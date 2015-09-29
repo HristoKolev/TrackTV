@@ -1,0 +1,11 @@
+﻿@using System.Globalization
+@model DateTime?
+
+@if (Model.HasValue)
+{
+    @Model.Value.ToString("D", CultureInfo.InvariantCulture)
+}
+else
+{
+    @:Unknown
+}

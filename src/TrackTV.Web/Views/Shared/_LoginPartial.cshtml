@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new
+    {
+        id = "logoutForm",
+        @class = "navbar-right"
+    }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Admin", "Index", "ManageShows", new
+                    {
+                        Area = "Admin"
+                    }, null)
+                }
+
+            </li>
+
+            <li>
+
+                <a href="@Url.Action("Index", "Manage", new
+                         {
+                             Area = string.Empty
+                         })" title="Manage">
+
+                    @Html.Gravatar(User.Identity.Name, 40, new
+                    {
+                        Title = User.Identity.Name,
+                        Alt = "Avatar",
+                        @class = "img-circle"
+                    })
+
+                    @User.Identity.GetUserName()
+                </a>
+
+
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Register", "Register", "Account", new
+            {
+                Area = string.Empty
+            }, new
+            {
+                id = "registerLink"
+            })</li>
+        <li>
+            @Html.ActionLink("Log in", "Login", "Account", new
+            {
+                Area = string.Empty
+            }, new
+            {
+                id = "loginLink"
+            })</li>
+    </ul>
+}

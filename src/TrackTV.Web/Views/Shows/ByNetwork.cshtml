@@ -1,0 +1,15 @@
+﻿@model ShowsNetworkViewModel
+
+@{
+    ViewBag.Title = "Search in " + Model.NetworkName;
+}
+
+
+<h1 class="text-center show-group-title">Top Shows on <span class="network-name">@Html.DisplayFor(model => model.NetworkName)</span></h1>
+
+@Html.DisplayFor(model => model.Shows)
+
+@if (Model.TotalPages > 1)
+{
+    @Html.Partial("_NetworkPager", Model)
+}

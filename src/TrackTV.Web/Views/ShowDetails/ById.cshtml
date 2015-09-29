@@ -1,0 +1,211 @@
+﻿@model ShowViewModel
+
+@{
+    ViewBag.Title = @Model.Name;
+}
+
+<div class="row well show-header">
+
+    <div class="col-md-8">
+
+        <div>
+            <img src="@Html.DisplayFor(model => model.Banner)"
+                 alt="@Html.DisplayFor(model => model.Name)"
+                 title="@Html.DisplayFor(model => model.Name)"/>
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div id="subscribe-unsubscribe-button">
+
+                @if (Model.IsUserSubscribed)
+                {
+                    using (Html.BeginForm("Unsubscribe", "ShowDetails", new
+                    {
+                        id = Model.Id
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Unsubscribe" class="btn btn-danger subscribe-button"/>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("Subscribe", "ShowDetails", new
+                    {
+                        id = Model.Id
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Subscribe" class="btn btn-success subscribe-button"/>
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            @Html.ActionLink("Login to subscribe", "Login", "Account", new
+            {
+                returnUrl = Url.Action("ById", "ShowDetails", new
+                {
+                    stringId = Model.StringId
+                })
+            }, new
+            {
+                @class = "btn btn-success subscribe-button"
+            })
+        }
+
+        <div class="panel panel-default description-panel">
+
+            <div class="panel-heading">
+                Description
+            </div>
+
+            <div class="panel-body description-box">
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </div>
+    </div>
+
+    <div class="show-details-area col-md-4 panel panel-default">
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="text-center big-info-title">Subscribers</div>
+
+                <div class="big-info text-center">
+                    @Html.DisplayFor(model => model.SubscriberCount)
+                </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+
+                        Network :
+                        @Html.ActionLink(Model.Network, "ByNetwork", "Shows", new
+                        {
+                            stringId = Model.NetworkStringId
+                        }, new
+                        {
+                            @class = "network-link"
+                        })
+
+                    </li>
+
+                    @Html.DisplayFor(model => model.AirTimeAndDate)
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="text-center big-info-title">Episodes</div>
+                <div class="big-info text-center">
+                    @Html.DisplayFor(model => model.EpisodeCount)
+                </div>
+
+                <ul class="list-group">
+
+                    <li class="list-group-item">
+                        @Html.DisplayFor(model => model.Status)
+                    </li>
+
+                    <li class="list-group-item">
+                        Premiered : @Html.DisplayFor(model => model.FirstAired)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="links-table text-center">
+
+            <a href="http://www.youtube.com/results?search_query=@(Model.Name.Replace(" ", "+"))+Trailer"
+               class="btn btn-default btn-danger text-center"
+               target="_blank">
+                YouTube Trailer
+            </a>
+
+            @if (Model.ImdbId != null)
+            {
+                <a href="http://www.imdb.com/title/@(Model.ImdbId)/"
+                   class="btn btn-default btn-success text-center"
+                   target="_blank">
+                    IMDB Profile
+                </a>
+            }
+
+            <a href="http://www.thetvdb.com/?tab=series&id=@(Model.TvDbId)"
+               class="btn btn-default btn-warning text-center"
+               target="_blank">
+                TheTVDB Profile
+            </a>
+        </div>
+
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class="show-admin-panel row well-lg danger">
+
+        @Html.Partial("_ShowAdminPanel", Model)
+
+    </div>
+}
+
+
+<div class="seasones-wrapper">
+
+    <h2>Seasones</h2>
+
+    <span id="show-id" data-show-id="@Html.DisplayFor(model => model.Id)"></span>
+    <span id="number-of-seasones" data-number-of-seasones="@Html.DisplayFor(model => model.NumberOfSeasones)"></span>
+
+    <ul id="tabstrip" class="nav nav-tabs" role="tablist">
+
+        @for (int i = @Model.NumberOfSeasones; i > 0; i--)
+        {
+            if (i == @Model.NumberOfSeasones)
+            {
+                <li class="active">
+                    <a href="#Season@(i)" role="tab" data-season-number="@i" class="btn btn-lg btn-success" data-
+                       toggle="tab">
+                        @i</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="#Season@(i)" role="tab" data-season-number="@i" class="btn btn-lg btn-success" data-
+                       toggle="tab">
+                        @i</a>
+                </li>
+            }
+        }
+    </ul>
+
+    <div class="tab-content">
+
+        @for (int i = @Model.NumberOfSeasones; i > 0; i--)
+        {
+            if (i == @Model.NumberOfSeasones)
+            {
+                <div class="tab-pane fade in active" id="Season@(i)"></div>
+            }
+            else
+            {
+                <div class="tab-pane fade" id="Season@(i)"></div>
+            }
+        }
+    </div>
+
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/ajaxTab.js")
+    @Scripts.Render("~/Scripts/jquery.shorten.1.0.js")
+    @Scripts.Render("~/Scripts/showMore.js")
+}

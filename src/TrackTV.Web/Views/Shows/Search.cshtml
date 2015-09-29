@@ -1,0 +1,15 @@
+﻿@model ShowsSearchViewModel
+
+@{
+    ViewBag.Title = "Search for " + Model.Query;
+}
+
+
+<h1 class="text-center show-group-title">Top Shows for <span class="search-query">@Html.DisplayFor(model => model.Query)</span></h1>
+
+@Html.DisplayFor(model => model.Shows)
+
+@if (Model.TotalPages > 1)
+{
+    @Html.Partial("_SearchShowPager", new SearchShowPagerViewModel(Model.CurrentPage, Model.TotalPages, Model.Query))
+}

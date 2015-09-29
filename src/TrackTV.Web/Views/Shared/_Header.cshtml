@@ -1,0 +1,51 @@
+﻿<header>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="/">
+                    <img src="~/Content/Images/logo-image.png" class="logo-image" alt=""/>
+                </a>
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            @Html.ActionLink("Calendar", "Index", "Home", new
+                            {
+                                Area = string.Empty
+                            }, null)
+                        </li>
+
+                        <li>
+                            @Html.ActionLink("My Shows", "Index", "MyShows", new
+                            {
+                                Area = string.Empty
+                            }, null)</li>
+                    }
+
+                    <li>
+                        @Html.ActionLink("Browse", "Index", "Shows", new
+                        {
+                            Area = string.Empty
+                        }, null)</li>
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+
+                <form class="navbar-form navbar-left search-form" action="@Url.Action("Search", "Shows")" method="GET" _lpchecked="1">
+                    <input type="text" name="query" class="form-control col-lg-8" placeholder="Search">
+                    <input type="submit" class="btn btn-success" value="Go"/>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>

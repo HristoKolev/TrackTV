@@ -1,0 +1,95 @@
+﻿@model ShowsNetworkViewModel
+
+<div class="text-center">
+    <ul class="pagination ">
+
+        @{
+            const string Path = "/Shows/ByNetwork";
+        }
+
+        @if (Model.CurrentPage > 1)
+        {
+            <li>
+                <a href="@Path?page=@(Model.CurrentPage - 1)">«</a>
+            </li>
+        }
+
+
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="active">
+                <a href="@Path?page=1">1</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@Path?page=1">1</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage > 2)
+        {
+            <li class="disabled">
+                <a>...</a>
+            </li>
+
+            if (Model.CurrentPage == Model.TotalPages && Model.TotalPages > 3)
+            {
+                <li>
+                    <a href="@Path?page=@(Model.CurrentPage - 2)">@(Model.CurrentPage - 2)</a>
+                </li>
+            }
+
+            <li>
+                <a href="@Path?page=@(Model.CurrentPage - 1)">@(Model.CurrentPage - 1)</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage != 1 && Model.CurrentPage != Model.TotalPages)
+        {
+            <li class="active">
+                <a href="@Path?page=@(Model.CurrentPage)">@(Model.CurrentPage)</a>
+            </li>
+        }
+
+
+        @if (Model.CurrentPage < Model.TotalPages - 1)
+        {
+            <li>
+                <a href="@Path?page=@(Model.CurrentPage + 1)">@(Model.CurrentPage + 1)</a>
+            </li>
+
+            if (Model.CurrentPage == 1 && Model.TotalPages > 3)
+            {
+                <li>
+                    <a href="@Path?page=@(Model.CurrentPage + 2)">@(Model.CurrentPage + 2)</a>
+                </li>
+            }
+
+            <li class="disabled">
+                <a>...</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage == Model.TotalPages)
+        {
+            <li class="active">
+                <a href="@Path?page=@(Model.TotalPages)">@(Model.TotalPages)</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@Path?page=@(Model.TotalPages)">@(Model.TotalPages)</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <li>
+                <a href="@Path?page=@(Model.CurrentPage + 1)">»</a>
+            </li>
+        }
+    </ul>
+</div>

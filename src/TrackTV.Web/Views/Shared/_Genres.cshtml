@@ -1,0 +1,12 @@
+﻿@model IList<GenreViewModel>
+
+
+<div class="well genre-panel text-center">
+    @*<h1 class="genre-title"> Genres </h1>*@
+
+    @foreach (GenreViewModel genre in Model)
+    {
+        <a href="/Shows/Genre/@genre.StringId" class="btn btn-default">@genre.Name</a>
+    }
+
+</div>

@@ -1,0 +1,19 @@
+﻿@model ShowViewModel
+
+<div class="text-center">
+
+    @using (Html.BeginForm("Update", "ShowDetails", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" value="@Model.Id" name="id"/>
+        <input type="submit" value="Update Show" class="btn btn-warning"/>
+    }
+
+    @using (Html.BeginForm("Remove", "ShowDetails", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" value="@Model.Id" name="id"/>
+        <input type="submit" value="Remove Show" class="btn btn-warning"/>
+    }
+
+</div>

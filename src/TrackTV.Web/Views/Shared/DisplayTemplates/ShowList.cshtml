@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SimpleShowViewModel>
+
+
+@if (Model.Any())
+{
+    <div class="row">
+
+        @foreach (SimpleShowViewModel show in Model)
+        {
+            <div class="text-center col-md-3 show-small">
+
+                <div>
+                    <a href="@Url.Action("ById", "ShowDetails", new
+                             {
+                                 show.StringId
+                             })">
+
+                        <img src="@show.Poster" alt="@show.Name" title="@show.Name" class="poster-small"/>
+
+                    </a>
+
+                    <strong class="text-center show-title-small">
+                        @Html.ActionLink(show.Name, "ById", "ShowDetails", new
+                        {
+                            show.StringId
+                        }, null)
+                    </strong>
+                </div>
+
+                <span class="info-small">
+                    Subscribers : @Html.DisplayFor(_ => show.SubscriberCount) |
+                    Episodes : @Html.DisplayFor(_ => show.EpisodeCount)
+                </span>
+
+            </div>
+        }
+    </div>
+}
+
+else
+{
+    <span>No shows</span>
+}

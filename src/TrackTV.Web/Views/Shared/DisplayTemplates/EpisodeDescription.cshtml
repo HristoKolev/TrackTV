@@ -1,0 +1,10 @@
+﻿@model string
+
+@if (string.IsNullOrWhiteSpace(Model))
+{
+    @:This episode has no summary.
+}
+else
+{
+    @Model
+}

@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Models", "TrackTV.Models\TrackTV.Models.csproj", "{1A8BC935-7F8A-4018-937C-88F953975ED1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Data", "TrackTV.Data\TrackTV.Data.csproj", "{330ED4EA-2327-427B-9AD9-95FC12B3F70C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Web", "TrackTV.Web\TrackTV.Web.csproj", "{92935E7A-2350-409F-BA69-7F738D2D0851}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{22B187B8-D90A-4CF5-99CE-3354D2E1A305}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Data.Common", "TrackTV.Data.Common\TrackTV.Data.Common.csproj", "{9B087A2A-6293-4C4B-86A1-36E83C49A38C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Logic", "TrackTV.Logic\TrackTV.Logic.csproj", "{B0F82EBF-DA30-4476-A389-C335F2812309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Web.Infrastructure", "TrackTV.Web.Infrastructure\TrackTV.Web.Infrastructure.csproj", "{034AC0A1-E05A-4097-928C-6B3CE08691D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A8BC935-7F8A-4018-937C-88F953975ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A8BC935-7F8A-4018-937C-88F953975ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A8BC935-7F8A-4018-937C-88F953975ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A8BC935-7F8A-4018-937C-88F953975ED1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{330ED4EA-2327-427B-9AD9-95FC12B3F70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330ED4EA-2327-427B-9AD9-95FC12B3F70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330ED4EA-2327-427B-9AD9-95FC12B3F70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330ED4EA-2327-427B-9AD9-95FC12B3F70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92935E7A-2350-409F-BA69-7F738D2D0851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92935E7A-2350-409F-BA69-7F738D2D0851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92935E7A-2350-409F-BA69-7F738D2D0851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92935E7A-2350-409F-BA69-7F738D2D0851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B087A2A-6293-4C4B-86A1-36E83C49A38C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B087A2A-6293-4C4B-86A1-36E83C49A38C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B087A2A-6293-4C4B-86A1-36E83C49A38C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B087A2A-6293-4C4B-86A1-36E83C49A38C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F82EBF-DA30-4476-A389-C335F2812309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F82EBF-DA30-4476-A389-C335F2812309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F82EBF-DA30-4476-A389-C335F2812309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F82EBF-DA30-4476-A389-C335F2812309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{034AC0A1-E05A-4097-928C-6B3CE08691D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034AC0A1-E05A-4097-928C-6B3CE08691D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034AC0A1-E05A-4097-928C-6B3CE08691D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034AC0A1-E05A-4097-928C-6B3CE08691D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

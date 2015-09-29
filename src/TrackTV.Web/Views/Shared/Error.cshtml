@@ -1,0 +1,21 @@
+﻿﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="jumbotron error-container">
+
+    <h1 class="text-center">An error occurred while processing your request.</h1>
+
+
+    @if (User.IsInRole("Admin"))
+    {
+        <h3 class="text-center">@Model.Exception.ToString()</h3>
+    }
+    else
+    {
+        <h3 class="text-center">@Model.Exception.GetType().Name - @Model.Exception.Message</h3>
+    }
+
+</div>

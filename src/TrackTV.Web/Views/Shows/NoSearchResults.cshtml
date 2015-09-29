@@ -1,0 +1,11 @@
+﻿@model ShowsSearchViewModel
+
+@{
+    ViewBag.Title = "Search for " + Model.Query;
+}
+
+<h1 class="text-center show-group-title">
+    Nothing found for <span class="search-query">
+                          @Html.DisplayFor(model => model.Query)
+                      </span>.
+</h1>
