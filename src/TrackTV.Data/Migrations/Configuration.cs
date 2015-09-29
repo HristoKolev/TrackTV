@@ -29,12 +29,12 @@ namespace TrackTV.Data.Migrations
             if (!context.Users.Any())
             {
                 CreateAdminRole(context);
-                ApplicationUser user = CreateUser();
+                ApplicationUser user = CreateUser(context);
                 AddUserToRole(user, RoleName, context);
             }
         }
 
-        private static void AddUserToRole(IUser<string> user, string roleName, ApplicationDbContext context)
+        private static void AddUserToRole(IUser<string> user, string roleName, DbContext context)
         {
             UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             {
@@ -51,27 +51,26 @@ namespace TrackTV.Data.Migrations
             {
                 roleManager.Create(new IdentityRole(RoleName));
             }
+
+            context.SaveChanges();
         }
 
-        private static ApplicationUser CreateUser()
+        private static ApplicationUser CreateUser(ApplicationDbContext context)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            ApplicationUser newUser = new ApplicationUser
             {
-                ApplicationUser newUser = new ApplicationUser
-                {
-                    UserName = Username,
-                    Email = Username,
-                    DeletedOn = DateTime.Now
-                };
+                UserName = Username,
+                Email = Username,
+                CreatedOn = DateTime.Now
+            };
 
-                UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-                userManager.Create(newUser, Password);
+            userManager.Create(newUser, Password);
 
-                context.SaveChanges();
+            context.SaveChanges();
 
-                return newUser;
-            }
+            return newUser;
         }
     }
 }
