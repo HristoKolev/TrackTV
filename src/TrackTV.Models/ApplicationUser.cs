@@ -13,54 +13,26 @@
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
-        private ICollection<Show> shows;
-
-        private ICollection<Episode> watchedEpisodes;
-
         public ApplicationUser()
         {
-            this.watchedEpisodes = new HashSet<Episode>();
-            this.shows = new HashSet<Show>();
             this.CreatedOn = DateTime.Now;
         }
 
-        public int MinutesSpendWatching { get; set; }
-
-        public virtual ICollection<Show> Shows
-        {
-            get
-            {
-                return this.shows;
-            }
-
-            set
-            {
-                this.shows = value;
-            }
-        }
-
-        public virtual ICollection<Episode> WatchedEpisodes
-        {
-            get
-            {
-                return this.watchedEpisodes;
-            }
-
-            set
-            {
-                this.watchedEpisodes = value;
-            }
-        }
-
         public DateTime CreatedOn { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public int MinutesSpendWatching { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
 
         public bool PreserveCreatedOn { get; set; }
 
-        public DateTime? DeletedOn { get; set; }
+        public virtual ICollection<Show> Shows { get; set; } = new HashSet<Show>();
 
-        public bool IsDeleted { get; set; }
+        public virtual ICollection<Episode> WatchedEpisodes { get; set; } = new HashSet<Episode>();
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

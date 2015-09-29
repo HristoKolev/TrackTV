@@ -16,7 +16,12 @@
 
     public class Fetcher : IFetcher
     {
-        private static readonly string[] ExceptableExtensions = { ".jpg", ".jpeg", ".png" };
+        private static readonly string[] ExceptableExtensions =
+        {
+            ".jpg",
+            ".jpeg",
+            ".png"
+        };
 
         private readonly ITrackTVData data;
 
@@ -88,8 +93,12 @@
         {
             IEnumerable<Episode> episodes = show.Seasons.SelectMany(season => season.Episodes);
 
-            Episode lastEpisode = episodes.Where(episode => episode.FirstAired < DateTime.Now).OrderByDescending(episode => episode.FirstAired).FirstOrDefault();
-            Episode nextEpisode = episodes.Where(episode => episode.FirstAired > DateTime.Now).OrderBy(episode => episode.FirstAired).FirstOrDefault();
+            Episode lastEpisode =
+                episodes.Where(episode => episode.FirstAired < DateTime.Now)
+                        .OrderByDescending(episode => episode.FirstAired)
+                        .FirstOrDefault();
+            Episode nextEpisode =
+                episodes.Where(episode => episode.FirstAired > DateTime.Now).OrderBy(episode => episode.FirstAired).FirstOrDefault();
 
             if (lastEpisode != null)
             {
@@ -143,10 +152,10 @@
         {
             switch (language)
             {
-                case "en":
+                case "en" :
                     return "English";
 
-                default:
+                default :
                     throw new ArgumentOutOfRangeException("language");
             }
         }

@@ -4,15 +4,18 @@ namespace TrackTV.Data
 
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    using TrackTV.Data.Migrations;
     using TrackTV.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", false)
+            : this("DefaultConnection")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+        }
+
+        public ApplicationDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString, false)
+        {
         }
 
         public IDbSet<Episode> Episodes { get; set; }
