@@ -30,13 +30,13 @@ namespace TrackTV.Logic.Calendar
 
         private ITrackTVData Data { get; set; }
 
-        public List<List<CalendarDay>> Create(DateTime now)
+        public List<List<CalendarDay>> Create(DateTime currentDate)
         {
             Calendar calendar = new GregorianCalendar();
 
             const int CalendarDays = 42;
 
-            DateTime startDate = new DateTime(now.Year, now.Month, 1);
+            DateTime startDate = new DateTime(currentDate.Year, currentDate.Month, 1);
 
             startDate = startDate.Subtract(new TimeSpan((int)calendar.GetDayOfWeek(startDate) - (int)DayOfWeek.Monday, 0, 0, 0));
 
@@ -80,7 +80,9 @@ namespace TrackTV.Logic.Calendar
             DateTime endDate = startDate.AddDays(1);
 
             List<CalendarEpisode> episodesForDay =
-                this.episodes.Where(viewModel => viewModel.FirstAired != null && viewModel.FirstAired.Value >= startDate && viewModel.FirstAired < endDate).ToList();
+                this.episodes.Where(
+                    viewModel => viewModel.FirstAired != null && viewModel.FirstAired.Value >= startDate && viewModel.FirstAired < endDate)
+                    .ToList();
 
             CalendarDay day = new CalendarDay
             {
@@ -104,8 +106,8 @@ namespace TrackTV.Logic.Calendar
                 this.Data.Episodes.All()
                     .Where(
                         episode =>
-                        !episode.Season.Show.IsDeleted && episode.Season.Show.Subscribers.Any(user => user.Id == this.userId) && episode.FirstAired > startDay
-                        && episode.FirstAired < endDay)
+                        !episode.Season.Show.IsDeleted && episode.Season.Show.Subscribers.Any(user => user.Id == this.userId)
+                        && episode.FirstAired > startDay && episode.FirstAired < endDay)
                     .Project()
                     .To<CalendarEpisode>()
                     .ToList();

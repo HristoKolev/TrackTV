@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web
+﻿namespace TrackTV.Web.Config
 {
     using System;
 

@@ -15,6 +15,8 @@ namespace TrackTV.Web
     using Ninject;
     using Ninject.Web.Common;
 
+    using TrackTV.Web.Config;
+
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper Bootstrapper = new Bootstrapper();

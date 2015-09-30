@@ -130,8 +130,12 @@
       <HintPath>..\packages\NetInfrastructure.AutoMapper.0.0.3.0\lib\net452\NetInfrastructure.automapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetInfrastructure.Core, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetInfrastructure.Core.0.0.3.0\lib\net452\NetInfrastructure.Core.dll</HintPath>
+    <Reference Include="NetInfrastructure.Core, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Core.0.0.4.0\lib\net46\NetInfrastructure.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Data, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Data.0.0.3.0\lib\net46\NetInfrastructure.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -396,7 +400,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrackTV.Data.Common\TrackTV.Data.Common.csproj">
-      <Project>{9B087A2A-6293-4C4B-86A1-36E83C49A38C}</Project>
+      <Project>{F4CD950B-19A8-4F21-88B7-445B9973CA21}</Project>
       <Name>TrackTV.Data.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\TrackTV.Data\TrackTV.Data.csproj">

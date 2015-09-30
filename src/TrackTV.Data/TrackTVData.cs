@@ -2,69 +2,38 @@
 {
     using System.Data.Entity;
 
-    using TrackTV.Data.Common;
-    using TrackTV.Data.Common.Repositories.Contracts;
+    using NetInfrastructure.Core.DI;
+    using NetInfrastructure.Data;
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data.Contracts;
     using TrackTV.Models;
 
-    public class TrackTVData : DataObject, ITrackTVData
+    public class TrackTVData : BaseDataUnit, ITrackTVData
     {
-        public TrackTVData(DbContext context)
-            : base(context)
+        public TrackTVData(ITypeProvider provider)
+            : base(provider)
         {
+            this.Context = provider.Get<DbContext>();
         }
 
-        public TrackTVData()
-            : this(new ApplicationDbContext())
-        {
-        }
+        public IRepository<Episode> Episodes => this.GetRepository<Episode>();
 
-        public IRepository<Episode, int> Episodes
-        {
-            get
-            {
-                return this.GetRepository<Episode, int>();
-            }
-        }
+        public IRepository<Genre> Genres => this.GetRepository<Genre>();
 
-        public IRepository<Genre, int> Genres
-        {
-            get
-            {
-                return this.GetRepository<Genre, int>();
-            }
-        }
+        public IRepository<Network> Networks => this.GetRepository<Network>();
 
-        public IRepository<Network, int> Networks
-        {
-            get
-            {
-                return this.GetRepository<Network, int>();
-            }
-        }
+        public IRepository<Season> Seasons => this.GetRepository<Season>();
 
-        public IRepository<Season, int> Seasons
-        {
-            get
-            {
-                return this.GetRepository<Season, int>();
-            }
-        }
+        public IRepository<Show> Shows => this.GetRepository<Show>();
 
-        public IRepository<Show, int> Shows
-        {
-            get
-            {
-                return this.GetRepository<Show, int>();
-            }
-        }
+        public IRepository<ApplicationUser, string> Users => this.GetRepository<ApplicationUser, string>();
 
-        public IRepository<ApplicationUser, string> Users
+        private DbContext Context { get; }
+
+        public int SaveChanges()
         {
-            get
-            {
-                return this.GetRepository<ApplicationUser, string>();
-            }
+            return this.Context.SaveChanges();
         }
     }
 }

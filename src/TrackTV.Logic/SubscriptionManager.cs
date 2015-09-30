@@ -12,12 +12,7 @@
         {
             this.Data = data;
         }
-
-        public SubscriptionManager()
-            : this(new TrackTVData())
-        {
-        }
-
+ 
         private ITrackTVData Data { get; set; }
 
         public void Subscribe(ApplicationUser user, Show show)

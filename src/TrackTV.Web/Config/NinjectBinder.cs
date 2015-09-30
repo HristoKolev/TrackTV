@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web
+﻿namespace TrackTV.Web.Config
 {
     using System;
     using System.Collections.Generic;
@@ -9,11 +9,12 @@
 
     using NetInfrastructure.AutoMapper;
     using NetInfrastructure.Core.DI;
+    using NetInfrastructure.Data.Repositories;
 
     using Ninject;
+    using Ninject.Web.Common;
 
     using TrackTV.Data;
-    using TrackTV.Data.Common.Repositories.Contracts;
     using TrackTV.Data.Contracts;
     using TrackTV.Logic.Fetchers;
 
@@ -30,9 +31,10 @@
         {
             this.Kernel.Bind<ITypeProvider>().To<NinjectTypeProvider>();
 
-            this.Kernel.Bind<DbContext>().To<ApplicationDbContext>();
+            this.Kernel.Bind<DbContext>().To<ApplicationDbContext>().InRequestScope();
 
-            this.Kernel.Bind(typeof(IRepository<,>)).To(typeof(IDeletableEntityRepository<,>));
+            this.Kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
+            this.Kernel.Bind(typeof(IRepository<,>)).To(typeof(Repository<,>));
 
             this.Kernel.Bind<ITrackTVData>().To<TrackTVData>();
 

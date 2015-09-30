@@ -53,6 +53,14 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NetInfrastructure.Core, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Core.0.0.1.0\lib\net46\NetInfrastructure.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Data, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Data.0.0.3.0\lib\net46\NetInfrastructure.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -93,7 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrackTV.Data.Common\TrackTV.Data.Common.csproj">
-      <Project>{9b087a2a-6293-4c4b-86a1-36e83c49a38c}</Project>
+      <Project>{F4CD950B-19A8-4F21-88B7-445B9973CA21}</Project>
       <Name>TrackTV.Data.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\TrackTV.Data\TrackTV.Data.csproj">
