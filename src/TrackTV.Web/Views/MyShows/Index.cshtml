@@ -98,7 +98,7 @@
                     @using (Html.BeginForm("Unsubscribe", "MyShows"))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="hidden" value="@show.StringId" name="StringId"/>
+                        <input type="hidden" value="@show.Id" name="Id"/>
                         <input type="submit" value="Unsubscribe" class="btn btn-danger my-show-unsubscribe-button"/>
                     }
                 </div>

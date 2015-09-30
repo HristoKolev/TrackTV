@@ -4,13 +4,13 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    using AutoMapper;
+    using NetInfrastructure.AutoMapper;
 
     using TrackTV.Logic;
     using TrackTV.Models;
-    using TrackTV.Web.Infrastructure.Mapping.Contracts;
 
-    public class ShowViewModel : IMapFrom<Show>, IHaveCustomMappings
+    [MapFrom(typeof(Show))]
+    public class ShowViewModel : ICustomMap<Show, ShowViewModel>
     {
         public AirTimeViewModel AirTimeAndDate { get; set; }
 
@@ -47,18 +47,16 @@
 
         public int TvDbId { get; set; }
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(ICustomMapper<Show, ShowViewModel> mapper)
         {
-            configuration.CreateMap<Show, ShowViewModel>()
-                .ForMember(model => model.Banner, expression => expression.MapFrom(show => ApplicationSettings.BannerPath + show.BannerBig))
-                .ForMember(model => model.EpisodeCount, expression => expression.MapFrom(show => show.Seasons.SelectMany(season => season.Episodes).Count()))
-                .ForMember(model => model.SubscriberCount, expression => expression.MapFrom(show => show.Subscribers.Count))
-                .ForMember(model => model.Network, expression => expression.MapFrom(show => show.Network.Name))
-                .ForMember(model => model.NetworkStringId, expression => expression.MapFrom(show => show.Network.StringId))
-                .ForMember(
-                    model => model.NumberOfSeasones,
-                    expression => expression.MapFrom(show => show.Seasons.Count(season => season.Episodes.Count != 0 && season.Number != 0)))
-                .ForMember(model => model.AirTimeAndDate, expression => expression.MapFrom(show => new AirTimeViewModel(show.AirDay, show.AirTime)));
+            mapper.QuickMap(model => model.Banner, show => ApplicationSettings.BannerPath + show.BannerBig);
+            mapper.QuickMap(model => model.EpisodeCount, show => show.Seasons.SelectMany(season => season.Episodes).Count());
+            mapper.QuickMap(model => model.SubscriberCount, show => show.Subscribers.Count);
+            mapper.QuickMap(model => model.Network, show => show.Network.Name);
+            mapper.QuickMap(model => model.NetworkStringId, show => show.Network.StringId);
+            mapper.QuickMap(model => model.NumberOfSeasones,
+                show => show.Seasons.Count(season => season.Episodes.Count != 0 && season.Number != 0));
+            mapper.QuickMap(model => model.AirTimeAndDate, show => new AirTimeViewModel(show.AirDay, show.AirTime));
         }
     }
 }

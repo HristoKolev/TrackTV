@@ -3,10 +3,12 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using TrackTV.Models;
-    using TrackTV.Web.Infrastructure.Mapping.Contracts;
+    using NetInfrastructure.AutoMapper;
 
-    public class EpisodeViewModel : IMapFrom<Episode>
+    using TrackTV.Models;
+ 
+    [MapFrom(typeof(Episode))]
+    public class EpisodeViewModel 
     {
         [UIHint("EpisodeDescription")]
         public string Description { get; set; }

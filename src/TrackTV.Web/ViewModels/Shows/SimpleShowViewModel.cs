@@ -2,13 +2,13 @@
 {
     using System.Linq;
 
-    using AutoMapper;
+    using NetInfrastructure.AutoMapper;
 
     using TrackTV.Logic;
     using TrackTV.Models;
-    using TrackTV.Web.Infrastructure.Mapping.Contracts;
 
-    public class SimpleShowViewModel : IMapFrom<Show>, IHaveCustomMappings
+    [MapFrom(typeof(Show))]
+    public class SimpleShowViewModel : ICustomMap<Show, SimpleShowViewModel>
     {
         public string Banner { get; set; }
 
@@ -22,13 +22,12 @@
 
         public int SubscriberCount { get; set; }
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(ICustomMapper<Show, SimpleShowViewModel> mapper)
         {
-            configuration.CreateMap<Show, SimpleShowViewModel>()
-                .ForMember(model => model.Banner, expression => expression.MapFrom(show => ApplicationSettings.BannerPath + show.BannerBig))
-                .ForMember(model => model.Poster, expression => expression.MapFrom(show => ApplicationSettings.PosterPath + (show.PosterBig ?? "/DefaultPoster.jpg")))
-                .ForMember(model => model.EpisodeCount, expression => expression.MapFrom(show => show.Seasons.SelectMany(season => season.Episodes).Count()))
-                .ForMember(model => model.SubscriberCount, expression => expression.MapFrom(show => show.Subscribers.Count));
+            mapper.QuickMap(model => model.Banner, show => ApplicationSettings.BannerPath + show.BannerBig);
+            mapper.QuickMap(model => model.Poster, show => ApplicationSettings.PosterPath + (show.PosterBig ?? "/DefaultPoster.jpg"));
+            mapper.QuickMap(model => model.EpisodeCount, show => show.Seasons.SelectMany(season => season.Episodes).Count());
+            mapper.QuickMap(model => model.SubscriberCount, show => show.Subscribers.Count);
         }
     }
 }

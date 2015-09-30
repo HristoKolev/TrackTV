@@ -1,9 +1,11 @@
 ﻿namespace TrackTV.Web.ViewModels.MyShows
 {
-    using TrackTV.Models;
-    using TrackTV.Web.Infrastructure.Mapping.Contracts;
+    using NetInfrastructure.AutoMapper;
 
-    public class MyShowViewModel : IMapFrom<Show>
+    using TrackTV.Models;
+
+    [MapFrom(typeof(Show))]
+    public class MyShowViewModel
     {
         public int Id { get; set; }
 

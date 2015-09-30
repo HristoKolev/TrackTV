@@ -1,9 +1,11 @@
 ﻿namespace TrackTV.Web.ViewModels.Shows
 {
-    using TrackTV.Models;
-    using TrackTV.Web.Infrastructure.Mapping.Contracts;
+    using NetInfrastructure.AutoMapper;
 
-    public class GenreViewModel : IMapFrom<Genre>
+    using TrackTV.Models;
+
+    [MapFrom(typeof(Genre))]
+    public class GenreViewModel
     {
         public string Name { get; set; }
 

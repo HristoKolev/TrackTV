@@ -3,12 +3,12 @@ namespace TrackTV.Web.ViewModels.MyShows
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using AutoMapper;
+    using NetInfrastructure.AutoMapper;
 
     using TrackTV.Models;
-    using TrackTV.Web.Infrastructure.Mapping.Contracts;
 
-    public class SimpleEpisodeViewModel : IMapFrom<Episode>, IHaveCustomMappings
+    [MapFrom(typeof(Episode))]
+    public class SimpleEpisodeViewModel : ICustomMap<Episode, SimpleEpisodeViewModel>
     {
         [UIHint("LongDate")]
         public DateTime? FirstAired { get; set; }
@@ -21,9 +21,9 @@ namespace TrackTV.Web.ViewModels.MyShows
 
         public string Title { get; set; }
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(ICustomMapper<Episode, SimpleEpisodeViewModel> mapper)
         {
-            configuration.CreateMap<Episode, SimpleEpisodeViewModel>().ForMember(model => model.SeasonNumber, expression => expression.MapFrom(episode => episode.Season.Number));
+            mapper.QuickMap(model => model.SeasonNumber, episode => episode.Season.Number);
         }
     }
 }

@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TrackTV.Logic</RootNamespace>
     <AssemblyName>TrackTV.Logic</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -102,10 +103,6 @@
     <ProjectReference Include="..\TrackTV.Models\TrackTV.Models.csproj">
       <Project>{1a8bc935-7f8a-4018-937c-88f953975ed1}</Project>
       <Name>TrackTV.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TrackTV.Web.Infrastructure\TrackTV.Web.Infrastructure.csproj">
-      <Project>{034AC0A1-E05A-4097-928C-6B3CE08691D0}</Project>
-      <Name>TrackTV.Web.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
