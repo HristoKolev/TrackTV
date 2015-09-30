@@ -399,10 +399,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TrackTV.Data.Common\TrackTV.Data.Common.csproj">
-      <Project>{F4CD950B-19A8-4F21-88B7-445B9973CA21}</Project>
-      <Name>TrackTV.Data.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TrackTV.Data\TrackTV.Data.csproj">
       <Project>{330ed4ea-2327-427b-9ad9-95fc12b3f70c}</Project>
       <Name>TrackTV.Data</Name>

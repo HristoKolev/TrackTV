@@ -1,14 +1,24 @@
 ﻿namespace TrackTV.Models
 {
+    using System;
     using System.Collections.Generic;
 
-    using TrackTV.Data.Common.Models;
+    using TrackTV.Models.Contracts;
 
-    public class Season : AuditInfo
+    public class Season : IAuditInfo
     {
+        public Season()
+        {
+            this.CreatedOn = DateTime.Now;
+        }
+
+        public DateTime CreatedOn { get; set; }
+
         public virtual ICollection<Episode> Episodes { get; set; } = new HashSet<Episode>();
 
         public int Id { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         public int Number { get; set; }
 

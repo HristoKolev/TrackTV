@@ -106,8 +106,8 @@ namespace TrackTV.Logic.Calendar
                 this.Data.Episodes.All()
                     .Where(
                         episode =>
-                        !episode.Season.Show.IsDeleted && episode.Season.Show.Subscribers.Any(user => user.Id == this.userId)
-                        && episode.FirstAired > startDay && episode.FirstAired < endDay)
+                        episode.Season.Show.Subscribers.Any(user => user.Id == this.userId) && episode.FirstAired > startDay
+                        && episode.FirstAired < endDay)
                     .Project()
                     .To<CalendarEpisode>()
                     .ToList();

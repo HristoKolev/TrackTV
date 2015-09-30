@@ -4,15 +4,22 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using TrackTV.Data.Common.Models;
+    using TrackTV.Models.Contracts;
 
-    public class Show : AuditInfo
+    public class Show : IAuditInfo
     {
+        public Show()
+        {
+            this.CreatedOn = DateTime.Now;
+        }
+
         public AirDay? AirDay { get; set; }
 
         public TimeSpan? AirTime { get; set; }
 
         public string BannerBig { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -30,6 +37,8 @@
         public int? LastEpisodeId { get; set; }
 
         public long? LastUpdated { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         [Required]
         public string Name { get; set; }

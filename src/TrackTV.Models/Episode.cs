@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    using TrackTV.Data.Common.Models;
+    using TrackTV.Models.Contracts;
 
-    public class Episode : AuditInfo
+    public class Episode : IAuditInfo
     {
         public Episode()
         {
@@ -33,5 +33,9 @@
         public int TvDbId { get; set; }
 
         public virtual ICollection<ApplicationUser> Viewers { get; set; } = new HashSet<ApplicationUser>();
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
     }
 }

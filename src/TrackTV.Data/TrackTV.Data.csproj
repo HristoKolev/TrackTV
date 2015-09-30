@@ -74,10 +74,6 @@
     <Compile Include="TrackTVData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TrackTV.Data.Common\TrackTV.Data.Common.csproj">
-      <Project>{F4CD950B-19A8-4F21-88B7-445B9973CA21}</Project>
-      <Name>TrackTV.Data.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TrackTV.Models\TrackTV.Models.csproj">
       <Project>{1a8bc935-7f8a-4018-937c-88f953975ed1}</Project>
       <Name>TrackTV.Models</Name>
