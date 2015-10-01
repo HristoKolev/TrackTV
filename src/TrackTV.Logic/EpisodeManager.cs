@@ -2,17 +2,18 @@
 {
     using System.Linq;
 
-    using TrackTV.Data;
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Models;
 
     public class EpisodeManager
     {
-        private readonly ITrackTVData data;
-
-        public EpisodeManager(ITrackTVData data)
+        public EpisodeManager(IRepository<Episode> episodes)
         {
-            this.data = data;
+            this.Episodes = episodes;
         }
+
+        private IRepository<Episode> Episodes { get; }
 
         public Episode GetLastEpisode(Show show)
         {
@@ -40,12 +41,15 @@
 
         public IQueryable<Episode> GetSeasonEpisodes(int showId, int seassonNumber)
         {
-            return this.GetAllEpisodes().Where(episode => episode.Season.Show.Id == showId && episode.Season.Number == seassonNumber).OrderBy(episode => episode.Number);
+            return
+                this.GetAllEpisodes()
+                    .Where(episode => episode.Season.Show.Id == showId && episode.Season.Number == seassonNumber)
+                    .OrderBy(episode => episode.Number);
         }
 
         private IQueryable<Episode> GetAllEpisodes()
         {
-            return this.data.Episodes.All();
+            return this.Episodes.All();
         }
 
         private Episode GetById(int id)

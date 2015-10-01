@@ -32,19 +32,21 @@
                 return this.NotFound();
             }
 
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
-            IList<SimpleShowViewModel> running = showManager.GetRunningShowsByGenre(genre.Id).Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
+            IList<SimpleShowViewModel> running =
+                showManager.GetRunningShowsByGenre(genre.Id).Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
 
-            IList<SimpleShowViewModel> ended = showManager.GetEndedShowsByGenre(genre.Id).Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
+            IList<SimpleShowViewModel> ended =
+                showManager.GetEndedShowsByGenre(genre.Id).Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
 
             IList<GenreViewModel> genres = genreManager.GetAllGenres().Project().To<GenreViewModel>().ToList();
 
             ShowsByGenreVewModel model = new ShowsByGenreVewModel
             {
-                Running = running,
-                Ended = ended,
-                Genres = genres,
+                Running = running, 
+                Ended = ended, 
+                Genres = genres, 
                 GenreName = genre.Name
             };
 
@@ -62,7 +64,7 @@
                 return this.NotFound();
             }
 
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             IQueryable<Show> shows = showManager.GetShowsByNetwork(network.Id);
 
@@ -77,7 +79,7 @@
 
             ShowsNetworkViewModel model = new ShowsNetworkViewModel
             {
-                Shows = shows.Project().To<SimpleShowViewModel>().ToList(),
+                Shows = shows.Project().To<SimpleShowViewModel>().ToList(), 
                 NetworkName = network.Name
             };
 
@@ -102,7 +104,7 @@
 
         public ActionResult Index()
         {
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             IList<SimpleShowViewModel> running = showManager.GetRunningShows().Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
             IList<SimpleShowViewModel> ended = showManager.GetEndedShows().Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
@@ -113,8 +115,8 @@
 
             ShowsViewModel model = new ShowsViewModel
             {
-                Running = running,
-                Ended = ended,
+                Running = running, 
+                Ended = ended, 
                 Genres = genres
             };
 
@@ -128,7 +130,7 @@
                 return this.RedirectToAction("Index");
             }
 
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             IQueryable<Show> shows = showManager.SearchShow(query);
 
@@ -136,12 +138,10 @@
 
             if (count == 0)
             {
-                return this.View(
-                    "NoSearchResults",
-                    new ShowsSearchViewModel
-                    {
-                        Query = query
-                    });
+                return this.View("NoSearchResults", new ShowsSearchViewModel
+                {
+                    Query = query
+                });
             }
 
             if (page.HasValue)
@@ -153,9 +153,9 @@
 
             ShowsSearchViewModel model = new ShowsSearchViewModel
             {
-                Shows = shows.Project().To<SimpleShowViewModel>().ToList(),
-                Query = query,
-                ActionName = MethodBase.GetCurrentMethod().Name,
+                Shows = shows.Project().To<SimpleShowViewModel>().ToList(), 
+                Query = query, 
+                ActionName = MethodBase.GetCurrentMethod().Name, 
                 ControllerName = MethodBase.GetCurrentMethod().DeclaringType.Name
             };
 

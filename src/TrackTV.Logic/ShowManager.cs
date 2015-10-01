@@ -2,17 +2,18 @@
 {
     using System.Linq;
 
-    using TrackTV.Data;
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Models;
 
     public class ShowManager
     {
-        private readonly ITrackTVData data;
-
-        public ShowManager(ITrackTVData data)
+        public ShowManager(IRepository<Show> shows)
         {
-            this.data = data;
+            this.Shows = shows;
         }
+
+        private IRepository<Show> Shows { get; }
 
         public IQueryable<Show> GetEndedShows()
         {
@@ -56,8 +57,8 @@
 
         public void RemoveShow(int id)
         {
-            this.data.Shows.Delete(id);
-            this.data.SaveChanges();
+            this.Shows.Delete(id);
+            this.Shows.SaveChanges();
         }
 
         public IQueryable<Show> SearchShow(string query)
@@ -79,7 +80,7 @@
 
         private IQueryable<Show> GetAllShows()
         {
-            return this.data.Shows.All();
+            return this.Shows.All();
         }
 
         private IQueryable<Show> GetShows(ShowStatus status)

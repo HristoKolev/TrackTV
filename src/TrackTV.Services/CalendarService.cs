@@ -7,6 +7,7 @@ namespace TrackTV.Services
     using TrackTV.Logic.Calendar;
     using TrackTV.Models;
     using TrackTV.Services.VewModels;
+    using TrackTV.Services.VewModels.Calendar;
 
     public class CalendarService
     {

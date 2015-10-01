@@ -22,7 +22,7 @@
 
         public ActionResult ById(string stringId)
         {
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             Show show = showManager.GetShowByStringId(stringId);
 
@@ -54,7 +54,7 @@
         [Authorize(Roles = "Admin")]
         public ActionResult Remove(int id)
         {
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             showManager.RemoveShow(id);
 
@@ -63,7 +63,7 @@
 
         public ActionResult Season(int id, int seasonNumber)
         {
-            EpisodeManager episodeManager = new EpisodeManager(this.Data);
+            EpisodeManager episodeManager = new EpisodeManager(this.Data.Episodes);
 
             IList<EpisodeViewModel> models = episodeManager.GetSeasonEpisodes(id, seasonNumber).Project().To<EpisodeViewModel>().ToList();
 
@@ -77,11 +77,11 @@
         {
             ApplicationUser user = this.GetCurrentUser();
 
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             Show show = showManager.GetShowById(id);
 
-            SubscriptionManager subscriptionManager = new SubscriptionManager(this.Data);
+            SubscriptionManager subscriptionManager = new SubscriptionManager(this.Data.Shows);
 
             subscriptionManager.Subscribe(user, show);
 
@@ -100,11 +100,11 @@
         {
             ApplicationUser user = this.GetCurrentUser();
 
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             Show show = showManager.GetShowById(id);
 
-            SubscriptionManager manager = new SubscriptionManager(this.Data);
+            SubscriptionManager manager = new SubscriptionManager(this.Data.Shows);
 
             manager.Unsubscribe(user, show);
 
@@ -121,7 +121,7 @@
         [Authorize(Roles = "Admin")]
         public ActionResult Update(int id)
         {
-            ShowManager showManager = new ShowManager(this.Data);
+            ShowManager showManager = new ShowManager(this.Data.Shows);
 
             Show show = showManager.GetShowById(id);
 

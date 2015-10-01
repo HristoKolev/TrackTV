@@ -1,4 +1,4 @@
-namespace TrackTV.Services.VewModels
+namespace TrackTV.Services.VewModels.Calendar
 {
     using System;
     using System.Collections.Generic;

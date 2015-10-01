@@ -18,5 +18,11 @@
             this.Configurator.ApplyDefaultMappings(assembly);
             this.Configurator.ApplyCustomMappings(assembly);
         }
+
+        public void Load(string assemblyName)
+        {
+            this.Configurator.ApplyDefaultMappings(assemblyName);
+            this.Configurator.ApplyCustomMappings(assemblyName);
+        }
     }
 }

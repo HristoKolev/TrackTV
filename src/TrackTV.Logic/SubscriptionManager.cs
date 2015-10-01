@@ -2,17 +2,18 @@
 {
     using System;
 
-    using TrackTV.Data;
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Models;
 
     public class SubscriptionManager
     {
-        public SubscriptionManager(ITrackTVData data)
+        public SubscriptionManager(IRepository<Show> shows)
         {
-            this.Data = data;
+            this.Shows = shows;
         }
- 
-        private ITrackTVData Data { get; set; }
+
+        private IRepository<Show> Shows { get; set; }
 
         public void Subscribe(ApplicationUser user, Show show)
         {
@@ -24,7 +25,7 @@
             user.Shows.Add(show);
             show.Subscribers.Add(user);
 
-            this.Data.SaveChanges();
+            this.Shows.SaveChanges();
         }
 
         public void Unsubscribe(ApplicationUser user, Show show)
@@ -37,7 +38,7 @@
             user.Shows.Remove(show);
             show.Subscribers.Remove(user);
 
-            this.Data.SaveChanges();
+            this.Shows.SaveChanges();
         }
     }
 }

@@ -1,65 +1,31 @@
 ﻿namespace TrackTV.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Web.Mvc;
 
-    using AutoMapper;
-
     using TrackTV.Data;
-    using TrackTV.Logic;
-    using TrackTV.Models;
-    using TrackTV.Web.ViewModels.MyShows;
+    using TrackTV.Services;
+    using TrackTV.Services.VewModels.MyShows;
 
     [Authorize]
     public class MyShowsController : BaseController
     {
-        public MyShowsController(ITrackTVData data)
+        public MyShowsController(ITrackTVData data, MyShowsService myShowsService)
             : base(data)
         {
+            this.MyShowsService = myShowsService;
         }
+
+        private MyShowsService MyShowsService { get; }
 
         public ActionResult Index()
         {
-            ShowManager showManager = new ShowManager(this.Data);
+            MyShowsViewModel model = this.MyShowsService.GetMyShows(this.CurrentUserId);
 
-            IList<Show> shows = showManager.GetUserShows(this.CurrentUserId).ToList();
-
-            if (shows.Count == 0)
+            if (model.IsEmpty)
             {
                 return this.View("NoShows");
-            }
-
-            IEnumerable<Show> running = shows.Where(show => show.Status == ShowStatus.Continuing);
-            IEnumerable<Show> ended = shows.Where(show => show.Status == ShowStatus.Ended);
-
-            MyShowsViewModel model = new MyShowsViewModel
-            {
-                Running = new List<MyShowViewModel>(),
-                Ended = new List<MyShowViewModel>()
-            };
-
-            EpisodeManager episodeManager = new EpisodeManager(this.Data);
-
-            foreach (Show show in running)
-            {
-                MyShowViewModel showModel = Mapper.Map<MyShowViewModel>(show);
-
-                showModel.LastEpisode = Mapper.Map<SimpleEpisodeViewModel>(episodeManager.GetLastEpisode(show));
-                showModel.NextEpisode = Mapper.Map<SimpleEpisodeViewModel>(episodeManager.GetNextEpisode(show));
-
-                model.Running.Add(showModel);
-            }
-
-            foreach (Show show in ended)
-            {
-                MyShowViewModel showModel = Mapper.Map<MyShowViewModel>(show);
-
-                showModel.LastEpisode = Mapper.Map<SimpleEpisodeViewModel>(episodeManager.GetLastEpisode(show));
-
-                model.Ended.Add(showModel);
             }
 
             return this.View(model);
@@ -70,17 +36,9 @@
         [Authorize]
         public ActionResult Unsubscribe(int id)
         {
-            ApplicationUser user = this.GetCurrentUser();
-
-            ShowManager showManager = new ShowManager(this.Data);
-
-            Show show = showManager.GetShowById(id);
-
-            SubscriptionManager subscriptionManager = new SubscriptionManager(this.Data);
-
             try
             {
-                subscriptionManager.Unsubscribe(user, show);
+                this.MyShowsService.Unsubscribe(this.GetCurrentUser(), id);
             }
             catch (InvalidOperationException exception)
             {

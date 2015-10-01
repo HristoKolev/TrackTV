@@ -1,4 +1,4 @@
-namespace TrackTV.Web.ViewModels.MyShows
+namespace TrackTV.Services.VewModels.MyShows
 {
     using System;
     using System.ComponentModel.DataAnnotations;
