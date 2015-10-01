@@ -2,14 +2,15 @@
 {
     using System.Web.Mvc;
 
-    using TrackTV.Data;
-    using TrackTV.Logic;
+    using NetInfrastructure.Data.Repositories;
+
+    using TrackTV.Models;
     using TrackTV.Services;
 
     public class HomeController : BaseController
     {
-        public HomeController(ITrackTVData data, CalendarService calendarService)
-            : base(data)
+        public HomeController(IRepository<ApplicationUser, string> users, CalendarService calendarService)
+            : base(users)
         {
             this.CalendarService = calendarService;
         }

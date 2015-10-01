@@ -33,8 +33,6 @@
             this.Kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
             this.Kernel.Bind(typeof(IRepository<,>)).To(typeof(Repository<,>));
 
-            this.Kernel.Bind<ITrackTVData>().To<TrackTVData>();
-
             this.Kernel.Bind<IFetcher>().To<Fetcher>();
 
             this.RegisterAutoMapperBindings();

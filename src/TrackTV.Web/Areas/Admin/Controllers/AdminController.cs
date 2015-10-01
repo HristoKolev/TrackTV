@@ -2,14 +2,17 @@
 {
     using System.Web.Mvc;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data;
+    using TrackTV.Models;
     using TrackTV.Web.Controllers;
 
     [Authorize(Roles = "Admin")]
     public abstract class AdminController : BaseController
     {
-        public AdminController(ITrackTVData data)
-            : base(data)
+        public AdminController(IRepository<ApplicationUser, string> users)
+            : base(users)
         {
         }
     }

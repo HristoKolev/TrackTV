@@ -5,22 +5,24 @@
 
     using Microsoft.AspNet.Identity;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data;
 
     using TrackTV.Models;
 
     public abstract class BaseController : Controller
     {
-        protected readonly ITrackTVData Data;
+        private IRepository<ApplicationUser, string> Users { get; }
 
-        public BaseController(ITrackTVData data)
+        protected BaseController(IRepository<ApplicationUser, string> users)
         {
-            this.Data = data;
+            this.Users = users;
         }
 
-        public string CurrentUserId => this.User.Identity.GetUserId();
+        protected string CurrentUserId => this.User.Identity.GetUserId();
 
-        public bool IsLoggedIn => this.User.Identity.IsAuthenticated;
+        protected bool IsLoggedIn => this.User.Identity.IsAuthenticated;
 
         public ApplicationUser GetCurrentUser()
         {
@@ -31,7 +33,7 @@
 
             string userId = this.User.Identity.GetUserId();
 
-            return this.Data.Users.All().FirstOrDefault(user => user.Id == userId);
+            return this.Users.All().FirstOrDefault(user => user.Id == userId);
         }
 
         public ActionResult NotFound(string message = "I don't know what... it's missing...")

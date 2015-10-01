@@ -4,15 +4,18 @@
     using System.Net;
     using System.Web.Mvc;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data;
+    using TrackTV.Models;
     using TrackTV.Services;
     using TrackTV.Services.VewModels.MyShows;
 
     [Authorize]
     public class MyShowsController : BaseController
     {
-        public MyShowsController(ITrackTVData data, MyShowsService myShowsService)
-            : base(data)
+        public MyShowsController(IRepository<ApplicationUser, string> users, MyShowsService myShowsService)
+            : base(users)
         {
             this.MyShowsService = myShowsService;
         }

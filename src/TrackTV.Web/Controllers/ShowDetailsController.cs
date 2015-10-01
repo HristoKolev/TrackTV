@@ -3,14 +3,17 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data;
+    using TrackTV.Models;
     using TrackTV.Services;
     using TrackTV.Services.VewModels.ShowDetails;
 
     public class ShowDetailsController : BaseController
     {
-        public ShowDetailsController(ITrackTVData data, ShowDetailsService showDetailsService)
-            : base(data)
+        public ShowDetailsController(IRepository<ApplicationUser, string> users, ShowDetailsService showDetailsService)
+            : base(users)
         {
             this.ShowDetailsService = showDetailsService;
         }

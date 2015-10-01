@@ -2,14 +2,17 @@
 {
     using System.Web.Mvc;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data;
+    using TrackTV.Models;
     using TrackTV.Services;
     using TrackTV.Services.VewModels.Shows;
 
     public class ShowsController : BaseController
     {
-        public ShowsController(ITrackTVData data, ShowsService showsService)
-            : base(data)
+        public ShowsController(IRepository<ApplicationUser, string> users, ShowsService showsService)
+            : base(users)
         {
             this.ShowsService = showsService;
         }
