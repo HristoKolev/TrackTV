@@ -1,7 +1,5 @@
 ﻿namespace TrackTV.Web.Config
 {
-    using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Reflection;
 
@@ -15,9 +13,7 @@
     using Ninject.Web.Common;
 
     using TrackTV.Data;
-    using TrackTV.Logic;
     using TrackTV.Logic.Fetchers;
-    using TrackTV.Services;
 
     public class NinjectBinder
     {
@@ -41,13 +37,7 @@
 
             this.Kernel.Bind<IFetcher>().To<Fetcher>();
 
-            this.RegisterManagers();
-
-            this.RegisterServices();
-
             this.RegisterAutoMapperBindings();
-
-            this.RegisterMappedModels(this.Kernel.Get<IMapConfigurator>(), Assembly.GetExecutingAssembly());
 
             AutoMapperConfiguration configuration = new AutoMapperConfiguration(this.Kernel.Get<IMapConfigurator>());
             configuration.Load(Assembly.GetExecutingAssembly());
@@ -62,28 +52,6 @@
             this.Kernel.Bind<IMappingEngine>().ToConstant(Mapper.Engine);
 
             this.Kernel.Bind<IMapConfigurator>().To<MapConfigurator>().InSingletonScope();
-        }
-
-        private void RegisterManagers()
-        {
-            this.Kernel.Bind<ShowManager>().ToSelf();
-            this.Kernel.Bind<EpisodeManager>().ToSelf();
-
-        }
-
-        private void RegisterMappedModels(IMapConfigurator configurator, Assembly assembly)
-        {
-            IEnumerable<Type> models = configurator.GetCustomModels(assembly);
-
-            foreach (Type model in models)
-            {
-                this.Kernel.Bind(model).ToSelf();
-            }
-        }
-
-        private void RegisterServices()
-        {
-            this.Kernel.Bind<CalendarService>().ToSelf();
         }
     }
 }
