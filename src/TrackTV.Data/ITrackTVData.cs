@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Data.Contracts
+﻿namespace TrackTV.Data
 {
     using NetInfrastructure.Data.Repositories;
 

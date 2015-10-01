@@ -7,7 +7,7 @@
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
     using TrackTV.Logic;
     using TrackTV.Logic.Fetchers;
     using TrackTV.Models;

@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{22B187
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Logic", "TrackTV.Logic\TrackTV.Logic.csproj", "{B0F82EBF-DA30-4476-A389-C335F2812309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTV.Services", "TrackTV.Services\TrackTV.Services.csproj", "{751605A4-9B80-4745-A083-48D8106B5BC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{B0F82EBF-DA30-4476-A389-C335F2812309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0F82EBF-DA30-4476-A389-C335F2812309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0F82EBF-DA30-4476-A389-C335F2812309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{751605A4-9B80-4745-A083-48D8106B5BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{751605A4-9B80-4745-A083-48D8106B5BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{751605A4-9B80-4745-A083-48D8106B5BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{751605A4-9B80-4745-A083-48D8106B5BC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,7 @@
     using System.Net;
     using System.Text;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
     using TrackTV.Logic.Models;
     using TrackTV.Models;
 

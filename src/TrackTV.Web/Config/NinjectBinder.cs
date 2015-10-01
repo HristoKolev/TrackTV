@@ -15,8 +15,8 @@
     using Ninject.Web.Common;
 
     using TrackTV.Data;
-    using TrackTV.Data.Contracts;
     using TrackTV.Logic.Fetchers;
+    using TrackTV.Services;
 
     public class NinjectBinder
     {
@@ -39,6 +39,8 @@
             this.Kernel.Bind<ITrackTVData>().To<TrackTVData>();
 
             this.Kernel.Bind<IFetcher>().To<Fetcher>();
+
+            this.Kernel.Bind<CalendarService>().ToSelf();
 
             this.RegisterAutoMapperBindings();
 

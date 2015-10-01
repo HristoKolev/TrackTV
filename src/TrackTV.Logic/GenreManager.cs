@@ -2,7 +2,7 @@
 {
     using System.Linq;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
     using TrackTV.Models;
 
     public class GenreManager

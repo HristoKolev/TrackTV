@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
     using TrackTV.Web.Controllers;
 
     [Authorize(Roles = "Admin")]

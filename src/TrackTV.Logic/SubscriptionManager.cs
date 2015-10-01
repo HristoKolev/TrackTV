@@ -3,7 +3,6 @@
     using System;
 
     using TrackTV.Data;
-    using TrackTV.Data.Contracts;
     using TrackTV.Models;
 
     public class SubscriptionManager

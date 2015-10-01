@@ -5,7 +5,8 @@
 
     using Microsoft.AspNet.Identity;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
+
     using TrackTV.Models;
 
     public abstract class BaseController : Controller

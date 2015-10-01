@@ -7,7 +7,9 @@ namespace TrackTV.Logic.Calendar
 
     using AutoMapper.QueryableExtensions;
 
-    using TrackTV.Data.Contracts;
+    using NetInfrastructure.Data.Repositories;
+
+    using TrackTV.Models;
 
     public class EpisodeCalendar
     {
@@ -21,14 +23,15 @@ namespace TrackTV.Logic.Calendar
 
         private int weekIndex;
 
-        public EpisodeCalendar(ITrackTVData data, string userId)
+        public EpisodeCalendar(IRepository<Episode> episodes, string userId)
         {
+            this.Episodes = episodes;
             this.userId = userId;
-            this.Data = data;
+
             this.model = ConstructModel();
         }
 
-        private ITrackTVData Data { get; set; }
+        private IRepository<Episode> Episodes { get; set; }
 
         public List<List<CalendarDay>> Create(DateTime currentDate)
         {
@@ -86,7 +89,7 @@ namespace TrackTV.Logic.Calendar
 
             CalendarDay day = new CalendarDay
             {
-                Date = startDate,
+                Date = startDate, 
                 Episodes = episodesForDay
             };
 
@@ -103,7 +106,7 @@ namespace TrackTV.Logic.Calendar
         private List<CalendarEpisode> GetEpisodes(DateTime startDay, DateTime endDay)
         {
             List<CalendarEpisode> episodes =
-                this.Data.Episodes.All()
+                this.Episodes.All()
                     .Where(
                         episode =>
                         episode.Season.Show.Subscribers.Any(user => user.Id == this.userId) && episode.FirstAired > startDay

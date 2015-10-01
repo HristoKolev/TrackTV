@@ -1,4 +1,4 @@
-namespace TrackTV.Web.ViewModels.Home
+namespace TrackTV.Services.VewModels
 {
     using System;
     using System.Collections.Generic;

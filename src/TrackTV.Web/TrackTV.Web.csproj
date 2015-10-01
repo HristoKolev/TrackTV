@@ -240,7 +240,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="ViewModels\Manage\ManageMessageId.cs" />
-    <Compile Include="ViewModels\Home\CalendarViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ShowDetailsController.cs" />
@@ -410,6 +409,10 @@
     <ProjectReference Include="..\TrackTV.Models\TrackTV.Models.csproj">
       <Project>{1a8bc935-7f8a-4018-937c-88f953975ed1}</Project>
       <Name>TrackTV.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrackTV.Services\TrackTV.Services.csproj">
+      <Project>{751605a4-9b80-4745-a083-48d8106b5bc0}</Project>
+      <Name>TrackTV.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

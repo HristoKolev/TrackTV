@@ -6,7 +6,6 @@
     using NetInfrastructure.Data;
     using NetInfrastructure.Data.Repositories;
 
-    using TrackTV.Data.Contracts;
     using TrackTV.Models;
 
     public class TrackTVData : BaseDataUnit, ITrackTVData

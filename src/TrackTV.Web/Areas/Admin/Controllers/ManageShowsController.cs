@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
     using TrackTV.Logic.Fetchers;
     using TrackTV.Logic.Models;
     using TrackTV.Models;

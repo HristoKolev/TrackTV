@@ -8,7 +8,7 @@
 
     using AutoMapper;
 
-    using TrackTV.Data.Contracts;
+    using TrackTV.Data;
     using TrackTV.Logic;
     using TrackTV.Models;
     using TrackTV.Web.ViewModels.MyShows;
