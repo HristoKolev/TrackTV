@@ -40,9 +40,9 @@
             return this.GetAllShows().FirstOrDefault(show => show.Id == id);
         }
 
-        public Show GetShowByStringId(string stringId)
+        public Show GetShowByUserFriendlyId(string userFriendlyId)
         {
-            return this.GetAllShows().FirstOrDefault(show => show.StringId == stringId);
+            return this.GetAllShows().FirstOrDefault(show => show.UserFriendlyId == userFriendlyId);
         }
 
         public IQueryable<Show> GetShowsByNetwork(int id)

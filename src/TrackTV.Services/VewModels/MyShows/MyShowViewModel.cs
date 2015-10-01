@@ -15,6 +15,6 @@
 
         public SimpleEpisodeViewModel NextEpisode { get; set; }
 
-        public string StringId { get; set; }
+        public string UserFriendlyId { get; set; }
     }
 }

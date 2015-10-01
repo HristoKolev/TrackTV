@@ -25,6 +25,6 @@
         public virtual ICollection<Show> Shows { get; set; } = new HashSet<Show>();
 
         [Required]
-        public string StringId { get; set; }
+        public string UserFriendlyId { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 
         public string ShowName { get; set; }
 
-        public string ShowStringId { get; set; }
+        public string UserFriendlyId { get; set; }
 
         public string Title { get; set; }
     }

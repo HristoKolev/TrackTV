@@ -182,7 +182,7 @@
             throw new ArgumentException("The ShowStatus cannot be parsed.");
         }
 
-        private static string GetStringId(string genreName)
+        private static string GetUserFriendlyId(string genreName)
         {
             string id = genreName.ToLower();
 
@@ -320,7 +320,7 @@
                 genre = new Genre
                 {
                     Name = genreName, 
-                    StringId = GetStringId(genreName)
+                    UserFriendlyId = GetUserFriendlyId(genreName)
                 };
 
                 this.Genres.Add(genre);
@@ -338,7 +338,7 @@
                 network = new Network
                 {
                     Name = networkName, 
-                    StringId = GetStringId(networkName)
+                    UserFriendlyId = GetUserFriendlyId(networkName)
                 };
 
                 this.Networks.Add(network);
@@ -364,7 +364,7 @@
             show.Status = GetStatus(fetchedShow.Status);
             show.BannerBig = this.GetImage("big_", fetchedShow.Banner, ApplicationSettings.BannerDirectory);
             show.PosterBig = this.GetImage("big_", fetchedShow.Poster, ApplicationSettings.PosterDirectory);
-            show.StringId = GetStringId(fetchedShow.Name);
+            show.UserFriendlyId = GetUserFriendlyId(fetchedShow.Name);
 
             show.Network.Shows.Add(show);
 

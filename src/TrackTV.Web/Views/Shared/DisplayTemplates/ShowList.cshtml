@@ -13,7 +13,7 @@
                 <div>
                     <a href="@Url.Action("ById", "ShowDetails", new
                              {
-                                 show.StringId
+                                 UserFriendlyId = show.UserFriendlyId
                              })">
 
                         <img src="@show.Poster" alt="@show.Name" title="@show.Name" class="poster-small"/>
@@ -23,7 +23,7 @@
                     <strong class="text-center show-title-small">
                         @Html.ActionLink(show.Name, "ById", "ShowDetails", new
                         {
-                            show.StringId
+                            UserFriendlyId = show.UserFriendlyId
                         }, null)
                     </strong>
                 </div>

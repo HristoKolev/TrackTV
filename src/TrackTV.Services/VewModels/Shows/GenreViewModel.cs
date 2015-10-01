@@ -9,6 +9,6 @@
     {
         public string Name { get; set; }
 
-        public string StringId { get; set; }
+        public string UserFriendlyId { get; set; }
     }
 }

@@ -77,12 +77,12 @@
                             {
                                 <div class="calendar-episode">
                                     @Html.ActionLink(episode.ShowName, "ById", "ShowDetails", new
-                                    {
-                                        stringId = episode.ShowStringId
-                                    }, new
-                                    {
-                                        @class = "calendar-episode-link"
-                                    })
+                                   {
+                                       userFriendlyId = episode.UserFriendlyId
+                                   }, new
+                                   {
+                                       @class = "calendar-episode-link"
+                                   })
 
                                     (<span>S@(episode.SeasonNumber.ToString().PadLeft(2, '0'))E@(episode.Number.ToString().PadLeft(2, '0'))</span>)
 

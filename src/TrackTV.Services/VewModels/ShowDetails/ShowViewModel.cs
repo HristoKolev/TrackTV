@@ -33,7 +33,7 @@
 
         public string Network { get; set; }
 
-        public string NetworkStringId { get; set; }
+        public string NetworkUserFriendlyId { get; set; }
 
         public int NumberOfSeasones { get; set; }
 
@@ -41,7 +41,7 @@
 
         public ShowStatus Status { get; set; }
 
-        public string StringId { get; set; }
+        public string UserFriendlyId { get; set; }
 
         public int SubscriberCount { get; set; }
 
@@ -53,7 +53,7 @@
             mapper.QuickMap(model => model.EpisodeCount, show => show.Seasons.SelectMany(season => season.Episodes).Count());
             mapper.QuickMap(model => model.SubscriberCount, show => show.Subscribers.Count);
             mapper.QuickMap(model => model.Network, show => show.Network.Name);
-            mapper.QuickMap(model => model.NetworkStringId, show => show.Network.StringId);
+            mapper.QuickMap(model => model.NetworkUserFriendlyId, show => show.Network.UserFriendlyId);
             mapper.QuickMap(model => model.NumberOfSeasones,
                 show => show.Seasons.Count(season => season.Episodes.Count != 0 && season.Number != 0));
             mapper.QuickMap(model => model.AirTimeAndDate, show => new AirTimeViewModel(show.AirDay, show.AirTime));

@@ -20,7 +20,7 @@
 
             routes.MapRoute(
                 name: "Shows by network",
-                url: "Shows/Network/{stringId}",
+                url: "Shows/Network/{userFriendlyId}",
                 defaults: new
                 {
                     controller = "Shows",
@@ -29,7 +29,7 @@
 
             routes.MapRoute(
                 name: "Shows by genre",
-                url: "Shows/Genre/{stringId}",
+                url: "Shows/Genre/{userFriendlyId}",
                 defaults: new
                 {
                     controller = "Shows",
@@ -38,7 +38,7 @@
 
             routes.MapRoute(
                 name: "Show Details",
-                url: "Show/{stringId}",
+                url: "Show/{userFriendlyId}",
                 defaults: new
                 {
                     controller = "ShowDetails",

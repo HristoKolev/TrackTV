@@ -18,7 +18,7 @@
 
         public string Poster { get; set; }
 
-        public string StringId { get; set; }
+        public string UserFriendlyId { get; set; }
 
         public int SubscriberCount { get; set; }
 

@@ -18,9 +18,9 @@
 
         private ShowDetailsService ShowDetailsService { get; }
 
-        public ActionResult ById(string stringId)
+        public ActionResult ById(string userFriendlyId)
         {
-            var model = this.ShowDetailsService.GetByStringId(stringId, this.CurrentUserId);
+            var model = this.ShowDetailsService.GetByUserFriendlyId(userFriendlyId, this.CurrentUserId);
 
             if (model == null)
             {
@@ -52,9 +52,9 @@
         [Authorize]
         public ActionResult Subscribe(int id)
         {
-            string stringId = this.ShowDetailsService.Subscribe(this.GetCurrentUser(), id);
+            string userFriendlyId = this.ShowDetailsService.Subscribe(this.GetCurrentUser(), id);
 
-            return this.RedirectToAction(controller => controller.ById(stringId));
+            return this.RedirectToAction(controller => controller.ById(userFriendlyId));
         }
 
         [HttpPost]
@@ -62,9 +62,9 @@
         [Authorize]
         public ActionResult Unsubscribe(int id)
         {
-            string stringId = this.ShowDetailsService.Unsubscribe(this.GetCurrentUser(), id);
+            string userFriendlyId = this.ShowDetailsService.Unsubscribe(this.GetCurrentUser(), id);
 
-            return this.RedirectToAction(controller => controller.ById(stringId));
+            return this.RedirectToAction(controller => controller.ById(userFriendlyId));
         }
 
         [HttpPost]
@@ -72,9 +72,9 @@
         [Authorize(Roles = "Admin")]
         public ActionResult Update(int id)
         {
-            string stringId = this.ShowDetailsService.Update(id);
+            string userFriendlyId = this.ShowDetailsService.Update(id);
 
-            return this.RedirectToAction(controller => controller.ById(stringId));
+            return this.RedirectToAction(controller => controller.ById(userFriendlyId));
         }
     }
 }

@@ -7,7 +7,7 @@
 
     @foreach (GenreViewModel genre in Model)
     {
-        <a href="/Shows/Genre/@genre.StringId" class="btn btn-default">@genre.Name</a>
+        <a href="/Shows/Genre/@genre.UserFriendlyId" class="btn btn-default">@genre.Name</a>
     }
 
 </div>

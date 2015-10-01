@@ -37,9 +37,9 @@ namespace TrackTV.Services
 
         private SubscriptionManager SubscriptionManager { get; }
 
-        public ShowViewModel GetByStringId(string stringId, string currentUserId)
+        public ShowViewModel GetByUserFriendlyId(string userFriendlyId, string currentUserId)
         {
-            Show show = this.ShowManager.GetShowByStringId(stringId);
+            Show show = this.ShowManager.GetShowByUserFriendlyId(userFriendlyId);
 
             if (show == null)
             {
@@ -79,7 +79,7 @@ namespace TrackTV.Services
 
             this.SubscriptionManager.Subscribe(user, show);
 
-            return show.StringId;
+            return show.UserFriendlyId;
         }
 
         public string Unsubscribe(ApplicationUser user, int showId)
@@ -88,7 +88,7 @@ namespace TrackTV.Services
 
             this.SubscriptionManager.Unsubscribe(user, show);
 
-            return show.StringId;
+            return show.UserFriendlyId;
         }
 
         public string Update(int showId)
@@ -97,7 +97,7 @@ namespace TrackTV.Services
 
             this.Fetcher.UpdateShow(show);
 
-            return show.StringId;
+            return show.UserFriendlyId;
         }
     }
 }

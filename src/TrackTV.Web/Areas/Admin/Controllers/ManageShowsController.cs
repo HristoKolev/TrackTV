@@ -27,14 +27,14 @@
         [ValidateAntiForgeryToken]
         public ActionResult AddShow(int id)
         {
-            string stringId = this.ManageShowsService.AddShow(id);
+            string userFriendlyId = this.ManageShowsService.AddShow(id);
 
             var routeValues = new
             {
                 Area = string.Empty
             };
 
-            return this.RedirectToAction<ShowDetailsController>(controller => controller.ById(stringId), routeValues);
+            return this.RedirectToAction<ShowDetailsController>(controller => controller.ById(userFriendlyId), routeValues);
         }
 
         public ActionResult Index()

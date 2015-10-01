@@ -20,9 +20,9 @@
 
         private ShowsService ShowsService { get; }
 
-        public ActionResult ByGenre(string stringId)
+        public ActionResult ByGenre(string userFriendlyId)
         {
-            var model = this.ShowsService.GetByGenre(stringId);
+            var model = this.ShowsService.GetByGenre(userFriendlyId);
 
             if (model == null)
             {
@@ -32,9 +32,9 @@
             return this.View(model);
         }
 
-        public ActionResult ByNetwork(string stringId, int? page)
+        public ActionResult ByNetwork(string userFriendlyId, int? page)
         {
-            var model = this.ShowsService.GetByNetwork(stringId, page);
+            var model = this.ShowsService.GetByNetwork(userFriendlyId, page);
 
             if (model == null)
             {

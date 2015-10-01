@@ -48,7 +48,7 @@
             {
                 returnUrl = Url.Action("ById", "ShowDetails", new
                 {
-                    stringId = Model.StringId
+                    userFriendlyId = Model.UserFriendlyId
                 })
             }, new
             {
@@ -84,12 +84,12 @@
 
                         Network :
                         @Html.ActionLink(Model.Network, "ByNetwork", "Shows", new
-                        {
-                            stringId = Model.NetworkStringId
-                        }, new
-                        {
-                            @class = "network-link"
-                        })
+                   {
+                       userFriendlyId = Model.NetworkUserFriendlyId
+                   }, new
+                   {
+                       @class = "network-link"
+                   })
 
                     </li>
 

@@ -26,7 +26,7 @@ namespace TrackTV.Services
         {
             Show show = this.Fetcher.AddShow(id);
 
-            return show.StringId;
+            return show.UserFriendlyId;
         }
 
         public SampleShowsViewModel Search(string query)

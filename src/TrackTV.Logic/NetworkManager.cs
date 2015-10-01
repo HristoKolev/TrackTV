@@ -15,9 +15,9 @@
 
         private IRepository<Network> Networks { get; }
 
-        public Network GetByStringId(string stringId)
+        public Network GetByUserFriendlyId(string userFriendlyId)
         {
-            return this.Networks.All().FirstOrDefault(n => n.StringId == stringId);
+            return this.Networks.All().FirstOrDefault(n => n.UserFriendlyId == userFriendlyId);
         }
     }
 }

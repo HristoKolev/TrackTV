@@ -20,9 +20,9 @@
             return this.Genres.All();
         }
 
-        public Genre GetByStringId(string stringId)
+        public Genre GetByUserFriendlyId(string userFriendlyId)
         {
-            return this.Genres.All().FirstOrDefault(g => g.StringId == stringId);
+            return this.Genres.All().FirstOrDefault(g => g.UserFriendlyId == userFriendlyId);
         }
     }
 }

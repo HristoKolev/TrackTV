@@ -26,9 +26,9 @@ namespace TrackTV.Services
 
         private ShowManager ShowManager { get; }
 
-        public ShowsByGenreVewModel GetByGenre(string genreStringId)
+        public ShowsByGenreVewModel GetByGenre(string genreUserFriendlyId)
         {
-            Genre genre = this.GenreManager.GetByStringId(genreStringId);
+            Genre genre = this.GenreManager.GetByUserFriendlyId(genreUserFriendlyId);
 
             if (genre == null)
             {
@@ -54,9 +54,9 @@ namespace TrackTV.Services
             return model;
         }
 
-        public ShowsNetworkViewModel GetByNetwork(string networkStringId, int? page)
+        public ShowsNetworkViewModel GetByNetwork(string networkUserFriendlyId, int? page)
         {
-            Network network = this.NetworkManager.GetByStringId(networkStringId);
+            Network network = this.NetworkManager.GetByUserFriendlyId(networkUserFriendlyId);
 
             if (network == null)
             {

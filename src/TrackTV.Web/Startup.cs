@@ -32,7 +32,7 @@ namespace TrackTV.Web
             Mapper.CreateMap<Episode, CalendarEpisode>()
                   .ForMember(model => model.SeasonNumber, expression => expression.MapFrom(episode => episode.Season.Number))
                   .ForMember(model => model.ShowName, expression => expression.MapFrom(episode => episode.Season.Show.Name))
-                  .ForMember(model => model.ShowStringId, expression => expression.MapFrom(episode => episode.Season.Show.StringId));
+                  .ForMember(model => model.UserFriendlyId, expression => expression.MapFrom(episode => episode.Season.Show.UserFriendlyId));
         }
     }
 }

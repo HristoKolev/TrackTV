@@ -25,9 +25,9 @@
             <td class="col-md-3">
                 <strong class="my-show-title">
                     @Html.ActionLink(show.Name, "ById", "ShowDetails", new
-                    {
-                        stringId = show.StringId
-                    }, null)
+               {
+                   userFriendlyId = show.UserFriendlyId
+               }, null)
                 </strong>
             </td>
 
@@ -78,10 +78,10 @@
         <tr>
             <td class="col-md-3">
                 <strong class="my-show-title">
-                    @Html.ActionLink(show.Name, "ById", "ShowDetails", new
-                    {
-                        stringId = show.StringId
-                    }, null)
+                       @Html.ActionLink(show.Name, "ById", "ShowDetails", new
+                       {
+                           userFriendlyId = show.UserFriendlyId
+                       }, null)
                 </strong>
             </td>
 
