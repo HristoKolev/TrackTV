@@ -18,21 +18,9 @@
             this.Data = data;
         }
 
-        public string CurrentUserId
-        {
-            get
-            {
-                return this.User.Identity.GetUserId();
-            }
-        }
+        public string CurrentUserId => this.User.Identity.GetUserId();
 
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return this.User.Identity.IsAuthenticated;
-            }
-        }
+        public bool IsLoggedIn => this.User.Identity.IsAuthenticated;
 
         public ApplicationUser GetCurrentUser()
         {
@@ -46,14 +34,9 @@
             return this.Data.Users.All().FirstOrDefault(user => user.Id == userId);
         }
 
-        public ActionResult NotFound(string message)
+        public ActionResult NotFound(string message = "I don't know what... it's missing...")
         {
             return this.View("~/Views/Error/PageNotFound.cshtml", null, message);
-        }
-
-        public ActionResult NotFound()
-        {
-            return this.NotFound("I don't know what... it's missing...");
         }
     }
 }

@@ -7,6 +7,8 @@
     using System.Net;
     using System.Text;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Data;
     using TrackTV.Logic.Models;
     using TrackTV.Models;
@@ -16,6 +18,12 @@
 
     public class Fetcher : IFetcher
     {
+        private IRepository<Show> Shows { get; }
+
+        private IRepository<Genre> Genres { get; }
+
+        private IRepository<Network> Networks { get; }
+
         private static readonly string[] ExceptableExtensions =
         {
             ".jpg",
@@ -23,15 +31,18 @@
             ".png"
         };
 
-        private readonly ITrackTVData data;
+    
 
         private readonly TVDB tvdbConnection;
 
         private WebClient webClient;
 
-        public Fetcher(ITrackTVData data)
+        public Fetcher(IRepository<Show> shows, IRepository<Genre> genres, IRepository<Network> networks)
         {
-            this.data = data;
+            this.Shows = shows;
+            this.Genres = genres;
+            this.Networks = networks;
+
             this.tvdbConnection = new TVDB(ApplicationSettings.ApiKey);
         }
 
@@ -43,11 +54,11 @@
 
             this.MapShow(show, fetchedShow);
 
-            this.data.Shows.Add(show);
-            this.data.Shows.SaveChanges();
+            this.Shows.Add(show);
+            this.Shows.SaveChanges();
 
             CalculateLastAndNextEpisodes(show);
-            this.data.SaveChanges();
+            this.Shows.SaveChanges();
 
             return show;
         }
@@ -82,11 +93,11 @@
 
             this.MapShow(show, fetchedShow);
 
-            this.data.Shows.Update(show);
-            this.data.Shows.SaveChanges();
+            this.Shows.Update(show);
+            this.Shows.SaveChanges();
 
             CalculateLastAndNextEpisodes(show);
-            this.data.SaveChanges();
+            this.Shows.SaveChanges();
         }
 
         private static void CalculateLastAndNextEpisodes(Show show)
@@ -305,7 +316,7 @@
 
         private Genre GetOrCreateGenre(string genreName)
         {
-            Genre genre = this.data.Genres.All().FirstOrDefault(g => g.Name == genreName);
+            Genre genre = this.Genres.All().FirstOrDefault(g => g.Name == genreName);
 
             if (genre == null)
             {
@@ -315,7 +326,7 @@
                     StringId = GetStringId(genreName)
                 };
 
-                this.data.Genres.Add(genre);
+                this.Genres.Add(genre);
             }
 
             return genre;
@@ -323,7 +334,7 @@
 
         private Network GetOrCreateNetwork(string networkName)
         {
-            Network network = this.data.Networks.All().FirstOrDefault(net => net.Name == networkName);
+            Network network = this.Networks.All().FirstOrDefault(net => net.Name == networkName);
 
             if (network == null)
             {
@@ -333,7 +344,7 @@
                     StringId = GetStringId(networkName)
                 };
 
-                this.data.Networks.Add(network);
+                this.Networks.Add(network);
             }
 
             return network;

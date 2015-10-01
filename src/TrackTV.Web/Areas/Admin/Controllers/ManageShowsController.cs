@@ -12,26 +12,25 @@
 
     public class ManageShowsController : AdminController
     {
-        public ManageShowsController(ITrackTVData data)
+        public ManageShowsController(ITrackTVData data, IFetcher fetcher)
             : base(data)
         {
+            this.Fetcher = fetcher;
         }
+
+        private IFetcher Fetcher { get; set; }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddShow(int id)
         {
-            IFetcher fetcher = new Fetcher(this.Data);
-            Show show = fetcher.AddShow(id);
+            Show show = this.Fetcher.AddShow(id);
 
-            return this.RedirectToAction(
-                actionName: "ById",
-                controllerName: "ShowDetails",
-                routeValues: new
-                {
-                    Area = string.Empty,
-                    stringId = show.StringId
-                });
+            return this.RedirectToAction(actionName: "ById", controllerName: "ShowDetails", routeValues: new
+            {
+                Area = string.Empty, 
+                stringId = show.StringId
+            });
         }
 
         public ActionResult Index()
@@ -46,9 +45,7 @@
                 return this.Redirect("Index");
             }
 
-            IFetcher fetcher = new Fetcher(this.Data);
-
-            IList<ShowSample> samples = fetcher.GetSamples(query);
+            IList<ShowSample> samples = this.Fetcher.GetSamples(query);
 
             if (!samples.Any())
             {
@@ -63,7 +60,7 @@
 
             SampleShowsViewModel model = new SampleShowsViewModel
             {
-                Samples = samples,
+                Samples = samples, 
                 Query = query
             };
 

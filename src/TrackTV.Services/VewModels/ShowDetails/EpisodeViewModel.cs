@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web.ViewModels.ShowDetails
+﻿namespace TrackTV.Services.VewModels.ShowDetails
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@
     using NetInfrastructure.AutoMapper;
 
     using TrackTV.Models;
- 
+
     [MapFrom(typeof(Episode))]
     public class EpisodeViewModel 
     {

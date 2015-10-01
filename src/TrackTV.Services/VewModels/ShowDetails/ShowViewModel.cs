@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web.ViewModels.ShowDetails
+﻿namespace TrackTV.Services.VewModels.ShowDetails
 {
     using System;
     using System.ComponentModel.DataAnnotations;
