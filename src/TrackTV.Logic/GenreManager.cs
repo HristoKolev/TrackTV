@@ -13,7 +13,7 @@
             this.Genres = genres;
         }
 
-        private IRepository<Genre> Genres { get; set; }
+        private IRepository<Genre> Genres { get; }
 
         public IQueryable<Genre> GetAllGenres()
         {
