@@ -77,6 +77,7 @@
     <Compile Include="MyShowsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShowDetailsService.cs" />
+    <Compile Include="ShowsService.cs" />
     <Compile Include="VewModels\Calendar\CalendarViewModel.cs" />
     <Compile Include="VewModels\MyShows\MyShowsViewModel.cs" />
     <Compile Include="VewModels\MyShows\MyShowViewModel.cs" />
@@ -84,6 +85,14 @@
     <Compile Include="VewModels\ShowDetails\AirTimeViewModel.cs" />
     <Compile Include="VewModels\ShowDetails\EpisodeViewModel.cs" />
     <Compile Include="VewModels\ShowDetails\ShowViewModel.cs" />
+    <Compile Include="VewModels\Shows\GenreViewModel.cs" />
+    <Compile Include="VewModels\PagerViewModel.cs" />
+    <Compile Include="VewModels\Shows\SearchShowPagerViewModel.cs" />
+    <Compile Include="VewModels\Shows\ShowsByGenreVewModel.cs" />
+    <Compile Include="VewModels\Shows\ShowsNetworkViewModel.cs" />
+    <Compile Include="VewModels\Shows\ShowsSearchViewModel.cs" />
+    <Compile Include="VewModels\Shows\ShowsViewModel.cs" />
+    <Compile Include="VewModels\Shows\SimpleShowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web.ViewModels.Shows
+﻿namespace TrackTV.Services.VewModels.Shows
 {
     public class ShowsByGenreVewModel : ShowsViewModel
     {

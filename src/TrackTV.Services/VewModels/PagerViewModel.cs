@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web.ViewModels
+﻿namespace TrackTV.Services.VewModels
 {
     public class PagerViewModel
     {

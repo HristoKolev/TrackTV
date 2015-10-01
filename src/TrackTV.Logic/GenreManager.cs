@@ -2,26 +2,27 @@
 {
     using System.Linq;
 
-    using TrackTV.Data;
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Models;
 
     public class GenreManager
     {
-        private readonly ITrackTVData data;
-
-        public GenreManager(ITrackTVData data)
+        public GenreManager(IRepository<Genre> genres)
         {
-            this.data = data;
+            this.Genres = genres;
         }
+
+        private IRepository<Genre> Genres { get; set; }
 
         public IQueryable<Genre> GetAllGenres()
         {
-            return this.data.Genres.All();
+            return this.Genres.All();
         }
 
         public Genre GetByStringId(string stringId)
         {
-            return this.data.Genres.All().FirstOrDefault(g => g.StringId == stringId);
+            return this.Genres.All().FirstOrDefault(g => g.StringId == stringId);
         }
     }
 }

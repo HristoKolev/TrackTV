@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web.ViewModels.Shows
+﻿namespace TrackTV.Services.VewModels.Shows
 {
     using System.Linq;
 

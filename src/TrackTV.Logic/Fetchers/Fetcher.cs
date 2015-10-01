@@ -9,7 +9,6 @@
 
     using NetInfrastructure.Data.Repositories;
 
-    using TrackTV.Data;
     using TrackTV.Logic.Models;
     using TrackTV.Models;
 
@@ -18,24 +17,16 @@
 
     public class Fetcher : IFetcher
     {
-        private IRepository<Show> Shows { get; }
-
-        private IRepository<Genre> Genres { get; }
-
-        private IRepository<Network> Networks { get; }
-
         private static readonly string[] ExceptableExtensions =
         {
-            ".jpg",
-            ".jpeg",
+            ".jpg", 
+            ".jpeg", 
             ".png"
         };
 
-    
+        private TVDB TvdbConnection { get;  }
 
-        private readonly TVDB tvdbConnection;
-
-        private WebClient webClient;
+        private WebClient WebClient { get; set; }
 
         public Fetcher(IRepository<Show> shows, IRepository<Genre> genres, IRepository<Network> networks)
         {
@@ -43,12 +34,18 @@
             this.Genres = genres;
             this.Networks = networks;
 
-            this.tvdbConnection = new TVDB(ApplicationSettings.ApiKey);
+            this.TvdbConnection = new TVDB(ApplicationSettings.ApiKey);
         }
+
+        private IRepository<Genre> Genres { get; }
+
+        private IRepository<Network> Networks { get; }
+
+        private IRepository<Show> Shows { get; }
 
         public Show AddShow(int id)
         {
-            TVDBSharp.Models.Show fetchedShow = this.tvdbConnection.GetShow(id);
+            TVDBSharp.Models.Show fetchedShow = this.TvdbConnection.GetShow(id);
 
             Show show = new Show();
 
@@ -69,15 +66,15 @@
 
             const int NumberOfResults = 3;
 
-            List<TVDBSharp.Models.Show> shows = this.tvdbConnection.Search(showName, NumberOfResults);
+            List<TVDBSharp.Models.Show> shows = this.TvdbConnection.Search(showName, NumberOfResults);
 
             foreach (TVDBSharp.Models.Show show in shows)
             {
                 ShowSample model = new ShowSample
                 {
-                    Banner = show.Banner.ToString(),
-                    Description = show.Description,
-                    Id = show.Id,
+                    Banner = show.Banner.ToString(), 
+                    Description = show.Description, 
+                    Id = show.Id, 
                     Name = show.Name
                 };
 
@@ -89,7 +86,7 @@
 
         public void UpdateShow(Show show)
         {
-            TVDBSharp.Models.Show fetchedShow = this.tvdbConnection.GetShow(show.TvDbId);
+            TVDBSharp.Models.Show fetchedShow = this.TvdbConnection.GetShow(show.TvDbId);
 
             this.MapShow(show, fetchedShow);
 
@@ -167,7 +164,7 @@
                     return "English";
 
                 default :
-                    throw new ArgumentOutOfRangeException("language");
+                    throw new ArgumentOutOfRangeException(nameof(language));
             }
         }
 
@@ -295,21 +292,21 @@
                 return null;
             }
 
-            if (this.webClient == null)
+            if (this.WebClient == null)
             {
-                this.webClient = new WebClient();
+                this.WebClient = new WebClient();
             }
 
-            string directory = string.Format(@"/{0}/{1}/{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            string directory = $@"/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}";
 
             if (!Directory.Exists(rootDirectory + directory))
             {
                 Directory.CreateDirectory(rootDirectory + directory);
             }
 
-            string path = string.Format(@"{0}/{1}{2}", directory, prefix, image.Segments.Last());
+            string path = $@"{directory}/{prefix}{image.Segments.Last()}";
 
-            this.webClient.DownloadFile(image, rootDirectory + path);
+            this.WebClient.DownloadFile(image, rootDirectory + path);
 
             return path;
         }
@@ -322,7 +319,7 @@
             {
                 genre = new Genre
                 {
-                    Name = genreName,
+                    Name = genreName, 
                     StringId = GetStringId(genreName)
                 };
 
@@ -340,7 +337,7 @@
             {
                 network = new Network
                 {
-                    Name = networkName,
+                    Name = networkName, 
                     StringId = GetStringId(networkName)
                 };
 
