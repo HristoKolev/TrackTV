@@ -68,10 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
-    <Compile Include="ITrackTVData.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrackTVData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrackTV.Models\TrackTV.Models.csproj">
