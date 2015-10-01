@@ -1,11 +1,13 @@
 ﻿namespace TrackTV.Web.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Mvc.Expressions;
 
     using NetInfrastructure.Data.Repositories;
 
     using TrackTV.Models;
     using TrackTV.Services;
+    using TrackTV.Services.VewModels.Calendar;
 
     public class HomeController : BaseController
     {
@@ -21,20 +23,25 @@
         {
             if (!this.IsLoggedIn)
             {
-                return this.RedirectToAction("Index", "Shows");
+                return this.RedirectToAction<ShowsController>(controller => controller.Index());
             }
 
-            return this.View("Index", this.CalendarService.GetCalendarModel(year, month, this.CurrentUserId));
+            var model = this.CalendarService.GetCalendarModel(year, month, this.CurrentUserId);
+
+
+            return this.View("Index", model);
         }
 
         public ActionResult Index()
         {
             if (!this.IsLoggedIn)
             {
-                return this.RedirectToAction("Index", "Shows");
+                return this.RedirectToAction<ShowsController>(controller => controller.Index());
             }
 
-            return this.View(this.CalendarService.GetCalendarModel(this.CurrentUserId));
+            var model = this.CalendarService.GetCalendarModel(this.CurrentUserId);
+
+            return this.View(model);
         }
     }
 }

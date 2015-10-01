@@ -1,6 +1,7 @@
 ﻿namespace TrackTV.Web.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Mvc.Expressions;
 
     using NetInfrastructure.Data.Repositories;
 
@@ -21,7 +22,7 @@
 
         public ActionResult ByGenre(string stringId)
         {
-            ShowsByGenreVewModel model = this.ShowsService.GetByGenre(stringId);
+            var model = this.ShowsService.GetByGenre(stringId);
 
             if (model == null)
             {
@@ -33,7 +34,7 @@
 
         public ActionResult ByNetwork(string stringId, int? page)
         {
-            ShowsNetworkViewModel model = this.ShowsService.GetByNetwork(stringId, page);
+            var model = this.ShowsService.GetByNetwork(stringId, page);
 
             if (model == null)
             {
@@ -54,10 +55,10 @@
         {
             if (query.Trim() == string.Empty)
             {
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction(controller => controller.Index());
             }
 
-            ShowsSearchViewModel model = this.ShowsService.Search(query, page);
+            var model = this.ShowsService.Search(query, page);
 
             model.ActionName = nameof(this.Search);
             model.ControllerName = nameof(ShowsController);

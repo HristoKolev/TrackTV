@@ -3,6 +3,7 @@
     using System;
     using System.Net;
     using System.Web.Mvc;
+    using System.Web.Mvc.Expressions;
 
     using NetInfrastructure.Data.Repositories;
 
@@ -24,7 +25,7 @@
 
         public ActionResult Index()
         {
-            MyShowsViewModel model = this.MyShowsService.GetMyShows(this.CurrentUserId);
+            var model = this.MyShowsService.GetMyShows(this.CurrentUserId);
 
             if (model.IsEmpty)
             {
@@ -48,7 +49,7 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, exception.Message);
             }
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction(c => c.Index());
         }
     }
 }

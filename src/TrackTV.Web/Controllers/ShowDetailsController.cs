@@ -1,14 +1,12 @@
 ﻿namespace TrackTV.Web.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
+    using System.Web.Mvc.Expressions;
 
     using NetInfrastructure.Data.Repositories;
 
-    using TrackTV.Data;
     using TrackTV.Models;
     using TrackTV.Services;
-    using TrackTV.Services.VewModels.ShowDetails;
 
     public class ShowDetailsController : BaseController
     {
@@ -22,7 +20,7 @@
 
         public ActionResult ById(string stringId)
         {
-            ShowViewModel model = this.ShowDetailsService.GetByStringId(stringId, this.CurrentUserId);
+            var model = this.ShowDetailsService.GetByStringId(stringId, this.CurrentUserId);
 
             if (model == null)
             {
@@ -39,14 +37,14 @@
         {
             this.ShowDetailsService.Remove(id);
 
-            return this.RedirectToAction("Index", "Shows");
+            return this.RedirectToAction<ShowsController>(controller => controller.Index());
         }
 
         public ActionResult Season(int id, int seasonNumber)
         {
-            IList<EpisodeViewModel> models = this.ShowDetailsService.GetSeason(id, seasonNumber);
+            var model = this.ShowDetailsService.GetSeason(id, seasonNumber);
 
-            return this.PartialView(models);
+            return this.PartialView(model);
         }
 
         [HttpPost]
@@ -56,10 +54,7 @@
         {
             string stringId = this.ShowDetailsService.Subscribe(this.GetCurrentUser(), id);
 
-            return this.RedirectToAction("ById", new
-            {
-                stringId
-            });
+            return this.RedirectToAction(controller => controller.ById(stringId));
         }
 
         [HttpPost]
@@ -69,10 +64,7 @@
         {
             string stringId = this.ShowDetailsService.Unsubscribe(this.GetCurrentUser(), id);
 
-            return this.RedirectToAction("ById", new
-            {
-                stringId
-            });
+            return this.RedirectToAction(controller => controller.ById(stringId));
         }
 
         [HttpPost]
@@ -80,12 +72,9 @@
         [Authorize(Roles = "Admin")]
         public ActionResult Update(int id)
         {
-            string stringid = this.ShowDetailsService.Update(id);
+            string stringId = this.ShowDetailsService.Update(id);
 
-            return this.RedirectToAction("ById", new
-            {
-                stringid
-            });
+            return this.RedirectToAction(controller => controller.ById(stringId));
         }
     }
 }
