@@ -1,12 +1,14 @@
 ﻿namespace TrackTV.Web.Areas.Admin.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Mvc.Expressions;
 
     using NetInfrastructure.Data.Repositories;
 
     using TrackTV.Logic.Fetchers;
     using TrackTV.Models;
     using TrackTV.Services;
+    using TrackTV.Web.Controllers;
 
     public class ManageShowsController : AdminController
     {
@@ -27,11 +29,12 @@
         {
             string stringId = this.ManageShowsService.AddShow(id);
 
-            return this.RedirectToAction(actionName: "ById", controllerName: "ShowDetails", routeValues: new
+            var routeValues = new
             {
-                Area = string.Empty, 
-                stringId
-            });
+                Area = string.Empty
+            };
+
+            return this.RedirectToAction<ShowDetailsController>(controller => controller.ById(stringId), routeValues);
         }
 
         public ActionResult Index()
@@ -43,7 +46,7 @@
         {
             if (string.IsNullOrWhiteSpace(query))
             {
-                return this.Redirect("Index");
+                return this.RedirectToAction(controller => controller.Index());
             }
 
             var model = this.ManageShowsService.Search(query);
