@@ -1,35 +1,34 @@
 ﻿namespace TrackTV.Web.Areas.Admin.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     using TrackTV.Data;
     using TrackTV.Logic.Fetchers;
-    using TrackTV.Logic.Models;
-    using TrackTV.Models;
-    using TrackTV.Web.Areas.Admin.ViewModels.ManageShows;
+    using TrackTV.Services;
 
     public class ManageShowsController : AdminController
     {
-        public ManageShowsController(ITrackTVData data, IFetcher fetcher)
+        public ManageShowsController(ITrackTVData data, IFetcher fetcher, ManageShowsService manageShowsService)
             : base(data)
         {
             this.Fetcher = fetcher;
+            this.ManageShowsService = manageShowsService;
         }
 
         private IFetcher Fetcher { get; set; }
+
+        private ManageShowsService ManageShowsService { get; }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddShow(int id)
         {
-            Show show = this.Fetcher.AddShow(id);
+            string stringId = this.ManageShowsService.AddShow(id);
 
             return this.RedirectToAction(actionName: "ById", controllerName: "ShowDetails", routeValues: new
             {
                 Area = string.Empty, 
-                stringId = show.StringId
+                stringId
             });
         }
 
@@ -45,24 +44,12 @@
                 return this.Redirect("Index");
             }
 
-            IList<ShowSample> samples = this.Fetcher.GetSamples(query);
+            var model = this.ManageShowsService.Search(query);
 
-            if (!samples.Any())
+            if (model == null)
             {
                 return this.HttpNotFound();
             }
-
-            foreach (ShowSample sample in samples)
-            {
-                int id = sample.Id;
-                sample.IsAdded = this.Data.Shows.All().Any(show => show.TvDbId == id);
-            }
-
-            SampleShowsViewModel model = new SampleShowsViewModel
-            {
-                Samples = samples, 
-                Query = query
-            };
 
             return this.View(model);
         }

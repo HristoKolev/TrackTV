@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Web.Areas.Admin.ViewModels.ManageShows
+﻿namespace TrackTV.Services.VewModels.ManageShows
 {
     using System.Collections.Generic;
 

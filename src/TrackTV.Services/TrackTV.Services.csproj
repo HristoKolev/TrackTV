@@ -74,11 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalendarService.cs" />
+    <Compile Include="ManageShowsService.cs" />
     <Compile Include="MyShowsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShowDetailsService.cs" />
     <Compile Include="ShowsService.cs" />
     <Compile Include="VewModels\Calendar\CalendarViewModel.cs" />
+    <Compile Include="VewModels\ManageShows\SampleShowsViewModel.cs" />
     <Compile Include="VewModels\MyShows\MyShowsViewModel.cs" />
     <Compile Include="VewModels\MyShows\MyShowViewModel.cs" />
     <Compile Include="VewModels\MyShows\SimpleEpisodeViewModel.cs" />
