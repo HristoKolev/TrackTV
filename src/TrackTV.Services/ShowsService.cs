@@ -5,6 +5,8 @@ namespace TrackTV.Services
 
     using AutoMapper.QueryableExtensions;
 
+    using NetInfrastructure.Data.Repositories;
+
     using TrackTV.Logic;
     using TrackTV.Models;
     using TrackTV.Services.VewModels.Shows;
@@ -13,22 +15,23 @@ namespace TrackTV.Services
     {
         private const int PageSize = 24;
 
-        public ShowsService(GenreManager genreManager, ShowManager showManager, NetworkManager networkManager)
+        public ShowsService(ShowManager showManager, IRepository<Genre> genres, IRepository<Network> networks)
         {
-            this.GenreManager = genreManager;
             this.ShowManager = showManager;
-            this.NetworkManager = networkManager;
+
+            this.Genres = genres;
+            this.Networks = networks;
         }
 
-        private GenreManager GenreManager { get; }
+        private IRepository<Genre> Genres { get; }
 
-        private NetworkManager NetworkManager { get; }
+        private IRepository<Network> Networks { get; }
 
         private ShowManager ShowManager { get; }
 
         public ShowsByGenreVewModel GetByGenre(string genreUserFriendlyId)
         {
-            Genre genre = this.GenreManager.GetByUserFriendlyId(genreUserFriendlyId);
+            Genre genre = this.GetGenreByUserFriendlyId(genreUserFriendlyId);
 
             if (genre == null)
             {
@@ -41,7 +44,7 @@ namespace TrackTV.Services
             IList<SimpleShowViewModel> ended =
                 this.ShowManager.GetEndedShowsByGenre(genre.Id).Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
 
-            IList<GenreViewModel> genres = this.GenreManager.GetAllGenres().Project().To<GenreViewModel>().ToList();
+            IList<GenreViewModel> genres = this.GetAllGenres().Project().To<GenreViewModel>().ToList();
 
             ShowsByGenreVewModel model = new ShowsByGenreVewModel
             {
@@ -56,7 +59,7 @@ namespace TrackTV.Services
 
         public ShowsNetworkViewModel GetByNetwork(string networkUserFriendlyId, int? page)
         {
-            Network network = this.NetworkManager.GetByUserFriendlyId(networkUserFriendlyId);
+            Network network = this.GetNetworkByUserFriendlyId(networkUserFriendlyId);
 
             if (network == null)
             {
@@ -99,13 +102,18 @@ namespace TrackTV.Services
             return model;
         }
 
+        public Network GetNetworkByUserFriendlyId(string userFriendlyId)
+        {
+            return this.Networks.All().FirstOrDefault(n => n.UserFriendlyId == userFriendlyId);
+        }
+
         public ShowsViewModel GetTopShows()
         {
             IList<SimpleShowViewModel> running =
                 this.ShowManager.GetRunningShows().Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
             IList<SimpleShowViewModel> ended = this.ShowManager.GetEndedShows().Take(PageSize).Project().To<SimpleShowViewModel>().ToList();
 
-            IList<GenreViewModel> genres = this.GenreManager.GetAllGenres().Project().To<GenreViewModel>().ToList();
+            IList<GenreViewModel> genres = this.GetAllGenres().Project().To<GenreViewModel>().ToList();
 
             ShowsViewModel model = new ShowsViewModel
             {
@@ -161,6 +169,16 @@ namespace TrackTV.Services
             }
 
             return model;
+        }
+
+        private IQueryable<Genre> GetAllGenres()
+        {
+            return this.Genres.All();
+        }
+
+        private Genre GetGenreByUserFriendlyId(string userFriendlyId)
+        {
+            return this.Genres.All().FirstOrDefault(g => g.UserFriendlyId == userFriendlyId);
         }
     }
 }
