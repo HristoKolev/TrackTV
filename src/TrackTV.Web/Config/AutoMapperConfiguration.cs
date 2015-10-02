@@ -3,6 +3,7 @@
     using System.Reflection;
 
     using NetInfrastructure.AutoMapper;
+    using NetInfrastructure.AutoMapper.Contracts;
 
     public class AutoMapperConfiguration
     {

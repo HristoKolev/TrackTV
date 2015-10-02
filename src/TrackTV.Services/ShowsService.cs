@@ -142,7 +142,6 @@ namespace TrackTV.Services
             {
                 Shows = shows.Project().To<SimpleShowViewModel>().ToList(), 
                 Query = query
-
             };
 
             if (page.HasValue)

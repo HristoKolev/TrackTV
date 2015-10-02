@@ -8,6 +8,7 @@
     using NetInfrastructure.Data.Repositories;
 
     using TrackTV.Data;
+    using TrackTV.Logic;
     using TrackTV.Models;
     using TrackTV.Services;
     using TrackTV.Services.VewModels.MyShows;
@@ -15,8 +16,8 @@
     [Authorize]
     public class MyShowsController : BaseController
     {
-        public MyShowsController(IRepository<ApplicationUser, string> users, MyShowsService myShowsService)
-            : base(users)
+        public MyShowsController(IRepository<ApplicationUser, string> users, IAppSettings appSettings, MyShowsService myShowsService)
+            : base(users, appSettings)
         {
             this.MyShowsService = myShowsService;
         }

@@ -5,6 +5,7 @@
 
     using NetInfrastructure.Data.Repositories;
 
+    using TrackTV.Logic;
     using TrackTV.Logic.Fetchers;
     using TrackTV.Models;
     using TrackTV.Services;
@@ -12,8 +13,12 @@
 
     public class ManageShowsController : AdminController
     {
-        public ManageShowsController(IRepository<ApplicationUser, string> users, IFetcher fetcher, ManageShowsService manageShowsService)
-            : base(users)
+        public ManageShowsController(
+            IRepository<ApplicationUser, string> users, 
+            IAppSettings appSettings, 
+            IFetcher fetcher, 
+            ManageShowsService manageShowsService)
+            : base(users, appSettings)
         {
             this.Fetcher = fetcher;
             this.ManageShowsService = manageShowsService;

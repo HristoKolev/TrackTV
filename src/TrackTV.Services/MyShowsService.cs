@@ -11,14 +11,21 @@ namespace TrackTV.Services
 
     public class MyShowsService
     {
-        public MyShowsService(ShowManager showManager, EpisodeManager episodeManager, SubscriptionManager subscriptionManager)
+        public MyShowsService(
+            ShowManager showManager, 
+            EpisodeManager episodeManager, 
+            SubscriptionManager subscriptionManager, 
+            IMappingEngine mappingEngine)
         {
             this.ShowManager = showManager;
             this.EpisodeManager = episodeManager;
             this.SubscriptionManager = subscriptionManager;
+            this.MappingEngine = mappingEngine;
         }
 
         private EpisodeManager EpisodeManager { get; }
+
+        private IMappingEngine MappingEngine { get; }
 
         private ShowManager ShowManager { get; }
 
@@ -44,19 +51,19 @@ namespace TrackTV.Services
 
             foreach (Show show in running)
             {
-                MyShowViewModel showModel = Mapper.Map<MyShowViewModel>(show);
+                MyShowViewModel showModel = this.MappingEngine.Map<MyShowViewModel>(show);
 
-                showModel.LastEpisode = Mapper.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetLastEpisode(show));
-                showModel.NextEpisode = Mapper.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetNextEpisode(show));
+                showModel.LastEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetLastEpisode(show));
+                showModel.NextEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetNextEpisode(show));
 
                 model.Running.Add(showModel);
             }
 
             foreach (Show show in ended)
             {
-                MyShowViewModel showModel = Mapper.Map<MyShowViewModel>(show);
+                MyShowViewModel showModel = this.MappingEngine.Map<MyShowViewModel>(show);
 
-                showModel.LastEpisode = Mapper.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetLastEpisode(show));
+                showModel.LastEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetLastEpisode(show));
 
                 model.Ended.Add(showModel);
             }

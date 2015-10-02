@@ -126,8 +126,16 @@
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetInfrastructure.automapper, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetInfrastructure.AutoMapper.0.0.3.0\lib\net452\NetInfrastructure.automapper.dll</HintPath>
+    <Reference Include="NetInfrastructure.AutoMapper, Version=0.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.AutoMapper.0.0.5.0\lib\net46\NetInfrastructure.AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.AutoMapper.Ninject, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.AutoMapper.Ninject.0.0.2.0\lib\net46\NetInfrastructure.AutoMapper.Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Configuration, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Configuration.0.0.2.0\lib\net46\NetInfrastructure.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NetInfrastructure.Core, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
@@ -229,6 +237,7 @@
     <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />
     <Compile Include="App_Start\Identity\EmailService.cs" />
     <Compile Include="App_Start\Identity\SmsService.cs" />
+    <Compile Include="ConfigurationManagerDocument.cs" />
     <Compile Include="Config\AutoMapperConfiguration.cs" />
     <Compile Include="Config\NinjectBinder.cs" />
     <Compile Include="Config\NinjectTypeProvider.cs" />

@@ -5,14 +5,14 @@
 
     using NetInfrastructure.Data.Repositories;
 
+    using TrackTV.Logic;
     using TrackTV.Models;
     using TrackTV.Services;
-    using TrackTV.Services.VewModels.Calendar;
 
     public class HomeController : BaseController
     {
-        public HomeController(IRepository<ApplicationUser, string> users, CalendarService calendarService)
-            : base(users)
+        public HomeController(IRepository<ApplicationUser, string> users, IAppSettings appSettings, CalendarService calendarService)
+            : base(users, appSettings)
         {
             this.CalendarService = calendarService;
         }
@@ -27,7 +27,6 @@
             }
 
             var model = this.CalendarService.GetCalendarModel(year, month, this.CurrentUserId);
-
 
             return this.View("Index", model);
         }

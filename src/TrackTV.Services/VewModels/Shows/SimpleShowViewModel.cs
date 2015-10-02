@@ -2,7 +2,8 @@
 {
     using System.Linq;
 
-    using NetInfrastructure.AutoMapper;
+    using NetInfrastructure.AutoMapper.Attributes;
+    using NetInfrastructure.AutoMapper.Contracts;
 
     using TrackTV.Logic;
     using TrackTV.Models;
@@ -18,14 +19,16 @@
 
         public string Poster { get; set; }
 
-        public string UserFriendlyId { get; set; }
-
         public int SubscriberCount { get; set; }
+
+        public string UserFriendlyId { get; set; }
 
         public void CreateMappings(ICustomMapper<Show, SimpleShowViewModel> mapper)
         {
-            mapper.QuickMap(model => model.Banner, show => ApplicationSettings.BannerPath + show.BannerBig);
-            mapper.QuickMap(model => model.Poster, show => ApplicationSettings.PosterPath + (show.PosterBig ?? "/DefaultPoster.jpg"));
+            IAppSettings appSettings = mapper.TypeProvider.Get<IAppSettings>();
+
+            mapper.QuickMap(model => model.Banner, show => appSettings.BannerPath + show.BannerBig);
+            mapper.QuickMap(model => model.Poster, show => appSettings.PosterPath + (show.PosterBig ?? "/DefaultPoster.jpg"));
             mapper.QuickMap(model => model.EpisodeCount, show => show.Seasons.SelectMany(season => season.Episodes).Count());
             mapper.QuickMap(model => model.SubscriberCount, show => show.Subscribers.Count);
         }

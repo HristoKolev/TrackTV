@@ -5,13 +5,14 @@
 
     using NetInfrastructure.Data.Repositories;
 
+    using TrackTV.Logic;
     using TrackTV.Models;
     using TrackTV.Services;
 
     public class ShowDetailsController : BaseController
     {
-        public ShowDetailsController(IRepository<ApplicationUser, string> users, ShowDetailsService showDetailsService)
-            : base(users)
+        public ShowDetailsController(IRepository<ApplicationUser, string> users, IAppSettings appSettings, ShowDetailsService showDetailsService)
+            : base(users, appSettings)
         {
             this.ShowDetailsService = showDetailsService;
         }

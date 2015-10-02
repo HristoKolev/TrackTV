@@ -6,14 +6,15 @@
     using NetInfrastructure.Data.Repositories;
 
     using TrackTV.Data;
+    using TrackTV.Logic;
     using TrackTV.Models;
     using TrackTV.Services;
     using TrackTV.Services.VewModels.Shows;
 
     public class ShowsController : BaseController
     {
-        public ShowsController(IRepository<ApplicationUser, string> users, ShowsService showsService)
-            : base(users)
+        public ShowsController(IRepository<ApplicationUser, string> users, IAppSettings appSettings, ShowsService showsService)
+            : base(users, appSettings)
         {
             this.ShowsService = showsService;
         }

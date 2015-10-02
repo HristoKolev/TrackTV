@@ -12,8 +12,8 @@
 
         public string ShowName { get; set; }
 
-        public string UserFriendlyId { get; set; }
-
         public string Title { get; set; }
+
+        public string UserFriendlyId { get; set; }
     }
 }

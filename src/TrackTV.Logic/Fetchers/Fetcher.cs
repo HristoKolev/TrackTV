@@ -24,24 +24,27 @@
             ".png"
         };
 
-        private TVDB TvdbConnection { get;  }
-
-        private WebClient WebClient { get; set; }
-
-        public Fetcher(IRepository<Show> shows, IRepository<Genre> genres, IRepository<Network> networks)
+        public Fetcher(IRepository<Show> shows, IRepository<Genre> genres, IRepository<Network> networks, IAppSettings appSettings)
         {
             this.Shows = shows;
             this.Genres = genres;
             this.Networks = networks;
+            this.AppSettings = appSettings;
 
-            this.TvdbConnection = new TVDB(ApplicationSettings.ApiKey);
+            this.TvdbConnection = new TVDB(this.AppSettings.ApiKey);
         }
+
+        public IAppSettings AppSettings { get; set; }
 
         private IRepository<Genre> Genres { get; }
 
         private IRepository<Network> Networks { get; }
 
         private IRepository<Show> Shows { get; }
+
+        private TVDB TvdbConnection { get; }
+
+        private WebClient WebClient { get; set; }
 
         public Show AddShow(int id)
         {
@@ -362,8 +365,8 @@
             show.LastUpdated = fetchedShow.LastUpdated;
             show.Name = fetchedShow.Name;
             show.Status = GetStatus(fetchedShow.Status);
-            show.BannerBig = this.GetImage("big_", fetchedShow.Banner, ApplicationSettings.BannerDirectory);
-            show.PosterBig = this.GetImage("big_", fetchedShow.Poster, ApplicationSettings.PosterDirectory);
+            show.BannerBig = this.GetImage("big_", fetchedShow.Banner, this.AppSettings.BannerDirectory);
+            show.PosterBig = this.GetImage("big_", fetchedShow.Poster, this.AppSettings.PosterDirectory);
             show.UserFriendlyId = GetUserFriendlyId(fetchedShow.Name);
 
             show.Network.Shows.Add(show);

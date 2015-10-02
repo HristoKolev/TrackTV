@@ -46,7 +46,7 @@ namespace TrackTV.Services
                 return null;
             }
 
-            ShowViewModel model = this.MappingEngine.Map<Show, ShowViewModel>(show);
+            ShowViewModel model = this.MappingEngine.Map<ShowViewModel>(show);
 
             if (currentUserId == null)
             {

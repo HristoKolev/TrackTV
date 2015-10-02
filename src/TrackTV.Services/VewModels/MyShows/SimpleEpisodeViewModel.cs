@@ -3,7 +3,8 @@ namespace TrackTV.Services.VewModels.MyShows
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using NetInfrastructure.AutoMapper;
+    using NetInfrastructure.AutoMapper.Attributes;
+    using NetInfrastructure.AutoMapper.Contracts;
 
     using TrackTV.Models;
 

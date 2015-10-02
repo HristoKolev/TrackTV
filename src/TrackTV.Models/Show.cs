@@ -57,10 +57,10 @@
 
         public ShowStatus Status { get; set; }
 
-        public string UserFriendlyId { get; set; }
-
         public virtual ICollection<ApplicationUser> Subscribers { get; set; } = new HashSet<ApplicationUser>();
 
         public int TvDbId { get; set; }
+
+        public string UserFriendlyId { get; set; }
     }
 }

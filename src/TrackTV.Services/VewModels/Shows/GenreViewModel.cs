@@ -1,6 +1,6 @@
 ﻿namespace TrackTV.Services.VewModels.Shows
 {
-    using NetInfrastructure.AutoMapper;
+    using NetInfrastructure.AutoMapper.Attributes;
 
     using TrackTV.Models;
 

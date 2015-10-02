@@ -59,8 +59,8 @@ namespace TrackTV.Data.Migrations
         {
             ApplicationUser newUser = new ApplicationUser
             {
-                UserName = Username,
-                Email = Username,
+                UserName = Username, 
+                Email = Username, 
                 CreatedOn = DateTime.Now
             };
 

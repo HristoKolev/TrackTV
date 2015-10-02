@@ -3,9 +3,8 @@
     using System.Data.Entity;
     using System.Reflection;
 
-    using AutoMapper;
-
-    using NetInfrastructure.AutoMapper;
+    using NetInfrastructure.AutoMapper.Ninject;
+    using NetInfrastructure.Configuration;
     using NetInfrastructure.Core.DI;
     using NetInfrastructure.Data.Repositories;
 
@@ -13,6 +12,7 @@
     using Ninject.Web.Common;
 
     using TrackTV.Data;
+    using TrackTV.Logic;
     using TrackTV.Logic.Fetchers;
 
     public class NinjectBinder
@@ -28,28 +28,37 @@
         {
             this.Kernel.Bind<ITypeProvider>().To<NinjectTypeProvider>();
 
-            this.Kernel.Bind<DbContext>().To<ApplicationDbContext>().InRequestScope();
+            this.RegisterDatabaseBindings<ApplicationDbContext>();
+            this.Kernel.AddAutoMapperBindings();
 
-            this.Kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
-            this.Kernel.Bind(typeof(IRepository<,>)).To(typeof(Repository<,>));
+            this.RegisterUserBindings();
 
-            this.Kernel.Bind<IFetcher>().To<Fetcher>();
+            this.ConfigureAutoMapper();
 
-            this.RegisterAutoMapperBindings();
+            // Mapper.Initialize(config => config.(type => this.Kernel.Get<ITypeProvider>().Get(type)));
+        }
 
-            AutoMapperConfiguration configuration = new AutoMapperConfiguration(this.Kernel.Get<IMapConfigurator>());
+        private void ConfigureAutoMapper()
+        {
+            var configuration = this.Kernel.Get<AutoMapperConfiguration>();
             configuration.Load(Assembly.GetExecutingAssembly());
             configuration.Load("TrackTV.Services");
         }
 
-        private void RegisterAutoMapperBindings()
+        private void RegisterDatabaseBindings<TContext>() where TContext : DbContext
         {
-            this.Kernel.Bind<IConfiguration>().ToConstant(Mapper.Configuration);
-            this.Kernel.Bind(typeof(ICustomMapper<,>)).To(typeof(CustomMapper<,>));
+            this.Kernel.Bind<DbContext>().To<TContext>().InRequestScope();
 
-            this.Kernel.Bind<IMappingEngine>().ToConstant(Mapper.Engine);
+            this.Kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
+            this.Kernel.Bind(typeof(IRepository<,>)).To(typeof(Repository<,>));
+        }
 
-            this.Kernel.Bind<IMapConfigurator>().To<MapConfigurator>().InSingletonScope();
+        private void RegisterUserBindings()
+        {
+            this.Kernel.Bind<IFetcher>().To<Fetcher>();
+
+            this.Kernel.Bind<IConfigurationDocument>().To<ConfigurationManagerDocument>();
+            this.Kernel.Bind<IAppSettings>().To<AppSettings>();
         }
     }
 }

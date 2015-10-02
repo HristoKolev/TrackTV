@@ -4,7 +4,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    using NetInfrastructure.AutoMapper;
+    using NetInfrastructure.AutoMapper.Attributes;
+    using NetInfrastructure.AutoMapper.Contracts;
 
     using TrackTV.Logic;
     using TrackTV.Models;
@@ -41,20 +42,22 @@
 
         public ShowStatus Status { get; set; }
 
-        public string UserFriendlyId { get; set; }
-
         public int SubscriberCount { get; set; }
 
         public int TvDbId { get; set; }
 
+        public string UserFriendlyId { get; set; }
+
         public void CreateMappings(ICustomMapper<Show, ShowViewModel> mapper)
         {
-            mapper.QuickMap(model => model.Banner, show => ApplicationSettings.BannerPath + show.BannerBig);
+            IAppSettings appSettings = mapper.TypeProvider.Get<IAppSettings>();
+
+            mapper.QuickMap(model => model.Banner, show => appSettings.BannerPath + show.BannerBig);
             mapper.QuickMap(model => model.EpisodeCount, show => show.Seasons.SelectMany(season => season.Episodes).Count());
             mapper.QuickMap(model => model.SubscriberCount, show => show.Subscribers.Count);
             mapper.QuickMap(model => model.Network, show => show.Network.Name);
             mapper.QuickMap(model => model.NetworkUserFriendlyId, show => show.Network.UserFriendlyId);
-            mapper.QuickMap(model => model.NumberOfSeasones,
+            mapper.QuickMap(model => model.NumberOfSeasones, 
                 show => show.Seasons.Count(season => season.Episodes.Count != 0 && season.Number != 0));
             mapper.QuickMap(model => model.AirTimeAndDate, show => new AirTimeViewModel(show.AirDay, show.AirTime));
         }

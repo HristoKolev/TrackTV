@@ -2,9 +2,9 @@
 {
     public enum ShowStatus
     {
-        Ended,
+        Ended, 
 
-        Continuing,
+        Continuing, 
 
         Unknown
     }

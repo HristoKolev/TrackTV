@@ -53,8 +53,16 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetInfrastructure.Core, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetInfrastructure.Core.0.0.1.0\lib\net46\NetInfrastructure.Core.dll</HintPath>
+    <Reference Include="NetInfrastructure.AutoMapper, Version=0.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.AutoMapper.0.0.5.0\lib\net46\NetInfrastructure.AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Configuration, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Configuration.0.0.2.0\lib\net46\NetInfrastructure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Core, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Core.0.0.4.0\lib\net46\NetInfrastructure.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NetInfrastructure.Data, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -80,7 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Calendar\EpisodeCalendar.cs" />
     <Compile Include="EpisodeManager.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
@@ -89,6 +97,7 @@
     <Compile Include="GenreManager.cs" />
     <Compile Include="Calendar\CalendarDay.cs" />
     <Compile Include="Calendar\CalendarEpisode.cs" />
+    <Compile Include="IAppSettings.cs" />
     <Compile Include="NetworkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShowManager.cs" />
