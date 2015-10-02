@@ -94,11 +94,9 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Fetchers\Fetcher.cs" />
     <Compile Include="Fetchers\IFetcher.cs" />
-    <Compile Include="GenreManager.cs" />
     <Compile Include="Calendar\CalendarDay.cs" />
     <Compile Include="Calendar\CalendarEpisode.cs" />
     <Compile Include="IAppSettings.cs" />
-    <Compile Include="NetworkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShowManager.cs" />
     <Compile Include="SubscriptionManager.cs" />
