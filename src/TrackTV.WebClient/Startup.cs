@@ -1,7 +1,6 @@
 ﻿namespace TrackTV.WebClient
 {
     using Microsoft.AspNet.Builder;
-    using Microsoft.Framework.DependencyInjection;
 
     public class Startup
     {
@@ -10,10 +9,6 @@
             app.UseFileServer();
 
             app.Run(async context => { context.Response.Redirect("/"); });
-        }
-
-        public void ConfigureServices(IServiceCollection services)
-        {
         }
     }
 }
