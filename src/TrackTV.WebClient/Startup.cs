@@ -8,7 +8,7 @@
         {
             app.UseFileServer();
 
-            app.Run(async context => { context.Response.Redirect("/"); });
+            app.Run(async context => context.Response.Redirect("/"));
         }
     }
 }
