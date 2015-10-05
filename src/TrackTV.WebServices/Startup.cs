@@ -28,12 +28,7 @@ namespace TrackTV.WebServices
         {
             StandardKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
-            RegisterMappings(kernel);
             return kernel;
-        }
-
-        private static void RegisterMappings(IKernel kernel)
-        {
         }
     }
 }

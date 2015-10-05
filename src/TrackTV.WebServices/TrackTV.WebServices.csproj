@@ -44,11 +44,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.0.4.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NetInfrastructure.AutoMapper, Version=0.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.AutoMapper.0.0.5.0\lib\net46\NetInfrastructure.AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.AutoMapper.Ninject, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.AutoMapper.Ninject.0.0.2.0\lib\net46\NetInfrastructure.AutoMapper.Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Configuration, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Configuration.0.0.2.0\lib\net46\NetInfrastructure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Core, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Core.0.0.4.0\lib\net46\NetInfrastructure.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetInfrastructure.Data, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetInfrastructure.Data.0.0.3.0\lib\net46\NetInfrastructure.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -129,9 +153,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
@@ -147,14 +168,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -208,8 +221,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\AutoMapperConfiguration.cs" />
+    <Compile Include="Configs\ConfigurationManagerDocument.cs" />
     <Compile Include="Configs\FilterConfig.cs" />
     <Compile Include="Configs\ApplicationUserManager.cs" />
+    <Compile Include="Configs\NinjectBinder.cs" />
+    <Compile Include="Configs\NinjectTypeProvider.cs" />
     <Compile Include="Configs\RouteConfig.cs" />
     <Compile Include="Configs\Startup.cs" />
     <Compile Include="Configs\WebApiConfig.cs" />
@@ -248,9 +265,17 @@
       <Project>{330ed4ea-2327-427b-9ad9-95fc12b3f70c}</Project>
       <Name>TrackTV.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TrackTV.Logic\TrackTV.Logic.csproj">
+      <Project>{b0f82ebf-da30-4476-a389-c335f2812309}</Project>
+      <Name>TrackTV.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TrackTV.Models\TrackTV.Models.csproj">
       <Project>{1a8bc935-7f8a-4018-937c-88f953975ed1}</Project>
       <Name>TrackTV.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrackTV.Services\TrackTV.Services.csproj">
+      <Project>{751605a4-9b80-4745-a083-48d8106b5bc0}</Project>
+      <Name>TrackTV.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -274,7 +299,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56494</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56494/</IISUrl>
+          <IISUrl>http://localhost:5050/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
