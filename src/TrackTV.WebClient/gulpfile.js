@@ -57,6 +57,7 @@ var scripts = [
     bowerComponent('jquery/dist/jquery.js'),
     bowerComponent('bootstrap/dist/js/bootstrap.js'),
     bowerComponent('angular/angular.js'),
+    bowerComponent('angular-route/angular-route.js'),
 ];
 
 // Contents of the third-party.css

@@ -1,4 +1,6 @@
-﻿app.factory('appOptions',
+﻿'use strict';
+
+app.factory('appOptions',
     function appOptions() {
 
         return {

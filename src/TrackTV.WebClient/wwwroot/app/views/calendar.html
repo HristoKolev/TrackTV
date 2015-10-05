@@ -1,0 +1,93 @@
+﻿<div class="calendar-view center-block">
+
+    <div class="text-center">
+        @{
+        DateTime monthAgo = Model.Date.AddMonths(-1);
+        DateTime monthAfter = Model.Date.AddMonths(1);
+        }
+
+        <h3 class="month-list">
+
+            @Html.ActionLink("« " + monthAgo.ToString("MMMM", CultureInfo.InvariantCulture), "Calendar", "Home", new
+            {
+            year = monthAgo.Year,
+            month = monthAgo.Month
+            }, new
+            {
+            @class = "month-link"
+            })
+        </h3>
+
+        <h1 class="month-list">@Html.DisplayFor(model => model.Date)</h1>
+
+        <h3 class="month-list">
+            @Html.ActionLink(monthAfter.ToString("MMMM", CultureInfo.InvariantCulture) + " »", "Calendar", "Home", new
+            {
+            year = monthAfter.Year,
+            month = monthAfter.Month
+            }, new
+            {
+            @class = "month-link"
+            })
+        </h3>
+    </div>
+
+    <h4 class="text-center">@Html.DisplayFor(model => model.Date.Year)</h4>
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                @foreach (DayOfWeek dayOfWeek in Model.DaysOfWeek)
+                {
+                <th class="col-md-1 danger text-center">
+                    @dayOfWeek.ToString()
+                </th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+
+
+            @foreach (List
+            <CalendarDay>
+                week in Model.Month)
+                {
+                <tr>
+
+                    @foreach (CalendarDay day in week)
+                    {
+                    string dayClass = day.Date.IsToday() ? "calendar-today" : string.Empty;
+
+                    <td class="calendar-day @dayClass">
+
+                        @Html.DisplayFor(list => day.Date, "ShortDate")
+
+                        @if (day.Episodes != null)
+                        {
+                        foreach (CalendarEpisode episode in day.Episodes)
+                        {
+                        <div class="calendar-episode">
+                            @Html.ActionLink(episode.ShowName, "ById", "ShowDetails", new
+                            {
+                            userFriendlyId = episode.UserFriendlyId
+                            }, new
+                            {
+                            @class = "calendar-episode-link"
+                            })
+
+                            (<span>S@(episode.SeasonNumber.ToString().PadLeft(2, '0'))E@(episode.Number.ToString().PadLeft(2, '0'))</span>)
+
+                            @*@Html.DisplayFor(list => episode.Title)*@
+                        </div>
+                        }
+                        }
+
+                    </td>
+                    }
+                </tr>
+                }
+        </tbody>
+    </table>
+</div>

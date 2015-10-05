@@ -1,5 +1,7 @@
-﻿app.factory('templateProvider',
-    function templateProvider () {
+﻿'use strict';
+
+app.constant('templateProvider',
+    function templateProvider() {
 
         var viewPath = 'app/views/';
         var directiveViewPath = 'app/directives/views/';
@@ -18,4 +20,4 @@
             view : view,
             directiveView : directiveView
         };
-    });
+    }());
