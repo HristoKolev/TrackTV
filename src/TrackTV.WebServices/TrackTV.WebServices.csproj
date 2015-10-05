@@ -208,11 +208,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\ApplicationUserManager.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configs\FilterConfig.cs" />
+    <Compile Include="Configs\ApplicationUserManager.cs" />
+    <Compile Include="Configs\RouteConfig.cs" />
+    <Compile Include="Configs\Startup.cs" />
+    <Compile Include="Configs\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
