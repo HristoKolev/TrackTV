@@ -1,11 +1,29 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="app" ng-cloak ng-controller="MainController">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title ng-bind="title"></title>
+
+    <link rel="icon" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="/lib/third-party.css">
+    <link rel="stylesheet" href="/content/styles.css">
 </head>
 <body>
+    @Html.Partial("_Header")
+
+    <div class="container body-content ng-view"></div>
+
+    @Html.Partial("_Footer")
 
 
+    <div id="scripts">
+        <script src="lib/third-party.js"></script>
+        <script src="app/app.js"></script>
+        <script src="merged/services.js"></script>
+        <script src="merged/controllers.js"></script>
+    </div>
 </body>
 </html>
