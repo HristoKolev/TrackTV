@@ -33,13 +33,18 @@ app.factory('identity', [
 
         function isAuthenticated() {
 
-            return !!this.getCurrentUser();
+            return !!getCurrentUser();
+        }
+
+        function isAdmin () {
+            return true;
         }
 
         return {
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            isAdmin: isAdmin
         };
     }
 ]);

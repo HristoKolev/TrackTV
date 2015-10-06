@@ -2,6 +2,7 @@
     function appOptions () {
 
         return {
-            title : 'hello world'
+            title : 'hello world',
+            baseServiceUrl : 'http://localhost:5050'
         };
     }());

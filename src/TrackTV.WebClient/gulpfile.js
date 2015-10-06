@@ -63,8 +63,11 @@ gulp.task('scripts', function () {
     var scripts = [
         bowerComponent('jquery/dist/jquery.js'),
         bowerComponent('bootstrap/dist/js/bootstrap.js'),
+        bowerComponent('toastr/toastr.js'),
         bowerComponent('angular/angular.js'),
         bowerComponent('angular-route/angular-route.js'),
+        bowerComponent('angular-cookies/angular-cookies.js'),
+        bowerComponent('angular-gravatar/build/angular-gravatar.js')
     ];
 
     gulp.src(scripts)
@@ -76,8 +79,8 @@ gulp.task('styles', function () {
 
     var styles = [
         bowerComponent('bootstrap/dist/css/bootstrap.css'),
-        bowerComponent('bootstrap/dist/css/bootstrap-theme.css'),
         bowerComponent('bootswatch/cosmo/bootstrap.css'),
+        bowerComponent('toastr/toastr.css')
     ];
 
     gulp.src(styles)

@@ -7,44 +7,43 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a href="/">
-                <img src="~/Content/Images/logo-image.png" class="logo-image" alt="" />
+            <a href="/#/">
+                <img src="/content/Images/logo-image.png" class="logo-image" alt="Logo"/>
             </a>
 
         </div>
         <div class="navbar-collapse collapse">
+            
             <ul class="nav navbar-nav">
-
-                @if (User.Identity.IsAuthenticated)
-                {
-                <li>
-                    @Html.ActionLink("Calendar", "Index", "Home", new
-                    {
-                    Area = string.Empty
-                    }, null)
-                </li>
-
-                <li>
-                    @Html.ActionLink("My Shows", "Index", "MyShows", new
-                    {
-                    Area = string.Empty
-                    }, null)
-                </li>
-                }
-
-                <li>
-                    @Html.ActionLink("Browse", "Index", "Shows", new
-                    {
-                    Area = string.Empty
-                    }, null)
-                </li>
+                <li ng-show="isLoggedIn()"><a href="/#/calendar">Calendar</a></li>
+                <li ng-show="isLoggedIn()"><a href="/#/myshows">My Shows</a></li>
+                <li><a href="/#/browse">Browse</a></li>
             </ul>
 
-            @Html.Partial("_LoginPartial")
+            <form id="logoutForm" class="navbar-right" ng-show="isLoggedIn()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-show="isAdmin()"><a href="/#/admin/manageshows"></a></li>
+                    <li>
+                        <a href="/#/manage">
+                            <img gravatar-src="user().username" alt="Avatar" title="{{ user().userName }}" gravatar-size="40"/>
+                            {{ user().userName }}
+                        </a>
+                    </li>
 
-            <form class="navbar-form navbar-left search-form" action="@Url.Action(" Search", "Shows" )" method="GET" _lpchecked="1">
+                    <li><a href="#" ng-click="logout()">Log off</a></li>
+                </ul>
+
+            </form>
+
+            <ul class="nav navbar-nav navbar-right" ng-hide="isLoggedIn()">
+
+                <li><a href="/#/register" id="registerLink">Register</a></li>
+                <li><a href="/#/login" id="loginLink">Log in</a></li>
+            </ul>
+
+            <form class="navbar-form navbar-left search-form" action="" method="GET" _lpchecked="1">
                 <input type="text" name="query" class="form-control col-lg-8" placeholder="Search">
-                <input type="submit" class="btn btn-success" value="Go" />
+                <input type="submit" class="btn btn-success" value="Go"/>
             </form>
         </div>
     </div>
