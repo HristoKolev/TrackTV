@@ -1,6 +1,4 @@
-﻿'use strict';
-
-app.controller('CalendarController',
+﻿app.controller('CalendarController',
     function CalendarController($scope, $routeParams) {
         $scope.cat = 'blaaaa';
     });

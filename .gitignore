@@ -199,7 +199,7 @@ FakesAssemblies/
 src/TrackTV.Web/Content/Uploads
 
 #Clinet libs
-/src/TrackTV.WebClient/wwwroot/fonts
 /src/TrackTV.WebClient/wwwroot/lib
-/src/TrackTV.WebClient/wwwroot/content/*.css
-/src/TrackTV.WebClient/wwwroot/merged/
+/src/TrackTV.WebClient/wwwroot/content
+/src/TrackTV.WebClient/wwwroot/merged-app.js
+

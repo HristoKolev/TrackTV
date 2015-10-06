@@ -1,18 +1,19 @@
-﻿'use strict';
-
-app.constant('templateProvider',
+﻿app.constant('templateProvider',
     function templateProvider() {
-
-        var viewPath = 'app/views/';
-        var directiveViewPath = 'app/directives/views/';
 
         var templateExtension = '.html';
 
-        function view (name) {
+        function view(name) {
+
+            var viewPath = 'app/templates/views/';
+
             return viewPath + name + templateExtension;
         }
 
-        function directiveView (name) {
+        function directiveView(name) {
+
+            var directiveViewPath = 'app/templates/directives/';
+
             return directiveViewPath + name + templateExtension;
         }
 

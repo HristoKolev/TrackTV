@@ -37,61 +37,60 @@ var gulp = require('gulp'),
     }
 })();
 
-function publicPath (path) {
-    return 'wwwroot/' + path;
-}
+function bowerComponent(path) {
+    var bowerRootPath = 'bower_components';
 
-// constants
-var libsPath = publicPath('lib');
-var fontsPath = publicPath('fonts');
-var mergedPath = publicPath('merged');
-var bowerRootPath = 'bower_components';
-
-// helper functions
-function bowerComponent (path) {
     return bowerRootPath + '/' + path;
 }
 
-// Contents of the third-party.js
-var scripts = [
-    bowerComponent('jquery/dist/jquery.js'),
-    bowerComponent('bootstrap/dist/js/bootstrap.js'),
-    bowerComponent('angular/angular.js'),
-    bowerComponent('angular-route/angular-route.js'),
-];
+function publicPath (path) {
 
-// Contents of the third-party.css
-var styles = [
-    bowerComponent('bootstrap/dist/css/bootstrap.css'),
-    bowerComponent('bootstrap/dist/css/bootstrap-theme.css'),
-    bowerComponent('bootswatch/cosmo/bootstrap.css'),
-];
+    path = path || '';
+    return 'wwwroot/' + path;
+}
 
-var lessFiles = publicPath('content/*.less');
-var cssFiles = publicPath('content/*.css');
-var controllers = publicPath('app/controllers/*Controller.js');
-var services = publicPath('app/services/*.js');
-var directives = publicPath('app/directives/*.js');
+var libsPath = publicPath('lib');
+var contentPath = publicPath('content');
+
+var lessFiles = publicPath('app/styles/*.less');
 
 (function RegisterTasks () {
 
     gulp.task('clean', function () {
-        del([libsPath, fontsPath, cssFiles, mergedPath]);
+        del.sync([libsPath, contentPath, publicPath('merged-app.js')]);
     });
 
     gulp.task('scripts', function () {
+
+        var scripts = [
+            bowerComponent('jquery/dist/jquery.js'),
+            bowerComponent('bootstrap/dist/js/bootstrap.js'),
+            bowerComponent('angular/angular.js'),
+            bowerComponent('angular-route/angular-route.js'),
+        ];
+
         gulp.src(scripts)
             .pipe(concat('third-party.js'))
             .pipe(gulp.dest(libsPath));
     });
 
     gulp.task('styles', function () {
+
+        var styles = [
+            bowerComponent('bootstrap/dist/css/bootstrap.css'),
+            bowerComponent('bootstrap/dist/css/bootstrap-theme.css'),
+            bowerComponent('bootswatch/cosmo/bootstrap.css'),
+        ];
+
         gulp.src(styles)
             .pipe(concat('third-party.css'))
-            .pipe(gulp.dest(libsPath));
+            .pipe(gulp.dest(publicPath('lib/css')));
     });
 
     gulp.task('fonts', function () {
+
+        var fontsPath = publicPath('lib/fonts');
+
         gulp.src([bowerComponent('bootstrap/dist/fonts/*')])
             .pipe(gulp.dest(fontsPath));
     });
@@ -100,42 +99,35 @@ var directives = publicPath('app/directives/*.js');
 
         gulp.src([lessFiles])
             .pipe(less())
-            .pipe(gulp.dest(publicPath('content')))
+            .pipe(gulp.dest(contentPath))
             .on('error', console.error);
     });
 
-    gulp.task('controllers', function () {
-        gulp.src([controllers])
-            .pipe(concat('controllers.js'))
-            .pipe(gulp.dest(mergedPath));
-    });
+    gulp.task('merge', function () {
 
-    gulp.task('services', function () {
-        gulp.src([services])
-            .pipe(concat('services.js'))
-            .pipe(gulp.dest(mergedPath));
-    });
+        var appStart = publicPath('app/js/app.js');
+        var constants = publicPath('app/js/constants/*.js');
+        var routeConfig = publicPath('app/js/routeConfig.js');
+        var services = publicPath('app/js/services/*.js');
+        var directives = publicPath('app/js/directives/*.js');
+        var controllers = publicPath('app/js/controllers/*.js');
 
-    gulp.task('directives', function () {
-        gulp.src([directives])
-            .pipe(concat('directives.js'))
-            .pipe(gulp.dest(mergedPath));
+        gulp.src([appStart, constants, routeConfig, services, directives, controllers])
+            .pipe(concat('merged-app.js'))
+            .pipe(gulp.dest(publicPath()));;
     });
 
     gulp.task('watch', function () {
         //less files
         gulp.watch(lessFiles, ['less']);
 
-        //angular controllers
-        gulp.watch(controllers, ['controllers']);
+        var sourceFiles = publicPath('app/js/**/*.js');
 
-        //angular services
-        gulp.watch(services, ['services']);
+        //angular app
+        gulp.watch(sourceFiles, ['merge']);
 
-        //angular directives
-        gulp.watch(directives, ['directives']);
     });
 
-    gulp.task('default', ['clean', 'scripts', 'styles', 'fonts', 'less', 'controllers', 'services', 'directives']);
+    gulp.task('default', ['clean', 'scripts', 'styles', 'fonts', 'less', 'merge']);
 
 })();

@@ -1,6 +1,4 @@
-﻿'use strict';
-
-app.controller('MainController',
+﻿app.controller('MainController',
     function MainController ($scope, appOptions, templateProvider) {
 
         $scope.title = appOptions.title;

@@ -1,6 +1,4 @@
-﻿'use strict';
-
-app.factory('calendarService',
+﻿app.factory('calendarService',
     function calendarService() {
 
 

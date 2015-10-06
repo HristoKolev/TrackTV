@@ -1,6 +1,4 @@
-﻿'use strict';
-
-app.config(function ($routeProvider, templateProvider) {
+﻿app.config(function ($routeProvider, templateProvider) {
 
     $routeProvider.when('/', {
         templateUrl: templateProvider.view('calendar')
