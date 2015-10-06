@@ -200,6 +200,6 @@ src/TrackTV.Web/Content/Uploads
 
 #Clinet libs
 /src/TrackTV.WebClient/wwwroot/lib
-/src/TrackTV.WebClient/wwwroot/content
 /src/TrackTV.WebClient/wwwroot/merged-app.js
+/src/TrackTV.WebClient/wwwroot/styles.css
 

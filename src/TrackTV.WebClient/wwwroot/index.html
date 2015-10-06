@@ -1,27 +1,28 @@
 ﻿<!DOCTYPE html>
 <html ng-app="app" ng-cloak ng-controller="MainController">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title ng-bind="title"></title>
 
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico"/>
 
     <link rel="stylesheet" href="/lib/css/third-party.css">
-    <link rel="stylesheet" href="/content/styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    @Html.Partial("_Header")
 
-    <div class="container body-content ng-view"></div>
+<header id="site-header" site-header></header>
 
-    @Html.Partial("_Footer")
+<section class="container body-content ng-view"></section>
+
+<footer id="site-footer" site-footer></footer>
 
 
-    <div id="scripts">
-        <script src="lib/third-party.js"></script>
-        <script src="merged-app.js"></script>
-    </div>
+<div id="scripts">
+    <script src="lib/third-party.js"></script>
+    <script src="merged-app.js"></script>
+</div>
 </body>
 </html>

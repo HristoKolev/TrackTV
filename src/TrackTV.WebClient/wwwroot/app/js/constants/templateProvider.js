@@ -10,7 +10,7 @@
             return viewPath + name + templateExtension;
         }
 
-        function directiveView(name) {
+        function directive(name) {
 
             var directiveViewPath = 'app/templates/directives/';
 
@@ -19,6 +19,6 @@
 
         return {
             view : view,
-            directiveView : directiveView
+            directive: directive
         };
     }());

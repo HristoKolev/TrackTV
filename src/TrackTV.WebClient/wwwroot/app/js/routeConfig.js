@@ -1,13 +1,17 @@
-﻿app.config(function ($routeProvider, templateProvider) {
+﻿app.config([
+    '$routeProvider', 'templateProvider',
+    function ($routeProvider, templateProvider) {
 
-    $routeProvider.when('/', {
-        templateUrl: templateProvider.view('calendar')
-    });
+        $routeProvider.when('/', {
+            templateUrl: templateProvider.view('calendar'),
+            controller: 'CalendarController'
+        });
 
-    $routeProvider.when('/calendar/:year/:month', {
-        templateUrl: templateProvider.view('calendar'),
-        controller: 'CalendarController'
-    });
+        $routeProvider.when('/calendar/:year/:month', {
+            templateUrl : templateProvider.view('calendar'),
+            controller : 'CalendarController'
+        });
 
-    $routeProvider.otherwise({ redirectTo: '/' });
-});
+        $routeProvider.otherwise({ redirectTo : '/' });
+    }
+]);
