@@ -1,3 +1,4 @@
+﻿<form name="registerForm" class="form-horizontal">
     <fieldset>
         <legend class="col-lg-10 col-lg-offset-2">Create New User</legend>
         <div class="form-group">
@@ -22,6 +23,7 @@
 
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-primary" ng-click="register(user)" ng-disabled="registerForm.$invalid">Register</button>
             </div>
         </div>
     </fieldset>
