@@ -1,10 +1,10 @@
 ﻿app.controller('RegisterController', [
-    '$scope', '$location', 'auth', 'toastr',
-    function RegisterController ($scope, $location, auth, toastr) {
+    '$scope', '$location', 'authentication', 'toastr',
+    function RegisterController($scope, $location, authentication, toastr) {
 
         function register (user) {
 
-            auth.signup(user)
+            authentication.signup(user)
                 .then(function (response) {
 
                     toastr.success('Registration successful!');

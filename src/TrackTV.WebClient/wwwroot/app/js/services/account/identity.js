@@ -26,7 +26,7 @@ app.factory('identity', [
 
         function removeCurrentUser() {
 
-            if (!$cookieStore.get(key)) {
+            if (!isAuthenticated()) {
 
                 throw Error('There currently is no authorized user.');
             }

@@ -1,12 +1,12 @@
 ﻿app.controller('LoginController', [
-    '$scope', '$location', 'toastr', 'identity', 'auth',
-    function LoginController($scope, $location, toastr, identity, auth) {
+    '$scope', '$location', 'toastr', 'identity', 'authentication',
+    function LoginController($scope, $location, toastr, identity, authentication) {
 
         $scope.identity = identity;
 
         function login(user, loginForm) {
 
-            auth.login(user).then(function (success) {
+            authentication.login(user).then(function (success) {
 
                 if (success) {
 
@@ -22,7 +22,7 @@
 
         function logout() {
 
-            auth.logout().then(function () {
+            authentication.logout().then(function () {
 
                 toastr.success('Successful logout!');
 

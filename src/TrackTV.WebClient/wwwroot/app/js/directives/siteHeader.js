@@ -1,13 +1,13 @@
 ﻿app.directive('siteHeader', [
-    'templateProvider', 'identity', 'auth',
-    function siteHeader (templateProvider, identity, auth) {
+    'templateProvider', 'identity', 'authentication',
+    function siteHeader(templateProvider, identity, authentication) {
 
         function link (scope, element, attr) {
 
             scope.isLoggedIn = identity.isAuthenticated;
             scope.isAdmin = identity.isAdmin;
             scope.user = identity.getCurrentUser;
-            scope.logout = auth.logout;
+            scope.logout = authentication.logout;
         }
 
         return {

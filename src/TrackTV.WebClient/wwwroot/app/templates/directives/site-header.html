@@ -23,7 +23,7 @@
             <form id="logoutForm" class="navbar-right" data-ng-if="isLoggedIn()">
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-if="isAdmin()"><a href="/#/admin/manageshows"></a></li>
+                    <li data-ng-if="isAdmin()"><a href="/#/admin/manageshows">Admin</a></li>
                     <li data-ng-if="isLoggedIn()">
                         <a href="/#/manage">
                             <img gravatar-src="user().username" alt="Avatar" title="{{ user().userName }}" gravatar-size="40" />
