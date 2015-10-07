@@ -55,7 +55,7 @@ app.factory('auth', [
             $http.post(usersApi + '/logout', {}, { headers : headers })
                 .success(function () {
 
-                    identity.setCurrentUser(undefined);
+                    identity.removeCurrentUser();
                     deferred.resolve();
                 });
 

@@ -166,7 +166,7 @@
                 ClaimsIdentity cookieIdentity =
                     await user.GenerateUserIdentityAsync(this.UserManager, CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(this.UserManager, user);
                 this.Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else

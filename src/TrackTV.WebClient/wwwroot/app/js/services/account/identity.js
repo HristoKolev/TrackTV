@@ -2,47 +2,66 @@ app.factory('identity', [
     '$cookieStore',
     function ($cookieStore) {
 
-        var cookieStorageUserKey = 'currentApplicationUser';
-
-        var currentUser;
+        var key = 'currentUser';
 
         function getCurrentUser() {
 
-            var savedUser = $cookieStore.get(cookieStorageUserKey);
+            var user = $cookieStore.get(key)
 
-            if (savedUser) {
-
-                return savedUser;
+            if (!user) {
+                throw Error('The user is not authenticated.');
             }
 
-            return currentUser;
+            return user;
         }
 
         function setCurrentUser(user) {
 
-            if (user) {
-
-                $cookieStore.put(cookieStorageUserKey, user);
-            } else {
-
-                $cookieStore.remove(cookieStorageUserKey);
+            if (!user) {
+                throw Error('The provided user is empty.');
             }
 
-            currentUser = user;
+            $cookieStore.put(key, user);
+        }
+
+        function removeCurrentUser() {
+
+            if (!$cookieStore.get(key)) {
+
+                throw Error('There currently is no authorized user.');
+            }
+
+            $cookieStore.remove(key);
         }
 
         function isAuthenticated() {
-
-            return !!getCurrentUser();
+            
+            return !!$cookieStore.get(key);
         }
 
-        function isAdmin () {
-            return true;
+        function isAdmin() {
+
+            if (isAuthenticated()) {
+
+                var isInAdminRole = getCurrentUser().isInAdminRole;
+
+                switch (isInAdminRole) {
+                    case 'True':
+                        return true;
+                    case 'False':
+                        return false;
+                    default:
+                        throw Error('The property "isInAdminRole" is not present or has no valid value. Value: ' + isInAdminRole)
+                }
+            } else {
+                return false;
+            }
         }
 
         return {
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
+            removeCurrentUser: removeCurrentUser,
             isAuthenticated: isAuthenticated,
             isAdmin: isAdmin
         };

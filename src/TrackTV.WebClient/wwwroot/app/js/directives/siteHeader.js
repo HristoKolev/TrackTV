@@ -1,8 +1,8 @@
 ﻿app.directive('siteHeader', [
     'templateProvider', 'identity', 'auth',
-    function siteHeader(templateProvider, identity, auth) {
+    function siteHeader (templateProvider, identity, auth) {
 
-        function link(scope, element, attr) {
+        function link (scope, element, attr) {
 
             scope.isLoggedIn = identity.isAuthenticated;
             scope.isAdmin = identity.isAdmin;

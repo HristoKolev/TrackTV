@@ -5,6 +5,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
@@ -26,14 +27,7 @@
             this.publicClientId = publicClientId;
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
-        {
-            IDictionary<string, string> data = new Dictionary<string, string>
-            {
-                { "userName", userName }
-            };
-            return new AuthenticationProperties(data);
-        }
+    
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
@@ -53,10 +47,20 @@
             ClaimsIdentity cookiesIdentity =
                 await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationProperties properties = CreateProperties(userManager, user);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
+        }
+
+        public static AuthenticationProperties CreateProperties(ApplicationUserManager userManager, ApplicationUser user)
+        {
+            IDictionary<string, string> data = new Dictionary<string, string>
+            {
+                { "userName", user.UserName },
+                { "isInAdminRole", userManager.IsInRole(user.Id, "admin").ToString() }
+            };
+            return new AuthenticationProperties(data);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
