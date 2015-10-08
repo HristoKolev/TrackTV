@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var name = 'ff.services';
+    var name = 'tt.services';
 
     var dependencies = [];
 

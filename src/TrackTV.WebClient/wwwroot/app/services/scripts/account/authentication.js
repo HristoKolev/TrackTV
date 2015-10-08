@@ -2,14 +2,14 @@
     'use strict';
 
     ngModules.services.factory('authentication', [
-        '$http', '$q', 'identity', 'appOptions',
-        function authentication ($http, $q, identity, appOptions) {
+        '$http', '$q', 'identity', 'baseServiceUrl',
+        function authentication($http, $q, identity, baseServiceUrl) {
 
-            var apiUrl = appOptions.baseServiceUrl + '/api/account';
+            var apiUrl = baseServiceUrl + '/api/account';
 
             var urls = {
                 registerUrl : apiUrl + '/register',
-                loginUrl : appOptions.baseServiceUrl + '/token',
+                loginUrl : baseServiceUrl + '/token',
                 loguotUrl : apiUrl + '/logout'
             };
 

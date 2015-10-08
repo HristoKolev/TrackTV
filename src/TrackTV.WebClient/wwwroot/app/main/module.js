@@ -7,8 +7,8 @@
         'ngRoute',
         'ngCookies',
         'ui.gravatar',
-        'ff.services',
-        'ff.directives'
+        'tt.services',
+        'tt.directives'
     ];
 
     window.ngModules.main = angular.module(name, dependencies);
