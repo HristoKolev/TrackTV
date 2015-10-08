@@ -6,20 +6,20 @@
         <div class="form-group">
             <label class="col-lg-2 control-label" for="inputEmail">Email</label>
             <div class="col-lg-10">
-                <input class="form-control" id="inputEmail" type="text" data-ng-model="user.username" placeholder="Email" required>
+                <input class="form-control" id="inputEmail" type="text" ng-model="user.username" placeholder="Email" required>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-lg-2 control-label" for="inputPassword">Password</label>
             <div class="col-lg-10">
-                <input class="form-control" id="inputPassword" type="password" data-ng-model="user.password" placeholder="Password" required>
+                <input class="form-control" id="inputPassword" type="password" ng-model="user.password" placeholder="Password" required>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                <button class="btn btn-primary" data-ng-click="login(user, loginForm)" data-ng-disabled="loginForm.$invalid">Login</button>
+                <button class="btn btn-primary" ng-click="login(user, loginForm)" ng-disabled="loginForm.$invalid">Login</button>
             </div>
         </div>
     </fieldset>

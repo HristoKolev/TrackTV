@@ -37,7 +37,7 @@ var gulp = require('gulp'),
     }
 })();
 
-function bowerComponent(path) {
+function bowerComponent (path) {
 
     var bowerRootPath = 'bower_components';
 
@@ -51,11 +51,36 @@ function publicPath (path) {
     return 'wwwroot/' + path;
 }
 
-var lessFiles = publicPath('app/styles/*.less');
+function SourceListBuilder () {
+
+    this.files = [];
+
+    SourceListBuilder.prototype.addModule = function (name) {
+
+        this.files.push(publicPath('app/' + name + '/module.js'));
+        this.files.push(publicPath('app/' + name + '/scripts/**/**/*.js'));
+
+        return this;
+    };
+
+    SourceListBuilder.prototype.addFile = function (path) {
+
+        this.files.push(publicPath(path));
+
+        return this;
+    };
+
+    SourceListBuilder.prototype.src = function () {
+
+        return this.files;
+    };
+}
+
+var lessFiles = publicPath('app/main/styles/*.less');
 
 gulp.task('clean', function () {
 
-    del.sync([publicPath('lib'), 'styles.css', publicPath('merged-app.js')]);
+    del.sync([publicPath('lib'), publicPath('styles.css'), publicPath('merged-app.js')]);
 });
 
 gulp.task('scripts', function () {
@@ -106,14 +131,15 @@ gulp.task('less', function () {
 
 gulp.task('merge', function () {
 
-    var appStart = publicPath('app/js/app.js');
-    var constants = publicPath('app/js/constants/**/*.js');
-    var routeConfig = publicPath('app/js/routeConfig.js');
-    var services = publicPath('app/js/services/**/*.js');
-    var directives = publicPath('app/js/directives/**/*.js');
-    var controllers = publicPath('app/js/controllers/**/*.js');
+    var builder = new SourceListBuilder();
 
-    gulp.src([appStart, constants, routeConfig, services, directives, controllers])
+    builder.addFile('app/init.js')
+        .addModule('services')
+        .addModule('directives')
+        .addModule('main')
+        .addFile('app/main/routeConfig.js');
+
+    gulp.src(builder.src())
         .pipe(concat('merged-app.js'))
         .pipe(gulp.dest(publicPath()));;
 });
@@ -122,7 +148,7 @@ gulp.task('watch', function () {
     //less files
     gulp.watch(lessFiles, ['less']);
 
-    var sourceFiles = publicPath('app/js/**/*.js');
+    var sourceFiles = publicPath('app/**/**/**/**/*.js');
 
     //angular app
     gulp.watch(sourceFiles, ['merge']);

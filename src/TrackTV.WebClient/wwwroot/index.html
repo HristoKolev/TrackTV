@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="app" ng-cloak ng-controller="GlobalController">
+<html ng-app="main" ng-cloak ng-controller="GlobalController">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +13,11 @@
 </head>
 <body>
 
-<header id="site-header" site-header></header>
+<header id="site-header" tt-site-header user="user"></header>
 
 <section class="container body-content ng-view"></section>
 
-<footer id="site-footer" site-footer></footer>
+<footer id="site-footer" tt-site-footer></footer>
 
 
 <div id="scripts">
