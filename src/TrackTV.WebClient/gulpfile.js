@@ -82,13 +82,13 @@ var sourceManager = (function () {
         };
     }
 
-    function SourceListBuilder (pathResolver) {
-
+    function ModulePathResolver(pathResolver) {
         this._pathResolver = pathResolver;
-        this._files = [];
         this.moduleRootPath = this._pathResolver.publicPath('app');
+        this.fetchLevel = 4;
 
-        SourceListBuilder.prototype.modulePath = function (moduleName, path) {
+
+        ModulePathResolver.prototype.modulePath = function (moduleName, path) {
 
             if (!moduleName) {
                 throw Error('You must specifiy the name of the module.');
@@ -111,6 +111,18 @@ var sourceManager = (function () {
             }
         };
 
+        ModulePathResolver.prototype.getSourceFilesPattern = function () {
+
+            return this.moduleRootPath + '/' + Array(this.fetchLevel + 1).join('**/') + '*.js';
+        };
+    }
+
+    function SourceListBuilder(pathResolver, modulePathResolver) {
+
+        this._pathResolver = pathResolver;
+        this._modulePathResolver = modulePathResolver;
+        this._files = [];
+
         SourceListBuilder.prototype.addModule = function (name) {
 
             if (name instanceof Array) {
@@ -122,9 +134,9 @@ var sourceManager = (function () {
 
             } else {
 
-                this.addFile(this.modulePath(name, 'module.js'));
-                this.addFile(this.modulePath(name, 'constants.js'));
-                this.addFile(this.modulePath(name, 'scripts/**/**/*.js'));
+                this.addFile(this._modulePathResolver.modulePath(name, 'module.js'));
+                this.addFile(this._modulePathResolver.modulePath(name, 'constants.js'));
+                this.addFile(this._modulePathResolver.modulePath(name, 'scripts/**/**/*.js'));
             }
 
             return this;
@@ -155,7 +167,7 @@ var sourceManager = (function () {
 
         SourceListBuilder.prototype.addModuleFile = function (moduleName, path) {
 
-            this.addFile(this.modulePath(moduleName, path));
+            this.addFile(this._modulePathResolver.modulePath(moduleName, path));
 
             return this;
         };
@@ -169,14 +181,17 @@ var sourceManager = (function () {
 
             this._files = [];
         };
+
     }
 
     var pathResolver = new PathResolver();
+    var modulePath = new ModulePathResolver(pathResolver)
 
     var module = {
-        path : pathResolver,
+        path: pathResolver,
+        modulePath: modulePath,
         createSourceListBuilder : function () {
-            return new SourceListBuilder(pathResolver);
+            return new SourceListBuilder(pathResolver, modulePath);
         }
     };
 
@@ -184,8 +199,9 @@ var sourceManager = (function () {
 }());
 
 var path = sourceManager.path;
+var modulePath = sourceManager.modulePath;
 
-var lessFiles = path.publicPath('app/main/styles/*.less');
+var lessFiles = modulePath.modulePath('main', 'styles/*.less');
 
 gulp.task('clean', function () {
 
@@ -262,11 +278,13 @@ gulp.task('merge', function () {
 gulp.task('watch', function () {
     //less files
     gulp.watch(lessFiles, ['less']);
+    console.log('Watching: ' + lessFiles);
 
-    var sourceFiles = path.publicPath('app/**/**/**/**/*.js');
+    var sourceFiles = modulePath.getSourceFilesPattern();
 
     //angular app
     gulp.watch(sourceFiles, ['merge']);
+    console.log('Watching: ' + sourceFiles);
 });
 
 gulp.task('default', ['clean', 'scripts', 'styles', 'fonts', 'less', 'merge']);
