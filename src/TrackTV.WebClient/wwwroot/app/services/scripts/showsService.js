@@ -23,9 +23,7 @@
                 return elements;
             }
 
-            function top () {
-
-                var request = $http.get(shows('/top'));
+            function fixBaseUrl (request) {
 
                 request.then(function (response) {
 
@@ -38,8 +36,20 @@
                 return request;
             }
 
+            function top () {
+
+                return fixBaseUrl($http.get(shows('/top')));
+            }
+
+            function genre (name) {
+
+                return fixBaseUrl($http.get(shows('/genre/' + name)));
+
+            }
+
             return {
                 top : top,
+                genre : genre
             };
         }
     ]);

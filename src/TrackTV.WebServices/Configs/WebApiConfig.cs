@@ -23,6 +23,12 @@
             {
                 id = RouteParameter.Optional
             });
+
+            config.Routes.MapHttpRoute(name: "Shows by genre", routeTemplate: "api/shows/genre/{genre}", defaults: new
+            {
+                controller = "Shows",
+                action = "Genre"
+            });
         }
     }
 }

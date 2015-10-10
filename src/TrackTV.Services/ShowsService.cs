@@ -102,11 +102,7 @@ namespace TrackTV.Services
             return model;
         }
 
-        public Network GetNetworkByUserFriendlyId(string userFriendlyId)
-        {
-            return this.Networks.All().FirstOrDefault(n => n.UserFriendlyId == userFriendlyId);
-        }
-
+        // done
         public ShowsViewModel GetTopShows()
         {
             IList<SimpleShowViewModel> running =
@@ -179,6 +175,11 @@ namespace TrackTV.Services
         private Genre GetGenreByUserFriendlyId(string userFriendlyId)
         {
             return this.Genres.All().FirstOrDefault(g => g.UserFriendlyId == userFriendlyId);
+        }
+
+        private Network GetNetworkByUserFriendlyId(string userFriendlyId)
+        {
+            return this.Networks.All().FirstOrDefault(n => n.UserFriendlyId == userFriendlyId);
         }
     }
 }

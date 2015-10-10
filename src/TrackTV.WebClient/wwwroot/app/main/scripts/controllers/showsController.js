@@ -2,15 +2,29 @@
     'use strict';
 
     ngModules.main.controller('ShowsController', [
-        '$scope', 'showsService',
-        function ShowsController ($scope, showsService) {
+        '$scope', 'showsService', '$routeParams',
+        function ShowsController ($scope, showsService, $routeParams) {
 
-            showsService.top()
-                .then(function (response) {
+            if ($routeParams.genre) {
 
-                    $scope.shows = response.data;
+                showsService.genre($routeParams.genre)
+                    .then(function (response) {
 
-                });
+                        $scope.shows = response.data;
+                        $scope.ready = true;
+
+                    });
+
+            } else {
+
+                showsService.top()
+                    .then(function (response) {
+
+                        $scope.shows = response.data;
+                        $scope.ready = true;
+                    });
+            }
+
         }
     ]);
 

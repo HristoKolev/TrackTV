@@ -14,6 +14,19 @@
         private ShowsService Shows { get; }
 
         [HttpGet]
+        public IHttpActionResult Genre(string genre)
+        {
+            var shows = this.Shows.GetByGenre(genre);
+
+            if (shows == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(shows);
+        }
+
+        [HttpGet]
         public IHttpActionResult Top()
         {
             return this.Ok(this.Shows.GetTopShows());

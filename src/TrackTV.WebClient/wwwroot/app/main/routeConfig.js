@@ -30,6 +30,11 @@
                 controller : 'ShowsController'
             });
 
+            $routeProvider.when('/shows/genre/:genre', {
+                templateUrl : templateProvider.view('shows-by-genre'),
+                controller : 'ShowsController'
+            });
+
             $routeProvider.otherwise({ redirectTo : '/' });
         }
     ]);
