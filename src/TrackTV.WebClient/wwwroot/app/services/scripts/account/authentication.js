@@ -2,22 +2,16 @@
     'use strict';
 
     ngModules.services.factory('authentication', [
-        '$http', '$q', 'identity', 'baseServiceUrl',
-        function authentication($http, $q, identity, baseServiceUrl) {
+        '$http', '$q', 'identity', 'apiPath', 'showsService',
+        function authentication($http, $q, identity, apiPath, showsService) {
 
-            var apiUrl = baseServiceUrl + '/api/account';
-
-            var urls = {
-                registerUrl : apiUrl + '/register',
-                loginUrl : baseServiceUrl + '/token',
-                loguotUrl : apiUrl + '/logout'
-            };
+            var account = apiPath.service('account');
 
             function signup (user) {
 
                 var deferred = $q.defer();
 
-                $http.post(urls.registerUrl, user)
+                $http.post(account('/register'), user)
                     .success(function (response) {
                         deferred.resolve(response);
                     }, function (response) {
@@ -39,7 +33,7 @@
                     headers : { 'Content-Type' : 'application/x-www-form-urlencoded' }
                 };
 
-                $http.post(urls.loginUrl, data, config)
+                $http.post(apiPath.loginPath(), data, config)
                     .success(function (response) {
                         if (response.access_token) {
 
@@ -59,11 +53,13 @@
 
                 var deferred = $q.defer();
 
-                var headers = {
-                    'Authorization' : 'Bearer ' + identity.getCurrentUser().full.access_token
-                };
+                var user = identity.getCurrentUser();
 
-                $http.post(urls.loguotUrl, {}, { headers : headers })
+                var headers = {};
+
+                user.addAuthorizationHeader(headers);
+
+                $http.post(account('/logout'), {}, { headers:headers })
                     .then(function success (response) {
 
                         identity.removeCurrentUser();

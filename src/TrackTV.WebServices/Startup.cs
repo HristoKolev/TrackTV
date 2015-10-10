@@ -9,6 +9,8 @@ namespace TrackTV.WebServices
     using System.Reflection;
     using System.Web.Http;
 
+    using Newtonsoft.Json.Serialization;
+
     using Ninject;
     using Ninject.Web.Common.OwinHost;
     using Ninject.Web.WebApi.OwinHost;
@@ -22,6 +24,9 @@ namespace TrackTV.WebServices
             this.ConfigureAuth(app);
 
             app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(GlobalConfiguration.Configuration);
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
         }
 
         private static StandardKernel CreateKernel()

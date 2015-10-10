@@ -25,6 +25,11 @@
                 controller : 'RegisterController'
             });
 
+            $routeProvider.when('/shows', {
+                templateUrl : templateProvider.view('shows'),
+                controller : 'ShowsController'
+            });
+
             $routeProvider.otherwise({ redirectTo : '/' });
         }
     ]);

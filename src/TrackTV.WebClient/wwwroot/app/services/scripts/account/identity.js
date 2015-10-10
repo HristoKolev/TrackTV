@@ -7,7 +7,9 @@
 
             var userKey = 'currentUser';
 
-            var localUser = {};
+            var localUser = {
+                addAuthorizationHeader : addAuthorizationHeader
+            };
 
             clearLocalUser();
 
@@ -16,8 +18,8 @@
 
                 user = user || getCookieUser() || {};
 
-                localUser.isAuthenticated = !!isAuthenticated(),
-                    localUser.isAdmin = !!isAdmin();
+                localUser.isAuthenticated = !!isAuthenticated();
+                localUser.isAdmin = !!isAdmin();
                 localUser.isGuest = !user.access_token;
                 localUser.username = user.userName;
 
@@ -26,6 +28,14 @@
                 }
 
                 localUser.full = user;
+            }
+
+            function addAuthorizationHeader (headers) {
+
+                headers = headers || {};
+                headers['Authorization'] = 'Bearer ' + localUser.full.access_token;
+
+                return headers;
             }
 
             function clearLocalUser () {

@@ -25,8 +25,8 @@ namespace TrackTV.Logic
 
         public string PosterPath => this.Document["PosterPath"];
 
-        public string Section { get; set; }
-
         private IConfigurationDocument Document { get; }
+
+        private string Section { get; }
     }
 }

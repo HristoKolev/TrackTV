@@ -197,6 +197,7 @@ FakesAssemblies/
 
 #Content folder
 src/TrackTV.Web/Content/Uploads
+src/TrackTV.WebServices/Content/Uploads
 
 #Clinet libs
 /src/TrackTV.WebClient/wwwroot/lib
