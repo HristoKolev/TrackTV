@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.config([
-        '$routeProvider', 'templateProvider',
-        function ($routeProvider, templateProvider) {
+        '$routeProvider', 'templateProvider', 'paginationTemplateProvider',
+        function ($routeProvider, templateProvider, paginationTemplateProvider) {
 
             $routeProvider.when('/', {
                 templateUrl : templateProvider.view('calendar'),
@@ -32,8 +32,16 @@
 
             $routeProvider.when('/shows/genre/:genre', {
                 templateUrl : templateProvider.view('shows-by-genre'),
-                controller : 'ShowsController'
+                controller : 'ShowsController',
             });
+
+            $routeProvider.when('/shows/search/:query', {
+                templateUrl: templateProvider.view('search'),
+                controller: 'SearchController',
+                reloadOnSearch: false
+            });
+
+            paginationTemplateProvider.setPath(templateProvider.lib('dirPagination.tpl'));
 
             $routeProvider.otherwise({ redirectTo : '/' });
         }

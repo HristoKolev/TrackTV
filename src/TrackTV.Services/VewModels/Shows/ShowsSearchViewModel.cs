@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class ShowsSearchViewModel : PagerViewModel
+    public class ShowsSearchViewModel
     {
         public string Query { get; set; }
 
         [UIHint("ShowList")]
-        public List<SimpleShowViewModel> Shows { get; set; }
+        public IEnumerable<SimpleShowViewModel> Shows { get; set; }
+
+        public int Count { get; set; }
     }
 }

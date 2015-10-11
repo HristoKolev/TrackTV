@@ -20,9 +20,17 @@
                 return directiveViewPath + name + templateExtension;
             }
 
+            function lib (name) {
+
+                var libPath = 'lib/templates/';
+
+                return libPath + name + templateExtension;
+            }
+
             return {
                 view : view,
-                directive : directive
+                directive : directive,
+                lib : lib
             };
         }());
 

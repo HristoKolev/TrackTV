@@ -5,26 +5,17 @@
         '$scope', 'showsService', '$routeParams',
         function ShowsController ($scope, showsService, $routeParams) {
 
-            if ($routeParams.genre) {
-
-                showsService.genre($routeParams.genre)
-                    .then(function (response) {
-
-                        $scope.shows = response.data;
-                        $scope.ready = true;
-
-                    });
-
-            } else {
-
-                showsService.top()
-                    .then(function (response) {
-
-                        $scope.shows = response.data;
-                        $scope.ready = true;
-                    });
+            function loadData (response) {
+                $scope.shows = response.data;
             }
 
+            if ($routeParams.genre) {
+
+                showsService.genre($routeParams.genre).then(loadData);
+            } else {
+
+                showsService.top().then(loadData);
+            }
         }
     ]);
 

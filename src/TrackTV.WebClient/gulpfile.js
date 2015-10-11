@@ -221,12 +221,18 @@ gulp.task('scripts', function () {
         'angular/angular.js',
         'angular-route/angular-route.js',
         'angular-cookies/angular-cookies.js',
-        'angular-gravatar/build/angular-gravatar.js'
+        'angular-gravatar/build/angular-gravatar.js',
+        'angular-utils-pagination/dirPagination.js',
     ]);
+
+    var libPath = path.publicPath('lib');
 
     gulp.src(scripts)
         .pipe(concat('third-party.js'))
-        .pipe(gulp.dest(path.publicPath('lib')));
+        .pipe(gulp.dest(libPath));
+
+    gulp.src(path.bowerComponent('angular-utils-pagination/dirPagination.tpl.html'))
+        .pipe(gulp.dest(path.publicPath('lib/templates')));
 });
 
 gulp.task('styles', function () {

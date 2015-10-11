@@ -29,6 +29,13 @@
                 controller = "Shows",
                 action = "Genre"
             });
+
+            config.Routes.MapHttpRoute(name: "Serach shows", routeTemplate: "api/shows/search/{query}/{page}", defaults: new
+            {
+                controller = "Shows",
+                action = "Search",
+                page = RouteParameter.Optional
+            });
         }
     }
 }

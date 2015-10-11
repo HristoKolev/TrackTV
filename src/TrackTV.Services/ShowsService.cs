@@ -13,7 +13,7 @@ namespace TrackTV.Services
 
     public class ShowsService
     {
-        private const int PageSize = 24;
+        private const int PageSize = 1;
 
         public ShowsService(ShowManager showManager, IRepository<Genre> genres, IRepository<Network> networks)
         {
@@ -29,6 +29,7 @@ namespace TrackTV.Services
 
         private ShowManager ShowManager { get; }
 
+        // done
         public ShowsByGenreVewModel GetByGenre(string genreUserFriendlyId)
         {
             Genre genre = this.GetGenreByUserFriendlyId(genreUserFriendlyId);
@@ -70,34 +71,12 @@ namespace TrackTV.Services
 
             int count = shows.Count();
 
-            if (page.HasValue)
-            {
-                shows = shows.Skip((page.Value - 1) * PageSize);
-            }
-
-            shows = shows.Take(PageSize);
-
             ShowsNetworkViewModel model = new ShowsNetworkViewModel
             {
-                Shows = shows.Project().To<SimpleShowViewModel>().ToList(), 
-                NetworkName = network.Name
+                Shows = shows.Page(page, PageSize).Project().To<SimpleShowViewModel>().ToList(), 
+                NetworkName = network.Name, 
+                Count = count
             };
-
-            if (page.HasValue)
-            {
-                model.CurrentPage = page.Value;
-            }
-            else
-            {
-                model.CurrentPage = 1;
-            }
-
-            model.TotalPages = count / PageSize;
-
-            if ((count % PageSize) > 0)
-            {
-                model.TotalPages++;
-            }
 
             return model;
         }
@@ -131,38 +110,17 @@ namespace TrackTV.Services
             {
                 return new ShowsSearchViewModel
                 {
-                    Query = query
+                    Query = query, 
+                    Count = 0
                 };
             }
 
-            if (page.HasValue)
-            {
-                shows = shows.Skip((page.Value - 1) * PageSize);
-            }
-
-            shows = shows.Take(PageSize);
-
             ShowsSearchViewModel model = new ShowsSearchViewModel
             {
-                Shows = shows.Project().To<SimpleShowViewModel>().ToList(), 
-                Query = query
+                Shows = shows.Project().To<SimpleShowViewModel>().Page(page, PageSize), 
+                Query = query, 
+                Count = count
             };
-
-            if (page.HasValue)
-            {
-                model.CurrentPage = page.Value;
-            }
-            else
-            {
-                model.CurrentPage = 1;
-            }
-
-            model.TotalPages = count / PageSize;
-
-            if ((count % PageSize) > 0)
-            {
-                model.TotalPages++;
-            }
 
             return model;
         }

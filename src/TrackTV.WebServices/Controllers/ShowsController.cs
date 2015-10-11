@@ -27,6 +27,12 @@
         }
 
         [HttpGet]
+        public IHttpActionResult Search(string query, int? page)
+        {
+            return this.Ok(this.Shows.Search(query, page));
+        }
+
+        [HttpGet]
         public IHttpActionResult Top()
         {
             return this.Ok(this.Shows.GetTopShows());

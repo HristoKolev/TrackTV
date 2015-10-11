@@ -5,9 +5,59 @@
         'apiPath', '$http',
         function showsService (apiPath, $http) {
 
-            var shows = apiPath.service('shows');
+            //variables
 
+            var shows = apiPath.service('shows');
             var baseUrl = apiPath.path();
+
+            //public
+
+            function top () {
+
+                var request = $http.get(shows('/top'));
+
+                request.then(function (response) {
+
+                    var data = response.data;
+
+                    addBaseUrl(data.running, 'poster');
+                    addBaseUrl(data.ended, 'poster');
+                });
+
+                return request;
+            }
+
+            function genre (name) {
+
+                var request = $http.get(shows('/genre/' + name));
+
+                request.then(function (response) {
+
+                    var data = response.data;
+
+                    addBaseUrl(data.running, 'poster');
+                    addBaseUrl(data.ended, 'poster');
+                });
+
+                return request;
+            }
+
+            function search (query, page) {
+                page = page || 1;
+
+                var request = $http.get(shows('/search/' + query + '/' + page));
+
+                request.then(function (response) {
+
+                    var data = response.data;
+
+                    addBaseUrl(data.shows, 'poster');
+                });
+
+                return request;
+            }
+
+            // private
 
             function addBaseUrl (elements, property) {
 
@@ -23,33 +73,10 @@
                 return elements;
             }
 
-            function fixBaseUrl (request) {
-
-                request.then(function (response) {
-
-                    var shows = response.data;
-
-                    addBaseUrl(shows.running, 'poster');
-                    addBaseUrl(shows.ended, 'poster');
-                });
-
-                return request;
-            }
-
-            function top () {
-
-                return fixBaseUrl($http.get(shows('/top')));
-            }
-
-            function genre (name) {
-
-                return fixBaseUrl($http.get(shows('/genre/' + name)));
-
-            }
-
             return {
                 top : top,
-                genre : genre
+                genre : genre,
+                search
             };
         }
     ]);

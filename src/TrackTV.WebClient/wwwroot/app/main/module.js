@@ -8,7 +8,8 @@
         'ngCookies',
         'ui.gravatar',
         'tt.services',
-        'tt.directives'
+        'tt.directives',
+        'angularUtils.directives.dirPagination'
     ];
 
     window.ngModules.main = angular.module(name, dependencies);
