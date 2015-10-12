@@ -8,7 +8,7 @@ namespace TrackTV.Services.VewModels.Shows
         public string NetworkName { get; set; }
 
         [UIHint("ShowList")]
-        public List<SimpleShowViewModel> Shows { get; set; }
+        public IEnumerable<SimpleShowViewModel> Shows { get; set; }
 
         public int Count { get; set; }
     }

@@ -27,6 +27,12 @@
         }
 
         [HttpGet]
+        public IHttpActionResult Network(string network, int? page)
+        {
+            return this.Ok(this.Shows.GetByNetwork(network, page));
+        }
+
+        [HttpGet]
         public IHttpActionResult Search(string query, int? page)
         {
             return this.Ok(this.Shows.Search(query, page));

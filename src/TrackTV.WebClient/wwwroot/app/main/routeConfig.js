@@ -41,6 +41,12 @@
                 reloadOnSearch: false
             });
 
+            $routeProvider.when('/shows/network/:network', {
+                templateUrl: templateProvider.view('network'),
+                controller: 'NetworkController',
+                reloadOnSearch: false
+            });
+
             paginationTemplateProvider.setPath(templateProvider.lib('dirPagination.tpl'));
 
             $routeProvider.otherwise({ redirectTo : '/' });

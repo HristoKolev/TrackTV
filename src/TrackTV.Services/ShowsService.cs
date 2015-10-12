@@ -67,13 +67,13 @@ namespace TrackTV.Services
                 return null;
             }
 
-            IQueryable<Show> shows = this.ShowManager.GetShowsByNetwork(network.Id);
+            IQueryable<Show> shows = this.ShowManager.GetShowsByNetwork(network.Id).OrderByDescending(show => show.Subscribers.Count);
 
             int count = shows.Count();
 
             ShowsNetworkViewModel model = new ShowsNetworkViewModel
             {
-                Shows = shows.Page(page, PageSize).Project().To<SimpleShowViewModel>().ToList(), 
+                Shows = shows.Project().To<SimpleShowViewModel>().Page(page, PageSize), 
                 NetworkName = network.Name, 
                 Count = count
             };
@@ -100,6 +100,7 @@ namespace TrackTV.Services
             return model;
         }
 
+        // done
         public ShowsSearchViewModel Search(string query, int? page)
         {
             IQueryable<Show> shows = this.ShowManager.SearchShow(query);

@@ -57,6 +57,21 @@
                 return request;
             }
 
+            function network(networkName, page) {
+                page = page || 1;
+
+                var request = $http.get(shows('/network/' + networkName + '/' + page));
+
+                request.then(function (response) {
+
+                    var data = response.data;
+
+                    addBaseUrl(data.shows, 'poster');
+                });
+
+                return request;
+            }
+
             // private
 
             function addBaseUrl (elements, property) {
@@ -76,7 +91,8 @@
             return {
                 top : top,
                 genre : genre,
-                search
+                search: search,
+                network: network
             };
         }
     ]);

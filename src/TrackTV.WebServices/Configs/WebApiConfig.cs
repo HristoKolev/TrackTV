@@ -33,8 +33,13 @@
             config.Routes.MapHttpRoute(name: "Serach shows", routeTemplate: "api/shows/search/{query}/{page}", defaults: new
             {
                 controller = "Shows",
-                action = "Search",
-                page = RouteParameter.Optional
+                action = "Search"
+            });
+
+            config.Routes.MapHttpRoute(name: "Shows by Network", routeTemplate: "api/shows/network/{network}/{page}", defaults: new
+            {
+                controller = "Shows",
+                action = "Network"
             });
         }
     }
