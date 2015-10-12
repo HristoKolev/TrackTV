@@ -2,31 +2,30 @@
     'use strict';
 
     ngModules.main.controller('SearchController', [
-        '$scope', 'showsService', '$routeParams',
-        function SearchController ($scope, showsService, $routeParams) {
+        '$scope', 'showsService', '$routeParams', '$location',
+        function SearchController($scope, showsService, $routeParams, $location) {
 
-            $scope.count = 0;
-            $scope.pageSize = 1;
-            $scope.shows = [];
+            $scope.pageSize = 24;
             $scope.query = $routeParams.query;
+            $scope.currentPage = $routeParams.page || 1;
 
-            $scope.pagination = {
-                current : $routeParams.page || 1
-            };
-
-            $scope.getPage = function (page) {
+            $scope.gePtage = function (page) {
 
                 showsService.search($routeParams.query, page)
                     .then(function (response) {
 
                         var data = response.data;
 
-                        $scope.shows = data.shows;
-                        $scope.count = data.count;
+                        $scope.items = data.shows;
+                        $scope.totalItems = data.count;
                     });
-            };
 
-            $scope.getPage($scope.pagination.current);
+                if (page === 1) {
+                    $location.search('page', null);
+                } else {
+                    $location.search('page', page);
+                }
+            };
         }
     ]);
 

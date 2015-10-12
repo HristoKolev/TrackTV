@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.directives.directive('ttSiteHeader', [
-        'templateProvider', 'authentication', 'toastr',
-        function ttSiteHeader (templateProvider, authentication, toastr) {
+        'templateProvider', 'authentication', 'toastr', '$location',
+        function ttSiteHeader (templateProvider, authentication, toastr, $location) {
 
             function notify () {
                 toastr.success('Successful Logout!');
@@ -11,6 +11,10 @@
 
             function logout () {
                 authentication.logout().then(notify, notify);
+            }
+
+            function search(query) {
+                $location.path('/shows/search/' + query);
             }
 
             return {
@@ -21,6 +25,7 @@
                 },
                 link : function link (scope, element, attr) {
                     scope.logout = logout;
+                    scope.search = search;
                 }
             };
         }

@@ -1,18 +1,12 @@
 ﻿<div class="shows-container">
-    <h1 class="text-center show-group-title">Search for '<span class="text-success">{{ query }}</span>'</h1>
+    <h1 class="text-center show-group-title">
+        Search for '<span class="text-success">{{ query }}</span>'
+    </h1>
 
-    <div ng-show="shows.length" class="row">
-
-        <div dir-paginate="show in shows | itemsPerPage: pageSize" total-items="count"
-             current-page="pagination.current" tt-short-show data-show="show" class="text-center col-md-3 show-small">
-        </div>
-
-        <div dir-pagination-controls on-page-change="getPage(newPageNumber)"></div>
-
-    </div>
-
-
-    <div ng-hide="shows.length">
-        <h3 class="text-center show-group-title">No Shows</h3>
-    </div>
+    <div tt-paged-show-list
+         data-items="items"
+         data-total-items="totalItems"
+         data-page-size="pageSize"
+         data-page-changed="gePtage"
+         data-current-page="currentPage"></div>
 </div>

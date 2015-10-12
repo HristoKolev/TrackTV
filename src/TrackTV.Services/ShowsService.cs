@@ -13,7 +13,7 @@ namespace TrackTV.Services
 
     public class ShowsService
     {
-        private const int PageSize = 1;
+        private const int PageSize = 24;
 
         public ShowsService(ShowManager showManager, IRepository<Genre> genres, IRepository<Network> networks)
         {

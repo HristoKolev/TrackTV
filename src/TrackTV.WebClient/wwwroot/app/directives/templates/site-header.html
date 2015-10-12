@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="navbar-collapse collapse">
-            
+
             <div class="navbar-section pull-left">
 
                 <ul class="nav navbar-nav">
@@ -18,14 +18,20 @@
                         </a>
                     </li>
 
-                    <li ng-if="user.isAuthenticated"><a href="/#/calendar">Calendar</a></li>
-                    <li ng-if="user.isAuthenticated"><a href="/#/myshows">My Shows</a></li>
-                    <li><a href="/#/shows">Browse</a></li>
+                    <li ng-if="user.isAuthenticated">
+                        <a href="/#/calendar">Calendar</a>
+                    </li>
+                    <li ng-if="user.isAuthenticated">
+                        <a href="/#/myshows">My Shows</a>
+                    </li>
+                    <li>
+                        <a href="/#/shows">Browse</a>
+                    </li>
 
                     <li>
-                        <form class="navbar-form navbar-left search-form" action="" method="GET" _lpchecked="1">
-                            <input type="text" name="query" class="form-control col-lg-8" placeholder="Search">
-                            <input type="submit" class="btn btn-success" value="Go"/>
+                        <form class="navbar-form navbar-left search-form">
+                            <input type="text" class="form-control col-lg-8" placeholder="Search" ng-model="query">
+                            <button class="btn btn-success" ng-click="search(query)">Go</button>
                         </form>
                     </li>
                 </ul>
@@ -37,7 +43,9 @@
                 <form id="logoutForm" class="navbar-right" ng-if="user.isAuthenticated">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li ng-if="user.isAdmin"><a href="/#/admin/manageshows">Admin</a></li>
+                        <li ng-if="user.isAdmin">
+                            <a href="/#/admin/manageshows">Admin</a>
+                        </li>
                         <li ng-if="user.isAuthenticated">
                             <a href="/#/manage">
                                 <img gravatar-src="user.username" alt="Avatar" title="{{ user.username }}" gravatar-size="40"/>
@@ -45,15 +53,21 @@
                             </a>
                         </li>
 
-                        <li><a href="#" ng-click="logout()">Log off</a></li>
+                        <li>
+                            <a href="#" ng-click="logout()">Log off</a>
+                        </li>
                     </ul>
 
                 </form>
 
                 <ul class="nav navbar-nav navbar-right" ng-if="!user.isAuthenticated">
 
-                    <li><a href="/#/register" id="registerLink">Register</a></li>
-                    <li><a href="/#/login" id="loginLink">Log in</a></li>
+                    <li>
+                        <a href="/#/register" id="registerLink">Register</a>
+                    </li>
+                    <li>
+                        <a href="/#/login" id="loginLink">Log in</a>
+                    </li>
                 </ul>
             </div>
         </div>

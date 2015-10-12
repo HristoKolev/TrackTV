@@ -1,0 +1,16 @@
+﻿<div ng-show="items.length">
+    <div class="row">
+
+        <div dir-paginate="item in items | itemsPerPage: pageSize" total-items="totalItems"
+             current-page="currentPage" tt-short-show data-show="item" class="text-center col-md-3 show-small">
+
+        </div>
+    </div>
+
+    <div dir-pagination-controls on-page-change="pageChanged(newPageNumber)" class="text-center"></div>
+
+</div>
+
+<div ng-hide="items.length">
+    <h3 class="text-center show-group-title">No Shows</h3>
+</div>
