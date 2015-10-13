@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.services.factory('authentication', [
-        '$http', '$q', 'identity', 'apiPath', 'showsService',
-        function authentication($http, $q, identity, apiPath, showsService) {
+        '$http', '$q', 'identity', 'apiPath', 'calendarService',
+        function authentication($http, $q, identity, apiPath, calendarService) {
 
             var account = apiPath.service('account');
 

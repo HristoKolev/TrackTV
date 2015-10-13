@@ -3,6 +3,7 @@
     using System.Web.Http;
 
     using TrackTV.Services;
+    using TrackTV.Services.VewModels.Shows;
 
     public class ShowsController : ApiController
     {
@@ -29,7 +30,14 @@
         [HttpGet]
         public IHttpActionResult Network(string network, int? page)
         {
-            return this.Ok(this.Shows.GetByNetwork(network, page));
+            var model = this.Shows.GetByNetwork(network, page);
+
+            if (model == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(model);
         }
 
         [HttpGet]

@@ -1,93 +1,45 @@
 ﻿<div class="calendar-view center-block">
 
     <div class="text-center">
-        @{
-        DateTime monthAgo = Model.Date.AddMonths(-1);
-        DateTime monthAfter = Model.Date.AddMonths(1);
-        }
-
         <h3 class="month-list">
-
-            @Html.ActionLink("« " + monthAgo.ToString("MMMM", CultureInfo.InvariantCulture), "Calendar", "Home", new
-            {
-            year = monthAgo.Year,
-            month = monthAgo.Month
-            }, new
-            {
-            @class = "month-link"
-            })
+            <a href="/#/calendar/{{ previosMonth.year }}/{{ previosMonth.month }}" class="month-link">« {{ previosMonth.name }}</a>
         </h3>
 
-        <h1 class="month-list">@Html.DisplayFor(model => model.Date)</h1>
+        <h1 class="month-list">{{ thisMonth.name }}</h1>
 
         <h3 class="month-list">
-            @Html.ActionLink(monthAfter.ToString("MMMM", CultureInfo.InvariantCulture) + " »", "Calendar", "Home", new
-            {
-            year = monthAfter.Year,
-            month = monthAfter.Month
-            }, new
-            {
-            @class = "month-link"
-            })
+            <a href="/#/calendar/{{ nextMonth.year }}/{{ nextMonth.month }}" class="month-link">{{ nextMonth.name }} »</a>
         </h3>
     </div>
 
-    <h4 class="text-center">@Html.DisplayFor(model => model.Date.Year)</h4>
+    <h4 class="text-center">{{ thisMonth.year }}</h4>
 
     <table class="table">
 
         <thead>
-            <tr>
-                @foreach (DayOfWeek dayOfWeek in Model.DaysOfWeek)
-                {
-                <th class="col-md-1 danger text-center">
-                    @dayOfWeek.ToString()
-                </th>
-                }
-            </tr>
+        <tr>
+            <th ng-repeat="day in daysOfWeek" class="col-md-1 danger text-center">
+                {{ day }}
+            </th>
+        </tr>
         </thead>
 
         <tbody>
 
+        <tr ng-repeat="week in weeks">
+            <td ng-repeat="day in week" class="calendar-day" ng-class="todayClass(day.date)">
 
-            @foreach (List
-            <CalendarDay>
-                week in Model.Month)
-                {
-                <tr>
+                <div class="calendar-date"> {{ shortDate(day.date) }} </div>
 
-                    @foreach (CalendarDay day in week)
-                    {
-                    string dayClass = day.Date.IsToday() ? "calendar-today" : string.Empty;
+                <div ng-repeat="episode in day.episodes" class="calendar-episode">
 
-                    <td class="calendar-day @dayClass">
+                    <a href="/#/show/{{ episode.userFriendlyId }}" class="calendar-episode-link">{{ episode.showName }}</a>
 
-                        @Html.DisplayFor(list => day.Date, "ShortDate")
+                    <span>(S{{ padLeft(episode.seasonNumber, 2, '0') }}E{{ padLeft(episode.number, 2, '0') }})</span>
 
-                        @if (day.Episodes != null)
-                        {
-                        foreach (CalendarEpisode episode in day.Episodes)
-                        {
-                        <div class="calendar-episode">
-                            @Html.ActionLink(episode.ShowName, "ById", "ShowDetails", new
-                            {
-                            userFriendlyId = episode.UserFriendlyId
-                            }, new
-                            {
-                            @class = "calendar-episode-link"
-                            })
-
-                            (<span>S@(episode.SeasonNumber.ToString().PadLeft(2, '0'))E@(episode.Number.ToString().PadLeft(2, '0'))</span>)
-
-                            @*@Html.DisplayFor(list => episode.Title)*@
-                        </div>
-                        }
-                        }
-
-                    </td>
-                    }
-                </tr>
-                }
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

@@ -7,34 +7,16 @@ namespace TrackTV.Logic.Calendar
 
     using AutoMapper.QueryableExtensions;
 
-    using NetInfrastructure.Data.Repositories;
-
     using TrackTV.Models;
 
     public class EpisodeCalendar
     {
         private const int NumberOfWeeks = 6;
 
-        private readonly List<List<CalendarDay>> model;
-
-        private readonly string userId;
-
-        private List<CalendarEpisode> episodes;
-
-        private int weekIndex;
-
-        public EpisodeCalendar(IRepository<Episode> episodes, string userId)
+        public List<List<CalendarDay>> Create(IQueryable<Episode> episodeCollection, DateTime currentDate)
         {
-            this.Episodes = episodes;
-            this.userId = userId;
+            List<List<CalendarDay>> model = this.ConstructModel();
 
-            this.model = ConstructModel();
-        }
-
-        private IRepository<Episode> Episodes { get; set; }
-
-        public List<List<CalendarDay>> Create(DateTime currentDate)
-        {
             Calendar calendar = new GregorianCalendar();
 
             const int CalendarDays = 42;
@@ -45,28 +27,53 @@ namespace TrackTV.Logic.Calendar
 
             DateTime endDate = startDate.Add(new TimeSpan(CalendarDays, 0, 0, 0));
 
-            this.episodes = this.GetEpisodes(startDate, endDate);
+            List<CalendarEpisode> episodes = this.GetEpisodes(episodeCollection, startDate, endDate);
 
-            this.weekIndex = 0;
+            int weekIndex = 0;
 
             for (int i = 0; i < CalendarDays; i++)
             {
                 DayOfWeek dayOfWeek = calendar.GetDayOfWeek(startDate);
 
-                this.AddEpisodes(startDate);
+                this.AddEpisodes(model, episodes, startDate, weekIndex);
 
                 startDate = startDate.AddDays(1);
 
                 if (dayOfWeek == DayOfWeek.Sunday)
                 {
-                    this.weekIndex++;
+                    weekIndex++;
                 }
             }
 
-            return this.model;
+            return model;
         }
 
-        private static List<List<CalendarDay>> ConstructModel()
+        private void AddEpisodes(List<List<CalendarDay>> model, List<CalendarEpisode> episodes, DateTime startDate, int weekIndex)
+        {
+            DateTime endDate = startDate.AddDays(1);
+
+            List<CalendarEpisode> episodesForDay =
+                episodes.Where(
+                    viewModel => viewModel.FirstAired != null && viewModel.FirstAired.Value >= startDate && viewModel.FirstAired < endDate)
+                        .ToList();
+
+            CalendarDay day = new CalendarDay
+            {
+                Date = startDate, 
+                Episodes = episodesForDay
+            };
+
+            if (episodesForDay.Any())
+            {
+                model[weekIndex].Add(day);
+            }
+            else
+            {
+                model[weekIndex].Add(new CalendarDay(startDate));
+            }
+        }
+
+        private List<List<CalendarDay>> ConstructModel()
         {
             List<List<CalendarDay>> model = new List<List<CalendarDay>>();
 
@@ -78,42 +85,14 @@ namespace TrackTV.Logic.Calendar
             return model;
         }
 
-        private void AddEpisodes(DateTime startDate)
-        {
-            DateTime endDate = startDate.AddDays(1);
-
-            List<CalendarEpisode> episodesForDay =
-                this.episodes.Where(
-                    viewModel => viewModel.FirstAired != null && viewModel.FirstAired.Value >= startDate && viewModel.FirstAired < endDate)
-                    .ToList();
-
-            CalendarDay day = new CalendarDay
-            {
-                Date = startDate, 
-                Episodes = episodesForDay
-            };
-
-            if (episodesForDay.Any())
-            {
-                this.model[this.weekIndex].Add(day);
-            }
-            else
-            {
-                this.model[this.weekIndex].Add(new CalendarDay(startDate));
-            }
-        }
-
-        private List<CalendarEpisode> GetEpisodes(DateTime startDay, DateTime endDay)
+        private List<CalendarEpisode> GetEpisodes(IQueryable<Episode> episodeCollection, DateTime startDay, DateTime endDay)
         {
             List<CalendarEpisode> episodes =
-                this.Episodes.All()
-                    .Where(
-                        episode =>
-                        episode.Season.Show.Subscribers.Any(user => user.Id == this.userId) && episode.FirstAired > startDay
-                        && episode.FirstAired < endDay)
-                    .Project()
-                    .To<CalendarEpisode>()
-                    .ToList();
+                episodeCollection.Where(episode => episode.FirstAired > startDay && episode.FirstAired < endDay)
+                                 .Project()
+                                 .To<CalendarEpisode>()
+                                 .ToList();
+
             return episodes;
         }
     }

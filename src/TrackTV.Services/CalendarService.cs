@@ -1,6 +1,7 @@
 namespace TrackTV.Services
 {
     using System;
+    using System.Linq;
 
     using NetInfrastructure.Data.Repositories;
 
@@ -17,14 +18,14 @@ namespace TrackTV.Services
 
         private IRepository<Episode> Episodes { get; }
 
-        public CalendarViewModel GetCalendarModel(string useerId)
+        public CalendarViewModel GetCalendarModel(string userId)
         {
             DateTime now = DateTime.Now;
 
-            return this.GetCalendarModel(now.Year, now.Month, useerId);
+            return this.GetCalendarModel(userId, now.Year, now.Month);
         }
 
-        public CalendarViewModel GetCalendarModel(int year, int month, string useerId)
+        public CalendarViewModel GetCalendarModel(string userId, int year, int month)
         {
             DateTime date;
 
@@ -37,24 +38,17 @@ namespace TrackTV.Services
                 date = DateTime.Now;
             }
 
-            EpisodeCalendar episodeCalendar = new EpisodeCalendar(this.Episodes, useerId);
+            IQueryable<Episode> episodes =
+                this.Episodes.All().Where(episode => episode.Season.Show.Subscribers.Any(user => user.Id == userId));
 
-            DayOfWeek[] daysOfWeek = {
-                DayOfWeek.Monday, 
-                DayOfWeek.Tuesday, 
-                DayOfWeek.Wednesday, 
-                DayOfWeek.Thursday, 
-                DayOfWeek.Friday, 
-                DayOfWeek.Saturday, 
-                DayOfWeek.Sunday
-            };
+            EpisodeCalendar episodeCalendar = new EpisodeCalendar();
 
             CalendarViewModel model = new CalendarViewModel
             {
-                Month = episodeCalendar.Create(date), 
-                Date = date, 
-                DaysOfWeek = daysOfWeek
+                Month = episodeCalendar.Create(episodes, date), 
+                Date = date
             };
+
             return model;
         }
     }

@@ -11,8 +11,6 @@ namespace TrackTV.Services.VewModels.Calendar
         [UIHint("MonthName")]
         public DateTime Date { get; set; }
 
-        public DayOfWeek[] DaysOfWeek { get; set; }
-
         public List<List<CalendarDay>> Month { get; set; }
     }
 }
