@@ -43,6 +43,7 @@ var sourceManager = (function () {
 
         this.rootPath = 'wwwroot';
         this.bowerRootPath = 'bower_components';
+        this.npmRootPath = 'node_modules';
 
         PathResolver.prototype.publicPath = function (path) {
 
@@ -80,13 +81,32 @@ var sourceManager = (function () {
                 return this.bowerRootPath + '/' + path;
             }
         };
+
+        PathResolver.prototype.npmComponent = function (path) {
+
+            if (!path) {
+                throw Error('You must specify the path of the component.');
+            }
+
+            if (path instanceof Array) {
+
+                for (var index in path) {
+                    path[index] = this.npmComponent(path[index]);
+                }
+
+                return path;
+
+            } else {
+
+                return this.npmRootPath + '/' + path;
+            }
+        };
     }
 
-    function ModulePathResolver(pathResolver) {
+    function ModulePathResolver (pathResolver) {
         this._pathResolver = pathResolver;
         this.moduleRootPath = this._pathResolver.publicPath('app');
         this.fetchLevel = 4;
-
 
         ModulePathResolver.prototype.modulePath = function (moduleName, path) {
 
@@ -117,7 +137,7 @@ var sourceManager = (function () {
         };
     }
 
-    function SourceListBuilder(pathResolver, modulePathResolver) {
+    function SourceListBuilder (pathResolver, modulePathResolver) {
 
         this._pathResolver = pathResolver;
         this._modulePathResolver = modulePathResolver;
@@ -185,11 +205,10 @@ var sourceManager = (function () {
     }
 
     var pathResolver = new PathResolver();
-    var modulePath = new ModulePathResolver(pathResolver)
-
+    var modulePath = new ModulePathResolver(pathResolver);
     var module = {
-        path: pathResolver,
-        modulePath: modulePath,
+        path : pathResolver,
+        modulePath : modulePath,
         createSourceListBuilder : function () {
             return new SourceListBuilder(pathResolver, modulePath);
         }
@@ -214,7 +233,7 @@ gulp.task('clean', function () {
 
 gulp.task('scripts', function () {
 
-    var scripts = path.bowerComponent([
+    var bowerScripts = path.bowerComponent([
         'jquery/dist/jquery.js',
         'bootstrap/dist/js/bootstrap.js',
         'toastr/toastr.js',
@@ -225,9 +244,13 @@ gulp.task('scripts', function () {
         'angular-utils-pagination/dirPagination.js',
     ]);
 
+    var npmScripts = path.npmComponent([
+        'underscore.string/dist/underscore.string.js'
+    ]);
+
     var libPath = path.publicPath('lib');
 
-    gulp.src(scripts)
+    gulp.src(bowerScripts.concat(npmScripts))
         .pipe(concat('third-party.js'))
         .pipe(gulp.dest(libPath));
 
