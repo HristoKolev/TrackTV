@@ -101,6 +101,7 @@
     <Compile Include="ShowManager.cs" />
     <Compile Include="SubscriptionManager.cs" />
     <Compile Include="Models\ShowSample.cs" />
+    <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

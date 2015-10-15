@@ -156,6 +156,7 @@ var sourceManager = (function () {
 
                 this.addFile(this._modulePathResolver.modulePath(name, 'module.js'));
                 this.addFile(this._modulePathResolver.modulePath(name, 'constants.js'));
+                this.addFile(this._modulePathResolver.modulePath(name, 'libraries.js'));
                 this.addFile(this._modulePathResolver.modulePath(name, 'scripts/**/**/*.js'));
             }
 
@@ -294,6 +295,7 @@ gulp.task('merge', function () {
     builder.addPublicFile('app/init.js')
         .addModule([
             'services',
+            'filters',
             'directives',
             'main'
         ])

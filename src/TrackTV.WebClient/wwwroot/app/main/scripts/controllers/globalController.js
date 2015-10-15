@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('GlobalController', [
-        '$scope', 'templateProvider', 'identity',
-        function GlobalController ($scope, templateProvider, identity) {
+        '$scope', 'identity',
+        function GlobalController ($scope, identity) {
 
             $scope.user = identity.getCurrentUser();
             $scope.title = 'TrackTV';

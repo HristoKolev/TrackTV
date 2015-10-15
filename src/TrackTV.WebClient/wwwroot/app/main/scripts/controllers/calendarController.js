@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('CalendarController', [
-        '$scope', '$routeParams', 'calendarService',
-        function CalendarController ($scope, $routeParams, calendarService) {
+        '$scope', '$routeParams', 'calendarService', '_s',
+        function CalendarController ($scope, $routeParams, calendarService, _s) {
 
             $scope.daysOfWeek = [
                 'Monday',
@@ -32,22 +32,6 @@
 
             // public
 
-            function shortDate (date) {
-
-                var monthName = monthNames[date.getMonth()].substr(0, 3);
-
-                var formattedDate = monthName + '. ' + padLeft(date.getDate(), 2, '0');
-
-                return formattedDate;
-            }
-
-            function padLeft (str, length, char) {
-
-                str = str.toString();
-
-                return Array((length - str.length) + 1).join(char) + str;
-            }
-
             function todayClass (date) {
 
                 if (date.toDateString() === new Date().toDateString()) {
@@ -57,8 +41,6 @@
                 return '';
             }
 
-            $scope.shortDate = shortDate;
-            $scope.padLeft = padLeft;
             $scope.todayClass = todayClass;
 
             // private
@@ -86,7 +68,6 @@
             function processResponse (response) {
 
                 var data = response.data;
-                console.log(data);
 
                 setMonthLinks(data.date);
 

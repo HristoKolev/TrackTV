@@ -232,6 +232,7 @@
     <Compile Include="Configs\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\MyShowsController.cs" />
     <Compile Include="Controllers\ShowsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

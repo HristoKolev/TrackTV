@@ -11,16 +11,20 @@ namespace TrackTV.Services
 
     public class MyShowsService
     {
+        private const int PageSize = 10;
+
         public MyShowsService(
             ShowManager showManager, 
             EpisodeManager episodeManager, 
             SubscriptionManager subscriptionManager, 
-            IMappingEngine mappingEngine)
+            IMappingEngine mappingEngine, 
+            UserManager userManager)
         {
             this.ShowManager = showManager;
             this.EpisodeManager = episodeManager;
             this.SubscriptionManager = subscriptionManager;
             this.MappingEngine = mappingEngine;
+            this.UserManager = userManager;
         }
 
         private EpisodeManager EpisodeManager { get; }
@@ -31,51 +35,53 @@ namespace TrackTV.Services
 
         private SubscriptionManager SubscriptionManager { get; }
 
-        public MyShowsViewModel GetMyShows(string userId)
+        private UserManager UserManager { get; }
+
+        public MyShowsViewModel Continuing(string userId, int? page)
         {
-            IList<Show> shows = this.ShowManager.GetUserShows(userId).ToList();
+            return this.GetShows(userId, ShowStatus.Continuing, page);
+        }
+
+        public MyShowsViewModel Ended(string userId, int? page)
+        {
+            return this.GetShows(userId, ShowStatus.Ended, page);
+        }
+
+        public void Unsubscribe(string userId, int showId)
+        {
+            Show show = this.ShowManager.GetShowById(showId);
+            ApplicationUser user = this.UserManager.GetUserById(userId);
+
+            this.SubscriptionManager.Unsubscribe(user, show);
+        }
+
+        private MyShowsViewModel GetShows(string userId, ShowStatus status, int? page)
+        {
+            IQueryable<Show> shows = this.ShowManager.GetUserShows(userId).Where(show => show.Status == status);
 
             MyShowsViewModel model = new MyShowsViewModel
             {
-                Running = new List<MyShowViewModel>(), 
-                Ended = new List<MyShowViewModel>()
+                Shows = new List<MyShowViewModel>(), 
+                Count = shows.Count()
             };
 
-            if (shows.Count == 0)
-            {
-                return model;
-            }
+            shows = shows.OrderBy(show => show.Name).Page(page, PageSize);
 
-            IEnumerable<Show> running = shows.Where(show => show.Status == ShowStatus.Continuing);
-            IEnumerable<Show> ended = shows.Where(show => show.Status == ShowStatus.Ended);
-
-            foreach (Show show in running)
-            {
-                MyShowViewModel showModel = this.MappingEngine.Map<MyShowViewModel>(show);
-
-                showModel.LastEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetLastEpisode(show));
-                showModel.NextEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetNextEpisode(show));
-
-                model.Running.Add(showModel);
-            }
-
-            foreach (Show show in ended)
+            foreach (Show show in shows)
             {
                 MyShowViewModel showModel = this.MappingEngine.Map<MyShowViewModel>(show);
 
                 showModel.LastEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetLastEpisode(show));
 
-                model.Ended.Add(showModel);
+                if (status == ShowStatus.Continuing)
+                {
+                    showModel.NextEpisode = this.MappingEngine.Map<SimpleEpisodeViewModel>(this.EpisodeManager.GetNextEpisode(show));
+                }
+
+                model.Shows.Add(showModel);
             }
 
             return model;
-        }
-
-        public void Unsubscribe(ApplicationUser user, int showId)
-        {
-            Show show = this.ShowManager.GetShowById(showId);
-
-            this.SubscriptionManager.Unsubscribe(user, show);
         }
     }
 }

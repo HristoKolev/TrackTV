@@ -9,6 +9,7 @@
         'ui.gravatar',
         'tt.services',
         'tt.directives',
+        'tt.filters',
         'angularUtils.directives.dirPagination'
     ];
 

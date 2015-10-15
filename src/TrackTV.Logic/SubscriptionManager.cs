@@ -13,7 +13,7 @@
             this.Shows = shows;
         }
 
-        private IRepository<Show> Shows { get; set; }
+        private IRepository<Show> Shows { get; }
 
         public void Subscribe(ApplicationUser user, Show show)
         {

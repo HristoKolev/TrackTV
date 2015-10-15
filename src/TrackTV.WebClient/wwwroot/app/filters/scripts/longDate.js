@@ -1,0 +1,23 @@
+﻿(function () {
+    'use strict';
+
+    ngModules.filters.filter('longDate', [
+        '_s',
+        function longDate (_s) {
+
+            function filter (date) {
+
+                if (!(date instanceof Date)) {
+
+                    date = new Date(date);
+                }
+
+                var options = { weekday : 'long', year : 'numeric', month : 'long', day : '2-digit' };
+
+                return date.toLocaleDateString('en-US', options);
+            }
+
+            return filter;
+        }
+    ]);
+})();

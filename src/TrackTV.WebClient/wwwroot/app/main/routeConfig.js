@@ -27,7 +27,7 @@
 
             $routeProvider.when('/shows', {
                 templateUrl : templateProvider.view('shows'),
-                controller : 'ShowsController'
+                controller: 'ShowsController',
             });
 
             $routeProvider.when('/shows/genre/:genre', {
@@ -44,6 +44,12 @@
             $routeProvider.when('/shows/network/:network', {
                 templateUrl: templateProvider.view('network'),
                 controller: 'NetworkController',
+                reloadOnSearch: false
+            });
+
+            $routeProvider.when('/myshows', {
+                templateUrl: templateProvider.view('my-shows'),
+                controller: 'MyShowsController',
                 reloadOnSearch: false
             });
 

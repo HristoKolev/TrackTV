@@ -29,13 +29,13 @@
         <tr ng-repeat="week in weeks">
             <td ng-repeat="day in week" class="calendar-day" ng-class="todayClass(day.date)">
 
-                <div class="calendar-date"> {{ shortDate(day.date) }} </div>
+                <div class="calendar-date"> {{ day.date | shortDate }} </div>
 
                 <div ng-repeat="episode in day.episodes" class="calendar-episode">
 
                     <a href="/#/show/{{ episode.userFriendlyId }}" class="calendar-episode-link">{{ episode.showName }}</a>
 
-                    <span>(S{{ padLeft(episode.seasonNumber, 2, '0') }}E{{ padLeft(episode.number, 2, '0') }})</span>
+                    <span>(S{{ episode.seasonNumber | doubleDigit }}E{{ episode.number | doubleDigit }})</span>
 
                 </div>
             </td>
