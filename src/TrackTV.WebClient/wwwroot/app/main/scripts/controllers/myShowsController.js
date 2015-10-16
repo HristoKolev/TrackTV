@@ -10,7 +10,7 @@
             $scope.pageSize = 10;
 
             function unsubscribe (id) {
-
+                console.log(id);
             }
 
             $scope.unsubscribe = unsubscribe;

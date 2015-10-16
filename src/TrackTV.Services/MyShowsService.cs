@@ -47,6 +47,14 @@ namespace TrackTV.Services
             return this.GetShows(userId, ShowStatus.Ended, page);
         }
 
+        public void Subscribe(string userId, int showId)
+        {
+            Show show = this.ShowManager.GetShowById(showId);
+            ApplicationUser user = this.UserManager.GetUserById(userId);
+
+            this.SubscriptionManager.Subscribe(user, show);
+        }
+
         public void Unsubscribe(string userId, int showId)
         {
             Show show = this.ShowManager.GetShowById(showId);

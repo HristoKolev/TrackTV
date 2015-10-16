@@ -56,6 +56,11 @@
             {
                 controller = "MyShows"
             });
+
+            config.Routes.MapHttpRoute(name: "New DefaultApi", routeTemplate: "api/{controller}/{action}/{id}", defaults: new
+            {
+                id = RouteParameter.Optional
+            });
         }
     }
 }

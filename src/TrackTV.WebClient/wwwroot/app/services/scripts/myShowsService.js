@@ -7,7 +7,9 @@
 
             var myShows = apiPath.service('myshows');
 
-            var config = { headers : identity.getCurrentUser().addAuthorizationHeader() };
+            var config = { headers: identity.getCurrentUser().addAuthorizationHeader() };
+
+            console.log(config);
 
             //public
 
@@ -30,7 +32,7 @@
                     id : id
                 };
 
-                return $http.post(myShows('/unsubscribe'), JSON.stringify(data), config);
+                return $http.post(myShows('/unsubscribe'), data, config);
             }
 
             return {
