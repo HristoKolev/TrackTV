@@ -11,6 +11,7 @@
     "bootstrap": "^3.3.5",
     "bootswatch": "^3.3.5",
     "toastr": "^2.1.2",
-    "angular-utils-pagination": "^0.9.0"
+    "angular-utils-pagination": "^0.9.0",
+    "underscore": "1.8.3"
   }
 }

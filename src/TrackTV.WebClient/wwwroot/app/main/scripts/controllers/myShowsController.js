@@ -2,18 +2,28 @@
     'use strict';
 
     ngModules.main.controller('MyShowsController', [
-        '$scope', 'myShowsService', '$routeParams',
-        function MyShowsController ($scope, myShowsService, $routeParams) {
-
-            window.unsub = myShowsService.unsubscribe;
+        '$scope', 'myShowsService', '$routeParams', 'subscriptionService',
+        function MyShowsController ($scope, myShowsService, $routeParams, subscriptionService) {
 
             $scope.pageSize = 10;
 
-            function unsubscribe (id) {
-                console.log(id);
+            function unsubscribe(id) {
+
+                subscriptionService.unsubscribe(id).then(function (response) {
+                    console.log(response);
+                });
             }
 
             $scope.unsubscribe = unsubscribe;
+
+            function subscribe(id) {
+
+                subscriptionService.subscribe(id).then(function (response) {
+                    console.log(response);
+                });
+            }
+
+            $scope.subscribe = subscribe;
 
             function getContinuing (page) {
 

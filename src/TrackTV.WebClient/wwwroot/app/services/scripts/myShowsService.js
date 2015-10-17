@@ -7,11 +7,7 @@
 
             var myShows = apiPath.service('myshows');
 
-            var config = { headers: identity.getCurrentUser().addAuthorizationHeader() };
-
-            console.log(config);
-
-            //public
+            var config = { headers : identity.getCurrentUser().addAuthorizationHeader() };
 
             function continuing (page) {
 
@@ -27,18 +23,9 @@
                 return $http.get(myShows('/ended/' + page), config);
             }
 
-            function unsubscribe (id) {
-                var data = {
-                    id : id
-                };
-
-                return $http.post(myShows('/unsubscribe'), data, config);
-            }
-
             return {
                 continuing : continuing,
                 ended : ended,
-                unsubscribe : unsubscribe
             };
         }
     ]);

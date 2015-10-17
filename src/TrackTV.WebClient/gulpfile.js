@@ -7,7 +7,9 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 var gulp = require('gulp'),
     del = require('del'),
     concat = require('gulp-concat'),
-    less = require('gulp-less');
+    less = require('gulp-less'),
+    fs = require('fs'),
+    path = require('path');
 
 (function () {
     // Workaround for https://github.com/gulpjs/gulp/issues/71
@@ -208,7 +210,7 @@ var sourceManager = (function () {
     var pathResolver = new PathResolver();
     var modulePath = new ModulePathResolver(pathResolver);
     var module = {
-        path : pathResolver,
+        pathResolve : pathResolver,
         modulePath : modulePath,
         createSourceListBuilder : function () {
             return new SourceListBuilder(pathResolver, modulePath);
@@ -218,14 +220,21 @@ var sourceManager = (function () {
     return module;
 }());
 
-var path = sourceManager.path;
+function getFolders (dir) {
+    return fs.readdirSync(dir)
+        .filter(function (file) {
+            return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+}
+
+var pathResolve = sourceManager.pathResolve;
 var modulePath = sourceManager.modulePath;
 
 var lessFiles = modulePath.modulePath('main', 'styles/*.less');
 
 gulp.task('clean', function () {
 
-    del.sync(path.publicPath([
+    del.sync(pathResolve.publicPath([
         'lib',
         'styles.css',
         'merged-app.js'
@@ -234,7 +243,7 @@ gulp.task('clean', function () {
 
 gulp.task('scripts', function () {
 
-    var bowerScripts = path.bowerComponent([
+    var bowerScripts = pathResolve.bowerComponent([
         'jquery/dist/jquery.js',
         'bootstrap/dist/js/bootstrap.js',
         'toastr/toastr.js',
@@ -243,25 +252,26 @@ gulp.task('scripts', function () {
         'angular-cookies/angular-cookies.js',
         'angular-gravatar/build/angular-gravatar.js',
         'angular-utils-pagination/dirPagination.js',
+        'underscore/underscore.js'
     ]);
 
-    var npmScripts = path.npmComponent([
+    var npmScripts = pathResolve.npmComponent([
         'underscore.string/dist/underscore.string.js'
     ]);
 
-    var libPath = path.publicPath('lib');
+    var libPath = pathResolve.publicPath('lib');
 
     gulp.src(bowerScripts.concat(npmScripts))
         .pipe(concat('third-party.js'))
         .pipe(gulp.dest(libPath));
 
-    gulp.src(path.bowerComponent('angular-utils-pagination/dirPagination.tpl.html'))
-        .pipe(gulp.dest(path.publicPath('lib/templates')));
+    gulp.src(pathResolve.bowerComponent('angular-utils-pagination/dirPagination.tpl.html'))
+        .pipe(gulp.dest(pathResolve.publicPath('lib/templates')));
 });
 
 gulp.task('styles', function () {
 
-    var styles = path.bowerComponent([
+    var styles = pathResolve.bowerComponent([
         'bootstrap/dist/css/bootstrap.css',
         'bootswatch/cosmo/bootstrap.css',
         'toastr/toastr.css'
@@ -269,14 +279,14 @@ gulp.task('styles', function () {
 
     gulp.src(styles)
         .pipe(concat('third-party.css'))
-        .pipe(gulp.dest(path.publicPath('lib/css')));
+        .pipe(gulp.dest(pathResolve.publicPath('lib/css')));
 });
 
 gulp.task('fonts', function () {
 
-    var fontsPath = path.publicPath('lib/fonts');
+    var fontsPath = pathResolve.publicPath('lib/fonts');
 
-    gulp.src([path.bowerComponent('bootstrap/dist/fonts/*')])
+    gulp.src([pathResolve.bowerComponent('bootstrap/dist/fonts/*')])
         .pipe(gulp.dest(fontsPath));
 });
 
@@ -284,7 +294,7 @@ gulp.task('less', function () {
 
     gulp.src([lessFiles])
         .pipe(less())
-        .pipe(gulp.dest(path.publicPath()))
+        .pipe(gulp.dest(pathResolve.publicPath()))
         .on('error', console.error);
 });
 
@@ -293,17 +303,12 @@ gulp.task('merge', function () {
     var builder = sourceManager.createSourceListBuilder();
 
     builder.addPublicFile('app/init.js')
-        .addModule([
-            'services',
-            'filters',
-            'directives',
-            'main'
-        ])
+        .addModule(getFolders(modulePath.moduleRootPath))
         .addModuleFile('main', 'routeConfig.js');
 
     gulp.src(builder.src())
         .pipe(concat('merged-app.js'))
-        .pipe(gulp.dest(path.publicPath()));;
+        .pipe(gulp.dest(pathResolve.publicPath()));;
 });
 
 gulp.task('watch', function () {

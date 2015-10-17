@@ -47,22 +47,6 @@ namespace TrackTV.Services
             return this.GetShows(userId, ShowStatus.Ended, page);
         }
 
-        public void Subscribe(string userId, int showId)
-        {
-            Show show = this.ShowManager.GetShowById(showId);
-            ApplicationUser user = this.UserManager.GetUserById(userId);
-
-            this.SubscriptionManager.Subscribe(user, show);
-        }
-
-        public void Unsubscribe(string userId, int showId)
-        {
-            Show show = this.ShowManager.GetShowById(showId);
-            ApplicationUser user = this.UserManager.GetUserById(userId);
-
-            this.SubscriptionManager.Unsubscribe(user, show);
-        }
-
         private MyShowsViewModel GetShows(string userId, ShowStatus status, int? page)
         {
             IQueryable<Show> shows = this.ShowManager.GetUserShows(userId).Where(show => show.Status == status);

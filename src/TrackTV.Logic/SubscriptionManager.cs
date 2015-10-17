@@ -19,7 +19,7 @@
         {
             if (user.Shows.Contains(show))
             {
-                throw new InvalidOperationException("The user is already subscribed.");
+                throw new InvalidOperationException("The user is already subscribed to tha show.");
             }
 
             user.Shows.Add(show);
@@ -32,7 +32,7 @@
         {
             if (!user.Shows.Contains(show))
             {
-                throw new InvalidOperationException("The user is not subscribed.");
+                throw new InvalidOperationException("The user is not subscribed to that show.");
             }
 
             user.Shows.Remove(show);

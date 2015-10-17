@@ -88,6 +88,7 @@
     <Compile Include="QuerableExrensions.cs" />
     <Compile Include="ShowDetailsService.cs" />
     <Compile Include="ShowsService.cs" />
+    <Compile Include="SubscriptionService.cs" />
     <Compile Include="VewModels\Calendar\CalendarViewModel.cs" />
     <Compile Include="VewModels\ManageShows\SampleShowsViewModel.cs" />
     <Compile Include="VewModels\MyShows\MyShowsViewModel.cs" />
