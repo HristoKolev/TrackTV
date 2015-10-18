@@ -221,12 +221,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\ApiRouteConfig.cs" />
     <Compile Include="Configs\AutoMapperConfiguration.cs" />
     <Compile Include="Configs\ConfigurationManagerDocument.cs" />
     <Compile Include="Configs\FilterConfig.cs" />
     <Compile Include="Configs\ApplicationUserManager.cs" />
+    <Compile Include="Configs\HttpConfigurationExtensions.cs" />
     <Compile Include="Configs\NinjectBinder.cs" />
     <Compile Include="Configs\NinjectTypeProvider.cs" />
+    <Compile Include="Configs\Route.cs" />
     <Compile Include="Configs\RouteConfig.cs" />
     <Compile Include="Configs\Startup.cs" />
     <Compile Include="Configs\WebApiConfig.cs" />
