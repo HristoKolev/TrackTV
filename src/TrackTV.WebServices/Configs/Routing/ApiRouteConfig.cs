@@ -1,4 +1,4 @@
-namespace TrackTV.WebServices
+namespace TrackTV.WebServices.Routing
 {
     using System.Collections.Generic;
     using System.Web.Http;

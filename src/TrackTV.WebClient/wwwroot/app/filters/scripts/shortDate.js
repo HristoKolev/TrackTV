@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.filters.filter('shortDate', [
-        '_s',
-        function shortDate (_s) {
+        's',
+        function shortDate (s) {
 
             var monthNames = [
                 'January',
@@ -24,7 +24,7 @@
 
                 var monthName = monthNames[date.getMonth()].substr(0, 3);
 
-                var formattedDate = monthName + '. ' + _s(date.getDate()).lpad(2, '0').value();
+                var formattedDate = monthName + '. ' + s(date.getDate()).lpad(2, '0').value();
 
                 return formattedDate;
             }

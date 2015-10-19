@@ -1,4 +1,4 @@
-﻿namespace TrackTV.WebServices
+﻿namespace TrackTV.WebServices.Routing
 {
     using System.Web.Http;
     using System.Web.Http.Cors;

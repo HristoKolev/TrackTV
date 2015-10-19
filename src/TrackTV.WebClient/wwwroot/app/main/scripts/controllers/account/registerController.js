@@ -11,12 +11,11 @@
                     .then(function (response) {
 
                         toastr.success('Registration successful!');
-                        console.log(response);
 
-                        //$location.path('/');
+                        $location.path('/');
 
                     }, function (response) {
-                        console.log(response);
+
                         toastr.error('Registration failed!');
                     });
             }

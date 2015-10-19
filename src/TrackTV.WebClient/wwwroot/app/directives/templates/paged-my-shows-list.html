@@ -4,8 +4,7 @@
         <tr>
             <th class="col-md-3 danger">Show</th>
             <th class="col-md-3 danger">Last Episode</th>
-            <th ng-if="showNextEpisode" class="col-md-3 danger">Next Episode</th>
-            <th ng-if="!showNextEpisode" class="col-md-3 danger"></th>
+            <th class="col-md-3 danger"><span ng-if="showNextEpisode">Next Episode</span></th>
             <th class="col-md-3 danger"></th>
         </tr>
         </thead>
@@ -20,14 +19,18 @@
                 </strong>
             </td>
 
-            <td tt-my-episode data-episode="item.lastEpisode" class="col-md-3"></td>
-
-            <td ng-if="showNextEpisode" tt-my-episode data-episode="item.nextEpisode" class="col-md-3"></td>
-
-            <td ng-if="!showNextEpisode"class="col-md-3"></td>
+            <td class="col-md-3">
+                <span ng-if="item.lastEpisode" tt-my-episode data-episode="item.lastEpisode"></span>
+            </td>
 
             <td class="col-md-3">
-                <button ng-click="unsubscribe(item.id)" class="btn btn-danger my-show-unsubscribe-button">Unsubscribe</button>
+                <span ng-if="showNextEpisode && item.nextEpisode" tt-my-episode data-episode="item.nextEpisode"></span>
+            </td>
+
+
+            <td class="col-md-3">
+                <button ng-hide="item.unsubscribed" ng-click="unsubscribe(item)" class="btn btn-danger my-show-unsubscribe-button btn-subscribtion">Unsubscribe</button>
+                <button ng-show="item.unsubscribed" ng-click="subscribe(item)" class="btn btn-danger btn-subscribtion">Undo</button>
             </td>
         </tr>
 
@@ -37,5 +40,3 @@
     <div dir-pagination-controls on-page-change="pageChanged(newPageNumber)" pagination-id="paginationId" class="text-center"></div>
 
 </div>
-
-

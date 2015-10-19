@@ -7,8 +7,8 @@
         timeOut: 2000,
     };
 
-    ngModules.main.value('toastr', toastr);
+    ngModules.main.value('toastr', window.toastr);
 
-    ngModules.main.value('_s', s);
+    ngModules.main.value('s', window.s);
 
 })();

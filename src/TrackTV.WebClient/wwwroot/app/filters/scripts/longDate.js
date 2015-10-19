@@ -2,8 +2,7 @@
     'use strict';
 
     ngModules.filters.filter('longDate', [
-        '_s',
-        function longDate (_s) {
+        function longDate () {
 
             function filter (date) {
 

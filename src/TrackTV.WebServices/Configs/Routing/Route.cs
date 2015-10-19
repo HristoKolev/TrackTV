@@ -1,4 +1,4 @@
-﻿namespace TrackTV.WebServices
+﻿namespace TrackTV.WebServices.Routing
 {
     public class Route
     {

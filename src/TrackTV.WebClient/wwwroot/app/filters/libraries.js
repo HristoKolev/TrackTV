@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
 
-    ngModules.filters.value('_s', s);
+    ngModules.filters.value('s', window.s);
 
 })();

@@ -41,6 +41,7 @@
                     currentPage : '=',
                     pageChanged : '=',
                     unsubscribe : '=',
+                    subscribe : '=',
                     showNextEpisode : '=',
                     paginationId : '@',
                 },

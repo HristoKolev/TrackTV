@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('CalendarController', [
-        '$scope', '$routeParams', 'calendarService', '_s',
-        function CalendarController ($scope, $routeParams, calendarService, _s) {
+        '$scope', '$routeParams', 'calendarService',
+        function CalendarController ($scope, $routeParams, calendarService) {
 
             $scope.daysOfWeek = [
                 'Monday',

@@ -2,45 +2,51 @@
     'use strict';
 
     ngModules.main.controller('MyShowsController', [
-        '$scope', 'myShowsService', '$routeParams', 'subscriptionService',
+        '$scope', 'myShowsService', '$routeParams', 'subscriptionService', 'toastr',
         function MyShowsController ($scope, myShowsService, $routeParams, subscriptionService) {
 
             $scope.pageSize = 10;
 
-            function unsubscribe(id) {
+            function subscribe (show) {
 
-                subscriptionService.unsubscribe(id).then(function (response) {
-                    console.log(response);
-                });
+                subscriptionService.subscribe(show.id)
+                    .then(function (response) {
+
+                        show.unsubscribed = false;
+                    });
             }
 
-            $scope.unsubscribe = unsubscribe;
+            function unsubscribe (show) {
 
-            function subscribe(id) {
+                subscriptionService.unsubscribe(show.id)
+                    .then(function (response) {
 
-                subscriptionService.subscribe(id).then(function (response) {
-                    console.log(response);
-                });
+                        show.unsubscribed = true;
+                        toastr.success('You have successfully unsubscribed from ' + show.name);
+                    });
             }
-
-            $scope.subscribe = subscribe;
 
             function getContinuing (page) {
 
-                myShowsService.continuing(page).then(function (response) {
-                    $scope.continuing = response.data;
-                });
-            }
+                myShowsService.continuing(page)
+                    .then(function (response) {
 
-            $scope.getContinuing = getContinuing;
+                        $scope.continuing = response.data;
+                    });
+            }
 
             function getEnded (page) {
 
-                myShowsService.ended(page).then(function (response) {
-                    $scope.ended = response.data;
-                });
+                myShowsService.ended(page)
+                    .then(function (response) {
+
+                        $scope.ended = response.data;
+                    });
             }
 
+            $scope.unsubscribe = unsubscribe;
+            $scope.subscribe = subscribe;
+            $scope.getContinuing = getContinuing;
             $scope.getEnded = getEnded;
         }
     ]);

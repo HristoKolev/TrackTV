@@ -6,6 +6,8 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    using TrackTV.WebServices.Routing;
+
     public class WebApiApplication : HttpApplication
     {
         protected void Application_BeginRequest(object sender, EventArgs e)
