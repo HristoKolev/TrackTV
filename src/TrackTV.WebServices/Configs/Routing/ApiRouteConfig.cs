@@ -11,6 +11,17 @@ namespace TrackTV.WebServices.Routing
 
             routes.Add(new Route
             {
+                Name = "Get by userFriendlyId",
+                Template = "api/{controller}/{userFriendlyId}",
+                Defaults = new
+                {
+                    userFriendlyId = RouteParameter.Optional
+                }
+            });
+
+
+            routes.Add(new Route
+            {
                 Name = "DefaultApi", 
                 Template = "api/{controller}/{id}", 
                 Defaults = new
@@ -19,6 +30,7 @@ namespace TrackTV.WebServices.Routing
                 }
             });
 
+        
             routes.Add(new Route
             {
                 Name = "Shows by genre", 

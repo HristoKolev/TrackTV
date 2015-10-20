@@ -2,13 +2,13 @@
 
     <div class="text-center">
         <h3 class="month-list">
-            <a href="/#/calendar/{{ previosMonth.year }}/{{ previosMonth.month }}" class="month-link">« {{ previosMonth.name }}</a>
+            <a href="/#/calendar/{{ previosMonth.year }}/{{ previosMonth.month }}" class="month-link">« {{ previosMonth.month | monthName }}</a>
         </h3>
 
-        <h1 class="month-list">{{ thisMonth.name }}</h1>
+        <h1 class="month-list">{{ thisMonth.month | monthName }}</h1>
 
         <h3 class="month-list">
-            <a href="/#/calendar/{{ nextMonth.year }}/{{ nextMonth.month }}" class="month-link">{{ nextMonth.name }} »</a>
+            <a href="/#/calendar/{{ nextMonth.year }}/{{ nextMonth.month }}" class="month-link">{{ nextMonth.month | monthName }} »</a>
         </h3>
     </div>
 

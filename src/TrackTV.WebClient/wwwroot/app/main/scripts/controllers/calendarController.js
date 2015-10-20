@@ -15,21 +15,6 @@
                 'Sunday'
             ];
 
-            var monthNames = [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
-            ];
-
             // public
 
             function todayClass (date) {
@@ -49,8 +34,7 @@
 
                 return {
                     year : date.getFullYear(),
-                    month : date.getMonth() + 1,
-                    name : monthNames[date.getMonth()]
+                    month : date.getMonth() + 1
                 };
             }
 

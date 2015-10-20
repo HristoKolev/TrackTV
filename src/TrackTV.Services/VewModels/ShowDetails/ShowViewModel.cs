@@ -13,7 +13,9 @@
     [MapFrom(typeof(Show))]
     public class ShowViewModel : ICustomMap<Show, ShowViewModel>
     {
-        public AirTimeViewModel AirTimeAndDate { get; set; }
+        public AirDay? AirDay { get; set; }
+
+        public Time AirTime { get; set; }
 
         public string Banner { get; set; }
 
@@ -53,13 +55,23 @@
             IAppSettings appSettings = mapper.TypeProvider.Get<IAppSettings>();
 
             mapper.QuickMap(model => model.Banner, show => appSettings.BannerPath + show.BannerBig);
+            mapper.QuickMap(model => model.AirTime, show => GetTime(show.AirTime));
             mapper.QuickMap(model => model.EpisodeCount, show => show.Seasons.SelectMany(season => season.Episodes).Count());
             mapper.QuickMap(model => model.SubscriberCount, show => show.Subscribers.Count);
             mapper.QuickMap(model => model.Network, show => show.Network.Name);
             mapper.QuickMap(model => model.NetworkUserFriendlyId, show => show.Network.UserFriendlyId);
             mapper.QuickMap(model => model.NumberOfSeasones, 
                 show => show.Seasons.Count(season => season.Episodes.Count != 0 && season.Number != 0));
-            mapper.QuickMap(model => model.AirTimeAndDate, show => new AirTimeViewModel(show.AirDay, show.AirTime));
+        }
+
+        private static Time GetTime(TimeSpan? time)
+        {
+            if (time.HasValue)
+            {
+                return new Time(time.Value.Hours, time.Value.Minutes);
+            }
+
+            return null;
         }
     }
 }

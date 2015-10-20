@@ -11,9 +11,9 @@ namespace TrackTV.Services
     using TrackTV.Models;
     using TrackTV.Services.VewModels.ShowDetails;
 
-    public class ShowDetailsService
+    public class ShowService
     {
-        public ShowDetailsService(
+        public ShowService(
             IMappingEngine mappingEngine, 
             ShowManager showManager, 
             EpisodeManager episodeManager, 
@@ -37,7 +37,7 @@ namespace TrackTV.Services
 
         private SubscriptionManager SubscriptionManager { get; }
 
-        public ShowViewModel GetByUserFriendlyId(string userFriendlyId, string currentUserId)
+        public ShowViewModel Show(string currentUserId, string userFriendlyId)
         {
             Show show = this.ShowManager.GetShowByUserFriendlyId(userFriendlyId);
 
@@ -60,7 +60,7 @@ namespace TrackTV.Services
             return model;
         }
 
-        public IList<EpisodeViewModel> GetSeason(int showId, int seasonNumber)
+        private IList<EpisodeViewModel> GetSeason(int showId, int seasonNumber)
         {
             IList<EpisodeViewModel> models =
                 this.EpisodeManager.GetSeasonEpisodes(showId, seasonNumber).Project().To<EpisodeViewModel>().ToList();
@@ -68,30 +68,12 @@ namespace TrackTV.Services
             return models;
         }
 
-        public void Remove(int id)
+        private void Remove(int id)
         {
             this.ShowManager.RemoveShow(id);
         }
 
-        public string Subscribe(ApplicationUser user, int showId)
-        {
-            Show show = this.ShowManager.GetShowById(showId);
-
-            this.SubscriptionManager.Subscribe(user, show);
-
-            return show.UserFriendlyId;
-        }
-
-        public string Unsubscribe(ApplicationUser user, int showId)
-        {
-            Show show = this.ShowManager.GetShowById(showId);
-
-            this.SubscriptionManager.Unsubscribe(user, show);
-
-            return show.UserFriendlyId;
-        }
-
-        public string Update(int showId)
+        private string Update(int showId)
         {
             Show show = this.ShowManager.GetShowById(showId);
 

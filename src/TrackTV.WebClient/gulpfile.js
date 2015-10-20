@@ -105,7 +105,8 @@ var sourceManager = (function () {
         };
     }
 
-    function ModulePathResolver (pathResolver) {
+    function ModulePathResolver(pathResolver) {
+
         this._pathResolver = pathResolver;
         this.moduleRootPath = this._pathResolver.publicPath('app');
         this.fetchLevel = 4;
@@ -209,6 +210,7 @@ var sourceManager = (function () {
 
     var pathResolver = new PathResolver();
     var modulePath = new ModulePathResolver(pathResolver);
+
     var module = {
         pathResolve : pathResolver,
         modulePath : modulePath,
@@ -252,7 +254,8 @@ gulp.task('scripts', function () {
         'angular-cookies/angular-cookies.js',
         'angular-gravatar/build/angular-gravatar.js',
         'angular-utils-pagination/dirPagination.js',
-        'underscore/underscore.js'
+        'underscore/underscore.js',
+        'moment/moment.js'
     ]);
 
     var npmScripts = pathResolve.npmComponent([

@@ -53,6 +53,11 @@
                 reloadOnSearch: false
             });
 
+            $routeProvider.when('/show/:show', {
+                templateUrl: templateProvider.view('show'),
+                controller: 'ShowController'
+            });
+
             paginationTemplateProvider.setPath(templateProvider.lib('dirPagination.tpl'));
 
             $routeProvider.otherwise({ redirectTo : '/' });

@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('NetworkController', [
-        '$scope', 'showsService', '$routeParams',
-        function NetworkController($scope, showsService, $routeParams) {
+        '$scope', 'showsService', '$routeParams', '$location',
+        function NetworkController($scope, showsService, $routeParams, $location) {
 
             $scope.pageSize = 24;
             $scope.currentPage = $routeParams.page || 1;
