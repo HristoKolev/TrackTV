@@ -12,19 +12,31 @@
                 headers : user.addAuthorizationHeader()
             };
 
-            // public
+            function getMonthModel (date) {
 
-            function currentMonth () {
-                return $http.get(calendar('/'), config).then(processResponse);
+                return {
+                    year : date.getFullYear(),
+                    month : date.getMonth() + 1
+                };
             }
 
-            function month (year, month) {
-                return $http.get(calendar('/' + year + '/' + month), config).then(processResponse);
-            }
+            function setMonthLinks (date) {
 
-            // private
+                var info = {};
+
+                info.thisMonth = getMonthModel(date);
+
+                date.setMonth(date.getMonth() - 1);
+                info.previosMonth = getMonthModel(date);
+
+                date.setMonth(date.getMonth() + 2);
+                info.nextMonth = getMonthModel(date);
+
+                return info;
+            }
 
             function processResponse (response) {
+
                 var data = response.data;
 
                 data.date = new Date(data.date);
@@ -36,7 +48,19 @@
                     }
                 }
 
+                data.info = setMonthLinks(data.date);
+
                 return response;
+            }
+
+            // public
+
+            function currentMonth () {
+                return $http.get(calendar('/'), config).then(processResponse);
+            }
+
+            function month (year, month) {
+                return $http.get(calendar('/' + year + '/' + month), config).then(processResponse);
             }
 
             return {
