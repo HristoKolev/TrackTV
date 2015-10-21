@@ -15,5 +15,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <DevelopmentServerPort>60381</DevelopmentServerPort>
   </PropertyGroup>
+  <ItemGroup>
+    <DnxInvisibleFolder Include="bower_components\" />    
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
