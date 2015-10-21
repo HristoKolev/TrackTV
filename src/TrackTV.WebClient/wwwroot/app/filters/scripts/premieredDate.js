@@ -12,7 +12,7 @@
                     date = new Date(date);
                 }
 
-                return moment(date).format('MMM [ \']DD');
+                return moment(date).format('MMM \'DD, YYYY');
             }
 
             return filter;
