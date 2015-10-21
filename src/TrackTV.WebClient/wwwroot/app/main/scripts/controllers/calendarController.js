@@ -5,6 +5,24 @@
         '$scope', '$routeParams', 'calendarService',
         function CalendarController ($scope, $routeParams, calendarService) {
 
+            function processResponse (response) {
+
+                var data = response.data;
+
+                $scope.info = data.info;
+                $scope.weeks = data.month;
+            }
+
+            if ($routeParams.year && $routeParams.month) {
+
+                calendarService.month($routeParams.year, $routeParams.month).then(processResponse);
+            } else {
+
+                calendarService.currentMonth().then(processResponse);
+            }
+
+            // scope
+
             $scope.daysOfWeek = [
                 'Monday',
                 'Tuesday',
@@ -14,8 +32,6 @@
                 'Saturday',
                 'Sunday'
             ];
-
-            // public
 
             function todayClass (date) {
 
@@ -27,44 +43,6 @@
             }
 
             $scope.todayClass = todayClass;
-
-            // private
-
-            function getMonthModel (date) {
-
-                return {
-                    year : date.getFullYear(),
-                    month : date.getMonth() + 1
-                };
-            }
-
-            function setMonthLinks (date) {
-
-                $scope.thisMonth = getMonthModel(date);
-
-                date.setMonth(date.getMonth() - 1);
-                $scope.previosMonth = getMonthModel(date);
-
-                date.setMonth(date.getMonth() + 2);
-                $scope.nextMonth = getMonthModel(date);
-            }
-
-            function processResponse (response) {
-
-                var data = response.data;
-
-                setMonthLinks(data.date);
-
-                $scope.weeks = data.month;
-            }
-
-            if ($routeParams.year && $routeParams.month) {
-
-                calendarService.month($routeParams.year, $routeParams.month).then(processResponse);
-            } else {
-
-                calendarService.currentMonth().then(processResponse);
-            }
         }
     ]);
 })();

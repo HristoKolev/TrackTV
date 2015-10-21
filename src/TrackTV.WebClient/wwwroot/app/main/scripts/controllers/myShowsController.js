@@ -5,6 +5,8 @@
         '$scope', 'myShowsService', '$routeParams', 'subscriptionService', 'toastr',
         function MyShowsController ($scope, myShowsService, $routeParams, subscriptionService) {
 
+            // scope
+
             $scope.pageSize = 10;
 
             function subscribe (show) {
@@ -16,6 +18,8 @@
                     });
             }
 
+            $scope.subscribe = subscribe;
+
             function unsubscribe (show) {
 
                 subscriptionService.unsubscribe(show.id)
@@ -26,6 +30,8 @@
                     });
             }
 
+            $scope.unsubscribe = unsubscribe;
+
             function getContinuing (page) {
 
                 myShowsService.continuing(page)
@@ -35,6 +41,8 @@
                     });
             }
 
+            $scope.getContinuing = getContinuing;
+
             function getEnded (page) {
 
                 myShowsService.ended(page)
@@ -43,10 +51,7 @@
                         $scope.ended = response.data;
                     });
             }
-
-            $scope.unsubscribe = unsubscribe;
-            $scope.subscribe = subscribe;
-            $scope.getContinuing = getContinuing;
+          
             $scope.getEnded = getEnded;
         }
     ]);

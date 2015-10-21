@@ -5,13 +5,15 @@
         '$scope', '$routeParams', 'showService', 'identity', 'subscriptionService',
         function ShowController ($scope, $routeParams, showService, identity, subscriptionService) {
 
-            $scope.user = identity.getCurrentUser();
-
             showService.show($routeParams.show)
-                .then(function (response) {
+              .then(function (response) {
 
-                    $scope.show = response.data;
-                });
+                  $scope.show = response.data;
+              });
+
+            // scope
+
+            $scope.user = identity.getCurrentUser();
 
             function subscribe (id) {
 
@@ -22,6 +24,8 @@
                     });
             }
 
+            $scope.subscribe = subscribe;
+
             function unsubscribe (id) {
 
                 subscriptionService.unsubscribe(id)
@@ -30,8 +34,7 @@
                         $scope.show.isUserSubscribed = false;
                     });
             }
-
-            $scope.subscribe = subscribe;
+           
             $scope.unsubscribe = unsubscribe;
         }
     ]);

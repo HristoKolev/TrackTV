@@ -3,13 +3,15 @@
 
     ngModules.main.controller('SearchController', [
         '$scope', 'showsService', '$routeParams', '$location',
-        function SearchController($scope, showsService, $routeParams, $location) {
+        function SearchController ($scope, showsService, $routeParams, $location) {
+
+            // scope
 
             $scope.pageSize = 24;
             $scope.query = $routeParams.query;
             $scope.currentPage = $routeParams.page || 1;
 
-            $scope.gePtage = function (page) {
+            function gePtage (page) {
 
                 showsService.search($routeParams.query, page)
                     .then(function (response) {
@@ -25,7 +27,9 @@
                 } else {
                     $location.search('page', page);
                 }
-            };
+            }
+
+            $scope.gePtage = gePtage;
         }
     ]);
 

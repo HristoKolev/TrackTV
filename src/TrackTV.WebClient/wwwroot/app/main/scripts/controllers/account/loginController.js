@@ -22,6 +22,8 @@
                 });
             }
 
+            $scope.login = login;
+
             function logout () {
 
                 authentication.logout().then(function () {
@@ -40,8 +42,7 @@
                     $location.path('/');
                 });
             }
-
-            $scope.login = login;
+        
             $scope.logout = logout;
         }
     ]);

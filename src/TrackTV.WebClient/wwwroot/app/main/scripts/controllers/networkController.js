@@ -3,12 +3,15 @@
 
     ngModules.main.controller('NetworkController', [
         '$scope', 'showsService', '$routeParams', '$location',
-        function NetworkController($scope, showsService, $routeParams, $location) {
+        function NetworkController ($scope, showsService, $routeParams, $location) {
+
+            // scope
 
             $scope.pageSize = 24;
+            
             $scope.currentPage = $routeParams.page || 1;
 
-            $scope.gePtage = function (page) {
+            function gePtage (page) {
 
                 showsService.network($routeParams.network, page)
                     .then(function (response) {
@@ -25,7 +28,9 @@
                 } else {
                     $location.search('page', page);
                 }
-            };
+            }
+
+            $scope.gePtage = gePtage;
         }
     ]);
 
