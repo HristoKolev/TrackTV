@@ -11,6 +11,7 @@
                   $scope.show = response.data;
               });
 
+
             // scope
 
             $scope.user = identity.getCurrentUser();

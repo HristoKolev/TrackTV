@@ -1,0 +1,16 @@
+﻿{
+  "templates": {
+    "extension": ".html",
+    "viewPath": "app/main/templates/",
+    "directivePath": "app/directives/templates/",
+    "libPath": "lib/templates/"
+  },
+
+  "source": {
+    "rootPath": "wwwroot",
+    "bowerRootPath": "bower_components",
+    "npmRootPath": "node_modules",
+    "moduleRootPath": "wwwroot/app",
+    "fetchLevel": 4
+  }
+}
