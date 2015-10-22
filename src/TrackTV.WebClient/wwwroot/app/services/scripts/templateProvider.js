@@ -28,17 +28,17 @@
 
             function view (name) {
 
-                return templates.viewPath + name + templates.extension;
+                return templates.viewPath + '/' + name + templates.extension;
             }
 
             function directive (name) {
 
-                return templates.directivePath + name + templates.extension;
+                return templates.directivePath + '/' + name + templates.extension;
             }
 
             function lib (name) {
 
-                return templates.libPath + name + templates.extension;
+                return templates.libPath + '/' + name + templates.extension;
             }
 
             return {

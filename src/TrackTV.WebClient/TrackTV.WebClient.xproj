@@ -16,7 +16,8 @@
     <DevelopmentServerPort>60381</DevelopmentServerPort>
   </PropertyGroup>
   <ItemGroup>
-    <DnxInvisibleFolder Include="bower_components\" />    
+    <DnxInvisibleFolder Include="bower_components\" />
+    <DnxInvisibleFolder Include="wwwroot\build\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
