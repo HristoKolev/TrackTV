@@ -4,13 +4,20 @@ This file in the main entry point for defining Gulp tasks and using Gulp plugins
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
+
+
 var gulp = require('gulp'),
     del = require('del'),
     concat = require('gulp-concat'),
     less = require('gulp-less'),
     fs = require('fs'),
     path = require('path'),
-    settings = require('./wwwroot/app/settings.json'),
+    replace = require('gulp-replace'),
+    tap = require('gulp-tap'),
+    dom = require('gulp-dom'),
+    insert = require('gulp-insert');
+
+var settings = require('./wwwroot/app/settings.json'),
     sourceManager = require('./sourceManager');
 
 sourceManager.setSettings(settings.source);
@@ -50,10 +57,58 @@ function getFolders (dir) {
         });
 }
 
+function getAppScripts () {
+
+    var builder = sourceManager.createSourceListBuilder();
+
+    builder.addPublicFile('/app/init.js')
+        .addModule(getFolders(settings.source.moduleRootPath))
+        .addModuleFile('main', '/routeConfig.js');
+
+    return builder.src();
+}
+
 var pathResolve = sourceManager.pathResolve;
 var modulePath = sourceManager.modulePath;
 
+// source files
+
 var lessFiles = modulePath.modulePath('main', '/styles/*.less');
+
+var bowerScripts = pathResolve.bowerComponent([
+    '/jquery/dist/jquery.js',
+    '/bootstrap/dist/js/bootstrap.js',
+    '/toastr/toastr.js',
+    '/angular/angular.js',
+    '/angular-route/angular-route.js',
+    '/angular-cookies/angular-cookies.js',
+    '/angular-gravatar/build/angular-gravatar.js',
+    '/angular-utils-pagination/dirPagination.js',
+    '/underscore/underscore.js',
+    '/moment/moment.js'
+]);
+
+var npmScripts = pathResolve.npmComponent([
+    '/underscore.string/dist/underscore.string.js'
+]);
+
+var styles = pathResolve.bowerComponent([
+    '/bootstrap/dist/css/bootstrap.css',
+    '/bootswatch/cosmo/bootstrap.css',
+    '/toastr/toastr.css'
+]);
+
+var fonts = pathResolve.bowerComponent([
+    '/bootstrap/dist/fonts/*'
+]);
+
+var templates = pathResolve.bowerComponent([
+    '/angular-utils-pagination/dirPagination.tpl.html'
+]);
+
+var appScripts = getAppScripts();
+
+// tasks
 
 gulp.task('clean', function () {
 
@@ -66,40 +121,17 @@ gulp.task('clean', function () {
 
 gulp.task('scripts', function () {
 
-    var bowerScripts = pathResolve.bowerComponent([
-        '/jquery/dist/jquery.js',
-        '/bootstrap/dist/js/bootstrap.js',
-        '/toastr/toastr.js',
-        '/angular/angular.js',
-        '/angular-route/angular-route.js',
-        '/angular-cookies/angular-cookies.js',
-        '/angular-gravatar/build/angular-gravatar.js',
-        '/angular-utils-pagination/dirPagination.js',
-        '/underscore/underscore.js',
-        '/moment/moment.js'
-    ]);
-
-    var npmScripts = pathResolve.npmComponent([
-        '/underscore.string/dist/underscore.string.js'
-    ]);
-
     var libPath = pathResolve.publicPath('/lib');
 
     gulp.src(bowerScripts.concat(npmScripts))
         .pipe(concat('third-party.js'))
         .pipe(gulp.dest(libPath));
 
-    gulp.src(pathResolve.bowerComponent('/angular-utils-pagination/dirPagination.tpl.html'))
+    gulp.src(templates)
         .pipe(gulp.dest(pathResolve.publicPath('/lib/templates')));
 });
 
 gulp.task('styles', function () {
-
-    var styles = pathResolve.bowerComponent([
-        '/bootstrap/dist/css/bootstrap.css',
-        '/bootswatch/cosmo/bootstrap.css',
-        '/toastr/toastr.css'
-    ]);
 
     gulp.src(styles)
         .pipe(concat('third-party.css'))
@@ -110,7 +142,7 @@ gulp.task('fonts', function () {
 
     var fontsPath = pathResolve.publicPath('/lib/fonts');
 
-    gulp.src([pathResolve.bowerComponent('/bootstrap/dist/fonts/*')])
+    gulp.src([fonts])
         .pipe(gulp.dest(fontsPath));
 });
 
@@ -124,13 +156,7 @@ gulp.task('less', function () {
 
 gulp.task('merge', function () {
 
-    var builder = sourceManager.createSourceListBuilder();
-
-    builder.addPublicFile('/app/init.js')
-        .addModule(getFolders(settings.source.moduleRootPath))
-        .addModuleFile('main', '/routeConfig.js');
-
-    gulp.src(builder.src())
+    gulp.src(appScripts)
         .pipe(concat('merged-app.js'))
         .pipe(gulp.dest(pathResolve.publicPath()));;
 
@@ -148,8 +174,14 @@ gulp.task('watch', function () {
     console.log('Watching: ' + sourceFiles);
 });
 
+var buildPath = pathResolve.publicPath('/build');
+
 gulp.task('compile', function () {
+
+    // clean
+    del.sync(buildPath);
 
 });
 
 gulp.task('default', ['clean', 'scripts', 'styles', 'fonts', 'less', 'merge']);
+
