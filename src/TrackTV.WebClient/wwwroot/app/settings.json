@@ -3,7 +3,7 @@
     "extension": ".html",
     "viewPath": "app/main/templates",
     "directivePath": "app/directives/templates",
-    "libPath": "lib/templates"
+    "libPath": "lib/templates"    
   },
 
   "source": {

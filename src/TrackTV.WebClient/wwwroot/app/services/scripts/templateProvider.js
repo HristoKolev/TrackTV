@@ -4,41 +4,40 @@
     ngModules.services.constant('templateProvider',
         function templateProvider () {
 
-            function getSettings () {
-
-                var settings;
-
-                $.ajax({
-                    type : 'GET',
-                    url : 'app/settings.json',
-                    dataType : 'json',
-                    success : function (data) {
-                        settings = data;
-
-                    },
-
-                    async : false
-                });
-
-                return settings;
-            }
-
-            var settings = window.settings || getSettings();
             var templates = settings.templates;
+
+            function getTemplate (name, prefix) {
+
+                var isCached = templates.cached;
+
+                var result = name + templates.extension;
+
+                if (!isCached) {
+                    result = prefix + result;
+                }
+
+                return result;
+            }
 
             function view (name) {
 
-                return templates.viewPath + '/' + name + templates.extension;
+                var path = templates.viewPath + '/';
+
+                return getTemplate(name, path);
             }
 
             function directive (name) {
 
-                return templates.directivePath + '/' + name + templates.extension;
+                var path = templates.directivePath + '/';
+
+                return getTemplate(name, path);
             }
 
             function lib (name) {
 
-                return templates.libPath + '/' + name + templates.extension;
+                var path = templates.libPath + '/';
+
+                return getTemplate(name, path);
             }
 
             return {
@@ -47,5 +46,4 @@
                 lib : lib
             };
         }());
-
 })();

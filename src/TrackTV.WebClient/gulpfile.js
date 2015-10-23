@@ -4,6 +4,8 @@ This file in the main entry point for defining Gulp tasks and using Gulp plugins
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 */
 
+'use strict';
+
 var gulp = require('gulp'),
     del = require('del'),
     concat = require('gulp-concat'),
@@ -16,8 +18,11 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     minifyCss = require('gulp-minify-css'),
     insert = require('gulp-insert'),
-    runSequence = require('run-sequence');
-file = require('gulp-file');
+    runSequence = require('run-sequence'),
+    file = require('gulp-file'),
+    minifyHtml = require('gulp-minify-html');
+
+var embedMedia = require('./gulp-embed-media');
 
 var settings = require('./wwwroot/app/settings.json'),
     sourceManager = require('./sourceManager');
@@ -199,9 +204,18 @@ var tempBuild = buildPath + '/temp';
 
 var html = pathResolve.publicPath('/index.html');
 
-var minifyOptions = {
+var cssMinifyOptions = {
     processImportFrom : ['local'],
     keepSpecialComments : 0
+};
+
+var htmlMinifyOptions = {
+    empty : true,
+};
+
+var embedMediaOptions = {
+    baseDir: pathResolve.publicPath(),
+    verbose: true
 };
 
 function createFile (name, contents) {
@@ -244,7 +258,7 @@ gulp.task('build-styles', function () {
 
     return gulp.src(styles)
         .pipe(concat('third-party.css'))
-        .pipe(minifyCss(minifyOptions))
+        .pipe(minifyCss(cssMinifyOptions))
         .pipe(replace('../fonts/', './content/'))
         .pipe(gulp.dest(tempBuild + '/lib/css'));
 });
@@ -259,7 +273,7 @@ gulp.task('build-less', function () {
 
     return gulp.src([lessFiles])
         .pipe(less())
-        .pipe(minifyCss(minifyOptions))
+        .pipe(minifyCss(cssMinifyOptions))
         .pipe(gulp.dest(tempBuild));
 });
 
@@ -286,6 +300,7 @@ gulp.task('build-templates', function () {
     }
 
     return gulp.src(templates)
+        .pipe(embedMedia(embedMediaOptions))
         .pipe(insert.transform(function (contents, file) {
 
             return wrapTemplate(file.path.split('\\').pop(), contents);
@@ -296,6 +311,7 @@ gulp.task('build-templates', function () {
 
 gulp.task('build-settings', function () {
 
+    settings.templates.cached = true;
     var content = '<script> window.settings = ' + JSON.stringify(settings) + '; </script>';
 
     return createFile('settings.html', content)
@@ -305,19 +321,24 @@ gulp.task('build-settings', function () {
 gulp.task('build-merge', function () {
 
     var templateRegex = commentPlaceholder('templates');
-    
     var settingsRegex = commentPlaceholder('settings');
-    console.log(settingsRegex);
-    
+
     var templateContent = fs.readFileSync(tempBuild + '/' + 'templates.html');
     var settingsContent = fs.readFileSync(tempBuild + '/' + 'settings.html');
 
     return gulp.src(html)
+        .pipe(embedMedia({
+            baseDir: pathResolve.publicPath(),
+            verbose: true,
+            selectors: 'head link[rel="icon"]',
+            attributes: 'href'
+        }))
         .pipe(replace(templateRegex, templateContent))
         .pipe(replace(settingsRegex, settingsContent))
         .pipe(smoosher({
             base : tempBuild
         }))
+        .pipe(minifyHtml(htmlMinifyOptions))
         .pipe(gulp.dest(buildPath));
 });
 
@@ -335,11 +356,11 @@ gulp.task('build', function () {
         'build-scripts',
         'build-source',
         'build-styles',
-        'build-fonts',
+        //'build-fonts',
         'build-less',
         'build-copy-content',
         'build-templates',
         'build-settings',
-        'build-merge','build-clear'
+        'build-merge', 'build-clear'
     );
 });
