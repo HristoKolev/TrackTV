@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-minify-css'),
     insert = require('gulp-insert'),
     runSequence = require('run-sequence');
+file = require('gulp-file');
 
 var settings = require('./wwwroot/app/settings.json'),
     sourceManager = require('./sourceManager');
@@ -203,6 +204,16 @@ var minifyOptions = {
     keepSpecialComments : 0
 };
 
+function createFile (name, contents) {
+
+    return file(name, contents, { src : true });
+}
+
+function commentPlaceholder (id) {
+
+    return new RegExp('<!--\\s*?' + id + '\\s*?-->', 'g');
+}
+
 // build tasks
 
 gulp.task('build-clean', function (callback) {
@@ -285,16 +296,25 @@ gulp.task('build-templates', function () {
 
 gulp.task('build-settings', function () {
 
+    var content = '<script> window.settings = ' + JSON.stringify(settings) + '; </script>';
+
+    return createFile('settings.html', content)
+        .pipe(gulp.dest(tempBuild));
 });
 
 gulp.task('build-merge', function () {
 
-    // templates 
-    var templateRegex = /<!--\s*?templates\s*?-->/g;
+    var templateRegex = commentPlaceholder('templates');
+    
+    var settingsRegex = commentPlaceholder('settings');
+    console.log(settingsRegex);
+    
     var templateContent = fs.readFileSync(tempBuild + '/' + 'templates.html');
+    var settingsContent = fs.readFileSync(tempBuild + '/' + 'settings.html');
 
     return gulp.src(html)
         .pipe(replace(templateRegex, templateContent))
+        .pipe(replace(settingsRegex, settingsContent))
         .pipe(smoosher({
             base : tempBuild
         }))
@@ -320,7 +340,6 @@ gulp.task('build', function () {
         'build-copy-content',
         'build-templates',
         'build-settings',
-        'build-merge',
-        'build-clear'
+        'build-merge','build-clear'
     );
 });
