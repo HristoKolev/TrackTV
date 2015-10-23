@@ -7,23 +7,32 @@ var gutil = require('gulp-util'),
     path = require('path'),
     mime = require('mime');
 
+var pluginName = 'gulp-embed-media';
+
 module.exports = function (options) {
 
     options = options || {};
-    options.selectors = options.selectors || ['img'];
-    options.attributes = options.attributes || ['src'];
-    options.verbose = !!options.verbose;
-    options.skipIfNotFound = true;
 
-    if (!(options.selectors instanceof Array)) {
-        options.selectors = [options.selectors];
+    processOptions(options);
+
+    function processOptions(options) {
+
+        options.selectors = options.selectors || ['img'];
+        options.attributes = options.attributes || ['src'];
+        options.verbose = !!options.verbose;
+        options.skipIfNotFound = true;
+
+        if (!(options.selectors instanceof Array)) {
+            options.selectors = [options.selectors];
+        }
+
+        if (!(options.attributes instanceof Array)) {
+            options.attributes = [options.attributes];
+        }
+
     }
 
-    if (!(options.attributes instanceof Array)) {
-        options.attributes = [options.attributes];
-    }
-
-    function log (message) {
+    function log(message) {
 
         if (options.verbose) {
 
@@ -31,12 +40,12 @@ module.exports = function (options) {
         }
     }
 
-    function isFunction (functionToCheck) {
+    function isFunction(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     }
 
-    function getBaseDirectory (file) {
+    function getBaseDirectory(file) {
 
         if (isFunction(options.resolveBaseDir)) {
 
@@ -51,7 +60,7 @@ module.exports = function (options) {
         return options.baseDir || file.base;
     }
 
-    function encodeResource (sourcePath, baseDirectory) {
+    function encodeResource(sourcePath, baseDirectory) {
 
         var isEncoded = sourcePath && sourcePath.indexOf('data:') === 0;
 
@@ -94,18 +103,15 @@ module.exports = function (options) {
         }
     }
 
-// create a stream through which each file will pass
     return through.obj(function (file, enc, callback) {
 
         if (file.isNull()) {
-
             this.push(file);
-            // do nothing if no contents
             return callback();
         }
 
         if (file.isStream()) {
-            this.emit('error', new gutil.PluginError('gulp-img64', 'Streaming not supported'));
+            this.emit('error', new gutil.PluginError(pluginName, 'Streaming is not supported'));
             return callback();
         }
 
@@ -143,9 +149,7 @@ module.exports = function (options) {
             }
 
             var output = $.html();
-
             file.contents = new Buffer(output);
-
             return callback(null, file);
         }
     });

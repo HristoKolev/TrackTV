@@ -102,6 +102,7 @@ function SourceListBuilder (pathResolver, modulePathResolver) {
     this._pathResolver = pathResolver;
     this._modulePathResolver = modulePathResolver;
     this._files = [];
+    this._modules = [];
 
     SourceListBuilder.prototype.addModule = function (name) {
 
@@ -113,6 +114,8 @@ function SourceListBuilder (pathResolver, modulePathResolver) {
             }
 
         } else {
+
+            this._modules.push(name);
 
             this.addFile(this._modulePathResolver.modulePath(name, '/module.js'));
             this.addFile(this._modulePathResolver.modulePath(name, '/constants.js'));
@@ -153,9 +156,35 @@ function SourceListBuilder (pathResolver, modulePathResolver) {
         return this;
     };
 
-    SourceListBuilder.prototype.src = function () {
+    SourceListBuilder.prototype.scripts = function () {
 
         return this._files;
+    };
+
+    SourceListBuilder.prototype.templates = function () {
+
+        var templatesPaths = [];
+
+        for (var index in this._modules) {
+            var module = this._modules[index];
+
+            templatesPaths.push(this._modulePathResolver.modulePath(module, '/templates/*.html'));
+        }
+
+        return templatesPaths;
+    };
+
+    SourceListBuilder.prototype.lessFiles = function () {
+
+        var templatesPaths = [];
+
+        for (var index in this._modules) {
+            var module = this._modules[index];
+
+            templatesPaths.push(this._modulePathResolver.modulePath(module, '/styles/*.less'));
+        }
+
+        return templatesPaths;
     };
 
     SourceListBuilder.prototype.clear = function () {
