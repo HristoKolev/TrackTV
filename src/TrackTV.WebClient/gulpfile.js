@@ -120,7 +120,7 @@ gulp.task('clean', function (cb) {
     cb();
 });
 
-gulp.task('scripts', ['clean'], function () {
+gulp.task('scripts', function () {
 
     var libPath = pathResolve.publicPath('/lib');
 
@@ -130,20 +130,20 @@ gulp.task('scripts', ['clean'], function () {
 
 });
 
-gulp.task('templates', ['scripts'], function () {
+gulp.task('templates', function () {
 
     return gulp.src(templates)
         .pipe(gulp.dest(pathResolve.publicPath('/lib/templates')));
 });
 
-gulp.task('styles', ['clean'], function () {
+gulp.task('styles', function () {
 
     return gulp.src(styles)
         .pipe(concat('third-party.css'))
         .pipe(gulp.dest(pathResolve.publicPath('/lib/css')));
 });
 
-gulp.task('fonts', ['styles'], function () {
+gulp.task('fonts', function () {
 
     var fontsPath = pathResolve.publicPath('/lib/fonts');
 
@@ -151,7 +151,7 @@ gulp.task('fonts', ['styles'], function () {
         .pipe(gulp.dest(fontsPath));
 });
 
-gulp.task('less', ['clean'], function () {
+gulp.task('less', function () {
 
     return gulp.src([lessFiles])
         .pipe(less())
@@ -159,7 +159,7 @@ gulp.task('less', ['clean'], function () {
         .on('error', console.error);
 });
 
-gulp.task('merge', ['clean'], function () {
+gulp.task('merge', function () {
 
     return gulp.src(appScripts)
         .pipe(concat('merged-app.js'))
@@ -167,15 +167,18 @@ gulp.task('merge', ['clean'], function () {
 
 });
 
-gulp.task('default', [
-    'clean',
-    'styles',
-    'fonts',
-    'scripts',
-    'templates',
-    'less',
-    'merge'
-]);
+gulp.task('default', function () {
+
+    runSequence(
+        'clean',
+        'styles',
+        'fonts',
+        'scripts',
+        'templates',
+        'less',
+        'merge'
+    );
+});
 
 gulp.task('watch', function () {
     //less files
@@ -209,7 +212,7 @@ gulp.task('build-clean', function (callback) {
     callback();
 });
 
-gulp.task('build-scripts', ['build-clean'], function () {
+gulp.task('build-scripts', function () {
 
     return gulp.src(bowerScripts.concat(npmScripts))
         .pipe(concat('third-party.js'))
@@ -217,7 +220,7 @@ gulp.task('build-scripts', ['build-clean'], function () {
         .pipe(gulp.dest(tempBuild + '/lib'));
 });
 
-gulp.task('build-source', ['build-clean'], function () {
+gulp.task('build-source', function () {
 
     return gulp.src(appScripts)
         .pipe(concat('merged-app.js'))
@@ -226,7 +229,7 @@ gulp.task('build-source', ['build-clean'], function () {
 
 });
 
-gulp.task('build-styles', ['build-clean'], function () {
+gulp.task('build-styles', function () {
 
     return gulp.src(styles)
         .pipe(concat('third-party.css'))
@@ -235,13 +238,13 @@ gulp.task('build-styles', ['build-clean'], function () {
         .pipe(gulp.dest(tempBuild + '/lib/css'));
 });
 
-gulp.task('build-fonts', ['build-clean'], function () {
+gulp.task('build-fonts', function () {
 
     return gulp.src([fonts])
         .pipe(gulp.dest(contentPath));
 });
 
-gulp.task('build-less', ['build-clean'], function () {
+gulp.task('build-less', function () {
 
     return gulp.src([lessFiles])
         .pipe(less())
@@ -249,13 +252,13 @@ gulp.task('build-less', ['build-clean'], function () {
         .pipe(gulp.dest(tempBuild));
 });
 
-gulp.task('build-copy-content', ['build-fonts'], function () {
+gulp.task('build-copy-content', function () {
 
     return gulp.src(pathResolve.publicPath('/content/*'))
         .pipe(gulp.dest(contentPath));
 });
 
-gulp.task('build-templates', ['build-clean'], function () {
+gulp.task('build-templates', function () {
 
     var tmpSettings = settings.templates;
     var ext = tmpSettings.extension;
@@ -280,18 +283,11 @@ gulp.task('build-templates', ['build-clean'], function () {
         .pipe(gulp.dest(tempBuild));
 });
 
-gulp.task('build-prepare', [
-    'build-clean',
-    'build-scripts',
-    'build-source',
-    'build-styles',
-    'build-fonts',
-    'build-less',
-    'build-copy-content',
-    'build-templates',
-]);
+gulp.task('build-settings', function () {
 
-gulp.task('build-merge', ['build-prepare'], function () {
+});
+
+gulp.task('build-merge', function () {
 
     // templates 
     var templateRegex = /<!--\s*?templates\s*?-->/g;
@@ -305,15 +301,26 @@ gulp.task('build-merge', ['build-prepare'], function () {
         .pipe(gulp.dest(buildPath));
 });
 
-gulp.task('build-clear', ['build-merge'], function (callback) {
+gulp.task('build-clear', function (callback) {
 
     del(tempBuild);
 
     callback();
 });
 
-gulp.task('build', [
-    'build-prepare',
-    'build-merge',
-    'build-clear'
-]);
+gulp.task('build', function () {
+
+    runSequence(
+        'build-clean',
+        'build-scripts',
+        'build-source',
+        'build-styles',
+        'build-fonts',
+        'build-less',
+        'build-copy-content',
+        'build-templates',
+        'build-settings',
+        'build-merge',
+        'build-clear'
+    );
+});
