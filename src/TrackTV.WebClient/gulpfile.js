@@ -22,10 +22,11 @@ var gulp = require('gulp'),
     file = require('gulp-file'),
     minifyHtml = require('gulp-minify-html');
 
-var embedMedia = require('./modules/gulp-embed-media');
+var embedMedia = require('./modules/gulp-embed-media'),
+    sourceManager = require('./modules/sourceManager');
 
 var settings = require('./wwwroot/app/settings.json'),
-    sourceManager = require('./modules/sourceManager');
+    includes = require('./config/includes.json');
 
 sourceManager.setSettings(settings.source);
 
@@ -57,60 +58,31 @@ sourceManager.setSettings(settings.source);
     }
 })();
 
-function getFolderNames (dir) {
-    return fs.readdirSync(dir).filter(function (file) {
-        return fs.statSync(path.join(dir, file)).isDirectory();
-    });
-}
-
 function getFileNames(dir) {
     return fs.readdirSync(dir).filter(function (file) {
         return fs.statSync(path.join(dir, file)).isFile();
     });
 }
 
-var appBuilder = sourceManager.createSourceListBuilder()
-    .addPublicFile('/app/init.js')
-    .addModule(getFolderNames(settings.source.moduleRootPath))
-    .addModuleFile('main', '/routeConfig.js');
+var appBuilder = sourceManager.createSourceListBuilder(settings.source.moduleRootPath);
 
 var pathResolve = sourceManager.pathResolve;
-var modulePath = sourceManager.modulePath;
 
 // source files
 
 var lessFiles = appBuilder.lessFiles();
 
-var bowerScripts = pathResolve.bowerComponent([
-    '/jquery/dist/jquery.js',
-    '/bootstrap/dist/js/bootstrap.js',
-    '/toastr/toastr.js',
-    '/angular/angular.js',
-    '/angular-route/angular-route.js',
-    '/angular-cookies/angular-cookies.js',
-    '/angular-gravatar/build/angular-gravatar.js',
-    '/angular-utils-pagination/dirPagination.js',
-    '/underscore/underscore.js',
-    '/moment/moment.js'
-]);
+var bowerScripts = pathResolve.bowerComponent(includes.bowerScripts);
 
-var npmScripts = pathResolve.npmComponent([
-    '/underscore.string/dist/underscore.string.js'
-]);
+var npmScripts = pathResolve.npmComponent(includes.npmScripts);
 
-var styles = pathResolve.bowerComponent([
-    '/bootstrap/dist/css/bootstrap.css',
-    '/bootswatch/cosmo/bootstrap.css',
-    '/toastr/toastr.css'
-]);
+var bowerStyles = pathResolve.bowerComponent(includes.bowerStyles);
 
-var fonts = pathResolve.bowerComponent('/bootstrap/dist/fonts/*');
+var fonts = pathResolve.bowerComponent(includes.bowerFonts);
 
 var templates = appBuilder.templates();
 
-var libTemplates = pathResolve.bowerComponent([
-    '/angular-utils-pagination/dirPagination.tpl.html'
-]);
+var libTemplates = pathResolve.bowerComponent(includes.bowerTemplates);
 
 var appScripts = appBuilder.scripts();
 
@@ -145,7 +117,7 @@ gulp.task('templates', function () {
 
 gulp.task('styles', function () {
 
-    return gulp.src(styles)
+    return gulp.src(bowerStyles)
         .pipe(concat('third-party.css'))
         .pipe(gulp.dest(pathResolve.publicPath('/lib/css')));
 });
@@ -154,7 +126,7 @@ gulp.task('fonts', function () {
 
     var fontsPath = pathResolve.publicPath('/lib/fonts');
 
-    return gulp.src([fonts])
+    return gulp.src(fonts)
         .pipe(gulp.dest(fontsPath));
 });
 
@@ -195,9 +167,8 @@ gulp.task('watch', function () {
     console.log('Watching: ' + lessFiles);
 
     //angular app
-    var sourceFiles = modulePath.getSourceFilesPattern();
-    gulp.watch(sourceFiles, ['merge']);
-    console.log('Watching: ' + sourceFiles);
+    gulp.watch(appScripts, ['merge']);
+    console.log('Watching: ' + appScripts);
 });
 
 var buildPath = pathResolve.publicPath('/build');
@@ -258,7 +229,7 @@ gulp.task('build-source', function () {
 
 gulp.task('build-styles', function () {
 
-    return gulp.src(styles)
+    return gulp.src(bowerStyles)
         .pipe(concat('third-party.css'))
         .pipe(minifyCss(cssMinifyOptions))
         .pipe(replace('../fonts/', './content/'))

@@ -1,0 +1,33 @@
+﻿{
+
+  "bowerScripts": [
+    "/jquery/dist/jquery.js",
+    "/bootstrap/dist/js/bootstrap.js",
+    "/toastr/toastr.js",
+    "/angular/angular.js",
+    "/angular-route/angular-route.js",
+    "/angular-cookies/angular-cookies.js",
+    "/angular-gravatar/build/angular-gravatar.js",
+    "/angular-utils-pagination/dirPagination.js",
+    "/underscore/underscore.js",
+    "/moment/moment.js"
+  ],
+
+  "bowerStyles": [
+    "/bootstrap/dist/css/bootstrap.css",
+    "/bootswatch/cosmo/bootstrap.css",
+    "/toastr/toastr.css"
+  ],
+
+  "bowerFonts": [
+    "/bootstrap/dist/fonts/*"
+  ],
+
+  "bowerTemplates": [
+    "/angular-utils-pagination/dirPagination.tpl.html"
+  ],
+
+  "npmScripts": [
+    "/underscore.string/dist/underscore.string.js"
+  ]
+}
