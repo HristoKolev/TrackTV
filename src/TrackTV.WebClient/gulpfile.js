@@ -10,59 +10,24 @@ var gulp = require('gulp'),
     del = require('del'),
     concat = require('gulp-concat'),
     less = require('gulp-less'),
-    fs = require('fs'),
-    path = require('path'),
-
     smoosher = require('gulp-smoosher'),
     replace = require('gulp-replace'),
     uglify = require('gulp-uglify'),
     minifyCss = require('gulp-minify-css'),
     insert = require('gulp-insert'),
     runSequence = require('run-sequence'),
-    file = require('gulp-file'),
     minifyHtml = require('gulp-minify-html');
 
 var embedMedia = require('./modules/gulp-embed-media'),
-    sourceManager = require('./modules/sourceManager');
+    sourceManager = require('./modules/sourceManager'),
+    fixGulp = require('./modules/fix-gulp');
+
+fixGulp(gulp);
 
 var settings = require('./wwwroot/app/settings.json'),
     includes = require('./config/includes.json');
 
 sourceManager.setSettings(settings.source);
-
-(function () {
-    // Workaround for https://github.com/gulpjs/gulp/issues/71
-    var origSrc = gulp.src;
-    gulp.src = function () {
-        return fixPipe(origSrc.apply(this, arguments));
-    };
-
-    function fixPipe (stream) {
-        var origPipe = stream.pipe;
-        stream.pipe = function (dest) {
-            arguments[0] = dest.on('error', function (error) {
-                var nextStreams = dest._nextStreams;
-                if (nextStreams) {
-                    nextStreams.forEach(function (nextStream) {
-                        nextStream.emit('error', error);
-                    });
-                } else if (dest.listeners('error').length === 1) {
-                    throw error;
-                }
-            });
-            var nextStream = fixPipe(origPipe.apply(this, arguments));
-            (this._nextStreams || (this._nextStreams = [])).push(nextStream);
-            return nextStream;
-        };
-        return stream;
-    }
-})();
-
-function getFileNames(dir) {
-    return fs.readdirSync(dir).filter(function (file) {
-        return fs.statSync(path.join(dir, file)).isFile();
-    });
-}
 
 var appBuilder = sourceManager.createSourceListBuilder(settings.source.moduleRootPath);
 

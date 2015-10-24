@@ -86,9 +86,18 @@ function SourceListBuilder(pathResolver, rootPath) {
 
             this._modules.push(name);
 
-            this.addFile(this.modulePath(name, '/module.js'));
-            this.addFile(this.modulePath(name, '/constants.js'));
-            this.addFile(this.modulePath(name, '/libraries.js'));
+            var headerFiles = [
+                '/module.js',
+                '/constants.js',
+                '/libraries.js'
+            ];
+
+            for (var index in headerFiles) {
+                var header = headerFiles[index];
+
+                this.addFile(this.modulePath(name, header));
+            }
+      
             this.addFile(this.modulePath(name, '/scripts/**/**/*.js'));
         }
 
