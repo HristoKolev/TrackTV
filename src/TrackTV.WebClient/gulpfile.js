@@ -18,18 +18,20 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     minifyHtml = require('gulp-minify-html'),
     file = require('gulp-file'),
-    fs = require('fs');
+    fs = require('fs'),
+    saveFile = require('gulp-savefile');
 
 var settings = require('./wwwroot/app/settings.json'),
     pathConfig = require('./config/path.json'),
-    includes = require('./config/includes.json');   
+    includes = require('./config/includes.json');
 
 var embedMedia = require('./modules/gulp-embed-media'),
     pathResolve = require('./modules/pathResolver').instance(pathConfig),
     appBuilder = require('./modules/appBuilder').instance(pathResolve, settings.source.moduleRootPath),
-    fixGulp = require('./modules/fix-gulp');
+    fixGulp = require('./modules/fix-gulp'),
+    fillContent = require('./modules/fill-content');
 
-fixGulp(gulp); 
+fixGulp(gulp);
 
 // source files
 
@@ -146,7 +148,7 @@ var buildPath = pathResolve.publicPath('/build');
 var contentPath = buildPath + '/content';
 var tempBuild = buildPath + '/temp';
 
-var html = pathResolve.publicPath('/index.html');
+var html = buildPath + '/index.html';
 
 var cssMinifyOptions = {
     processImportFrom : ['local'],
@@ -181,6 +183,12 @@ gulp.task('build-clean', function (callback) {
     callback();
 });
 
+gulp.task('build-index', function () {
+
+    return gulp.src(pathResolve.publicPath('/index.html'))
+        .pipe(gulp.dest(buildPath));
+});
+
 gulp.task('build-scripts', function () {
 
     return gulp.src(bowerScripts.concat(npmScripts))
@@ -195,7 +203,6 @@ gulp.task('build-source', function () {
         .pipe(concat(mergedScriptsJs))
         .pipe(uglify())
         .pipe(gulp.dest(tempBuild));;
-
 });
 
 gulp.task('build-styles', function () {
@@ -209,7 +216,7 @@ gulp.task('build-styles', function () {
 
 gulp.task('build-fonts', function () {
 
-    return gulp.src([fonts])
+    return gulp.src(fonts)
         .pipe(gulp.dest(contentPath));
 });
 
@@ -241,8 +248,8 @@ gulp.task('build-templates', function () {
 
             return wrapTemplate(file.path.split('\\').pop(), contents);
         }))
-        .pipe(concat('templates.html'))
-        .pipe(gulp.dest(tempBuild));
+        .pipe(concat('templates'))
+        .pipe(fillContent(html, 'templates'));
 });
 
 gulp.task('build-settings', function () {
@@ -250,17 +257,12 @@ gulp.task('build-settings', function () {
     settings.templates.cached = true;
     var content = '<script> window.settings = ' + JSON.stringify(settings) + '; </script>';
 
+    
     return createFile('settings.html', content)
-        .pipe(gulp.dest(tempBuild));
+        .pipe(fillContent(html, 'settings'));
 });
 
 gulp.task('build-merge', function () {
-
-    var templateRegex = commentPlaceholder('templates');
-    var settingsRegex = commentPlaceholder('settings');
-
-    var templateContent = fs.readFileSync(tempBuild + '/' + 'templates.html');
-    var settingsContent = fs.readFileSync(tempBuild + '/' + 'settings.html');
 
     return gulp.src(html)
         .pipe(embedMedia({
@@ -269,13 +271,11 @@ gulp.task('build-merge', function () {
             selectors : 'head link[rel="icon"]',
             attributes : 'href'
         }))
-        .pipe(replace(templateRegex, templateContent))
-        .pipe(replace(settingsRegex, settingsContent))
         .pipe(smoosher({
             base : tempBuild
         }))
         .pipe(minifyHtml(htmlMinifyOptions))
-        .pipe(gulp.dest(buildPath));
+        .pipe(saveFile());
 });
 
 gulp.task('build-clear', function (callback) {
@@ -289,6 +289,7 @@ gulp.task('build', function () {
 
     runSequence(
         'build-clean',
+        'build-index',
         'build-scripts',
         'build-source',
         'build-styles',
