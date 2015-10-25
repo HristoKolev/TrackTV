@@ -1,4 +1,4 @@
-/// <binding Clean='default' ProjectOpened='default' />
+/// <binding />
 /*
 This file in the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
@@ -59,7 +59,7 @@ var mergedScriptsJs = '/merged-scripts.js';
 
 // dev tasks
 
-gulp.task('clean', function (cb) {
+gulp.task('clean', function (callback) {
 
     del(pathResolve.publicPath([
         '/lib',
@@ -67,7 +67,7 @@ gulp.task('clean', function (cb) {
         mergedScriptsJs
     ]));
 
-    cb();
+    callback();
 });
 
 gulp.task('scripts', function () {

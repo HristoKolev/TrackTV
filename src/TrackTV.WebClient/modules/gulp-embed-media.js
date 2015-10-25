@@ -15,7 +15,7 @@ module.exports = function (options) {
 
     processOptions(options);
 
-    function processOptions(options) {
+    function processOptions (options) {
 
         options.selectors = options.selectors || ['img'];
         options.attributes = options.attributes || ['src'];
@@ -32,7 +32,7 @@ module.exports = function (options) {
 
     }
 
-    function log(message) {
+    function log (message) {
 
         if (options.verbose) {
 
@@ -40,12 +40,17 @@ module.exports = function (options) {
         }
     }
 
-    function isFunction(functionToCheck) {
+    function error (message) {
+
+        this.emit('error', new gutil.PluginError(pluginName, message));
+    }
+
+    function isFunction (functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     }
 
-    function getBaseDirectory(file) {
+    function getBaseDirectory (file) {
 
         if (isFunction(options.resolveBaseDir)) {
 
@@ -60,7 +65,7 @@ module.exports = function (options) {
         return options.baseDir || file.base;
     }
 
-    function encodeResource(sourcePath, baseDirectory) {
+    function encodeResource (sourcePath, baseDirectory) {
 
         var isEncoded = sourcePath && sourcePath.indexOf('data:') === 0;
 
@@ -92,7 +97,8 @@ module.exports = function (options) {
                         log('\t Skipping: ' + sourcePath);
 
                     } else {
-                        throw e;
+
+                        error('File not found. : ' + resourceFilePath);
                     }
                 }
 
@@ -111,7 +117,8 @@ module.exports = function (options) {
         }
 
         if (file.isStream()) {
-            this.emit('error', new gutil.PluginError(pluginName, 'Streaming is not supported'));
+
+            error('Streaming is not supported');
             return callback();
         }
 
