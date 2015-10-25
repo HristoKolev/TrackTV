@@ -1,9 +1,3 @@
-/// <binding />
-/*
-This file in the main entry point for defining Gulp tasks and using Gulp plugins.
-Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
-*/
-
 'use strict';
 
 var gulp = require('gulp'),
@@ -47,7 +41,7 @@ var fonts = pathResolve.bowerComponent(includes.bowerFonts);
 
 var templates = appBuilder.templates();
 
-var libTemplates = pathResolve.bowerComponent(includes.bowerTemplates);
+var bowerTemplates = pathResolve.bowerComponent(includes.bowerTemplates);
 
 var appScripts = appBuilder.scripts();
 
@@ -84,7 +78,7 @@ gulp.task('scripts', function () {
 
 gulp.task('templates', function () {
 
-    return gulp.src(libTemplates)
+    return gulp.src(bowerTemplates)
         .pipe(gulp.dest(pathResolve.publicPath('/lib/templates')));
 });
 
@@ -169,11 +163,6 @@ function createFile (name, contents) {
     return file(name, contents, { src : true });
 }
 
-function commentPlaceholder (id) {
-
-    return new RegExp('<!--\\s*?' + id + '\\s*?-->', 'g');
-}
-
 // build tasks
 
 gulp.task('build-clean', function (callback) {
@@ -242,7 +231,7 @@ gulp.task('build-templates', function () {
         return '<script type="text/ng-template" id="' + name + '">\n' + contents + '\n</script>';
     }
 
-    return gulp.src(templates.concat(libTemplates))
+    return gulp.src(templates.concat(bowerTemplates))
         .pipe(embedMedia(embedMediaOptions))
         .pipe(insert.transform(function (contents, file) {
 
