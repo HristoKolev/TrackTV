@@ -16,22 +16,20 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-minify-css'),
     insert = require('gulp-insert'),
     runSequence = require('run-sequence'),
-    minifyHtml = require('gulp-minify-html');
-
-var embedMedia = require('./modules/gulp-embed-media'),
-    sourceManager = require('./modules/sourceManager'),
-    fixGulp = require('./modules/fix-gulp');
-
-fixGulp(gulp);
+    minifyHtml = require('gulp-minify-html'),
+    file = require('gulp-file'),
+    fs = require('fs');
 
 var settings = require('./wwwroot/app/settings.json'),
-    includes = require('./config/includes.json');
+    pathConfig = require('./config/path.json'),
+    includes = require('./config/includes.json');   
 
-sourceManager.setSettings(settings.source);
+var embedMedia = require('./modules/gulp-embed-media'),
+    pathResolve = require('./modules/pathResolver').instance(pathConfig),
+    appBuilder = require('./modules/appBuilder').instance(pathResolve, settings.source.moduleRootPath),
+    fixGulp = require('./modules/fix-gulp');
 
-var appBuilder = sourceManager.createSourceListBuilder(settings.source.moduleRootPath);
-
-var pathResolve = sourceManager.pathResolve;
+fixGulp(gulp); 
 
 // source files
 
@@ -51,14 +49,22 @@ var libTemplates = pathResolve.bowerComponent(includes.bowerTemplates);
 
 var appScripts = appBuilder.scripts();
 
+// constants
+
+var thirdPartyJs = 'third-party.js';
+var thirdPartyCss = 'third-party.css';
+
+var mergedStylesCss = '/merged-styles.css';
+var mergedScriptsJs = '/merged-scripts.js';
+
 // dev tasks
 
 gulp.task('clean', function (cb) {
 
     del(pathResolve.publicPath([
         '/lib',
-        '/merged-styles.css',
-        '/merged-scripts.js'
+        mergedStylesCss,
+        mergedScriptsJs
     ]));
 
     cb();
@@ -69,7 +75,7 @@ gulp.task('scripts', function () {
     var libPath = pathResolve.publicPath('/lib');
 
     return gulp.src(bowerScripts.concat(npmScripts))
-        .pipe(concat('third-party.js'))
+        .pipe(concat(thirdPartyJs))
         .pipe(gulp.dest(libPath));
 
 });
@@ -83,7 +89,7 @@ gulp.task('templates', function () {
 gulp.task('styles', function () {
 
     return gulp.src(bowerStyles)
-        .pipe(concat('third-party.css'))
+        .pipe(concat(thirdPartyCss))
         .pipe(gulp.dest(pathResolve.publicPath('/lib/css')));
 });
 
@@ -98,7 +104,7 @@ gulp.task('fonts', function () {
 gulp.task('less', function () {
 
     return gulp.src(lessFiles)
-        .pipe(concat('merged-styles.css'))
+        .pipe(concat(mergedStylesCss))
         .pipe(less())
         .pipe(gulp.dest(pathResolve.publicPath()))
         .on('error', console.error);
@@ -107,7 +113,7 @@ gulp.task('less', function () {
 gulp.task('merge', function () {
 
     return gulp.src(appScripts)
-        .pipe(concat('merged-scripts.js'))
+        .pipe(concat(mergedScriptsJs))
         .pipe(gulp.dest(pathResolve.publicPath()));;
 
 });
@@ -178,7 +184,7 @@ gulp.task('build-clean', function (callback) {
 gulp.task('build-scripts', function () {
 
     return gulp.src(bowerScripts.concat(npmScripts))
-        .pipe(concat('third-party.js'))
+        .pipe(concat(thirdPartyJs))
         .pipe(uglify())
         .pipe(gulp.dest(tempBuild + '/lib'));
 });
@@ -186,7 +192,7 @@ gulp.task('build-scripts', function () {
 gulp.task('build-source', function () {
 
     return gulp.src(appScripts)
-        .pipe(concat('merged-scripts.js'))
+        .pipe(concat(mergedScriptsJs))
         .pipe(uglify())
         .pipe(gulp.dest(tempBuild));;
 
@@ -195,7 +201,7 @@ gulp.task('build-source', function () {
 gulp.task('build-styles', function () {
 
     return gulp.src(bowerStyles)
-        .pipe(concat('third-party.css'))
+        .pipe(concat(thirdPartyCss))
         .pipe(minifyCss(cssMinifyOptions))
         .pipe(replace('../fonts/', './content/'))
         .pipe(gulp.dest(tempBuild + '/lib/css'));
@@ -210,7 +216,7 @@ gulp.task('build-fonts', function () {
 gulp.task('build-less', function () {
 
     return gulp.src(lessFiles)
-        .pipe(concat('merged-styles.js'))
+        .pipe(concat(mergedStylesCss))
         .pipe(less())
         .pipe(minifyCss(cssMinifyOptions))
         .pipe(gulp.dest(tempBuild));

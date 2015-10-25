@@ -6,10 +6,7 @@
     "libPath": "lib/templates"    
   },
 
-  "source": {
-    "rootPath": "wwwroot",
-    "bowerRootPath": "bower_components",
-    "npmRootPath": "node_modules",
+  "source": {    
     "moduleRootPath": "wwwroot/app",
     "fetchLevel": 4
   }
