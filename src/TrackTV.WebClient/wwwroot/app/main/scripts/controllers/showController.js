@@ -22,6 +22,8 @@
                     .then(function (response) {
 
                         $scope.show.isUserSubscribed = true;
+                        $scope.show.subscriberCount++;
+
                     });
             }
 
@@ -33,6 +35,7 @@
                     .then(function (response) {
 
                         $scope.show.isUserSubscribed = false;
+                        $scope.show.subscriberCount--;
                     });
             }
            
