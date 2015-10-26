@@ -2,15 +2,16 @@
     'use strict';
 
     ngModules.main.controller('ShowController', [
-        '$scope', '$routeParams', 'showService', 'identity', 'subscriptionService',
-        function ShowController ($scope, $routeParams, showService, identity, subscriptionService) {
+        '$scope', '$routeParams', 'showService', 'identity', 'subscriptionService', 'templateLoader',
+        function ShowController ($scope, $routeParams, showService, identity, subscriptionService, templateLoader) {
 
             showService.show($routeParams.show)
-              .then(function (response) {
+                .then(function (response) {
 
-                  $scope.show = response.data;
-              });
+                    $scope.show = response.data;
 
+                    templateLoader.ready();
+                });
 
             // scope
 
@@ -38,7 +39,7 @@
                         $scope.show.subscriberCount--;
                     });
             }
-           
+
             $scope.unsubscribe = unsubscribe;
         }
     ]);

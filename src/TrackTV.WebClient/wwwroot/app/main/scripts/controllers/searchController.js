@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('SearchController', [
-        '$scope', 'showsService', '$routeParams', '$location',
-        function SearchController ($scope, showsService, $routeParams, $location) {
+        '$scope', 'showsService', '$routeParams', '$location', 'templateLoader',
+        function SearchController($scope, showsService, $routeParams, $location, templateLoader) {
 
             // scope
 
@@ -20,6 +20,8 @@
 
                         $scope.items = data.shows;
                         $scope.totalItems = data.count;
+
+                        templateLoader.ready();
                     });
 
                 if (page === 1) {

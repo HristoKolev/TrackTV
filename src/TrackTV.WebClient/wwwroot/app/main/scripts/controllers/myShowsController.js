@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('MyShowsController', [
-        '$scope', 'myShowsService', '$routeParams', 'subscriptionService', 'toastr',
-        function MyShowsController ($scope, myShowsService, $routeParams, subscriptionService) {
+        '$scope', 'myShowsService', '$routeParams', 'subscriptionService', 'templateLoader',
+        function MyShowsController($scope, myShowsService, $routeParams, subscriptionService, templateLoader) {
 
             // scope
 
@@ -38,6 +38,7 @@
                     .then(function (response) {
 
                         $scope.continuing = response.data;
+                        templateLoader.ready();
                     });
             }
 

@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('NetworkController', [
-        '$scope', 'showsService', '$routeParams', '$location',
-        function NetworkController ($scope, showsService, $routeParams, $location) {
+        '$scope', 'showsService', '$routeParams', '$location', 'templateLoader',
+        function NetworkController($scope, showsService, $routeParams, $location, templateLoader) {
 
             // scope
 
@@ -21,6 +21,8 @@
                         $scope.items = data.shows;
                         $scope.totalItems = data.count;
                         $scope.network = data.networkName;
+
+                        templateLoader.ready();
                     });
 
                 if (page === 1) {

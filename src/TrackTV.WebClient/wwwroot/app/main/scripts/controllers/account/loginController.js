@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('LoginController', [
-        '$scope', '$location', 'toastr', 'identity', 'authentication',
-        function LoginController ($scope, $location, toastr, identity, authentication) {
+        '$scope', '$location', 'toastr', 'identity', 'authentication', 'templateLoader',
+        function LoginController($scope, $location, toastr, identity, authentication, templateLoader) {
 
             $scope.identity = identity;
 
@@ -44,6 +44,8 @@
             }
         
             $scope.logout = logout;
+
+            templateLoader.ready();
         }
     ]);
 

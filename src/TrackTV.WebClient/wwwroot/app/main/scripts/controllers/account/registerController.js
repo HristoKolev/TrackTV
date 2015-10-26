@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('RegisterController', [
-        '$scope', '$location', 'authentication', 'toastr',
-        function RegisterController ($scope, $location, authentication, toastr) {
+        '$scope', '$location', 'authentication', 'toastr', 'templateLoader',
+        function RegisterController($scope, $location, authentication, toastr, templateLoader) {
 
             function register (user) {
 
@@ -21,6 +21,8 @@
             }
 
             $scope.register = register;
+
+            templateLoader.ready();
         }
     ]);
 

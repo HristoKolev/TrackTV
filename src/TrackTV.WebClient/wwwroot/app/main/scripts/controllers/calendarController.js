@@ -2,8 +2,8 @@
     'use strict';
 
     ngModules.main.controller('CalendarController', [
-        '$scope', '$routeParams', 'calendarService',
-        function CalendarController ($scope, $routeParams, calendarService) {
+        '$scope', '$routeParams', 'calendarService', 'templateLoader',
+    function CalendarController ($scope, $routeParams, calendarService, templateLoader) {
 
             function processResponse (response) {
 
@@ -11,6 +11,8 @@
 
                 $scope.info = data.info;
                 $scope.weeks = data.month;
+
+                templateLoader.ready();
             }
 
             if ($routeParams.year && $routeParams.month) {

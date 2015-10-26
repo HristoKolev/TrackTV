@@ -7,7 +7,7 @@
 
     <link rel="icon" href="/include/favicon.ico"/>
 
-    <base href="/" />
+    <base href="/"/>
 
     <!-- smoosh -->
     <link rel="stylesheet" href="/lib/css/third-party.css">
@@ -18,7 +18,8 @@
 
 <header id="site-header" tt-site-header user="user"></header>
 
-<section ng-view class="container body-content"></section>
+<section ng-show="loadState === states.ready" ng-view class="container body-content"></section>
+<section ng-show="loadState === states.loading" class="container loading-screen"></section>
 
 <footer id="site-footer" tt-site-footer></footer>
 
