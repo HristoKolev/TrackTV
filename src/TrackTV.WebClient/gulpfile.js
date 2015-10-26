@@ -136,6 +136,13 @@ gulp.task('watch', function () {
     //angular app
     gulp.watch(appScripts, ['merge']);
     console.log('Watching: ' + appScripts);
+
+    //configuration files
+    var buildSystemConfigs = './config/*.json';
+
+    gulp.watch(buildSystemConfigs, ['default']);
+    console.log('Watching: ' + buildSystemConfigs);
+
 });
 
 var buildPath = pathResolve.publicPath('/build');
@@ -246,7 +253,6 @@ gulp.task('build-settings', function () {
     settings.templates.cached = true;
     var content = '<script> window.settings = ' + JSON.stringify(settings) + '; </script>';
 
-    
     return createFile('settings.html', content)
         .pipe(fillContent(html, 'settings'));
 });
