@@ -18,8 +18,11 @@
 
 <header id="site-header" tt-site-header user="user"></header>
 
-<section ng-show="loadState === states.ready" ng-view class="container body-content"></section>
-<section ng-show="loadState === states.loading" class="container loading-screen"></section>
+<section class="container body-content">
+
+    <div ng-show="loadState === states.ready" ng-view></div>
+
+</section>
 
 <footer id="site-footer" tt-site-footer></footer>
 

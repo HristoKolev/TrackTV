@@ -1,4 +1,4 @@
-﻿{
+{
 
   "bowerScripts": [
     "/jquery/dist/jquery.js",
@@ -7,6 +7,7 @@
     "/angular/angular.js",
     "/angular-route/angular-route.js",
     "/angular-cookies/angular-cookies.js",
+    "/angular-animate/angular-animate.js",
     "/angular-gravatar/build/angular-gravatar.js",
     "/angular-utils-pagination/dirPagination.js",
     "/underscore/underscore.js",
