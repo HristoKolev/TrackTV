@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     ngModules.services.factory('calendarService', [
@@ -8,9 +8,11 @@
             var calendar = apiPath.service('calendar');
             var user = identity.getCurrentUser();
 
-            var config = {
-                headers : user.addAuthorizationHeader()
-            };
+            function getConfig () {
+                return {
+                    headers : user.addAuthorizationHeader()
+                };
+            }
 
             function getMonthModel (date) {
 
@@ -56,11 +58,11 @@
             // public
 
             function currentMonth () {
-                return $http.get(calendar('/'), config).then(processResponse);
+                return $http.get(calendar('/'), getConfig()).then(processResponse);
             }
 
             function month (year, month) {
-                return $http.get(calendar('/' + year + '/' + month), config).then(processResponse);
+                return $http.get(calendar('/' + year + '/' + month), getConfig()).then(processResponse);
             }
 
             return {
