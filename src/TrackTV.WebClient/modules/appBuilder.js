@@ -1,4 +1,4 @@
-﻿var fs = require('fs'),
+var fs = require('fs'),
     path = require('path'); 
 
 function appBuilder(pathResolver, rootPath) {
@@ -47,7 +47,7 @@ function appBuilder(pathResolver, rootPath) {
                 this.addFile(this.modulePath(name, header));
             }
 
-            this.addFile(this.modulePath(name, '/scripts/**/**/*.js'));
+            this.addFile(this.modulePath(name, '/scripts/**/**/**/*.js'));
         }
 
         return this;
