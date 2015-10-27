@@ -5,7 +5,8 @@ var gutil = require('gulp-util'),
     cheerio = require('cheerio'),
     fs = require('fs'),
     path = require('path'),
-    mime = require('mime');
+    mime = require('mime'),
+    multimatch = require('multimatch');
 
 var pluginName = 'gulp-embed-media';
 
@@ -30,6 +31,9 @@ module.exports = function (options) {
             options.attributes = [options.attributes];
         }
 
+        if (options.resourcePattern && !(options.resourcePattern instanceof Array)) {
+            options.resourcePattern = [options.resourcePattern];
+        }
     }
 
     function log (message) {
@@ -92,14 +96,21 @@ module.exports = function (options) {
 
                 } catch (e) {
 
-                    if (e.code === 'ENOENT' && options.skipIfNotFound) {
+                    if (e.code === 'ENOENT') {
 
-                        log('\t Skipping: ' + sourcePath);
+                        if (options.skipIfNotFound) {
 
+                            log('\t Skipping: ' + sourcePath);
+
+                        } else {
+
+                            error('File not found. : ' + resourceFilePath);
+                        }
                     } else {
 
-                        error('File not found. : ' + resourceFilePath);
+                        error(e);
                     }
+
                 }
 
                 var encodedContent = new Buffer(fileContent).toString('base64');
@@ -107,6 +118,20 @@ module.exports = function (options) {
                 return 'data:' + mimeType + ';base64,' + encodedContent;
             }
         }
+    }
+
+    function shouldProcessResource (source) {
+
+        if (!source) {
+            return false;
+        }
+
+        if (options.resourcePattern && !multimatch(source, options.resourcePattern).length) {
+
+            return false;
+        }
+
+        return true;
     }
 
     return through.obj(function (file, enc, callback) {
@@ -142,7 +167,7 @@ module.exports = function (options) {
 
                         var source = element.attr(attribute);
 
-                        if (source) {
+                        if (shouldProcessResource(source)) {
 
                             var encodedSource = encodeResource(source, getBaseDirectory(file));
 

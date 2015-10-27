@@ -15,15 +15,17 @@ var gulp = require('gulp'),
     fs = require('fs'),
     saveFile = require('gulp-savefile');
 
-var settings = require('./wwwroot/app/settings.json'),
+var appConfig = require('./config/appConfig.json'),
     pathConfig = require('./config/path.json'),
-    includes = require('./config/includes.json');
+    includes = require('./config/includes.json'),
+    templateConfig = require('./' + appConfig.appRoot + '/templateConfig.json');
 
 var embedMedia = require('./modules/gulp-embed-media'),
     pathResolve = require('./modules/pathResolver').instance(pathConfig),
-    appBuilder = require('./modules/appBuilder').instance(pathResolve, settings.source.moduleRootPath),
+    appBuilder = require('./modules/appBuilder').instance(pathResolve, appConfig.appRoot),
     fixGulp = require('./modules/fix-gulp'),
-    fillContent = require('./modules/fill-content');
+    fillContent = require('./modules/fill-content'),
+    jsonExpose = require('./modules/json-expose');
 
 fixGulp(gulp);
 
@@ -162,6 +164,9 @@ var htmlMinifyOptions = {
 
 var embedMediaOptions = {
     baseDir : pathResolve.publicPath(),
+    resourcePattern : [
+        '/include/*'
+    ],
     verbose : true
 };
 
@@ -250,10 +255,9 @@ gulp.task('build-templates', function () {
 
 gulp.task('build-settings', function () {
 
-    settings.templates.cached = true;
-    var content = '<script> window.settings = ' + JSON.stringify(settings) + '; </script>';
+    templateConfig.cached = true;
 
-    return createFile('settings.html', content)
+    return createFile('settings.html', jsonExpose('settings', appConfig.appRoot + '/*.json'))
         .pipe(fillContent(html, 'settings'));
 });
 
@@ -293,6 +297,7 @@ gulp.task('build', function () {
         'build-copy-content',
         'build-templates',
         'build-settings',
-        'build-merge', 'build-clear'
+        'build-merge',
+        'build-clear'
     );
 });

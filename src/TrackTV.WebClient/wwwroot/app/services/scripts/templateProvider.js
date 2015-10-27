@@ -1,14 +1,14 @@
-﻿(function () {
+(function () {
     'use strict';
 
     ngModules.services.constant('templateProvider',
         function templateProvider () {
 
-            var templates = settings.templates;
+            var templates = settings.templateConfig;
 
             function getTemplate (name, prefix) {
 
-                var isCached = templates.cached;
+                var isCached = !settings.development;
 
                 var result = name + templates.extension;
 

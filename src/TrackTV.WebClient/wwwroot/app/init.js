@@ -1,21 +1,30 @@
-﻿(function () {
+(function () {
     'use strict';
 
     function getSettings () {
 
-        var settings;
+        function syncRequest (url) {
 
-        $.ajax({
-            type : 'GET',
-            url : 'app/settings.json',
-            dataType : 'json',
-            success : function (data) {
-                settings = data;
+            var result;
 
-            },
+            $.ajax({
+                type : 'GET',
+                url : url,
+                dataType : 'json',
+                success : function (data) {
+                    result = data;
+                },
 
-            async : false
-        });
+                async : false
+            });
+
+            return result;
+        }
+
+        var settings = {
+            templateConfig : syncRequest('app/templateConfig.json'),
+            development : true
+        };
 
         return settings;
     }
@@ -23,5 +32,4 @@
     window.settings = window.settings || getSettings();
 
     window.ngModules = {};
-
 })();
