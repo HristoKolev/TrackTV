@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.services.factory('showsService', [
+    window.ngModules.services.factory('showsService', [
         'apiPath', '$http',
-        function showsService (apiPath, $http) {
+        function showsService(apiPath, $http) {
 
             //variables
 
@@ -12,7 +12,7 @@
 
             //public
 
-            function top () {
+            function top() {
 
                 var request = $http.get(shows('/top'));
 
@@ -27,7 +27,7 @@
                 return request;
             }
 
-            function genre (name) {
+            function genre(name) {
 
                 var request = $http.get(shows('/genre/' + name));
 
@@ -42,7 +42,7 @@
                 return request;
             }
 
-            function search (query, page) {
+            function search(query, page) {
                 page = page || 1;
 
                 var request = $http.get(shows('/search/' + query + '/' + page));
@@ -74,15 +74,15 @@
 
             // private
 
-            function addBaseUrl (elements, property) {
+            function addBaseUrl(elements, property) {
 
-                for (var index in elements) {
+                for (var i = 0; i < elements.length; i += 1) {
 
-                    var element = elements[index];
+                    var element = elements[i];
 
                     element[property] = baseUrl + element[property];
 
-                    elements[index] = element;
+                    elements[i] = element;
                 }
 
                 return elements;
@@ -91,10 +91,10 @@
             return {
                 top : top,
                 genre : genre,
-                search: search,
-                network: network
+                search : search,
+                network : network
             };
         }
     ]);
 
-})();
+}());

@@ -1,20 +1,21 @@
 (function () {
     'use strict';
 
-    ngModules.services.factory('calendarService', [
+    window.ngModules.services.factory('calendarService', [
         'apiPath', '$http', 'identity',
-        function calendarService (apiPath, $http, identity) {
+        function calendarService(apiPath, $http, identity) {
 
             var calendar = apiPath.service('calendar');
             var user = identity.getCurrentUser();
 
-            function getConfig () {
+            function getConfig() {
+
                 return {
                     headers : user.addAuthorizationHeader()
                 };
             }
 
-            function getMonthModel (date) {
+            function getMonthModel(date) {
 
                 return {
                     year : date.getFullYear(),
@@ -22,7 +23,7 @@
                 };
             }
 
-            function setMonthLinks (date) {
+            function setMonthLinks(date) {
 
                 var info = {};
 
@@ -37,16 +38,19 @@
                 return info;
             }
 
-            function processResponse (response) {
+            function processResponse(response) {
 
                 var data = response.data;
 
                 data.date = new Date(data.date);
 
-                for (var i in data.month) {
-                    for (var j in data.month[i]) {
+                for (var i = 0; i < data.month.length; i += 1) {
+
+                    for (var j = 0; j < data.month[i].length; j += 1) {
+
                         var day = data.month[i][j];
                         day.date = new Date(day.date);
+                        data.month[i][j] = day;
                     }
                 }
 
@@ -57,19 +61,21 @@
 
             // public
 
-            function currentMonth () {
+            function currentMonth() {
+
                 return $http.get(calendar('/'), getConfig()).then(processResponse);
             }
 
-            function month (year, month) {
+            function getMonth(year, month) {
+
                 return $http.get(calendar('/' + year + '/' + month), getConfig()).then(processResponse);
             }
 
             return {
                 currentMonth : currentMonth,
-                month : month
+                month : getMonth
             };
         }
     ]);
 
-})();
+}());

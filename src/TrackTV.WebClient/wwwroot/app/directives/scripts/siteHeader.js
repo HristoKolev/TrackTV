@@ -1,20 +1,33 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.directives.directive('ttSiteHeader', [
+    window.ngModules.directives.directive('ttSiteHeader', [
         'templateProvider', 'authentication', 'toastr', '$location',
-        function ttSiteHeader (templateProvider, authentication, toastr, $location) {
+        function ttSiteHeader(templateProvider, authentication, toastr, $location) {
 
-            function notify () {
+            function notify() {
+
                 toastr.success('Successful Logout!');
             }
 
-            function logout () {
+            function logout() {
+
                 authentication.logout().then(notify, notify);
             }
 
             function search(query) {
-                $location.path('/shows/search/' + query);
+
+                if (query) {
+
+                    $location.path('/shows/search/' + query);
+                }
+            }
+
+            /*jslint unparam:true */
+            function link(scope, element, attr) {
+
+                scope.logout = logout;
+                scope.search = search;
             }
 
             return {
@@ -23,12 +36,9 @@
                 scope : {
                     user : '='
                 },
-                link : function link (scope, element, attr) {
-                    scope.logout = logout;
-                    scope.search = search;
-                }
+                link : link
             };
         }
     ]);
 
-})();
+}());

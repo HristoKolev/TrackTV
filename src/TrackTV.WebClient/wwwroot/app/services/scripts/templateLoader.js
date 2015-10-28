@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    ngModules.services.factory('templateLoader', [
-        function templateLoader () {
+    window.ngModules.services.factory('templateLoader', [
+        function templateLoader() {
 
             var states = {
                 ready : 'LOAD_STATE_READY',
@@ -18,7 +18,7 @@
 
             // public
 
-            function setScope (scope) {
+            function setScope(scope) {
 
                 scope.$on('$locationChangeStart', function (event) {
 
@@ -30,7 +30,7 @@
                 globalScope = scope;
             }
 
-            function ready () {
+            function ready() {
                 setState(states.ready);
             }
 
@@ -41,4 +41,4 @@
         }
     ]);
 
-})();
+}());

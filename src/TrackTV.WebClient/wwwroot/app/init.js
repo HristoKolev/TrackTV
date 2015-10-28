@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    function getSettings () {
+    function getSettings() {
 
-        function syncRequest (url) {
+        function syncRequest(url) {
 
             var result;
 
@@ -21,15 +21,13 @@
             return result;
         }
 
-        var settings = {
+        return {
             templateConfig : syncRequest('app/templateConfig.json'),
             development : true
         };
-
-        return settings;
     }
 
     window.settings = window.settings || getSettings();
 
     window.ngModules = {};
-})();
+}());

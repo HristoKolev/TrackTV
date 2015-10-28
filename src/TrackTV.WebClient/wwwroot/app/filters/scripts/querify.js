@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('querify', [
+    window.ngModules.filters.filter('querify', [
         function querify() {
 
             function filter(str) {
@@ -14,4 +14,4 @@
             return filter;
         }
     ]);
-})();
+}());

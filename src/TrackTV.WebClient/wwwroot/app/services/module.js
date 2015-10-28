@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     var name = 'tt.services';
@@ -7,4 +7,4 @@
 
     window.ngModules.services = angular.module(name, dependencies);
 
-})();
+}());

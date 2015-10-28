@@ -1,4 +1,4 @@
-<div class="calendar-view center-block">
+﻿<div class="calendar-view center-block">
 
     <div class="month-list center-block row">
 
@@ -15,29 +15,29 @@
     <table class="table">
 
         <thead>
-            <tr>
-                <th ng-repeat="day in daysOfWeek" class="col-md-1 danger text-center">
-                    {{ day }}
-                </th>
-            </tr>
+        <tr>
+            <th ng-repeat="day in daysOfWeek" class="col-md-1 danger text-center">
+                {{ day }}
+            </th>
+        </tr>
         </thead>
 
         <tbody>
 
-            <tr ng-repeat="week in weeks">
-                <td ng-repeat="day in week" class="calendar-day" ng-class="todayClass(day.date)">
+        <tr ng-repeat="week in weeks">
+            <td ng-repeat="day in week" class="calendar-day" ng-class="todayClass(day.date)">
 
-                    <div class="calendar-date"> {{ day.date | shortDate }} </div>
+                <div class="calendar-date"> {{ day.date | shortDate }} </div>
 
-                    <div ng-repeat="episode in day.episodes" class="calendar-episode">
+                <div ng-repeat="episode in day.episodes" class="calendar-episode">
 
-                        <a href="/#/show/{{ episode.userFriendlyId }}" class="calendar-episode-link">{{ episode.showName }}</a>
+                    <a href="/#/show/{{ episode.userFriendlyId }}" class="calendar-episode-link">{{ episode.showName }}</a>
 
-                        <span>(S{{ episode.seasonNumber | doubleDigit }}E{{ episode.number | doubleDigit }})</span>
+                    <span>(S{{ episode.seasonNumber | doubleDigit }}E{{ episode.number | doubleDigit }})</span>
 
-                    </div>
-                </td>
-            </tr>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

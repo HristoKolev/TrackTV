@@ -1,10 +1,10 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('longDate', [
-        function longDate () {
+    window.ngModules.filters.filter('longDate', [
+        function longDate() {
 
-            function filter (date) {
+            function filter(date) {
 
                 if (!(date instanceof Date)) {
 
@@ -19,4 +19,4 @@
             return filter;
         }
     ]);
-})();
+}());

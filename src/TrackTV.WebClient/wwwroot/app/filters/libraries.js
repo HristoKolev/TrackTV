@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters
+    window.ngModules.filters
         .value('s', window.s)
         .value('moment', window.moment);
-})();
+}());

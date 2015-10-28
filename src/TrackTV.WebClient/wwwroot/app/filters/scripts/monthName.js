@@ -1,9 +1,8 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('monthName', [
-        's',
-        function monthName(s) {
+    window.ngModules.filters.filter('monthName', [
+        function monthName() {
 
             var monthNames = [
                 'January',
@@ -28,4 +27,4 @@
             return filter;
         }
     ]);
-})();
+}());

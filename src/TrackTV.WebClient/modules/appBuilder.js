@@ -1,39 +1,35 @@
 var fs = require('fs'),
-    path = require('path'); 
+    path = require('path');
 
-function appBuilder(pathResolver, rootPath) {
+function appBuilder (pathResolver, rootPath, fetchLevel) {
 
-    this._pathResolver = pathResolver;
-    this._files = [];
-    this._modules = [];
+    fetchLevel = fetchLevel || 4;
 
-    appBuilder.prototype.loadModules = function () {
+    var that = Object.create(null);
 
-        function getFolderNames (dir) {
-            return fs.readdirSync(dir).filter(function (file) {
-                return fs.statSync(path.join(dir, file)).isDirectory();
-            });
-        }
+    var files = [],
+        modules = [];
 
-        this.addAppFile('/init.js')
-            .addModule(getFolderNames(this.appPath()))
-            .addAppFile('/routeConfig.js');
+    function getFolderNames (dir) {
 
-        return this;
-    };
+        return fs.readdirSync(dir).filter(function (file) {
 
-    appBuilder.prototype.addModule = function (name) {
+            return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+    }
+
+    that.addModule = function (name) {
 
         if (name instanceof Array) {
 
             for (var index in name) {
 
-                this.addModule(name[index]);
+                that.addModule(name[index]);
             }
 
         } else {
 
-            this._modules.push(name);
+            modules.push(name);
 
             var headerFiles = [
                 '/module.js',
@@ -44,89 +40,92 @@ function appBuilder(pathResolver, rootPath) {
             for (var index in headerFiles) {
                 var header = headerFiles[index];
 
-                this.addFile(this.modulePath(name, header));
+                that.addFile(that.modulePath(name, header));
             }
 
-            this.addFile(this.modulePath(name, '/scripts/**/**/**/*.js'));
+            that.addFile(that.modulePath(name, '/scripts/' + Array(fetchLevel + 1).join('**/') + '*.js'));
         }
 
-        return this;
+        return that;
     };
 
-    appBuilder.prototype.addPublicFile = function (path) {
+    that.addPublicFile = function (path) {
 
-        return this.addFile(this._pathResolver.publicPath(path));
+        return that.addFile(pathResolver.publicPath(path));
     };
 
-    appBuilder.prototype.addAppFile = function (path) {
+    that.addAppFile = function (path) {
 
-        return this.addFile(this.appPath(path));
+        return that.addFile(that.appPath(path));
     };
 
-    appBuilder.prototype.addFile = function (path) {
+    that.addFile = function (path) {
 
         if (path instanceof Array) {
 
             for (var index in path) {
 
-                this.addFile(path[index]);
+                that.addFile(path[index]);
             }
 
         } else {
 
-            this._files.push(path);
+            files.push(path);
         }
 
-        return this;
+        return that;
 
     };
 
-    appBuilder.prototype.addModuleFile = function (moduleName, path) {
+    that.addModuleFile = function (moduleName, path) {
 
-        this.addFile(this.modulePath(moduleName, path));
+        that.addFile(that.modulePath(moduleName, path));
 
-        return this;
+        return that;
     };
 
-    appBuilder.prototype.scripts = function () {
+    that.scripts = function () {
 
-        return this._files;
+        return files.concat([]);
     };
 
-    appBuilder.prototype.templates = function () {
+    that.templates = function () {
 
         var templatesPaths = [];
 
-        for (var index in this._modules) {
-            var module = this._modules[index];
+        for (var index in modules) {
 
-            templatesPaths.push(this.modulePath(module, '/templates/*.html'));
+            var module = modules[index];
+
+            templatesPaths.push(that.modulePath(module, '/templates/*.html'));
         }
 
         return templatesPaths;
     };
 
-    appBuilder.prototype.lessFiles = function () {
+    that.lessFiles = function () {
 
         var templatesPaths = [];
 
-        for (var index in this._modules) {
-            var module = this._modules[index];
+        for (var index in modules) {
 
-            templatesPaths.push(this.modulePath(module, '/styles/*.less'));
+            var module = modules[index];
+
+            templatesPaths.push(that.modulePath(module, '/styles/*.less'));
         }
 
         return templatesPaths;
     };
 
-    appBuilder.prototype.clear = function () {
+    that.clear = function () {
 
-        this._files = [];
+        files = [];
     };
 
-    appBuilder.prototype.modulePath = function (moduleName, path) {
+    that.modulePath = function (moduleName, path) {
 
         if (!moduleName) {
+
             throw Error('You must specifiy the name of the module.');
         }
 
@@ -134,7 +133,7 @@ function appBuilder(pathResolver, rootPath) {
 
             for (var index in path) {
 
-                path[index] = this.modulePath(moduleName, path[index]);
+                path[index] = that.modulePath(moduleName, path[index]);
             }
 
             return path;
@@ -143,16 +142,17 @@ function appBuilder(pathResolver, rootPath) {
 
             path = path || '';
 
-            return this.appPath('/' + moduleName + path);
+            return that.appPath('/' + moduleName + path);
         }
     };
 
-    appBuilder.prototype.appPath = function (path) {
+    that.appPath = function (path) {
 
         if (path instanceof Array) {
 
             for (var index in path) {
-                path[index] = this.appPath(path[index]);
+
+                path[index] = that.appPath(path[index]);
             }
 
             return path;
@@ -165,16 +165,16 @@ function appBuilder(pathResolver, rootPath) {
         }
     };
 
-    this.loadModules();
+    that.addAppFile('/init.js')
+        .addModule(getFolderNames(that.appPath()))
+        .addAppFile('/routeConfig.js');
 
-    //appBuilder.prototype.getSourceFilesPattern = function () {
-    //    return sourseSettings.moduleRootPath + '/' + Array(sourseSettings.fetchLevel + 1).join('**/') + '*.js';
-    //};
-
+    return that;
 }
 
 module.exports = {
-    instance: function (pathResolver, rootPath) {
-        return new appBuilder(pathResolver, rootPath);
+    instance : function (pathResolver, rootPath, fetchLevel) {
+
+        return appBuilder(pathResolver, rootPath, fetchLevel);
     }
 };

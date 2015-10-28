@@ -1,15 +1,15 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('MyShowsController', [
-        '$scope', 'myShowsService', '$routeParams', 'subscriptionService', 'templateLoader',
-        function MyShowsController($scope, myShowsService, $routeParams, subscriptionService, templateLoader) {
+    window.ngModules.main.controller('MyShowsController', [
+        '$scope', 'myShowsService', '$routeParams', 'subscriptionService', 'toastr', 'templateLoader',
+        function MyShowsController($scope, myShowsService, $routeParams, subscriptionService, toastr, templateLoader) {
 
             // scope
 
             $scope.pageSize = 10;
 
-            function subscribe (show) {
+            function subscribe(show) {
 
                 subscriptionService.subscribe(show.id)
                     .then(function (response) {
@@ -20,7 +20,7 @@
 
             $scope.subscribe = subscribe;
 
-            function unsubscribe (show) {
+            function unsubscribe(show) {
 
                 subscriptionService.unsubscribe(show.id)
                     .then(function (response) {
@@ -32,7 +32,7 @@
 
             $scope.unsubscribe = unsubscribe;
 
-            function getContinuing (page) {
+            function getContinuing(page) {
 
                 myShowsService.continuing(page)
                     .then(function (response) {
@@ -44,7 +44,7 @@
 
             $scope.getContinuing = getContinuing;
 
-            function getEnded (page) {
+            function getEnded(page) {
 
                 myShowsService.ended(page)
                     .then(function (response) {
@@ -52,8 +52,8 @@
                         $scope.ended = response.data;
                     });
             }
-          
+
             $scope.getEnded = getEnded;
         }
     ]);
-})();
+}());

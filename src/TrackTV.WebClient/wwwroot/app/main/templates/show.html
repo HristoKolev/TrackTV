@@ -1,8 +1,8 @@
-﻿<div class="row well show-header">
+<div class="row well show-header">
 
     <div class="col-md-8">
 
-        <img src="{{ show.banner }}" alt="{{ show.name }}" title="{{ show.name }}"/>
+        <img ng-src="{{ show.banner }}" alt="{{ show.name }}" title="{{ show.name }}"/>
 
         <div ng-if="user.isAuthenticated" id="subscribe-unsubscribe-button">
 
@@ -97,19 +97,18 @@
 
         <div class="links-table text-center">
 
-            <a href="http://www.youtube.com/results?search_query={{ show.name | querify }}+Trailer" class="btn btn-default btn-danger text-center" target="_blank">
+            <a ng-href="http://www.youtube.com/results?search_query={{ show.name | querify }}+Trailer" class="btn btn-default btn-danger text-center" target="_blank">
                 YouTube Trailer
             </a>
 
-            <a href="http://www.imdb.com/title/{{ show.imdbId }}/" class="btn btn-default btn-success text-center" target="_blank">
+            <a ng-href="http://www.imdb.com/title/{{ show.imdbId }}/" class="btn btn-default btn-success text-center" target="_blank">
                 IMDB Profile
             </a>
 
-            <a href="http://www.thetvdb.com/?tab=series&id={{ show.tvDbId }}" class="btn btn-default btn-warning text-center" target="_blank">
+            <a ng-href="http://www.thetvdb.com/?tab=series&id={{ show.tvDbId }}" class="btn btn-default btn-warning text-center" target="_blank">
                 TheTVDB Profile
             </a>
         </div>
 
     </div>
 </div>
-

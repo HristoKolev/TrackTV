@@ -1,49 +1,49 @@
 (function () {
     'use strict';
 
-    ngModules.services.constant('templateProvider',
-        function templateProvider () {
+    window.ngModules.services.constant('templateProvider',
+    (function templateProvider() {
 
-            var templates = settings.templateConfig;
+        var templates = window.settings.templateConfig;
 
-            function getTemplate (name, prefix) {
+        function getTemplate(name, prefix) {
 
-                var isCached = !settings.development;
+            var isCached = !window.settings.development;
 
-                var result = name + templates.extension;
+            var result = name + templates.extension;
 
-                if (!isCached) {
-                    result = prefix + result;
-                }
-
-                return result;
+            if (!isCached) {
+                result = prefix + result;
             }
 
-            function view (name) {
+            return result;
+        }
 
-                var path = templates.viewPath + '/';
+        function view(name) {
 
-                return getTemplate(name, path);
-            }
+            var path = templates.viewPath + '/';
 
-            function directive (name) {
+            return getTemplate(name, path);
+        }
 
-                var path = templates.directivePath + '/';
+        function directive(name) {
 
-                return getTemplate(name, path);
-            }
+            var path = templates.directivePath + '/';
 
-            function lib (name) {
+            return getTemplate(name, path);
+        }
 
-                var path = templates.libPath + '/';
+        function lib(name) {
 
-                return getTemplate(name, path);
-            }
+            var path = templates.libPath + '/';
 
-            return {
-                view : view,
-                directive : directive,
-                lib : lib
-            };
-        }());
-})();
+            return getTemplate(name, path);
+        }
+
+        return {
+            view : view,
+            directive : directive,
+            lib : lib
+        };
+    }()));
+}());

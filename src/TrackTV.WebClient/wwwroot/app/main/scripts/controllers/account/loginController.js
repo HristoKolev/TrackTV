@@ -1,13 +1,13 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('LoginController', [
+    window.ngModules.main.controller('LoginController', [
         '$scope', '$location', 'toastr', 'identity', 'authentication', 'templateLoader',
         function LoginController($scope, $location, toastr, identity, authentication, templateLoader) {
 
             $scope.identity = identity;
 
-            function login (user, loginForm) {
+            function login(user, loginForm) {
 
                 authentication.login(user).then(function (success) {
 
@@ -24,7 +24,7 @@
 
             $scope.login = login;
 
-            function logout () {
+            function logout() {
 
                 authentication.logout().then(function () {
 
@@ -42,11 +42,11 @@
                     $location.path('/');
                 });
             }
-        
+
             $scope.logout = logout;
 
             templateLoader.ready();
         }
     ]);
 
-})();
+}());

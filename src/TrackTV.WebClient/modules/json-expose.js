@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 var globule = require('globule');
 var path = require('path');
@@ -12,11 +12,13 @@ module.exports = function (name, pattern) {
     }
 
     if (!(pattern instanceof Array)) {
+
         pattern = [pattern];
     }
 
     var paths = globule.find(pattern)
         .filter(function (filePath) {
+
             return path.extname(filePath).toLowerCase() === '.json';
         });
 

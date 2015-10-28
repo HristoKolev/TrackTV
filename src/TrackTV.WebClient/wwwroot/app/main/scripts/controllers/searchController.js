@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('SearchController', [
+    window.ngModules.main.controller('SearchController', [
         '$scope', 'showsService', '$routeParams', '$location', 'templateLoader',
         function SearchController($scope, showsService, $routeParams, $location, templateLoader) {
 
@@ -11,7 +11,7 @@
             $scope.query = $routeParams.query;
             $scope.currentPage = $routeParams.page || 1;
 
-            function gePtage (page) {
+            function gePtage(page) {
 
                 showsService.search($routeParams.query, page)
                     .then(function (response) {
@@ -35,4 +35,4 @@
         }
     ]);
 
-})();
+}());

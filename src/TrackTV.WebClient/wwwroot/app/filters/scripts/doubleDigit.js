@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('doubleDigit', [
+    window.ngModules.filters.filter('doubleDigit', [
         's',
-        function doubleDigit (s) {
+        function doubleDigit(s) {
 
             function filter(number) {
 
@@ -12,5 +12,5 @@
 
             return filter;
         }
-    ]); 
-})();
+    ]);
+}());

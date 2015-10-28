@@ -1,10 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    var name = 'tt.filters';
-
-    var dependencies = [];
+    var name = 'tt.filters',
+        dependencies = [];
 
     window.ngModules.filters = angular.module(name, dependencies);
 
-})();
+}());

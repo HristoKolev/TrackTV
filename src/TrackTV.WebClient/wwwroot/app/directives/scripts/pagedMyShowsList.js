@@ -1,11 +1,17 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.directives.directive('ttPagedMyShowsList', [
+    window.ngModules.directives.directive('ttPagedMyShowsList', [
         'templateProvider',
-        function ttPagedMyShowsList (templateProvider) {
+        function ttPagedMyShowsList(templateProvider) {
 
-            function compile (element, attrs) {
+            /*jslint unparam:true */
+            function link(scope, element, attrs) {
+
+                scope.pageChanged(scope.currentPage);
+            }
+
+            function compile(element, attrs) {
 
                 if (!attrs.totalItems) {
 
@@ -26,11 +32,6 @@
                 return link;
             }
 
-            function link (scope, element, attrs) {
-
-                scope.pageChanged(scope.currentPage);
-            }
-
             return {
                 restrict : 'A',
                 templateUrl : templateProvider.directive('paged-my-shows-list'),
@@ -43,11 +44,11 @@
                     unsubscribe : '=',
                     subscribe : '=',
                     showNextEpisode : '=',
-                    paginationId : '@',
+                    paginationId : '@'
                 },
                 compile : compile
             };
         }
     ]);
 
-})();
+}());

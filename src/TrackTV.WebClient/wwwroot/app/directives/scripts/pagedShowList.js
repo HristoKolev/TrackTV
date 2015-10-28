@@ -1,11 +1,17 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.directives.directive('ttPagedShowList', [
+    window.ngModules.directives.directive('ttPagedShowList', [
         'templateProvider',
-        function ttPagedShowList (templateProvider) {
+        function ttPagedShowList(templateProvider) {
 
-            function compile (element, attrs) {
+            /*jslint unparam:true */
+            function link(scope, element, attrs) {
+
+                scope.pageChanged(scope.currentPage);
+            }
+
+            function compile(element, attrs) {
 
                 if (!attrs.totalItems) {
 
@@ -26,12 +32,6 @@
                 return link;
             }
 
-            function link (scope, element, attrs) {
-
-                scope.pageChanged(scope.currentPage);
-
-            }
-
             return {
                 restrict : 'A',
                 templateUrl : templateProvider.directive('paged-show-list'),
@@ -47,4 +47,4 @@
         }
     ]);
 
-})();
+}());

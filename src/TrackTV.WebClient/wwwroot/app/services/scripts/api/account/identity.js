@@ -1,20 +1,16 @@
 (function () {
     'use strict';
 
-    ngModules.services.factory('identity', [
+    window.ngModules.services.factory('identity', [
         '$cookieStore',
         function ($cookieStore) {
 
             var userKey = 'currentUser';
 
-            var localUser = {
-                addAuthorizationHeader : addAuthorizationHeader
-            };
-
-            clearLocalUser();
+            var localUser = {};
 
             // private
-            function updateLocalUser (user) {
+            function updateLocalUser(user) {
 
                 user = user || getCookieUser() || {};
 
@@ -22,6 +18,7 @@
                 localUser.isAdmin = !!isAdmin();
                 localUser.isGuest = !user.access_token;
                 localUser.username = user.userName;
+                localUser.addAuthorizationHeader = addAuthorizationHeader;
 
                 if (localUser.isGuest) {
                     localUser.username = 'Guest';
@@ -30,30 +27,34 @@
                 localUser.full = user;
             }
 
-            function addAuthorizationHeader (headers) {
+            function addAuthorizationHeader(headers) {
 
                 headers = headers || {};
-                headers['Authorization'] = 'Bearer ' + localUser.full.access_token;
+
+                // !!! capital A
+                headers.Authorization = 'Bearer ' + localUser.full.access_token;
 
                 return headers;
             }
 
-            function clearLocalUser () {
+            function clearLocalUser() {
+
                 updateLocalUser({});
             }
 
-            function getCookieUser () {
+            function getCookieUser() {
+
                 return $cookieStore.get(userKey);
             }
 
             // public
-            function getCurrentUser () {
+            function getCurrentUser() {
 
                 updateLocalUser();
                 return localUser;
             }
 
-            function setCurrentUser (user) {
+            function setCurrentUser(user) {
 
                 if (!user) {
                     throw Error('The provided user is empty.');
@@ -64,7 +65,7 @@
                 updateLocalUser(user);
             }
 
-            function removeCurrentUser () {
+            function removeCurrentUser() {
 
                 if (!isAuthenticated()) {
 
@@ -72,15 +73,16 @@
                 }
 
                 $cookieStore.remove(userKey);
+
                 clearLocalUser();
             }
 
-            function isAuthenticated () {
+            function isAuthenticated() {
 
                 return !!getCookieUser();
             }
 
-            function isAdmin () {
+            function isAdmin() {
 
                 if (isAuthenticated()) {
 
@@ -99,6 +101,8 @@
                 }
             }
 
+            clearLocalUser();
+
             return {
                 getCurrentUser : getCurrentUser,
                 setCurrentUser : setCurrentUser,
@@ -109,4 +113,4 @@
         }
     ]);
 
-})();
+}());

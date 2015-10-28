@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.services.factory('subscriptionService', [
+    window.ngModules.services.factory('subscriptionService', [
         'apiPath', '$http', 'identity',
-        function subscriptionService (apiPath, $http, identity) {
+        function subscriptionService(apiPath, $http, identity) {
 
             var subscription = apiPath.service('subscription');
 
@@ -14,7 +14,7 @@
                 return $http.post(subscription('/subscribe/' + id), {}, config);
             }
 
-            function unsubscribe (id) {
+            function unsubscribe(id) {
                 return $http.post(subscription('/unsubscribe/' + id), {}, config);
             }
 
@@ -25,4 +25,4 @@
         }
     ]);
 
-})();
+}());

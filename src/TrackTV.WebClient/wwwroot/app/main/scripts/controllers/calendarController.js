@@ -1,11 +1,11 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('CalendarController', [
+    window.ngModules.main.controller('CalendarController', [
         '$scope', '$routeParams', 'calendarService', 'templateLoader',
-    function CalendarController ($scope, $routeParams, calendarService, templateLoader) {
+        function CalendarController($scope, $routeParams, calendarService, templateLoader) {
 
-            function processResponse (response) {
+            function processResponse(response) {
 
                 var data = response.data;
 
@@ -35,7 +35,7 @@
                 'Sunday'
             ];
 
-            function todayClass (date) {
+            function todayClass(date) {
 
                 if (date.toDateString() === new Date().toDateString()) {
                     return 'calendar-today';
@@ -47,4 +47,4 @@
             $scope.todayClass = todayClass;
         }
     ]);
-})();
+}());

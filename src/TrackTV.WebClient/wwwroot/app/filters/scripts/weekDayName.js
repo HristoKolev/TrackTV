@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('weekDayName', [
+    window.ngModules.filters.filter('weekDayName', [
         's',
-        function weekDayName (s) {
+        function weekDayName(s) {
 
             var daysOfWeek = [
                 'Monday',
@@ -15,7 +15,7 @@
                 'Sunday'
             ];
 
-            function filter (number) {
+            function filter(number) {
 
                 return daysOfWeek[number - 1];
             }
@@ -23,4 +23,4 @@
             return filter;
         }
     ]);
-})();
+}());

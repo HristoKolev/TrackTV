@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('ShowController', [
+    window.ngModules.main.controller('ShowController', [
         '$scope', '$routeParams', 'showService', 'identity', 'subscriptionService', 'templateLoader',
-        function ShowController ($scope, $routeParams, showService, identity, subscriptionService, templateLoader) {
+        function ShowController($scope, $routeParams, showService, identity, subscriptionService, templateLoader) {
 
             showService.show($routeParams.show)
                 .then(function (response) {
@@ -17,30 +17,30 @@
 
             $scope.user = identity.getCurrentUser();
 
-            function subscribe (id) {
+            function subscribe(id) {
 
                 subscriptionService.subscribe(id)
                     .then(function (response) {
 
                         $scope.show.isUserSubscribed = true;
-                        $scope.show.subscriberCount++;
+                        $scope.show.subscriberCount += 1;
 
                     });
             }
 
             $scope.subscribe = subscribe;
 
-            function unsubscribe (id) {
+            function unsubscribe(id) {
 
                 subscriptionService.unsubscribe(id)
                     .then(function (response) {
 
                         $scope.show.isUserSubscribed = false;
-                        $scope.show.subscriberCount--;
+                        $scope.show.subscriberCount += 1;
                     });
             }
 
             $scope.unsubscribe = unsubscribe;
         }
     ]);
-})();
+}());

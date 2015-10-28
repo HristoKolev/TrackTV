@@ -16,4 +16,4 @@
 
     window.ngModules.main = angular.module(name, dependencies);
 
-})();
+}());

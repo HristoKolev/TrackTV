@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('GlobalController', [
+    window.ngModules.main.controller('GlobalController', [
         '$scope', 'identity', 'showService', 'templateLoader',
         function GlobalController($scope, identity, showService, templateLoader) {
 
@@ -12,4 +12,4 @@
         }
     ]);
 
-})();
+}());

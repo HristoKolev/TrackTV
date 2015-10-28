@@ -1,11 +1,11 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('premieredDate', [
+    window.ngModules.filters.filter('premieredDate', [
         'moment',
-        function premieredDate (moment) {
+        function premieredDate(moment) {
 
-            function filter (date) {
+            function filter(date) {
 
                 if (date instanceof String) {
 
@@ -18,4 +18,4 @@
             return filter;
         }
     ]);
-})();
+}());

@@ -1,17 +1,17 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('NetworkController', [
+    window.ngModules.main.controller('NetworkController', [
         '$scope', 'showsService', '$routeParams', '$location', 'templateLoader',
         function NetworkController($scope, showsService, $routeParams, $location, templateLoader) {
 
             // scope
 
             $scope.pageSize = 24;
-            
+
             $scope.currentPage = $routeParams.page || 1;
 
-            function gePtage (page) {
+            function gePtage(page) {
 
                 showsService.network($routeParams.network, page)
                     .then(function (response) {
@@ -36,4 +36,4 @@
         }
     ]);
 
-})();
+}());

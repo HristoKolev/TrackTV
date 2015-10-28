@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.directives.directive('ttShortShow', [
+    window.ngModules.directives.directive('ttShortShow', [
         'templateProvider',
         function ttShortShow(templateProvider) {
 
@@ -10,9 +10,9 @@
                 templateUrl : templateProvider.directive('short-show'),
                 scope : {
                     show : '='
-                },
+                }
             };
         }
     ]);
 
-})();
+}());

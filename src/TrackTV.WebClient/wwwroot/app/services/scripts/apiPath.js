@@ -1,19 +1,18 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.services.factory('apiPath', [
+    window.ngModules.services.factory('apiPath', [
         'baseServiceUrl',
-        function apiPath (baseServiceUrl) {
-
-            var instances = [];
+        function apiPath(baseServiceUrl) {
 
             var baseApiPath = baseServiceUrl + '/api';
 
-            function loginPath () {
+            function loginPath() {
+
                 return baseServiceUrl + '/token';
             }
 
-            function service (serviceName) {
+            function service(serviceName) {
 
                 return function (path) {
                     return baseApiPath + '/' + serviceName + path;
@@ -21,12 +20,14 @@
             }
 
             function path(name) {
+
                 name = name || '';
 
                 return baseServiceUrl + name;
             }
 
-            function apiPath (name) {
+            function rawPath(name) {
+
                 return baseApiPath + name;
             }
 
@@ -34,9 +35,9 @@
                 loginPath : loginPath,
                 service : service,
                 path : path,
-                apiPath : apiPath
+                rawPath : rawPath
             };
         }
     ]);
 
-})();
+}());

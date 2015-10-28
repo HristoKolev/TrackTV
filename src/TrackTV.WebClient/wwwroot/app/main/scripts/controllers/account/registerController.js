@@ -1,11 +1,11 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('RegisterController', [
+    window.ngModules.main.controller('RegisterController', [
         '$scope', '$location', 'authentication', 'toastr', 'templateLoader',
         function RegisterController($scope, $location, authentication, toastr, templateLoader) {
 
-            function register (user) {
+            function register(user) {
 
                 authentication.signup(user)
                     .then(function (response) {
@@ -26,4 +26,4 @@
         }
     ]);
 
-})();
+}());

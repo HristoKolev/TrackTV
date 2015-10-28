@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.services.factory('showService', [
+    window.ngModules.services.factory('showService', [
         'apiPath', '$http', 'identity',
-        function showService (apiPath, $http, identity) {
+        function showService(apiPath, $http, identity) {
 
             //variables
 
@@ -13,13 +13,13 @@
 
             //public
 
-            function getShow (name) {
+            function getShow(name) {
                 return $http.get(show('/' + name), config).then(processResponse);
             }
 
             // private 
 
-            function processResponse (response) {
+            function processResponse(response) {
 
                 var data = response.data;
 
@@ -34,7 +34,7 @@
                 }
 
                 return response;
-            };
+            }
 
             return {
                 show : getShow,
@@ -42,4 +42,4 @@
         }
     ]);
 
-})();
+}());

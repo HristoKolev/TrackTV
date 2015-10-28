@@ -1,13 +1,13 @@
 (function () {
     'use strict';
 
-    ngModules.services.factory('authentication', [
+    window.ngModules.services.factory('authentication', [
         '$http', '$q', 'identity', 'apiPath', 'calendarService',
         function authentication($http, $q, identity, apiPath, calendarService) {
 
             var account = apiPath.service('account');
 
-            function signup (user) {
+            function signup(user) {
 
                 var deferred = $q.defer();
 
@@ -21,7 +21,7 @@
                 return deferred.promise;
             }
 
-            function login (user) {
+            function login(user) {
 
                 var deferred = $q.defer();
 
@@ -49,7 +49,7 @@
                 return deferred.promise;
             }
 
-            function logout () {
+            function logout() {
 
                 var deferred = $q.defer();
 
@@ -59,18 +59,17 @@
 
                 user.addAuthorizationHeader(headers);
 
-                $http.post(account('/logout'), {}, { headers:headers })
-                    .then(function success (response) {
+                $http.post(account('/logout'), {}, { headers : headers })
+                    .then(function success(response) {
 
                         identity.removeCurrentUser();
                         deferred.resolve(response);
 
-                    }, function error (response) {
+                    }, function error(response) {
 
                         // removing the cookie, despite the server being unavailable
                         identity.removeCurrentUser();
 
-                        console.log(response);
                         deferred.reject(response);
                     });
 
@@ -85,4 +84,4 @@
         }
     ]);
 
-})();
+}());

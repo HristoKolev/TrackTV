@@ -1,9 +1,9 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.filters.filter('shortDate', [
+    window.ngModules.filters.filter('shortDate', [
         's',
-        function shortDate (s) {
+        function shortDate(s) {
 
             var monthNames = [
                 'January',
@@ -20,7 +20,7 @@
                 'December'
             ];
 
-            function filter (date) {
+            function filter(date) {
 
                 var monthName = monthNames[date.getMonth()].substr(0, 3);
 
@@ -32,4 +32,4 @@
             return filter;
         }
     ]);
-})();
+}());

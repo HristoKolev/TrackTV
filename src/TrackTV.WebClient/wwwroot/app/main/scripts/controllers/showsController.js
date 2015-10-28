@@ -1,11 +1,11 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.controller('ShowsController', [
+    window.ngModules.main.controller('ShowsController', [
         '$scope', 'showsService', '$routeParams', 'templateLoader',
         function ShowsController($scope, showsService, $routeParams, templateLoader) {
 
-            function processResponse (response) {
+            function processResponse(response) {
                 $scope.shows = response.data;
 
                 templateLoader.ready();
@@ -21,4 +21,4 @@
         }
     ]);
 
-})();
+}());

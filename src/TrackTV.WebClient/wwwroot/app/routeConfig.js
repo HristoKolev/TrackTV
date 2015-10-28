@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
     'use strict';
 
-    ngModules.main.config([
+    window.ngModules.main.config([
         '$routeProvider', 'templateProvider', 'paginationTemplateProvider', '$locationProvider',
         function ($routeProvider, templateProvider, paginationTemplateProvider, $locationProvider) {
 
@@ -70,4 +70,4 @@
 
         }
     ]);
-})();
+}());
