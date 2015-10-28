@@ -1,2 +1,2 @@
 start gulp watch
-dnvm upgrade -u && dnu restore && dnx-watch web
+dnvm dnu restore && dnx-watch web
