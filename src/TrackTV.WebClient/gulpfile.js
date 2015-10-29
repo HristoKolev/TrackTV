@@ -83,25 +83,25 @@ function fileExists(filePath) {
 }
 
 var cssMinifyOptions = {
-    processImportFrom : ['local'],
-    keepSpecialComments : 0
+    processImportFrom: ['local'],
+    keepSpecialComments: 0
 };
 
 var htmlMinifyOptions = {
-    empty : true,
+    empty: true,
 };
 
 var embedMediaOptions = {
-    baseDir : pathResolve.publicPath(),
-    resourcePattern : [
+    baseDir: pathResolve.publicPath(),
+    resourcePattern: [
         '/include/*'
     ],
-    verbose : true
+    verbose: true
 };
 
 var browserifyOptions = {
-    debug : true,
-    entries : npmModuleFiles.filter(function (file) {
+    debug: true,
+    entries: npmModuleFiles.filter(function (file) {
 
         return fileExists(file);
     })
@@ -109,7 +109,7 @@ var browserifyOptions = {
 
 function createFile(name, contents) {
 
-    return file(name, contents, { src : true });
+    return file(name, contents, { src: true });
 }
 
 fixGulp(gulp);
@@ -353,13 +353,13 @@ gulp.task('build-merge', function () {
 
     return gulp.src(buildHtml)
         .pipe(embedMedia({
-            baseDir : pathResolve.publicPath(),
-            verbose : true,
-            selectors : 'head link[rel="icon"]',
-            attributes : 'href'
+            baseDir: pathResolve.publicPath(),
+            verbose: true,
+            selectors: 'head link[rel="icon"]',
+            attributes: 'href'
         }))
         .pipe(smoosher({
-            base : tempBuild
+            base: tempBuild
         }))
         .pipe(minifyHtml(htmlMinifyOptions))
         .pipe(saveFile());

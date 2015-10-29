@@ -6,10 +6,10 @@
         function ttShowList(templateProvider) {
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('show-list'),
-                scope : {
-                    shows : '='
+                restrict: 'A',
+                templateUrl: templateProvider.directive('show-list'),
+                scope: {
+                    shows: '='
                 }
             };
         }

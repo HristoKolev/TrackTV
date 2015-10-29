@@ -89,10 +89,10 @@
             }
 
             return {
-                top : top,
-                genre : genre,
-                search : search,
-                network : network
+                top: top,
+                genre: genre,
+                search: search,
+                network: network
             };
         }
     ]);

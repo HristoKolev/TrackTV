@@ -2,9 +2,9 @@
     'use strict';
 
     window.toastr.options = {
-        closeButton : true,
-        positionClass : 'toast-top-center',
-        timeOut : 2000,
+        closeButton: true,
+        positionClass: 'toast-top-center',
+        timeOut: 2000,
     };
 
     window.ngModules.main

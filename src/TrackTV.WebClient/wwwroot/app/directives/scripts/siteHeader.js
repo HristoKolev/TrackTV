@@ -31,12 +31,12 @@
             }
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('site-header'),
-                scope : {
-                    user : '='
+                restrict: 'A',
+                templateUrl: templateProvider.directive('site-header'),
+                scope: {
+                    user: '='
                 },
-                link : link
+                link: link
             };
         }
     ]);

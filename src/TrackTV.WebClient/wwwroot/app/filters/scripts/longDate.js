@@ -11,7 +11,7 @@
                     date = new Date(date);
                 }
 
-                var options = { weekday : 'long', year : 'numeric', month : 'long', day : '2-digit' };
+                var options = { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' };
 
                 return date.toLocaleDateString('en-US', options);
             }

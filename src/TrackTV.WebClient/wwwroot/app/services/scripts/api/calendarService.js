@@ -10,15 +10,15 @@
             function getConfig() {
 
                 return {
-                    headers : identity.getCurrentUser().addAuthorizationHeader()
+                    headers: identity.getCurrentUser().addAuthorizationHeader()
                 };
             }
 
             function getMonthModel(date) {
 
                 return {
-                    year : date.getFullYear(),
-                    month : date.getMonth() + 1
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1
                 };
             }
 
@@ -71,8 +71,8 @@
             }
 
             return {
-                currentMonth : currentMonth,
-                month : getMonth
+                currentMonth: currentMonth,
+                month: getMonth
             };
         }
     ]);

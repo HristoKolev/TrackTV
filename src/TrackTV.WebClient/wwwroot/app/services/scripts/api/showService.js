@@ -43,7 +43,7 @@
             }
 
             return {
-                show : getShow,
+                show: getShow,
             };
         }
     ]);

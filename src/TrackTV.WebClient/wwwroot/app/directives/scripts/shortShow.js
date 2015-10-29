@@ -6,10 +6,10 @@
         function ttShortShow(templateProvider) {
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('short-show'),
-                scope : {
-                    show : '='
+                restrict: 'A',
+                templateUrl: templateProvider.directive('short-show'),
+                scope: {
+                    show: '='
                 }
             };
         }

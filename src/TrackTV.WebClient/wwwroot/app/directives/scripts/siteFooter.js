@@ -6,9 +6,9 @@
         function ttSiteFooter(templateProvider) {
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('site-footer'),
-                scope : {}
+                restrict: 'A',
+                templateUrl: templateProvider.directive('site-footer'),
+                scope: {}
             };
         }
     ]);

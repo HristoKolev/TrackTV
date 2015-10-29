@@ -30,7 +30,7 @@
                 var data = 'username=' + user.username + '&password=' + user.password + '&grant_type=password';
 
                 var config = {
-                    headers : { 'Content-Type' : 'application/x-www-form-urlencoded' }
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 };
 
                 $http.post(apiPath.loginPath(), data, config)
@@ -59,7 +59,7 @@
 
                 user.addAuthorizationHeader(headers);
 
-                $http.post(account('/logout'), {}, { headers : headers })
+                $http.post(account('/logout'), {}, { headers: headers })
                     .then(function success(response) {
 
                         identity.removeCurrentUser();
@@ -77,9 +77,9 @@
             }
 
             return {
-                signup : signup,
-                login : login,
-                logout : logout
+                signup: signup,
+                login: login,
+                logout: logout
             };
         }
     ]);

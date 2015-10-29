@@ -8,22 +8,22 @@
             var result;
 
             $.ajax({
-                type : 'GET',
-                url : url,
-                dataType : 'json',
-                success : function (data) {
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                success: function (data) {
                     result = data;
                 },
 
-                async : false
+                async: false
             });
 
             return result;
         }
 
         return {
-            templateConfig : syncRequest('app/templateConfig.json'),
-            development : true
+            templateConfig: syncRequest('app/templateConfig.json'),
+            development: true
         };
     }
 

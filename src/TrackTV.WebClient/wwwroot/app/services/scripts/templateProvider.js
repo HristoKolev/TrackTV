@@ -41,9 +41,9 @@
         }
 
         return {
-            view : view,
-            directive : directive,
-            lib : lib
+            view: view,
+            directive: directive,
+            lib: lib
         };
     }()));
 }());

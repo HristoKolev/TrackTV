@@ -5,8 +5,8 @@
         function templateLoader() {
 
             var states = {
-                ready : 'LOAD_STATE_READY',
-                loading : 'LOAD_STATE_LOADING',
+                ready: 'LOAD_STATE_READY',
+                loading: 'LOAD_STATE_LOADING',
             };
 
             var globalScope;
@@ -35,8 +35,8 @@
             }
 
             return {
-                setScope : setScope,
-                ready : ready
+                setScope: setScope,
+                ready: ready
             };
         }
     ]);

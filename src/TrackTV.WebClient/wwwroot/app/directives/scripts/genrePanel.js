@@ -6,10 +6,10 @@
         function ttGenrePanel(templateProvider) {
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('genre-panel'),
-                scope : {
-                    genres : '='
+                restrict: 'A',
+                templateUrl: templateProvider.directive('genre-panel'),
+                scope: {
+                    genres: '='
                 }
             };
         }

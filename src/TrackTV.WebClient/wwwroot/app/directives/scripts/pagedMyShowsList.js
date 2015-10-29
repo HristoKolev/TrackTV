@@ -33,20 +33,20 @@
             }
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('paged-my-shows-list'),
-                scope : {
-                    totalItems : '=',
-                    pageSize : '=',
-                    items : '=',
-                    currentPage : '=',
-                    pageChanged : '=',
-                    unsubscribe : '=',
-                    subscribe : '=',
-                    showNextEpisode : '=',
-                    paginationId : '@'
+                restrict: 'A',
+                templateUrl: templateProvider.directive('paged-my-shows-list'),
+                scope: {
+                    totalItems: '=',
+                    pageSize: '=',
+                    items: '=',
+                    currentPage: '=',
+                    pageChanged: '=',
+                    unsubscribe: '=',
+                    subscribe: '=',
+                    showNextEpisode: '=',
+                    paginationId: '@'
                 },
-                compile : compile
+                compile: compile
             };
         }
     ]);

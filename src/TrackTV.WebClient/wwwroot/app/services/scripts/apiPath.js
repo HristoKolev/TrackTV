@@ -32,10 +32,10 @@
             }
 
             return {
-                loginPath : loginPath,
-                service : service,
-                path : path,
-                rawPath : rawPath
+                loginPath: loginPath,
+                service: service,
+                path: path,
+                rawPath: rawPath
             };
         }
     ]);

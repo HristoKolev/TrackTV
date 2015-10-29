@@ -33,16 +33,16 @@
             }
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('paged-show-list'),
-                scope : {
-                    totalItems : '=',
-                    pageSize : '=',
-                    items : '=',
-                    currentPage : '=',
-                    pageChanged : '='
+                restrict: 'A',
+                templateUrl: templateProvider.directive('paged-show-list'),
+                scope: {
+                    totalItems: '=',
+                    pageSize: '=',
+                    items: '=',
+                    currentPage: '=',
+                    pageChanged: '='
                 },
-                compile : compile
+                compile: compile
             };
         }
     ]);

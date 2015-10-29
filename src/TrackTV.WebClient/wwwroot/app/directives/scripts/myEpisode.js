@@ -6,10 +6,10 @@
         function ttMyEpisode(templateProvider) {
 
             return {
-                restrict : 'A',
-                templateUrl : templateProvider.directive('my-episode'),
-                scope : {
-                    episode : '='
+                restrict: 'A',
+                templateUrl: templateProvider.directive('my-episode'),
+                scope: {
+                    episode: '='
                 }
             };
         }

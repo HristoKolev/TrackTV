@@ -104,11 +104,11 @@
             clearLocalUser();
 
             return {
-                getCurrentUser : getCurrentUser,
-                setCurrentUser : setCurrentUser,
-                removeCurrentUser : removeCurrentUser,
-                isAuthenticated : isAuthenticated,
-                isAdmin : isAdmin
+                getCurrentUser: getCurrentUser,
+                setCurrentUser: setCurrentUser,
+                removeCurrentUser: removeCurrentUser,
+                isAuthenticated: isAuthenticated,
+                isAdmin: isAdmin
             };
         }
     ]);

@@ -10,7 +10,7 @@
             function getConfig() {
 
                 return {
-                    headers : identity.getCurrentUser().addAuthorizationHeader()
+                    headers: identity.getCurrentUser().addAuthorizationHeader()
                 };
             }
 
@@ -24,8 +24,8 @@
             }
 
             return {
-                subscribe : subscribe,
-                unsubscribe : unsubscribe
+                subscribe: subscribe,
+                unsubscribe: unsubscribe
             };
         }
     ]);
