@@ -2,10 +2,15 @@
     'use strict';
 
     window.ngModules.main.controller('CalendarController', [
-        '$scope', '$routeParams', 'calendarService', 'templateLoader',
-        function CalendarController($scope, $routeParams, calendarService, templateLoader) {
+        '$scope', '$routeParams', 'calendarService', 'templateLoader', '$location', 'identity',
+        function CalendarController($scope, $routeParams, calendarService, templateLoader, $location, identity) {
 
-            function processResponse(response) {
+            if (!identity.getCurrentUser().isAuthenticated) {
+
+                $location.path('/shows');
+            }
+
+            function processSuccess(response) {
 
                 var data = response.data;
 
@@ -17,10 +22,10 @@
 
             if ($routeParams.year && $routeParams.month) {
 
-                calendarService.month($routeParams.year, $routeParams.month).then(processResponse);
+                calendarService.month($routeParams.year, $routeParams.month).then(processSuccess);
             } else {
 
-                calendarService.currentMonth().then(processResponse);
+                calendarService.currentMonth().then(processSuccess);
             }
 
             // scope
@@ -38,6 +43,7 @@
             function todayClass(date) {
 
                 if (date.toDateString() === new Date().toDateString()) {
+
                     return 'calendar-today';
                 }
 
