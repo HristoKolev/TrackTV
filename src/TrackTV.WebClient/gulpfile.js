@@ -73,8 +73,6 @@ var embedMediaOptions = {
     verbose : true
 };
 
-var jsLintFlagComment = '/*global $, angular, window */\n';
-
 function createFile(name, contents) {
 
     return file(name, contents, { src : true });
@@ -145,13 +143,16 @@ gulp.task('merge', function () {
 
 gulp.task('lint', function () {
 
+    var jsLintFlagComment = '/*global $, angular, window */\n';
+
     gulp.src(appScripts)
         .pipe(insert.transform(function (contents, file) {
 
-            return jsLintFlagComment + '\n' + contents;
+            return jsLintFlagComment + contents;
         }))
         .pipe(jslint.run())
-        .pipe(jslint.report(stylish));
+        .pipe(jslint.report(stylish))
+        .on('error', console.error);
 
     gulp.src(appScripts)
         .pipe(jshint('.jshintrc'))
