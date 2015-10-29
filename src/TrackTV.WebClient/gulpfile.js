@@ -114,6 +114,8 @@ function createFile(name, contents) {
 
 fixGulp(gulp);
 
+var buildSystem = require('./modules/buildSystem.js').instance(appBuilder, includes, pathResolve);
+
 // dev tasks
 
 gulp.task('clean', function (callback) {
@@ -128,22 +130,20 @@ gulp.task('clean', function (callback) {
 
 gulp.task('scripts', function () {
 
-    return gulp.src(bowerScripts)
-        .pipe(concat(thirdPartyJs))
+    return buildSystem.libScriptsStream()
         .pipe(gulp.dest(libPath));
 
 });
 
 gulp.task('templates', function () {
 
-    return gulp.src(bowerTemplates)
+    return buildSystem.libTemplatesStream()
         .pipe(gulp.dest(pathResolve.publicPath('/lib/templates')));
 });
 
 gulp.task('styles', function () {
 
-    return gulp.src(bowerStyles)
-        .pipe(concat(thirdPartyCss))
+    return buildSystem.libStylesStream()
         .pipe(gulp.dest(pathResolve.publicPath('/lib/css')));
 });
 
@@ -151,33 +151,28 @@ gulp.task('fonts', function () {
 
     var fontsPath = pathResolve.publicPath('/lib/fonts');
 
-    return gulp.src(bowerFonts)
+    return buildSystem.libFontsStream()
         .pipe(gulp.dest(fontsPath));
 });
 
 gulp.task('less', function () {
 
-    return gulp.src(appLessFiles)
-        .pipe(concat(mergedStyles))
-        .pipe(less())
+    return buildSystem.appStylesStream()
         .pipe(gulp.dest(mergedPath))
         .on('error', console.error);
 });
 
 gulp.task('merge', function () {
 
-    return gulp.src(appScripts)
-        .pipe(concat(mergedScripts))
+    return buildSystem.appScriptsStream()
         .pipe(gulp.dest(mergedPath));
 });
 
 gulp.task('lint', function () {
 
-    var filesForLinting = appScripts.concat(npmModuleFiles).concat(moduleHeaders);
-
     var jsLintFlagComment = '/*global $, angular, window */\n';
 
-    gulp.src(filesForLinting)
+    gulp.src(buildSystem.allSourcesStream())
         .pipe(insert.transform(function (contents, file) {
 
             return jsLintFlagComment + contents;
@@ -186,7 +181,7 @@ gulp.task('lint', function () {
         .pipe(jslint.report(stylish))
         .on('error', console.error);
 
-    gulp.src(filesForLinting)
+    gulp.src(buildSystem.allSourcesStream())
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter(stylish))
         .on('error', console.error);
@@ -194,17 +189,13 @@ gulp.task('lint', function () {
 
 gulp.task('module-headers', function () {
 
-    return gulp.src(moduleHeaders)
-        .pipe(concat(headerScripts))
+    return buildSystem.moduleHeadersStream()
         .pipe(gulp.dest(mergedPath));
 });
 
 gulp.task('browserify', function () {
 
-    return browserify(browserifyOptions)
-        .bundle()
-        .pipe(source(browserifiedScripts))
-        .pipe(buffer())
+    return buildSystem.browserifyStream()
         .pipe(gulp.dest(pathResolve.publicPath('/lib')));
 
 });
@@ -231,10 +222,8 @@ gulp.task('watch', function () {
     console.log('Watching: ' + appLessFiles);
 
     //angular app
-    var sourceFiles = appScripts.concat(moduleHeaders);
-
-    gulp.watch(sourceFiles, ['merge', 'module-headers', 'lint']);
-    console.log('Watching: ' + sourceFiles);
+    gulp.watch(appBuilder.sourceFiles(), ['merge', 'module-headers', 'lint']);
+    console.log('Watching: ' + appBuilder.sourceFiles());
 
     //browserify
     gulp.watch(npmModuleFiles, ['browserify']);
@@ -265,32 +254,28 @@ gulp.task('build-index', function () {
 
 gulp.task('build-scripts', function () {
 
-    return gulp.src(bowerScripts)
-        .pipe(concat(thirdPartyJs))
+    return buildSystem.libScriptsStream()
         .pipe(uglify())
         .pipe(gulp.dest(tempBuild + '/lib'));
 });
 
 gulp.task('build-module-headers', function () {
 
-    return gulp.src(moduleHeaders)
-        .pipe(concat(headerScripts))
+    return buildSystem.moduleHeadersStream()
         .pipe(uglify())
         .pipe(gulp.dest(tempMerged));
 });
 
 gulp.task('build-source', function () {
 
-    return gulp.src(appScripts)
-        .pipe(concat(mergedScripts))
+    return buildSystem.appScriptsStream()
         .pipe(uglify())
         .pipe(gulp.dest(tempMerged));;
 });
 
 gulp.task('build-styles', function () {
 
-    return gulp.src(bowerStyles)
-        .pipe(concat(thirdPartyCss))
+    return buildSystem.libStylesStream()
         .pipe(minifyCss(cssMinifyOptions))
         .pipe(replace('../fonts/', './content/'))
         .pipe(gulp.dest(tempBuild + '/lib/css'));
@@ -298,28 +283,24 @@ gulp.task('build-styles', function () {
 
 gulp.task('build-fonts', function () {
 
-    return gulp.src(bowerFonts)
+    return buildSystem.libFontsStream()
         .pipe(gulp.dest(contentPath));
 });
 
 gulp.task('build-less', function () {
 
-    return gulp.src(appLessFiles)
-        .pipe(concat(mergedStyles))
-        .pipe(less())
+    return buildSystem.appStylesStream()
         .pipe(minifyCss(cssMinifyOptions))
         .pipe(gulp.dest(tempMerged));
 });
 
 gulp.task('build-browserify', function () {
 
-    return browserify(browserifyOptions)
-        .bundle()
-        .pipe(source(browserifiedScripts))
-        .pipe(buffer())
+    return buildSystem.browserifyStream()
         .pipe(uglify())
         .pipe(gulp.dest(tempBuild + '/lib'));
 });
+
 gulp.task('build-copy-content', function () {
 
     return gulp.src(pathResolve.publicPath('/content/*'))
@@ -333,7 +314,7 @@ gulp.task('build-templates', function () {
         return '<script type="text/ng-template" id="' + name + '">\n' + contents + '\n</script>';
     }
 
-    return gulp.src(appTemplates.concat(bowerTemplates))
+    return buildSystem.allTemplatesStream()
         .pipe(embedMedia(embedMediaOptions))
         .pipe(insert.transform(function (contents, file) {
 
