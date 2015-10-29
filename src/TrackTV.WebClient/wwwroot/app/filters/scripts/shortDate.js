@@ -22,6 +22,10 @@
 
             function filter(date) {
 
+                if (!(date instanceof Date)) {
+                    date = new Date(date);
+                }
+
                 var monthName = monthNames[date.getMonth()].substr(0, 3);
 
                 var formattedDate = monthName + '. ' + s(date.getDate()).lpad(2, '0').value();
