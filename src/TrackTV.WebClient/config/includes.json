@@ -26,9 +26,5 @@
 
   "bowerTemplates": [
     "/angular-utils-pagination/dirPagination.tpl.html"
-  ],
-
-  "npmScripts": [
-    "/underscore.string/dist/underscore.string.js"
   ]
 }

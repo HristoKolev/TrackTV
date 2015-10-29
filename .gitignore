@@ -196,11 +196,8 @@ FakesAssemblies/
 *.opt
 
 #Content folder
-src/TrackTV.Web/Content/Uploads
-src/TrackTV.WebServices/Content/Uploads
+Uploads/
 
-#Clinet libs
-/src/TrackTV.WebClient/wwwroot/lib
-/src/TrackTV.WebClient/wwwroot/merged-scripts.js
-/src/TrackTV.WebClient/wwwroot/merged-styles.css
-
+#Clinet libs & generated code
+lib/
+merged/

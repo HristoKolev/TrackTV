@@ -2,8 +2,7 @@
     'use strict';
 
     window.ngModules.filters.filter('weekDayName', [
-        's',
-        function weekDayName(s) {
+        function weekDayName() {
 
             var daysOfWeek = [
                 'Monday',

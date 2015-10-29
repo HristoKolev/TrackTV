@@ -1,7 +1,7 @@
 var fs = require('fs'),
     path = require('path');
 
-function appBuilder (pathResolver, rootPath, fetchLevel) {
+function appBuilder(pathResolver, rootPath, fetchLevel) {
 
     fetchLevel = fetchLevel || 4;
 
@@ -10,7 +10,7 @@ function appBuilder (pathResolver, rootPath, fetchLevel) {
     var files = [],
         modules = [];
 
-    function getFolderNames (dir) {
+    function getFolderNames(dir) {
 
         return fs.readdirSync(dir).filter(function (file) {
 
@@ -32,7 +32,6 @@ function appBuilder (pathResolver, rootPath, fetchLevel) {
             modules.push(name);
 
             var headerFiles = [
-                '/module.js',
                 '/constants.js',
                 '/libraries.js'
             ];
@@ -165,8 +164,32 @@ function appBuilder (pathResolver, rootPath, fetchLevel) {
         }
     };
 
-    that.addAppFile('/init.js')
-        .addModule(getFolderNames(that.appPath()))
+    that.npmModuleFiles = function () {
+
+        var files = [];
+
+        for (var i = 0; i < modules.length; i += 1) {
+
+            files.push(that.modulePath(modules[i], '/npmModules.js'));
+        }
+
+        return files;
+    };
+
+    that.moduleHeaders = function () {
+
+        var files = [that.appPath('/init.js')];
+
+        for (var i = 0; i < modules.length; i += 1) {
+
+            files.push(that.modulePath(modules[i], '/module.js'));
+        }
+
+        return files;
+
+    };
+
+    that.addModule(getFolderNames(that.appPath()))
         .addAppFile('/routeConfig.js');
 
     return that;

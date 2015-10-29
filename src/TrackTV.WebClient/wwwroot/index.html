@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html ng-app="main" ng-cloak ng-controller="GlobalController">
+<!DOCTYPE html>
+<html ng-app="main" ng-hint ng-cloak ng-controller="GlobalController">
 <head>
     <meta charset="utf-8"/>
 
@@ -11,7 +11,7 @@
 
     <!-- smoosh -->
     <link rel="stylesheet" href="/lib/css/third-party.css">
-    <link rel="stylesheet" href="/merged-styles.css">
+    <link rel="stylesheet" href="merged/merged-styles.css">
     <!-- endsmoosh -->
 </head>
 <body>
@@ -32,7 +32,9 @@
 
     <!-- smoosh -->
     <script src="lib/third-party.js"></script>
-    <script src="merged-scripts.js"></script>
+    <script src="merged/module-headers.js"></script>
+    <script src="lib/browserified.js"></script>
+    <script src="merged/merged-scripts.js"></script>
     <!-- endsmoosh -->
 
 </div>

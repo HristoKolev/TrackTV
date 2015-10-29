@@ -16,7 +16,10 @@ var gulp = require('gulp'),
     saveFile = require('gulp-savefile'),
     jslint = require('gulp-jslint-simple'),
     jshint = require('gulp-jshint'),
-    stylish = require('jshint-stylish');
+    stylish = require('jshint-stylish'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer');
 
 // config files
 var appConfig = require('./config/appConfig.json'),
@@ -38,23 +41,46 @@ var appScripts = appBuilder.scripts(),
     appLessFiles = appBuilder.lessFiles(),
     appTemplates = appBuilder.templates(),
     bowerScripts = pathResolve.bowerComponent(includes.bowerScripts),
-    npmScripts = pathResolve.npmComponent(includes.npmScripts),
     bowerStyles = pathResolve.bowerComponent(includes.bowerStyles),
     bowerFonts = pathResolve.bowerComponent(includes.bowerFonts),
-    bowerTemplates = pathResolve.bowerComponent(includes.bowerTemplates);
+    bowerTemplates = pathResolve.bowerComponent(includes.bowerTemplates),
+    npmModuleFiles = appBuilder.npmModuleFiles(),
+    moduleHeaders = appBuilder.moduleHeaders();
 
 // constants
 
 var thirdPartyJs = 'third-party.js',
     thirdPartyCss = 'third-party.css',
-    mergedStyles = '/merged-styles.css',
-    mergedScripts = '/merged-scripts.js';
+    mergedStyles = 'merged-styles.css',
+    mergedScripts = 'merged-scripts.js',
+    browserifiedScripts = 'browserified.js',
+    headerScripts = 'module-headers.js';
 
 // third party configs
 var buildPath = pathResolve.publicPath('/build'),
     contentPath = buildPath + '/content',
     tempBuild = buildPath + '/temp',
-    buildHtml = buildPath + '/index.html';
+    buildHtml = buildPath + '/index.html',
+    tempMerged = tempBuild + '/merged',
+
+    libPath = pathResolve.publicPath('/lib'),
+    mergedPath = pathResolve.publicPath('/merged');
+
+function fileExists(filePath) {
+
+    try {
+        fs.statSync(filePath);
+    } catch (err) {
+
+        if (err.code == 'ENOENT') {
+            return false;
+        } else {
+            throw err;
+        }
+    }
+
+    return true;
+}
 
 var cssMinifyOptions = {
     processImportFrom : ['local'],
@@ -73,6 +99,14 @@ var embedMediaOptions = {
     verbose : true
 };
 
+var browserifyOptions = {
+    debug : true,
+    entries : npmModuleFiles.filter(function (file) {
+
+        return fileExists(file);
+    })
+};
+
 function createFile(name, contents) {
 
     return file(name, contents, { src : true });
@@ -85,9 +119,8 @@ fixGulp(gulp);
 gulp.task('clean', function (callback) {
 
     del(pathResolve.publicPath([
-        '/lib',
-        mergedStyles,
-        mergedScripts
+        libPath,
+        mergedPath
     ]));
 
     callback();
@@ -95,9 +128,7 @@ gulp.task('clean', function (callback) {
 
 gulp.task('scripts', function () {
 
-    var libPath = pathResolve.publicPath('/lib');
-
-    return gulp.src(bowerScripts.concat(npmScripts))
+    return gulp.src(bowerScripts)
         .pipe(concat(thirdPartyJs))
         .pipe(gulp.dest(libPath));
 
@@ -129,7 +160,7 @@ gulp.task('less', function () {
     return gulp.src(appLessFiles)
         .pipe(concat(mergedStyles))
         .pipe(less())
-        .pipe(gulp.dest(pathResolve.publicPath()))
+        .pipe(gulp.dest(mergedPath))
         .on('error', console.error);
 });
 
@@ -137,15 +168,16 @@ gulp.task('merge', function () {
 
     return gulp.src(appScripts)
         .pipe(concat(mergedScripts))
-        .pipe(gulp.dest(pathResolve.publicPath()));
-
+        .pipe(gulp.dest(mergedPath));
 });
 
 gulp.task('lint', function () {
 
+    var filesForLinting = appScripts.concat(npmModuleFiles).concat(moduleHeaders);
+
     var jsLintFlagComment = '/*global $, angular, window */\n';
 
-    gulp.src(appScripts)
+    gulp.src(filesForLinting)
         .pipe(insert.transform(function (contents, file) {
 
             return jsLintFlagComment + contents;
@@ -154,10 +186,27 @@ gulp.task('lint', function () {
         .pipe(jslint.report(stylish))
         .on('error', console.error);
 
-    gulp.src(appScripts)
+    gulp.src(filesForLinting)
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter(stylish))
         .on('error', console.error);
+});
+
+gulp.task('module-headers', function () {
+
+    return gulp.src(moduleHeaders)
+        .pipe(concat(headerScripts))
+        .pipe(gulp.dest(mergedPath));
+});
+
+gulp.task('browserify', function () {
+
+    return browserify(browserifyOptions)
+        .bundle()
+        .pipe(source(browserifiedScripts))
+        .pipe(buffer())
+        .pipe(gulp.dest(pathResolve.publicPath('/lib')));
+
 });
 
 gulp.task('default', function () {
@@ -167,8 +216,10 @@ gulp.task('default', function () {
         'styles',
         //'fonts',
         'scripts',
+        'browserify',
         'templates',
         'less',
+        'module-headers',
         'merge'
     );
 });
@@ -180,8 +231,14 @@ gulp.task('watch', function () {
     console.log('Watching: ' + appLessFiles);
 
     //angular app
-    gulp.watch(appScripts, ['merge', 'lint']);
-    console.log('Watching: ' + appScripts);
+    var sourceFiles = appScripts.concat(moduleHeaders);
+
+    gulp.watch(sourceFiles, ['merge', 'module-headers', 'lint']);
+    console.log('Watching: ' + sourceFiles);
+
+    //browserify
+    gulp.watch(npmModuleFiles, ['browserify']);
+    console.log('Watching: ' + npmModuleFiles);
 
     //configuration files
     var buildSystemConfigs = './config/*.json';
@@ -195,7 +252,7 @@ gulp.task('watch', function () {
 
 gulp.task('build-clean', function (callback) {
 
-    del(buildPath);
+    del.sync(buildPath);
 
     callback();
 });
@@ -208,10 +265,18 @@ gulp.task('build-index', function () {
 
 gulp.task('build-scripts', function () {
 
-    return gulp.src(bowerScripts.concat(npmScripts))
+    return gulp.src(bowerScripts)
         .pipe(concat(thirdPartyJs))
         .pipe(uglify())
         .pipe(gulp.dest(tempBuild + '/lib'));
+});
+
+gulp.task('build-module-headers', function () {
+
+    return gulp.src(moduleHeaders)
+        .pipe(concat(headerScripts))
+        .pipe(uglify())
+        .pipe(gulp.dest(tempMerged));
 });
 
 gulp.task('build-source', function () {
@@ -219,7 +284,7 @@ gulp.task('build-source', function () {
     return gulp.src(appScripts)
         .pipe(concat(mergedScripts))
         .pipe(uglify())
-        .pipe(gulp.dest(tempBuild));;
+        .pipe(gulp.dest(tempMerged));;
 });
 
 gulp.task('build-styles', function () {
@@ -243,9 +308,18 @@ gulp.task('build-less', function () {
         .pipe(concat(mergedStyles))
         .pipe(less())
         .pipe(minifyCss(cssMinifyOptions))
-        .pipe(gulp.dest(tempBuild));
+        .pipe(gulp.dest(tempMerged));
 });
 
+gulp.task('build-browserify', function () {
+
+    return browserify(browserifyOptions)
+        .bundle()
+        .pipe(source(browserifiedScripts))
+        .pipe(buffer())
+        .pipe(uglify())
+        .pipe(gulp.dest(tempBuild + '/lib'));
+});
 gulp.task('build-copy-content', function () {
 
     return gulp.src(pathResolve.publicPath('/content/*'))
@@ -293,7 +367,7 @@ gulp.task('build-merge', function () {
 
 gulp.task('build-clear', function (callback) {
 
-    del(tempBuild);
+    del.sync(tempBuild);
 
     callback();
 });
@@ -304,7 +378,9 @@ gulp.task('build', function () {
         'build-clean',
         'build-index',
         'build-scripts',
+        'build-browserify',
         'build-source',
+        'build-module-headers',
         'build-styles',
         //'build-fonts',
         'build-less',

@@ -2,5 +2,6 @@
     'use strict';
 
     window.ngModules.filters
-        .value('moment', window.moment);
+        .constant('s', require('underscore.string'));
+
 }());
