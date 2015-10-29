@@ -7,15 +7,20 @@
 
             var subscription = apiPath.service('subscription');
 
-            var config = { headers : identity.getCurrentUser().addAuthorizationHeader() };
+            function getConfig() {
+
+                return {
+                    headers : identity.getCurrentUser().addAuthorizationHeader()
+                };
+            }
 
             function subscribe(id) {
 
-                return $http.post(subscription('/subscribe/' + id), {}, config);
+                return $http.post(subscription('/subscribe/' + id), {}, getConfig());
             }
 
             function unsubscribe(id) {
-                return $http.post(subscription('/unsubscribe/' + id), {}, config);
+                return $http.post(subscription('/unsubscribe/' + id), {}, getConfig());
             }
 
             return {

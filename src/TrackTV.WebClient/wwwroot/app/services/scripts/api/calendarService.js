@@ -6,12 +6,11 @@
         function calendarService(apiPath, $http, identity) {
 
             var calendar = apiPath.service('calendar');
-            var user = identity.getCurrentUser();
 
             function getConfig() {
 
                 return {
-                    headers : user.addAuthorizationHeader()
+                    headers : identity.getCurrentUser().addAuthorizationHeader()
                 };
             }
 

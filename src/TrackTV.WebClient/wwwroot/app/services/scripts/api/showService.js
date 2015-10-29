@@ -9,12 +9,18 @@
 
             var show = apiPath.service('show');
             var baseUrl = apiPath.path();
-            var config = { headers : identity.getCurrentUser().addAuthorizationHeader() };
+
+            function getConfig() {
+
+                return {
+                    headers: identity.getCurrentUser().addAuthorizationHeader()
+                };
+            }
 
             //public
 
             function getShow(name) {
-                return $http.get(show('/' + name), config).then(processResponse);
+                return $http.get(show('/' + name), getConfig()).then(processResponse);
             }
 
             // private 

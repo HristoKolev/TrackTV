@@ -7,20 +7,25 @@
 
             var myShows = apiPath.service('myshows');
 
-            var config = { headers : identity.getCurrentUser().addAuthorizationHeader() };
+            function getConfig() {
+
+                return {
+                    headers : identity.getCurrentUser().addAuthorizationHeader()
+                };
+            }
 
             function continuing(page) {
 
                 page = page || 1;
 
-                return $http.get(myShows('/continuing/' + page), config);
+                return $http.get(myShows('/continuing/' + page), getConfig());
             }
 
             function ended(page) {
 
                 page = page || 1;
 
-                return $http.get(myShows('/ended/' + page), config);
+                return $http.get(myShows('/ended/' + page), getConfig());
             }
 
             return {
