@@ -21,15 +21,6 @@ function buildSystem(appBuilder, includes) {
         headerScripts = 'module-headers.js',
         browserifiedScripts = 'browserified.js';
 
-    // variables
-    var browserifyOptions = {
-        debug: true,
-        entries: appBuilder.npmModuleFiles().filter(function (file) {
-
-            return fileExists(file);
-        })
-    };
-
     function fileExists(filePath) {
 
         try {
@@ -46,6 +37,17 @@ function buildSystem(appBuilder, includes) {
         return true;
     }
 
+    // option object
+    var browserifyOptions = {
+        debug: true,
+        entries: appBuilder.npmModuleFiles().filter(function (file) {
+
+            return fileExists(file);
+        })
+    };
+
+    // methods
+
     that.libScriptsStream = function () {
 
         return gulp.src(includes.scripts)
@@ -53,6 +55,7 @@ function buildSystem(appBuilder, includes) {
     };
 
     that.libStylesStream = function () {
+
         return gulp.src(includes.styles)
             .pipe(concat(thirdPartyCss));
     };

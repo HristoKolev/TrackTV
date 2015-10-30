@@ -1,8 +1,8 @@
 'use strict';
 
-function devBuildSystem(appBuilder, includes, pathResolver) {
+function devBuildSystem(appBuilder, buildSystem, pathResolver) {
 
-    var that = require('./buildSystem').instance(appBuilder, includes);
+    var that = Object.create(null);
 
     // modules
     var gulp = require('gulp'),
@@ -24,46 +24,46 @@ function devBuildSystem(appBuilder, includes, pathResolver) {
 
         gulp.task('dev-clean', function (callback) {
 
-            del([libPath, mergedPath]);
+            del.sync([libPath, mergedPath]);
 
             callback();
         });
 
         gulp.task('dev-scripts', function () {
 
-            return that.libScriptsStream()
+            return buildSystem.libScriptsStream()
                 .pipe(gulp.dest(libPath));
 
         });
 
         gulp.task('dev-templates', function () {
 
-            return that.libTemplatesStream()
+            return buildSystem.libTemplatesStream()
                 .pipe(gulp.dest(libTemplatesPath));
         });
 
         gulp.task('dev-styles', function () {
 
-            return that.libStylesStream()
+            return buildSystem.libStylesStream()
                 .pipe(gulp.dest(libCssPath));
         });
 
         gulp.task('dev-fonts', function () {
 
-            return that.libFontsStream()
+            return buildSystem.libFontsStream()
                 .pipe(gulp.dest(libFontsPath));
         });
 
         gulp.task('dev-less', function () {
 
-            return that.appStylesStream()
+            return buildSystem.appStylesStream()
                 .pipe(gulp.dest(mergedPath))
                 .on('error', console.error);
         });
 
         gulp.task('dev-merge', function () {
 
-            return that.appScriptsStream()
+            return buildSystem.appScriptsStream()
                 .pipe(gulp.dest(mergedPath));
         });
 
@@ -71,7 +71,7 @@ function devBuildSystem(appBuilder, includes, pathResolver) {
 
             var jsLintFlagComment = '/*global $, angular, window */\n';
 
-            that.allSourcesStream()
+            buildSystem.allSourcesStream()
                 .pipe(insert.transform(function (contents, file) {
 
                     return jsLintFlagComment + contents;
@@ -80,7 +80,7 @@ function devBuildSystem(appBuilder, includes, pathResolver) {
                 .pipe(jslint.report(stylish))
                 .on('error', console.error);
 
-            that.allSourcesStream()
+            buildSystem.allSourcesStream()
                 .pipe(jshint('.jshintrc'))
                 .pipe(jshint.reporter(stylish))
                 .on('error', console.error);
@@ -88,13 +88,13 @@ function devBuildSystem(appBuilder, includes, pathResolver) {
 
         gulp.task('dev-module-headers', function () {
 
-            return that.moduleHeadersStream()
+            return buildSystem.moduleHeadersStream()
                 .pipe(gulp.dest(mergedPath));
         });
 
         gulp.task('dev-browserify', function () {
 
-            return that.browserifyStream()
+            return buildSystem.browserifyStream()
                 .pipe(gulp.dest(libPath));
 
         });
@@ -119,7 +119,6 @@ function devBuildSystem(appBuilder, includes, pathResolver) {
             gulp.watch(buildSystemConfigs, ['default']);
             console.log('Watching: ' + buildSystemConfigs);
         });
-
     };
 
     return that;
