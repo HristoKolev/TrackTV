@@ -1,6 +1,8 @@
 'use strict';
 
-function buildSystem(appBuilder, includes, pathResolver) {
+function buildSystem(appBuilder, includes) {
+
+    var that = Object.create(null);
 
     // modules
     var gulp = require('gulp'),
@@ -20,11 +22,6 @@ function buildSystem(appBuilder, includes, pathResolver) {
         browserifiedScripts = 'browserified.js';
 
     // variables
-    var bowerScripts = pathResolver.bowerComponent(includes.bowerScripts),
-        bowerStyles = pathResolver.bowerComponent(includes.bowerStyles),
-        bowerFonts = pathResolver.bowerComponent(includes.bowerFonts),
-        bowerTemplates = pathResolver.bowerComponent(includes.bowerTemplates);
-
     var browserifyOptions = {
         debug: true,
         entries: appBuilder.npmModuleFiles().filter(function (file) {
@@ -49,32 +46,30 @@ function buildSystem(appBuilder, includes, pathResolver) {
         return true;
     }
 
-    var that = Object.create(null);
-
     that.libScriptsStream = function () {
 
-        return gulp.src(bowerScripts)
+        return gulp.src(includes.scripts)
             .pipe(concat(thirdPartyJs));
     };
 
     that.libStylesStream = function () {
-        return gulp.src(bowerStyles)
+        return gulp.src(includes.styles)
             .pipe(concat(thirdPartyCss));
     };
 
     that.libFontsStream = function () {
 
-        return gulp.src(bowerFonts);
+        return gulp.src(includes.fonts);
     };
 
     that.libTemplatesStream = function () {
 
-        return gulp.src(bowerTemplates);
+        return gulp.src(includes.templates);
     };
 
     that.allTemplatesStream = function () {
 
-        return gulp.src(bowerTemplates.concat(appBuilder.templates()));
+        return gulp.src(includes.templates.concat(appBuilder.templates()));
     };
 
     that.appStylesStream = function () {
@@ -115,8 +110,5 @@ function buildSystem(appBuilder, includes, pathResolver) {
 }
 
 module.exports = {
-    instance: function (appBuilder, includes, pathResolver) {
-
-        return buildSystem(appBuilder, includes, pathResolver);
-    }
+    instance: buildSystem
 };

@@ -191,7 +191,7 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
     that.sourceFiles = function () {
 
-        return that.scripts.concat(that.moduleHeaders);
+        return that.scripts().concat(that.moduleHeaders());
     };
 
     that.addModule(getFolderNames(that.appPath()))
@@ -201,8 +201,5 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 }
 
 module.exports = {
-    instance: function (pathResolver, rootPath, fetchLevel) {
-
-        return appBuilder(pathResolver, rootPath, fetchLevel);
-    }
+    instance: appBuilder
 };

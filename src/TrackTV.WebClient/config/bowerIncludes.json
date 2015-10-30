@@ -1,6 +1,5 @@
 {
-
-  "bowerScripts": [
+  "scripts": [
     "/jquery/dist/jquery.js",
     "/bootstrap/dist/js/bootstrap.js",
     "/toastr/toastr.js",
@@ -14,17 +13,17 @@
     "/moment/moment.js"
   ],
 
-  "bowerStyles": [
+  "styles": [
     "/bootstrap/dist/css/bootstrap.css",
     "/bootswatch/cosmo/bootstrap.css",
     "/toastr/toastr.css"
   ],
 
-  "bowerFonts": [
+  "fonts": [
     "/bootstrap/dist/fonts/*"
   ],
 
-  "bowerTemplates": [
+  "templates": [
     "/angular-utils-pagination/dirPagination.tpl.html"
   ]
 }

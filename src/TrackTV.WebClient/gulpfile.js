@@ -24,7 +24,6 @@ var gulp = require('gulp'),
 // config files
 var appConfig = require('./config/appConfig.json'),
     pathConfig = require('./config/path.json'),
-    includes = require('./config/includes.json'),
     templateConfig = require('./' + appConfig.appRoot + '/templateConfig.json');
 
 // custom modules
@@ -33,17 +32,14 @@ var embedMedia = require('./modules/gulp-embed-media'),
     appBuilder = require('./modules/appBuilder').instance(pathResolve, appConfig.appRoot),
     fixGulp = require('./modules/fix-gulp'),
     fillContent = require('./modules/fill-content'),
-    jsonExpose = require('./modules/json-expose');
+    jsonExpose = require('./modules/json-expose'),
+    bowerComponents = require('./modules/bowerComponents').instance(pathResolve, require('./config/bowerIncludes.json'));
 
 // source files
 
 var appScripts = appBuilder.scripts(),
     appLessFiles = appBuilder.lessFiles(),
     appTemplates = appBuilder.templates(),
-    bowerScripts = pathResolve.bowerComponent(includes.bowerScripts),
-    bowerStyles = pathResolve.bowerComponent(includes.bowerStyles),
-    bowerFonts = pathResolve.bowerComponent(includes.bowerFonts),
-    bowerTemplates = pathResolve.bowerComponent(includes.bowerTemplates),
     npmModuleFiles = appBuilder.npmModuleFiles(),
     moduleHeaders = appBuilder.moduleHeaders();
 
@@ -114,129 +110,32 @@ function createFile(name, contents) {
 
 fixGulp(gulp);
 
-var buildSystem = require('./modules/buildSystem.js').instance(appBuilder, includes, pathResolve);
+ 
+
+var buildSystem = require('./modules/buildSystem')
+    .instance(appBuilder, bowerComponents, pathResolve);
 
 // dev tasks
 
-gulp.task('clean', function (callback) {
+var devBuildSystem = require('./modules/devBuildSystem')
+    .instance(appBuilder, bowerComponents, pathResolve);
 
-    del(pathResolve.publicPath([
-        libPath,
-        mergedPath
-    ]));
-
-    callback();
-});
-
-gulp.task('scripts', function () {
-
-    return buildSystem.libScriptsStream()
-        .pipe(gulp.dest(libPath));
-
-});
-
-gulp.task('templates', function () {
-
-    return buildSystem.libTemplatesStream()
-        .pipe(gulp.dest(pathResolve.publicPath('/lib/templates')));
-});
-
-gulp.task('styles', function () {
-
-    return buildSystem.libStylesStream()
-        .pipe(gulp.dest(pathResolve.publicPath('/lib/css')));
-});
-
-gulp.task('fonts', function () {
-
-    var fontsPath = pathResolve.publicPath('/lib/fonts');
-
-    return buildSystem.libFontsStream()
-        .pipe(gulp.dest(fontsPath));
-});
-
-gulp.task('less', function () {
-
-    return buildSystem.appStylesStream()
-        .pipe(gulp.dest(mergedPath))
-        .on('error', console.error);
-});
-
-gulp.task('merge', function () {
-
-    return buildSystem.appScriptsStream()
-        .pipe(gulp.dest(mergedPath));
-});
-
-gulp.task('lint', function () {
-
-    var jsLintFlagComment = '/*global $, angular, window */\n';
-
-    gulp.src(buildSystem.allSourcesStream())
-        .pipe(insert.transform(function (contents, file) {
-
-            return jsLintFlagComment + contents;
-        }))
-        .pipe(jslint.run())
-        .pipe(jslint.report(stylish))
-        .on('error', console.error);
-
-    gulp.src(buildSystem.allSourcesStream())
-        .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter(stylish))
-        .on('error', console.error);
-});
-
-gulp.task('module-headers', function () {
-
-    return buildSystem.moduleHeadersStream()
-        .pipe(gulp.dest(mergedPath));
-});
-
-gulp.task('browserify', function () {
-
-    return buildSystem.browserifyStream()
-        .pipe(gulp.dest(pathResolve.publicPath('/lib')));
-
-});
+devBuildSystem.registerTasks();
 
 gulp.task('default', function () {
 
     runSequence(
-        'clean',
-        'styles',
-        //'fonts',
-        'scripts',
-        'browserify',
-        'templates',
-        'less',
-        'module-headers',
-        'merge'
+        'dev-clean',
+        'dev-styles',
+        //'dev-fonts',
+        'dev-scripts',
+        'dev-browserify',
+        'dev-templates',
+        'dev-less',
+        'dev-module-headers',
+        'dev-merge'
     );
 });
-
-gulp.task('watch', function () {
-
-    //less files
-    gulp.watch(appLessFiles, ['less']);
-    console.log('Watching: ' + appLessFiles);
-
-    //angular app
-    gulp.watch(appBuilder.sourceFiles(), ['merge', 'module-headers', 'lint']);
-    console.log('Watching: ' + appBuilder.sourceFiles());
-
-    //browserify
-    gulp.watch(npmModuleFiles, ['browserify']);
-    console.log('Watching: ' + npmModuleFiles);
-
-    //configuration files
-    var buildSystemConfigs = './config/*.json';
-
-    gulp.watch(buildSystemConfigs, ['default']);
-    console.log('Watching: ' + buildSystemConfigs);
-
-});
-
 // build tasks
 
 gulp.task('build-clean', function (callback) {
