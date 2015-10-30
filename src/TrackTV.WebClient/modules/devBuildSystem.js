@@ -14,8 +14,9 @@ function devBuildSystem(appBuilder, buildSystem, pathResolver) {
 
     // paths
     var libPath = pathResolver.publicPath('/lib'),
+        libScriptsPath = libPath + '/scripts',
         libTemplatesPath = libPath + '/templates',
-        libCssPath = libPath + '/css',
+        libCssPath = libPath + '/styles',
         libFontsPath = libPath + '/fonts';
 
     var mergedPath = pathResolver.publicPath('/merged');
@@ -32,7 +33,7 @@ function devBuildSystem(appBuilder, buildSystem, pathResolver) {
         gulp.task('dev-scripts', function () {
 
             return buildSystem.libScriptsStream()
-                .pipe(gulp.dest(libPath));
+                .pipe(gulp.dest(libScriptsPath));
 
         });
 
@@ -95,7 +96,7 @@ function devBuildSystem(appBuilder, buildSystem, pathResolver) {
         gulp.task('dev-browserify', function () {
 
             return buildSystem.browserifyStream()
-                .pipe(gulp.dest(libPath));
+                .pipe(gulp.dest(libScriptsPath));
 
         });
 

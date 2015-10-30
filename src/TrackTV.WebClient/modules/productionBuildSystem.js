@@ -46,7 +46,8 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
         tempBuild = buildPath + '/temp',
         tempMerged = tempBuild + '/merged',
         tempLib = tempBuild + '/lib',
-        tempLibCss = tempLib + '/css';
+        tempLibCss = tempLib + '/styles',
+        libScriptsPath = tempLib + '/scripts';
 
     var sourceIndex = pathResolver.publicPath('/index.html'),
         sourceContent = pathResolver.publicPath('/content/*');
@@ -75,7 +76,7 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
 
             return buildSystem.libScriptsStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(tempLib));
+                .pipe(gulp.dest(libScriptsPath));
         });
 
         gulp.task('build-module-headers', function () {
@@ -117,7 +118,7 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
 
             return buildSystem.browserifyStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(tempLib));
+                .pipe(gulp.dest(libScriptsPath));
         });
 
         gulp.task('build-copy-content', function () {
