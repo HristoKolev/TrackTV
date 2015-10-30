@@ -34,7 +34,11 @@ gulp.task('default', function () {
         'dev-browserify',
         'dev-templates',
         'dev-less',
+        'dev-copy-initFile',
         'dev-module-headers',
+        'dev-module-constants',
+        'dev-module-libraries',
+        'dev-copy-routeConfig',
         'dev-merge'
     );
 });
@@ -47,7 +51,11 @@ gulp.task('build', function () {
         'build-scripts',
         'build-browserify',
         'build-source',
+        'build-copy-initFile',
         'build-module-headers',
+        'build-module-constants',
+        'build-module-libraries',
+        'build-copy-routeConfig',
         'build-styles',
         //'build-fonts',
         'build-less',

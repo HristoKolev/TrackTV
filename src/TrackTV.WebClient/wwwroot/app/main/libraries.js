@@ -8,7 +8,6 @@
     };
 
     window.ngModules.main
-        .value('toastr', window.toastr)
-        .value('s', window.s);
+        .value('toastr', window.toastr);
 
 }());

@@ -18,32 +18,15 @@ function buildSystem(appBuilder, includes) {
         thirdPartyCss = 'third-party.css',
         mergedStyles = 'merged-styles.css',
         mergedScripts = 'merged-scripts.js',
-        headerScripts = 'module-headers.js',
+        moduleHeaders = 'module-headers.js',
+        moduleLibraries = 'module-libraries.js',
+        moduleConstants = 'module-constants.js',
         browserifiedScripts = 'browserified.js';
-
-    function fileExists(filePath) {
-
-        try {
-            fs.statSync(filePath);
-        } catch (err) {
-
-            if (err.code == 'ENOENT') {
-                return false;
-            } else {
-                throw err;
-            }
-        }
-
-        return true;
-    }
 
     // option object
     var browserifyOptions = {
         debug: true,
-        entries: appBuilder.npmModuleFiles().filter(function (file) {
-
-            return fileExists(file);
-        })
+        entries: appBuilder.existingNpmModueFiles
     };
 
     // methods
@@ -72,33 +55,53 @@ function buildSystem(appBuilder, includes) {
 
     that.allTemplatesStream = function () {
 
-        return gulp.src(includes.templates.concat(appBuilder.templates()));
+        return gulp.src(includes.templates.concat(appBuilder.templates));
     };
 
     that.appStylesStream = function () {
 
-        return gulp.src(appBuilder.lessFiles())
+        return gulp.src(appBuilder.lessFiles)
             .pipe(concat(mergedStyles))
             .pipe(less());
     };
 
     that.appScriptsStream = function () {
 
-        return gulp.src(appBuilder.scripts())
+        return gulp.src(appBuilder.scripts)
             .pipe(concat(mergedScripts));
     };
 
     that.allSourcesStream = function () {
 
-        return gulp.src(appBuilder.scripts()
-            .concat(appBuilder.npmModuleFiles())
-            .concat(appBuilder.moduleHeaders()));
+        return gulp.src(appBuilder.sourceFiles.concat(appBuilder.npmModuleFiles));
     };
 
     that.moduleHeadersStream = function () {
 
-        return gulp.src(appBuilder.moduleHeaders())
-            .pipe(concat(headerScripts));
+        return gulp.src(appBuilder.moduleHeaders)
+            .pipe(concat(moduleHeaders));
+    };
+
+    that.moduleLibrariesStream = function () {
+
+        return gulp.src(appBuilder.moduleLibraries)
+            .pipe(concat(moduleLibraries));
+    };
+
+    that.moduleConstantsStream = function () {
+
+        return gulp.src(appBuilder.moduleConstants)
+            .pipe(concat(moduleConstants));
+    };
+
+    that.initFileStream = function () {
+
+        return gulp.src(appBuilder.initFile);
+    };
+
+    that.routeConfigStream = function () {
+
+        return gulp.src(appBuilder.routeConfig);
     };
 
     that.browserifyStream = function () {

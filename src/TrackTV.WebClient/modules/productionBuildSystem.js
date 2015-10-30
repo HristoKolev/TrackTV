@@ -86,11 +86,35 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
                 .pipe(gulp.dest(tempMerged));
         });
 
+        gulp.task('build-module-libraries', function () {
+
+            return buildSystem.moduleLibrariesStream()
+                .pipe(gulp.dest(tempMerged));
+        });
+
+        gulp.task('build-module-constants', function () {
+
+            return buildSystem.moduleConstantsStream()
+                .pipe(gulp.dest(tempMerged));
+        });
+
+        gulp.task('build-copy-initFile', function () {
+
+            return buildSystem.initFileStream()
+                .pipe(gulp.dest(tempMerged));
+        });
+
+        gulp.task('build-copy-routeConfig', function () {
+
+            return buildSystem.routeConfigStream()
+                .pipe(gulp.dest(tempMerged));
+        });
+
         gulp.task('build-source', function () {
 
             return buildSystem.appScriptsStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(tempMerged));;
+                .pipe(gulp.dest(tempMerged));
         });
 
         gulp.task('build-styles', function () {
@@ -151,9 +175,7 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
             var globalPropertyName = 'settings';
             var commentPlaceholder = 'settings';
 
-            var configFiles = appBuilder.appPath('/*.json');
-
-            var content = jsonExpose(globalPropertyName, configFiles);
+            var content = jsonExpose(globalPropertyName, appBuilder.configFiles);
 
             return createFile('settings', content)
                 .pipe(fillContent(buildHtml, commentPlaceholder));

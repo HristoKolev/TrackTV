@@ -93,6 +93,30 @@ function devBuildSystem(appBuilder, buildSystem, pathResolver) {
                 .pipe(gulp.dest(mergedPath));
         });
 
+        gulp.task('dev-module-libraries', function () {
+
+            return buildSystem.moduleLibrariesStream()
+                .pipe(gulp.dest(mergedPath));
+        });
+
+        gulp.task('dev-module-constants', function () {
+
+            return buildSystem.moduleConstantsStream()
+                .pipe(gulp.dest(mergedPath));
+        });
+
+        gulp.task('dev-copy-routeConfig', function () {
+
+            return buildSystem.routeConfigStream()
+                .pipe(gulp.dest(mergedPath));
+        });
+
+        gulp.task('dev-copy-initFile', function () {
+
+            return buildSystem.initFileStream()
+                .pipe(gulp.dest(mergedPath));
+        });
+
         gulp.task('dev-browserify', function () {
 
             return buildSystem.browserifyStream()
@@ -103,16 +127,24 @@ function devBuildSystem(appBuilder, buildSystem, pathResolver) {
         gulp.task('watch', function () {
 
             //less files
-            gulp.watch(appBuilder.lessFiles(), ['dev-less']);
-            console.log('Watching: ' + appBuilder.lessFiles());
+            gulp.watch(appBuilder.lessFiles, ['dev-less']);
+            console.log('Watching: ' + appBuilder.lessFiles);
 
             //angular app
-            gulp.watch(appBuilder.sourceFiles(), ['dev-merge', 'dev-module-headers', 'dev-lint']);
-            console.log('Watching: ' + appBuilder.sourceFiles());
+            gulp.watch(appBuilder.sourceFiles, [
+                'dev-merge',
+                'dev-module-headers',
+                'dev-module-libraries',
+                'dev-module-constants',
+                'dev-copy-initFile',
+                'dev-copy-routeConfig',
+                'dev-lint',
+            ]);
+            console.log('Watching: ' + appBuilder.sourceFiles);
 
             //browserify
-            gulp.watch(appBuilder.npmModuleFiles(), ['dev-browserify']);
-            console.log('Watching: ' + appBuilder.npmModuleFiles());
+            gulp.watch(appBuilder.npmModuleFiles, ['dev-browserify']);
+            console.log('Watching: ' + appBuilder.npmModuleFiles);
 
             //configuration files
             var buildSystemConfigs = './config/*.json';
