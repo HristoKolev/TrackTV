@@ -22,9 +22,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
         if (name instanceof Array) {
 
-            for (var index in name) {
+            for (var i = 0; i < name.length; i += 1) {
 
-                that.addModule(name[index]);
+                that.addModule(name[i]);
             }
 
         } else {
@@ -36,10 +36,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
                 '/libraries.js'
             ];
 
-            for (var index in headerFiles) {
-                var header = headerFiles[index];
+            for (var i = 0; i < headerFiles.length; i += 1) {
 
-                that.addFile(that.modulePath(name, header));
+                that.addFile(that.modulePath(name, headerFiles[i]));
             }
 
             that.addFile(that.modulePath(name, '/scripts/' + Array(fetchLevel + 1).join('**/') + '*.js'));
@@ -62,9 +61,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
         if (path instanceof Array) {
 
-            for (var index in path) {
+            for (var i = 0; i < path.length; i += 1) {
 
-                that.addFile(path[index]);
+                that.addFile(path[i]);
             }
 
         } else {
@@ -92,11 +91,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
         var templatesPaths = [];
 
-        for (var index in modules) {
+        for (var i = 0; i < modules.length; i += 1) {
 
-            var module = modules[index];
-
-            templatesPaths.push(that.modulePath(module, '/templates/*.html'));
+            templatesPaths.push(that.modulePath(modules[i], '/templates/*.html'));
         }
 
         return templatesPaths;
@@ -106,11 +103,10 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
         var templatesPaths = [];
 
-        for (var index in modules) {
+        for (var i = 0; i < modules.length; i += 1) {
 
-            var module = modules[index];
+            templatesPaths.push(that.modulePath(modules[i], '/styles/*.less'));
 
-            templatesPaths.push(that.modulePath(module, '/styles/*.less'));
         }
 
         return templatesPaths;
@@ -130,9 +126,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
         if (path instanceof Array) {
 
-            for (var index in path) {
+            for (var i = 0; i < path.length; i += 1) {
 
-                path[index] = that.modulePath(moduleName, path[index]);
+                path[index] = that.modulePath(moduleName, path[i]);
             }
 
             return path;
@@ -149,9 +145,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
         if (path instanceof Array) {
 
-            for (var index in path) {
+            for (var i = 0; i < path.length; i += 1) {
 
-                path[index] = that.appPath(path[index]);
+                path[i] = that.appPath(path[i]);
             }
 
             return path;
