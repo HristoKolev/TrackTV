@@ -1,157 +1,106 @@
 'use strict';
 
-function devBuildSystem(appBuilder, buildSystem, pathResolver) {
+function devBuildSystem(output, appStream) {
 
     var that = Object.create(null);
 
     // modules
     var gulp = require('gulp'),
-        del = require('del'),
-        insert = require('gulp-insert'),
-        jslint = require('gulp-jslint-simple'),
-        jshint = require('gulp-jshint'),
-        stylish = require('jshint-stylish');
+        del = require('del');
 
     // paths
-    var libPath = pathResolver.publicPath('/lib'),
-        libScriptsPath = libPath + '/scripts',
-        libTemplatesPath = libPath + '/templates',
-        libCssPath = libPath + '/styles',
-        libFontsPath = libPath + '/fonts';
+    var libPath = output('/lib'),
+        libScriptsPath = libPath('/scripts'),
+        libTemplatesPath = libPath('/templates'),
+        libCssPath = libPath('/styles'),
+        libFontsPath = libPath('/fonts');
 
-    var mergedPath = pathResolver.publicPath('/merged');
+    var mergedPath = output('/merged');
 
     that.registerTasks = function () {
 
         gulp.task('dev-clean', function (callback) {
 
-            del.sync([libPath, mergedPath]);
+            del.sync([libPath.value(), mergedPath.value()]);
 
             callback();
         });
 
         gulp.task('dev-scripts', function () {
 
-            return buildSystem.libScriptsStream()
-                .pipe(gulp.dest(libScriptsPath));
+            return appStream.libScriptsStream()
+                .pipe(libScriptsPath.destStream());
 
         });
 
         gulp.task('dev-templates', function () {
 
-            return buildSystem.libTemplatesStream()
-                .pipe(gulp.dest(libTemplatesPath));
+            return appStream.libTemplatesStream()
+                .pipe(libTemplatesPath.destStream());
         });
 
         gulp.task('dev-styles', function () {
 
-            return buildSystem.libStylesStream()
-                .pipe(gulp.dest(libCssPath));
+            return appStream.libStylesStream()
+                .pipe(libCssPath.destStream());
         });
 
         gulp.task('dev-fonts', function () {
 
-            return buildSystem.libFontsStream()
-                .pipe(gulp.dest(libFontsPath));
+            return appStream.libFontsStream()
+                .pipe(libFontsPath.destStream());
         });
 
         gulp.task('dev-less', function () {
 
-            return buildSystem.appStylesStream()
-                .pipe(gulp.dest(mergedPath))
+            return appStream.appStylesStream()
+                .pipe(mergedPath.destStream())
                 .on('error', console.error);
         });
 
         gulp.task('dev-merge', function () {
 
-            return buildSystem.appScriptsStream()
-                .pipe(gulp.dest(mergedPath));
-        });
-
-        gulp.task('dev-lint', function () {
-
-            var jsLintFlagComment = '/*global $, angular, window */\n';
-
-            buildSystem.allSourcesStream()
-                .pipe(insert.transform(function (contents, file) {
-
-                    return jsLintFlagComment + contents;
-                }))
-                .pipe(jslint.run())
-                .pipe(jslint.report(stylish))
-                .on('error', console.error);
-
-            buildSystem.allSourcesStream()
-                .pipe(jshint('.jshintrc'))
-                .pipe(jshint.reporter(stylish))
-                .on('error', console.error);
+            return appStream.appScriptsStream()
+                .pipe(mergedPath.destStream());
         });
 
         gulp.task('dev-module-headers', function () {
 
-            return buildSystem.moduleHeadersStream()
-                .pipe(gulp.dest(mergedPath));
+            return appStream.moduleHeadersStream()
+                .pipe(mergedPath.destStream());
         });
 
         gulp.task('dev-module-libraries', function () {
 
-            return buildSystem.moduleLibrariesStream()
-                .pipe(gulp.dest(mergedPath));
+            return appStream.moduleLibrariesStream()
+                .pipe(mergedPath.destStream());
         });
 
         gulp.task('dev-module-constants', function () {
 
-            return buildSystem.moduleConstantsStream()
-                .pipe(gulp.dest(mergedPath));
+            return appStream.moduleConstantsStream()
+                .pipe(mergedPath.destStream());
         });
 
         gulp.task('dev-copy-routeConfig', function () {
 
-            return buildSystem.routeConfigStream()
-                .pipe(gulp.dest(mergedPath));
+            return appStream.routeConfigStream()
+                .pipe(mergedPath.destStream());
         });
 
         gulp.task('dev-copy-initFile', function () {
 
-            return buildSystem.initFileStream()
-                .pipe(gulp.dest(mergedPath));
+            return appStream.initFileStream()
+                .pipe(mergedPath.destStream());
         });
 
         gulp.task('dev-browserify', function () {
 
-            return buildSystem.browserifyStream()
-                .pipe(gulp.dest(libScriptsPath));
+            return appStream.browserifyStream()
+                .pipe(libScriptsPath.destStream());
 
         });
 
-        gulp.task('watch', function () {
-
-            //less files
-            gulp.watch(appBuilder.lessFiles, ['dev-less']);
-            console.log('Watching: ' + appBuilder.lessFiles);
-
-            //angular app
-            gulp.watch(appBuilder.sourceFiles, [
-                'dev-merge',
-                'dev-module-headers',
-                'dev-module-libraries',
-                'dev-module-constants',
-                'dev-copy-initFile',
-                'dev-copy-routeConfig',
-                'dev-lint',
-            ]);
-            console.log('Watching: ' + appBuilder.sourceFiles);
-
-            //browserify
-            gulp.watch(appBuilder.npmModuleFiles, ['dev-browserify']);
-            console.log('Watching: ' + appBuilder.npmModuleFiles);
-
-            //configuration files
-            var buildSystemConfigs = './config/*.json';
-
-            gulp.watch(buildSystemConfigs, ['default']);
-            console.log('Watching: ' + buildSystemConfigs);
-        });
     };
 
     return that;

@@ -1,0 +1,4 @@
+{
+  "devPath": "wwwroot",
+  "prodPath": "wwwroot/build"
+}

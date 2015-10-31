@@ -1,6 +1,6 @@
 'use strict';
 
-function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
+function productionBuildSystem(output, appBuilder, appStream, pathResolver) {
 
     var that = Object.create(null);
 
@@ -14,7 +14,8 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
         file = require('gulp-file'),
         smoosher = require('gulp-smoosher'),
         minifyHtml = require('gulp-minify-html'),
-        saveFile = require('gulp-savefile');
+        saveFile = require('gulp-savefile'),
+        wrench = require('wrench');
 
     // custom modules 
     var embedMedia = require('./gulp-embed-media'),
@@ -32,25 +33,22 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
     };
 
     var embedMediaOptions = {
-        baseDir: pathResolver.publicPath(),
+        baseDir: appBuilder.contentPath,
         resourcePattern: [
             '/include/*'
         ],
-        verbose: true
+        verbose: false
     };
 
     // paths
-    var buildPath = pathResolver.publicPath('/build'),
-        contentPath = buildPath + '/content',
-        buildHtml = buildPath + '/index.html',
-        tempBuild = buildPath + '/temp',
-        tempMerged = tempBuild + '/merged',
-        tempLib = tempBuild + '/lib',
-        tempLibCss = tempLib + '/styles',
-        libScriptsPath = tempLib + '/scripts';
 
-    var sourceIndex = pathResolver.publicPath('/index.html'),
-        sourceContent = pathResolver.publicPath('/content/*');
+    var contentPath = output('/content'),
+        buildHtml = output('/index.html'),
+        tempBuild = output('/temp'),
+        tempMerged = tempBuild('/merged'),
+        tempLib = tempBuild('/lib'),
+        tempLibCss = tempLib('/styles'),
+        libScriptsPath = tempLib('/scripts');
 
     function createFile(name, contents) {
 
@@ -61,94 +59,99 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
 
         gulp.task('build-clean', function (callback) {
 
-            del.sync(buildPath);
+            del.sync(output.value());
 
             callback();
         });
 
         gulp.task('build-index', function () {
 
-            return gulp.src(sourceIndex)
-                .pipe(gulp.dest(buildPath));
+            return appStream.indexFileStream()
+                .pipe(output.destStream());
         });
 
         gulp.task('build-scripts', function () {
 
-            return buildSystem.libScriptsStream()
+            return appStream.libScriptsStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(libScriptsPath));
+                .pipe(libScriptsPath.destStream());
         });
 
         gulp.task('build-module-headers', function () {
 
-            return buildSystem.moduleHeadersStream()
+            return appStream.moduleHeadersStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(tempMerged));
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-module-libraries', function () {
 
-            return buildSystem.moduleLibrariesStream()
-                .pipe(gulp.dest(tempMerged));
+            return appStream.moduleLibrariesStream()
+                .pipe(uglify())
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-module-constants', function () {
 
-            return buildSystem.moduleConstantsStream()
-                .pipe(gulp.dest(tempMerged));
+            return appStream.moduleConstantsStream()
+                .pipe(uglify())
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-copy-initFile', function () {
 
-            return buildSystem.initFileStream()
-                .pipe(gulp.dest(tempMerged));
+            return appStream.initFileStream()
+                .pipe(uglify())
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-copy-routeConfig', function () {
 
-            return buildSystem.routeConfigStream()
-                .pipe(gulp.dest(tempMerged));
+            return appStream.routeConfigStream()
+                .pipe(uglify())
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-source', function () {
 
-            return buildSystem.appScriptsStream()
+            return appStream.appScriptsStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(tempMerged));
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-styles', function () {
 
-            return buildSystem.libStylesStream()
+            return appStream.libStylesStream()
                 .pipe(minifyCss(cssMinifyOptions))
                 .pipe(replace('../fonts/', './content/'))
-                .pipe(gulp.dest(tempLibCss));
+                .pipe(tempLibCss.destStream());
         });
 
         gulp.task('build-fonts', function () {
 
-            return buildSystem.libFontsStream()
-                .pipe(gulp.dest(contentPath));
+            return appStream.libFontsStream()
+                .pipe(contentPath.destStream());
         });
 
         gulp.task('build-less', function () {
 
-            return buildSystem.appStylesStream()
+            return appStream.appStylesStream()
                 .pipe(minifyCss(cssMinifyOptions))
-                .pipe(gulp.dest(tempMerged));
+                .pipe(tempMerged.destStream());
         });
 
         gulp.task('build-browserify', function () {
 
-            return buildSystem.browserifyStream()
+            return appStream.browserifyStream()
                 .pipe(uglify())
-                .pipe(gulp.dest(libScriptsPath));
+                .pipe(libScriptsPath.destStream());
         });
 
-        gulp.task('build-copy-content', function () {
+        gulp.task('build-copy-content', function (callback) {
 
-            return gulp.src(sourceContent)
-                .pipe(gulp.dest(contentPath));
+            wrench.copyDirSyncRecursive(appBuilder.contentPath, contentPath.value());
+
+            return callback();
         });
 
         gulp.task('build-templates', function () {
@@ -160,14 +163,14 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
 
             var templatesName = 'templates';
 
-            return buildSystem.allTemplatesStream()
+            return appStream.allTemplatesStream()
                 .pipe(embedMedia(embedMediaOptions))
                 .pipe(insert.transform(function (contents, file) {
 
                     return wrapTemplate(file.path.split('\\').pop(), contents);
                 }))
                 .pipe(concat(templatesName))
-                .pipe(fillContent(buildHtml, templatesName));
+                .pipe(fillContent(buildHtml.value(), templatesName));
         });
 
         gulp.task('build-settings', function () {
@@ -178,20 +181,20 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
             var content = jsonExpose(globalPropertyName, appBuilder.configFiles);
 
             return createFile('settings', content)
-                .pipe(fillContent(buildHtml, commentPlaceholder));
+                .pipe(fillContent(buildHtml.value(), commentPlaceholder));
         });
 
         gulp.task('build-merge', function () {
 
-            return gulp.src(buildHtml)
+            return gulp.src(buildHtml.value())
                 .pipe(embedMedia({
-                    baseDir: pathResolver.publicPath(),
-                    verbose: true,
+                    baseDir: appBuilder.contentPath,
+                    verbose: false,
                     selectors: 'head link[rel="icon"]',
                     attributes: 'href'
                 }))
                 .pipe(smoosher({
-                    base: tempBuild
+                    base: tempBuild.value()
                 }))
                 .pipe(minifyHtml(htmlMinifyOptions))
                 .pipe(saveFile());
@@ -199,7 +202,7 @@ function productionBuildSystem(appBuilder, buildSystem, pathResolver) {
 
         gulp.task('build-clear', function (callback) {
 
-            del.sync(tempBuild);
+            del.sync(tempBuild.value());
 
             callback();
         });

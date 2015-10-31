@@ -9,19 +9,28 @@ fixGulp(gulp);
 
 var pathConfig = require('./config/path.json'),
     includes = require('./config/bowerIncludes.json'),
-    appConfig = require('./config/appConfig.json');
+    appConfig = require('./config/appConfig.json'),
+    outputConfig = require('./config/outputConfig.json');
 
 var pathResolver = require('./modules/pathResolver').instance(pathConfig),
     bowerComponents = require('./modules/bowerComponents').instance(pathResolver, includes),
     appBuilder = require('./modules/appBuilder').instance(pathResolver, appConfig.appRoot),
-    buildSystem = require('./modules/buildSystem').instance(appBuilder, bowerComponents, pathResolver);
+    appStream = require('./modules/appStream').instance(appBuilder, bowerComponents, pathResolver),
+    output = require('./modules/buildOutput');
+
+var devOutput = output.instance(outputConfig.devPath),
+    prodOutput = output.instance(outputConfig.prodPath);
 
 var devBuildSystem = require('./modules/devBuildSystem')
-    .instance(appBuilder, buildSystem, pathResolver)
+    .instance(devOutput, appStream)
     .registerTasks();
 
 var productionBuildSystem = require('./modules/productionBuildSystem')
-    .instance(appBuilder, buildSystem, pathResolver)
+    .instance(prodOutput, appBuilder, appStream, pathResolver)
+    .registerTasks();
+
+var devSupport = require('./modules/devSupport')
+    .instance(appBuilder, appStream)
     .registerTasks();
 
 gulp.task('default', function () {

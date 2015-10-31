@@ -35,7 +35,7 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
         }
     };
 
-    var appPatterns = {
+    var patterns = {
         initFile: '/init.js',
         moduleHeaders: '/**/module.js',
         npmModuleFiles: '/**/npmModules.js',
@@ -48,9 +48,9 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
         configFiles: '/*.json'
     };
 
-    Object.keys(appPatterns).forEach(function (index) {
+    Object.keys(patterns).forEach(function (index) {
 
-        that[index] = that.appPath(appPatterns[index]);
+        that[index] = that.appPath(patterns[index]);
     });
 
     that.sourceFiles = [
@@ -62,7 +62,11 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
         that.routeConfig
     ];
 
-    that.existingNpmModueFiles = glob.sync(that.npmModuleFiles);
+    that.basePath = that.appPath('/../');
+
+    that.contentPath = that.appPath('/../content');
+
+    that.indexFile = that.appPath('/../index.html');
 
     return that;
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-function buildSystem(appBuilder, includes) {
+function appStream(appBuilder, includes) {
 
     var that = Object.create(null);
 
@@ -9,24 +9,28 @@ function buildSystem(appBuilder, includes) {
         concat = require('gulp-concat'),
         less = require('gulp-less'),
         fs = require('fs'),
+        path = require('path'),
         browserify = require('browserify'),
         source = require('vinyl-source-stream'),
-        buffer = require('vinyl-buffer');
+        buffer = require('vinyl-buffer'),
+        glob = require('glob');
 
     // constants
-    var thirdPartyJs = 'third-party.js',
-        thirdPartyCss = 'third-party.css',
-        mergedStyles = 'merged-styles.css',
-        mergedScripts = 'merged-scripts.js',
-        moduleHeaders = 'module-headers.js',
-        moduleLibraries = 'module-libraries.js',
-        moduleConstants = 'module-constants.js',
-        browserifiedScripts = 'browserified.js';
+    var constants = {
+        thirdPartyJs: 'third-party.js',
+        thirdPartyCss: 'third-party.css',
+        mergedStyles: 'merged-styles.css',
+        mergedScripts: 'merged-scripts.js',
+        moduleHeaders: 'module-headers.js',
+        moduleLibraries: 'module-libraries.js',
+        moduleConstants: 'module-constants.js',
+        browserifiedScripts: 'browserified.js'
+    };
 
     // option object
     var browserifyOptions = {
         debug: true,
-        entries: appBuilder.existingNpmModueFiles
+        entries: glob.sync(appBuilder.npmModuleFiles)
     };
 
     // methods
@@ -34,13 +38,13 @@ function buildSystem(appBuilder, includes) {
     that.libScriptsStream = function () {
 
         return gulp.src(includes.scripts)
-            .pipe(concat(thirdPartyJs));
+            .pipe(concat(constants.thirdPartyJs));
     };
 
     that.libStylesStream = function () {
 
         return gulp.src(includes.styles)
-            .pipe(concat(thirdPartyCss));
+            .pipe(concat(constants.thirdPartyCss));
     };
 
     that.libFontsStream = function () {
@@ -61,14 +65,14 @@ function buildSystem(appBuilder, includes) {
     that.appStylesStream = function () {
 
         return gulp.src(appBuilder.lessFiles)
-            .pipe(concat(mergedStyles))
+            .pipe(concat(constants.mergedStyles))
             .pipe(less());
     };
 
     that.appScriptsStream = function () {
 
         return gulp.src(appBuilder.scripts)
-            .pipe(concat(mergedScripts));
+            .pipe(concat(constants.mergedScripts));
     };
 
     that.allSourcesStream = function () {
@@ -79,19 +83,19 @@ function buildSystem(appBuilder, includes) {
     that.moduleHeadersStream = function () {
 
         return gulp.src(appBuilder.moduleHeaders)
-            .pipe(concat(moduleHeaders));
+            .pipe(concat(constants.moduleHeaders));
     };
 
     that.moduleLibrariesStream = function () {
 
         return gulp.src(appBuilder.moduleLibraries)
-            .pipe(concat(moduleLibraries));
+            .pipe(concat(constants.moduleLibraries));
     };
 
     that.moduleConstantsStream = function () {
 
         return gulp.src(appBuilder.moduleConstants)
-            .pipe(concat(moduleConstants));
+            .pipe(concat(constants.moduleConstants));
     };
 
     that.initFileStream = function () {
@@ -108,13 +112,27 @@ function buildSystem(appBuilder, includes) {
 
         return browserify(browserifyOptions)
             .bundle()
-            .pipe(source(browserifiedScripts))
+            .pipe(source(constants.browserifiedScripts))
             .pipe(buffer());
     };
 
+    that.indexFileStream = function () {
+
+        return gulp.src(appBuilder.indexFile);
+    };
+
+    that.contentStream = function () {
+
+        return gulp.src(appBuilder.contentPath, {
+            base: path.basename(appBuilder.contentPath)
+
+        });
+    };
+
+    that.basePath = appBuilder.basePath;
     return that;
 }
 
 module.exports = {
-    instance: buildSystem
+    instance: appStream
 };
