@@ -9,6 +9,8 @@ function bowerComponents(pathResolver, includes) {
         that[key] = pathResolver.bowerComponent(includes[key]);
     });
 
+    that.baseDir = pathResolver.bowerComponent();
+
     return that;
 }
 

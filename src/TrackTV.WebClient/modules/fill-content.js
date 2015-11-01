@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 var gutil = require('gulp-util'),
     through = require('through2'),
@@ -6,16 +6,27 @@ var gutil = require('gulp-util'),
 
 var pluginName = 'fill-content';
 
-module.exports = function (destinationFile, placeholder) {
+function commentPlaceholder(placeholder) {
+
+    return new RegExp('<!--\\s*?' + placeholder + '\\s*?-->', 'g');
+}
+
+function replaceContent(destinationFile, placeholder, replacement) {
+
+    var regex = commentPlaceholder(placeholder);
+
+    var content = fs.readFileSync(destinationFile).toString();
+
+    content = content.replace(regex, replacement);
+
+    fs.writeFileSync(destinationFile, content);
+}
+
+function stream(destinationFile, placeholder) {
 
     function error(message) {
 
         this.emit('error', new gutil.PluginError(pluginName, message));
-    }
-
-    function commentPlaceholder(placeholder) {
-
-        return new RegExp('<!--\\s*?' + placeholder + '\\s*?-->', 'g');
     }
 
     return through.obj(function (file, enc, callback) {
@@ -33,13 +44,13 @@ module.exports = function (destinationFile, placeholder) {
 
         if (file.isBuffer()) {
 
-            var regex = commentPlaceholder(placeholder);
-
-            var content = fs.readFileSync(destinationFile).toString();
-            content = content.replace(regex, file.contents);
-            fs.writeFileSync(destinationFile, content);
+            replaceContent(destinationFile, placeholder, file.contents);
 
             return callback(null, file);
         }
     });
 };
+
+module.exports = stream;
+
+module.exports.external = replaceContent;

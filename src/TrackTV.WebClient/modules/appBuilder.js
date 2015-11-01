@@ -34,16 +34,17 @@ function appBuilder(pathResolver, rootPath) {
     };
 
     var patterns = {
+        indexFile: '/index.html',
         initFile: '/init.js',
-        moduleHeaders: '/*/module.js',
-        npmModuleFiles: '/*/npmModules.js',
-        moduleConstants: '/*/constants.js',
-        moduleLibraries: '/*/libraries.js',
-        scripts: '/*/scripts/**/*.js',
+        moduleHeaders: '/modules/*/module.js',
+        npmModuleFiles: '/modules/*/npmModules.js',
+        moduleConstants: '/modules/*/constants.js',
+        moduleLibraries: '/modules/*/libraries.js',
+        scripts: '/modules/*/scripts/**/*.js',
         routeConfig: '/routeConfig.js',
-        templates: '/*/templates/*.html',
-        lessFiles: '/*/styles/*.less',
-        configFiles: '/*.json'
+        templates: '/modules/*/templates/*.html',
+        lessFiles: '/modules/*/styles/*.less',
+        configFiles: '/configs/*.json'
     };
 
     Object.keys(patterns).forEach(function (index) {
@@ -60,11 +61,7 @@ function appBuilder(pathResolver, rootPath) {
         that.routeConfig
     ];
 
-    that.basePath = that.appPath('/../');
-
-    that.contentPath = that.appPath('/../content');
-
-    that.indexFile = that.appPath('/../index.html');
+    that.contentPath = that.appPath('/content');
 
     return that;
 }

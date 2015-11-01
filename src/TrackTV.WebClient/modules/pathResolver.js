@@ -25,12 +25,7 @@ function pathResolver(pathsConfig) {
 
     that.bowerComponent = function (path) {
 
-        if (!path) {
-
-            throw Error('You must specify the path of the component.');
-        }
-
-       if (Array.isArray(path)) {
+        if (Array.isArray(path)) {
 
             for (var index in path) {
 
@@ -40,6 +35,8 @@ function pathResolver(pathsConfig) {
             return path;
 
         } else {
+
+            path = path || '';
 
             return pathsConfig.bowerRootPath + path;
         }
@@ -52,7 +49,7 @@ function pathResolver(pathsConfig) {
             throw Error('You must specify the path of the component.');
         }
 
-       if (Array.isArray(path)) {
+        if (Array.isArray(path)) {
 
             for (var index in path) {
 
