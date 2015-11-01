@@ -21,7 +21,7 @@ function devBuildSystem(output, appStream) {
 
         gulp.task('dev-clean', function (callback) {
 
-            del.sync([libPath.value(), mergedPath.value()]);
+            del.sync(output.value());
 
             callback();
         });
