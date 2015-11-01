@@ -16,7 +16,7 @@ function appBuilder(pathResolver, rootPath) {
 
     that.appPath = function (path) {
 
-        if (path instanceof Array) {
+        if (Array.isArray(path)) {
 
             for (var i = 0; i < path.length; i += 1) {
 

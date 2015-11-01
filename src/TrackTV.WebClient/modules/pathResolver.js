@@ -6,7 +6,7 @@ function pathResolver(pathsConfig) {
 
     that.publicPath = function (path) {
 
-        if (path instanceof Array) {
+        if (Array.isArray(path)) {
 
             for (var index in path) {
 
@@ -30,7 +30,7 @@ function pathResolver(pathsConfig) {
             throw Error('You must specify the path of the component.');
         }
 
-        if (path instanceof Array) {
+       if (Array.isArray(path)) {
 
             for (var index in path) {
 
@@ -52,7 +52,7 @@ function pathResolver(pathsConfig) {
             throw Error('You must specify the path of the component.');
         }
 
-        if (path instanceof Array) {
+       if (Array.isArray(path)) {
 
             for (var index in path) {
 

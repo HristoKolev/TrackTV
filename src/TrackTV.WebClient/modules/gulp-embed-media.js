@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 var gutil = require('gulp-util'),
     through = require('through2'),
@@ -23,15 +23,15 @@ module.exports = function (options) {
         options.verbose = !!options.verbose;
         options.skipIfNotFound = true;
 
-        if (!(options.selectors instanceof Array)) {
+        if (!Array.isArray(options.selectors)) {
             options.selectors = [options.selectors];
         }
 
-        if (!(options.attributes instanceof Array)) {
+        if (!Array.isArray(options.attributes)) {
             options.attributes = [options.attributes];
         }
 
-        if (options.resourcePattern && !(options.resourcePattern instanceof Array)) {
+        if (options.resourcePattern && !Array.isArray(options.resourcePattern)) {
             options.resourcePattern = [options.resourcePattern];
         }
     }
