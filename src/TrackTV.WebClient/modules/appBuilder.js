@@ -2,9 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     glob = require('glob');
 
-function appBuilder(pathResolver, rootPath, fetchLevel) {
-
-    fetchLevel = fetchLevel || 4;
+function appBuilder(pathResolver, rootPath) {
 
     var that = Object.create(null);
 
@@ -37,14 +35,14 @@ function appBuilder(pathResolver, rootPath, fetchLevel) {
 
     var patterns = {
         initFile: '/init.js',
-        moduleHeaders: '/**/module.js',
-        npmModuleFiles: '/**/npmModules.js',
-        moduleConstants: '/**/constants.js',
-        moduleLibraries: '/**/libraries.js',
-        scripts: '/**/scripts/' + Array(fetchLevel + 1).join('**/') + '*.js',
+        moduleHeaders: '/*/module.js',
+        npmModuleFiles: '/*/npmModules.js',
+        moduleConstants: '/*/constants.js',
+        moduleLibraries: '/*/libraries.js',
+        scripts: '/*/scripts/**/*.js',
         routeConfig: '/routeConfig.js',
-        templates: '/**/templates/*.html',
-        lessFiles: '/**/styles/*.less',
+        templates: '/*/templates/*.html',
+        lessFiles: '/*/styles/*.less',
         configFiles: '/*.json'
     };
 

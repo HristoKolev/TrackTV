@@ -1,4 +1,3 @@
-﻿{
-  "appRoot": "wwwroot/app",
-  "fetchLevel": 4
+{
+  "appRoot": "wwwroot/app"
 }
