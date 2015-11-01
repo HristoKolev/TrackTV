@@ -1,7 +1,7 @@
 ﻿// Workaround for https://github.com/gulpjs/gulp/issues/71
 
 module.exports = function (gulp) {
-    
+
     var origSrc = gulp.src;
     gulp.src = function () {
         return fixPipe(origSrc.apply(this, arguments));

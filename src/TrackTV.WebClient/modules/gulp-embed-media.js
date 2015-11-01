@@ -16,7 +16,7 @@ module.exports = function (options) {
 
     processOptions(options);
 
-    function processOptions (options) {
+    function processOptions(options) {
 
         options.selectors = options.selectors || ['img'];
         options.attributes = options.attributes || ['src'];
@@ -36,7 +36,7 @@ module.exports = function (options) {
         }
     }
 
-    function log (message) {
+    function log(message) {
 
         if (options.verbose) {
 
@@ -44,17 +44,17 @@ module.exports = function (options) {
         }
     }
 
-    function error (message) {
+    function error(message) {
 
         this.emit('error', new gutil.PluginError(pluginName, message));
     }
 
-    function isFunction (functionToCheck) {
+    function isFunction(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     }
 
-    function getBaseDirectory (file) {
+    function getBaseDirectory(file) {
 
         if (isFunction(options.resolveBaseDir)) {
 
@@ -69,7 +69,7 @@ module.exports = function (options) {
         return options.baseDir || file.base;
     }
 
-    function encodeResource (sourcePath, baseDirectory) {
+    function encodeResource(sourcePath, baseDirectory) {
 
         var isEncoded = sourcePath && sourcePath.indexOf('data:') === 0;
 
@@ -120,7 +120,7 @@ module.exports = function (options) {
         }
     }
 
-    function shouldProcessResource (source) {
+    function shouldProcessResource(source) {
 
         if (!source) {
             return false;

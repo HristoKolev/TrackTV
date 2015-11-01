@@ -98,7 +98,6 @@ function devBuildSystem(output, appStream) {
 
             return appStream.browserifyStream()
                 .pipe(libScriptsPath.destStream());
-
         });
 
     };

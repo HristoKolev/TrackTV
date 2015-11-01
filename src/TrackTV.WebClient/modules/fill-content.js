@@ -8,7 +8,7 @@ var pluginName = 'fill-content';
 
 module.exports = function (destinationFile, placeholder) {
 
-    function error (message) {
+    function error(message) {
 
         this.emit('error', new gutil.PluginError(pluginName, message));
     }

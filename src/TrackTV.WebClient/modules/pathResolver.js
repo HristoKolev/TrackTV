@@ -1,6 +1,6 @@
 'use strict';
 
-function pathResolver (pathsConfig) {
+function pathResolver(pathsConfig) {
 
     var that = Object.create(null);
 
@@ -71,7 +71,7 @@ function pathResolver (pathsConfig) {
 }
 
 module.exports = {
-    instance : function (pathConfig) {
+    instance: function (pathConfig) {
 
         return pathResolver(pathConfig);
     }
