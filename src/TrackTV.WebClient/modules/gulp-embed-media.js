@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 var gutil = require('gulp-util'),
     through = require('through2'),
@@ -16,27 +16,27 @@ module.exports = function (options) {
 
     processOptions(options);
 
-    function processOptions (options) {
+    function processOptions(options) {
 
         options.selectors = options.selectors || ['img'];
         options.attributes = options.attributes || ['src'];
         options.verbose = !!options.verbose;
         options.skipIfNotFound = true;
 
-        if (!(options.selectors instanceof Array)) {
+        if (!Array.isArray(options.selectors)) {
             options.selectors = [options.selectors];
         }
 
-        if (!(options.attributes instanceof Array)) {
+        if (!Array.isArray(options.attributes)) {
             options.attributes = [options.attributes];
         }
 
-        if (options.resourcePattern && !(options.resourcePattern instanceof Array)) {
+        if (options.resourcePattern && !Array.isArray(options.resourcePattern)) {
             options.resourcePattern = [options.resourcePattern];
         }
     }
 
-    function log (message) {
+    function log(message) {
 
         if (options.verbose) {
 
@@ -44,17 +44,17 @@ module.exports = function (options) {
         }
     }
 
-    function error (message) {
+    function error(message) {
 
         this.emit('error', new gutil.PluginError(pluginName, message));
     }
 
-    function isFunction (functionToCheck) {
+    function isFunction(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     }
 
-    function getBaseDirectory (file) {
+    function getBaseDirectory(file) {
 
         if (isFunction(options.resolveBaseDir)) {
 
@@ -69,7 +69,7 @@ module.exports = function (options) {
         return options.baseDir || file.base;
     }
 
-    function encodeResource (sourcePath, baseDirectory) {
+    function encodeResource(sourcePath, baseDirectory) {
 
         var isEncoded = sourcePath && sourcePath.indexOf('data:') === 0;
 
@@ -120,7 +120,7 @@ module.exports = function (options) {
         }
     }
 
-    function shouldProcessResource (source) {
+    function shouldProcessResource(source) {
 
         if (!source) {
             return false;

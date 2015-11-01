@@ -1,12 +1,12 @@
 'use strict';
 
-function pathResolver (pathsConfig) {
+function pathResolver(pathsConfig) {
 
     var that = Object.create(null);
 
     that.publicPath = function (path) {
 
-        if (path instanceof Array) {
+        if (Array.isArray(path)) {
 
             for (var index in path) {
 
@@ -25,12 +25,7 @@ function pathResolver (pathsConfig) {
 
     that.bowerComponent = function (path) {
 
-        if (!path) {
-
-            throw Error('You must specify the path of the component.');
-        }
-
-        if (path instanceof Array) {
+        if (Array.isArray(path)) {
 
             for (var index in path) {
 
@@ -40,6 +35,8 @@ function pathResolver (pathsConfig) {
             return path;
 
         } else {
+
+            path = path || '';
 
             return pathsConfig.bowerRootPath + path;
         }
@@ -52,7 +49,7 @@ function pathResolver (pathsConfig) {
             throw Error('You must specify the path of the component.');
         }
 
-        if (path instanceof Array) {
+        if (Array.isArray(path)) {
 
             for (var index in path) {
 
@@ -71,7 +68,7 @@ function pathResolver (pathsConfig) {
 }
 
 module.exports = {
-    instance : function (pathConfig) {
+    instance: function (pathConfig) {
 
         return pathResolver(pathConfig);
     }

@@ -198,6 +198,6 @@ FakesAssemblies/
 #Content folder
 Uploads/
 
-#Clinet libs & generated code
-lib/
-merged/
+#generated code
+src/TrackTV.WebClient/wwwroot/
+src/TrackTV.WebClient/dist/

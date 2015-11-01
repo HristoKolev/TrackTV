@@ -35,11 +35,19 @@ function appStream(appBuilder, includes) {
 
     // methods
 
-    that.libScriptsStream = function () {
+    ///////////////////////////////////////////////////////////////
 
-        return gulp.src(includes.scripts)
-            .pipe(concat(constants.thirdPartyJs));
+    that.indexFileStream = function () {
+
+        return gulp.src(appBuilder.indexFile);
     };
+
+    that.thirdPartyScriptsStream = function () {
+
+        return gulp.src(includes.scripts);
+    };
+
+    ///////////////////////////////////////////////////////////////
 
     that.libStylesStream = function () {
 
@@ -114,11 +122,6 @@ function appStream(appBuilder, includes) {
             .bundle()
             .pipe(source(constants.browserifiedScripts))
             .pipe(buffer());
-    };
-
-    that.indexFileStream = function () {
-
-        return gulp.src(appBuilder.indexFile);
     };
 
     that.contentStream = function () {

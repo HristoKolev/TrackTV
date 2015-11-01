@@ -11,7 +11,7 @@ module.exports = function (name, pattern) {
         throw Error('Parameters name and pattern must be valid.');
     }
 
-    if (!(pattern instanceof Array)) {
+    if (!Array.isArray(pattern)) {
 
         pattern = [pattern];
     }

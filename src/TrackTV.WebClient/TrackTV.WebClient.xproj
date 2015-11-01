@@ -17,7 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <DnxInvisibleFolder Include="bower_components\" />
-    <DnxInvisibleFolder Include="wwwroot\build\" />
+    <DnxInvisibleFolder Include="dist\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
