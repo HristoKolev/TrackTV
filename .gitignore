@@ -200,4 +200,4 @@ Uploads/
 
 #generated code
 src/TrackTV.WebClient/wwwroot/
-src/TrackTV.WebClient/dest/
+src/TrackTV.WebClient/dist/
