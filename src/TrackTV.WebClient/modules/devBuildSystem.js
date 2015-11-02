@@ -8,7 +8,10 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
     var gulp = require('gulp'),
         del = require('del'),
         glob = require('glob'),
-        path = require('path');
+        path = require('path'),
+        browserify = require('browserify'),
+        source = require('vinyl-source-stream'),
+        buffer = require('vinyl-buffer');
 
     // custom modules
     var fillContent = require('./fill-content').external,
@@ -33,7 +36,13 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         moduleHeaders: 'module-headers',
         moduleConstants: 'module-constants',
         moduleLibraries: 'module-libraries',
-        routeConfig: 'route-config'
+        routeConfig: 'route-config',
+        browserified: 'browserified',
+    };
+
+    var browserifyOptions = {
+        debug: true,
+        entries: glob.sync(appBuilder.npmModuleFiles)
     };
 
     // paths
@@ -158,6 +167,20 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         gulp.task('dev-include-' + constants.routeConfig, function () {
 
             return includeFile(constants.routeConfig, appBuilder.routeConfig, appBuilder.appPath(), scriptFormatter);
+        });
+
+        gulp.task('dev-browserify', function () {
+
+            var fileName = constants.browserified + '.js';
+
+            injectFiles(constants.browserified, [fileName], scriptFormatter);
+
+            return browserify(browserifyOptions)
+                .bundle()
+                .pipe(source(fileName))
+                .pipe(buffer())
+                .pipe(output.destStream());
+
         });
 
         ////////////////////////////////////////////////////////////////////////////////////

@@ -45,7 +45,8 @@ gulp.task('default', function () {
         'dev-include-module-headers',
         'dev-include-module-constants',
         'dev-include-module-libraries',
-        'dev-include-route-config'
+        'dev-include-route-config',
+        'dev-browserify'
     );
 });
 
