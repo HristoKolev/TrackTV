@@ -18,17 +18,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         listScripts = require('./list-resources'),
         fsCopy = require('./preserveFileStructureCopy');
 
-    // paths
-    var libPath = output('/lib'),
-        libScriptsPath = libPath('/scripts'),
-        libTemplatesPath = libPath('/templates'),
-        libCssPath = libPath('/styles'),
-        libFontsPath = libPath('/fonts');
-
-    var mergedPath = output('/merged');
-
-    ////////////////////
-
     var constants = {
         thirdPartyScripts: 'third-party-scripts',
         thirdPartyStyles: 'third-party-styles',
@@ -48,6 +37,8 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
     // paths
 
     var outputIndex = output('index.html');
+
+    // logic
 
     var scriptFormatter = function (resourcePath) {
 
@@ -114,8 +105,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         injectApplicationFiles(name, newList, formatter);
     }
 
-    ////////////////////
-
     that.registerTasks = function () {
 
         gulp.task('dev-clean', function (callback) {
@@ -180,7 +169,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
                 .pipe(source(fileName))
                 .pipe(buffer())
                 .pipe(output.destStream());
-
         });
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -208,12 +196,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
         //    return appStream.appScriptsStream()
         //        .pipe(mergedPath.destStream());
-        //});
-
-        //gulp.task('dev-browserify', function () {
-
-        //    return appStream.browserifyStream()
-        //        .pipe(libScriptsPath.destStream());
         //});
 
     };
