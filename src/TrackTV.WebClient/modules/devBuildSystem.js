@@ -72,15 +72,21 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         return path.join(moduleName + '-' + base + ext);
     };
 
+    function injectFiles(placeholder, files, formatter) {
+
+        fillContent(outputIndex.value(), placeholder, listScripts(files, formatter));
+    }
+
+    function injectApplicationFiles(placeholder, files, formatter) {
+
+        fillContent(outputIndex.value(), placeholder, listScripts(removeBaseDir(files, output.value()), formatter));
+    }
+
     function includeDirectory(name, list, baseDir, formatter) {
 
         var newList = fsCopy(list, output(name).value(), baseDir);
 
-        newList = removeBaseDir(newList, output.value());
-
-        var scriptList = listScripts(newList, formatter);
-
-        fillContent(outputIndex.value(), name, scriptList);
+        injectApplicationFiles(name, newList, formatter);
 
     };
 
@@ -88,11 +94,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
         var newList = fsCopy([file], output.value(), baseDir);
 
-        newList = removeBaseDir(newList, output.value());
-
-        var scriptList = listScripts(newList, formatter);
-
-        fillContent(outputIndex.value(), placeholder, scriptList);
+        injectApplicationFiles(placeholder, newList, formatter);
 
     };
 
@@ -100,11 +102,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
         var newList = fsCopy.simple(list, output(name).value(), renameModuleFile);
 
-        newList = removeBaseDir(newList, output.value());
-
-        var scriptList = listScripts(newList, formatter);
-
-        fillContent(outputIndex.value(), name, scriptList);
+        injectApplicationFiles(name, newList, formatter);
     }
 
     ////////////////////
@@ -186,30 +184,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         //gulp.task('dev-merge', function () {
 
         //    return appStream.appScriptsStream()
-        //        .pipe(mergedPath.destStream());
-        //});
-
-        //gulp.task('dev-module-headers', function () {
-
-        //    return appStream.moduleHeadersStream()
-        //        .pipe(mergedPath.destStream());
-        //});
-
-        //gulp.task('dev-module-libraries', function () {
-
-        //    return appStream.moduleLibrariesStream()
-        //        .pipe(mergedPath.destStream());
-        //});
-
-        //gulp.task('dev-module-constants', function () {
-
-        //    return appStream.moduleConstantsStream()
-        //        .pipe(mergedPath.destStream());
-        //});
-
-        //gulp.task('dev-copy-routeConfig', function () {
-
-        //    return appStream.routeConfigStream()
         //        .pipe(mergedPath.destStream());
         //});
 
