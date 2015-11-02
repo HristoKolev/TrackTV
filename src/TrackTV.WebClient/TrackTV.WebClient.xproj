@@ -15,7 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <DevelopmentServerPort>60381</DevelopmentServerPort>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup>    
     <DnxInvisibleFolder Include="bower_components\" />
     <DnxInvisibleFolder Include="dist\" />
   </ItemGroup>
