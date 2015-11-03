@@ -7,7 +7,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
     // modules
     var gulp = require('gulp'),
         del = require('del'),
-        glob = require('glob'),
+        glob = require('glob-all'),
         path = require('path'),
         browserify = require('browserify'),
         source = require('vinyl-source-stream'),
@@ -27,6 +27,8 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         moduleLibraries: 'module-libraries',
         routeConfig: 'route-config',
         browserified: 'browserified',
+        globalScripts: 'global-scripts',
+        globalModuleScripts: 'global-module-scripts'
     };
 
     var browserifyOptions = {
@@ -56,6 +58,11 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
         for (var i = 0; i < files.length; i += 1) {
 
+            if (files[i].indexOf(baseDir) !== 0) {
+
+                throw Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + files[i]);
+            }
+
             files[i] = files[i].slice(baseDir.length);
         }
 
@@ -72,6 +79,16 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         return path.join(moduleName + '-' + base + ext);
     };
 
+    function separateModuleFile(fileName) {
+
+        var ext = path.extname(fileName);
+        var base = path.basename(fileName, ext);
+
+        var moduleName = path.basename(path.dirname(fileName));
+
+        return path.join(moduleName, base + ext);
+    }
+
     function injectFiles(placeholder, files, formatter) {
 
         fillContent(outputIndex.value(), placeholder, listScripts(files, formatter));
@@ -87,7 +104,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         var newList = fsCopy(list, output(name).value(), baseDir);
 
         injectApplicationFiles(name, newList, formatter);
-
     };
 
     function includeFile(placeholder, file, baseDir, formatter) {
@@ -95,7 +111,6 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         var newList = fsCopy([file], output.value(), baseDir);
 
         injectApplicationFiles(placeholder, newList, formatter);
-
     };
 
     function includeModuleFiles(name, list, formatter) {
@@ -104,6 +119,15 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
         injectApplicationFiles(name, newList, formatter);
     }
+
+    function includeSeparatedModuleFiles(name, list, baseDir, formatter) {
+
+        var newList = fsCopy(list, output(name).value(), baseDir, separateModuleFile);
+
+        injectApplicationFiles(name, newList, formatter);
+    }
+
+    // tasks
 
     that.registerTasks = function () {
 
@@ -125,37 +149,69 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
         gulp.task('dev-include-' + constants.thirdPartyScripts, function () {
 
-            return includeDirectory(constants.thirdPartyScripts, includes.scripts, includes.baseDir, scriptFormatter);
+            return includeDirectory(
+                constants.thirdPartyScripts,
+                includes.scripts,
+                includes.baseDir,
+                scriptFormatter
+            );
         });
 
         gulp.task('dev-include-' + constants.thirdPartyStyles, function () {
 
-            return includeDirectory(constants.thirdPartyStyles, includes.styles, includes.baseDir, styleFormatter);
+            return includeDirectory(
+                constants.thirdPartyStyles,
+                includes.styles,
+                includes.baseDir,
+                styleFormatter
+            );
         });
 
         gulp.task('dev-include-' + constants.initFile, function () {
 
-            return includeFile(constants.initFile, appBuilder.initFile, appBuilder.appPath(), scriptFormatter);
+            return includeFile(
+                constants.initFile,
+                appBuilder.initFile,
+                appBuilder.appPath(),
+                scriptFormatter
+            );
         });
 
         gulp.task('dev-include-' + constants.moduleHeaders, function () {
 
-            return includeModuleFiles(constants.moduleHeaders, glob.sync(appBuilder.moduleHeaders), scriptFormatter);
+            return includeModuleFiles(
+                constants.moduleHeaders,
+                glob.sync(appBuilder.moduleHeaders),
+                scriptFormatter
+            );
         });
 
         gulp.task('dev-include-' + constants.moduleConstants, function () {
 
-            return includeModuleFiles(constants.moduleConstants, glob.sync(appBuilder.moduleConstants), scriptFormatter);
+            return includeModuleFiles(
+                constants.moduleConstants,
+                glob.sync(appBuilder.moduleConstants),
+                scriptFormatter
+            );
         });
 
         gulp.task('dev-include-' + constants.moduleLibraries, function () {
 
-            return includeModuleFiles(constants.moduleLibraries, glob.sync(appBuilder.moduleLibraries), scriptFormatter);
+            return includeModuleFiles(
+                constants.moduleLibraries,
+                glob.sync(appBuilder.moduleLibraries),
+                scriptFormatter
+            );
         });
 
         gulp.task('dev-include-' + constants.routeConfig, function () {
 
-            return includeFile(constants.routeConfig, appBuilder.routeConfig, appBuilder.appPath(), scriptFormatter);
+            return includeFile(
+                constants.routeConfig,
+                appBuilder.routeConfig,
+                appBuilder.appPath(),
+                scriptFormatter
+            );
         });
 
         gulp.task('dev-browserify', function () {
@@ -169,6 +225,26 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
                 .pipe(source(fileName))
                 .pipe(buffer())
                 .pipe(output.destStream());
+        });
+
+        gulp.task('dev-include-' + constants.globalScripts, function () {
+
+            return includeDirectory(
+                constants.globalScripts,
+                glob.sync(appBuilder.globalScripts),
+                appBuilder.appPath(),
+                scriptFormatter
+            );
+        });
+
+        gulp.task('dev-include-' + constants.globalModuleScripts, function () {
+
+            return includeSeparatedModuleFiles(
+                constants.globalModuleScripts,
+                glob.sync(appBuilder.globalModuleScripts),
+                appBuilder.modulesDir,
+                scriptFormatter
+            );
         });
 
         ////////////////////////////////////////////////////////////////////////////////////

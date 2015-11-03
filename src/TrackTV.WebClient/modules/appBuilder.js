@@ -40,11 +40,12 @@ function appBuilder(pathResolver, rootPath) {
         npmModuleFiles: '/modules/*/npmModules.js',
         moduleConstants: '/modules/*/constants.js',
         moduleLibraries: '/modules/*/libraries.js',
-        scripts: '/modules/*/scripts/**/*.js',
+        scripts: '/modules/*/**/*.js',
         routeConfig: '/routeConfig.js',
-        templates: '/modules/*/templates/*.html',
-        lessFiles: '/modules/*/styles/*.less',
-        configFiles: '/configs/*.json'
+        templates: '/modules/*/**/*.html',
+        lessFiles: '/modules/*/**/*.less',
+        globalScripts: '/*.js',
+        globalModuleScripts: '/modules/*/*.js'
     };
 
     Object.keys(patterns).forEach(function (index) {
@@ -61,7 +62,23 @@ function appBuilder(pathResolver, rootPath) {
         that.routeConfig
     ];
 
+    that.globalScripts = [
+        that.globalScripts,
+        '!' + that.initFile,
+        '!' + that.routeConfig
+    ];
+
+    that.globalModuleScripts = [
+        that.globalModuleScripts,
+        '!' + that.moduleHeaders,
+        '!' + that.npmModuleFiles,
+        '!' + that.moduleConstants,
+        '!' + that.moduleLibraries,
+    ];
+
     that.contentPath = that.appPath('/content');
+
+    that.modulesDir = that.appPath('/modules');
 
     return that;
 }

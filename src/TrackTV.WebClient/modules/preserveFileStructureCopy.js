@@ -5,6 +5,11 @@ var fs = require('fs-extra'),
 
 function removeBaseDir(fileName, baseDir) {
 
+    if (fileName.indexOf(baseDir) !== 0) {
+
+        throw Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + fileName);
+    }
+
     return fileName.slice(baseDir.length);
 }
 
@@ -12,14 +17,11 @@ function preserveFileStructureCopy(files, target, baseDir, processNewFile) {
 
     var newFiles = [];
 
+    processNewFile = processNewFile || removeBaseDir;
+
     for (var i = 0; i < files.length; i += 1) {
 
-        var newFile = path.join(target, removeBaseDir(files[i], baseDir));
-
-        if (processNewFile) {
-
-            newFile = processNewFile(newFile);
-        }
+        var newFile = newFile = path.join(target, processNewFile(files[i], baseDir));
 
         fs.copySync(files[i], newFile);
 
