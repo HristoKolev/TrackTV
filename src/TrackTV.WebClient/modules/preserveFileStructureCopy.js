@@ -35,6 +35,16 @@ module.exports = preserveFileStructureCopy;
 
 module.exports.simple = function (files, target, processNewFile) {
 
+    if (!Array.isArray(files)) {
+
+        files = [files];
+    }
+
+    processNewFile = processNewFile || function (name) {
+
+        return path.basename(name);
+    }
+
     var newFiles = [];
 
     for (var i = 0; i < files.length; i += 1) {

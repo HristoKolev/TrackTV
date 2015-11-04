@@ -45,7 +45,7 @@ function appBuilder(pathResolver, rootPath) {
         templates: '/modules/*/*/**/*.html',
         lessFiles: '/modules/*/*/**/*.less',
         globalScripts: '/*.js',
-        globalModuleScripts: '/modules/*/*.js'
+        globalModuleScripts: '/modules/*/*.js',
     };
 
     Object.keys(patterns).forEach(function (index) {

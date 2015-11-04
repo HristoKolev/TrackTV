@@ -11,7 +11,8 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         path = require('path'),
         browserify = require('browserify'),
         source = require('vinyl-source-stream'),
-        buffer = require('vinyl-buffer');
+        buffer = require('vinyl-buffer'),
+        fs = require('fs');
 
     // custom modules
     var fillContent = require('./fill-content').external,
@@ -39,18 +40,24 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
     // paths
 
-    var outputIndex = output('index.html');
+    var outputIndex = output('index.html'),
+        includeLog = output('includes.json');
 
     // logic
 
-    var scriptFormatter = function (resourcePath) {
+    var scriptFormatter = function(resourcePath) {
 
         return '<script src="' + resourcePath + '"></script>';
     };
 
-    var styleFormatter = function (resourcePath) {
+    var styleFormatter = function(resourcePath) {
 
         return '<link rel="stylesheet" href="' + resourcePath + '">';
+    };
+
+    var formatterNames = {
+        script: 'script',
+        style: 'style'
     };
 
     function removeBaseDir(files, baseDir) {
@@ -90,14 +97,88 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         return path.join(moduleName, base + ext);
     }
 
-    function injectFiles(placeholder, files, formatter) {
+    function getFormatterName(formatter) {
 
-        fillContent(outputIndex.value(), placeholder, listScripts(files, formatter));
+        var formatterName;
+
+        if (formatter === scriptFormatter) {
+
+            formatterName = formatterNames.script;
+        }
+        else if (formatter === styleFormatter) {
+
+            formatterName = formatterNames.style;
+        } else {
+
+            throw Error('Unknown formatter: ' + formatter);
+        }
+
+        return formatterName;
+    }
+
+    function getFormatter(name) {
+
+        if (name === formatterNames.script) {
+
+            return scriptFormatter;
+        }
+        else if (name === formatterNames.style) {
+
+            return styleFormatter;
+        } else {
+
+            throw Error('Unknown formatter name: ' + name);
+        }
+    }
+
+    function logIncludes(name, files, formatter) {
+
+        var obj = JSON.parse(fs.readFileSync(includeLog.value()));
+
+        obj[name] = {
+            files: files,
+            formatter: getFormatterName(formatter)
+        };
+
+        fs.writeFileSync(includeLog.value(), JSON.stringify(obj, null, '\t'));
+    }
+
+    function copyIndex() {
+
+        fsCopy.simple(appBuilder.indexFile, output.value());
+    }
+
+    function readIncludes() {
+
+        var obj = JSON.parse(fs.readFileSync(includeLog.value()));
+
+        Object.keys(obj).forEach(function(index) {
+
+            obj[index].formatter = getFormatter(obj[index].formatter);
+        });
+
+        return obj;
+    }
+
+    function updateIncludes() {
+
+        copyIndex();
+
+        var includes = readIncludes();
+
+        Object.keys(includes).forEach(function(index) {
+
+            var include = includes[index];
+
+            fillContent(outputIndex.value(), index, listScripts(include.files, include.formatter));
+        });
     }
 
     function injectApplicationFiles(placeholder, files, formatter) {
 
-        fillContent(outputIndex.value(), placeholder, listScripts(removeBaseDir(files, output.value()), formatter));
+        files = removeBaseDir(files, output.value());
+
+        logIncludes(placeholder, files, formatter);
     }
 
     function includeDirectory(name, list, baseDir, formatter) {
@@ -130,9 +211,9 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
     // tasks
 
-    that.registerTasks = function () {
+    that.registerTasks = function() {
 
-        gulp.task('dev-clean', function (callback) {
+        gulp.task('dev-clean', function(callback) {
 
             del.sync([
                 output.value() + '/*',
@@ -142,13 +223,14 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             callback();
         });
 
-        gulp.task('dev-index', function () {
+        gulp.task('dev-init', function() {
 
-            return appStream.indexFileStream()
-                .pipe(output.destStream());
+            fs.writeFileSync(includeLog.value(), '{}');
+
+            copyIndex();
         });
 
-        gulp.task('dev-include-' + constants.thirdPartyScripts, function () {
+        gulp.task('dev-include-' + constants.thirdPartyScripts, function() {
 
             return includeDirectory(
                 constants.thirdPartyScripts,
@@ -158,7 +240,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.thirdPartyStyles, function () {
+        gulp.task('dev-include-' + constants.thirdPartyStyles, function() {
 
             return includeDirectory(
                 constants.thirdPartyStyles,
@@ -168,7 +250,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.initFile, function () {
+        gulp.task('dev-include-' + constants.initFile, function() {
 
             return includeFile(
                 constants.initFile,
@@ -178,7 +260,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.moduleHeaders, function () {
+        gulp.task('dev-include-' + constants.moduleHeaders, function() {
 
             return includeModuleFiles(
                 constants.moduleHeaders,
@@ -187,7 +269,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.moduleConstants, function () {
+        gulp.task('dev-include-' + constants.moduleConstants, function() {
 
             return includeModuleFiles(
                 constants.moduleConstants,
@@ -196,7 +278,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.moduleLibraries, function () {
+        gulp.task('dev-include-' + constants.moduleLibraries, function() {
 
             return includeModuleFiles(
                 constants.moduleLibraries,
@@ -205,7 +287,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.routeConfig, function () {
+        gulp.task('dev-include-' + constants.routeConfig, function() {
 
             return includeFile(
                 constants.routeConfig,
@@ -215,11 +297,11 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-browserify', function () {
+        gulp.task('dev-browserify', function() {
 
             var fileName = constants.browserified + '.js';
 
-            injectFiles(constants.browserified, [fileName], scriptFormatter);
+            logIncludes(constants.browserified, [fileName], scriptFormatter);
 
             return browserify(browserifyOptions)
                 .bundle()
@@ -228,7 +310,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
                 .pipe(output.destStream());
         });
 
-        gulp.task('dev-include-' + constants.globalScripts, function () {
+        gulp.task('dev-include-' + constants.globalScripts, function() {
 
             return includeDirectory(
                 constants.globalScripts,
@@ -238,7 +320,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.globalModuleScripts, function () {
+        gulp.task('dev-include-' + constants.globalModuleScripts, function() {
 
             return includeSeparatedModuleFiles(
                 constants.globalModuleScripts,
@@ -248,14 +330,19 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             );
         });
 
-        gulp.task('dev-include-' + constants.scripts, function () {
+        gulp.task('dev-include-' + constants.scripts, function() {
 
-             return includeDirectory(
-                constants.scripts,
-                glob.sync(appBuilder.scripts),
-                appBuilder.modulesDir,
-                scriptFormatter
-            );
+            return includeDirectory(
+               constants.scripts,
+               glob.sync(appBuilder.scripts),
+               appBuilder.modulesDir,
+               scriptFormatter
+           );
+        });
+
+        gulp.task('dev-update-includes', function() {
+
+            updateIncludes();
         });
 
         ////////////////////////////////////////////////////////////////////////////////////

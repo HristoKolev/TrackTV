@@ -38,7 +38,7 @@ gulp.task('default', function () {
 
     runSequence(
         'dev-clean',
-        'dev-index',
+        'dev-init',
         'dev-include-third-party-scripts',
         'dev-include-third-party-styles',
         'dev-include-init-file',
@@ -49,7 +49,8 @@ gulp.task('default', function () {
         'dev-browserify',
         'dev-include-global-scripts',
         'dev-include-global-module-scripts',
-        'dev-include-main-scripts'
+        'dev-include-main-scripts',
+        'dev-update-includes'
     );
 });
 
