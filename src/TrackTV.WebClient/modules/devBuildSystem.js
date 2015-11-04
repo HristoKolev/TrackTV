@@ -28,7 +28,8 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
         routeConfig: 'route-config',
         browserified: 'browserified',
         globalScripts: 'global-scripts',
-        globalModuleScripts: 'global-module-scripts'
+        globalModuleScripts: 'global-module-scripts',
+        scripts: 'main-scripts',
     };
 
     var browserifyOptions = {
@@ -242,6 +243,16 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
             return includeSeparatedModuleFiles(
                 constants.globalModuleScripts,
                 glob.sync(appBuilder.globalModuleScripts),
+                appBuilder.modulesDir,
+                scriptFormatter
+            );
+        });
+
+        gulp.task('dev-include-' + constants.scripts, function () {
+
+             return includeDirectory(
+                constants.scripts,
+                glob.sync(appBuilder.scripts),
                 appBuilder.modulesDir,
                 scriptFormatter
             );

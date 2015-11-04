@@ -40,10 +40,10 @@ function appBuilder(pathResolver, rootPath) {
         npmModuleFiles: '/modules/*/npmModules.js',
         moduleConstants: '/modules/*/constants.js',
         moduleLibraries: '/modules/*/libraries.js',
-        scripts: '/modules/*/**/*.js',
+        scripts: '/modules/*/*/**/*.js',
         routeConfig: '/routeConfig.js',
-        templates: '/modules/*/**/*.html',
-        lessFiles: '/modules/*/**/*.less',
+        templates: '/modules/*/*/**/*.html',
+        lessFiles: '/modules/*/*/**/*.less',
         globalScripts: '/*.js',
         globalModuleScripts: '/modules/*/*.js'
     };
