@@ -17,7 +17,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
     // custom modules
     var fillContent = require('./fill-content').external,
         listScripts = require('./list-resources'),
-        fsCopy = require('./preserveFileStructureCopy');
+        copyFiles = require('./copyFiles');
 
     var constants = {
         thirdPartyScripts: 'third-party-scripts',
@@ -145,7 +145,7 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
     function copyIndex() {
 
-        fsCopy.simple(appBuilder.indexFile, output.value());
+        copyFiles.copy(appBuilder.indexFile, output.value());
     }
 
     function readIncludes() {
@@ -183,28 +183,28 @@ function devBuildSystem(appBuilder, output, appStream, includes) {
 
     function includeDirectory(name, list, baseDir, formatter) {
 
-        var newList = fsCopy(list, output(name).value(), baseDir);
+        var newList = copyFiles.copyStructure(list, output(name).value(), baseDir);
 
         injectApplicationFiles(name, newList, formatter);
     };
 
     function includeFile(placeholder, file, baseDir, formatter) {
 
-        var newList = fsCopy([file], output.value(), baseDir);
+        var newList = copyFiles.copyStructure([file], output.value(), baseDir);
 
         injectApplicationFiles(placeholder, newList, formatter);
     };
 
     function includeModuleFiles(name, list, formatter) {
 
-        var newList = fsCopy.simple(list, output(name).value(), renameModuleFile);
+        var newList = copyFiles.copy(list, output(name).value(), renameModuleFile);
 
         injectApplicationFiles(name, newList, formatter);
     }
 
     function includeSeparatedModuleFiles(name, list, baseDir, formatter) {
 
-        var newList = fsCopy(list, output(name).value(), baseDir, separateModuleFile);
+        var newList = copyFiles.copyStructure(list, output(name).value(), baseDir, separateModuleFile);
 
         injectApplicationFiles(name, newList, formatter);
     }

@@ -29,5 +29,6 @@
 
     window.settings = window.settings || getSettings();
 
-    window.ngModules = {};
+    window.ngModules = {};    
+
 }());
