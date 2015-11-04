@@ -22,8 +22,10 @@ var pathResolver = require('./modules/pathResolver').instance(pathConfig),
 var devOutput = output.instance(outputConfig.devPath),
     prodOutput = output.instance(outputConfig.prodPath);
 
+var includer = require('./modules/includer').instance(devOutput, appBuilder);
+
 var devBuildSystem = require('./modules/devBuildSystem')
-    .instance(appBuilder, devOutput, appStream, bowerComponents)
+    .instance(appBuilder, devOutput, includer, bowerComponents)
     .registerTasks();
 
 //var productionBuildSystem = require('./modules/productionBuildSystem')
