@@ -2,15 +2,25 @@
 
 var expect = require('chai').expect,
     sinon = require('sinon'),
-    path = require('path');
+    path = require('path'),
+    mockery = require('mockery');
 
 var assertComposition = require('../testing/assertComposition').multitest;
 
-var copyFiles = require('../modules/copyFiles');
-
 var spy = sinon.spy();
 
-copyFiles._rawCopy = spy;
+mockery.registerMock('fs-extra', {
+    copySync: spy
+});
+
+mockery.registerAllowable('../modules/copyFiles');
+mockery.registerAllowable('path');
+
+mockery.enable();
+
+var copyFiles = require('../modules/copyFiles');
+
+mockery.disable();
 
 describe('#copyFiles', function () {
 
@@ -19,11 +29,15 @@ describe('#copyFiles', function () {
         assertComposition.object('copyFiles', copyFiles, [
             ['copy', 'function'],
             ['copyStructure', 'function'],
-            ['_rawCopy', 'function'],
         ]);
     });
 
     describe('#copy()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
 
         beforeEach(function () {
             spy.reset();
@@ -32,6 +46,7 @@ describe('#copyFiles', function () {
         after(function () {
 
             spy.reset();
+            mockery.disable();
         });
 
         var files = [
@@ -42,7 +57,7 @@ describe('#copyFiles', function () {
 
         var destination = 'dest';
 
-        it('should call #_rawCopy() for each file', function () {
+        it('should copy each individual file', function () {
 
             copyFiles.copy(files, destination);
 
@@ -139,6 +154,11 @@ describe('#copyFiles', function () {
 
     describe('#copyStructure()', function () {
 
+        before(function () {
+
+            mockery.enable();
+        });
+
         beforeEach(function () {
             spy.reset();
         });
@@ -146,6 +166,7 @@ describe('#copyFiles', function () {
         after(function () {
 
             spy.reset();
+            mockery.disable();
         });
 
         var files = [
@@ -158,7 +179,7 @@ describe('#copyFiles', function () {
 
         var baseDir = 'source';
 
-        it('should call #_rawCopy() for each file', function () {
+        it('should copy each individual file', function () {
 
             copyFiles.copyStructure(files, destination, baseDir);
 

@@ -23,11 +23,6 @@ function copyFiles() {
 
     };
 
-    that._rawCopy = function (oldPath, newPath) {
-
-        fs.copySync(oldPath, newPath);
-    };
-
     that.copy = function (paths, targetDir, processPath) {
 
         if (!paths) {
@@ -65,7 +60,7 @@ function copyFiles() {
 
             var newPath = path.join(targetDir, processedPath);
 
-            that._rawCopy(paths[i], newPath);
+            fs.copySync(paths[i], newPath);
 
             returnPaths.push(newPath);
         }
