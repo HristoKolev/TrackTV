@@ -23,12 +23,27 @@ function copyFiles() {
 
     };
 
-    that.fsCopy = function (oldPath, newPath) {
+    that._rawCopy = function (oldPath, newPath) {
 
         fs.copySync(oldPath, newPath);
     };
 
     that.copy = function (paths, targetDir, processPath) {
+
+        if (!paths) {
+
+            throw new Error('The paths are invalid. Paths: ' + paths);
+        }
+
+        if (Array.isArray(paths) && paths.length === 0) {
+
+            throw new Error('The paths array is empty.');
+        }
+
+        if (!targetDir) {
+
+            throw new Error('The target directory is invalid. targetDir: ' + targetDir);
+        }
 
         if (!Array.isArray(paths)) {
 
@@ -41,9 +56,16 @@ function copyFiles() {
 
         for (var i = 0; i < paths.length; i += 1) {
 
-            var newPath = path.join(targetDir, processPath(paths[i]));
+            var processedPath = processPath(paths[i]);
 
-            that.fsCopy(paths[i], newPath);
+            if (!processedPath) {
+
+                throw new Error('The process function returned a falsy path.');
+            }
+
+            var newPath = path.join(targetDir, processedPath);
+
+            that._rawCopy(paths[i], newPath);
 
             returnPaths.push(newPath);
         }
@@ -52,6 +74,11 @@ function copyFiles() {
     };
 
     that.copyStructure = function (paths, targetDir, baseDir, processPath) {
+
+        if (!baseDir) {
+
+            throw new Error('The base directory is invalid.');
+        }
 
         processPath = processPath || removeBaseDir;
 
