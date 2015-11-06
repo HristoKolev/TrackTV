@@ -28,7 +28,7 @@ describe('#copyFiles', function () {
 
         assertComposition.object('copyFiles', copyFiles, [
             ['copy', 'function'],
-            ['copyStructure', 'function'],
+            ['copyStructure', 'function']
         ]);
     });
 
@@ -104,8 +104,10 @@ describe('#copyFiles', function () {
         it('should use the provided processing function insted of flattening if such function is available', function () {
 
             var func = function (fileName) {
+
                 return fileName + '!';
             };
+
             var newPaths = copyFiles.copy('file.txt', destination, func);
 
             expect(newPaths[0]).to.equal('dest\\file.txt!');
@@ -118,7 +120,9 @@ describe('#copyFiles', function () {
             };
 
             expect(function () {
+
                 copyFiles.copy('file.txt', destination, func);
+
             }).to.throw(/falsy path/);
 
         });
@@ -229,7 +233,9 @@ describe('#copyFiles', function () {
             };
 
             expect(function () {
+
                 copyFiles.copyStructure('base/file.txt', destination, 'base', func);
+
             }).to.throw(/falsy path/);
 
         });
