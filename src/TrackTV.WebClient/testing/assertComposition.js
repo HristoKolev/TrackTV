@@ -1,4 +1,4 @@
-'use srtict';
+'use strict';
 
 var expect = require('chai').expect;
 
@@ -53,6 +53,34 @@ function getTitle(objectName, member) {
     return message;
 }
 
+function testMember(objectName, obj, member, multitest) {
+
+    var memberInfo = getMemberInfo(member);
+
+    var title = getTitle(objectName, member);
+
+    function executeTest() {
+
+        var member = obj[memberInfo.name];
+
+        expect(member).to.exist;
+
+        if (memberInfo.hasType) {
+
+            expect(member).to.be.a(memberInfo.type);
+        }
+    }
+
+    if (multitest) {
+
+        it(title, executeTest);
+
+    } else {
+
+        executeTest();
+    }
+}
+
 function assertComposition(multitest) {
 
     var that = Object.create(null);
@@ -61,34 +89,9 @@ function assertComposition(multitest) {
 
         for (var i = 0; i < members.length; i += 1) {
 
-            (function () {
+            var member = members[i];
 
-                var memberInfo = getMemberInfo(members[i]);
-
-                var title = getTitle(objectName, members[i]);
-
-                function executeTest() {
-
-                    var member = obj[memberInfo.name];
-
-                    expect(member).to.exist;
-
-                    if (memberInfo.hasType) {
-
-                        expect(member).to.be.a(memberInfo.type);
-                    }
-                }
-
-                if (multitest) {
-
-                    it(title, executeTest);
-
-                } else {
-
-                    executeTest();
-                }
-
-            }());
+            testMember(objectName, obj, member, multitest);
         }
     };
 
