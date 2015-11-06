@@ -1,7 +1,8 @@
 'use strict';
 
 var fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    linuxStylePath = require('./linuxStylePath');
 
 function appBuilder(rootPath) {
 
@@ -22,7 +23,7 @@ function appBuilder(rootPath) {
 
             relativePath = relativePath || '';
 
-            return path.join(rootPath, relativePath);
+            return linuxStylePath(path.join(rootPath, relativePath));
         }
     };
 

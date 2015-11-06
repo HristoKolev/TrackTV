@@ -1,8 +1,7 @@
 'use strict';
 
 var expect = require('chai').expect,
-    assertCompositionMultitest = require('../testing/assertComposition').multitest,
-    assertComposition = require('../testing/assertComposition');
+    assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
 var appBuilder = require('../modules/appBuilder');
 
@@ -62,7 +61,16 @@ describe('#appBuilder', function () {
 
             var path = 'file';
 
-            expect(builder.appPath(path)).to.be.equal('app\\file');
+            expect(builder.appPath(path)).to.be.equal('app/file');
+        });
+
+        it('should convert windows style paths to linux style paths', function () {
+
+            var builder = appBuilder.instance('dir\\path\\path1');
+
+            var path = builder.appPath('lib\\file');
+
+            expect(path).to.equal('dir/path/path1/lib/file');
         });
     });
 
