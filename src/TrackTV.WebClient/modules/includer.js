@@ -57,7 +57,7 @@ function includer(output, appBuilder) {
         var moduleName = path.basename(path.dirname(fileName));
 
         return path.join(moduleName + '-' + base + ext);
-    };
+    }
 
     function separateModuleFile(fileName) {
 
@@ -121,7 +121,7 @@ function includer(output, appBuilder) {
         files = removeBaseDir(files, output.value());
 
         that.logIncludes(placeholder, files, formatter);
-    };
+    }
 
     that.copyIndex = function () {
 

@@ -24,9 +24,9 @@ module.exports = function (name, pattern) {
 
     var jsonObject = {};
 
-    for (var index in paths) {
+    for (var i = 0; i < paths.length; i += 1) {
 
-        var fileName = paths[index];
+        var fileName = paths[i];
 
         var fileContent = fs.readFileSync(fileName).toString();
         var propertyName = path.basename(fileName, '.json');

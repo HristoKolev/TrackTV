@@ -44,9 +44,9 @@ module.exports = function (options) {
         }
     }
 
-    function error(message) {
+    function error(obj, message) {
 
-        this.emit('error', new gutil.PluginError(pluginName, message));
+        obj.emit('error', new gutil.PluginError(pluginName, message));
     }
 
     function isFunction(functionToCheck) {
@@ -84,7 +84,7 @@ module.exports = function (options) {
 
             var mimeType = mime.lookup(resourceFilePath);
 
-            if (mimeType != 'application/octet-stream') {
+            if (mimeType !== 'application/octet-stream') {
 
                 log('\t Source: ' + sourcePath);
 
@@ -104,11 +104,11 @@ module.exports = function (options) {
 
                         } else {
 
-                            error('File not found. : ' + resourceFilePath);
+                            error(this, 'File not found. : ' + resourceFilePath);
                         }
                     } else {
 
-                        error(e);
+                        error(this, e);
                     }
 
                 }
@@ -126,12 +126,37 @@ module.exports = function (options) {
             return false;
         }
 
-        if (options.resourcePattern && !multimatch(source, options.resourcePattern).length) {
+        if (options.resourcePattern && !(multimatch(source, options.resourcePattern).length)) {
 
             return false;
         }
 
         return true;
+    }
+
+    function processSelector($, selector, attributes, file) {
+
+        $(selector).each(function (index, element) {
+
+            element = $(element);
+
+            for (var j = 0; j < attributes.length; j += 1) {
+
+                var attribute = attributes[j];
+
+                var source = element.attr(attribute);
+
+                if (shouldProcessResource(source)) {
+
+                    var encodedSource = encodeResource(source, getBaseDirectory(file));
+
+                    if (encodedSource) {
+
+                        element.attr(attribute, encodedSource);
+                    }
+                }
+            }
+        });
     }
 
     return through.obj(function (file, enc, callback) {
@@ -143,7 +168,7 @@ module.exports = function (options) {
 
         if (file.isStream()) {
 
-            error('Streaming is not supported');
+            error(this, 'Streaming is not supported');
             return callback();
         }
 
@@ -153,31 +178,11 @@ module.exports = function (options) {
 
             var $ = cheerio.load(String(file.contents));
 
-            for (var selectorIndex in options.selectors) {
+            for (var i = 0; i < options.selectors.length; i += 1) {
 
-                var selector = options.selectors[selectorIndex];
+                var selector = options.selectors[i];
 
-                $(selector).each(function (index, element) {
-
-                    element = $(element);
-
-                    for (var attributeIndex in options.attributes) {
-
-                        var attribute = options.attributes[attributeIndex];
-
-                        var source = element.attr(attribute);
-
-                        if (shouldProcessResource(source)) {
-
-                            var encodedSource = encodeResource(source, getBaseDirectory(file));
-
-                            if (encodedSource) {
-
-                                element.attr(attribute, encodedSource);
-                            }
-                        }
-                    }
-                });
+                processSelector($, selector, options.attributes, file);
             }
 
             var output = $.html();

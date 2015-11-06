@@ -24,9 +24,9 @@ function replaceContent(destinationFile, placeholder, replacement) {
 
 function stream(destinationFile, placeholder) {
 
-    function error(message) {
+    function error(obj, message) {
 
-        this.emit('error', new gutil.PluginError(pluginName, message));
+        obj.emit('error', new gutil.PluginError(pluginName, message));
     }
 
     return through.obj(function (file, enc, callback) {
@@ -38,7 +38,7 @@ function stream(destinationFile, placeholder) {
 
         if (file.isStream()) {
 
-            error('Streaming is not supported');
+            error(this, 'Streaming is not supported');
             return callback();
         }
 
@@ -49,7 +49,7 @@ function stream(destinationFile, placeholder) {
             return callback(null, file);
         }
     });
-};
+}
 
 module.exports = stream;
 

@@ -16,12 +16,11 @@ function copyFiles() {
 
         if (fileName.indexOf(baseDir) !== 0) {
 
-            throw Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + fileName);
+            throw new Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + fileName);
         }
 
         return fileName.slice(baseDir.length);
-
-    };
+    }
 
     that.copy = function (paths, targetDir, processPath) {
 

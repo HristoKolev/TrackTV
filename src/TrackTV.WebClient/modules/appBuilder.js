@@ -1,20 +1,11 @@
 'use strict';
 
 var fs = require('fs'),
-    path = require('path'),
-    glob = require('glob');
+    path = require('path');
 
-function appBuilder(pathResolver, rootPath) {
+function appBuilder(rootPath) {
 
     var that = Object.create(null);
-
-    function getFolderNames(dir) {
-
-        return fs.readdirSync(dir).filter(function (file) {
-
-            return fs.statSync(path.join(dir, file)).isDirectory();
-        });
-    }
 
     that.appPath = function (path) {
 
@@ -47,7 +38,7 @@ function appBuilder(pathResolver, rootPath) {
         templates: '/modules/*/*/**/*.html',
         lessFiles: '/modules/*/*/**/*.less',
         globalScripts: '/*.js',
-        globalModuleScripts: '/modules/*/*.js',
+        globalModuleScripts: '/modules/*/*.js'
     };
 
     Object.keys(patterns).forEach(function (index) {
@@ -75,7 +66,7 @@ function appBuilder(pathResolver, rootPath) {
         '!' + that.moduleHeaders,
         '!' + that.npmModuleFiles,
         '!' + that.moduleConstants,
-        '!' + that.moduleLibraries,
+        '!' + that.moduleLibraries
     ];
 
     that.contentPath = that.appPath('/content');

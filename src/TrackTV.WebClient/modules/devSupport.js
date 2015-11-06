@@ -17,7 +17,7 @@ function devSupport(appBuilder, appStream) {
             var jsLintFlagComment = '/*global $, angular, window */\n';
 
             appStream.allSourcesStream()
-                .pipe(insert.transform(function (contents, file) {
+                .pipe(insert.transform(function (contents) {
 
                     return jsLintFlagComment + contents;
                 }))
@@ -45,7 +45,7 @@ function devSupport(appBuilder, appStream) {
                 'dev-module-constants',
                 'dev-copy-initFile',
                 'dev-copy-routeConfig',
-                'lint',
+                'lint'
             ]);
             console.log('Watching: ' + appBuilder.sourceFiles);
 

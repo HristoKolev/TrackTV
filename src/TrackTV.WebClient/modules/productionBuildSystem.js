@@ -29,7 +29,7 @@ function productionBuildSystem(output, appBuilder, appStream, pathResolver) {
     };
 
     var htmlMinifyOptions = {
-        empty: true,
+        empty: true
     };
 
     var embedMediaOptions = {

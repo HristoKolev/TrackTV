@@ -1,4 +1,4 @@
-'use srtict';
+'use strict';
 
 var expect = require('chai').expect,
     sinon = require('sinon'),
@@ -114,7 +114,8 @@ describe('#copyFiles', function () {
 
         it('should throw if the process function does not return', function () {
 
-            var func = function () {};
+            var func = function () {
+            };
 
             expect(function () {
                 copyFiles.copy('file.txt', destination, func);
@@ -224,7 +225,8 @@ describe('#copyFiles', function () {
 
         it('should throw if the process function does not return', function () {
 
-            var func = function () {};
+            var func = function () {
+            };
 
             expect(function () {
                 copyFiles.copyStructure('base/file.txt', destination, 'base', func);

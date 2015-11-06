@@ -8,9 +8,9 @@ function pathResolver(pathsConfig) {
 
         if (Array.isArray(path)) {
 
-            for (var index in path) {
+            for (var i = 0; i < path.length; i += 1) {
 
-                path[index] = that.publicPath(path[index]);
+                path[i] = that.publicPath(path[i]);
             }
 
             return path;
@@ -27,9 +27,9 @@ function pathResolver(pathsConfig) {
 
         if (Array.isArray(path)) {
 
-            for (var index in path) {
+            for (var i = 0; i < path.length; i += 1) {
 
-                path[index] = that.bowerComponent(path[index]);
+                path[i] = that.bowerComponent(path[i]);
             }
 
             return path;
@@ -51,9 +51,9 @@ function pathResolver(pathsConfig) {
 
         if (Array.isArray(path)) {
 
-            for (var index in path) {
+            for (var i = 0; i < path.length; i += 1) {
 
-                path[index] = that.npmComponent(path[index]);
+                path[i] = that.npmComponent(path[i]);
             }
 
             return path;

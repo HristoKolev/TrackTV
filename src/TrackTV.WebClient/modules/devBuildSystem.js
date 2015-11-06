@@ -25,7 +25,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
         browserified: 'browserified',
         globalScripts: 'global-scripts',
         globalModuleScripts: 'global-module-scripts',
-        scripts: 'main-scripts',
+        scripts: 'main-scripts'
     };
 
     var browserifyOptions = {
