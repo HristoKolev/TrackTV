@@ -1,15 +1,37 @@
 'use strict';
 
-function bowerComponents(pathResolver, includes) {
+var path = require('path'),
+    linuxStylePath = require('../modules/linuxStylePath');
+
+function bowerComponents(includes, basePath) {
 
     var that = Object.create(null);
 
+    that.basePath = basePath;
+
+    that.resolve = function (relativePath) {
+
+        if (Array.isArray(relativePath)) {
+
+            var paths = relativePath;
+
+            for (var i = 0; i < paths.length; i += 1) {
+
+                paths[i] = that.resolve(paths[i]);
+            }
+
+            return paths;
+        }
+
+        relativePath = relativePath || '';
+
+        return linuxStylePath(path.join(that.basePath, relativePath));
+    };
+
     Object.keys(includes).forEach(function (key) {
 
-        that[key] = pathResolver.bowerComponent(includes[key]);
+        that[key] = that.resolve(includes[key]);
     });
-
-    that.baseDir = pathResolver.bowerComponent();
 
     return that;
 }
