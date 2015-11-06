@@ -57,7 +57,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
             return includer.includeDirectory(
                 constants.thirdPartyScripts,
                 includes.scripts,
-                includes.baseDir,
+                includes.basePath,
                 includer.formatters.scriptFormatter
             );
         });
@@ -67,7 +67,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
             return includer.includeDirectory(
                 constants.thirdPartyStyles,
                 includes.styles,
-                includes.baseDir,
+                includes.basePath,
                 includer.formatters.styleFormatter
             );
         });
