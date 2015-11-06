@@ -5,6 +5,17 @@ var path = require('path'),
 
 function bowerComponents(includes, basePath) {
 
+    if (!includes) {
+
+        throw new Error('The includes object is invalid.');
+    }
+
+    if (!basePath) {
+
+        throw new Error('The base path is invalid.');
+    }
+
+
     var that = Object.create(null);
 
     that.basePath = basePath;

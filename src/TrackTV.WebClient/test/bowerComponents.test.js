@@ -73,6 +73,24 @@ describe('#bowerComponents', function () {
         });
     });
 
+    it('should throw if the basePath is falsy', function () {
+
+        expect(function () {
+
+            bowerComponents.instance({}, null);
+
+        }).to.throw(/base path is invalid/);
+    });
+
+    it('should throw if the includes are falsy', function () {
+
+        expect(function () {
+
+            bowerComponents.instance(null, defaultBasePath);
+
+        }).to.throw(/includes object is invalid/);
+    });
+
     it('should expose the basePath', function () {
 
         var components = bowerComponents.instance({}, defaultBasePath);
