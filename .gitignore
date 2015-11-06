@@ -201,3 +201,6 @@ Uploads/
 #generated code
 src/TrackTV.WebClient/wwwroot/
 src/TrackTV.WebClient/dist/
+
+#WebStorm
+.idea/
