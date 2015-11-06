@@ -7,22 +7,22 @@ function appBuilder(rootPath) {
 
     var that = Object.create(null);
 
-    that.appPath = function (path) {
+    that.appPath = function (relativePath) {
 
-        if (Array.isArray(path)) {
+        if (Array.isArray(relativePath)) {
 
-            for (var i = 0; i < path.length; i += 1) {
+            for (var i = 0; i < relativePath.length; i += 1) {
 
-                path[i] = that.appPath(path[i]);
+                relativePath[i] = that.appPath(relativePath[i]);
             }
 
-            return path;
+            return relativePath;
 
         } else {
 
-            path = path || '';
+            relativePath = relativePath || '';
 
-            return rootPath + path;
+            return path.join(rootPath, relativePath);
         }
     };
 

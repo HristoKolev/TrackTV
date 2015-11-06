@@ -48,7 +48,7 @@ function getTitle(objectName, member) {
 
     var memberInfo = getMemberInfo(member);
 
-    var message = '#' + objectName + ' should have property [' + (memberInfo.type || 'any') + '] ' + memberInfo.formattedName;
+    var message = '#' + objectName + ' should have property ' + memberInfo.formattedName + ' : ' + (memberInfo.type || 'any');
 
     return message;
 }
