@@ -1,8 +1,7 @@
 'use strict';
 
-var path = require('path');
-
-var separatorRegex = new RegExp('\\' + path.sep, 'g');
+var path = require('path'),
+    linuxStylePath = require('./linuxStylePath');
 
 module.exports = function (resourceArray, formatter, baseDir) {
 
@@ -12,7 +11,7 @@ module.exports = function (resourceArray, formatter, baseDir) {
 
     for (var i = 0; i < resourceArray.length; i += 1) {
 
-        var resourcePath = path.join('./', baseDir, resourceArray[i]).replace(separatorRegex, '/');
+        var resourcePath = linuxStylePath(path.join('./', baseDir, resourceArray[i]));
 
         lines.push(formatter(resourcePath));
     }
