@@ -95,7 +95,7 @@ function assertComposition(multitest) {
         }
     };
 
-    that.function = function (name, obj) {
+    that.function = function (obj, name) {
 
         function executeTest() {
 
