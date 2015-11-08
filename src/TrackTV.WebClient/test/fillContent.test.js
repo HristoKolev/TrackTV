@@ -7,15 +7,16 @@ var expect = require('chai').expect,
 var assertCompositionMultitest = require('../testing/assertComposition').multitest,
     assertComposition = require('../testing/assertComposition');
 
+var readSpy = sinon.spy(function () {
+    return '';
+});
+
+var writeSpy = sinon.spy();
+
 var fs = {
-    readFileSync: function () {
-    },
-
-    writeFileSync: function () {
-    }
+    readFileSync: readSpy,
+    writeFileSync: writeSpy
 };
-
-var fsMock = sinon.mock(fs);
 
 mockery.registerMock('fs', fs);
 
@@ -43,12 +44,14 @@ describe('#fillContent()', function () {
 
         beforeEach(function () {
 
-            fsMock.restore();
+            readSpy.reset();
+            writeSpy.reset();
         });
 
         after(function () {
 
-            fsMock.restore();
+            readSpy.reset();
+            writeSpy.reset();
 
             mockery.disable();
         });
@@ -86,23 +89,16 @@ describe('#fillContent()', function () {
 
         it('should read the destination file', function () {
 
-            fsMock.expects('readFileSync').once().withArgs(defaultDestination).returns('');
-
             fillContent(defaultDestination, defaultPlaceholder, defaultReplacement);
 
-            fsMock.verify();
-            fsMock.restore();
+            expect(readSpy.withArgs(defaultDestination).called).to.be.true;
         });
 
         it('should write to the destination file', function () {
 
-            fsMock.expects('readFileSync').once().withArgs(defaultDestination).returns('');
-
             fillContent(defaultDestination, defaultPlaceholder, defaultReplacement);
 
-            fsMock.verify();
-            fsMock.restore();
-
+            expect(writeSpy.withArgs(defaultDestination).called).to.be.true;
         });
     });
 });
