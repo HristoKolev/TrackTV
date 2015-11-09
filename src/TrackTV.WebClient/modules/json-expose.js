@@ -1,26 +1,29 @@
 'use strict';
 
-var globule = require('globule');
 var path = require('path');
 var fs = require('fs');
 
-module.exports = function (name, pattern) {
+function wrapScript(scriptContent) {
 
-    if (!name || !pattern) {
+    return '<script>' + scriptContent + '</script>';
+}
 
-        throw Error('Parameters name and pattern must be valid.');
+function expose(name, paths) {
+
+    if (!name) {
+
+        throw new Error('The name is invalid.');
     }
 
-    if (!Array.isArray(pattern)) {
+    if (!paths) {
 
-        pattern = [pattern];
+        throw new Error('The paths are invalid.');
     }
 
-    var paths = globule.find(pattern)
-        .filter(function (filePath) {
+    if (!Array.isArray(paths)) {
 
-            return path.extname(filePath).toLowerCase() === '.json';
-        });
+        throw new Error('The paths is not an array.');
+    }
 
     var jsonObject = {};
 
@@ -29,12 +32,13 @@ module.exports = function (name, pattern) {
         var fileName = paths[i];
 
         var fileContent = fs.readFileSync(fileName).toString();
-        var propertyName = path.basename(fileName, '.json');
+
+        var propertyName = path.basename(fileName, path.extname(fileName));
 
         jsonObject[propertyName] = JSON.parse(fileContent);
     }
 
-    var content = '<script> window.' + name + ' = ' + JSON.stringify(jsonObject) + '; </script>';
+    return wrapScript('window.' + name + ' = ' + JSON.stringify(jsonObject) + ';');
+}
 
-    return content;
-};
+module.exports = expose;
