@@ -118,7 +118,7 @@ describe('#jsonExpose()', function () {
 
             var result = jsonExpose(name, paths);
 
-            var expected = '<script>window.settings = {"file1":{"content":"file1-content"}};</script>';
+            var expected = '<script>window["settings"] = {"file1":{"content":"file1-content"}};</script>';
 
             expect(result).to.equal(expected);
         });
@@ -144,7 +144,7 @@ describe('#jsonExpose()', function () {
 
             var result = jsonExpose('settings', paths);
 
-            var expected = '<script>window.settings = {"file1":{"content":"file1-content"},' +
+            var expected = '<script>window["settings"] = {"file1":{"content":"file1-content"},' +
                 '"file2":{"content":"file2-content"},"file3":{"content":"file2-content"}};</script>';
 
             expect(result).to.equal(expected);

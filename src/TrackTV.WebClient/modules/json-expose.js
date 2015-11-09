@@ -3,9 +3,9 @@
 var path = require('path');
 var fs = require('fs');
 
-function wrapScript(scriptContent) {
+function wrapScript(name, jsonString) {
 
-    return '<script>' + scriptContent + '</script>';
+    return '<script>window["' + name + '"] = ' + jsonString + ';</script>';
 }
 
 function expose(name, paths) {
@@ -38,7 +38,9 @@ function expose(name, paths) {
         jsonObject[propertyName] = JSON.parse(fileContent);
     }
 
-    return wrapScript('window.' + name + ' = ' + JSON.stringify(jsonObject) + ';');
+    var jsonString = JSON.stringify(jsonObject);
+
+    return wrapScript(name, jsonString);
 }
 
 module.exports = expose;
