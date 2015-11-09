@@ -11,7 +11,7 @@ function includer(output, appBuilder) {
         includeLog = output('includes.json');
 
     // custom modules
-    var fillContent = require('./fill-content').external,
+    var fillContent = require('./fillContent'),
         listScripts = require('./list-resources'),
         copyFiles = require('./copyFiles');
 

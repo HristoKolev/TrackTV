@@ -4,8 +4,7 @@ var expect = require('chai').expect,
     sinon = require('sinon'),
     mockery = require('mockery');
 
-var assertCompositionMultitest = require('../testing/assertComposition').multitest,
-    assertComposition = require('../testing/assertComposition');
+var assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
 var readStub = sinon.stub();
 var readSpy = sinon.spy(readStub);

@@ -15,7 +15,6 @@ function bowerComponents(includes, basePath) {
         throw new Error('The base path is invalid.');
     }
 
-
     var that = Object.create(null);
 
     that.basePath = basePath;
