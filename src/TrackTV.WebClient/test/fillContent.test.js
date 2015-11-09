@@ -7,26 +7,40 @@ var expect = require('chai').expect,
 var assertCompositionMultitest = require('../testing/assertComposition').multitest,
     assertComposition = require('../testing/assertComposition');
 
-var readSpy = sinon.spy(function () {
-    return '';
-});
-
+var readStub = sinon.stub();
+var readSpy = sinon.spy(readStub);
 var writeSpy = sinon.spy();
+
+function resetMocks() {
+
+    readStub.reset();
+    readStub.returns('');
+
+    readSpy.reset();
+    writeSpy.reset();
+}
 
 var fs = {
     readFileSync: readSpy,
     writeFileSync: writeSpy
 };
 
+function mockRequire(moduleName) {
+
+    mockery.registerAllowable(moduleName);
+
+    mockery.enable();
+
+    var module = require(moduleName);
+
+    mockery.disable();
+
+    return module;
+}
+
 mockery.registerMock('fs', fs);
 
-mockery.registerAllowable('../modules/fillContent');
-
-mockery.enable();
-
-var fillContent = require('../modules/fillContent');
-
-mockery.disable();
+var fillContent = mockRequire('../modules/fillContent');
 
 describe('#fillContent()', function () {
 
@@ -44,14 +58,12 @@ describe('#fillContent()', function () {
 
         beforeEach(function () {
 
-            readSpy.reset();
-            writeSpy.reset();
+            resetMocks();
         });
 
         after(function () {
 
-            readSpy.reset();
-            writeSpy.reset();
+            resetMocks();
 
             mockery.disable();
         });
@@ -99,6 +111,42 @@ describe('#fillContent()', function () {
             fillContent(defaultDestination, defaultPlaceholder, defaultReplacement);
 
             expect(writeSpy.withArgs(defaultDestination).called).to.be.true;
+        });
+
+        it('should replace the placeholder with the replacer', function () {
+
+            var replacement = '[new content]';
+
+            var content = 'Lorem <!-- placeholder --> ipsum dolor sit amet, consectetur adipiscing elit.';
+
+            readStub.returns(content);
+
+            fillContent(defaultDestination, defaultPlaceholder, replacement);
+
+            expect(readSpy.calledOnce).to.be.true;
+            expect(readSpy.alwaysCalledWithExactly(defaultDestination)).to.be.true;
+
+            var expectedContent = 'Lorem [new content] ipsum dolor sit amet, consectetur adipiscing elit.';
+
+            expect(writeSpy.calledOnce).to.be.true;
+            expect(writeSpy.alwaysCalledWithExactly(defaultDestination, expectedContent)).to.be.true;
+        });
+
+        it('should replace all occurrences of the placeholder', function () {
+
+            var replacement = '[new content]';
+
+            var content = 'Lorem <!-- placeholder --> ipsum dolor sit amet,' +
+                ' consectetur adipiscing <!-- placeholder --> elit.';
+
+            readStub.returns(content);
+
+            fillContent(defaultDestination, defaultPlaceholder, replacement);
+
+            var expectedContent = 'Lorem [new content] ipsum dolor sit amet,' +
+                ' consectetur adipiscing [new content] elit.';
+
+            expect(writeSpy.alwaysCalledWithExactly(defaultDestination, expectedContent)).to.be.true;
         });
     });
 });
