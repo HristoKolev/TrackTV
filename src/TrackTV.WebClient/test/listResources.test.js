@@ -18,22 +18,20 @@ describe('#listResources()', function () {
 
         var defaultResources = ['path1/file', 'path2/file', 'path3/file'];
 
+        var defaultFormatterSpy = sinon.spy(function () {
+
+            return '';
+        });
+
+        var echoFormatterSpy = sinon.spy(function (arg) {
+
+            return arg;
+        });
+
         var formatters = {
-
-            defaultFormatter: function () {
-
-                return '';
-            },
-
-            echoFormatter: function (arg) {
-
-                return arg;
-            }
+            defaultFormatter: defaultFormatterSpy,
+            echoFormatter: echoFormatterSpy
         };
-
-        var defaultFormatterSpy = sinon.spy(formatters, "defaultFormatter");
-
-        var echoFormatterSpy = sinon.spy(formatters, "echoFormatter");
 
         function resetMocks() {
 
