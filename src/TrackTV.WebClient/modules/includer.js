@@ -5,6 +5,16 @@ var path = require('path'),
 
 function includer(output, indexFile) {
 
+    if (!output) {
+
+        throw new Error('The output is invalid.');
+    }
+
+    if (!indexFile) {
+
+        throw new Error('The index file is invalid.');
+    }
+
     var that = Object.create(null);
 
     var outputIndex = output('index.html'),

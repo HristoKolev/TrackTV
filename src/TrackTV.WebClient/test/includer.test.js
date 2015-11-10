@@ -120,6 +120,28 @@ describe('#includer', function () {
         ]);
     });
 
+    describe('instance validation', function () {
+
+        var defaultIndexFile = 'index.html';
+        var defaultOutput = pathChain.instance('app');
+
+        it('should throw if the output is falsy', function () {
+
+            expect(function () {
+                includer.instance(null, defaultIndexFile);
+
+            }).to.throw(/output is invalid/);
+        });
+
+        it('should throw if the index file is falsy', function () {
+
+            expect(function () {
+                includer.instance(defaultOutput, null);
+
+            }).to.throw(/index file is invalid/);
+        });
+    });
+
     describe('#formatters', function () {
 
         var instance = includer.instance(defaultOutput, {});
