@@ -22,7 +22,7 @@ var pathResolver = require('./modules/pathResolver').instance(pathConfig),
 var devOutput = output.instance(outputConfig.devPath),
     prodOutput = output.instance(outputConfig.prodPath);
 
-var includer = require('./modules/includer').instance(devOutput, appBuilder);
+var includer = require('./modules/includer').instance(devOutput, appBuilder.indexFile);
 
 var devBuildSystem = require('./modules/devBuildSystem')
     .instance(appBuilder, devOutput, includer, bowerComponents)
