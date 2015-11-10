@@ -7,12 +7,10 @@ var expect = require('chai').expect,
 var assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
 var readStub = sinon.stub();
-var readSpy = sinon.spy(readStub);
 
 function resetMocks() {
 
     readStub.reset();
-    readSpy.reset();
 
     readStub.returns('{}');
 }
