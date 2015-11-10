@@ -3,7 +3,7 @@
 var path = require('path'),
     fs = require('fs');
 
-function includer(output, appBuilder) {
+function includer(output, indexFile) {
 
     var that = Object.create(null);
 
@@ -91,29 +91,52 @@ function includer(output, appBuilder) {
 
         var obj = JSON.parse(fs.readFileSync(includeLog.value()));
 
-        Object.keys(obj).forEach(function (index) {
+        for (var i = 0; i < obj.length; i += 1) {
 
-            obj[index].formatter = getFormatter(obj[index].formatter);
-        });
+            obj[i].formatter = getFormatter(obj[i].formatter);
+        }
 
         return obj;
     }
 
     that.createIncludeLog = function () {
 
-        fs.writeFileSync(includeLog.value(), '{}');
+        fs.writeFileSync(includeLog.value(), '[]');
     };
 
     that.logIncludes = function (name, files, formatter) {
 
+        if (!name) {
+
+            throw new Error('The name is invalid.');
+        }
+
+        if (!files) {
+
+            throw new Error('The files argument is invalid.');
+        }
+
+        if (!Array.isArray(files)) {
+
+            throw new Error('The files argument is not an array.');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
         var obj = JSON.parse(fs.readFileSync(includeLog.value()));
 
-        obj[name] = {
+        obj.push({
+            name: name,
             files: files,
             formatter: formatter
-        };
+        });
 
-        fs.writeFileSync(includeLog.value(), JSON.stringify(obj, null, '\t'));
+        var jsonString = JSON.stringify(obj, null, '\t');
+
+        fs.writeFileSync(includeLog.value(), jsonString);
     };
 
     function injectApplicationFiles(placeholder, files, formatter) {
@@ -125,7 +148,7 @@ function includer(output, appBuilder) {
 
     that.copyIndex = function () {
 
-        copyFiles.copy(appBuilder.indexFile, output.value());
+        copyFiles.copy(indexFile, output.value());
     };
 
     that.updateIncludes = function () {
@@ -134,12 +157,12 @@ function includer(output, appBuilder) {
 
         var includes = readIncludes();
 
-        Object.keys(includes).forEach(function (index) {
+        for (var i = 0; i < includes.length; i += 1) {
 
-            var include = includes[index];
+            var include = includes[i];
 
-            fillContent(outputIndex.value(), index, listScripts(include.files, include.formatter));
-        });
+            fillContent(outputIndex.value(), include.name, listScripts(include.files, include.formatter));
+        }
     };
 
     that.includeDirectory = function (name, list, baseDir, formatter) {
