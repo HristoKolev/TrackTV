@@ -33,6 +33,8 @@ function devBuildSystem(appBuilder, output, includer, includes) {
         entries: glob.sync(appBuilder.npmModuleFiles)
     };
 
+    var formatters = includer.formatters;
+
     that.registerTasks = function () {
 
         gulp.task('dev-clean', function (callback) {
@@ -58,7 +60,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.thirdPartyScripts,
                 includes.scripts,
                 includes.basePath,
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -68,7 +70,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.thirdPartyStyles,
                 includes.styles,
                 includes.basePath,
-                includer.formatters.styleFormatter
+                formatters.styleFormatter
             );
         });
 
@@ -78,7 +80,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.initFile,
                 appBuilder.initFile,
                 appBuilder.appPath(),
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -87,7 +89,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
             return includer.includeModuleFiles(
                 constants.moduleHeaders,
                 glob.sync(appBuilder.moduleHeaders),
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -96,7 +98,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
             return includer.includeModuleFiles(
                 constants.moduleConstants,
                 glob.sync(appBuilder.moduleConstants),
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -105,7 +107,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
             return includer.includeModuleFiles(
                 constants.moduleLibraries,
                 glob.sync(appBuilder.moduleLibraries),
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -115,7 +117,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.routeConfig,
                 appBuilder.routeConfig,
                 appBuilder.appPath(),
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -138,7 +140,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.globalScripts,
                 glob.sync(appBuilder.globalScripts),
                 appBuilder.appPath(),
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -148,7 +150,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.globalModuleScripts,
                 glob.sync(appBuilder.globalModuleScripts),
                 appBuilder.modulesDir,
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -158,7 +160,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 constants.scripts,
                 glob.sync(appBuilder.scripts),
                 appBuilder.modulesDir,
-                includer.formatters.scriptFormatter
+                formatters.scriptFormatter
             );
         });
 
@@ -187,13 +189,6 @@ function devBuildSystem(appBuilder, output, includer, includes) {
         //        .pipe(mergedPath.destStream())
         //        .on('error', console.error);
         //});
-
-        //gulp.task('dev-merge', function () {
-
-        //    return appStream.appScriptsStream()
-        //        .pipe(mergedPath.destStream());
-        //});
-
     };
 
     return that;
