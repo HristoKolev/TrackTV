@@ -24,10 +24,17 @@ var writeSpy = sinon.spy(fs, 'writeFileSync');
 
 mockery.registerMock('fs', fs);
 
+var copyStructureStub = sinon.stub();
+var copyStub = sinon.stub();
+
 var copyFiles = {
     copy: function () {
+
+        return copyStub.apply(this, arguments);
     },
     copyStructure: function () {
+
+        return copyStructureStub.apply(this, arguments);
     }
 };
 
@@ -49,10 +56,14 @@ function resetMocks() {
 
     readStub.reset();
     readSpy.reset();
+
     writeSpy.reset();
 
     copySpy.reset();
+    copyStub.reset();
+
     copyStructureSpy.reset();
+    copyStructureStub.reset();
 
     fillContentSpy.reset();
 }
@@ -85,17 +96,14 @@ describe('#includer', function () {
         ]);
     });
 
-    var defaultOutput = pathChain.instance('app');
-
-    var defaultLogFile = 'app\\includes.json';
-
-    var defaultIndex = 'index.html';
-
-    var defaultOutputIndex = 'app\\index.html';
+    var defaultOutput = pathChain.instance('app'),
+        defaultLogFile = 'app\\includes.json',
+        defaultIndex = 'index.html',
+        defaultOutputIndex = 'app\\index.html';
 
     function createDefaultInstance() {
 
-        return includer.instance(defaultOutput, defaultIndex);
+        return includer.instance(defaultIndex, defaultOutput);
     }
 
     function returnEmptyArray(name) {
@@ -122,13 +130,10 @@ describe('#includer', function () {
 
     describe('instance validation', function () {
 
-        var defaultIndexFile = 'index.html';
-        var defaultOutput = pathChain.instance('app');
-
         it('should throw if the output is falsy', function () {
 
             expect(function () {
-                includer.instance(null, defaultIndexFile);
+                includer.instance(defaultIndex, null);
 
             }).to.throw(/output is invalid/);
         });
@@ -136,7 +141,7 @@ describe('#includer', function () {
         it('should throw if the index file is falsy', function () {
 
             expect(function () {
-                includer.instance(defaultOutput, null);
+                includer.instance(null, defaultOutput);
 
             }).to.throw(/index file is invalid/);
         });
@@ -144,7 +149,7 @@ describe('#includer', function () {
 
     describe('#formatters', function () {
 
-        var instance = includer.instance(defaultOutput, {});
+        var instance = createDefaultInstance();
 
         assertCompositionMultitest.object('formatters', instance.formatters, [
             ['scriptFormatter', 'string'],
@@ -508,7 +513,504 @@ describe('#includer', function () {
                 instance.updateIncludes();
 
             }).to.throw(/Unknown formatter name/);
-
         });
+    });
+
+    function assertCopiedStructure(files, output, baseDir) {
+
+        expect(copyStructureSpy.calledOnce).to.be.true;
+
+        expect(copyStructureSpy.alwaysCalledWith(files, output, baseDir)).to.be.true;
+    }
+
+    function assertCopied(files, output) {
+
+        expect(copySpy.calledOnce).to.be.true;
+
+        expect(copySpy.alwaysCalledWith(files, output)).to.be.true;
+    }
+
+    function assertLoggedIncludes(spy, name, paths, formatter) {
+
+        expect(spy.calledOnce).to.be.true;
+
+        expect(spy.alwaysCalledWithExactly(name, paths, formatter)).to.be.true;
+    }
+
+    describe('#includeDirectory()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
+
+        beforeEach(function () {
+
+            resetMocks();
+        });
+
+        after(function () {
+
+            resetMocks();
+
+            mockery.disable();
+        });
+
+        var defaultName = 'name',
+            defaultFiles = [
+                'dir/path/file1',
+                'dir/path/file2',
+                'dir/path1/file1',
+                'dir/path1/file2'
+            ],
+            defaultBasePath = 'dir',
+            defaultFormatter = 'formatter';
+
+        describe('validation', function () {
+
+            it('should throw if passed a falsy name', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeDirectory(null, defaultFiles, defaultBasePath, defaultFormatter);
+
+                }).to.throw(/name is invalid/);
+            });
+
+            it('should throw if passed a falsy files argument', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeDirectory(defaultName, null, defaultBasePath, defaultFormatter);
+
+                }).to.throw(/files argument is invalid/);
+            });
+
+            it('should throw if files is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeDirectory(defaultName, 'files', defaultBasePath, defaultFormatter);
+
+                }).to.throw(/files argument is not an array/);
+            });
+
+            it('should throw if passed a falsy basePath', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeDirectory(defaultName, defaultFiles, null, defaultFormatter);
+
+                }).to.throw(/base path is invalid/);
+            });
+
+            it('should throw if passed a falsy formatter', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, null);
+
+                }).to.throw(/formatter is invalid/);
+
+            });
+        });
+
+        it('should call #copyFiles.copyStructure() with the specified arguments', function () {
+
+            copyStructureStub.returns([]);
+
+            var instance = createDefaultInstance();
+
+            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+
+            assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
+        });
+
+        it('should call #logIncludes() with the specified arguments', function () {
+
+            var copiedPaths = [
+                'app\\name\\path\\file1',
+                'app\\name\\path\\file2',
+                'app\\name\\path1\\file1',
+                'app\\name\\path1\\file2'
+            ];
+
+            copyStructureStub.returns(copiedPaths);
+
+            var instance = createDefaultInstance();
+
+            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+
+            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+
+            var expectedPaths = [
+                'name\\path\\file1',
+                'name\\path\\file2',
+                'name\\path1\\file1',
+                'name\\path1\\file2'
+            ];
+
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter);
+        });
+    });
+
+    describe('#includeFile()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
+
+        beforeEach(function () {
+
+            resetMocks();
+        });
+
+        after(function () {
+
+            resetMocks();
+
+            mockery.disable();
+        });
+
+        var defaultPlaceholder = 'placeholder',
+            defaultFile = 'source/file1',
+            defaultBasePath = 'source',
+            defaultFormatter = 'formatter';
+
+        describe('validation', function () {
+
+            it('should throw if passed a falsy name', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeFile(null, defaultFile, defaultBasePath, defaultFormatter);
+
+                }).to.throw(/placeholder is invalid/);
+            });
+
+            it('should throw if passed a falsy file', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeFile(defaultPlaceholder, null, defaultBasePath, defaultFormatter);
+
+                }).to.throw(/file is invalid/);
+            });
+
+            it('should throw if passed a falsy basePath', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeFile(defaultPlaceholder, defaultFile, null, defaultFormatter);
+
+                }).to.throw(/base path is invalid/);
+            });
+
+            it('should throw if passed a falsy formatter', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, null);
+
+                }).to.throw(/formatter is invalid/);
+
+            });
+        });
+
+        it('should call #copyFiles.copyStructure() with the specified arguments', function () {
+
+            copyStructureStub.returns([]);
+
+            var instance = createDefaultInstance();
+
+            instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter);
+
+            assertCopiedStructure([defaultFile], 'app', defaultBasePath);
+        });
+
+        it('should call #logIncludes() with the specified arguments', function () {
+
+            var copiedPaths = [
+                'app\\file1'
+            ];
+
+            copyStructureStub.returns(copiedPaths);
+
+            var instance = createDefaultInstance();
+
+            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+
+            instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter);
+
+            var expectedPaths = [
+                'file1',
+            ];
+
+            assertLoggedIncludes(logIncludesSpy, defaultPlaceholder, expectedPaths, defaultFormatter);
+        });
+
+    });
+
+    describe('#includeSeparatedModuleFiles()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
+
+        beforeEach(function () {
+
+            resetMocks();
+        });
+
+        after(function () {
+
+            resetMocks();
+
+            mockery.disable();
+        });
+
+        var defaultName = 'name',
+            defaultFiles = [
+                'dir/path/file1',
+                'dir/path/file2',
+                'dir/path1/file1',
+                'dir/path1/file2'
+            ],
+            defaultBasePath = 'dir',
+            defaultFormatter = 'formatter';
+
+        describe('validation', function () {
+
+            it('should throw if passed a falsy name', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(null, defaultFiles, defaultBasePath, defaultFormatter);
+
+                }).to.throw(/name is invalid/);
+            });
+
+            it('should throw if passed a falsy files argument', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, null, defaultBasePath, defaultFormatter);
+
+                }).to.throw(/files argument is invalid/);
+            });
+
+            it('should throw if files is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, 'files', defaultBasePath, defaultFormatter);
+
+                }).to.throw(/files argument is not an array/);
+            });
+
+            it('should throw if passed a falsy basePath', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, null, defaultFormatter);
+
+                }).to.throw(/base path is invalid/);
+            });
+
+            it('should throw if passed a falsy formatter', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, null);
+
+                }).to.throw(/formatter is invalid/);
+
+            });
+        });
+
+        it('should call #copyFiles.copyStructure() with the specified arguments', function () {
+
+            copyStructureStub.returns([]);
+
+            var instance = createDefaultInstance();
+
+            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+
+            assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
+        });
+
+        it('should call #logIncludes() with the specified arguments', function () {
+
+            var copiedPaths = [
+                'app\\path\\file1',
+                'app\\path\\file2',
+                'app\\path1\\file1',
+                'app\\path1\\file2'
+            ];
+
+            copyStructureStub.returns(copiedPaths);
+
+            var instance = createDefaultInstance();
+
+            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+
+            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+
+            var expectedPaths = [
+                'path\\file1',
+                'path\\file2',
+                'path1\\file1',
+                'path1\\file2'
+            ];
+
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter);
+        });
+
+    });
+
+    describe('#includeModuleFiles()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
+
+        beforeEach(function () {
+
+            resetMocks();
+        });
+
+        after(function () {
+
+            resetMocks();
+
+            mockery.disable();
+        });
+
+        var defaultName = 'name',
+            defaultFiles = [
+                'dir/path/file1',
+                'dir/path/file2',
+                'dir/path1/file1',
+                'dir/path1/file2'
+            ],
+            defaultFormatter = 'formatter';
+
+        describe('validation', function () {
+
+            it('should throw if passed a falsy name', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeModuleFiles(null, defaultFiles, defaultFormatter);
+
+                }).to.throw(/name is invalid/);
+            });
+
+            it('should throw if passed a falsy files argument', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeModuleFiles(defaultName, null, defaultFormatter);
+
+                }).to.throw(/files argument is invalid/);
+            });
+
+            it('should throw if files is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeModuleFiles(defaultName, 'files', defaultFormatter);
+
+                }).to.throw(/files argument is not an array/);
+            });
+
+            it('should throw if passed a falsy formatter', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeModuleFiles(defaultName, defaultFiles, null);
+
+                }).to.throw(/formatter is invalid/);
+
+            });
+        });
+
+        it('should call #copyFiles.copy() with the specified arguments', function () {
+
+            copyStub.returns([]);
+
+            var instance = createDefaultInstance();
+
+            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter);
+
+            assertCopied(defaultFiles, 'app\\name');
+        });
+
+        it('should call #logIncludes() with the specified arguments', function () {
+
+            var copiedPaths = [
+                'app\\name\\path-file1',
+                'app\\name\\path-file2',
+                'app\\name\\path1-file1',
+                'app\\name\\path1-file2'
+            ];
+
+            copyStub.returns(copiedPaths);
+
+            var instance = createDefaultInstance();
+
+            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+
+            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter);
+
+            var expectedPaths = [
+                'name\\path-file1',
+                'name\\path-file2',
+                'name\\path1-file1',
+                'name\\path1-file2'
+            ];
+
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter);
+        });
+
     });
 });

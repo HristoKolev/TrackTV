@@ -3,16 +3,16 @@
 var path = require('path'),
     fs = require('fs');
 
-function includer(output, indexFile) {
-
-    if (!output) {
-
-        throw new Error('The output is invalid.');
-    }
+function includer(indexFile, output) {
 
     if (!indexFile) {
 
         throw new Error('The index file is invalid.');
+    }
+
+    if (!output) {
+
+        throw new Error('The output is invalid.');
     }
 
     var that = Object.create(null);
@@ -53,7 +53,7 @@ function includer(output, indexFile) {
                 throw new Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + files[i]);
             }
 
-            files[i] = files[i].slice(baseDir.length);
+            files[i] = path.join('./', files[i].slice(baseDir.length));
         }
 
         return files;
@@ -175,30 +175,120 @@ function includer(output, indexFile) {
         }
     };
 
-    that.includeDirectory = function (name, list, baseDir, formatter) {
+    that.includeDirectory = function (name, files, basePath, formatter) {
 
-        var newList = copyFiles.copyStructure(list, output(name).value(), baseDir);
+        if (!name) {
+
+            throw new Error('The name is invalid.');
+        }
+
+        if (!files) {
+
+            throw new Error('The files argument is invalid.');
+        }
+
+        if (!Array.isArray(files)) {
+
+            throw new Error('The files argument is not an array');
+        }
+
+        if (!basePath) {
+
+            throw new Error('The base path is invalid.');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
+        var newList = copyFiles.copyStructure(files, output(name).value(), basePath);
 
         injectApplicationFiles(name, newList, formatter);
     };
 
-    that.includeFile = function (placeholder, file, baseDir, formatter) {
+    that.includeFile = function (placeholder, file, basePath, formatter) {
 
-        var newList = copyFiles.copyStructure([file], output.value(), baseDir);
+        if (!placeholder) {
+
+            throw new Error('The placeholder is invalid.');
+        }
+
+        if (!file) {
+
+            throw new Error('The file is invalid.');
+        }
+
+        if (!basePath) {
+
+            throw new Error('The base path is invalid.');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
+        var newList = copyFiles.copyStructure([file], output.value(), basePath);
 
         injectApplicationFiles(placeholder, newList, formatter);
     };
 
-    that.includeModuleFiles = function (name, list, formatter) {
+    that.includeModuleFiles = function (name, files, formatter) {
 
-        var newList = copyFiles.copy(list, output(name).value(), renameModuleFile);
+        if (!name) {
+
+            throw new Error('The name is invalid.');
+        }
+
+        if (!files) {
+
+            throw new Error('The files argument is invalid.');
+        }
+
+        if (!Array.isArray(files)) {
+
+            throw new Error('The files argument is not an array');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
+        var newList = copyFiles.copy(files, output(name).value(), renameModuleFile);
 
         injectApplicationFiles(name, newList, formatter);
     };
 
-    that.includeSeparatedModuleFiles = function (name, list, baseDir, formatter) {
+    that.includeSeparatedModuleFiles = function (name, files, basePath, formatter) {
 
-        var newList = copyFiles.copyStructure(list, output(name).value(), baseDir, separateModuleFile);
+        if (!name) {
+
+            throw new Error('The name is invalid.');
+        }
+
+        if (!files) {
+
+            throw new Error('The files argument is invalid.');
+        }
+
+        if (!Array.isArray(files)) {
+
+            throw new Error('The files argument is not an array');
+        }
+
+        if (!basePath) {
+
+            throw new Error('The base path is invalid.');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
+        var newList = copyFiles.copyStructure(files, output(name).value(), basePath, separateModuleFile);
 
         injectApplicationFiles(name, newList, formatter);
     };
