@@ -14,7 +14,7 @@ var pathConfig = require('./config/path.json'),
     outputConfig = require('./config/outputConfig.json');
 
 var pathResolver = require('./modules/pathResolver').instance(pathConfig),
-    bowerComponents = require('./modules/bowerComponents').instance(pathResolver, includes),
+    bowerComponents = require('./modules/bowerComponents').instance(includes, appConfig.bowerRoot),
     appBuilder = require('./modules/appBuilder').instance(appConfig.appRoot),
     appStream = require('./modules/appStream').instance(appBuilder, bowerComponents, pathResolver),
     output = require('./modules/buildOutput');
