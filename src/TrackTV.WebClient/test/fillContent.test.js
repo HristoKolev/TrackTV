@@ -1,8 +1,12 @@
 "use strict";
 
-var expect = require('chai').expect,
+var chai = require('chai'),
+    expect = chai.expect,
+    sinonChai = require('sinon-chai'),
     sinon = require('sinon'),
     mockery = require('mockery');
+
+chai.use(sinonChai);
 
 var assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
@@ -102,14 +106,14 @@ describe('#fillContent()', function () {
 
             fillContent(defaultDestination, defaultPlaceholder, defaultReplacement);
 
-            expect(readSpy.withArgs(defaultDestination).called).to.be.true;
+            expect(readSpy).to.be.calledWith(defaultDestination);
         });
 
         it('should write to the destination file', function () {
 
             fillContent(defaultDestination, defaultPlaceholder, defaultReplacement);
 
-            expect(writeSpy.withArgs(defaultDestination).called).to.be.true;
+            expect(writeSpy).to.be.calledWith(defaultDestination);
         });
 
         it('should replace the placeholder with the replacer', function () {
@@ -122,13 +126,13 @@ describe('#fillContent()', function () {
 
             fillContent(defaultDestination, defaultPlaceholder, replacement);
 
-            expect(readSpy.calledOnce).to.be.true;
-            expect(readSpy.alwaysCalledWithExactly(defaultDestination)).to.be.true;
+            expect(readSpy).to.be.calledOnce;
+            expect(readSpy).to.be.always.calledWithExactly(defaultDestination);
 
             var expectedContent = 'Lorem [new content] ipsum dolor sit amet, consectetur adipiscing elit.';
 
-            expect(writeSpy.calledOnce).to.be.true;
-            expect(writeSpy.alwaysCalledWithExactly(defaultDestination, expectedContent)).to.be.true;
+            expect(writeSpy).to.be.calledOnce;
+            expect(writeSpy).to.be.always.calledWithExactly(defaultDestination, expectedContent);
         });
 
         it('should replace all occurrences of the placeholder', function () {
@@ -145,7 +149,7 @@ describe('#fillContent()', function () {
             var expectedContent = 'Lorem [new content] ipsum dolor sit amet,' +
                 ' consectetur adipiscing [new content] elit.';
 
-            expect(writeSpy.alwaysCalledWithExactly(defaultDestination, expectedContent)).to.be.true;
+            expect(writeSpy).to.be.always.calledWithExactly(defaultDestination, expectedContent);
         });
     });
 });

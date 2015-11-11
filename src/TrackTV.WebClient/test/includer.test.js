@@ -1,8 +1,12 @@
 "use strict";
 
-var expect = require('chai').expect,
+var chai = require('chai'),
+    sinonChai = require("sinon-chai"),
+    expect = chai.expect,
     sinon = require('sinon'),
     mockery = require('mockery');
+
+chai.use(sinonChai);
 
 var pathChain = require('../modules/pathChain');
 
@@ -193,9 +197,9 @@ describe('#includer', function () {
 
             instance.createIncludeLog();
 
-            expect(writeSpy.calledOnce).to.be.true;
+            expect(writeSpy).to.be.calledOnce;
 
-            expect(writeSpy.alwaysCalledWithExactly(defaultLogFile, '[]')).to.be.true;
+            expect(writeSpy).to.be.always.calledWithExactly(defaultLogFile, '[]');
         });
 
     });
@@ -275,7 +279,7 @@ describe('#includer', function () {
 
             instance.logIncludes(defaultName, defaultFiles, defaultFormatter);
 
-            expect(readSpy.calledOnce).to.be.true;
+            expect(readSpy).to.be.calledOnce;
         });
 
         it('should write to the includes file', function () {
@@ -286,8 +290,8 @@ describe('#includer', function () {
 
             instance.logIncludes(defaultName, defaultFiles, defaultFormatter);
 
-            expect(writeSpy.calledOnce).to.be.true;
-            expect(writeSpy.alwaysCalledWith(defaultLogFile)).to.be.true;
+            expect(writeSpy).to.be.calledOnce;
+            expect(writeSpy).to.be.always.calledWith(defaultLogFile);
         });
 
         it('should add the includes to the log file', function () {
@@ -341,8 +345,8 @@ describe('#includer', function () {
 
             instance.copyIndex();
 
-            expect(copySpy.calledOnce).to.be.true;
-            expect(copySpy.alwaysCalledWithExactly(defaultIndex, 'app')).to.be.true;
+            expect(copySpy).to.be.calledOnce;
+            expect(copySpy).to.be.always.calledWithExactly(defaultIndex, 'app');
         });
 
     });
@@ -391,7 +395,7 @@ describe('#includer', function () {
 
             instance.updateIncludes();
 
-            expect(copyIndexSpy.calledOnce).to.be.true;
+            expect(copyIndexSpy).to.be.calledOnce;
         });
 
         it('should read the includes file', function () {
@@ -400,8 +404,8 @@ describe('#includer', function () {
 
             instance.updateIncludes();
 
-            expect(readSpy.calledOnce).to.be.true;
-            expect(readSpy.alwaysCalledWithExactly(defaultLogFile)).to.be.true;
+            expect(readSpy).to.be.calledOnce;
+            expect(readSpy).to.be.always.calledWithExactly(defaultLogFile);
 
         });
 
@@ -417,7 +421,7 @@ describe('#includer', function () {
 
                 var include = defaultIncludes[i];
 
-                expect(fillContentSpy.calledWith(defaultOutputIndex, include.name)).to.be.true;
+                expect(fillContentSpy).to.be.calledWith(defaultOutputIndex, include.name);
             }
         });
 
@@ -439,7 +443,7 @@ describe('#includer', function () {
 
                 var include = defaultIncludes[i];
 
-                expect(fillContentSpy.calledWithExactly(defaultOutputIndex, include.name, expected[i])).to.be.true;
+                expect(fillContentSpy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
             }
         });
 
@@ -486,7 +490,7 @@ describe('#includer', function () {
 
                 var include = includes[i];
 
-                expect(fillContentSpy.calledWithExactly(defaultOutputIndex, include.name, expected[i])).to.be.true;
+                expect(fillContentSpy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
             }
         });
 
@@ -518,23 +522,23 @@ describe('#includer', function () {
 
     function assertCopiedStructure(files, output, baseDir) {
 
-        expect(copyStructureSpy.calledOnce).to.be.true;
+        expect(copyStructureSpy).to.be.calledOnce;
 
-        expect(copyStructureSpy.alwaysCalledWith(files, output, baseDir)).to.be.true;
+        expect(copyStructureSpy).to.be.always.calledWith(files, output, baseDir);
     }
 
     function assertCopied(files, output) {
 
-        expect(copySpy.calledOnce).to.be.true;
+        expect(copySpy).to.be.calledOnce;
 
-        expect(copySpy.alwaysCalledWith(files, output)).to.be.true;
+        expect(copySpy).to.be.always.calledWith(files, output);
     }
 
     function assertLoggedIncludes(spy, name, paths, formatter) {
 
-        expect(spy.calledOnce).to.be.true;
+        expect(spy).to.be.calledOnce;
 
-        expect(spy.alwaysCalledWithExactly(name, paths, formatter)).to.be.true;
+        expect(spy).to.be.always.calledWithExactly(name, paths, formatter);
     }
 
     describe('#includeDirectory()', function () {

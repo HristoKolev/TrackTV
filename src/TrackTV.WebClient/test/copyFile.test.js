@@ -1,9 +1,12 @@
 'use strict';
-
-var expect = require('chai').expect,
+var chai = require('chai'),
+    expect = chai.expect,
+    sinonChai = require("sinon-chai"),
     sinon = require('sinon'),
     path = require('path'),
     mockery = require('mockery');
+
+chai.use(sinonChai);
 
 var assertComposition = require('../testing/assertComposition').multitest;
 
@@ -61,7 +64,7 @@ describe('#copyFiles', function () {
 
             copyFiles.copy(files, destination);
 
-            expect(spy.callCount).to.equal(files.length);
+            expect(spy).to.have.callCount(files.length);
 
             for (var i = 0; i < files.length; i += 1) {
 
@@ -188,7 +191,7 @@ describe('#copyFiles', function () {
 
             copyFiles.copyStructure(files, destination, baseDir);
 
-            expect(spy.callCount).to.equal(files.length);
+            expect(spy).to.have.callCount(files.length);
 
             for (var i = 0; i < files.length; i += 1) {
 
