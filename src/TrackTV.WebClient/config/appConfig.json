@@ -1,4 +1,3 @@
 {
-  "appRoot": "app",
-  "bowerRoot": "bower_components"
+  "appRoot": "app"
 }

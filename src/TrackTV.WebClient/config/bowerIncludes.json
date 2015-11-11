@@ -12,17 +12,14 @@
     "/underscore/underscore.js",
     "/moment/moment.js"
   ],
-
   "styles": [
     "/bootstrap/dist/css/bootstrap.css",
     "/bootswatch/cosmo/bootstrap.css",
     "/toastr/toastr.css"
   ],
-
   "fonts": [
     "/bootstrap/dist/fonts/*"
   ],
-
   "templates": [
     "/angular-utils-pagination/dirPagination.tpl.html"
   ]
