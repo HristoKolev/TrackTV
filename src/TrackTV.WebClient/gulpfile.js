@@ -76,3 +76,44 @@ gulp.task('default', function () {
 //        'build-clear'
 //    );
 //});
+
+gulp.task('test-task', function () {
+
+    var streamFiles = require('./modules/plugins/streamFiles');
+    var task = require('gulp-task');
+    var q = require('q');
+    var end = require('stream-end');
+
+    task('do-work', function () {
+
+        var deferred = q.defer();
+
+        var stream = gulp.src('modules/*.js');
+
+        stream.on('error', function (error) {
+
+            deferred.reject(error);
+        });
+
+        stream.pipe(streamFiles('base'));
+
+        stream.pipe(end(function () {
+
+            console.log('kitten');
+            deferred.resolve();
+        }));
+
+        return deferred.promise;
+
+    });
+
+    task.run('do-work')
+        .then(function () {
+
+            console.log(streamFiles.record());
+        }, function (error) {
+
+            console.log(error);
+        });
+
+});
