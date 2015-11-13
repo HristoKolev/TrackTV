@@ -18,7 +18,7 @@ function productionBuildSystem(output, appBuilder, appStream, pathResolver) {
         wrench = require('wrench');
 
     // custom modules 
-    var embedMedia = require('./gulp-embed-media'),
+    var embedMedia = require('./plugins/gulp-embed-media'),
         fillContent = require('./fill-content'),
         jsonExpose = require('./json-expose');
 

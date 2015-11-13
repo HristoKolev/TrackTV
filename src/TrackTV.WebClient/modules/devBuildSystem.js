@@ -42,7 +42,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
             del.sync([
                 output.value() + '/*',
                 output.value() + '/*/'
-            ], { force: true });
+            ], {force: true});
 
             callback();
         });
@@ -125,7 +125,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
             var fileName = constants.browserified + '.js';
 
-            includer.logIncludes(constants.browserified, [fileName], includer.formatters.scriptFormatter);
+            includer.logIncludes(constants.browserified, [fileName], formatters.scriptFormatter);
 
             return browserify(browserifyOptions)
                 .bundle()
