@@ -16,8 +16,7 @@ var bowerComponents = require('./modules/bowerComponents').instance(includes, pa
     appBuilder = require('./modules/appBuilder').instance(appConfig.appRoot),
     output = require('./modules/buildOutput');
 
-var devOutput = output.instance(outputConfig.devPath),
-    prodOutput = output.instance(outputConfig.prodPath);
+var devOutput = output.instance(outputConfig.devPath);
 
 var includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
 

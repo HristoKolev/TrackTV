@@ -52,7 +52,7 @@ function productionBuildSystem(output, appBuilder, appStream, pathResolver) {
 
     function createFile(name, contents) {
 
-        return file(name, contents, { src: true });
+        return file(name, contents, {src: true});
     }
 
     that.registerTasks = function () {
