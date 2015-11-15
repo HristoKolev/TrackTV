@@ -82,37 +82,27 @@ gulp.task('test-task', function () {
     var task = require('gulp-task');
     var q = require('q');
     var end = require('stream-end');
+    var path = require('path');
+    var rename = require('gulp-rename');
+    var save = require('gulp-savefile');
 
     task('do-work', function () {
 
-        var deferred = q.defer();
+        var stream = gulp.src('testPath/*.js');
 
-        var stream = gulp.src('modules/*.js');
+        stream.pipe(save());
 
-        stream.on('error', function (error) {
+        stream.pipe(streamFiles(path.resolve('./')));
 
-            deferred.reject(error);
-        });
-
-        stream.pipe(streamFiles('base'));
-
-        stream.pipe(end(function () {
-
-            console.log('kitten');
-            deferred.resolve();
-        }));
-
-        return deferred.promise;
+        return stream;
 
     });
 
     task.run('do-work')
         .then(function () {
 
-            console.log(streamFiles.record());
-        }, function (error) {
+            console.log(streamFiles.record);
 
-            console.log(error);
         });
 
 });

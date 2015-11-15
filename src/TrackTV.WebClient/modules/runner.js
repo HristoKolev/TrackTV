@@ -2,7 +2,11 @@
 
 var path = require('path'),
     gulp = require('gulp'),
-    savefile = require('gulp-savefile');
+    savefile = require('gulp-savefile'),
+    task = require('gulp-task'),
+    q = require('q');
+
+var streamFiles = require('./plugins/streamFiles');
 
 function runner(output) {
 
@@ -49,25 +53,81 @@ function runner(output) {
         tasks[name] = task;
     };
 
+    function runTasks(stream, tasks) {
+
+        for (var j = 0; j < tasks.length; j += 1) {
+
+            var name = tasks[j];
+
+            var task = getTask(name);
+
+            task.run(stream);
+        }
+    }
+
+    var basePath = path.resolve(output.value());
+
+    function getPromise(include) {
+
+        return task(function () {
+
+            var stream = getSourceStream(getFiles(include));
+
+            runTasks(stream, include.tasks);
+
+            stream.pipe(savefile());
+
+            stream.pipe(streamFiles(basePath, include.name));
+
+            return stream;
+
+        }).then(function () {
+
+            return {
+                name: include.name,
+                files: streamFiles.get(include.name)
+            };
+        });
+    }
+
     that.run = function (includes) {
+
+        var promises = [];
 
         for (var i = 0; i < includes.length; i += 1) {
 
             var include = includes[i];
 
-            var stream = getSourceStream(getFiles(include));
+            promises.push(getPromise(include));
+        }
 
-            for (var j = 0; j < include.tasks.length; j += 1) {
+        return q.all(promises).then(function (data) {
 
-                var name = include.tasks[j];
+            var i;
 
-                var task = getTask(name);
+            var updates = {};
 
-                task.run(stream);
+            for (i = 0; i < data.length; i += 1) {
+
+                var update = data[i];
+
+                updates[update.name] = update.files;
             }
 
-            stream.pipe(savefile());
-        }
+            for (i = 0; i < includes.length; i += 1) {
+
+                var include = includes[i];
+
+                var files = updates[include.name];
+
+                if (files) {
+
+                    include.files = files;
+                }
+            }
+
+            return includes;
+        });
 
     };
 
