@@ -664,7 +664,6 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            console.log(defaultTasks);
             instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
             assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
