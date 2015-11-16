@@ -14,9 +14,12 @@ var pathConfig = require('./config/path.json'),
 
 var bowerComponents = require('./modules/bowerComponents').instance(includes, pathConfig.bowerRootPath),
     appBuilder = require('./modules/appBuilder').instance(appConfig.appRoot),
-    output = require('./modules/buildOutput');
+    output = require('./modules/pathChain'),
+    devOutput = output.instance(outputConfig.devPath),
+    tasks = require('./modules/tasks'),
+    runner = require('./modules/runner').instance(devOutput);
 
-var devOutput = output.instance(outputConfig.devPath);
+tasks.load(runner);
 
 var includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
 
@@ -78,31 +81,21 @@ gulp.task('default', function () {
 
 gulp.task('test-task', function () {
 
-    var streamFiles = require('./modules/plugins/streamFiles');
-    var task = require('gulp-task');
-    var q = require('q');
-    var end = require('stream-end');
-    var path = require('path');
-    var rename = require('gulp-rename');
-    var save = require('gulp-savefile');
+    var originalIncludes = [
+        {
+            name: "third-party-scripts",
+            files: [
+                "testPath\\clendar.less",
+                "testPath\\route-animation.less",
+                "testPath\\styles.less"
+            ],
+            formatter: "script",
+            tasks: ['less']
+        }
+    ];
 
-    task('do-work', function () {
+    runner.run(originalIncludes).then(function (newIncludes) {
 
-        var stream = gulp.src('testPath/*.js');
-
-        stream.pipe(save());
-
-        stream.pipe(streamFiles(path.resolve('./')));
-
-        return stream;
-
+        console.log(newIncludes);
     });
-
-    task.run('do-work')
-        .then(function () {
-
-            console.log(streamFiles.record);
-
-        });
-
 });

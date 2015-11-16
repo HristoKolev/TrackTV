@@ -2,34 +2,51 @@
 
 var path = require('path'),
     gulp = require('gulp'),
-    savefile = require('gulp-savefile'),
     task = require('gulp-task'),
     q = require('q');
 
 var streamFiles = require('./plugins/streamFiles');
 
+function saveFile() {
+
+    return gulp.dest(function (file) {
+
+        return path.dirname(file.path);
+    });
+}
+
 function runner(output) {
 
-    var that = Object.create(null);
+    var that = Object.create(null),
+        tasks = {},
+        basePath = path.resolve(output.value());
 
-    function getFiles(include) {
+    that.use = function (module) {
 
-        var files = include.files.slice();
+        if (tasks[module.name]) {
 
-        for (var i = 0; i < files.length; i += 1) {
-
-            files[i] = path.join(output.value(), files[i]);
+            throw new Error('There is already a task registered with that name. Name: ' + module.name);
         }
 
-        return files;
+        tasks[module.name] = module.task;
+    };
+
+    function resolvePaths(files) {
+
+        var paths = files.slice();
+
+        for (var i = 0; i < paths.length; i += 1) {
+
+            paths[i] = path.join(output.value(), paths[i]);
+        }
+
+        return paths;
     }
 
-    function getSourceStream(files) {
+    function source(files) {
 
         return gulp.src(files);
     }
-
-    var tasks = {};
 
     function getTask(name) {
 
@@ -43,43 +60,29 @@ function runner(output) {
         return task;
     }
 
-    that.registerTask = function (name, task) {
-
-        if (tasks[name]) {
-
-            throw new Error('There is already a task registered with that name. Name: ' + name);
-        }
-
-        tasks[name] = task;
-    };
-
     function runTasks(stream, tasks) {
 
-        for (var j = 0; j < tasks.length; j += 1) {
+        for (var i = 0; i < tasks.length; i += 1) {
 
-            var name = tasks[j];
+            var name = tasks[i];
 
             var task = getTask(name);
 
-            task.run(stream);
+            stream = task(stream);
         }
-    }
 
-    var basePath = path.resolve(output.value());
+        return stream;
+    }
 
     function getPromise(include) {
 
-        return task(function () {
+        return task.run(function () {
 
-            var stream = getSourceStream(getFiles(include));
+            var stream = source(resolvePaths(include.files));
 
-            runTasks(stream, include.tasks);
-
-            stream.pipe(savefile());
-
-            stream.pipe(streamFiles(basePath, include.name));
-
-            return stream;
+            return runTasks(stream, include.tasks)
+                .pipe(streamFiles(basePath, include.name))
+                .pipe(saveFile());
 
         }).then(function () {
 
@@ -87,6 +90,42 @@ function runner(output) {
                 name: include.name,
                 files: streamFiles.get(include.name)
             };
+        });
+    }
+
+    function formatUpdates(data) {
+
+        var updates = {};
+
+        for (var i = 0; i < data.length; i += 1) {
+
+            var update = data[i];
+
+            updates[update.name] = update.files;
+        }
+
+        return updates;
+    }
+
+    function merge(promises, includes) {
+
+        return q.all(promises).then(function (data) {
+
+            var updates = formatUpdates(data);
+
+            for (var i = 0; i < includes.length; i += 1) {
+
+                var include = includes[i];
+
+                var files = updates[include.name];
+
+                if (files) {
+
+                    include.files = files;
+                }
+            }
+
+            return includes;
         });
     }
 
@@ -101,34 +140,7 @@ function runner(output) {
             promises.push(getPromise(include));
         }
 
-        return q.all(promises).then(function (data) {
-
-            var i;
-
-            var updates = {};
-
-            for (i = 0; i < data.length; i += 1) {
-
-                var update = data[i];
-
-                updates[update.name] = update.files;
-            }
-
-            for (i = 0; i < includes.length; i += 1) {
-
-                var include = includes[i];
-
-                var files = updates[include.name];
-
-                if (files) {
-
-                    include.files = files;
-                }
-            }
-
-            return includes;
-        });
-
+        return merge(promises, includes);
     };
 
     return that;
