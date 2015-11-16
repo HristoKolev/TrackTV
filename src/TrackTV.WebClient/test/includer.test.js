@@ -226,49 +226,64 @@ describe('#includer', function () {
         var defaultName = 'name';
         var defaultFiles = ['file1', 'file2', 'file3'];
         var defaultFormatter = 'formatter';
+        var defaultTasks = ['task1', 'task2'];
 
-        it('should throw if the name is falsy', function () {
+        describe('validation', function () {
 
-            var instance = createDefaultInstance();
+            it('should throw if the name is falsy', function () {
 
-            expect(function () {
+                var instance = createDefaultInstance();
 
-                instance.logIncludes(null, defaultFiles, defaultFormatter);
+                expect(function () {
 
-            }).to.throw(/name is invalid/);
-        });
+                    instance.logIncludes(null, defaultFiles, defaultFormatter, defaultTasks);
 
-        it('should throw if the files array is falsy', function () {
+                }).to.throw(/name is invalid/);
+            });
 
-            var instance = createDefaultInstance();
+            it('should throw if the files array is falsy', function () {
 
-            expect(function () {
+                var instance = createDefaultInstance();
 
-                instance.logIncludes(defaultName, null, defaultFormatter);
+                expect(function () {
 
-            }).to.throw(/files argument is invalid/);
-        });
+                    instance.logIncludes(defaultName, null, defaultFormatter, defaultTasks);
 
-        it('should throw if the files is not an array', function () {
+                }).to.throw(/files argument is invalid/);
+            });
 
-            var instance = createDefaultInstance();
+            it('should throw if the files is not an array', function () {
 
-            expect(function () {
+                var instance = createDefaultInstance();
 
-                instance.logIncludes(defaultName, 'files', defaultFormatter);
+                expect(function () {
 
-            }).to.throw(/files argument is not an array/);
-        });
+                    instance.logIncludes(defaultName, 'files', defaultFormatter, defaultTasks);
 
-        it('should throw if the files is not an array', function () {
+                }).to.throw(/files argument is not an array/);
+            });
 
-            var instance = createDefaultInstance();
+            it('should throw if the formatter is falsy', function () {
 
-            expect(function () {
+                var instance = createDefaultInstance();
 
-                instance.logIncludes(defaultName, defaultFiles, null);
+                expect(function () {
 
-            }).to.throw(/formatter is invalid/);
+                    instance.logIncludes(defaultName, defaultFiles, null, defaultTasks);
+
+                }).to.throw(/formatter is invalid/);
+            });
+
+            it('should throw if the tasks argument is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.logIncludes(defaultName, defaultFiles, defaultFormatter, 'tasks');
+
+                }).to.throw(/tasks argument is not an array/);
+            });
         });
 
         it('should read the includes file', function () {
@@ -277,7 +292,7 @@ describe('#includer', function () {
 
             returnEmptyArray(defaultLogFile);
 
-            instance.logIncludes(defaultName, defaultFiles, defaultFormatter);
+            instance.logIncludes(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             expect(readSpy).to.be.calledOnce;
         });
@@ -288,7 +303,7 @@ describe('#includer', function () {
 
             returnEmptyArray(defaultLogFile);
 
-            instance.logIncludes(defaultName, defaultFiles, defaultFormatter);
+            instance.logIncludes(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             expect(writeSpy).to.be.calledOnce;
             expect(writeSpy).to.be.always.calledWith(defaultLogFile);
@@ -300,7 +315,7 @@ describe('#includer', function () {
 
             returnEmptyArray(defaultLogFile);
 
-            instance.logIncludes(defaultName, defaultFiles, defaultFormatter);
+            instance.logIncludes(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             var expected = [
                 {
@@ -310,7 +325,8 @@ describe('#includer', function () {
                         'file2',
                         'file3'
                     ],
-                    formatter: 'formatter'
+                    formatter: 'formatter',
+                    tasks: ['task1', 'task2']
                 }
             ];
 
@@ -534,11 +550,11 @@ describe('#includer', function () {
         expect(copySpy).to.be.always.calledWith(files, output);
     }
 
-    function assertLoggedIncludes(spy, name, paths, formatter) {
+    function assertLoggedIncludes(spy, name, paths, formatter, tasks) {
 
         expect(spy).to.be.calledOnce;
 
-        expect(spy).to.be.always.calledWithExactly(name, paths, formatter);
+        expect(spy).to.be.always.calledWithExactly(name, paths, formatter, tasks);
     }
 
     describe('#includeDirectory()', function () {
@@ -568,7 +584,8 @@ describe('#includer', function () {
                 'dir/path1/file2'
             ],
             defaultBasePath = 'dir',
-            defaultFormatter = 'formatter';
+            defaultFormatter = 'formatter',
+            defaultTasks = ['task1', 'task2'];
 
         describe('validation', function () {
 
@@ -578,7 +595,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(null, defaultFiles, defaultBasePath, defaultFormatter);
+                    instance.includeDirectory(null, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/name is invalid/);
             });
@@ -589,7 +606,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, null, defaultBasePath, defaultFormatter);
+                    instance.includeDirectory(defaultName, null, defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is invalid/);
             });
@@ -600,7 +617,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, 'files', defaultBasePath, defaultFormatter);
+                    instance.includeDirectory(defaultName, 'files', defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is not an array/);
             });
@@ -611,7 +628,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, defaultFiles, null, defaultFormatter);
+                    instance.includeDirectory(defaultName, defaultFiles, null, defaultFormatter, defaultTasks);
 
                 }).to.throw(/base path is invalid/);
             });
@@ -622,9 +639,21 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, null);
+                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, null, defaultTasks);
 
                 }).to.throw(/formatter is invalid/);
+
+            });
+
+            it('should throw if the tasks argument is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, 'tasks');
+
+                }).to.throw(/tasks argument is not an array/);
 
             });
         });
@@ -635,7 +664,8 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+            console.log(defaultTasks);
+            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
             assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
         });
@@ -655,7 +685,7 @@ describe('#includer', function () {
 
             var logIncludesSpy = sinon.spy(instance, 'logIncludes');
 
-            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
             var expectedPaths = [
                 'name\\path\\file1',
@@ -664,7 +694,7 @@ describe('#includer', function () {
                 'name\\path1\\file2'
             ];
 
-            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter);
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
         });
     });
 
@@ -690,7 +720,8 @@ describe('#includer', function () {
         var defaultPlaceholder = 'placeholder',
             defaultFile = 'source/file1',
             defaultBasePath = 'source',
-            defaultFormatter = 'formatter';
+            defaultFormatter = 'formatter',
+            defaultTasks = ['task1', 'task2'];
 
         describe('validation', function () {
 
@@ -700,7 +731,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeFile(null, defaultFile, defaultBasePath, defaultFormatter);
+                    instance.includeFile(null, defaultFile, defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/placeholder is invalid/);
             });
@@ -711,7 +742,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeFile(defaultPlaceholder, null, defaultBasePath, defaultFormatter);
+                    instance.includeFile(defaultPlaceholder, null, defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/file is invalid/);
             });
@@ -722,7 +753,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeFile(defaultPlaceholder, defaultFile, null, defaultFormatter);
+                    instance.includeFile(defaultPlaceholder, defaultFile, null, defaultFormatter, defaultTasks);
 
                 }).to.throw(/base path is invalid/);
             });
@@ -733,9 +764,21 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, null);
+                    instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, null, defaultTasks);
 
                 }).to.throw(/formatter is invalid/);
+
+            });
+
+            it('should throw if the tasks argument is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter, 'tasks');
+
+                }).to.throw(/tasks argument is not an array/);
 
             });
         });
@@ -746,7 +789,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter);
+            instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter, defaultTasks);
 
             assertCopiedStructure([defaultFile], 'app', defaultBasePath);
         });
@@ -763,13 +806,13 @@ describe('#includer', function () {
 
             var logIncludesSpy = sinon.spy(instance, 'logIncludes');
 
-            instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter);
+            instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter, defaultTasks);
 
             var expectedPaths = [
-                'file1',
+                'file1'
             ];
 
-            assertLoggedIncludes(logIncludesSpy, defaultPlaceholder, expectedPaths, defaultFormatter);
+            assertLoggedIncludes(logIncludesSpy, defaultPlaceholder, expectedPaths, defaultFormatter, defaultTasks);
         });
 
     });
@@ -801,7 +844,8 @@ describe('#includer', function () {
                 'dir/path1/file2'
             ],
             defaultBasePath = 'dir',
-            defaultFormatter = 'formatter';
+            defaultFormatter = 'formatter',
+            defaultTasks = ['task1', 'task2'];
 
         describe('validation', function () {
 
@@ -811,7 +855,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(null, defaultFiles, defaultBasePath, defaultFormatter);
+                    instance.includeSeparatedModuleFiles(null, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/name is invalid/);
             });
@@ -822,7 +866,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, null, defaultBasePath, defaultFormatter);
+                    instance.includeSeparatedModuleFiles(defaultName, null, defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is invalid/);
             });
@@ -833,7 +877,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, 'files', defaultBasePath, defaultFormatter);
+                    instance.includeSeparatedModuleFiles(defaultName, 'files', defaultBasePath, defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is not an array/);
             });
@@ -844,7 +888,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, null, defaultFormatter);
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, null, defaultFormatter, defaultTasks);
 
                 }).to.throw(/base path is invalid/);
             });
@@ -855,9 +899,21 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, null);
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, null, defaultTasks);
 
                 }).to.throw(/formatter is invalid/);
+
+            });
+
+            it('should throw if the tasks argument is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, 'tasks');
+
+                }).to.throw(/tasks argument is not an array/);
 
             });
         });
@@ -868,7 +924,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
             assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
         });
@@ -888,7 +944,7 @@ describe('#includer', function () {
 
             var logIncludesSpy = sinon.spy(instance, 'logIncludes');
 
-            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter);
+            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
             var expectedPaths = [
                 'path\\file1',
@@ -897,7 +953,7 @@ describe('#includer', function () {
                 'path1\\file2'
             ];
 
-            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter);
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
         });
 
     });
@@ -928,7 +984,8 @@ describe('#includer', function () {
                 'dir/path1/file1',
                 'dir/path1/file2'
             ],
-            defaultFormatter = 'formatter';
+            defaultFormatter = 'formatter',
+            defaultTasks = ['task1', 'task2'];
 
         describe('validation', function () {
 
@@ -938,7 +995,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeModuleFiles(null, defaultFiles, defaultFormatter);
+                    instance.includeModuleFiles(null, defaultFiles, defaultFormatter, defaultTasks);
 
                 }).to.throw(/name is invalid/);
             });
@@ -949,7 +1006,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeModuleFiles(defaultName, null, defaultFormatter);
+                    instance.includeModuleFiles(defaultName, null, defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is invalid/);
             });
@@ -960,7 +1017,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeModuleFiles(defaultName, 'files', defaultFormatter);
+                    instance.includeModuleFiles(defaultName, 'files', defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is not an array/);
             });
@@ -971,9 +1028,21 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeModuleFiles(defaultName, defaultFiles, null);
+                    instance.includeModuleFiles(defaultName, defaultFiles, null, defaultTasks);
 
                 }).to.throw(/formatter is invalid/);
+
+            });
+
+            it('should throw if the tasks argument is not an array', function () {
+
+                var instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, 'tasks');
+
+                }).to.throw(/tasks argument is not an array/);
 
             });
         });
@@ -984,7 +1053,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter);
+            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             assertCopied(defaultFiles, 'app\\name');
         });
@@ -1004,7 +1073,7 @@ describe('#includer', function () {
 
             var logIncludesSpy = sinon.spy(instance, 'logIncludes');
 
-            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter);
+            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             var expectedPaths = [
                 'name\\path-file1',
@@ -1013,7 +1082,7 @@ describe('#includer', function () {
                 'name\\path1-file2'
             ];
 
-            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter);
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
         });
 
     });

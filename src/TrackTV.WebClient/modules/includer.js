@@ -114,7 +114,7 @@ function includer(indexFile, output) {
         fs.writeFileSync(includeLog.value(), '[]');
     };
 
-    that.logIncludes = function (name, files, formatter) {
+    that.logIncludes = function (name, files, formatter, tasks) {
 
         if (!name) {
 
@@ -136,12 +136,23 @@ function includer(indexFile, output) {
             throw new Error('The formatter is invalid.');
         }
 
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
         var obj = JSON.parse(fs.readFileSync(includeLog.value()));
 
         obj.push({
             name: name,
             files: files,
-            formatter: formatter
+            formatter: formatter,
+            tasks: tasks
         });
 
         var jsonString = JSON.stringify(obj, null, '\t');
@@ -149,11 +160,11 @@ function includer(indexFile, output) {
         fs.writeFileSync(includeLog.value(), jsonString);
     };
 
-    function injectApplicationFiles(placeholder, files, formatter) {
+    function injectApplicationFiles(placeholder, files, formatter, tasks) {
 
         files = removeBaseDir(files, output.value());
 
-        that.logIncludes(placeholder, files, formatter);
+        that.logIncludes(placeholder, files, formatter, tasks);
     }
 
     that.copyIndex = function () {
@@ -175,7 +186,7 @@ function includer(indexFile, output) {
         }
     };
 
-    that.includeDirectory = function (name, files, basePath, formatter) {
+    that.includeDirectory = function (name, files, basePath, formatter, tasks) {
 
         if (!name) {
 
@@ -202,12 +213,22 @@ function includer(indexFile, output) {
             throw new Error('The formatter is invalid.');
         }
 
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
         var newList = copyFiles.copyStructure(files, output(name).value(), basePath);
 
-        injectApplicationFiles(name, newList, formatter);
+        injectApplicationFiles(name, newList, formatter, tasks);
     };
 
-    that.includeFile = function (placeholder, file, basePath, formatter) {
+    that.includeFile = function (placeholder, file, basePath, formatter, tasks) {
 
         if (!placeholder) {
 
@@ -229,12 +250,22 @@ function includer(indexFile, output) {
             throw new Error('The formatter is invalid.');
         }
 
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
         var newList = copyFiles.copyStructure([file], output.value(), basePath);
 
-        injectApplicationFiles(placeholder, newList, formatter);
+        injectApplicationFiles(placeholder, newList, formatter, tasks);
     };
 
-    that.includeModuleFiles = function (name, files, formatter) {
+    that.includeModuleFiles = function (name, files, formatter, tasks) {
 
         if (!name) {
 
@@ -256,12 +287,22 @@ function includer(indexFile, output) {
             throw new Error('The formatter is invalid.');
         }
 
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
         var newList = copyFiles.copy(files, output(name).value(), renameModuleFile);
 
-        injectApplicationFiles(name, newList, formatter);
+        injectApplicationFiles(name, newList, formatter, tasks);
     };
 
-    that.includeSeparatedModuleFiles = function (name, files, basePath, formatter) {
+    that.includeSeparatedModuleFiles = function (name, files, basePath, formatter, tasks) {
 
         if (!name) {
 
@@ -288,9 +329,19 @@ function includer(indexFile, output) {
             throw new Error('The formatter is invalid.');
         }
 
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
         var newList = copyFiles.copyStructure(files, output(name).value(), basePath, separateModuleFile);
 
-        injectApplicationFiles(name, newList, formatter);
+        injectApplicationFiles(name, newList, formatter, tasks);
     };
 
     return that;
