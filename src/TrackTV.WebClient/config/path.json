@@ -1,5 +1,4 @@
 ﻿{
-  "rootPath": "wwwroot",
   "bowerRootPath": "bower_components",
   "npmRootPath": "node_modules"
 }
