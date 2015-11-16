@@ -17,7 +17,7 @@ var output = require('./modules/pathChain');
 var devOutput = output.instance(outputConfig.devPath);
 
 var bowerComponents = require('./modules/bowerComponents').instance(includes, pathConfig.bowerRootPath),
-    appBuilder = require('./modules/appBuilder').instance(appConfig.appRoot),
+    appBuilder = require('./modules/appBuilder').instance(appConfig.appPath),
     tasks = require('./modules/tasks'),
     runner = require('./modules/runner');
 
@@ -36,10 +36,6 @@ var instance = require('./modules/devBuildSystem')
 //var devSupport = require('./modules/devSupport')
 //    .instance(appBuilder, appStream)
 //    .registerTasks();
-
-gulp.task('dev-output', function () {
-
-});
 
 gulp.task('default', function () {
 
