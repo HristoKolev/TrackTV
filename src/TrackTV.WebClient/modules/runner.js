@@ -20,11 +20,10 @@ function source(files) {
     return gulp.src(files);
 }
 
-function runner(output) {
+function runner() {
 
     var that = Object.create(null),
-        tasks = {},
-        basePath = path.resolve(output.value());
+        tasks = {};
 
     that.use = function (module) {
 
@@ -36,13 +35,13 @@ function runner(output) {
         tasks[module.name] = module.task;
     };
 
-    function resolvePaths(files) {
+    function resolvePaths(files, output) {
 
         var paths = files.slice();
 
         for (var i = 0; i < paths.length; i += 1) {
 
-            paths[i] = path.join(output.value(), paths[i]);
+            paths[i] = output(paths[i]).value();
         }
 
         return paths;
@@ -74,14 +73,14 @@ function runner(output) {
         return stream;
     }
 
-    function getPromise(include) {
+    function getPromise(include, output) {
 
         return task.run(function () {
 
-            var stream = source(resolvePaths(include.files));
+            var stream = source(resolvePaths(include.files, output));
 
             return runTasks(stream, include.tasks)
-                .pipe(streamFiles(basePath, include.name))
+                .pipe(streamFiles(path.resolve(output.value()), include.name))
                 .pipe(saveFile());
 
         }).then(function () {
@@ -129,7 +128,7 @@ function runner(output) {
         });
     }
 
-    that.run = function (includes) {
+    that.run = function (includes, output) {
 
         var promises = [];
 
@@ -137,7 +136,7 @@ function runner(output) {
 
             var include = includes[i];
 
-            promises.push(getPromise(include));
+            promises.push(getPromise(include, output));
         }
 
         return merge(promises, includes);
@@ -146,6 +145,4 @@ function runner(output) {
     return that;
 }
 
-module.exports = {
-    instance: runner
-};
+module.exports = runner();
