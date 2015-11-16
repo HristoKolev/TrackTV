@@ -12,18 +12,20 @@ var pathConfig = require('./config/path.json'),
     appConfig = require('./config/appConfig.json'),
     outputConfig = require('./config/outputConfig.json');
 
+var output = require('./modules/pathChain');
+
+var devOutput = output.instance(outputConfig.devPath);
+
 var bowerComponents = require('./modules/bowerComponents').instance(includes, pathConfig.bowerRootPath),
     appBuilder = require('./modules/appBuilder').instance(appConfig.appRoot),
-    output = require('./modules/pathChain'),
-    devOutput = output.instance(outputConfig.devPath),
     tasks = require('./modules/tasks'),
-    runner = require('./modules/runner').instance(devOutput);
+    runner = require('./modules/runner');
 
 tasks.load(runner);
 
 var includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
 
-var devBuildSystem = require('./modules/devBuildSystem')
+var instance = require('./modules/devBuildSystem')
     .instance(appBuilder, devOutput, includer, bowerComponents)
     .registerTasks();
 
@@ -34,6 +36,10 @@ var devBuildSystem = require('./modules/devBuildSystem')
 //var devSupport = require('./modules/devSupport')
 //    .instance(appBuilder, appStream)
 //    .registerTasks();
+
+gulp.task('dev-output', function () {
+
+});
 
 gulp.task('default', function () {
 
@@ -94,7 +100,7 @@ gulp.task('test-task', function () {
         }
     ];
 
-    runner.run(originalIncludes).then(function (newIncludes) {
+    runner.run(originalIncludes, devOutput).then(function (newIncludes) {
 
         console.log(newIncludes);
     });
