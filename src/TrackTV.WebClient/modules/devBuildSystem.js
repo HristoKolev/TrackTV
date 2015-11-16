@@ -131,7 +131,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
                 .bundle()
                 .pipe(source(fileName))
                 .pipe(buffer())
-                .pipe(output.destStream());
+                .pipe(gulp.dest(output.value()));
         });
 
         gulp.task('dev-include-' + constants.globalScripts, function () {

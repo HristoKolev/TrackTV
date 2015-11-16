@@ -15,6 +15,11 @@ function saveFile() {
     });
 }
 
+function source(files) {
+
+    return gulp.src(files);
+}
+
 function runner(output) {
 
     var that = Object.create(null),
@@ -41,11 +46,6 @@ function runner(output) {
         }
 
         return paths;
-    }
-
-    function source(files) {
-
-        return gulp.src(files);
     }
 
     function getTask(name) {
