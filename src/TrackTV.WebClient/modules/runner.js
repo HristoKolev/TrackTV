@@ -29,7 +29,7 @@ function runner() {
 
         if (tasks[module.name]) {
 
-            throw new Error('There is already a task registered with that name. Name: ' + module.name);
+            throw new Error('There is already a task with that name. Name: ' + module.name);
         }
 
         tasks[module.name] = module.task;
