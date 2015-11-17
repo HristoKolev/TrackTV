@@ -20,12 +20,53 @@ function source(files) {
     return gulp.src(files);
 }
 
+function resolvePaths(files, output) {
+
+    var paths = files.slice();
+
+    for (var i = 0; i < paths.length; i += 1) {
+
+        paths[i] = output(paths[i]).value();
+    }
+
+    return paths;
+}
+
+function formatUpdates(data) {
+
+    var updates = {};
+
+    for (var i = 0; i < data.length; i += 1) {
+
+        var update = data[i];
+
+        updates[update.name] = update.files;
+    }
+
+    return updates;
+}
+
 function runner() {
 
     var that = Object.create(null),
         tasks = {};
 
     that.use = function (module) {
+
+        if (!module) {
+
+            throw new Error('The module is invalid.');
+        }
+
+        if (!module.name) {
+
+            throw new Error('The module name is invalid.');
+        }
+
+        if (!module.task) {
+
+            throw new Error('The module task is invalid. ' + JSON.stringify(module));
+        }
 
         if (tasks[module.name]) {
 
@@ -34,18 +75,6 @@ function runner() {
 
         tasks[module.name] = module.task;
     };
-
-    function resolvePaths(files, output) {
-
-        var paths = files.slice();
-
-        for (var i = 0; i < paths.length; i += 1) {
-
-            paths[i] = output(paths[i]).value();
-        }
-
-        return paths;
-    }
 
     function getTask(name) {
 
@@ -92,20 +121,6 @@ function runner() {
         });
     }
 
-    function formatUpdates(data) {
-
-        var updates = {};
-
-        for (var i = 0; i < data.length; i += 1) {
-
-            var update = data[i];
-
-            updates[update.name] = update.files;
-        }
-
-        return updates;
-    }
-
     function merge(promises, includes) {
 
         return q.all(promises).then(function (data) {
@@ -129,6 +144,21 @@ function runner() {
     }
 
     that.run = function (includes, output) {
+
+        if (!includes) {
+
+            throw new Error('The includes are invalid.');
+        }
+
+        if (!Array.isArray(includes)) {
+
+            throw new Error('The includes argument is not an array.');
+        }
+
+        if (!output) {
+
+            throw new Error('The output is invalid.');
+        }
 
         var promises = [];
 
