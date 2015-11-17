@@ -29,8 +29,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
     };
 
     var browserifyOptions = {
-        debug: true,
-        entries: glob.sync(appBuilder.npmModuleFiles)
+        debug: true
     };
 
     var formatters = includer.formatters;
@@ -127,7 +126,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
             includer.logIncludes(constants.browserified, [fileName], formatters.scriptFormatter);
 
-            return browserify(browserifyOptions)
+            return browserify(glob.sync(appBuilder.npmModuleFiles), browserifyOptions)
                 .bundle()
                 .pipe(source(fileName))
                 .pipe(buffer())
