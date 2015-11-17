@@ -1,8 +1,26 @@
 'use strict';
 
-var list = [
-    'less'
-];
+var fs = require('fs'),
+    path = require('path');
+
+function getTaskNames(taskRoot) {
+
+    var paths = fs.readdirSync(taskRoot)
+        .filter(function (file) {
+
+            return fs.statSync(path.join(taskRoot, file)).isFile();
+        });
+
+    for (var i = 0; i < paths.length; i += 1) {
+
+        paths[i] = path.basename(paths[i]);
+
+    }
+
+    return paths;
+}
+
+var list = getTaskNames('./modules/tasks/');
 
 function tasks() {
 
