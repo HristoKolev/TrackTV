@@ -21,14 +21,19 @@ function removeBaseDir(fileName, basePath) {
     return fileName;
 }
 
-function recordFile(file, basePath, name) {
+function getRecord(name) {
 
     if (!records[name]) {
 
         records[name] = [];
     }
 
-    var record = records[name];
+    return records[name];
+}
+
+function recordFile(file, basePath, name) {
+
+    var record = getRecord(name);
 
     record.push(removeBaseDir(file.path, basePath));
 }
@@ -73,8 +78,9 @@ function streamFiles(basePath, name) {
 }
 
 module.exports = streamFiles;
+
 module.exports.get = function (name) {
 
-    return records[name].slice();
+    return records[name] || [];
 };
 
