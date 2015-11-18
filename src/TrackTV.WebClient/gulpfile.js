@@ -26,7 +26,7 @@ tasks.load(runner);
 var includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
 
 var instance = require('./modules/devBuildSystem')
-    .instance(appBuilder, devOutput, includer, bowerComponents)
+    .instance(appBuilder, devOutput, includer, bowerComponents, runner)
     .registerTasks();
 
 //var productionBuildSystem = require('./modules/productionBuildSystem')
@@ -51,8 +51,11 @@ gulp.task('default', function () {
         'dev-include-route-config',
         'dev-browserify',
         'dev-include-global-scripts',
+        'dev-include-global-less',
         'dev-include-global-module-scripts',
         'dev-include-main-scripts',
+        'dev-include-global-module-less',
+        'dev-process-includes',
         'dev-update-includes'
     );
 });
@@ -80,24 +83,3 @@ gulp.task('default', function () {
 //        'build-clear'
 //    );
 //});
-
-gulp.task('test-task', function () {
-
-    var originalIncludes = [
-        {
-            name: "third-party-scripts",
-            files: [
-                "testPath\\clendar.less",
-                "testPath\\route-animation.less",
-                "testPath\\styles.less"
-            ],
-            formatter: "script",
-            tasks: ['less']
-        }
-    ];
-
-    runner.run(originalIncludes, devOutput).then(function (newIncludes) {
-
-        console.log(newIncludes);
-    });
-});

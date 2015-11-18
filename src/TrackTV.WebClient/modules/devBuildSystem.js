@@ -1,6 +1,6 @@
 'use strict';
 
-function devBuildSystem(appBuilder, output, includer, includes) {
+function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
     var that = Object.create(null);
 
@@ -25,7 +25,9 @@ function devBuildSystem(appBuilder, output, includer, includes) {
         browserified: 'browserified',
         globalScripts: 'global-scripts',
         globalModuleScripts: 'global-module-scripts',
-        scripts: 'main-scripts'
+        scripts: 'main-scripts',
+        globalLess: 'global-less',
+        globalModuleLess: 'global-module-less'
     };
 
     var browserifyOptions = {
@@ -55,7 +57,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
         gulp.task('dev-include-' + constants.thirdPartyScripts, function () {
 
-            return includer.includeDirectory(
+            includer.includeDirectory(
                 constants.thirdPartyScripts,
                 includes.scripts,
                 includes.basePath,
@@ -65,7 +67,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
         gulp.task('dev-include-' + constants.thirdPartyStyles, function () {
 
-            return includer.includeDirectory(
+            includer.includeDirectory(
                 constants.thirdPartyStyles,
                 includes.styles,
                 includes.basePath,
@@ -75,7 +77,7 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
         gulp.task('dev-include-' + constants.initFile, function () {
 
-            return includer.includeFile(
+            includer.includeFile(
                 constants.initFile,
                 appBuilder.initFile,
                 appBuilder.appPath(),
@@ -85,34 +87,49 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
         gulp.task('dev-include-' + constants.moduleHeaders, function () {
 
-            return includer.includeModuleFiles(
-                constants.moduleHeaders,
-                glob.sync(appBuilder.moduleHeaders),
-                formatters.scriptFormatter
-            );
+            var files = glob.sync(appBuilder.moduleHeaders);
+
+            if (files.length) {
+
+                includer.includeModuleFiles(
+                    constants.moduleHeaders,
+                    files,
+                    formatters.scriptFormatter
+                );
+            }
         });
 
         gulp.task('dev-include-' + constants.moduleConstants, function () {
 
-            return includer.includeModuleFiles(
-                constants.moduleConstants,
-                glob.sync(appBuilder.moduleConstants),
-                formatters.scriptFormatter
-            );
+            var files = glob.sync(appBuilder.moduleConstants);
+
+            if (files.length) {
+
+                includer.includeModuleFiles(
+                    constants.moduleConstants,
+                    files,
+                    formatters.scriptFormatter
+                );
+            }
         });
 
         gulp.task('dev-include-' + constants.moduleLibraries, function () {
 
-            return includer.includeModuleFiles(
-                constants.moduleLibraries,
-                glob.sync(appBuilder.moduleLibraries),
-                formatters.scriptFormatter
-            );
+            var files = glob.sync(appBuilder.moduleLibraries);
+
+            if (files.length) {
+
+                includer.includeModuleFiles(
+                    constants.moduleLibraries,
+                    files,
+                    formatters.scriptFormatter
+                );
+            }
         });
 
         gulp.task('dev-include-' + constants.routeConfig, function () {
 
-            return includer.includeFile(
+            includer.includeFile(
                 constants.routeConfig,
                 appBuilder.routeConfig,
                 appBuilder.appPath(),
@@ -122,45 +139,105 @@ function devBuildSystem(appBuilder, output, includer, includes) {
 
         gulp.task('dev-browserify', function () {
 
-            var fileName = constants.browserified + '.js';
+            var files = glob.sync(appBuilder.npmModuleFiles);
 
-            includer.logIncludes(constants.browserified, [fileName], formatters.scriptFormatter);
+            if (files.length) {
 
-            return browserify(glob.sync(appBuilder.npmModuleFiles), browserifyOptions)
-                .bundle()
-                .pipe(source(fileName))
-                .pipe(buffer())
-                .pipe(gulp.dest(output.value()));
+                var fileName = constants.browserified + '.js';
+
+                includer.logInclude(constants.browserified, [fileName], formatters.scriptFormatter);
+
+                return browserify(files, browserifyOptions)
+                    .bundle()
+                    .pipe(source(fileName))
+                    .pipe(buffer())
+                    .pipe(gulp.dest(output.value()));
+            }
         });
 
         gulp.task('dev-include-' + constants.globalScripts, function () {
 
-            return includer.includeDirectory(
-                constants.globalScripts,
-                glob.sync(appBuilder.globalScripts),
-                appBuilder.appPath(),
-                formatters.scriptFormatter
-            );
+            var files = glob.sync(appBuilder.globalScripts);
+
+            if (files.length) {
+
+                includer.includeDirectory(
+                    constants.globalScripts,
+                    files,
+                    appBuilder.appPath(),
+                    formatters.scriptFormatter
+                );
+            }
+        });
+
+        gulp.task('dev-include-' + constants.globalLess, function () {
+
+            var files = glob.sync(appBuilder.globalLess);
+
+            if (files.length) {
+
+                includer.includeDirectory(
+                    constants.globalLess,
+                    files,
+                    appBuilder.appPath(),
+                    formatters.styleFormatter,
+                    ['less']
+                );
+            }
         });
 
         gulp.task('dev-include-' + constants.globalModuleScripts, function () {
 
-            return includer.includeSeparatedModuleFiles(
+            var files = glob.sync(appBuilder.globalModuleScripts);
+
+            includer.includeSeparatedModuleFiles(
                 constants.globalModuleScripts,
-                glob.sync(appBuilder.globalModuleScripts),
+                files,
                 appBuilder.modulesDir,
                 formatters.scriptFormatter
             );
         });
 
+        gulp.task('dev-include-' + constants.globalModuleLess, function () {
+
+            var files = glob.sync(appBuilder.globalModuleLess);
+
+            if (files.length) {
+
+                includer.includeSeparatedModuleFiles(
+                    constants.globalModuleLess,
+                    files,
+                    appBuilder.modulesDir,
+                    formatters.styleFormatter,
+                    ['less']
+                );
+            }
+        });
+
         gulp.task('dev-include-' + constants.scripts, function () {
 
-            return includer.includeDirectory(
-                constants.scripts,
-                glob.sync(appBuilder.scripts),
-                appBuilder.modulesDir,
-                formatters.scriptFormatter
-            );
+            var files = glob.sync(appBuilder.scripts);
+
+            if (files.length) {
+
+                includer.includeDirectory(
+                    constants.scripts,
+                    files,
+                    appBuilder.modulesDir,
+                    formatters.scriptFormatter
+                );
+            }
+        });
+
+        gulp.task('dev-process-includes', function (callback) {
+
+            runner.run(includer.readIncludes(), output)
+                .then(function (newIncludes) {
+
+                    includer.writeIncludes(newIncludes);
+
+                    callback();
+                });
         });
 
         gulp.task('dev-update-includes', function () {
