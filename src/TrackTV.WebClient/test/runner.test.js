@@ -172,7 +172,5 @@ describe('#runner', function () {
             resetMocks();
         });
 
-
-
     });
 });

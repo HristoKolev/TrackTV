@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html ng-app="main" ng-hint ng-cloak ng-controller="GlobalController">
-<head>
-    <meta charset="utf-8"/>
+    <head>
+        <meta charset="utf-8"/>
 
-    <title ng-bind="title"></title>
+        <title ng-bind="title"></title>
 
-    <link rel="icon" href="/include/favicon.ico"/>
+        <link rel="icon" href="/include/favicon.ico"/>
 
-    <base href="/"/>
+        <base href="/"/>
 
-    <!-- smoosh -->
+        <!-- smoosh -->
 
-    <!-- Third party styles -->
-    <!-- third-party-styles -->
+        <!-- Third party styles -->
+        <!-- third-party-styles -->
 
-    <!-- Global application styles -->
-    <!-- global-styles -->
+        <!-- Global application styles -->
+        <!-- global-styles -->
 
-    <!-- Global module styles -->
-    <!-- global-module-styles -->
+        <!-- Global application less styles -->
+        <!-- global-less -->
 
-    <!-- endsmoosh -->
-</head>
-<body>
+        <!-- Global module styles -->
+        <!-- global-module-styles -->
 
-<header id="site-header" tt-site-header user="user"></header>
+        <!-- Global module less styles -->
+        <!-- global-module-less -->
 
-<section class="container body-content">
+        <!-- endsmoosh -->
+    </head>
+    <body>
 
-    <div ng-show="loadState === states.ready" ng-view></div>
+        <header id="site-header" tt-site-header user="user"></header>
 
-</section>
+        <section class="container body-content">
 
-<footer id="site-footer" tt-site-footer></footer>
+            <div ng-show="loadState === states.ready" ng-view></div>
 
-<div id="generated">
+        </section>
 
-    <!-- settings -->
+        <footer id="site-footer" tt-site-footer></footer>
 
-    <!-- smoosh -->
+        <div id="generated">
 
-    <!-- Third party scripts -->
-    <!-- third-party-scripts -->
+            <!-- settings -->
 
-    <!-- Module initialization file -->
-    <!-- init-file -->
+            <!-- smoosh -->
 
-    <!-- Module headers -->
-    <!-- module-headers -->
+            <!-- Third party scripts -->
+            <!-- third-party-scripts -->
 
-    <!-- Module constants -->
-    <!-- module-constants -->
+            <!-- Module initialization file -->
+            <!-- init-file -->
 
-    <!-- Module libraries -->
-    <!-- module-libraries -->
+            <!-- Module headers -->
+            <!-- module-headers -->
 
-    <!-- Route configuration -->
-    <!-- route-config -->
+            <!-- Module constants -->
+            <!-- module-constants -->
 
-    <!-- Browserify bundle -->
-    <!-- browserified -->
+            <!-- Module libraries -->
+            <!-- module-libraries -->
 
-    <!-- Global application scripts -->
-    <!-- global-scripts -->
+            <!-- Route configuration -->
+            <!-- route-config -->
+
+            <!-- Browserify bundle -->
+            <!-- browserified -->
+
+            <!-- Global application scripts -->
+            <!-- global-scripts -->
 
 
-    <!-- Global module scripts -->
-    <!-- global-module-scripts -->
+            <!-- Global module scripts -->
+            <!-- global-module-scripts -->
 
-    <!-- Main scripts -->
-    <!-- main-scripts -->
+            <!-- Main scripts -->
+            <!-- main-scripts -->
 
-    <!-- endsmoosh -->
+            <!-- endsmoosh -->
 
-    <!-- templates -->
-</div>
+            <!-- templates -->
+        </div>
 
-</body>
+    </body>
 </html>
