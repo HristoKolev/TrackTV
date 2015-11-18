@@ -97,24 +97,44 @@ function includer(indexFile, output) {
 
     }
 
-    function readIncludes() {
+    function addFormatter(includes) {
 
-        var obj = JSON.parse(fs.readFileSync(includeLog.value()));
+        for (var i = 0; i < includes.length; i += 1) {
 
-        for (var i = 0; i < obj.length; i += 1) {
-
-            obj[i].formatter = getFormatter(obj[i].formatter);
+            includes[i].formatter = getFormatter(includes[i].formatter);
         }
 
-        return obj;
+        return includes;
     }
+
+    that.readIncludes = function () {
+
+        return JSON.parse(fs.readFileSync(includeLog.value()));
+    };
+
+    that.writeIncludes = function (includes) {
+
+        if (!includes) {
+
+            throw new Error('The includes are invalid.');
+        }
+
+        if (!Array.isArray(includes)) {
+
+            throw new Error('The includes are not an array.');
+        }
+
+        var jsonString = JSON.stringify(includes, null, '\t');
+
+        fs.writeFileSync(includeLog.value(), jsonString);
+    };
 
     that.createIncludeLog = function () {
 
-        fs.writeFileSync(includeLog.value(), '[]');
+        that.writeIncludes([]);
     };
 
-    that.logIncludes = function (name, files, formatter, tasks) {
+    that.logInclude = function (name, files, formatter, tasks) {
 
         if (!name) {
 
@@ -146,25 +166,23 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        var obj = JSON.parse(fs.readFileSync(includeLog.value()));
+        var includes = that.readIncludes();
 
-        obj.push({
+        includes.push({
             name: name,
             files: files,
             formatter: formatter,
             tasks: tasks
         });
 
-        var jsonString = JSON.stringify(obj, null, '\t');
-
-        fs.writeFileSync(includeLog.value(), jsonString);
+        that.writeIncludes(includes);
     };
 
     function injectApplicationFiles(placeholder, files, formatter, tasks) {
 
         files = removeBaseDir(files, output.value());
 
-        that.logIncludes(placeholder, files, formatter, tasks);
+        that.logInclude(placeholder, files, formatter, tasks);
     }
 
     that.copyIndex = function () {
@@ -176,7 +194,7 @@ function includer(indexFile, output) {
 
         that.copyIndex();
 
-        var includes = readIncludes();
+        var includes = addFormatter(that.readIncludes());
 
         for (var i = 0; i < includes.length; i += 1) {
 

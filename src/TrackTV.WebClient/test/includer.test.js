@@ -115,6 +115,24 @@ describe('#includer', function () {
         readStub.withArgs(name).returns('[]');
     }
 
+    var defaultIncludes = [
+        {
+            name: 'name',
+            files: [
+                'file1',
+                'file2',
+                'file3'
+            ],
+            formatter: 'script',
+            tasks: ['task1', 'task2']
+        }
+    ];
+
+    function registerIncludes(includes) {
+
+        readStub.withArgs(defaultLogFile).returns(JSON.stringify(includes));
+    }
+
     describe('instance exports', function () {
 
         var instance = createDefaultInstance();
@@ -122,9 +140,13 @@ describe('#includer', function () {
         assertCompositionMultitest.object('instance', instance, [
             ['formatters', 'object'],
             ['createIncludeLog', 'function'],
-            ['logIncludes', 'function'],
+            ['logInclude', 'function'],
             ['copyIndex', 'function'],
             ['updateIncludes', 'function'],
+
+            ['readIncludes', 'function'],
+            ['writeIncludes', 'function'],
+
             ['includeDirectory', 'function'],
             ['includeFile', 'function'],
             ['includeModuleFiles', 'function'],
@@ -204,7 +226,7 @@ describe('#includer', function () {
 
     });
 
-    describe('#logIncludes()', function () {
+    describe('#logInclude()', function () {
 
         before(function () {
 
@@ -236,7 +258,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.logIncludes(null, defaultFiles, defaultFormatter, defaultTasks);
+                    instance.logInclude(null, defaultFiles, defaultFormatter, defaultTasks);
 
                 }).to.throw(/name is invalid/);
             });
@@ -247,7 +269,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.logIncludes(defaultName, null, defaultFormatter, defaultTasks);
+                    instance.logInclude(defaultName, null, defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is invalid/);
             });
@@ -258,7 +280,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.logIncludes(defaultName, 'files', defaultFormatter, defaultTasks);
+                    instance.logInclude(defaultName, 'files', defaultFormatter, defaultTasks);
 
                 }).to.throw(/files argument is not an array/);
             });
@@ -269,7 +291,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.logIncludes(defaultName, defaultFiles, null, defaultTasks);
+                    instance.logInclude(defaultName, defaultFiles, null, defaultTasks);
 
                 }).to.throw(/formatter is invalid/);
             });
@@ -280,7 +302,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.logIncludes(defaultName, defaultFiles, defaultFormatter, 'tasks');
+                    instance.logInclude(defaultName, defaultFiles, defaultFormatter, 'tasks');
 
                 }).to.throw(/tasks argument is not an array/);
             });
@@ -292,7 +314,7 @@ describe('#includer', function () {
 
             returnEmptyArray(defaultLogFile);
 
-            instance.logIncludes(defaultName, defaultFiles, defaultFormatter, defaultTasks);
+            instance.logInclude(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             expect(readSpy).to.be.calledOnce;
         });
@@ -303,7 +325,7 @@ describe('#includer', function () {
 
             returnEmptyArray(defaultLogFile);
 
-            instance.logIncludes(defaultName, defaultFiles, defaultFormatter, defaultTasks);
+            instance.logInclude(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             expect(writeSpy).to.be.calledOnce;
             expect(writeSpy).to.be.always.calledWith(defaultLogFile);
@@ -315,7 +337,7 @@ describe('#includer', function () {
 
             returnEmptyArray(defaultLogFile);
 
-            instance.logIncludes(defaultName, defaultFiles, defaultFormatter, defaultTasks);
+            instance.logInclude(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
             var expected = [
                 {
@@ -386,23 +408,6 @@ describe('#includer', function () {
             mockery.disable();
         });
 
-        var defaultIncludes = [
-            {
-                name: 'name',
-                files: [
-                    'file1',
-                    'file2',
-                    'file3'
-                ],
-                formatter: 'script'
-            }
-        ];
-
-        function registerIncludes(includes) {
-
-            readStub.withArgs(defaultLogFile).returns(JSON.stringify(includes));
-        }
-
         it('should call #copyIndex()', function () {
 
             var instance = createDefaultInstance();
@@ -422,7 +427,6 @@ describe('#includer', function () {
 
             expect(readSpy).to.be.calledOnce;
             expect(readSpy).to.be.always.calledWithExactly(defaultLogFile);
-
         });
 
         it('should call #fillContent() for every include', function () {
@@ -453,7 +457,7 @@ describe('#includer', function () {
                 '<script src="file1"></script>\n' +
                 '<script src="file2"></script>\n' +
                 '<script src="file3"></script>'
-            ]
+            ];
 
             for (var i = 0; i < defaultIncludes.length; i += 1) {
 
@@ -533,6 +537,115 @@ describe('#includer', function () {
                 instance.updateIncludes();
 
             }).to.throw(/Unknown formatter name/);
+        });
+    });
+
+    describe('#readIncludes()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
+
+        beforeEach(function () {
+
+            resetMocks();
+        });
+
+        after(function () {
+
+            resetMocks();
+
+            mockery.disable();
+        });
+
+        it('should read the includes file', function () {
+
+            registerIncludes(defaultIncludes);
+
+            var instance = createDefaultInstance();
+
+            var result = instance.readIncludes();
+
+            expect(readSpy).to.be.calledOnce;
+            expect(readSpy).to.be.always.calledWithExactly(defaultLogFile);
+
+            expect(result).to.deep.equal(defaultIncludes);
+        });
+    });
+
+    describe('#writeIncludes()', function () {
+
+        before(function () {
+
+            mockery.enable();
+        });
+
+        beforeEach(function () {
+
+            resetMocks();
+        });
+
+        after(function () {
+
+            resetMocks();
+
+            mockery.disable();
+        });
+
+        describe('validation', function () {
+
+            before(function () {
+
+                mockery.enable();
+            });
+
+            beforeEach(function () {
+
+                resetMocks();
+            });
+
+            after(function () {
+
+                resetMocks();
+
+                mockery.disable();
+            });
+
+            it('should throw if the includes are falsy', function () {
+
+                expect(function () {
+
+                    var instance = createDefaultInstance();
+                    instance.writeIncludes(null);
+
+                }).to.throw(/includes are invalid/);
+            });
+
+            it('should throw if the includes are not an array', function () {
+
+                expect(function () {
+
+                    var instance = createDefaultInstance();
+
+                    instance.writeIncludes('includes');
+
+                }).to.throw(/includes are not an array/);
+            });
+        });
+
+        it('should write the includes to the file', function () {
+
+            var instance = createDefaultInstance();
+
+            instance.writeIncludes(defaultIncludes);
+
+            expect(writeSpy).to.be.calledOnce;
+            expect(writeSpy).to.be.always.calledWith(defaultLogFile);
+
+            var includes = JSON.parse(writeSpy.args[0][1]);
+
+            expect(includes).to.deep.equal(defaultIncludes);
         });
     });
 
@@ -669,7 +782,7 @@ describe('#includer', function () {
             assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
         });
 
-        it('should call #logIncludes() with the specified arguments', function () {
+        it('should call #logInclude() with the specified arguments', function () {
 
             var copiedPaths = [
                 'app\\name\\path\\file1',
@@ -682,7 +795,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+            var logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
@@ -793,7 +906,7 @@ describe('#includer', function () {
             assertCopiedStructure([defaultFile], 'app', defaultBasePath);
         });
 
-        it('should call #logIncludes() with the specified arguments', function () {
+        it('should call #logInclude() with the specified arguments', function () {
 
             var copiedPaths = [
                 'app\\file1'
@@ -803,7 +916,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+            var logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter, defaultTasks);
 
@@ -928,7 +1041,7 @@ describe('#includer', function () {
             assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
         });
 
-        it('should call #logIncludes() with the specified arguments', function () {
+        it('should call #logInclude() with the specified arguments', function () {
 
             var copiedPaths = [
                 'app\\path\\file1',
@@ -941,7 +1054,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+            var logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
@@ -1057,7 +1170,7 @@ describe('#includer', function () {
             assertCopied(defaultFiles, 'app\\name');
         });
 
-        it('should call #logIncludes() with the specified arguments', function () {
+        it('should call #logInclude() with the specified arguments', function () {
 
             var copiedPaths = [
                 'app\\name\\path-file1',
@@ -1070,7 +1183,7 @@ describe('#includer', function () {
 
             var instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logIncludes');
+            var logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
