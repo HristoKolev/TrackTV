@@ -53,8 +53,9 @@ gulp.task('default', function () {
         'dev-include-global-scripts',
         'dev-include-global-less',
         'dev-include-global-module-scripts',
-        'dev-include-main-scripts',
         'dev-include-global-module-less',
+        'dev-include-main-scripts',
+        'dev-include-main-less-styles',
         'dev-process-includes',
         'dev-update-includes'
     );

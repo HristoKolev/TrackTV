@@ -27,7 +27,8 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         globalModuleScripts: 'global-module-scripts',
         scripts: 'main-scripts',
         globalLess: 'global-less',
-        globalModuleLess: 'global-module-less'
+        globalModuleLess: 'global-module-less',
+        lessFiles: 'main-less-styles'
     };
 
     var browserifyOptions = {
@@ -229,6 +230,22 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
+        gulp.task('dev-include-' + constants.lessFiles, function () {
+
+            var files = glob.sync(appBuilder.lessFiles);
+
+            if (files.length) {
+
+                includer.includeDirectory(
+                    constants.lessFiles,
+                    files,
+                    appBuilder.modulesDir,
+                    formatters.styleFormatter,
+                    ['less']
+                );
+            }
+        });
+
         gulp.task('dev-process-includes', function (callback) {
 
             runner.run(includer.readIncludes(), output)
@@ -236,8 +253,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
                     includer.writeIncludes(newIncludes);
 
-                    callback();
-                });
+                }).then(callback);
         });
 
         gulp.task('dev-update-includes', function () {
