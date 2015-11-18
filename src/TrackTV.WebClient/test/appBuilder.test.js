@@ -19,21 +19,28 @@ describe('#appBuilder', function () {
         var builder = appBuilder.instance('./');
 
         assertCompositionMultitest.object('appBuilder', builder, [
-            ['appPath', 'function'],
 
             ['indexFile', 'string'],
             ['initFile', 'string'],
+            ['routeConfig', 'string'],
+
             ['moduleHeaders', 'string'],
             ['npmModuleFiles', 'string'],
             ['moduleConstants', 'string'],
             ['moduleLibraries', 'string'],
+
             ['scripts', 'string'],
-            ['routeConfig', 'string'],
             ['templates', 'string'],
             ['lessFiles', 'string'],
 
             ['globalScripts', 'array'],
+            ['globalLess', 'string'],
+
             ['globalModuleScripts', 'array'],
+            ['globalModuleLess', 'string'],
+
+            ['appPath', 'function'],
+
             ['sourceFiles', 'array'],
 
             ['contentPath', 'string'],

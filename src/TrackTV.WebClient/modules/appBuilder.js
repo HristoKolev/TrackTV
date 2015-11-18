@@ -30,16 +30,22 @@ function appBuilder(rootPath) {
     var patterns = {
         indexFile: '/index.html',
         initFile: '/init.js',
+        routeConfig: '/routeConfig.js',
+
         moduleHeaders: '/modules/*/module.js',
         npmModuleFiles: '/modules/*/npmModules.js',
         moduleConstants: '/modules/*/constants.js',
         moduleLibraries: '/modules/*/libraries.js',
+
         scripts: '/modules/*/*/**/*.js',
-        routeConfig: '/routeConfig.js',
         templates: '/modules/*/*/**/*.html',
         lessFiles: '/modules/*/*/**/*.less',
+
         globalScripts: '/*.js',
-        globalModuleScripts: '/modules/*/*.js'
+        globalLess: '/*.less',
+
+        globalModuleScripts: '/modules/*/*.js',
+        globalModuleLess: '/modules/*/*.less'
     };
 
     Object.keys(patterns).forEach(function (index) {
