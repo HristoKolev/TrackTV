@@ -53,7 +53,7 @@ function includer(indexFile, output) {
                 throw new Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + files[i]);
             }
 
-            files[i] = path.join('./', files[i].slice(baseDir.length));
+            files[i] = path.relative(baseDir, files[i]);
         }
 
         return files;

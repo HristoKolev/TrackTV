@@ -84,3 +84,7 @@ gulp.task('default', function () {
 //        'build-clear'
 //    );
 //});
+
+gulp.task('test-task', function () {
+
+});
