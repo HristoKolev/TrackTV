@@ -29,7 +29,7 @@ var runner;
 
 function resetRunner() {
 
-    runner = mockRequire('../modules/runner');
+    runner = require('../modules/runner');
 }
 
 var gulp = {

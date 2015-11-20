@@ -3,38 +3,112 @@
 var path = require('path'),
     validator = require('validator');
 
+var linuxStylePath = require('./linuxStylePath');
+
+var validatorOptions = {
+    allow_protocol_relative_urls: true
+};
+
 function isAbsolute(p) {
 
     return path.normalize(p) === path.resolve(p);
 }
 
-module.exports = function (appPath, outputPath, filePath, resource) {
+function getModuleInfo(outputPath, filePath) {
 
-    if (isAbsolute(resource) && validator.isURL(resource)) {
+    var relativeFilePath = path.relative(path.resolve(outputPath), filePath);
 
-        return resource;
+    var parts = relativeFilePath.split(path.sep);
+
+    if (parts.length < 4) {
+
+        throw new Error('Invalid relative file path: ' + relativeFilePath + '; Number of path parts: ' + parts.length +
+            '; required minimum of 4 for the format "$include_name$/$module_name$/**/$submodule_name$/$file_name$"');
+
     }
+
+    parts.pop();
+
+    var submoduleName = parts.pop();
+
+    parts.reverse();
+
+    parts.pop();
+
+    var moduleName = parts.pop();
+
+    return {
+        moduleName,
+        submoduleName
+    };
+}
+
+function getRelativePath(outputPath, filePath, relativeResourcePath) {
+
+    var fileDirPath = path.dirname(path.relative(path.resolve(outputPath), filePath));
+
+    return path.relative(fileDirPath, relativeResourcePath);
+}
+
+module.exports = function (outputPath, filePath, resourcePath) {
+
+    if (!outputPath) {
+
+        throw new Error('The output path is invalid');
+    }
+
+    if (!filePath) {
+
+        throw new Error('The file path is invalid');
+    }
+
+    if (!isAbsolute(filePath)) {
+
+        throw new Error('The file path is not absolute');
+    }
+
+    var absoluteOutputPath = path.resolve(outputPath);
+
+    if (!filePath.startsWith(absoluteOutputPath)) {
+
+        throw new Error('The file is not in the output directory. file path: ' + filePath + '; output path: ' + absoluteOutputPath);
+    }
+
+    if (!resourcePath) {
+
+        throw new Error('The resource path is invalid');
+    }
+
+    if (validator.isURL(resourcePath, validatorOptions) || isAbsolute(resourcePath)) {
+
+        return resourcePath;
+    }
+
+    var result;
 
     var contentPath = 'content/';
-    var globalContentPath = 'global_content/';
 
-    var resourceFileName = path.basename(resource);
+    if (resourcePath.startsWith(contentPath)) {
 
-    if (resource.startsWith(contentPath)) {
+        var info = getModuleInfo(outputPath, filePath);
 
-        var modulePath = path.join(appPath, 'modules');
-        var paths = path.dirname(filePath).split('/');
+        var relativeResource = path.relative(contentPath, resourcePath);
 
-        var moduleName = path.relative(modulePath, filePath).split('/')[0];
-        var submoduleName = paths[paths.length - 1];
-
-        return path.join(outputPath, moduleName, submoduleName, contentPath, resourceFileName);
-    }
-    else if (resource.startsWith(globalContentPath)) {
-
-        return path.join(outputPath, globalContentPath, resourceFileName);
+        result = path.join(contentPath, info.moduleName, info.submoduleName, relativeResource);
     }
     else {
-        throw new Error('Unknown resource path: ' + resource);
+
+        var resource = resourcePath;
+
+        var globalContentPath = 'global_content/';
+
+        if (!resource.startsWith(globalContentPath)) {
+
+            resource = path.join(globalContentPath, resource);
+        }
+
+        result = path.join(resource);
     }
+
+    return linuxStylePath(getRelativePath(outputPath, filePath, result));
 };
