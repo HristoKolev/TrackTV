@@ -1,8 +1,8 @@
 "use strict";
 
-var path = require('path');
+let path = require('path');
 
-var separatorRegex = new RegExp('\\' + path.sep, 'g');
+let separatorRegex = new RegExp('\\' + path.sep, 'g');
 
 module.exports = function (pathToProcess) {
 

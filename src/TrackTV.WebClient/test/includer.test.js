@@ -1,6 +1,6 @@
 "use strict";
 
-var chai = require('chai'),
+let chai = require('chai'),
     sinonChai = require("sinon-chai"),
     expect = chai.expect,
     sinon = require('sinon'),
@@ -8,13 +8,13 @@ var chai = require('chai'),
 
 chai.use(sinonChai);
 
-var pathChain = require('../modules/pathChain');
+let pathChain = require('../modules/pathChain');
 
-var assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var readStub = sinon.stub();
+let readStub = sinon.stub();
 
-var fs = {
+let fs = {
     readFileSync: function () {
 
         return readStub.apply(this, arguments);
@@ -23,15 +23,15 @@ var fs = {
     }
 };
 
-var readSpy = sinon.spy(fs, 'readFileSync');
-var writeSpy = sinon.spy(fs, 'writeFileSync');
+let readSpy = sinon.spy(fs, 'readFileSync');
+let writeSpy = sinon.spy(fs, 'writeFileSync');
 
 mockery.registerMock('fs', fs);
 
-var copyStructureStub = sinon.stub();
-var copyStub = sinon.stub();
+let copyStructureStub = sinon.stub();
+let copyStub = sinon.stub();
 
-var copyFiles = {
+let copyFiles = {
     copy: function () {
 
         return copyStub.apply(this, arguments);
@@ -42,17 +42,17 @@ var copyFiles = {
     }
 };
 
-var copySpy = sinon.spy(copyFiles, 'copy');
-var copyStructureSpy = sinon.spy(copyFiles, 'copyStructure');
+let copySpy = sinon.spy(copyFiles, 'copy');
+let copyStructureSpy = sinon.spy(copyFiles, 'copyStructure');
 
 mockery.registerMock('./copyFiles', copyFiles);
 
-var fillContent = {
+let fillContent = {
     func: function () {
     }
 };
 
-var fillContentSpy = sinon.spy(fillContent, 'func');
+let fillContentSpy = sinon.spy(fillContent, 'func');
 
 mockery.registerMock('./fillContent', fillContent.func);
 
@@ -78,7 +78,7 @@ function mockRequire(moduleName) {
 
     mockery.enable();
 
-    var module = require(moduleName);
+    let module = require(moduleName);
 
     mockery.disable();
 
@@ -89,7 +89,7 @@ mockery.registerAllowable('./fillContent');
 mockery.registerAllowable('./list-resources');
 mockery.registerAllowable('./copyFiles');
 
-var includer = mockRequire('../modules/includer');
+let includer = mockRequire('../modules/includer');
 
 describe('#includer', function () {
 
@@ -100,7 +100,7 @@ describe('#includer', function () {
         ]);
     });
 
-    var defaultOutput = pathChain.instance('app'),
+    let defaultOutput = pathChain.instance('app'),
         defaultLogFile = 'app\\includes.json',
         defaultIndex = 'index.html',
         defaultOutputIndex = 'app\\index.html';
@@ -115,7 +115,7 @@ describe('#includer', function () {
         readStub.withArgs(name).returns('[]');
     }
 
-    var defaultIncludes = [
+    let defaultIncludes = [
         {
             name: 'name',
             files: [
@@ -135,7 +135,7 @@ describe('#includer', function () {
 
     describe('instance exports', function () {
 
-        var instance = createDefaultInstance();
+        let instance = createDefaultInstance();
 
         assertCompositionMultitest.object('instance', instance, [
             ['formatters', 'object'],
@@ -175,7 +175,7 @@ describe('#includer', function () {
 
     describe('#formatters', function () {
 
-        var instance = createDefaultInstance();
+        let instance = createDefaultInstance();
 
         assertCompositionMultitest.object('formatters', instance.formatters, [
             ['scriptFormatter', 'string'],
@@ -215,7 +215,7 @@ describe('#includer', function () {
 
         it('should write to the includes file', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.createIncludeLog();
 
@@ -245,16 +245,16 @@ describe('#includer', function () {
             mockery.disable();
         });
 
-        var defaultName = 'name';
-        var defaultFiles = ['file1', 'file2', 'file3'];
-        var defaultFormatter = 'formatter';
-        var defaultTasks = ['task1', 'task2'];
+        let defaultName = 'name';
+        let defaultFiles = ['file1', 'file2', 'file3'];
+        let defaultFormatter = 'formatter';
+        let defaultTasks = ['task1', 'task2'];
 
         describe('validation', function () {
 
             it('should throw if the name is falsy', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -265,7 +265,7 @@ describe('#includer', function () {
 
             it('should throw if the files array is falsy', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -276,7 +276,7 @@ describe('#includer', function () {
 
             it('should throw if the files is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -287,7 +287,7 @@ describe('#includer', function () {
 
             it('should throw if the formatter is falsy', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -298,7 +298,7 @@ describe('#includer', function () {
 
             it('should throw if the tasks argument is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -310,7 +310,7 @@ describe('#includer', function () {
 
         it('should read the includes file', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             returnEmptyArray(defaultLogFile);
 
@@ -321,7 +321,7 @@ describe('#includer', function () {
 
         it('should write to the includes file', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             returnEmptyArray(defaultLogFile);
 
@@ -333,13 +333,13 @@ describe('#includer', function () {
 
         it('should add the includes to the log file', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             returnEmptyArray(defaultLogFile);
 
             instance.logInclude(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
-            var expected = [
+            let expected = [
                 {
                     name: 'name',
                     files: [
@@ -352,7 +352,7 @@ describe('#includer', function () {
                 }
             ];
 
-            var result = JSON.parse(writeSpy.args[0][1]);
+            let result = JSON.parse(writeSpy.args[0][1]);
 
             expect(result).to.deep.equal(expected);
         });
@@ -379,7 +379,7 @@ describe('#includer', function () {
 
         it('should call #copyFiles.copy() with the index file and the output location.', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.copyIndex();
 
@@ -410,9 +410,9 @@ describe('#includer', function () {
 
         it('should call #copyIndex()', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
-            var copyIndexSpy = sinon.spy(instance, 'copyIndex');
+            let copyIndexSpy = sinon.spy(instance, 'copyIndex');
 
             instance.updateIncludes();
 
@@ -421,7 +421,7 @@ describe('#includer', function () {
 
         it('should read the includes file', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.updateIncludes();
 
@@ -431,15 +431,15 @@ describe('#includer', function () {
 
         it('should call #fillContent() for every include', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             registerIncludes(defaultIncludes);
 
             instance.updateIncludes();
 
-            for (var i = 0; i < defaultIncludes.length; i += 1) {
+            for (let i = 0; i < defaultIncludes.length; i += 1) {
 
-                var include = defaultIncludes[i];
+                let include = defaultIncludes[i];
 
                 expect(fillContentSpy).to.be.calledWith(defaultOutputIndex, include.name);
             }
@@ -449,19 +449,19 @@ describe('#includer', function () {
 
             registerIncludes(defaultIncludes);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.updateIncludes();
 
-            var expected = [
+            let expected = [
                 '<script src="file1"></script>\n' +
                 '<script src="file2"></script>\n' +
                 '<script src="file3"></script>'
             ];
 
-            for (var i = 0; i < defaultIncludes.length; i += 1) {
+            for (let i = 0; i < defaultIncludes.length; i += 1) {
 
-                var include = defaultIncludes[i];
+                let include = defaultIncludes[i];
 
                 expect(fillContentSpy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
             }
@@ -469,7 +469,7 @@ describe('#includer', function () {
 
         it('should format the includes with the correct formatter', function () {
 
-            var includes = [
+            let includes = [
                 {
                     name: 'name',
                     files: [
@@ -492,7 +492,7 @@ describe('#includer', function () {
 
             registerIncludes(includes);
 
-            var expected = [
+            let expected = [
                 '<script src="file1"></script>\n' +
                 '<script src="file2"></script>\n' +
                 '<script src="file3"></script>',
@@ -502,13 +502,13 @@ describe('#includer', function () {
                 '<link rel="stylesheet" href="style3">'
             ];
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.updateIncludes();
 
-            for (var i = 0; i < includes.length; i += 1) {
+            for (let i = 0; i < includes.length; i += 1) {
 
-                var include = includes[i];
+                let include = includes[i];
 
                 expect(fillContentSpy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
             }
@@ -516,7 +516,7 @@ describe('#includer', function () {
 
         it('should throw if the includes refer to non existent formatter', function () {
 
-            var includes = [
+            let includes = [
                 {
                     name: 'name',
                     files: [
@@ -530,7 +530,7 @@ describe('#includer', function () {
 
             registerIncludes(includes);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             expect(function () {
 
@@ -563,9 +563,9 @@ describe('#includer', function () {
 
             registerIncludes(defaultIncludes);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
-            var result = instance.readIncludes();
+            let result = instance.readIncludes();
 
             expect(readSpy).to.be.calledOnce;
             expect(readSpy).to.be.always.calledWithExactly(defaultLogFile);
@@ -616,7 +616,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    var instance = createDefaultInstance();
+                    let instance = createDefaultInstance();
                     instance.writeIncludes(null);
 
                 }).to.throw(/includes are invalid/);
@@ -626,7 +626,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    var instance = createDefaultInstance();
+                    let instance = createDefaultInstance();
 
                     instance.writeIncludes('includes');
 
@@ -636,14 +636,14 @@ describe('#includer', function () {
 
         it('should write the includes to the file', function () {
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.writeIncludes(defaultIncludes);
 
             expect(writeSpy).to.be.calledOnce;
             expect(writeSpy).to.be.always.calledWith(defaultLogFile);
 
-            var includes = JSON.parse(writeSpy.args[0][1]);
+            let includes = JSON.parse(writeSpy.args[0][1]);
 
             expect(includes).to.deep.equal(defaultIncludes);
         });
@@ -689,7 +689,7 @@ describe('#includer', function () {
             mockery.disable();
         });
 
-        var defaultName = 'name',
+        let defaultName = 'name',
             defaultFiles = [
                 'dir/path/file1',
                 'dir/path/file2',
@@ -704,7 +704,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy name', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -715,7 +715,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy files argument', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -726,7 +726,7 @@ describe('#includer', function () {
 
             it('should throw if files is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -737,7 +737,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy basePath', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -748,7 +748,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy formatter', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -760,7 +760,7 @@ describe('#includer', function () {
 
             it('should throw if the tasks argument is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -775,7 +775,7 @@ describe('#includer', function () {
 
             copyStructureStub.returns([]);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
@@ -784,7 +784,7 @@ describe('#includer', function () {
 
         it('should call #logInclude() with the specified arguments', function () {
 
-            var copiedPaths = [
+            let copiedPaths = [
                 'app\\name\\path\\file1',
                 'app\\name\\path\\file2',
                 'app\\name\\path1\\file1',
@@ -793,13 +793,13 @@ describe('#includer', function () {
 
             copyStructureStub.returns(copiedPaths);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logInclude');
+            let logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'name\\path\\file1',
                 'name\\path\\file2',
                 'name\\path1\\file1',
@@ -829,7 +829,7 @@ describe('#includer', function () {
             mockery.disable();
         });
 
-        var defaultPlaceholder = 'placeholder',
+        let defaultPlaceholder = 'placeholder',
             defaultFile = 'source/file1',
             defaultBasePath = 'source',
             defaultFormatter = 'formatter',
@@ -839,7 +839,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy name', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -850,7 +850,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy file', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -861,7 +861,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy basePath', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -872,7 +872,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy formatter', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -884,7 +884,7 @@ describe('#includer', function () {
 
             it('should throw if the tasks argument is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -899,7 +899,7 @@ describe('#includer', function () {
 
             copyStructureStub.returns([]);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter, defaultTasks);
 
@@ -908,19 +908,19 @@ describe('#includer', function () {
 
         it('should call #logInclude() with the specified arguments', function () {
 
-            var copiedPaths = [
+            let copiedPaths = [
                 'app\\file1'
             ];
 
             copyStructureStub.returns(copiedPaths);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logInclude');
+            let logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeFile(defaultPlaceholder, defaultFile, defaultBasePath, defaultFormatter, defaultTasks);
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'file1'
             ];
 
@@ -948,7 +948,7 @@ describe('#includer', function () {
             mockery.disable();
         });
 
-        var defaultName = 'name',
+        let defaultName = 'name',
             defaultFiles = [
                 'dir/path/file1',
                 'dir/path/file2',
@@ -963,7 +963,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy name', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -974,7 +974,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy files argument', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -985,7 +985,7 @@ describe('#includer', function () {
 
             it('should throw if files is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -996,7 +996,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy basePath', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1007,7 +1007,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy formatter', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1019,7 +1019,7 @@ describe('#includer', function () {
 
             it('should throw if the tasks argument is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1034,7 +1034,7 @@ describe('#includer', function () {
 
             copyStructureStub.returns([]);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
@@ -1043,7 +1043,7 @@ describe('#includer', function () {
 
         it('should call #logInclude() with the specified arguments', function () {
 
-            var copiedPaths = [
+            let copiedPaths = [
                 'app\\path\\file1',
                 'app\\path\\file2',
                 'app\\path1\\file1',
@@ -1052,13 +1052,13 @@ describe('#includer', function () {
 
             copyStructureStub.returns(copiedPaths);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logInclude');
+            let logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'path\\file1',
                 'path\\file2',
                 'path1\\file1',
@@ -1089,7 +1089,7 @@ describe('#includer', function () {
             mockery.disable();
         });
 
-        var defaultName = 'name',
+        let defaultName = 'name',
             defaultFiles = [
                 'dir/path/file1',
                 'dir/path/file2',
@@ -1103,7 +1103,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy name', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1114,7 +1114,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy files argument', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1125,7 +1125,7 @@ describe('#includer', function () {
 
             it('should throw if files is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1136,7 +1136,7 @@ describe('#includer', function () {
 
             it('should throw if passed a falsy formatter', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1148,7 +1148,7 @@ describe('#includer', function () {
 
             it('should throw if the tasks argument is not an array', function () {
 
-                var instance = createDefaultInstance();
+                let instance = createDefaultInstance();
 
                 expect(function () {
 
@@ -1163,7 +1163,7 @@ describe('#includer', function () {
 
             copyStub.returns([]);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
             instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
@@ -1172,7 +1172,7 @@ describe('#includer', function () {
 
         it('should call #logInclude() with the specified arguments', function () {
 
-            var copiedPaths = [
+            let copiedPaths = [
                 'app\\name\\path-file1',
                 'app\\name\\path-file2',
                 'app\\name\\path1-file1',
@@ -1181,13 +1181,13 @@ describe('#includer', function () {
 
             copyStub.returns(copiedPaths);
 
-            var instance = createDefaultInstance();
+            let instance = createDefaultInstance();
 
-            var logIncludesSpy = sinon.spy(instance, 'logInclude');
+            let logIncludesSpy = sinon.spy(instance, 'logInclude');
 
             instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'name\\path-file1',
                 'name\\path-file2',
                 'name\\path1-file1',

@@ -1,18 +1,18 @@
 'use strict';
 
-var fs = require('fs'),
-    path = require('path'),
-    linuxStylePath = require('./linuxStylePath');
+let path = require('path');
+
+let linuxStylePath = require('./linuxStylePath');
 
 function appBuilder(rootPath) {
 
-    var that = Object.create(null);
+    let that = Object.create(null);
 
     that.appPath = function (relativePath) {
 
         if (Array.isArray(relativePath)) {
 
-            for (var i = 0; i < relativePath.length; i += 1) {
+            for (let i = 0; i < relativePath.length; i += 1) {
 
                 relativePath[i] = that.appPath(relativePath[i]);
             }

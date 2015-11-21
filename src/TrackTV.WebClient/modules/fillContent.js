@@ -1,6 +1,6 @@
 'use strict';
 
-var fs = require('fs');
+let fs = require('fs');
 
 function commentPlaceholder(placeholder) {
 
@@ -24,9 +24,9 @@ function replaceContent(destinationFile, placeholder, replacement) {
         throw new Error('The replacement is invalid. :' + replacement);
     }
 
-    var content = fs.readFileSync(destinationFile).toString();
+    let content = fs.readFileSync(destinationFile).toString();
 
-    var regex = commentPlaceholder(placeholder);
+    let regex = commentPlaceholder(placeholder);
 
     content = content.replace(regex, replacement);
 

@@ -1,7 +1,6 @@
 'use strict';
 
-var path = require('path'),
-    gulp = require('gulp');
+let path = require('path');
 
 function pathChain(basePath) {
 
@@ -10,7 +9,7 @@ function pathChain(basePath) {
         throw new Error('The base path is invalid.');
     }
 
-    var that = function (newPath) {
+    let that = function (newPath) {
 
         return pathChain(path.join(basePath, newPath));
     };

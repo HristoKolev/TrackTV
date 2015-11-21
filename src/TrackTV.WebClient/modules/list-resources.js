@@ -1,13 +1,13 @@
 'use strict';
 
-var path = require('path'),
+let path = require('path'),
     linuxStylePath = require('./linuxStylePath');
 
 function isFunction(func) {
 
-    var getType = {};
+    let obj = {};
 
-    return func && getType.toString.call(func) === '[object Function]';
+    return func && obj.toString.call(func) === '[object Function]';
 }
 
 function list(resources, formatter, basePath) {
@@ -39,16 +39,16 @@ function list(resources, formatter, basePath) {
         throw new Error('The base path is not a string.');
     }
 
-    var lines = [];
+    let lines = [];
 
-    for (var i = 0; i < resources.length; i += 1) {
+    for (let i = 0; i < resources.length; i += 1) {
 
-        var resourcePath = linuxStylePath(path.join('./', basePath, resources[i]));
+        let resourcePath = linuxStylePath(path.join('./', basePath, resources[i]));
 
         lines.push(formatter(resourcePath));
     }
 
-    var separator = '\n';
+    let separator = '\n';
 
     return lines.join(separator);
 }

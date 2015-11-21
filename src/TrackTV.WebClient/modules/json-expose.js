@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path');
-var fs = require('fs');
+let path = require('path'),
+    fs = require('fs');
 
 function wrapScript(name, jsonString) {
 
@@ -25,20 +25,20 @@ function expose(name, paths) {
         throw new Error('The paths is not an array.');
     }
 
-    var jsonObject = {};
+    let jsonObject = {};
 
-    for (var i = 0; i < paths.length; i += 1) {
+    for (let i = 0; i < paths.length; i += 1) {
 
-        var fileName = paths[i];
+        let fileName = paths[i];
 
-        var fileContent = fs.readFileSync(fileName).toString();
+        let fileContent = fs.readFileSync(fileName).toString();
 
-        var propertyName = path.basename(fileName, path.extname(fileName));
+        let propertyName = path.basename(fileName, path.extname(fileName));
 
         jsonObject[propertyName] = JSON.parse(fileContent);
     }
 
-    var jsonString = JSON.stringify(jsonObject);
+    let jsonString = JSON.stringify(jsonObject);
 
     return wrapScript(name, jsonString);
 }

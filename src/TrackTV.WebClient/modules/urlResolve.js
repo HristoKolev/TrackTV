@@ -5,10 +5,14 @@ let path = require('path'),
 
 let linuxStylePath = require('./linuxStylePath');
 
-let validatorOptions = {
+function isUrl(url) {
 
-    allow_protocol_relative_urls: true // jshint ignore:line
-};
+    let options = {
+        allow_protocol_relative_urls: true // jshint ignore:line
+    };
+
+    return validator.isURL(url, options);
+}
 
 function isAbsolute(p) {
 
@@ -73,11 +77,11 @@ function rewritePath(outputPath, filePath, resourcePath) {
         return path.join(resource);
     }
 
-    let contentPath = 'content/';
-    let globalContentPath = 'global_content/';
+    const contentPath = 'content/';
+    const globalContentPath = 'global_content/';
 
-    let includesPath = 'include/';
-    let globalIncludes = 'global_include/';
+    const includesPath = 'include/';
+    const globalIncludes = 'global_include/';
 
     if (resourcePath.startsWith(contentPath)) {
 
@@ -125,7 +129,7 @@ module.exports = function (outputPath, filePath, resourcePath) {
         throw new Error('The resource path is invalid');
     }
 
-    if (validator.isURL(resourcePath, validatorOptions) || isAbsolute(resourcePath)) {
+    if (isUrl(resourcePath) || isAbsolute(resourcePath)) {
 
         return resourcePath;
     }

@@ -1,6 +1,6 @@
 'use strict';
 
-var chai = require('chai'),
+let chai = require('chai'),
     expect = chai.expect,
     sinon = require('sinon'),
     chaiAsPromised = require("chai-as-promised"),
@@ -10,7 +10,7 @@ var chai = require('chai'),
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
-var assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
 function mockRequire(moduleName) {
 
@@ -25,22 +25,22 @@ function mockRequire(moduleName) {
     return module;
 }
 
-var runner;
+let runner;
 
 function resetRunner() {
 
     runner = require('../modules/runner');
 }
 
-var gulp = {
+let gulp = {
     src: function () {
     },
     dest: function () {
     }
 };
 
-var srcSpy = sinon.spy(gulp, 'src');
-var destSpy = sinon.spy(gulp, 'dest');
+let srcSpy = sinon.spy(gulp, 'src');
+let destSpy = sinon.spy(gulp, 'dest');
 
 function resetMocks() {
 
@@ -107,7 +107,7 @@ describe('#runner', function () {
 
             it('should throw if module with the same name is already passed', function () {
 
-                var name = 'name';
+                let name = 'name';
 
                 runner.use({
                     name: name,

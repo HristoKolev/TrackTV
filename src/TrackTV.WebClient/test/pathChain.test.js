@@ -1,10 +1,10 @@
 'use strict';
 
-var expect = require('chai').expect,
+let expect = require('chai').expect,
     assertCompositionMultitest = require('../testing/assertComposition').multitest,
     assertComposition = require('../testing/assertComposition');
 
-var pathChain = require('../modules/pathChain');
+let pathChain = require('../modules/pathChain');
 
 describe('#pathChain', function () {
 
@@ -28,7 +28,7 @@ describe('#pathChain', function () {
 
         it('should create new node', function () {
 
-            var chain = pathChain.instance('path');
+            let chain = pathChain.instance('path');
 
             assertIsChain(chain);
         });
@@ -36,31 +36,31 @@ describe('#pathChain', function () {
 
     it('should return new node when called with sting path', function () {
 
-        var instance = pathChain.instance('/test');
+        let instance = pathChain.instance('/test');
 
-        var node = instance('dir');
+        let node = instance('dir');
 
         assertIsChain(node);
     });
 
     it('should return the the correct value', function () {
 
-        var path = 'dir';
+        let path = 'dir';
 
-        var node = pathChain.instance(path);
+        let node = pathChain.instance(path);
 
         expect(node.value()).to.be.equal(path);
     });
 
     it('should expand the value of the node that created it', function () {
 
-        var parentPath = 'dir';
+        let parentPath = 'dir';
 
-        var parentNode = pathChain.instance(parentPath);
+        let parentNode = pathChain.instance(parentPath);
 
-        var nodePath = 'file';
+        let nodePath = 'file';
 
-        var node = parentNode(nodePath);
+        let node = parentNode(nodePath);
 
         expect(node.value()).to.be.equal('dir\\file');
     });

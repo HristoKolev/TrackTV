@@ -1,11 +1,11 @@
 "use strict";
 
-var expect = require('chai').expect,
+let expect = require('chai').expect,
     sinon = require('sinon');
 
-var assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var listResources = require('../modules/list-resources');
+let listResources = require('../modules/list-resources');
 
 describe('#listResources()', function () {
 
@@ -16,19 +16,19 @@ describe('#listResources()', function () {
 
     describe('#list()', function () {
 
-        var defaultResources = ['path1/file', 'path2/file', 'path3/file'];
+        let defaultResources = ['path1/file', 'path2/file', 'path3/file'];
 
-        var defaultFormatterSpy = sinon.spy(function () {
+        let defaultFormatterSpy = sinon.spy(function () {
 
             return '';
         });
 
-        var echoFormatterSpy = sinon.spy(function (arg) {
+        let echoFormatterSpy = sinon.spy(function (arg) {
 
             return arg;
         });
 
-        var formatters = {
+        let formatters = {
             defaultFormatter: defaultFormatterSpy,
             echoFormatter: echoFormatterSpy
         };
@@ -39,7 +39,7 @@ describe('#listResources()', function () {
             echoFormatterSpy.reset();
         }
 
-        var defaultBasePath = 'path';
+        let defaultBasePath = 'path';
 
         beforeEach(function () {
 
@@ -57,7 +57,7 @@ describe('#listResources()', function () {
 
         it('should throw if the resources argument is not an array', function () {
 
-            var resources = 'resources';
+            let resources = 'resources';
 
             expect(function () {
 
@@ -78,7 +78,7 @@ describe('#listResources()', function () {
 
         it('should throw if the formatter is not a function', function () {
 
-            var formatter = 'formatter';
+            let formatter = 'formatter';
 
             expect(function () {
 
@@ -89,7 +89,7 @@ describe('#listResources()', function () {
         });
 
         it('should throw if the basePath is provided but is not a string', function () {
-            var basePath = 1;
+            let basePath = 1;
 
             expect(function () {
 
@@ -100,7 +100,7 @@ describe('#listResources()', function () {
 
         it('should call the formatter for every element in the resources array', function () {
 
-            var resources = ['path1', 'path2', 'path3'];
+            let resources = ['path1', 'path2', 'path3'];
 
             listResources(resources, formatters.defaultFormatter, defaultBasePath);
 
@@ -109,18 +109,18 @@ describe('#listResources()', function () {
 
         it('should format the paths', function () {
 
-            var basePath = 'base';
+            let basePath = 'base';
 
             listResources(defaultResources, formatters.echoFormatter, basePath);
 
-            var results = [];
+            let results = [];
 
-            for (var i = 0; i < defaultResources.length; i += 1) {
+            for (let i = 0; i < defaultResources.length; i += 1) {
 
                 results.push(echoFormatterSpy.args[i][0]);
             }
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'base/path1/file',
                 'base/path2/file',
                 'base/path3/file'
@@ -133,14 +133,14 @@ describe('#listResources()', function () {
 
             listResources(defaultResources, formatters.echoFormatter);
 
-            var results = [];
+            let results = [];
 
-            for (var i = 0; i < defaultResources.length; i += 1) {
+            for (let i = 0; i < defaultResources.length; i += 1) {
 
                 results.push(echoFormatterSpy.args[i][0]);
             }
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'path1/file',
                 'path2/file',
                 'path3/file'
@@ -151,7 +151,7 @@ describe('#listResources()', function () {
 
         it('should format the paths in linux style /', function () {
 
-            var resources = [
+            let resources = [
                 'path1\\file',
                 'path2\\file',
                 'path3\\file'
@@ -159,14 +159,14 @@ describe('#listResources()', function () {
 
             listResources(resources, formatters.echoFormatter);
 
-            var results = [];
+            let results = [];
 
-            for (var i = 0; i < defaultResources.length; i += 1) {
+            for (let i = 0; i < defaultResources.length; i += 1) {
 
                 results.push(echoFormatterSpy.args[i][0]);
             }
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'path1/file',
                 'path2/file',
                 'path3/file'
@@ -177,7 +177,7 @@ describe('#listResources()', function () {
 
         it('should remove the path separator from the start of the path', function () {
 
-            var resources = [
+            let resources = [
                 '/path1/file',
                 '/path2/file',
                 '/path3/file'
@@ -185,14 +185,14 @@ describe('#listResources()', function () {
 
             listResources(resources, formatters.echoFormatter);
 
-            var results = [];
+            let results = [];
 
-            for (var i = 0; i < defaultResources.length; i += 1) {
+            for (let i = 0; i < defaultResources.length; i += 1) {
 
                 results.push(echoFormatterSpy.args[i][0]);
             }
 
-            var expectedPaths = [
+            let expectedPaths = [
                 'path1/file',
                 'path2/file',
                 'path3/file'

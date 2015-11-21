@@ -1,9 +1,9 @@
 'use strict';
 
-var expect = require('chai').expect,
+let expect = require('chai').expect,
     assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var linuxStylePath = require('../modules/linuxStylePath');
+let linuxStylePath = require('../modules/linuxStylePath');
 
 describe('#linuxStylePath()', function () {
 
@@ -28,15 +28,15 @@ describe('#linuxStylePath()', function () {
 
     it('should return a passed sting if the sting does not contain "\\"', function () {
 
-        var path = '/dir/path/file';
+        let path = '/dir/path/file';
 
         expect(linuxStylePath(path)).to.be.equal(path);
     });
 
     it('should replace \\ with /', function () {
 
-        var path = 'dir\\path\\file';
-        var linuxPath = 'dir/path/file';
+        let path = 'dir\\path\\file';
+        let linuxPath = 'dir/path/file';
 
         expect(linuxStylePath(path)).to.be.equal(linuxPath);
     });

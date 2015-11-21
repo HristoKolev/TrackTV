@@ -1,6 +1,6 @@
 "use strict";
 
-var chai = require('chai'),
+let chai = require('chai'),
     expect = chai.expect,
     sinonChai = require('sinon-chai'),
     sinon = require('sinon'),
@@ -8,11 +8,11 @@ var chai = require('chai'),
 
 chai.use(sinonChai);
 
-var assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var readStub = sinon.stub();
-var readSpy = sinon.spy(readStub);
-var writeSpy = sinon.spy();
+let readStub = sinon.stub();
+let readSpy = sinon.spy(readStub);
+let writeSpy = sinon.spy();
 
 function resetMocks() {
 
@@ -23,7 +23,7 @@ function resetMocks() {
     writeSpy.reset();
 }
 
-var fs = {
+let fs = {
     readFileSync: readSpy,
     writeFileSync: writeSpy
 };
@@ -34,7 +34,7 @@ function mockRequire(moduleName) {
 
     mockery.enable();
 
-    var module = require(moduleName);
+    let module = require(moduleName);
 
     mockery.disable();
 
@@ -43,7 +43,7 @@ function mockRequire(moduleName) {
 
 mockery.registerMock('fs', fs);
 
-var fillContent = mockRequire('../modules/fillContent');
+let fillContent = mockRequire('../modules/fillContent');
 
 describe('#fillContent()', function () {
 
@@ -71,9 +71,9 @@ describe('#fillContent()', function () {
             mockery.disable();
         });
 
-        var defaultDestination = 'dest';
-        var defaultPlaceholder = 'placeholder';
-        var defaultReplacement = 'value';
+        let defaultDestination = 'dest';
+        let defaultPlaceholder = 'placeholder';
+        let defaultReplacement = 'value';
 
         it('should throw if the destination path is falsy', function () {
 
@@ -118,9 +118,9 @@ describe('#fillContent()', function () {
 
         it('should replace the placeholder with the replacer', function () {
 
-            var replacement = '[new content]';
+            let replacement = '[new content]';
 
-            var content = 'Lorem <!-- placeholder --> ipsum dolor sit amet, consectetur adipiscing elit.';
+            let content = 'Lorem <!-- placeholder --> ipsum dolor sit amet, consectetur adipiscing elit.';
 
             readStub.returns(content);
 
@@ -129,7 +129,7 @@ describe('#fillContent()', function () {
             expect(readSpy).to.be.calledOnce;
             expect(readSpy).to.be.always.calledWithExactly(defaultDestination);
 
-            var expectedContent = 'Lorem [new content] ipsum dolor sit amet, consectetur adipiscing elit.';
+            let expectedContent = 'Lorem [new content] ipsum dolor sit amet, consectetur adipiscing elit.';
 
             expect(writeSpy).to.be.calledOnce;
             expect(writeSpy).to.be.always.calledWithExactly(defaultDestination, expectedContent);
@@ -137,16 +137,16 @@ describe('#fillContent()', function () {
 
         it('should replace all occurrences of the placeholder', function () {
 
-            var replacement = '[new content]';
+            let replacement = '[new content]';
 
-            var content = 'Lorem <!-- placeholder --> ipsum dolor sit amet,' +
+            let content = 'Lorem <!-- placeholder --> ipsum dolor sit amet,' +
                 ' consectetur adipiscing <!-- placeholder --> elit.';
 
             readStub.returns(content);
 
             fillContent(defaultDestination, defaultPlaceholder, replacement);
 
-            var expectedContent = 'Lorem [new content] ipsum dolor sit amet,' +
+            let expectedContent = 'Lorem [new content] ipsum dolor sit amet,' +
                 ' consectetur adipiscing [new content] elit.';
 
             expect(writeSpy).to.be.always.calledWithExactly(defaultDestination, expectedContent);

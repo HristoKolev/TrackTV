@@ -1,6 +1,6 @@
 'use strict';
 
-var path = require('path'),
+let path = require('path'),
     fs = require('fs');
 
 function includer(indexFile, output) {
@@ -15,24 +15,24 @@ function includer(indexFile, output) {
         throw new Error('The output is invalid.');
     }
 
-    var that = Object.create(null);
+    let that = Object.create(null);
 
-    var outputIndex = output('index.html'),
+    let outputIndex = output('index.html'),
         includeLog = output('includes.json');
 
     // custom modules
-    var fillContent = require('./fillContent'),
+    let fillContent = require('./fillContent'),
         listScripts = require('./list-resources'),
         copyFiles = require('./copyFiles');
 
     // logic
 
-    var scriptFormatter = function (resourcePath) {
+    let scriptFormatter = function (resourcePath) {
 
         return '<script src="' + resourcePath + '"></script>';
     };
 
-    var styleFormatter = function (resourcePath) {
+    let styleFormatter = function (resourcePath) {
 
         return '<link rel="stylesheet" href="' + resourcePath + '">';
     };
@@ -46,7 +46,7 @@ function includer(indexFile, output) {
 
         files = files.slice();
 
-        for (var i = 0; i < files.length; i += 1) {
+        for (let i = 0; i < files.length; i += 1) {
 
             if (files[i].indexOf(baseDir) !== 0) {
 
@@ -61,32 +61,32 @@ function includer(indexFile, output) {
 
     function renameModuleFile(fileName) {
 
-        var ext = path.extname(fileName);
-        var base = path.basename(fileName, ext);
+        let ext = path.extname(fileName);
+        let base = path.basename(fileName, ext);
 
-        var moduleName = path.basename(path.dirname(fileName));
+        let moduleName = path.basename(path.dirname(fileName));
 
         return path.join(moduleName + '-' + base + ext);
     }
 
     function separateModuleFile(fileName) {
 
-        var ext = path.extname(fileName);
-        var base = path.basename(fileName, ext);
+        let ext = path.extname(fileName);
+        let base = path.basename(fileName, ext);
 
-        var moduleName = path.basename(path.dirname(fileName));
+        let moduleName = path.basename(path.dirname(fileName));
 
         return path.join(moduleName, base + ext);
     }
 
     function getFormatter(name) {
 
-        var formattersByName = {};
+        let formattersByName = {};
 
         formattersByName[that.formatters.scriptFormatter] = scriptFormatter;
         formattersByName[that.formatters.styleFormatter] = styleFormatter;
 
-        var formatter = formattersByName[name];
+        let formatter = formattersByName[name];
 
         if (!formatter) {
 
@@ -99,7 +99,7 @@ function includer(indexFile, output) {
 
     function addFormatter(includes) {
 
-        for (var i = 0; i < includes.length; i += 1) {
+        for (let i = 0; i < includes.length; i += 1) {
 
             includes[i].formatter = getFormatter(includes[i].formatter);
         }
@@ -124,7 +124,7 @@ function includer(indexFile, output) {
             throw new Error('The includes are not an array.');
         }
 
-        var jsonString = JSON.stringify(includes, null, '\t');
+        let jsonString = JSON.stringify(includes, null, '\t');
 
         fs.writeFileSync(includeLog.value(), jsonString);
     };
@@ -166,7 +166,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        var includes = that.readIncludes();
+        let includes = that.readIncludes();
 
         includes.push({
             name: name,
@@ -194,11 +194,11 @@ function includer(indexFile, output) {
 
         that.copyIndex();
 
-        var includes = addFormatter(that.readIncludes());
+        let includes = addFormatter(that.readIncludes());
 
-        for (var i = 0; i < includes.length; i += 1) {
+        for (let i = 0; i < includes.length; i += 1) {
 
-            var include = includes[i];
+            let include = includes[i];
 
             fillContent(outputIndex.value(), include.name, listScripts(include.files, include.formatter));
         }
@@ -241,7 +241,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        var newList = copyFiles.copyStructure(files, output(name).value(), basePath);
+        let newList = copyFiles.copyStructure(files, output(name).value(), basePath);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
@@ -278,7 +278,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        var newList = copyFiles.copyStructure([file], output.value(), basePath);
+        let newList = copyFiles.copyStructure([file], output.value(), basePath);
 
         injectApplicationFiles(placeholder, newList, formatter, tasks);
     };
@@ -315,7 +315,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        var newList = copyFiles.copy(files, output(name).value(), renameModuleFile);
+        let newList = copyFiles.copy(files, output(name).value(), renameModuleFile);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
@@ -357,7 +357,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        var newList = copyFiles.copyStructure(files, output(name).value(), basePath, separateModuleFile);
+        let newList = copyFiles.copyStructure(files, output(name).value(), basePath, separateModuleFile);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };

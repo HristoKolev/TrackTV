@@ -1,12 +1,12 @@
 "use strict";
 
-var expect = require('chai').expect,
+let expect = require('chai').expect,
     sinon = require('sinon'),
     mockery = require('mockery');
 
-var assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var readStub = sinon.stub();
+let readStub = sinon.stub();
 
 function resetMocks() {
 
@@ -15,7 +15,7 @@ function resetMocks() {
     readStub.returns('{}');
 }
 
-var fs = {
+let fs = {
     readFileSync: readStub
 };
 
@@ -27,7 +27,7 @@ function mockRequire(moduleName) {
 
     mockery.enable();
 
-    var module = require(moduleName);
+    let module = require(moduleName);
 
     mockery.disable();
 
@@ -36,7 +36,7 @@ function mockRequire(moduleName) {
 
 mockery.registerMock('fs', fs);
 
-var jsonExpose = mockRequire('../modules/json-expose');
+let jsonExpose = mockRequire('../modules/json-expose');
 
 describe('#jsonExpose()', function () {
 
@@ -64,9 +64,9 @@ describe('#jsonExpose()', function () {
             mockery.disable();
         });
 
-        var defaultName = 'settings';
+        let defaultName = 'settings';
 
-        var defaultPaths = ['file1.json', 'file2.json', 'file3.json'];
+        let defaultPaths = ['file1.json', 'file2.json', 'file3.json'];
 
         it('should throw if the name is falsy', function () {
 
@@ -98,7 +98,7 @@ describe('#jsonExpose()', function () {
 
         it('should read every file', function () {
 
-            for (var i = 0; i < defaultPaths.length; i += 1) {
+            for (let i = 0; i < defaultPaths.length; i += 1) {
 
                 readStub.calledWith(defaultPaths[i]);
             }
@@ -108,41 +108,41 @@ describe('#jsonExpose()', function () {
 
         it('should format the json content in a script tag', function () {
 
-            var paths = ['file1.json'];
+            let paths = ['file1.json'];
 
             readStub.withArgs('file1.json').returns('{"content":"file1-content"}');
 
-            var name = 'settings';
+            let name = 'settings';
 
-            var result = jsonExpose(name, paths);
+            let result = jsonExpose(name, paths);
 
-            var expected = '<script>window["settings"] = {"file1":{"content":"file1-content"}};</script>';
+            let expected = '<script>window["settings"] = {"file1":{"content":"file1-content"}};</script>';
 
             expect(result).to.equal(expected);
         });
 
         it('should format all of the json content in a script tag', function () {
 
-            var paths = [
+            let paths = [
                 'file1.json',
                 'file2.json',
                 'file3.json'
             ];
 
-            var values = [
+            let values = [
                 '{"content":"file1-content"}',
                 '{"content":"file2-content"}',
                 '{"content":"file2-content"}'
             ];
 
-            for (var i = 0; i < paths.length; i += 1) {
+            for (let i = 0; i < paths.length; i += 1) {
 
                 readStub.withArgs(paths[i]).returns(values[i]);
             }
 
-            var result = jsonExpose('settings', paths);
+            let result = jsonExpose('settings', paths);
 
-            var expected = '<script>window["settings"] = {"file1":{"content":"file1-content"},' +
+            let expected = '<script>window["settings"] = {"file1":{"content":"file1-content"},' +
                 '"file2":{"content":"file2-content"},"file3":{"content":"file2-content"}};</script>';
 
             expect(result).to.equal(expected);

@@ -1,6 +1,6 @@
 'use strict';
 
-var path = require('path'),
+let path = require('path'),
     linuxStylePath = require('../modules/linuxStylePath');
 
 function bowerComponents(includes, basePath) {
@@ -15,7 +15,7 @@ function bowerComponents(includes, basePath) {
         throw new Error('The base path is invalid.');
     }
 
-    var that = Object.create(null);
+    let that = Object.create(null);
 
     that.basePath = basePath;
 
@@ -23,9 +23,9 @@ function bowerComponents(includes, basePath) {
 
         if (Array.isArray(relativePath)) {
 
-            var paths = relativePath;
+            let paths = relativePath;
 
-            for (var i = 0; i < paths.length; i += 1) {
+            for (let i = 0; i < paths.length; i += 1) {
 
                 paths[i] = that.resolve(paths[i]);
             }

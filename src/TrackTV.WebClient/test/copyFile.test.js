@@ -1,16 +1,15 @@
 'use strict';
-var chai = require('chai'),
+let chai = require('chai'),
     expect = chai.expect,
     sinonChai = require("sinon-chai"),
     sinon = require('sinon'),
-    path = require('path'),
     mockery = require('mockery');
 
 chai.use(sinonChai);
 
-var assertComposition = require('../testing/assertComposition').multitest;
+let assertComposition = require('../testing/assertComposition').multitest;
 
-var spy = sinon.spy();
+let spy = sinon.spy();
 
 mockery.registerMock('fs-extra', {
     copySync: spy
@@ -52,13 +51,13 @@ describe('#copyFiles', function () {
             mockery.disable();
         });
 
-        var files = [
+        let files = [
             'source/dir/dir/file1.txt',
             'source/dir/file2.txt',
             'source/dir2/file3.txt'
         ];
 
-        var destination = 'dest';
+        let destination = 'dest';
 
         it('should copy each individual file', function () {
 
@@ -66,7 +65,7 @@ describe('#copyFiles', function () {
 
             expect(spy).to.have.callCount(files.length);
 
-            for (var i = 0; i < files.length; i += 1) {
+            for (let i = 0; i < files.length; i += 1) {
 
                 expect(spy.args[i][0]).to.equal(files[i]);
             }
@@ -74,9 +73,9 @@ describe('#copyFiles', function () {
 
         it('should return the new paths', function () {
 
-            var newPaths = copyFiles.copy(files, destination);
+            let newPaths = copyFiles.copy(files, destination);
 
-            for (var i = 0; i < files.length; i += 1) {
+            for (let i = 0; i < files.length; i += 1) {
 
                 expect(spy.args[i][1]).to.equal(newPaths[i]);
             }
@@ -84,20 +83,20 @@ describe('#copyFiles', function () {
 
         it('should return flattened file paths starting with the destination path', function () {
 
-            var expected = [
+            let expected = [
                 'dest\\file1.txt',
                 'dest\\file2.txt',
                 'dest\\file3.txt'
             ];
 
-            var newPaths = copyFiles.copy(files, destination);
+            let newPaths = copyFiles.copy(files, destination);
 
             expect(newPaths).to.deep.equal(expected);
         });
 
         it('should be able to process single file', function () {
 
-            var newPaths = copyFiles.copy('dir/file.txt', destination);
+            let newPaths = copyFiles.copy('dir/file.txt', destination);
 
             expect(newPaths).to.have.length(1);
 
@@ -106,12 +105,12 @@ describe('#copyFiles', function () {
 
         it('should use the provided processing function insted of flattening if such function is available', function () {
 
-            var func = function (fileName) {
+            let func = function (fileName) {
 
                 return fileName + '!';
             };
 
-            var newPaths = copyFiles.copy('file.txt', destination, func);
+            let newPaths = copyFiles.copy('file.txt', destination, func);
 
             expect(newPaths[0]).to.equal('dest\\file.txt!');
 
@@ -119,7 +118,7 @@ describe('#copyFiles', function () {
 
         it('should throw if the process function does not return', function () {
 
-            var func = function () {
+            let func = function () {
             };
 
             expect(function () {
@@ -177,15 +176,15 @@ describe('#copyFiles', function () {
             mockery.disable();
         });
 
-        var files = [
+        let files = [
             'source/dir/dir/file1.txt',
             'source/dir/file2.txt',
             'source/dir2/file3.txt'
         ];
 
-        var destination = 'dest';
+        let destination = 'dest';
 
-        var baseDir = 'source';
+        let baseDir = 'source';
 
         it('should copy each individual file', function () {
 
@@ -193,7 +192,7 @@ describe('#copyFiles', function () {
 
             expect(spy).to.have.callCount(files.length);
 
-            for (var i = 0; i < files.length; i += 1) {
+            for (let i = 0; i < files.length; i += 1) {
 
                 expect(spy.args[i][0]).to.equal(files[i]);
             }
@@ -201,9 +200,9 @@ describe('#copyFiles', function () {
 
         it('should return the new paths', function () {
 
-            var newPaths = copyFiles.copyStructure(files, destination, baseDir);
+            let newPaths = copyFiles.copyStructure(files, destination, baseDir);
 
-            for (var i = 0; i < files.length; i += 1) {
+            for (let i = 0; i < files.length; i += 1) {
 
                 expect(spy.args[i][1]).to.equal(newPaths[i]);
             }
@@ -211,7 +210,7 @@ describe('#copyFiles', function () {
 
         it('should be able to process single file', function () {
 
-            var newPaths = copyFiles.copyStructure('dir/file.txt', destination, 'dir');
+            let newPaths = copyFiles.copyStructure('dir/file.txt', destination, 'dir');
 
             expect(newPaths).to.have.length(1);
 
@@ -220,11 +219,11 @@ describe('#copyFiles', function () {
 
         it('should use the provided processing function insted of removing the base path if such function is available', function () {
 
-            var func = function (fileName) {
+            let func = function (fileName) {
                 return fileName + '!';
             };
 
-            var newPaths = copyFiles.copyStructure('base/file.txt', destination, 'base', func);
+            let newPaths = copyFiles.copyStructure('base/file.txt', destination, 'base', func);
 
             expect(newPaths[0]).to.equal('dest\\base\\file.txt!');
 
@@ -232,7 +231,7 @@ describe('#copyFiles', function () {
 
         it('should throw if the process function does not return', function () {
 
-            var func = function () {
+            let func = function () {
             };
 
             expect(function () {
@@ -245,13 +244,13 @@ describe('#copyFiles', function () {
 
         it('should copy the files while preserving the file structure', function () {
 
-            var expected = [
+            let expected = [
                 'dest\\dir\\dir\\file1.txt',
                 'dest\\dir\\file2.txt',
                 'dest\\dir2\\file3.txt'
             ];
 
-            var newPaths = copyFiles.copyStructure(files, destination, 'source');
+            let newPaths = copyFiles.copyStructure(files, destination, 'source');
 
             expect(newPaths).to.deep.equal(expected);
 

@@ -1,9 +1,9 @@
 'use strict';
 
-var expect = require('chai').expect,
+let expect = require('chai').expect,
     assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var appBuilder = require('../modules/appBuilder');
+let appBuilder = require('../modules/appBuilder');
 
 describe('#appBuilder', function () {
 
@@ -16,7 +16,7 @@ describe('#appBuilder', function () {
 
     describe('instance exports', function () {
 
-        var builder = appBuilder.instance('./');
+        let builder = appBuilder.instance('./');
 
         assertCompositionMultitest.object('appBuilder', builder, [
 
@@ -52,9 +52,9 @@ describe('#appBuilder', function () {
 
         it('should return the application root if called with no or falsy arguments', function () {
 
-            var root = 'path';
+            let root = 'path';
 
-            var builder = appBuilder.instance(root);
+            let builder = appBuilder.instance(root);
 
             expect(builder.appPath()).to.be.equal(root);
             expect(builder.appPath(null)).to.be.equal(root);
@@ -62,20 +62,20 @@ describe('#appBuilder', function () {
 
         it('should return application relative path given a relative path', function () {
 
-            var rootPath = 'app';
+            let rootPath = 'app';
 
-            var builder = appBuilder.instance(rootPath);
+            let builder = appBuilder.instance(rootPath);
 
-            var path = 'file';
+            let path = 'file';
 
             expect(builder.appPath(path)).to.be.equal('app/file');
         });
 
         it('should convert windows style paths to linux style paths', function () {
 
-            var builder = appBuilder.instance('dir\\path\\path1');
+            let builder = appBuilder.instance('dir\\path\\path1');
 
-            var path = builder.appPath('lib\\file');
+            let path = builder.appPath('lib\\file');
 
             expect(path).to.equal('dir/path/path1/lib/file');
         });
@@ -91,17 +91,17 @@ describe('#appBuilder', function () {
             });
         }
 
-        var basePath = 'app';
+        let basePath = 'app';
 
-        var builder = appBuilder.instance(basePath);
+        let builder = appBuilder.instance(basePath);
 
         Object.keys(builder).forEach(function (index) {
 
-            var value = builder[index];
+            let value = builder[index];
 
             if (typeof value === 'string') {
 
-                var name = 'should start with the application base path. Property:  #' + index;
+                let name = 'should start with the application base path. Property:  #' + index;
 
                 assertBasePath(name, value, basePath);
             }

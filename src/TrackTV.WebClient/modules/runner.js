@@ -1,11 +1,11 @@
 'use strict';
 
-var path = require('path'),
+let path = require('path'),
     gulp = require('gulp'),
     task = require('gulp-task'),
     q = require('q');
 
-var streamFiles = require('./plugins/streamFiles');
+let streamFiles = require('./plugins/streamFiles');
 
 function saveFile() {
 
@@ -22,9 +22,9 @@ function source(files) {
 
 function resolvePaths(files, output) {
 
-    var paths = files.slice();
+    let paths = files.slice();
 
-    for (var i = 0; i < paths.length; i += 1) {
+    for (let i = 0; i < paths.length; i += 1) {
 
         paths[i] = output(paths[i]).value();
     }
@@ -34,11 +34,11 @@ function resolvePaths(files, output) {
 
 function formatUpdates(data) {
 
-    var updates = {};
+    let updates = {};
 
-    for (var i = 0; i < data.length; i += 1) {
+    for (let i = 0; i < data.length; i += 1) {
 
-        var update = data[i];
+        let update = data[i];
 
         updates[update.name] = update.files;
     }
@@ -78,7 +78,7 @@ function runner() {
 
     function getTask(name) {
 
-        var task = tasks[name];
+        let task = tasks[name];
 
         if (!task) {
 
@@ -90,11 +90,11 @@ function runner() {
 
     function runTasks(stream, tasks) {
 
-        for (var i = 0; i < tasks.length; i += 1) {
+        for (let i = 0; i < tasks.length; i += 1) {
 
-            var name = tasks[i];
+            let name = tasks[i];
 
-            var task = getTask(name);
+            let task = getTask(name);
 
             stream = task(stream);
         }
@@ -106,7 +106,7 @@ function runner() {
 
         return task.run(function () {
 
-            var stream = source(resolvePaths(include.files, output));
+            let stream = source(resolvePaths(include.files, output));
 
             return runTasks(stream, include.tasks)
                 .pipe(streamFiles(path.resolve(output.value()), include.name))
@@ -125,13 +125,13 @@ function runner() {
 
         return q.all(promises).then(function (data) {
 
-            var updates = formatUpdates(data);
+            let updates = formatUpdates(data);
 
-            for (var i = 0; i < includes.length; i += 1) {
+            for (let i = 0; i < includes.length; i += 1) {
 
-                var include = includes[i];
+                let include = includes[i];
 
-                var files = updates[include.name];
+                let files = updates[include.name];
 
                 if (files) {
 
@@ -160,11 +160,11 @@ function runner() {
             throw new Error('The output is invalid.');
         }
 
-        var promises = [];
+        let promises = [];
 
         for (var i = 0; i < includes.length; i += 1) {
 
-            var include = includes[i];
+            let include = includes[i];
 
             promises.push(getPromise(include, output));
         }

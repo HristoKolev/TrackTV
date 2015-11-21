@@ -1,11 +1,11 @@
 'use strict';
 
-var fs = require('fs-extra'),
+let fs = require('fs-extra'),
     path = require('path');
 
 function copyFiles() {
 
-    var that = Object.create(null);
+    let that = Object.create(null);
 
     function flatten(name) {
 
@@ -46,18 +46,18 @@ function copyFiles() {
 
         processPath = processPath || flatten;
 
-        var returnPaths = [];
+        let returnPaths = [];
 
-        for (var i = 0; i < paths.length; i += 1) {
+        for (let i = 0; i < paths.length; i += 1) {
 
-            var processedPath = processPath(paths[i]);
+            let processedPath = processPath(paths[i]);
 
             if (!processedPath) {
 
                 throw new Error('The process function returned a falsy path.');
             }
 
-            var newPath = path.join(targetDir, processedPath);
+            let newPath = path.join(targetDir, processedPath);
 
             fs.copySync(paths[i], newPath);
 
