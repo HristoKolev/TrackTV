@@ -1,11 +1,11 @@
 'use strict';
 
-var path = require('path');
+let path = require('path');
 
-var expect = require('chai').expect,
+let expect = require('chai').expect,
     assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-var urlResolve = require('../modules/urlResolve');
+let urlResolve = require('../modules/urlResolve');
 
 describe('#urlResolve()', function () {
 
@@ -14,7 +14,7 @@ describe('#urlResolve()', function () {
         assertCompositionMultitest.function(urlResolve, 'urlResolve');
     });
 
-    var defaultOutput = './wwwroot',
+    let defaultOutput = './wwwroot',
         defaultFilePath = path.resolve('.\\wwwroot\\main-less-styles\\main\\calendar\\clendar.less'),
         defaultResourcePath = 'content/dir/file1';
 
@@ -63,7 +63,7 @@ describe('#urlResolve()', function () {
 
     it('should throw if the file is not in the output directory', function () {
 
-        var filePath = path.resolve('.\\dist\\file1');
+        let filePath = path.resolve('.\\dist\\file1');
 
         expect(function () {
 
@@ -74,9 +74,9 @@ describe('#urlResolve()', function () {
 
     it('should return the path if it is absolute', function () {
 
-        var resourcePath = 'C:\\windows';
+        let resourcePath = 'C:\\windows';
 
-        var result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
         expect(result).to.equal(resourcePath);
 
@@ -84,9 +84,9 @@ describe('#urlResolve()', function () {
 
     it('should return the path if it is an url', function () {
 
-        var resourcePath = 'http://google.com';
+        let resourcePath = 'http://google.com';
 
-        var result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
         expect(result).to.equal(resourcePath);
 
@@ -94,36 +94,66 @@ describe('#urlResolve()', function () {
 
     it('should return the path if it is relative protocol url', function () {
 
-        var resourcePath = '//google.com';
+        let resourcePath = '//google.com';
 
-        var result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
         expect(result).to.equal(resourcePath);
 
     });
 
-    it('should return the resolved path', function () {
+    it('should resolve local path', function () {
 
-        var result = urlResolve(defaultOutput, defaultFilePath, defaultResourcePath);
+        let result = urlResolve(defaultOutput, defaultFilePath, defaultResourcePath);
 
         expect(result).to.equal('../../../content/main/calendar/dir/file1');
     });
 
-    it('should return resolved global path if no local path is selected', function () {
+    it('should resolve local include path', function () {
 
-        var resourcePath = 'dir/file1';
+        let resourcePath = 'include/dir/file1';
 
-        var result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+
+        expect(result).to.equal('../../../include/main/calendar/dir/file1');
+    });
+
+    it('should resolve global path if explicitly selected ', function () {
+
+        let resourcePath = 'global_content/dir/file1';
+
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
         expect(result).to.equal('../../../global_content/dir/file1');
     });
 
-    it('should return resolved global path if explicitly selected ', function () {
+    it('should resolve global include path if explicitly selected ', function () {
 
-        var resourcePath = 'global_content/dir/file1';
+        let resourcePath = 'global_include/dir/file1';
 
-        var result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
+
+        expect(result).to.equal('../../../global_include/dir/file1');
+    });
+
+    it('should resolve global path if no local path is selected', function () {
+
+        let resourcePath = 'dir/file1';
+
+        let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
         expect(result).to.equal('../../../global_content/dir/file1');
+    });
+
+    it('should throw if the file path does not match the build system pattern', function () {
+
+        let filePath = path.resolve('.\\wwwroot\\main\\calendar\\clendar.less');
+
+        expect(function () {
+
+            urlResolve(defaultOutput, filePath, defaultResourcePath);
+
+        }).to.throw(/relative file path/);
+
     });
 });

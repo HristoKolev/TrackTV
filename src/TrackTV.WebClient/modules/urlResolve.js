@@ -1,12 +1,13 @@
 'use strict';
 
-var path = require('path'),
+let path = require('path'),
     validator = require('validator');
 
-var linuxStylePath = require('./linuxStylePath');
+let linuxStylePath = require('./linuxStylePath');
 
-var validatorOptions = {
-    allow_protocol_relative_urls: true
+let validatorOptions = {
+
+    allow_protocol_relative_urls: true // jshint ignore:line
 };
 
 function isAbsolute(p) {
@@ -16,26 +17,25 @@ function isAbsolute(p) {
 
 function getModuleInfo(outputPath, filePath) {
 
-    var relativeFilePath = path.relative(path.resolve(outputPath), filePath);
+    let relativeFilePath = path.relative(path.resolve(outputPath), filePath);
 
-    var parts = relativeFilePath.split(path.sep);
+    let parts = relativeFilePath.split(path.sep);
 
     if (parts.length < 4) {
 
         throw new Error('Invalid relative file path: ' + relativeFilePath + '; Number of path parts: ' + parts.length +
-            '; required minimum of 4 for the format "$include_name$/$module_name$/**/$submodule_name$/$file_name$"');
-
+            '; required minimum of 4 for the pattern "$include_name$/$module_name$/**/$submodule_name$/$file_name$"');
     }
 
     parts.pop();
 
-    var submoduleName = parts.pop();
+    let submoduleName = parts.pop();
 
     parts.reverse();
 
     parts.pop();
 
-    var moduleName = parts.pop();
+    let moduleName = parts.pop();
 
     return {
         moduleName,
@@ -45,9 +45,55 @@ function getModuleInfo(outputPath, filePath) {
 
 function getRelativePath(outputPath, filePath, relativeResourcePath) {
 
-    var fileDirPath = path.dirname(path.relative(path.resolve(outputPath), filePath));
+    let fileDirPath = path.dirname(path.relative(path.resolve(outputPath), filePath));
 
     return path.relative(fileDirPath, relativeResourcePath);
+}
+
+function rewritePath(outputPath, filePath, resourcePath) {
+
+    function getLocalPath(basePath) {
+
+        let info = getModuleInfo(outputPath, filePath);
+
+        let relativeResourcePath = path.relative(basePath, resourcePath);
+
+        return path.join(basePath, info.moduleName, info.submoduleName, relativeResourcePath);
+    }
+
+    function getGlobalPath(basePath) {
+
+        let resource = resourcePath;
+
+        if (!resource.startsWith(basePath)) {
+
+            resource = path.join(basePath, resource);
+        }
+
+        return path.join(resource);
+    }
+
+    let contentPath = 'content/';
+    let globalContentPath = 'global_content/';
+
+    let includesPath = 'include/';
+    let globalIncludes = 'global_include/';
+
+    if (resourcePath.startsWith(contentPath)) {
+
+        return getLocalPath(contentPath);
+    }
+    else if (resourcePath.startsWith(includesPath)) {
+
+        return getLocalPath(includesPath);
+    }
+    else if (resourcePath.startsWith(globalIncludes)) {
+
+        return getGlobalPath(globalIncludes);
+    }
+    else {
+        return getGlobalPath(globalContentPath);
+    }
 }
 
 module.exports = function (outputPath, filePath, resourcePath) {
@@ -67,7 +113,7 @@ module.exports = function (outputPath, filePath, resourcePath) {
         throw new Error('The file path is not absolute');
     }
 
-    var absoluteOutputPath = path.resolve(outputPath);
+    let absoluteOutputPath = path.resolve(outputPath);
 
     if (!filePath.startsWith(absoluteOutputPath)) {
 
@@ -84,31 +130,7 @@ module.exports = function (outputPath, filePath, resourcePath) {
         return resourcePath;
     }
 
-    var result;
-
-    var contentPath = 'content/';
-
-    if (resourcePath.startsWith(contentPath)) {
-
-        var info = getModuleInfo(outputPath, filePath);
-
-        var relativeResource = path.relative(contentPath, resourcePath);
-
-        result = path.join(contentPath, info.moduleName, info.submoduleName, relativeResource);
-    }
-    else {
-
-        var resource = resourcePath;
-
-        var globalContentPath = 'global_content/';
-
-        if (!resource.startsWith(globalContentPath)) {
-
-            resource = path.join(globalContentPath, resource);
-        }
-
-        result = path.join(resource);
-    }
+    var result = rewritePath(outputPath, filePath, resourcePath);
 
     return linuxStylePath(getRelativePath(outputPath, filePath, result));
 };
