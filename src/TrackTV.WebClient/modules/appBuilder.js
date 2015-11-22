@@ -48,10 +48,10 @@ function appBuilder(rootPath) {
         globalModuleLess: '/modules/*/*.less'
     };
 
-    Object.keys(patterns).forEach(function (index) {
+    for (let key  of Object.keys(patterns)) {
 
-        that[index] = that.appPath(patterns[index]);
-    });
+        that[key] = that.appPath(patterns[key]);
+    }
 
     that.sourceFiles = [
         that.initFile,
