@@ -95,16 +95,16 @@ describe('#appBuilder', function () {
 
         let builder = appBuilder.instance(basePath);
 
-        for (let key of Object.keys(builder)) {
+        Object.keys(builder).forEach(function (index) {
 
-            let value = builder[key];
+            let value = builder[index];
 
             if (typeof value === 'string') {
 
-                let name = 'should start with the application base path. Property:  #' + key;
+                let name = 'should start with the application base path. Property:  #' + index;
 
                 assertBasePath(name, value, basePath);
             }
-        }
+        });
     });
 });

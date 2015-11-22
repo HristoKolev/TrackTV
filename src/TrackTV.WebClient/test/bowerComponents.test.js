@@ -109,10 +109,10 @@ describe('#bowerComponents', function () {
 
         let properties = [];
 
-        for (let key of Object.keys(includes)) {
+        Object.keys(includes).forEach(function (key) {
 
             properties.push([key, 'string']);
-        }
+        });
 
         assertComposition.object('components', components, properties);
 
@@ -129,9 +129,10 @@ describe('#bowerComponents', function () {
 
         let components = bowerComponents.instance(includes, basePath);
 
-        for (let key of Object.keys(includes)) {
+        Object.keys(includes).forEach(function (key) {
 
             expect(components[key]).to.equal('app/' + includes[key]);
-        }
+        });
+
     });
 });
