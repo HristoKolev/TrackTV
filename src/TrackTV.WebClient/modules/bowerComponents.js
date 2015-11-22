@@ -38,10 +38,10 @@ function bowerComponents(includes, basePath) {
         return linuxStylePath(path.join(that.basePath, relativePath));
     };
 
-    Object.keys(includes).forEach(function (key) {
+    for (let key of Object.keys(includes)) {
 
         that[key] = that.resolve(includes[key]);
-    });
+    }
 
     return that;
 }
