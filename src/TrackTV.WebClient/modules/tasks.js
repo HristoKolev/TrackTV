@@ -6,15 +6,11 @@ var fs = require('fs'),
 function getTaskNames(taskRoot) {
 
     var paths = fs.readdirSync(taskRoot)
-        .filter(function (file) {
-
-            return fs.statSync(path.join(taskRoot, file)).isFile();
-        });
+        .filter(file => fs.statSync(path.join(taskRoot, file)).isFile());
 
     for (var i = 0; i < paths.length; i += 1) {
 
         paths[i] = path.basename(paths[i]);
-
     }
 
     return paths;
