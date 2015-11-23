@@ -27,9 +27,7 @@ function expose(name, paths) {
 
     let jsonObject = {};
 
-    for (let i = 0; i < paths.length; i += 1) {
-
-        let fileName = paths[i];
+    for (let fileName of paths) {
 
         let fileContent = fs.readFileSync(fileName).toString();
 

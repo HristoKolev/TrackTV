@@ -134,7 +134,7 @@ module.exports = function (outputPath, filePath, resourcePath) {
         return resourcePath;
     }
 
-    var result = rewritePath(outputPath, filePath, resourcePath);
+    let result = rewritePath(outputPath, filePath, resourcePath);
 
     return linuxStylePath(getRelativePath(outputPath, filePath, result));
 };

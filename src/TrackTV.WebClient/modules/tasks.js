@@ -16,17 +16,17 @@ function getTaskNames(taskRoot) {
     return paths;
 }
 
-var list = getTaskNames('./modules/tasks/');
+var taskNames = getTaskNames('./modules/tasks/');
 
 function tasks() {
 
-    var that = Object.create(null);
+    let that = Object.create(null);
 
     that.load = function (runner) {
 
-        for (var i = 0; i < list.length; i += 1) {
+        for (let taskName of taskNames) {
 
-            runner.use(require('./tasks/' + list[i]));
+            runner.use(require('./tasks/' + taskName));
         }
     };
 

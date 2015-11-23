@@ -1,9 +1,7 @@
 'use strict';
 
 const path = require('path'),
-    gulp = require('gulp'),
-    task = require('gulp-task'),
-    q = require('q');
+    gulp = require('gulp');
 
 const streamFiles = require('./plugins/streamFiles');
 
@@ -20,13 +18,13 @@ function source(files) {
     return gulp.src(files);
 }
 
-function resolvePaths(files, output) {
+function resolvePaths(files, outputPath) {
 
     let paths = files.slice();
 
     for (let i = 0; i < paths.length; i += 1) {
 
-        paths[i] = output(paths[i]).value();
+        paths[i] = path.join(outputPath, paths[i]);
     }
 
     return paths;
@@ -86,40 +84,51 @@ function runner() {
         return task;
     }
 
-    function runTasks(stream, taskNames) {
+    function runTasks(stream, taskNames, context) {
 
         for (let taskName of taskNames) {
 
             let task = getTask(taskName);
 
-            stream = task(stream);
+            stream = task(stream, context);
         }
 
         return stream;
     }
 
-    function getPromise(include, output) {
+    function streamToPromise(stream) {
 
-        return task.run(function () {
+        return new Promise(function (resolve) {
 
-            let stream = source(resolvePaths(include.files, output));
+            return stream.on('finish', function () {
 
-            return runTasks(stream, include.tasks)
-                .pipe(streamFiles(path.resolve(output.value()), include.name))
-                .pipe(saveFile());
+                return resolve();
+            });
+        });
+    }
 
-        }).then(function () {
+    function getPromise(include, context) {
+
+        let stream = source(resolvePaths(include.files, context.outputPath));
+
+        stream = runTasks(stream, include.tasks, context)
+            .pipe(streamFiles(path.resolve(context.outputPath), include.name))
+            .pipe(saveFile());
+
+        function format() {
 
             return {
                 name: include.name,
                 files: streamFiles.get(include.name)
             };
-        });
+        }
+
+        return streamToPromise(stream).then(format);
     }
 
     function merge(promises, includes) {
 
-        return q.all(promises).then(function (data) {
+        return Promise.all(promises).then(function (data) {
 
             let updates = formatUpdates(data);
 
@@ -137,7 +146,7 @@ function runner() {
         });
     }
 
-    that.run = function (includes, output) {
+    that.run = function (includes, outputPath) {
 
         if (!includes) {
 
@@ -149,16 +158,20 @@ function runner() {
             throw new Error('The includes argument is not an array.');
         }
 
-        if (!output) {
+        if (!outputPath) {
 
-            throw new Error('The output is invalid.');
+            throw new Error('The output path is invalid.');
         }
 
         let promises = [];
 
+        var context = {
+            outputPath
+        };
+
         for (let include of includes) {
 
-            promises.push(getPromise(include, output));
+            promises.push(getPromise(include, context));
         }
 
         return merge(promises, includes);

@@ -27,16 +27,6 @@ function includer(indexFile, output) {
 
     // logic
 
-    let scriptFormatter = function (resourcePath) {
-
-        return `<script src="${ resourcePath }"></script>`;
-    };
-
-    let styleFormatter = function (resourcePath) {
-
-        return `<link rel="stylesheet" href="${ resourcePath }">`;
-    };
-
     that.formatters = {
         scriptFormatter: 'script',
         styleFormatter: 'style'
@@ -59,27 +49,44 @@ function includer(indexFile, output) {
         return files;
     }
 
-    function renameModuleFile(fileName) {
+    function getModuleInfo(fileName) {
 
-        let ext = path.extname(fileName);
-        let base = path.basename(fileName, ext);
-
+        let extension = path.extname(fileName);
+        let baseName = path.basename(fileName, extension);
         let moduleName = path.basename(path.dirname(fileName));
 
-        return path.join(moduleName + '-' + base + ext);
+        return {
+            extension: extension,
+            baseName: baseName,
+            moduleName: moduleName
+        };
+    }
+
+    function renameModuleFile(fileName) {
+
+        let moduleInfo = getModuleInfo(fileName);
+
+        return path.join(moduleInfo.moduleName + '-' + moduleInfo.baseName + moduleInfo.extension);
     }
 
     function separateModuleFile(fileName) {
 
-        let ext = path.extname(fileName);
-        let base = path.basename(fileName, ext);
+        let moduleInfo = getModuleInfo(fileName);
 
-        let moduleName = path.basename(path.dirname(fileName));
-
-        return path.join(moduleName, base + ext);
+        return path.join(moduleInfo.moduleName, moduleInfo.baseName + moduleInfo.extension);
     }
 
     function getFormatter(name) {
+
+        let scriptFormatter = function (resourcePath) {
+
+            return `<script src="${ resourcePath }"></script>`;
+        };
+
+        let styleFormatter = function (resourcePath) {
+
+            return `<link rel="stylesheet" href="${ resourcePath }">`;
+        };
 
         let formattersByName = {
             [that.formatters.scriptFormatter]: scriptFormatter,
@@ -94,7 +101,6 @@ function includer(indexFile, output) {
         }
 
         return formatter;
-
     }
 
     function addFormatter(includes) {

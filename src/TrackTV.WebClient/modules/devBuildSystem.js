@@ -8,11 +8,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
     var gulp = require('gulp'),
         del = require('del'),
         glob = require('glob-all'),
-        path = require('path'),
         browserify = require('browserify'),
         source = require('vinyl-source-stream'),
-        buffer = require('vinyl-buffer'),
-        fs = require('fs');
+        buffer = require('vinyl-buffer');
 
     var constants = {
         thirdPartyScripts: 'third-party-scripts',
@@ -241,14 +239,14 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                     files,
                     appBuilder.modulesDir,
                     formatters.styleFormatter,
-                    ['less']
+                    ['less', 'url-resolve']
                 );
             }
         });
 
         gulp.task('dev-process-includes', function (callback) {
 
-            runner.run(includer.readIncludes(), output)
+            runner.run(includer.readIncludes(), output.value())
                 .then(function (newIncludes) {
 
                     includer.writeIncludes(newIncludes);

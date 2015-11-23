@@ -162,7 +162,7 @@ describe('#runner', function () {
 
                     runner.run([], null);
 
-                }).to.throw(/output is invalid/);
+                }).to.throw(/output path is invalid/);
             });
         });
 
