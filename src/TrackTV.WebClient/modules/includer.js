@@ -29,12 +29,12 @@ function includer(indexFile, output) {
 
     let scriptFormatter = function (resourcePath) {
 
-        return '<script src="' + resourcePath + '"></script>';
+        return `<script src="${ resourcePath }"></script>`;
     };
 
     let styleFormatter = function (resourcePath) {
 
-        return '<link rel="stylesheet" href="' + resourcePath + '">';
+        return `<link rel="stylesheet" href="${ resourcePath }">`;
     };
 
     that.formatters = {
@@ -81,10 +81,10 @@ function includer(indexFile, output) {
 
     function getFormatter(name) {
 
-        let formattersByName = {};
-
-        formattersByName[that.formatters.scriptFormatter] = scriptFormatter;
-        formattersByName[that.formatters.styleFormatter] = styleFormatter;
+        let formattersByName = {
+            [that.formatters.scriptFormatter]: scriptFormatter,
+            [that.formatters.styleFormatter]: styleFormatter
+        };
 
         let formatter = formattersByName[name];
 
@@ -196,9 +196,7 @@ function includer(indexFile, output) {
 
         let includes = addFormatter(that.readIncludes());
 
-        for (let i = 0; i < includes.length; i += 1) {
-
-            let include = includes[i];
+        for (let include of includes) {
 
             fillContent(outputIndex.value(), include.name, listScripts(include.files, include.formatter));
         }

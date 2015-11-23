@@ -5,7 +5,7 @@ let path = require('path'),
 
 function wrapScript(name, jsonString) {
 
-    return '<script>window["' + name + '"] = ' + jsonString + ';</script>';
+    return `<script>window["${ name }"] = ${ jsonString };</script>`;
 }
 
 function expose(name, paths) {

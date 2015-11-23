@@ -76,10 +76,7 @@ function copyFiles() {
 
         processPath = processPath || removeBaseDir;
 
-        return that.copy(paths, targetDir, function (name) {
-
-            return processPath(name, baseDir);
-        });
+        return that.copy(paths, targetDir, name => processPath(name, baseDir));
     };
 
     return that;
