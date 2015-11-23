@@ -41,9 +41,9 @@ function list(resources, formatter, basePath) {
 
     let lines = [];
 
-    for (let i = 0; i < resources.length; i += 1) {
+    for (let resource of resources) {
 
-        let resourcePath = linuxStylePath(path.join('./', basePath, resources[i]));
+        let resourcePath = linuxStylePath(path.join('./', basePath, resource));
 
         lines.push(formatter(resourcePath));
     }

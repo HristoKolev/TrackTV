@@ -1,11 +1,11 @@
 'use strict';
 
-let path = require('path'),
+const path = require('path'),
     gulp = require('gulp'),
     task = require('gulp-task'),
     q = require('q');
 
-let streamFiles = require('./plugins/streamFiles');
+const streamFiles = require('./plugins/streamFiles');
 
 function saveFile() {
 
@@ -36,9 +36,7 @@ function formatUpdates(data) {
 
     let updates = {};
 
-    for (let i = 0; i < data.length; i += 1) {
-
-        let update = data[i];
+    for (let update of data) {
 
         updates[update.name] = update.files;
     }
@@ -88,13 +86,11 @@ function runner() {
         return task;
     }
 
-    function runTasks(stream, tasks) {
+    function runTasks(stream, taskNames) {
 
-        for (let i = 0; i < tasks.length; i += 1) {
+        for (let taskName of taskNames) {
 
-            let name = tasks[i];
-
-            let task = getTask(name);
+            let task = getTask(taskName);
 
             stream = task(stream);
         }
@@ -127,9 +123,7 @@ function runner() {
 
             let updates = formatUpdates(data);
 
-            for (let i = 0; i < includes.length; i += 1) {
-
-                let include = includes[i];
+            for (let include of includes) {
 
                 let files = updates[include.name];
 
@@ -162,9 +156,7 @@ function runner() {
 
         let promises = [];
 
-        for (var i = 0; i < includes.length; i += 1) {
-
-            let include = includes[i];
+        for (let include of includes) {
 
             promises.push(getPromise(include, output));
         }
