@@ -1,10 +1,21 @@
 'use strict';
 
-let path = require('path'),
+const path = require('path'),
     validator = require('validator');
 
-let linuxStylePath = require('./linuxStylePath'),
+const linuxStylePath = require('./linuxStylePath'),
     modulePathParse = require('./modulePathParse');
+
+const contentPath = 'content/',
+    globalContentPath = 'global_content/',
+    includePath = 'include/',
+    globalIncludePath = 'global_include/';
+
+const contentPathNames = Object.freeze({
+    local: 'local',
+    module: 'module',
+    global: 'global'
+});
 
 function isUrl(url) {
 
@@ -43,28 +54,28 @@ function getExplicitGlobalPath(baseName, basePath, resourcePath) {
 
     let resource = removeExplicitPath(basePath, resourcePath);
 
-    return path.join(baseName, 'global', resource);
+    return path.join(baseName, contentPathNames.global, resource);
 }
 
 function getLocalPath(basePath, resourcePath, info) {
 
     let resource = removeExplicitPath(basePath, resourcePath);
 
-    return path.join(basePath, 'local', info.moduleName, info.submoduleName, resource);
+    return path.join(basePath, contentPathNames.local, info.moduleName, info.submoduleName, resource);
 }
 
 function getModulePath(basePath, resourcePath, info) {
 
     let resource = removeExplicitPath(basePath, resourcePath);
 
-    return path.join(basePath, 'module', info.moduleName, resource);
+    return path.join(basePath, contentPathNames.module, info.moduleName, resource);
 }
 
 function getGlobalPath(basePath, resourcePath) {
 
     let resource = removeExplicitPath(basePath, resourcePath);
 
-    return path.join(basePath, 'global', resource);
+    return path.join(basePath, contentPathNames.global, resource);
 }
 
 function getStrategy(fileClass) {
@@ -90,12 +101,6 @@ function getStrategy(fileClass) {
 function rewritePath(outputPath, filePath, resourcePath) {
 
     let info = modulePathParse(path.relative(outputPath, filePath));
-
-    const contentPath = 'content/';
-    const globalContentPath = 'global_content/';
-
-    const includePath = 'include/';
-    const globalIncludePath = 'global_include/';
 
     if (resourcePath.startsWith(globalIncludePath)) {
 

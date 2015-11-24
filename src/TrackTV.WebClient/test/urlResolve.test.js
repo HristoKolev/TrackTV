@@ -12,7 +12,7 @@ describe('#urlResolve()', function () {
         assertCompositionMultitest.function(urlResolve, 'urlResolve');
     });
 
-    let defaultOutput = '.\\wwwroot',
+    const defaultOutput = '.\\wwwroot',
         defaultFilePath = '.\\wwwroot\\main-less-styles\\main\\calendar\\calendar.less',
         defaultResourcePath = 'content/dir/file1',
         defaultIncludeResourcePath = 'include/dir/file1',
@@ -53,7 +53,7 @@ describe('#urlResolve()', function () {
 
     it('should throw if the file is not in the output directory', function () {
 
-        let filePath = '.\\dist\\file1';
+        const filePath = '.\\dist\\file1';
 
         expect(function () {
 
@@ -64,7 +64,7 @@ describe('#urlResolve()', function () {
 
     it('should return the path if it is absolute', function () {
 
-        let resourcePath = 'C:\\windows';
+        const resourcePath = 'C:\\windows';
 
         let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
@@ -74,7 +74,7 @@ describe('#urlResolve()', function () {
 
     it('should return the path if it is an url', function () {
 
-        let resourcePath = 'http://google.com';
+        const resourcePath = 'http://google.com';
 
         let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
@@ -84,7 +84,7 @@ describe('#urlResolve()', function () {
 
     it('should return the path if it is relative protocol url', function () {
 
-        let resourcePath = '//google.com';
+        const resourcePath = '//google.com';
 
         let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
@@ -96,7 +96,7 @@ describe('#urlResolve()', function () {
 
         it('should resolve global path if explicitly selected ', function () {
 
-            let resourcePath = 'global_content/dir/file1';
+            const resourcePath = 'global_content/dir/file1';
 
             let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
@@ -105,7 +105,7 @@ describe('#urlResolve()', function () {
 
         it('should resolve global include path if explicitly selected ', function () {
 
-            let resourcePath = 'global_include/dir/file1';
+            const resourcePath = 'global_include/dir/file1';
 
             let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
@@ -139,7 +139,7 @@ describe('#urlResolve()', function () {
 
     describe('module files', function () {
 
-        let filePath = '.\\wwwroot\\main-less-styles\\main\\calendar.less';
+        const filePath = '.\\wwwroot\\main-less-styles\\main\\calendar.less';
 
         it('should resolve module path', function () {
 
@@ -165,7 +165,7 @@ describe('#urlResolve()', function () {
 
     describe('global files', function () {
 
-        let filePath = '.\\wwwroot\\main-less-styles\\calendar.less';
+        const filePath = '.\\wwwroot\\main-less-styles\\calendar.less';
 
         it('should resolve module path', function () {
 

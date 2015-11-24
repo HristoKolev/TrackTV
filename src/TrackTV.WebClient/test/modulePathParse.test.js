@@ -35,14 +35,14 @@ describe('#modulePathParse()', function () {
 
     it('should parse global path', function () {
 
-        var info = modulePathParse('name/file1');
+        let info = modulePathParse('name/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.global);
     });
 
     it('should parse global module path', function () {
 
-        var info = modulePathParse('name/module/file1');
+        let info = modulePathParse('name/module/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.moduleGlobal);
         expect(info.moduleName).to.equal('module');
@@ -50,7 +50,7 @@ describe('#modulePathParse()', function () {
 
     it('should parse local path', function () {
 
-        var info = modulePathParse('name/module/submodule/file1');
+        let info = modulePathParse('name/module/submodule/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.local);
         expect(info.moduleName).to.equal('module');
@@ -59,7 +59,7 @@ describe('#modulePathParse()', function () {
 
     it('should parse nested submodules', function () {
 
-        var info = modulePathParse('name/module/submodule1/submodule2/submoduleN/file1');
+        let info = modulePathParse('name/module/submodule1/submodule2/submoduleN/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.local);
         expect(info.moduleName).to.equal('module');
