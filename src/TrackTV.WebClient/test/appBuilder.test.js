@@ -24,20 +24,20 @@ describe('#appBuilder', function () {
             ['initFile', 'string'],
             ['routeConfig', 'string'],
 
-            ['moduleHeaders', 'string'],
-            ['npmModuleFiles', 'string'],
-            ['moduleConstants', 'string'],
-            ['moduleLibraries', 'string'],
+            ['moduleHeaders', 'array'],
+            ['npmModuleFiles', 'array'],
+            ['moduleConstants', 'array'],
+            ['moduleLibraries', 'array'],
 
-            ['scripts', 'string'],
-            ['templates', 'string'],
-            ['lessFiles', 'string'],
+            ['scripts', 'array'],
+            ['templates', 'array'],
+            ['lessFiles', 'array'],
 
             ['globalScripts', 'array'],
             ['globalLess', 'string'],
 
             ['globalModuleScripts', 'array'],
-            ['globalModuleLess', 'string'],
+            ['globalModuleLess', 'array'],
 
             ['appPath', 'function'],
 

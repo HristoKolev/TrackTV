@@ -29,6 +29,8 @@ var instance = require('./modules/devBuildSystem')
     .instance(appBuilder, devOutput, includer, bowerComponents, runner)
     .registerTasks();
 
+console.log(JSON.stringify(appBuilder, null, '\t'));
+
 //var productionBuildSystem = require('./modules/productionBuildSystem')
 //    .instance(prodOutput, appBuilder, appStream, pathResolver)
 //    .registerTasks();

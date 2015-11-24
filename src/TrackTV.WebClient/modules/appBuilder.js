@@ -1,20 +1,47 @@
 'use strict';
 
-let path = require('path');
+const path = require('path');
 
-let linuxStylePath = require('./linuxStylePath');
+const linuxStylePath = require('./linuxStylePath');
 
 function appBuilder(rootPath) {
 
-    let that = Object.create(null);
+    const that = Object.create(null);
 
-    that.appPath = function (relativePath) {
+    function level(input, masterArray) {
+
+        if (!masterArray) {
+
+            masterArray = [];
+        }
+
+        if (Array.isArray(input)) {
+
+            for (let element of input) {
+
+                level(element, masterArray);
+            }
+        }
+        else {
+
+            masterArray.push(input);
+        }
+
+        return masterArray;
+    }
+
+    function removeDuplicates(array) {
+
+        return Array.from(new Set(array));
+    }
+
+    that.appPath = function appPath(relativePath) {
 
         if (Array.isArray(relativePath)) {
 
             for (let i = 0; i < relativePath.length; i += 1) {
 
-                relativePath[i] = that.appPath(relativePath[i]);
+                relativePath[i] = appPath(relativePath[i]);
             }
 
             return relativePath;
@@ -23,62 +50,90 @@ function appBuilder(rootPath) {
 
             relativePath = relativePath || '';
 
-            return linuxStylePath(path.join(rootPath, relativePath));
+            let notChar = '!';
+
+            let removedNot = false;
+
+            if (relativePath.startsWith(notChar)) {
+
+                relativePath = relativePath.slice(1);
+                removedNot = true;
+            }
+
+            let result = linuxStylePath(path.join(rootPath, relativePath));
+
+            if (removedNot) {
+
+                result = notChar + result;
+            }
+
+            return result;
         }
     };
 
-    var patterns = {
-        indexFile: '/index.html',
-        initFile: '/init.js',
-        routeConfig: '/routeConfig.js',
+    const excludePattern = ['!/global_content', '!/global_include'];
 
-        moduleHeaders: '/modules/*/module.js',
-        npmModuleFiles: '/modules/*/npmModules.js',
-        moduleConstants: '/modules/*/constants.js',
-        moduleLibraries: '/modules/*/libraries.js',
+    const patterns = {
+        indexFile: 'index.html',
+        initFile: 'init.js',
+        routeConfig: 'routeConfig.js',
 
-        scripts: '/modules/*/*/**/*.js',
-        templates: '/modules/*/*/**/*.html',
-        lessFiles: '/modules/*/*/**/*.less',
+        moduleHeaders: ['*/module.js', excludePattern.slice()],
+        npmModuleFiles: ['*/npmModules.js', excludePattern.slice()],
+        moduleConstants: ['*/constants.js', excludePattern.slice()],
+        moduleLibraries: ['*/libraries.js', excludePattern.slice()],
 
-        globalScripts: '/*.js',
-        globalLess: '/*.less',
+        scripts: ['*/*/**/*.js', excludePattern.slice()],
+        templates: ['*/*/**/*.html', excludePattern.slice()],
+        lessFiles: ['*/*/**/*.less', excludePattern.slice()],
 
-        globalModuleScripts: '/modules/*/*.js',
-        globalModuleLess: '/modules/*/*.less'
+        globalScripts: '*.js',
+        globalLess: '*.less',
+
+        globalModuleScripts: ['*/*.js', excludePattern.slice()],
+        globalModuleLess: ['*/*.less', excludePattern.slice()]
     };
+
+    patterns.sourceFiles = [
+        patterns.initFile,
+        patterns.moduleHeaders,
+        patterns.moduleConstants,
+        patterns.moduleLibraries,
+        patterns.scripts,
+        patterns.routeConfig
+    ];
+
+    patterns.globalScripts = [
+        patterns.globalScripts,
+        '!' + patterns.initFile,
+        '!' + patterns.routeConfig
+    ];
+
+    patterns.globalModuleScripts = [
+        patterns.globalModuleScripts.slice(),
+        '!' + patterns.moduleHeaders[0],
+        '!' + patterns.npmModuleFiles[0],
+        '!' + patterns.moduleConstants[0],
+        '!' + patterns.moduleLibraries[0],
+        excludePattern.slice()
+
+    ];
 
     for (let key  of Object.keys(patterns)) {
 
-        that[key] = that.appPath(patterns[key]);
+        let target = removeDuplicates(level(patterns[key]));
+
+        if (target.length === 1) {
+
+            target = target[0];
+        }
+
+        that[key] = that.appPath(target);
     }
 
-    that.sourceFiles = [
-        that.initFile,
-        that.moduleHeaders,
-        that.moduleConstants,
-        that.moduleLibraries,
-        that.scripts,
-        that.routeConfig
-    ];
+    that.contentPath = that.appPath('content');
 
-    that.globalScripts = [
-        that.globalScripts,
-        '!' + that.initFile,
-        '!' + that.routeConfig
-    ];
-
-    that.globalModuleScripts = [
-        that.globalModuleScripts,
-        '!' + that.moduleHeaders,
-        '!' + that.npmModuleFiles,
-        '!' + that.moduleConstants,
-        '!' + that.moduleLibraries
-    ];
-
-    that.contentPath = that.appPath('/content');
-
-    that.modulesDir = that.appPath('/modules');
+    that.modulesDir = that.appPath();
 
     return that;
 }
