@@ -22,10 +22,7 @@ module.exports = function (options) {
 
         var contents = file.contents.toString();
 
-        var newContents = rework(contents).use(reworkUrl(function (url) {
-
-            return urlResolve(options.outputPath, file.path, url);
-        })).toString();
+        var newContents = rework(contents).use(reworkUrl(url => urlResolve(options.outputPath, file.path, url))).toString();
 
         file.contents = new Buffer(newContents);
     });

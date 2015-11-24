@@ -78,15 +78,15 @@ function includer(indexFile, output) {
 
     function getFormatter(name) {
 
-        let scriptFormatter = function (resourcePath) {
+        function scriptFormatter(resourcePath) {
 
             return `<script src="${ resourcePath }"></script>`;
-        };
+        }
 
-        let styleFormatter = function (resourcePath) {
+        function styleFormatter(resourcePath) {
 
             return `<link rel="stylesheet" href="${ resourcePath }">`;
-        };
+        }
 
         let formattersByName = {
             [that.formatters.scriptFormatter]: scriptFormatter,
