@@ -1,17 +1,20 @@
 'use strict';
 
+const Mocha = require('mocha');
+
+const gulp = require('gulp'),
+    del = require('del'),
+    glob = require('glob-all').sync,
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
+    path = require('path');
+
 function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
     var that = Object.create(null);
 
     // modules
-    var gulp = require('gulp'),
-        del = require('del'),
-        glob = require('glob-all'),
-        browserify = require('browserify'),
-        source = require('vinyl-source-stream'),
-        buffer = require('vinyl-buffer');
-
     var constants = {
         thirdPartyScripts: 'third-party-scripts',
         thirdPartyStyles: 'third-party-styles',
@@ -29,13 +32,30 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         lessFiles: 'main-less-styles'
     };
 
-    var browserifyOptions = {
-        debug: true
-    };
-
     var formatters = includer.formatters;
 
     that.registerTasks = function () {
+
+        gulp.task('dev-validate', function (callback) {
+
+            let mocha = new Mocha();
+
+            let validationsFilePath = path.resolve('./validations.js');
+
+            mocha.addFile(validationsFilePath);
+
+            mocha.run(function (failed) {
+
+                if (failed === 0) {
+
+                    callback();
+                }
+                else {
+
+                    throw new Error('Validation failed.');
+                }
+            });
+        });
 
         gulp.task('dev-clean', function (callback) {
 
@@ -86,7 +106,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.moduleHeaders, function () {
 
-            var files = glob.sync(appBuilder.moduleHeaders);
+            var files = glob(appBuilder.moduleHeaders);
 
             if (files.length) {
 
@@ -100,7 +120,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.moduleConstants, function () {
 
-            var files = glob.sync(appBuilder.moduleConstants);
+            var files = glob(appBuilder.moduleConstants);
 
             if (files.length) {
 
@@ -114,7 +134,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.moduleLibraries, function () {
 
-            var files = glob.sync(appBuilder.moduleLibraries);
+            var files = glob(appBuilder.moduleLibraries);
 
             if (files.length) {
 
@@ -138,13 +158,17 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-browserify', function () {
 
-            var files = glob.sync(appBuilder.npmModuleFiles);
+            var files = glob(appBuilder.npmModuleFiles);
 
             if (files.length) {
 
                 var fileName = constants.browserified + '.js';
 
                 includer.logInclude(constants.browserified, [fileName], formatters.scriptFormatter);
+
+                var browserifyOptions = {
+                    debug: true
+                };
 
                 return browserify(files, browserifyOptions)
                     .bundle()
@@ -156,7 +180,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.globalScripts, function () {
 
-            var files = glob.sync(appBuilder.globalScripts);
+            var files = glob(appBuilder.globalScripts);
 
             if (files.length) {
 
@@ -171,7 +195,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.globalLess, function () {
 
-            var files = glob.sync(appBuilder.globalLess);
+            var files = glob(appBuilder.globalLess);
 
             if (files.length) {
 
@@ -187,7 +211,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.globalModuleScripts, function () {
 
-            var files = glob.sync(appBuilder.globalModuleScripts);
+            var files = glob(appBuilder.globalModuleScripts);
 
             includer.includeSeparatedModuleFiles(
                 constants.globalModuleScripts,
@@ -199,7 +223,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.globalModuleLess, function () {
 
-            var files = glob.sync(appBuilder.globalModuleLess);
+            var files = glob(appBuilder.globalModuleLess);
 
             if (files.length) {
 
@@ -215,7 +239,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.scripts, function () {
 
-            var files = glob.sync(appBuilder.scripts);
+            var files = glob(appBuilder.scripts);
 
             if (files.length) {
 
@@ -230,7 +254,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         gulp.task('dev-include-' + constants.lessFiles, function () {
 
-            var files = glob.sync(appBuilder.lessFiles);
+            var files = glob(appBuilder.lessFiles);
 
             if (files.length) {
 

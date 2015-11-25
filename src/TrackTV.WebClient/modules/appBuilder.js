@@ -71,7 +71,7 @@ function appBuilder(rootPath) {
         }
     };
 
-    const excludePattern = ['!/global_content', '!/global_include'];
+    const excludePattern = ['!global_content', '!global_include'];
 
     const patterns = {
         indexFile: 'index.html',
@@ -119,7 +119,7 @@ function appBuilder(rootPath) {
 
     ];
 
-    for (let key  of Object.keys(patterns)) {
+    for (let key of Object.keys(patterns)) {
 
         let target = removeDuplicates(level(patterns[key]));
 

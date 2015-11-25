@@ -1,35 +1,33 @@
 'use strict';
 
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     runSequence = require('run-sequence');
 
-var fixGulp = require('./modules/fix-gulp');
+const fixGulp = require('./modules/fix-gulp');
 
 fixGulp(gulp);
 
-var pathConfig = require('./config/path.json'),
+const pathConfig = require('./config/path.json'),
     includes = require('./config/bowerIncludes.json'),
     appConfig = require('./config/appConfig.json'),
     outputConfig = require('./config/outputConfig.json');
 
-var output = require('./modules/pathChain');
+const output = require('./modules/pathChain');
 
-var devOutput = output.instance(outputConfig.devPath);
+const devOutput = output.instance(outputConfig.devPath);
 
-var bowerComponents = require('./modules/bowerComponents').instance(includes, pathConfig.bowerRootPath),
+const bowerComponents = require('./modules/bowerComponents').instance(includes, pathConfig.bowerRootPath),
     appBuilder = require('./modules/appBuilder').instance(appConfig.appPath),
     tasks = require('./modules/tasks'),
     runner = require('./modules/runner');
 
 tasks.load(runner);
 
-var includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
+const includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
 
-var instance = require('./modules/devBuildSystem')
+const instance = require('./modules/devBuildSystem')
     .instance(appBuilder, devOutput, includer, bowerComponents, runner)
     .registerTasks();
-
-console.log(JSON.stringify(appBuilder, null, '\t'));
 
 //var productionBuildSystem = require('./modules/productionBuildSystem')
 //    .instance(prodOutput, appBuilder, appStream, pathResolver)
@@ -42,6 +40,7 @@ console.log(JSON.stringify(appBuilder, null, '\t'));
 gulp.task('default', function () {
 
     runSequence(
+        'dev-validate',
         'dev-clean',
         'dev-init',
         'dev-include-third-party-scripts',
