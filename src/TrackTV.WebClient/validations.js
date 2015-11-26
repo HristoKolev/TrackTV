@@ -3,9 +3,46 @@
 const _ = require('underscore'),
     glob = require('glob-all').sync,
     path = require('path'),
-    expect = require('chai').expect;
+    expect = require('chai').expect,
+    fs = require('fs');
 
-function getPaths() {
+const configs = _(glob('./config/*.json')).map(config => path.relative(path.resolve('./config'), config));
+
+function directoryExists(filePath) {
+    try {
+        return fs.statSync(filePath).isDirectory();
+    }
+    catch (err) {
+        return false;
+    }
+}
+
+describe('configuration validation', function () {
+
+    describe('appConfig.json', function () {
+
+        const fileName = 'appConfig.json';
+
+        it('should exist', function () {
+
+            expect(_(configs).contains(fileName)).to.be.true;
+        });
+
+        const appConfig = require('./' + path.join('config', fileName));
+
+        it('should have property appPath ', function () {
+
+            expect(appConfig.appPath).to.exist;
+        });
+
+        it('should have property appPath that points to existing directory', function () {
+
+            expect(directoryExists(path.resolve(appConfig.appPath))).to.be.true;
+        });
+    });
+});
+
+const paths = (function getPaths() {
 
     const appPath = require('./config/appConfig').appPath;
 
@@ -19,9 +56,8 @@ function getPaths() {
     }
 
     return _(glob(pattern)).map(shorten);
-}
 
-const paths = getPaths();
+}());
 
 function assertContains(p) {
 
@@ -31,7 +67,7 @@ function assertContains(p) {
     });
 }
 
-describe('App validations', function () {
+describe('structure validations', function () {
 
     assertContains('index.html');
     assertContains('init.js');
