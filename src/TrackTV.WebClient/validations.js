@@ -15,7 +15,8 @@ function pathExists(p) {
 
     try {
 
-        return fs.statSync(p);
+        fs.statSync(p);
+        return true;
     }
     catch (err) {
 
@@ -66,13 +67,10 @@ function getSubmodules(modulePath) {
 
     let directories = _(glob(path.join(modulePath, '**/*')))
         .filter(p => directoryExists(p))
-        .map(function (p) {
-
-            return {
-                name: path.basename(p),
-                fullPath: p
-            };
-        });
+        .map(p => ({
+            name: path.basename(p),
+            fullPath: p
+        }));
 
     return directories.value();
 }
@@ -101,7 +99,6 @@ describe('configuration validation', function () {
 
             expect(directoryExists(path.resolve(appConfig.appPath))).to.be.true;
         });
-
     });
 });
 
@@ -150,15 +147,22 @@ function assertModulePath(name) {
     }
 }
 
-describe('structure validations', function () {
-
-    assertContains('index.html');
-    assertContains('init.js');
-    assertContains('routeConfig.js');
-
-    assertModulePath('module.js');
+function validateSubmodules() {
 
     let modules = getModules(appConfig.appPath);
+
+    function testSubmodule(groupes, module, submoduleName) {
+
+        it(`there should be only one submodule named "${submoduleName}" in module "${module.name}"`, function () {
+
+            let paths = _(groupes[submoduleName]).map(e => e.fullPath).value();
+
+            if (paths.length > 1) {
+
+                assert.fail(null, null, `There are more than one submodule called "${submoduleName}" in module "${module.name}": \n ${paths.join(',\n')}`);
+            }
+        });
+    }
 
     for (let module of modules) {
 
@@ -168,16 +172,18 @@ describe('structure validations', function () {
 
         for (let submoduleName of Object.keys(groupes)) {
 
-            it(`there should be only one submodule named "${submoduleName}" in module "${module.name}"`, function () {
-
-                let paths = _(groupes[submoduleName]).map(e => e.fullPath).value();
-
-                if (paths.length > 1) {
-
-                    assert.fail(null, null, `There are more than one submodule called "${submoduleName}" in module "${module.name}": \n ${paths.join(',\n')}`);
-                }
-            });
-
+            testSubmodule(groupes, module, submoduleName);
         }
     }
+}
+
+describe('structure validations', function () {
+
+    assertContains('index.html');
+    assertContains('init.js');
+    assertContains('routeConfig.js');
+
+    assertModulePath('module.js');
+
+    validateSubmodules();
 });
