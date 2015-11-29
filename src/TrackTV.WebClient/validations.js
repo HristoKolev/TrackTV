@@ -52,25 +52,25 @@ function getModules(appPath) {
 
     return _(fs.readdirSync(appPath))
         .without('global_content', 'global_include')
-        .map(function (p) {
-
-            return {
-                name: p,
-                fullPath: path.resolve(path.join(appPath, p))
-            };
-        })
+        .map(p => ({
+            name: p,
+            fullPath: path.resolve(path.join(appPath, p))
+        }))
         .filter(p => directoryExists(p.fullPath))
         .value();
 }
 
 function getSubmodules(modulePath) {
 
+    let specialDirectories = ['content', 'include'];
+
     let directories = _(glob(path.join(modulePath, '**/*')))
         .filter(p => directoryExists(p))
         .map(p => ({
             name: path.basename(p),
             fullPath: p
-        }));
+        }))
+        .filter(p => specialDirectories.indexOf(p.name) === -1);
 
     return directories.value();
 }
@@ -155,7 +155,9 @@ function validateSubmodules() {
 
         it(`there should be only one submodule named "${submoduleName}" in module "${module.name}"`, function () {
 
-            let paths = _(groupes[submoduleName]).map(e => e.fullPath).value();
+            let paths = _(groupes[submoduleName])
+                .map(e => e.fullPath)
+                .value();
 
             if (paths.length > 1) {
 
@@ -170,7 +172,9 @@ function validateSubmodules() {
 
         let groupes = _(submodules).groupBy(p => p.name).value();
 
-        for (let submoduleName of Object.keys(groupes)) {
+        let submoduleNames = _(Object.keys(groupes)).value();
+
+        for (let submoduleName of submoduleNames) {
 
             testSubmodule(groupes, module, submoduleName);
         }
