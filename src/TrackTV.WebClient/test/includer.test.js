@@ -85,9 +85,12 @@ function mockRequire(moduleName) {
     return module;
 }
 
-mockery.registerAllowable('./fillContent');
-mockery.registerAllowable('./list-resources');
-mockery.registerAllowable('./copyFiles');
+mockery.registerAllowables([
+    './fillContent',
+    './list-resources',
+    './copyFiles',
+    'path'
+]);
 
 let includer = mockRequire('../modules/includer');
 

@@ -1,39 +1,54 @@
 'use strict';
 
-const path = require('path');
+const path = require('path'),
+    glob = require('glob-all').sync,
+    _ = require('underscore'),
+    fs = require('fs');
 
 const linuxStylePath = require('./linuxStylePath');
+
+function level(input, masterArray) {
+
+    if (!masterArray) {
+
+        masterArray = [];
+    }
+
+    if (Array.isArray(input)) {
+
+        for (let element of input) {
+
+            level(element, masterArray);
+        }
+    }
+    else {
+
+        masterArray.push(input);
+    }
+
+    return masterArray;
+}
+
+function removeDuplicates(array) {
+
+    return Array.from(new Set(array));
+}
+
+function directoryExists(dirPath) {
+
+    try {
+
+        return fs.statSync(dirPath).isDirectory();
+    }
+    catch (err) {
+
+        return false;
+    }
+}
 
 function appBuilder(rootPath) {
 
     const that = Object.create(null);
-
-    function level(input, masterArray) {
-
-        if (!masterArray) {
-
-            masterArray = [];
-        }
-
-        if (Array.isArray(input)) {
-
-            for (let element of input) {
-
-                level(element, masterArray);
-            }
-        }
-        else {
-
-            masterArray.push(input);
-        }
-
-        return masterArray;
-    }
-
-    function removeDuplicates(array) {
-
-        return Array.from(new Set(array));
-    }
 
     that.appPath = function appPath(relativePath) {
 
@@ -134,6 +149,18 @@ function appBuilder(rootPath) {
     that.contentPath = that.appPath('content');
 
     that.modulesDir = that.appPath();
+
+    that.getModules = function getModules() {
+
+        return _.chain(fs.readdirSync(rootPath))
+            .without('global_content', 'global_include')
+            .map(p => ({
+                name: p,
+                fullPath: path.resolve(path.join(rootPath, p))
+            }))
+            .filter(p => directoryExists(p.fullPath))
+            .value();
+    };
 
     return that;
 }

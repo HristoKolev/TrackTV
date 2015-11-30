@@ -1,11 +1,48 @@
 'use strict';
 
-let expect = require('chai').expect,
-    assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let chai = require('chai'),
+    expect = chai.expect,
+    sinonChai = require("sinon-chai"),
+    mockery = require('mockery'),
+    assertCompositionMultitest = require('../testing/assertComposition').multitest,
+    mockHelper = require('../testing/mockHelper'),
+    path = require('path');
 
-let appBuilder = require('../modules/appBuilder');
+chai.use(sinonChai);
+
+const globMock = mockHelper('glob-all', {
+    sync: ['stub', 'spy']
+});
+
+let globSync = globMock.sync;
+
+const fsMock = mockHelper('fs', {
+    readdirSync: ['stub', 'spy'],
+    statSync: ['stub', 'spy']
+});
+
+mockery.registerAllowables([
+    './linuxStylePath',
+    'path',
+    'fs'
+]);
+
+const appBuilder = mockHelper.require('../modules/appBuilder');
 
 describe('#appBuilder', function () {
+
+    beforeEach(function () {
+
+        globMock.resetMocks();
+        fsMock.resetMocks();
+
+        mockery.enable();
+    });
+
+    afterEach(function () {
+
+        mockery.disable();
+    });
 
     describe('module exports', function () {
 
@@ -44,7 +81,9 @@ describe('#appBuilder', function () {
             ['sourceFiles', 'array'],
 
             ['contentPath', 'string'],
-            ['modulesDir', 'string']
+            ['modulesDir', 'string'],
+
+            ['getModules', 'function']
         ]);
     });
 
@@ -106,5 +145,106 @@ describe('#appBuilder', function () {
                 assertBasePath(name, value, basePath);
             }
         }
+    });
+
+    const defaultAppPath = 'app';
+
+    let absoluteAppPath = path.resolve(defaultAppPath);
+
+    function createDefaultInstance(appPath) {
+
+        appPath = appPath || defaultAppPath;
+
+        return appBuilder.instance(appPath);
+    }
+
+    let defaultPaths = [
+        'main',
+        'kitten',
+        'dir1',
+        'dir2',
+        'global_content',
+        'global_include',
+        'someFile.html',
+        'someOtherFile.js'
+    ];
+
+    function registerStats() {
+
+        function isDirectory(p) {
+
+            return function () {
+
+                console.log(p);
+                return p.indexOf('.') === -1;
+            };
+        }
+
+        for (let p of defaultPaths) {
+
+            fsMock.statSync.stub
+                .withArgs(path.join(absoluteAppPath, p))
+                .returns({
+                    isDirectory: isDirectory(p)
+                });
+        }
+    }
+
+    describe('#getModules()', function () {
+
+        function getModules() {
+
+            fsMock.readdirSync.stub.returns(defaultPaths);
+
+            registerStats();
+
+            let instance = createDefaultInstance();
+
+            return instance.getModules();
+        }
+
+        it('should read the app directory', function () {
+
+            let instance = createDefaultInstance();
+
+            instance.getModules();
+
+            expect(fsMock.readdirSync.spy).to.be.calledOnce;
+            expect(fsMock.readdirSync.spy).to.always.be.calledWithExactly(defaultAppPath);
+        });
+
+        it('should call stat for every file and directory in the application path ' +
+            'excluding the global content directories', function () {
+
+            getModules();
+
+            expect(fsMock.statSync.spy).to.have.callCount(defaultPaths.length - 2);
+        });
+
+        it('should return module objects with properties "name" and "fullPath"', function () {
+
+            let modules = getModules();
+
+            let expected = [
+                {
+                    name: 'main',
+                    fullPath: path.join(absoluteAppPath, 'main')
+                },
+                {
+                    name: 'kitten',
+                    fullPath: path.join(absoluteAppPath, 'kitten')
+                },
+                {
+                    name: 'dir1',
+                    fullPath: path.join(absoluteAppPath, 'dir1')
+                },
+                {
+                    name: 'dir2',
+                    fullPath: path.join(absoluteAppPath, 'dir2')
+                }
+            ];
+
+            expect(modules).to.deep.equal(expected);
+        });
     });
 });
