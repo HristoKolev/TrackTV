@@ -6,15 +6,14 @@ let chai = require('chai'),
     mockery = require('mockery'),
     assertCompositionMultitest = require('../testing/assertComposition').multitest,
     mockHelper = require('../testing/mockHelper'),
-    path = require('path');
+    path = require('path'),
+    _ = require('underscore');
 
 chai.use(sinonChai);
 
 const globMock = mockHelper('glob-all', {
     sync: ['stub', 'spy']
 });
-
-let globSync = globMock.sync;
 
 const fsMock = mockHelper('fs', {
     readdirSync: ['stub', 'spy'],
@@ -24,10 +23,13 @@ const fsMock = mockHelper('fs', {
 mockery.registerAllowables([
     './linuxStylePath',
     'path',
-    'fs'
+    'fs',
+    'underscore'
 ]);
 
 const appBuilder = mockHelper.require('../modules/appBuilder');
+
+const specialDirectoryCount = 2;
 
 describe('#appBuilder', function () {
 
@@ -83,7 +85,8 @@ describe('#appBuilder', function () {
             ['contentPath', 'string'],
             ['modulesDir', 'string'],
 
-            ['getModules', 'function']
+            ['getModules', 'function'],
+            ['getSubmodules', 'function']
         ]);
     });
 
@@ -158,7 +161,7 @@ describe('#appBuilder', function () {
         return appBuilder.instance(appPath);
     }
 
-    let defaultPaths = [
+    let defaultAppContentList = [
         'main',
         'kitten',
         'dir1',
@@ -169,21 +172,27 @@ describe('#appBuilder', function () {
         'someOtherFile.js'
     ];
 
-    function registerStats() {
+    function registerStats(array, transform) {
+
+        function noTransform(p) {
+
+            return p;
+        }
+
+        transform = transform || noTransform;
 
         function isDirectory(p) {
 
             return function () {
 
-                console.log(p);
-                return p.indexOf('.') === -1;
+                return !path.extname(p);
             };
         }
 
-        for (let p of defaultPaths) {
+        for (let p of array) {
 
             fsMock.statSync.stub
-                .withArgs(path.join(absoluteAppPath, p))
+                .withArgs(transform(p))
                 .returns({
                     isDirectory: isDirectory(p)
                 });
@@ -194,9 +203,12 @@ describe('#appBuilder', function () {
 
         function getModules() {
 
-            fsMock.readdirSync.stub.returns(defaultPaths);
+            fsMock.readdirSync.stub.returns(defaultAppContentList);
 
-            registerStats();
+            registerStats(defaultAppContentList, function (p) {
+
+                return path.join(absoluteAppPath, p);
+            });
 
             let instance = createDefaultInstance();
 
@@ -209,8 +221,10 @@ describe('#appBuilder', function () {
 
             instance.getModules();
 
-            expect(fsMock.readdirSync.spy).to.be.calledOnce;
-            expect(fsMock.readdirSync.spy).to.always.be.calledWithExactly(defaultAppPath);
+            let spy = fsMock.readdirSync.spy;
+
+            expect(spy).to.be.calledOnce;
+            expect(spy).to.always.be.calledWithExactly(defaultAppPath);
         });
 
         it('should call stat for every file and directory in the application path ' +
@@ -218,7 +232,7 @@ describe('#appBuilder', function () {
 
             getModules();
 
-            expect(fsMock.statSync.spy).to.have.callCount(defaultPaths.length - 2);
+            expect(fsMock.statSync.spy).to.have.callCount(defaultAppContentList.length - specialDirectoryCount);
         });
 
         it('should return module objects with properties "name" and "fullPath"', function () {
@@ -245,6 +259,100 @@ describe('#appBuilder', function () {
             ];
 
             expect(modules).to.deep.equal(expected);
+        });
+    });
+
+    describe('#getSubmodules()', function () {
+
+        let defaultModulePath = path.join(absoluteAppPath, 'module_name');
+
+        let defaultPaths = _.map([
+            'submodule1',
+            'submodule1/submodule2',
+            'submodule1/submodule2/submodule3',
+            'submodule1/submodule2/submodule4',
+            'submodule1/file1.txt',
+            'submodule1/file2.txt',
+            'submodule1/file3.txt',
+            'submodule1/file4.txt'
+        ], p => path.join(defaultModulePath, p));
+
+        function getSubmodules() {
+
+            globMock.sync.stub.returns(defaultPaths);
+
+            registerStats(defaultPaths);
+
+            let instance = createDefaultInstance();
+
+            return instance.getSubmodules(defaultModulePath);
+        }
+
+        describe('validation', function () {
+
+            it('should throw if the module name is falsy', function () {
+
+                expect(function () {
+
+                    let instance = createDefaultInstance();
+                    instance.getSubmodules(null);
+
+                }).to.throw(/module path is invalid/);
+            });
+        });
+
+        it('should call glob.sync with the submodule pattern', function () {
+
+            getSubmodules();
+
+            let spy = globMock.sync.spy;
+
+            expect(spy).to.be.calledOnce;
+
+            let pattern = path.join(defaultModulePath, '**/*');
+
+            expect(spy).to.be.calledWithExactly(pattern);
+        });
+
+        it('should check every path if it is a directory', function () {
+
+            getSubmodules();
+
+            expect(fsMock.statSync.spy).to.have.callCount(defaultPaths.length);
+        });
+
+        it('should return valid submodule objects', function () {
+
+            let submodules = getSubmodules();
+
+            let expected = [
+                {
+                    name: 'submodule1',
+                    fullPath: 'submodule1'
+                },
+                {
+                    name: 'submodule2',
+                    fullPath: 'submodule1/submodule2'
+                },
+                {
+                    name: 'submodule3',
+                    fullPath: 'submodule1/submodule2/submodule3'
+                },
+                {
+                    name: 'submodule4',
+                    fullPath: 'submodule1/submodule2/submodule4'
+                }
+            ];
+
+            expected = _.map(expected, function (module) {
+
+                return {
+                    name: module.name,
+                    fullPath: path.join(defaultModulePath, module.fullPath)
+                };
+            });
+
+            expect(submodules).to.deep.equal(expected);
         });
     });
 });

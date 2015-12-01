@@ -1,9 +1,7 @@
 'use strict';
 
 const fs = require('fs'),
-    path = require('path'),
-    glob = require('glob-all').sync,
-    _ = require('underscore').chain;
+    path = require('path');
 
 const specialDirectories = ['content', 'include'];
 
@@ -19,38 +17,13 @@ function directoryExists(dirPath) {
     }
 }
 
-function getModules(appPath) {
-
-    return _(fs.readdirSync(appPath))
-        .without('global_content', 'global_include')
-        .map(p => ({
-            name: p,
-            fullPath: path.resolve(path.join(appPath, p))
-        }))
-        .filter(p => directoryExists(p.fullPath))
-        .value();
-}
-
-function getSubmodules(modulePath) {
-
-    let directories = _(glob(path.join(modulePath, '**/*')))
-        .filter(p => directoryExists(p))
-        .map(p => ({
-            name: path.basename(p),
-            fullPath: p
-        }))
-        .filter(p => specialDirectories.indexOf(p.name) === -1);
-
-    return directories.value();
-}
-
-function getLocalList(modules, outputPath) {
+function getLocalList(modules, outputPath, appBuilder) {
 
     let list = [];
 
     for (let module of modules) {
 
-        let submodules = getSubmodules(module.fullPath);
+        let submodules = appBuilder.getSubmodules(module.fullPath);
 
         for (let submodule of submodules) {
 
@@ -125,25 +98,25 @@ function getGlobalList(appPath, outputPath) {
     return list;
 }
 
-module.exports = function (appPath, outputPath) {
-
-    if (!appPath) {
-
-        throw new Error('Invalid application path');
-    }
+module.exports = function (appBuilder, outputPath) {
 
     if (!outputPath) {
 
         throw new Error('Invalid output path');
     }
 
-    let modules = getModules(appPath);
+    if (!appBuilder) {
 
-    let localList = getLocalList(modules, outputPath);
+        throw new Error('Invalid app builder');
+    }
+
+    let modules = appBuilder.getModules();
+
+    let localList = getLocalList(modules, outputPath, appBuilder);
 
     let moduleList = getModuleList(modules, outputPath);
 
-    let globalList = getGlobalList(appPath, outputPath);
+    let globalList = getGlobalList(appBuilder.appPath(), outputPath);
 
     return localList.concat(moduleList, globalList);
 };

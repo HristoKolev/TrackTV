@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path'),
-    glob = require('glob-all').sync,
+    glob = require('glob-all'),
     _ = require('underscore'),
     fs = require('fs');
 
@@ -29,11 +29,6 @@ function level(input, masterArray) {
     return masterArray;
 }
 
-function removeDuplicates(array) {
-
-    return Array.from(new Set(array));
-}
-
 function directoryExists(dirPath) {
 
     try {
@@ -45,6 +40,10 @@ function directoryExists(dirPath) {
         return false;
     }
 }
+
+const specialDirectories = ['content', 'include'],
+    globalSpecialDirectories = _.map(specialDirectories, p => 'global_' + p),
+    excludePattern = _.map(globalSpecialDirectories, p => '!' + p);
 
 function appBuilder(rootPath) {
 
@@ -85,8 +84,6 @@ function appBuilder(rootPath) {
             return result;
         }
     };
-
-    const excludePattern = ['!global_content', '!global_include'];
 
     const patterns = {
         indexFile: 'index.html',
@@ -136,7 +133,7 @@ function appBuilder(rootPath) {
 
     for (let key of Object.keys(patterns)) {
 
-        let target = removeDuplicates(level(patterns[key]));
+        let target = _.uniq(level(patterns[key]));
 
         if (target.length === 1) {
 
@@ -160,6 +157,24 @@ function appBuilder(rootPath) {
             }))
             .filter(p => directoryExists(p.fullPath))
             .value();
+    };
+
+    that.getSubmodules = function getSubmodules(modulePath) {
+
+        if (!modulePath) {
+
+            throw new Error('The module path is invalid.');
+        }
+
+        let directories = _.chain(glob.sync(path.join(modulePath, '**/*')))
+            .filter(p => directoryExists(p))
+            .map(p => ({
+                name: path.basename(p),
+                fullPath: p
+            }))
+            .filter(p => specialDirectories.indexOf(p.name) === -1);
+
+        return directories.value();
     };
 
     return that;

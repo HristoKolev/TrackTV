@@ -90,8 +90,7 @@ gulp.task('test-task', function () {
 
     let copyContent = require('./modules/copyContent');
 
-    let list = copyContent(appBuilder.appPath(), devOutput.value());
+    let list = copyContent(appBuilder, devOutput.value());
 
-    console.log();
-
+    console.log(list);
 });
