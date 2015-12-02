@@ -102,12 +102,12 @@ module.exports = function (appBuilder, outputPath) {
 
     if (!outputPath) {
 
-        throw new Error('Invalid output path');
+        throw new Error('The app output path is invalid');
     }
 
     if (!appBuilder) {
 
-        throw new Error('Invalid app builder');
+        throw new Error('The app builder is invalid');
     }
 
     let modules = appBuilder.getModules();

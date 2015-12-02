@@ -1,6 +1,6 @@
 'use strict';
 
-let chai = require('chai'),
+const chai = require('chai'),
     expect = chai.expect,
     sinonChai = require("sinon-chai"),
     mockery = require('mockery'),
