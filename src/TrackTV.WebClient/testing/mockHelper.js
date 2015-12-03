@@ -11,7 +11,23 @@ function parseSettings(settings) {
     };
 }
 
-function getMock(moduleName, optionsObj) {
+function forwardFunction(func) {
+
+    if (func) {
+
+        return function () {
+
+            return func.apply(this, arguments);
+        };
+    }
+    else {
+
+        return function () {
+        };
+    }
+}
+
+function getMock(moduleName, optionsObj, originalModule) {
 
     let functionNames = Object.keys(optionsObj);
 
@@ -31,18 +47,22 @@ function getMock(moduleName, optionsObj) {
             let stub = sinon.stub();
             substitutes.push(stub);
 
-            mock[funcName] = function () {
-
-                return stub.apply(this, arguments);
-            };
+            mock[funcName] = forwardFunction(stub);
 
             result[funcName].stub = stub;
-
         }
         else {
 
-            mock[funcName] = function () {
-            };
+            if (originalModule) {
+
+                let fallthrough = originalModule[funcName];
+
+                mock[funcName] = forwardFunction(fallthrough);
+            }
+            else {
+
+                mock[funcName] = forwardFunction();
+            }
         }
 
         if (settings.shouldSpy) {

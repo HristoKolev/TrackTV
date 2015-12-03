@@ -40,29 +40,24 @@ let jsonExpose = mockRequire('../modules/json-expose');
 
 describe('#jsonExpose()', function () {
 
+    beforeEach(function () {
+
+        resetMocks();
+
+        mockery.enable();
+    });
+
+    afterEach(function () {
+
+        mockery.disable();
+    });
+
     describe('module exports', function () {
 
         assertCompositionMultitest.function(jsonExpose, 'jsonExpose');
     });
 
     describe('#expose()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         let defaultName = 'settings';
 

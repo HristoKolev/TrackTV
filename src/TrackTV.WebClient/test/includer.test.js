@@ -4,7 +4,8 @@ let chai = require('chai'),
     sinonChai = require("sinon-chai"),
     expect = chai.expect,
     sinon = require('sinon'),
-    mockery = require('mockery');
+    mockery = require('mockery'),
+    mockHelper = require('../testing/mockHelper');
 
 chai.use(sinonChai);
 
@@ -12,40 +13,15 @@ let pathChain = require('../modules/pathChain');
 
 let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
-let readStub = sinon.stub();
+let fsMock = mockHelper('fs', {
+    readFileSync: ['stub', 'spy'],
+    writeFileSync: ['spy']
+});
 
-let fs = {
-    readFileSync: function () {
-
-        return readStub.apply(this, arguments);
-    },
-    writeFileSync: function () {
-    }
-};
-
-let readSpy = sinon.spy(fs, 'readFileSync');
-let writeSpy = sinon.spy(fs, 'writeFileSync');
-
-mockery.registerMock('fs', fs);
-
-let copyStructureStub = sinon.stub();
-let copyStub = sinon.stub();
-
-let copyFiles = {
-    copy: function () {
-
-        return copyStub.apply(this, arguments);
-    },
-    copyStructure: function () {
-
-        return copyStructureStub.apply(this, arguments);
-    }
-};
-
-let copySpy = sinon.spy(copyFiles, 'copy');
-let copyStructureSpy = sinon.spy(copyFiles, 'copyStructure');
-
-mockery.registerMock('./copyFiles', copyFiles);
+let copyFilesMock = mockHelper('./copyFiles', {
+    copy: ['stub', 'spy'],
+    copyStructure: ['stub', 'spy']
+});
 
 let fillContent = {
     func: function () {
@@ -58,16 +34,8 @@ mockery.registerMock('./fillContent', fillContent.func);
 
 function resetMocks() {
 
-    readStub.reset();
-    readSpy.reset();
-
-    writeSpy.reset();
-
-    copySpy.reset();
-    copyStub.reset();
-
-    copyStructureSpy.reset();
-    copyStructureStub.reset();
+    fsMock.resetMocks();
+    copyFilesMock.resetMocks();
 
     fillContentSpy.reset();
 }
@@ -96,6 +64,17 @@ let includer = mockRequire('../modules/includer');
 
 describe('#includer', function () {
 
+    beforeEach(function () {
+
+        resetMocks();
+        mockery.enable();
+    });
+
+    afterEach(function () {
+
+        mockery.disable();
+    });
+
     describe('module exports', function () {
 
         assertCompositionMultitest.object('includer', includer, [
@@ -115,7 +94,7 @@ describe('#includer', function () {
 
     function returnEmptyArray(name) {
 
-        readStub.withArgs(name).returns('[]');
+        fsMock.readFileSync.stub.withArgs(name).returns('[]');
     }
 
     let defaultIncludes = [
@@ -133,7 +112,7 @@ describe('#includer', function () {
 
     function registerIncludes(includes) {
 
-        readStub.withArgs(defaultLogFile).returns(JSON.stringify(includes));
+        fsMock.readFileSync.stub.withArgs(defaultLogFile).returns(JSON.stringify(includes));
     }
 
     describe('instance exports', function () {
@@ -199,54 +178,19 @@ describe('#includer', function () {
 
     describe('#createIncludeLog()', function () {
 
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
-
         it('should write to the includes file', function () {
 
             let instance = createDefaultInstance();
 
             instance.createIncludeLog();
 
-            expect(writeSpy).to.be.calledOnce;
+            expect(fsMock.writeFileSync.spy).to.be.calledOnce;
 
-            expect(writeSpy).to.be.always.calledWithExactly(defaultLogFile, '[]');
+            expect(fsMock.writeFileSync.spy).to.be.always.calledWithExactly(defaultLogFile, '[]');
         });
-
     });
 
     describe('#logInclude()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         let defaultName = 'name';
         let defaultFiles = ['file1', 'file2', 'file3'];
@@ -319,7 +263,7 @@ describe('#includer', function () {
 
             instance.logInclude(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
-            expect(readSpy).to.be.calledOnce;
+            expect(fsMock.readFileSync.spy).to.be.calledOnce;
         });
 
         it('should write to the includes file', function () {
@@ -330,8 +274,8 @@ describe('#includer', function () {
 
             instance.logInclude(defaultName, defaultFiles, defaultFormatter, defaultTasks);
 
-            expect(writeSpy).to.be.calledOnce;
-            expect(writeSpy).to.be.always.calledWith(defaultLogFile);
+            expect(fsMock.writeFileSync.spy).to.be.calledOnce;
+            expect(fsMock.writeFileSync.spy).to.be.always.calledWith(defaultLogFile);
         });
 
         it('should add the includes to the log file', function () {
@@ -355,7 +299,7 @@ describe('#includer', function () {
                 }
             ];
 
-            let result = JSON.parse(writeSpy.args[0][1]);
+            let result = JSON.parse(fsMock.writeFileSync.spy.args[0][1]);
 
             expect(result).to.deep.equal(expected);
         });
@@ -363,53 +307,18 @@ describe('#includer', function () {
 
     describe('#copyIndex()', function () {
 
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
-
         it('should call #copyFiles.copy() with the index file and the output location.', function () {
 
             let instance = createDefaultInstance();
 
             instance.copyIndex();
 
-            expect(copySpy).to.be.calledOnce;
-            expect(copySpy).to.be.always.calledWithExactly(defaultIndex, 'app');
+            expect(copyFilesMock.copy.spy).to.be.calledOnce;
+            expect(copyFilesMock.copy.spy).to.be.always.calledWithExactly(defaultIndex, 'app');
         });
-
     });
 
     describe('#updateIncludes()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         it('should call #copyIndex()', function () {
 
@@ -428,8 +337,8 @@ describe('#includer', function () {
 
             instance.updateIncludes();
 
-            expect(readSpy).to.be.calledOnce;
-            expect(readSpy).to.be.always.calledWithExactly(defaultLogFile);
+            expect(fsMock.readFileSync.spy).to.be.calledOnce;
+            expect(fsMock.readFileSync.spy).to.be.always.calledWithExactly(defaultLogFile);
         });
 
         it('should call #fillContent() for every include', function () {
@@ -545,23 +454,6 @@ describe('#includer', function () {
 
     describe('#readIncludes()', function () {
 
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
-
         it('should read the includes file', function () {
 
             registerIncludes(defaultIncludes);
@@ -570,8 +462,8 @@ describe('#includer', function () {
 
             let result = instance.readIncludes();
 
-            expect(readSpy).to.be.calledOnce;
-            expect(readSpy).to.be.always.calledWithExactly(defaultLogFile);
+            expect(fsMock.readFileSync.spy).to.be.calledOnce;
+            expect(fsMock.readFileSync.spy).to.be.always.calledWithExactly(defaultLogFile);
 
             expect(result).to.deep.equal(defaultIncludes);
         });
@@ -579,41 +471,7 @@ describe('#includer', function () {
 
     describe('#writeIncludes()', function () {
 
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
-
         describe('validation', function () {
-
-            before(function () {
-
-                mockery.enable();
-            });
-
-            beforeEach(function () {
-
-                resetMocks();
-            });
-
-            after(function () {
-
-                resetMocks();
-
-                mockery.disable();
-            });
 
             it('should throw if the includes are falsy', function () {
 
@@ -643,10 +501,10 @@ describe('#includer', function () {
 
             instance.writeIncludes(defaultIncludes);
 
-            expect(writeSpy).to.be.calledOnce;
-            expect(writeSpy).to.be.always.calledWith(defaultLogFile);
+            expect(fsMock.writeFileSync.spy).to.be.calledOnce;
+            expect(fsMock.writeFileSync.spy).to.be.always.calledWith(defaultLogFile);
 
-            let includes = JSON.parse(writeSpy.args[0][1]);
+            let includes = JSON.parse(fsMock.writeFileSync.spy.args[0][1]);
 
             expect(includes).to.deep.equal(defaultIncludes);
         });
@@ -654,16 +512,16 @@ describe('#includer', function () {
 
     function assertCopiedStructure(files, output, baseDir) {
 
-        expect(copyStructureSpy).to.be.calledOnce;
+        expect(copyFilesMock.copyStructure.spy).to.be.calledOnce;
 
-        expect(copyStructureSpy).to.be.always.calledWith(files, output, baseDir);
+        expect(copyFilesMock.copyStructure.spy).to.be.always.calledWith(files, output, baseDir);
     }
 
     function assertCopied(files, output) {
 
-        expect(copySpy).to.be.calledOnce;
+        expect(copyFilesMock.copy.spy).to.be.calledOnce;
 
-        expect(copySpy).to.be.always.calledWith(files, output);
+        expect(copyFilesMock.copy.spy).to.be.always.calledWith(files, output);
     }
 
     function assertLoggedIncludes(spy, name, paths, formatter, tasks) {
@@ -674,23 +532,6 @@ describe('#includer', function () {
     }
 
     describe('#includeDirectory()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         let defaultName = 'name',
             defaultFiles = [
@@ -776,7 +617,7 @@ describe('#includer', function () {
 
         it('should call #copyFiles.copyStructure() with the specified arguments', function () {
 
-            copyStructureStub.returns([]);
+            copyFilesMock.copyStructure.stub.returns([]);
 
             let instance = createDefaultInstance();
 
@@ -794,7 +635,7 @@ describe('#includer', function () {
                 'app\\name\\path1\\file2'
             ];
 
-            copyStructureStub.returns(copiedPaths);
+            copyFilesMock.copyStructure.stub.returns(copiedPaths);
 
             let instance = createDefaultInstance();
 
@@ -814,23 +655,6 @@ describe('#includer', function () {
     });
 
     describe('#includeFile()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         let defaultPlaceholder = 'placeholder',
             defaultFile = 'source/file1',
@@ -900,7 +724,7 @@ describe('#includer', function () {
 
         it('should call #copyFiles.copyStructure() with the specified arguments', function () {
 
-            copyStructureStub.returns([]);
+            copyFilesMock.copyStructure.stub.returns([]);
 
             let instance = createDefaultInstance();
 
@@ -915,7 +739,7 @@ describe('#includer', function () {
                 'app\\file1'
             ];
 
-            copyStructureStub.returns(copiedPaths);
+            copyFilesMock.copyStructure.stub.returns(copiedPaths);
 
             let instance = createDefaultInstance();
 
@@ -929,27 +753,9 @@ describe('#includer', function () {
 
             assertLoggedIncludes(logIncludesSpy, defaultPlaceholder, expectedPaths, defaultFormatter, defaultTasks);
         });
-
     });
 
     describe('#includeSeparatedModuleFiles()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         let defaultName = 'name',
             defaultFiles = [
@@ -1035,7 +841,7 @@ describe('#includer', function () {
 
         it('should call #copyFiles.copyStructure() with the specified arguments', function () {
 
-            copyStructureStub.returns([]);
+            copyFilesMock.copyStructure.stub.returns([]);
 
             let instance = createDefaultInstance();
 
@@ -1053,7 +859,7 @@ describe('#includer', function () {
                 'app\\path1\\file2'
             ];
 
-            copyStructureStub.returns(copiedPaths);
+            copyFilesMock.copyStructure.stub.returns(copiedPaths);
 
             let instance = createDefaultInstance();
 
@@ -1074,23 +880,6 @@ describe('#includer', function () {
     });
 
     describe('#includeModuleFiles()', function () {
-
-        before(function () {
-
-            mockery.enable();
-        });
-
-        beforeEach(function () {
-
-            resetMocks();
-        });
-
-        after(function () {
-
-            resetMocks();
-
-            mockery.disable();
-        });
 
         let defaultName = 'name',
             defaultFiles = [
@@ -1164,7 +953,7 @@ describe('#includer', function () {
 
         it('should call #copyFiles.copy() with the specified arguments', function () {
 
-            copyStub.returns([]);
+            copyFilesMock.copy.stub.returns([]);
 
             let instance = createDefaultInstance();
 
@@ -1182,7 +971,7 @@ describe('#includer', function () {
                 'app\\name\\path1-file2'
             ];
 
-            copyStub.returns(copiedPaths);
+            copyFilesMock.copy.stub.returns(copiedPaths);
 
             let instance = createDefaultInstance();
 
@@ -1199,6 +988,5 @@ describe('#includer', function () {
 
             assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
         });
-
     });
 });
