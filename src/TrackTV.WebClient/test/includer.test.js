@@ -23,35 +23,7 @@ let copyFilesMock = mockHelper('./copyFiles', {
     copyStructure: ['stub', 'spy']
 });
 
-let fillContent = {
-    func: function () {
-    }
-};
-
-let fillContentSpy = sinon.spy(fillContent, 'func');
-
-mockery.registerMock('./fillContent', fillContent.func);
-
-function resetMocks() {
-
-    fsMock.resetMocks();
-    copyFilesMock.resetMocks();
-
-    fillContentSpy.reset();
-}
-
-function mockRequire(moduleName) {
-
-    mockery.registerAllowable(moduleName);
-
-    mockery.enable();
-
-    let module = require(moduleName);
-
-    mockery.disable();
-
-    return module;
-}
+let fillContentMock = mockHelper.mockFunction('./fillContent', ['spy']);
 
 mockery.registerAllowables([
     './fillContent',
@@ -60,13 +32,16 @@ mockery.registerAllowables([
     'path'
 ]);
 
-let includer = mockRequire('../modules/includer');
+let includer = mockHelper.require('../modules/includer');
 
 describe('#includer', function () {
 
     beforeEach(function () {
 
-        resetMocks();
+        fsMock.resetMocks();
+        copyFilesMock.resetMocks();
+        fillContentMock.resetMocks();
+
         mockery.enable();
     });
 
@@ -353,7 +328,7 @@ describe('#includer', function () {
 
                 let include = defaultIncludes[i];
 
-                expect(fillContentSpy).to.be.calledWith(defaultOutputIndex, include.name);
+                expect(fillContentMock.spy).to.be.calledWith(defaultOutputIndex, include.name);
             }
         });
 
@@ -375,7 +350,7 @@ describe('#includer', function () {
 
                 let include = defaultIncludes[i];
 
-                expect(fillContentSpy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
+                expect(fillContentMock.spy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
             }
         });
 
@@ -422,7 +397,7 @@ describe('#includer', function () {
 
                 let include = includes[i];
 
-                expect(fillContentSpy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
+                expect(fillContentMock.spy).to.be.calledWithExactly(defaultOutputIndex, include.name, expected[i]);
             }
         });
 

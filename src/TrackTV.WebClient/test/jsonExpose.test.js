@@ -1,42 +1,25 @@
 "use strict";
 
 let expect = require('chai').expect,
-    sinon = require('sinon'),
     mockery = require('mockery');
 
-let assertCompositionMultitest = require('../testing/assertComposition').multitest;
+let assertCompositionMultitest = require('../testing/assertComposition').multitest,
+    mockHelper = require('../testing/mockHelper');
 
-let readStub = sinon.stub();
-
-function resetMocks() {
-
-    readStub.reset();
-
-    readStub.returns('{}');
-}
-
-let fs = {
-    readFileSync: readStub
-};
+const fsMock = mockHelper('fs', {
+    readFileSync: ['stub']
+});
 
 mockery.registerAllowable('path');
 
-function mockRequire(moduleName) {
+function resetMocks() {
 
-    mockery.registerAllowable(moduleName);
+    fsMock.resetMocks();
 
-    mockery.enable();
-
-    let module = require(moduleName);
-
-    mockery.disable();
-
-    return module;
+    fsMock.readFileSync.stub.returns('{}');
 }
 
-mockery.registerMock('fs', fs);
-
-let jsonExpose = mockRequire('../modules/json-expose');
+let jsonExpose = mockHelper.require('../modules/json-expose');
 
 describe('#jsonExpose()', function () {
 
@@ -95,7 +78,7 @@ describe('#jsonExpose()', function () {
 
             for (let i = 0; i < defaultPaths.length; i += 1) {
 
-                readStub.calledWith(defaultPaths[i]);
+                fsMock.readFileSync.stub.calledWith(defaultPaths[i]);
             }
 
             jsonExpose(defaultName, defaultPaths);
@@ -105,7 +88,7 @@ describe('#jsonExpose()', function () {
 
             let paths = ['file1.json'];
 
-            readStub.withArgs('file1.json').returns('{"content":"file1-content"}');
+            fsMock.readFileSync.stub.withArgs('file1.json').returns('{"content":"file1-content"}');
 
             let name = 'settings';
 
@@ -132,7 +115,7 @@ describe('#jsonExpose()', function () {
 
             for (let i = 0; i < paths.length; i += 1) {
 
-                readStub.withArgs(paths[i]).returns(values[i]);
+                fsMock.readFileSync.stub.withArgs(paths[i]).returns(values[i]);
             }
 
             let result = jsonExpose('settings', paths);

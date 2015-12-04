@@ -100,5 +100,59 @@ function mockRequire(moduleName) {
     return module;
 }
 
+function fromFunction(moduleName, optionsArray, originalFunction) {
+
+    const homeObject = {};
+    const result = {};
+
+    const substitutes = [];
+
+    const options = parseSettings(optionsArray);
+
+    if (options.shouldStub) {
+
+        let stub = sinon.stub();
+
+        homeObject.func = forwardFunction(stub);
+
+        result.stub = stub;
+
+        substitutes.push(stub);
+    }
+    else {
+
+        if (originalFunction) {
+
+            homeObject.func = forwardFunction(originalFunction);
+        }
+        else {
+
+            homeObject.func = forwardFunction();
+        }
+    }
+
+    if (options.shouldSpy) {
+
+        let spy = sinon.spy(homeObject, 'func');
+
+        result.spy = spy;
+
+        substitutes.push(spy);
+    }
+
+    mockery.registerMock(moduleName, homeObject.func);
+
+    result.resetMocks = function () {
+
+        for (let substitute of substitutes) {
+
+            substitute.reset();
+        }
+    };
+
+    return result;
+}
+
 module.exports = getMock;
 module.exports.require = mockRequire;
+module.exports.mockFunction = fromFunction;
