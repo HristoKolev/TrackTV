@@ -118,5 +118,5 @@ module.exports = function (appBuilder, outputPath) {
 
     let globalList = getGlobalList(appBuilder.appPath(), outputPath);
 
-    return localList.concat(moduleList, globalList);
+    return [].concat(localList, moduleList, globalList);
 };

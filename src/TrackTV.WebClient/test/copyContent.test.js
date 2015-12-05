@@ -2,11 +2,21 @@
 
 const assertCompositionMultitest = require('../testing/assertComposition').multitest,
     chai = require('chai'),
-    expect = chai.expect;
+    expect = chai.expect,
+    mockHelper = require('../testing/mockHelper');
 
-const copyContent = require('../modules/copyContent');
+const fsMock = mockHelper('fs', {
+    statSync: ['stub']
+});
+
+const copyContent = mockHelper.require('../modules/copyContent');
 
 describe('#copyContent()', function () {
+
+    beforeEach(function () {
+
+        fsMock.resetMocks();
+    });
 
     assertCompositionMultitest.function(copyContent, 'copyContent');
 
@@ -29,5 +39,10 @@ describe('#copyContent()', function () {
                 copyContent({}, null);
             }).to.throw(/app output path is invalid/);
         });
+
     });
+
+    //it('should call appBuilder.getModules()', function () {
+    //
+    //});
 });

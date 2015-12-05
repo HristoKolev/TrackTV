@@ -1,41 +1,9 @@
 'use strict';
 
+require('./modules/load');
+
 const gulp = require('gulp'),
     runSequence = require('run-sequence');
-
-const fixGulp = require('./modules/fix-gulp');
-
-fixGulp(gulp);
-
-const pathConfig = require('./config/path.json'),
-    includes = require('./config/bowerIncludes.json'),
-    appConfig = require('./config/appConfig.json'),
-    outputConfig = require('./config/outputConfig.json');
-
-const output = require('./modules/pathChain');
-
-const devOutput = output.instance(outputConfig.devPath);
-
-const bowerComponents = require('./modules/bowerComponents').instance(includes, pathConfig.bowerRootPath),
-    appBuilder = require('./modules/appBuilder').instance(appConfig.appPath),
-    tasks = require('./modules/tasks'),
-    runner = require('./modules/runner');
-
-tasks.load(runner);
-
-const includer = require('./modules/includer').instance(appBuilder.indexFile, devOutput);
-
-const instance = require('./modules/devBuildSystem')
-    .instance(appBuilder, devOutput, includer, bowerComponents, runner)
-    .registerTasks();
-
-//var productionBuildSystem = require('./modules/productionBuildSystem')
-//    .instance(prodOutput, appBuilder, appStream, pathResolver)
-//    .registerTasks();
-
-//var devSupport = require('./modules/devSupport')
-//    .instance(appBuilder, appStream)
-//    .registerTasks();
 
 gulp.task('default', function () {
 
@@ -88,9 +56,4 @@ gulp.task('default', function () {
 
 gulp.task('test-task', function () {
 
-    let copyContent = require('./modules/copyContent');
-
-    let list = copyContent(appBuilder, devOutput.value());
-
-    console.log(list);
 });
