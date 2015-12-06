@@ -74,7 +74,10 @@ function getMock(moduleName, optionsObj, originalModule) {
         }
     }
 
-    mockery.registerMock(moduleName, mock);
+    if (moduleName !== null) {
+
+        mockery.registerMock(moduleName, mock);
+    }
 
     result.resetMocks = function () {
 
@@ -83,6 +86,8 @@ function getMock(moduleName, optionsObj, originalModule) {
             substitute.reset();
         }
     };
+
+    result.mock = mock;
 
     return result;
 }
@@ -140,7 +145,10 @@ function fromFunction(moduleName, optionsArray, originalFunction) {
         substitutes.push(spy);
     }
 
-    mockery.registerMock(moduleName, homeObject.func);
+    if (moduleName !== null) {
+
+        mockery.registerMock(moduleName, homeObject.func);
+    }
 
     result.resetMocks = function () {
 
@@ -149,6 +157,8 @@ function fromFunction(moduleName, optionsArray, originalFunction) {
             substitute.reset();
         }
     };
+
+    result.mock = homeObject.func;
 
     return result;
 }
