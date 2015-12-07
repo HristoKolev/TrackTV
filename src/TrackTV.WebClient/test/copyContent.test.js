@@ -22,16 +22,18 @@ const copyContent = mockHelper.require('../modules/copyContent');
 
 describe('#copyContent()', function () {
 
+    assertCompositionMultitest.function(copyContent, 'copyContent');
+
+    const defaultOutputPath = 'output';
+    let defaultAppPath = '/app';
+
     beforeEach(function () {
 
         fsMock.resetMocks();
         appBuilderMock.resetMocks();
+
+        appBuilderMock.appPath.stub.returns(defaultAppPath);
     });
-
-    assertCompositionMultitest.function(copyContent, 'copyContent');
-
-    const defaultOutputPath = 'output';
-    let defaultAppPath = 'app';
 
     describe('validations', function () {
 
@@ -55,12 +57,14 @@ describe('#copyContent()', function () {
 
     it('should call appBuilder.getModules()', function () {
 
-        appBuilderMock.appPath.stub.returns(defaultAppPath);
-
         appBuilderMock.getModules.stub.returns([]);
 
         copyContent(appBuilderMock.mock, defaultOutputPath);
 
         expect(appBuilderMock.getModules.spy).to.be.calledOnce;
+    });
+
+    it('should read the root path', function () {
+
     });
 });

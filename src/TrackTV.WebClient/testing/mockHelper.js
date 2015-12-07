@@ -1,7 +1,13 @@
 'use strict';
 
 const sinon = require('sinon'),
-    mockery = require('mockery');
+    mockery = require('mockery'),
+    _ = require('underscore');
+
+function isFunction(functionToCheck) {
+
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
 
 function parseSettings(settings) {
 
@@ -53,7 +59,13 @@ function getMock(moduleName, optionsObj, originalModule) {
         }
         else {
 
-            if (originalModule) {
+            let mockFunc = _.find(optionsObj[funcName], e => isFunction(e));
+
+            if (mockFunc) {
+
+                mock[funcName] = mockFunc;
+
+            } else if (originalModule) {
 
                 let fallthrough = originalModule[funcName];
 
@@ -126,7 +138,13 @@ function fromFunction(moduleName, optionsArray, originalFunction) {
     }
     else {
 
-        if (originalFunction) {
+        let mockFunc = _.find(optionsArray, e => isFunction(e));
+
+        if (mockFunc) {
+
+            homeObject.func = mockFunc;
+
+        } else if (originalFunction) {
 
             homeObject.func = forwardFunction(originalFunction);
         }
