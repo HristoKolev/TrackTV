@@ -19,18 +19,26 @@ function parseSettings(settings) {
 
 function forwardFunction(func) {
 
-    if (func) {
+    return function (...args) {
 
-        return function () {
+        if (func) {
 
-            return func.apply(this, arguments);
-        };
-    }
-    else {
+            return func(...args);
+        }
+    };
+}
 
-        return function () {
-        };
-    }
+function mockRequire(moduleName) {
+
+    mockery.registerAllowable(moduleName);
+
+    mockery.enable();
+
+    let module = require(moduleName);
+
+    mockery.disable();
+
+    return module;
 }
 
 function getMock(moduleName, optionsObj, originalModule) {
@@ -99,22 +107,14 @@ function getMock(moduleName, optionsObj, originalModule) {
         }
     };
 
+    result.deregister = function () {
+
+        mockery.deregisterMock(moduleName);
+    };
+
     result.mock = mock;
 
     return result;
-}
-
-function mockRequire(moduleName) {
-
-    mockery.registerAllowable(moduleName);
-
-    mockery.enable();
-
-    let module = require(moduleName);
-
-    mockery.disable();
-
-    return module;
 }
 
 function fromFunction(moduleName, optionsArray, originalFunction) {
@@ -174,6 +174,11 @@ function fromFunction(moduleName, optionsArray, originalFunction) {
 
             substitute.reset();
         }
+    };
+
+    result.deregister = function () {
+
+        mockery.deregisterMock(moduleName);
     };
 
     result.mock = homeObject.func;

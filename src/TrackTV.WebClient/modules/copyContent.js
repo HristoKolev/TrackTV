@@ -37,8 +37,7 @@ function getLocalList(modules, outputPath, appBuilder) {
 
                     list.push({
                         targetPath: targetPath,
-                        destinationPath: destinationPath,
-                        basePath: targetPath
+                        destinationPath: destinationPath
                     });
                 }
             }
@@ -64,8 +63,7 @@ function getModuleList(modules, outputPath) {
 
                 list.push({
                     targetPath: targetPath,
-                    destinationPath: destinationPath,
-                    basePath: targetPath
+                    destinationPath: destinationPath
                 });
             }
         }
@@ -89,8 +87,7 @@ function getGlobalList(appPath, outputPath) {
             list.push({
 
                 targetPath: targetPath,
-                destinationPath: destinationPath,
-                basePath: targetPath
+                destinationPath: destinationPath
             });
         }
     }
