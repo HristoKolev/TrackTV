@@ -37,7 +37,7 @@ function getLocalList(modules, outputPath, appBuilder) {
 
                     list.push({
                         targetPath: targetPath,
-                        destinationPath: destinationPath
+                        destinationPath: destinationPath,
                     });
                 }
             }
@@ -63,7 +63,7 @@ function getModuleList(modules, outputPath) {
 
                 list.push({
                     targetPath: targetPath,
-                    destinationPath: destinationPath
+                    destinationPath: destinationPath,
                 });
             }
         }
@@ -78,16 +78,16 @@ function getGlobalList(appPath, outputPath) {
 
     for (let specialDirectory of specialDirectories) {
 
-        let targetPath = path.join(appPath, 'global_' + specialDirectory);
+        let targetPath = path.join(path.resolve(appPath), 'global_' + specialDirectory);
 
-        let destinationPath = path.join(outputPath, specialDirectory, 'global');
+        let destinationPath = path.join(path.resolve(outputPath), specialDirectory, 'global');
 
         if (directoryExists(targetPath)) {
 
             list.push({
 
                 targetPath: targetPath,
-                destinationPath: destinationPath
+                destinationPath: destinationPath,
             });
         }
     }

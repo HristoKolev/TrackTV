@@ -10,6 +10,9 @@ const gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     path = require('path');
 
+const copyFiles = require('./copyFiles'),
+    copyContent = require('./copyContent');
+
 function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
     var that = Object.create(null);
@@ -281,6 +284,22 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         gulp.task('dev-update-includes', function () {
 
             includer.updateIncludes();
+        });
+
+        gulp.task('dev-copy-content', function () {
+
+            let list = copyContent(appBuilder, output.value());
+
+            for (let directory of list) {
+
+                let paths = glob(path.join(directory.targetPath, '**/*'));
+
+                if (paths.length > 0) {
+
+                    copyFiles.copyStructure(paths, directory.destinationPath, directory.targetPath);
+
+                }
+            }
         });
 
         ////////////////////////////////////////////////////////////////////////////////////

@@ -26,7 +26,8 @@ gulp.task('default', function () {
         'dev-include-main-scripts',
         'dev-include-main-less-styles',
         'dev-process-includes',
-        'dev-update-includes'
+        'dev-update-includes',
+        'dev-copy-content'
     );
 });
 

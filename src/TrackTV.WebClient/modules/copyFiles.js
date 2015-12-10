@@ -14,6 +14,9 @@ function copyFiles() {
 
     function removeBaseDir(fileName, baseDir) {
 
+        fileName = path.normalize(fileName);
+        baseDir = path.normalize(baseDir);
+
         if (fileName.indexOf(baseDir) !== 0) {
 
             throw new Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + fileName);
