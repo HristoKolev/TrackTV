@@ -11,4 +11,4 @@ tasks.load(runner);
 
 const buildSystem = require('./instances/buildSystem');
 
-buildSystem.registerTasks();
+module.exports = buildSystem.registerTasks();

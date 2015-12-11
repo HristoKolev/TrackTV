@@ -1,34 +1,13 @@
 'use strict';
 
-require('./modules/load');
+let taskNames = require('./modules/load');
 
 const gulp = require('gulp'),
     runSequence = require('run-sequence');
 
 gulp.task('default', function () {
 
-    runSequence(
-        'dev-validate',
-        'dev-clean',
-        'dev-init',
-        'dev-include-third-party-scripts',
-        'dev-include-third-party-styles',
-        'dev-include-init-file',
-        'dev-include-module-headers',
-        'dev-include-module-constants',
-        'dev-include-module-libraries',
-        'dev-include-route-config',
-        'dev-browserify',
-        'dev-include-global-scripts',
-        'dev-include-global-less',
-        'dev-include-global-module-scripts',
-        'dev-include-global-module-less',
-        'dev-include-main-scripts',
-        'dev-include-main-less-styles',
-        'dev-process-includes',
-        'dev-update-includes',
-        'dev-copy-content'
-    );
+    runSequence(...taskNames);
 });
 
 //gulp.task('build', function () {

@@ -37,9 +37,17 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
     var formatters = includer.formatters;
 
+    let names = [];
+
+    function register(name, func) {
+
+        gulp.task(name, func);
+        names.push(name);
+    }
+
     that.registerTasks = function () {
 
-        gulp.task('dev-validate', function (callback) {
+        register('dev-validate', function (callback) {
 
             let mocha = new Mocha();
 
@@ -60,7 +68,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             });
         });
 
-        gulp.task('dev-clean', function (callback) {
+        register('dev-clean', function (callback) {
 
             del.sync([
                 output.value() + '/*',
@@ -70,14 +78,14 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             callback();
         });
 
-        gulp.task('dev-init', function () {
+        register('dev-init', function () {
 
             includer.createIncludeLog();
 
             includer.copyIndex();
         });
 
-        gulp.task('dev-include-' + constants.thirdPartyScripts, function () {
+        register('dev-include-' + constants.thirdPartyScripts, function () {
 
             includer.includeDirectory(
                 constants.thirdPartyScripts,
@@ -87,7 +95,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             );
         });
 
-        gulp.task('dev-include-' + constants.thirdPartyStyles, function () {
+        register('dev-include-' + constants.thirdPartyStyles, function () {
 
             includer.includeDirectory(
                 constants.thirdPartyStyles,
@@ -97,7 +105,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             );
         });
 
-        gulp.task('dev-include-' + constants.initFile, function () {
+        register('dev-include-' + constants.initFile, function () {
 
             includer.includeFile(
                 constants.initFile,
@@ -107,7 +115,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             );
         });
 
-        gulp.task('dev-include-' + constants.moduleHeaders, function () {
+        register('dev-include-' + constants.moduleHeaders, function () {
 
             var files = glob(appBuilder.moduleHeaders);
 
@@ -121,7 +129,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.moduleConstants, function () {
+        register('dev-include-' + constants.moduleConstants, function () {
 
             var files = glob(appBuilder.moduleConstants);
 
@@ -135,7 +143,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.moduleLibraries, function () {
+        register('dev-include-' + constants.moduleLibraries, function () {
 
             var files = glob(appBuilder.moduleLibraries);
 
@@ -149,7 +157,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.routeConfig, function () {
+        register('dev-include-' + constants.routeConfig, function () {
 
             includer.includeFile(
                 constants.routeConfig,
@@ -159,7 +167,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             );
         });
 
-        gulp.task('dev-browserify', function () {
+        register('dev-browserify', function () {
 
             var files = glob(appBuilder.npmModuleFiles);
 
@@ -181,7 +189,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.globalScripts, function () {
+        register('dev-include-' + constants.globalScripts, function () {
 
             var files = glob(appBuilder.globalScripts);
 
@@ -196,7 +204,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.globalLess, function () {
+        register('dev-include-' + constants.globalLess, function () {
 
             var files = glob(appBuilder.globalLess);
 
@@ -212,7 +220,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.globalModuleScripts, function () {
+        register('dev-include-' + constants.globalModuleScripts, function () {
 
             var files = glob(appBuilder.globalModuleScripts);
 
@@ -224,7 +232,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             );
         });
 
-        gulp.task('dev-include-' + constants.globalModuleLess, function () {
+        register('dev-include-' + constants.globalModuleLess, function () {
 
             var files = glob(appBuilder.globalModuleLess);
 
@@ -240,7 +248,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.scripts, function () {
+        register('dev-include-' + constants.scripts, function () {
 
             var files = glob(appBuilder.scripts);
 
@@ -255,7 +263,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-include-' + constants.lessFiles, function () {
+        register('dev-include-' + constants.lessFiles, function () {
 
             var files = glob(appBuilder.lessFiles);
 
@@ -271,7 +279,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
             }
         });
 
-        gulp.task('dev-process-includes', function (callback) {
+        register('dev-process-includes', function (callback) {
 
             runner.run(includer.readIncludes(), output.value())
                 .then(function (newIncludes) {
@@ -281,12 +289,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                 }).then(callback);
         });
 
-        gulp.task('dev-update-includes', function () {
+        register('dev-update-includes', function () {
 
             includer.updateIncludes();
         });
 
-        gulp.task('dev-copy-content', function () {
+        register('dev-copy-content', function () {
 
             let list = copyContent(appBuilder, output.value());
 
@@ -304,24 +312,26 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
         ////////////////////////////////////////////////////////////////////////////////////
 
-        //gulp.task('dev-templates', function () {
+        //register('dev-templates', function () {
 
         //    return appStream.libTemplatesStream()
         //        .pipe(libTemplatesPath.destStream());
         //});
 
-        //gulp.task('dev-fonts', function () {
+        //register('dev-fonts', function () {
 
         //    return appStream.libFontsStream()
         //        .pipe(libFontsPath.destStream());
         //});
 
-        //gulp.task('dev-less', function () {
+        //register('dev-less', function () {
 
         //    return appStream.appStylesStream()
         //        .pipe(mergedPath.destStream())
         //        .on('error', console.error);
         //});
+
+        return names;
     };
 
     return that;
