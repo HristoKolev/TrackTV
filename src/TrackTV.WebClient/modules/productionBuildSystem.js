@@ -1,6 +1,6 @@
 'use strict';
 
-function productionBuildSystem(output, appBuilder, appStream, pathResolver) {
+function productionBuildSystem(output, appBuilder, appStream) {
 
     var that = Object.create(null);
 

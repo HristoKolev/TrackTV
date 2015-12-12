@@ -217,7 +217,8 @@ describe('#copyFiles', function () {
             expect(newPaths[0]).to.equal('dest\\file.txt');
         });
 
-        it('should use the provided processing function insted of removing the base path if such function is available', function () {
+        it('should use the provided processing function ' +
+            'instead of removing the base path if such function is available', function () {
 
             let func = function (fileName) {
                 return fileName + '!';
