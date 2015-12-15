@@ -64,9 +64,47 @@ describe('#copyTemplates()', function () {
 
     it('should return an array of object that have targetPath and destinationPath properties', function () {
 
-        let result = copyTemplates(['module/submodule/index.html'], appPath, outputPath);
+        let result = copyTemplates(['app/module/submodule/index.html'], appPath, outputPath);
 
         expect(result[0].targetPath).to.exist;
         expect(result[0].destinationPath).to.exist;
+    });
+
+    it('should return the proper files and destination paths', function () {
+
+        var files = [
+            'app/module1/submodule1/file.html',
+            'app/module1/submodule2/file.html',
+
+            'app/module2/submodule1/file.html',
+            'app/module2/path/submodule2/file.html',
+            'app/module2/path/submodule3/file.html'
+        ];
+
+        let result = copyTemplates(files, appPath, outputPath);
+
+        let expected = [
+            {
+                targetPath: 'app\\module1\\submodule1\\file.html',
+                destinationPath: 'output\\templates\\module1\\submodule1'
+            },
+            {
+                targetPath: 'app\\module1\\submodule2\\file.html',
+                destinationPath: 'output\\templates\\module1\\submodule2'
+            },
+            {
+                targetPath: 'app\\module2\\submodule1\\file.html',
+                destinationPath: 'output\\templates\\module2\\submodule1'
+            },
+            {
+                targetPath: 'app\\module2\\path\\submodule2\\file.html',
+                destinationPath: 'output\\templates\\module2\\submodule2'
+            },
+            {
+                targetPath: 'app\\module2\\path\\submodule3\\file.html',
+                destinationPath: 'output\\templates\\module2\\submodule3'
+            }];
+
+        expect(result).to.deep.equal(expected);
     });
 });

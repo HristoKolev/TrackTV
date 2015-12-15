@@ -11,7 +11,8 @@ const gulp = require('gulp'),
     path = require('path');
 
 const copyFiles = require('./copyFiles'),
-    copyContent = require('./copyContent');
+    copyContent = require('./copyContent'),
+    copyTemplates = require('./copyTemplates');
 
 function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
@@ -308,6 +309,24 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
                 }
             }
+        });
+
+        register('dev-process-templates', function () {
+
+            let paths = glob(appBuilder.templates);
+
+            let list = copyTemplates(paths, appBuilder.appPath(), output.value());
+
+            let result = [];
+
+            for (let template of list) {
+
+                let paths = copyFiles.copy(template.targetPath, template.destinationPath);
+
+                result.push(paths[0]);
+            }
+
+            console.log(result);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////

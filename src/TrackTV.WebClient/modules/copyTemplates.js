@@ -61,8 +61,8 @@ module.exports = function (templateFilePaths, appPath, outputPath) {
         let destinationPath = path.join(outputPath, 'templates', info.moduleName, info.submoduleName);
 
         list.push({
-            targetPath: filePath,
-            destinationPath
+            targetPath: path.relative(process.cwd(), path.join(appPath, filePath)),
+            destinationPath: path.relative(process.cwd(), destinationPath)
         });
     }
 

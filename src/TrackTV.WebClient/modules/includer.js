@@ -29,7 +29,8 @@ function includer(indexFile, output) {
 
     that.formatters = {
         scriptFormatter: 'script',
-        styleFormatter: 'style'
+        styleFormatter: 'style',
+        none: 'none'
     };
 
     function removeBaseDir(files, baseDir) {
