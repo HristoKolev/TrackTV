@@ -276,9 +276,34 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                     files,
                     appBuilder.modulesDir,
                     formatters.styleFormatter,
-                    ['less', 'url-resolve']
+                    ['less', 'css-rebase']
                 );
             }
+        });
+
+        register('dev-process-templates', function () {
+
+            let paths = glob(appBuilder.templates);
+
+            let templatePaths = [];
+
+            let templateList = copyTemplates(paths, appBuilder.appPath(), output.value());
+
+            for (let template of templateList) {
+
+                let resultPaths = copyFiles.copy(template.targetPath, template.destinationPath);
+
+                var templatePath = path.relative(output.value(), resultPaths[0]);
+
+                templatePaths.push(templatePath);
+            }
+
+            includer.logInclude(
+                constants.templates,
+                templatePaths,
+                formatters.none,
+                ['html-rebase']
+            );
         });
 
         register('dev-process-includes', function (callback) {
@@ -310,26 +335,6 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
                 }
             }
-        });
-
-        register('dev-process-templates', function () {
-
-            let paths = glob(appBuilder.templates);
-
-            let templatePaths = [];
-
-            let templateList = copyTemplates(paths, appBuilder.appPath(), output.value());
-
-            for (let template of templateList) {
-
-                let resultPaths = copyFiles.copy(template.targetPath, template.destinationPath);
-
-                var templatePath = path.relative(output.value(), resultPaths[0]);
-
-                templatePaths.push(templatePath);
-            }
-
-            includer.logInclude(constants.templates, templatePaths, formatters.none);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////

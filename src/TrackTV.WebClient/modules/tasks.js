@@ -16,7 +16,7 @@ function getTaskNames(taskRoot) {
     return paths;
 }
 
-var taskNames = getTaskNames('./modules/tasks/');
+let taskNames = getTaskNames('./modules/tasks/');
 
 function tasks() {
 

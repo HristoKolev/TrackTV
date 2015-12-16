@@ -18,11 +18,13 @@ module.exports = function (options) {
         throw new Error('The output path is invalid.');
     }
 
-    return pluginWrapper('urlResolve', function (file) {
+    return pluginWrapper('css-rebase', function (file) {
 
         var contents = file.contents.toString();
 
-        var newContents = rework(contents).use(reworkUrl(url => urlResolve(options.outputPath, file.path, url))).toString();
+        var newContents = rework(contents)
+            .use(reworkUrl(url => urlResolve(options.outputPath, file.path, url)))
+            .toString();
 
         file.contents = new Buffer(newContents);
     });
