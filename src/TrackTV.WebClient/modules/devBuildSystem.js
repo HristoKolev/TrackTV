@@ -33,7 +33,8 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         scripts: 'main-scripts',
         globalLess: 'global-less',
         globalModuleLess: 'global-module-less',
-        lessFiles: 'main-less-styles'
+        lessFiles: 'main-less-styles',
+        templates: 'templates'
     };
 
     var formatters = includer.formatters;
@@ -315,18 +316,20 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             let paths = glob(appBuilder.templates);
 
-            let list = copyTemplates(paths, appBuilder.appPath(), output.value());
+            let templatePaths = [];
 
-            let result = [];
+            let templateList = copyTemplates(paths, appBuilder.appPath(), output.value());
 
-            for (let template of list) {
+            for (let template of templateList) {
 
-                let paths = copyFiles.copy(template.targetPath, template.destinationPath);
+                let resultPaths = copyFiles.copy(template.targetPath, template.destinationPath);
 
-                result.push(paths[0]);
+                var templatePath = path.relative(output.value(), resultPaths[0]);
+
+                templatePaths.push(templatePath);
             }
 
-            console.log(result);
+            includer.logInclude(constants.templates, templatePaths, formatters.none);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////
