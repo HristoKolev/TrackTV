@@ -1,9 +1,9 @@
 'use strict';
 
-let taskNames = require('./modules/load');
-
 const gulp = require('gulp'),
     runSequence = require('run-sequence');
+
+let taskNames = require('./modules/load');
 
 gulp.task('default', function () {
 
@@ -35,5 +35,11 @@ gulp.task('default', function () {
 //});
 
 gulp.task('test-task', function () {
+
+    const copyTemplates = require('./modules/copyTemplates');
+
+    let list = copyTemplates(['app/module/submodule/index.html'], 'app', 'wwwroot');
+
+    console.log(list);
 
 });
