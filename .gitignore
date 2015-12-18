@@ -205,3 +205,4 @@ src/TrackTV.WebClient/dist/
 **/.ntvs_analysis.dat
 **/workspace.xml
 
+**/project.lock.json
