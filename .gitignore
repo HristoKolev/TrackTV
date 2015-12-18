@@ -202,5 +202,6 @@ Uploads/
 src/TrackTV.WebClient/wwwroot/
 src/TrackTV.WebClient/dist/
 
-#WebStorm
-.idea/
+**/.ntvs_analysis.dat
+**/workspace.xml
+
