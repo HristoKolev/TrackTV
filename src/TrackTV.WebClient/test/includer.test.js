@@ -485,25 +485,25 @@ describe('#includer', function () {
         });
     });
 
-    function assertCopiedStructure(files, output, baseDir) {
+    function assertCopiedStructure(...args) {
 
         expect(copyFilesMock.copyStructure.spy).to.be.calledOnce;
 
-        expect(copyFilesMock.copyStructure.spy).to.be.always.calledWith(files, output, baseDir);
+        expect(copyFilesMock.copyStructure.spy).to.be.always.calledWith(...args);
     }
 
-    function assertCopied(files, output) {
+    function assertCopied(...args) {
 
         expect(copyFilesMock.copy.spy).to.be.calledOnce;
 
-        expect(copyFilesMock.copy.spy).to.be.always.calledWith(files, output);
+        expect(copyFilesMock.copy.spy).to.be.always.calledWith(...args);
     }
 
-    function assertLoggedIncludes(spy, name, paths, formatter, tasks) {
+    function assertLoggedIncludes(spy, ...args) {
 
         expect(spy).to.be.calledOnce;
 
-        expect(spy).to.be.always.calledWithExactly(name, paths, formatter, tasks);
+        expect(spy).to.be.always.calledWithExactly(...args);
     }
 
     describe('#includeDirectory()', function () {
