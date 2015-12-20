@@ -517,7 +517,8 @@ describe('#includer', function () {
             ],
             defaultBasePath = 'dir',
             defaultFormatter = 'formatter',
-            defaultTasks = ['task1', 'task2'];
+            defaultTasks = ['task1', 'task2'],
+            defaultDirectory = 'dir';
 
         describe('validation', function () {
 
@@ -527,7 +528,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(null, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
+                    instance.includeDirectory(null, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/name is invalid/);
             });
@@ -538,7 +539,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, null, defaultBasePath, defaultFormatter, defaultTasks);
+                    instance.includeDirectory(defaultName, null, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/files argument is invalid/);
             });
@@ -549,7 +550,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, 'files', defaultBasePath, defaultFormatter, defaultTasks);
+                    instance.includeDirectory(defaultName, 'files', defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/files argument is not an array/);
             });
@@ -560,7 +561,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, defaultFiles, null, defaultFormatter, defaultTasks);
+                    instance.includeDirectory(defaultName, defaultFiles, null, defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/base path is invalid/);
             });
@@ -571,7 +572,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, null, defaultTasks);
+                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, null, defaultTasks, defaultDirectory);
 
                 }).to.throw(/formatter is invalid/);
 
@@ -583,7 +584,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, 'tasks');
+                    instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, 'tasks', defaultDirectory);
 
                 }).to.throw(/tasks argument is not an array/);
 
@@ -596,18 +597,18 @@ describe('#includer', function () {
 
             let instance = createDefaultInstance();
 
-            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
+            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
-            assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
+            assertCopiedStructure(defaultFiles, 'app\\dir', defaultBasePath);
         });
 
         it('should call #logInclude() with the specified arguments', function () {
 
             let copiedPaths = [
-                'app\\name\\path\\file1',
-                'app\\name\\path\\file2',
-                'app\\name\\path1\\file1',
-                'app\\name\\path1\\file2'
+                'app\\dir\\path\\file1',
+                'app\\dir\\path\\file2',
+                'app\\dir\\path1\\file1',
+                'app\\dir\\path1\\file2'
             ];
 
             copyFilesMock.copyStructure.stub.returns(copiedPaths);
@@ -616,13 +617,13 @@ describe('#includer', function () {
 
             let logIncludesSpy = sinon.spy(instance, 'logInclude');
 
-            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
+            instance.includeDirectory(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
             let expectedPaths = [
-                'name\\path\\file1',
-                'name\\path\\file2',
-                'name\\path1\\file1',
-                'name\\path1\\file2'
+                'dir\\path\\file1',
+                'dir\\path\\file2',
+                'dir\\path1\\file1',
+                'dir\\path1\\file2'
             ];
 
             assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
@@ -730,7 +731,7 @@ describe('#includer', function () {
         });
     });
 
-    describe('#includeSeparatedModuleFiles()', function () {
+    describe('#includeModuleFiles()', function () {
 
         let defaultName = 'name',
             defaultFiles = [
@@ -739,9 +740,9 @@ describe('#includer', function () {
                 'dir/path1/file1',
                 'dir/path1/file2'
             ],
-            defaultBasePath = 'dir',
             defaultFormatter = 'formatter',
-            defaultTasks = ['task1', 'task2'];
+            defaultTasks = ['task1', 'task2'],
+            defaultDirectory = 'dir';
 
         describe('validation', function () {
 
@@ -751,7 +752,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(null, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
+                    instance.includeModuleFiles(null, defaultFiles, defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/name is invalid/);
             });
@@ -762,7 +763,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, null, defaultBasePath, defaultFormatter, defaultTasks);
+                    instance.includeModuleFiles(defaultName, null, defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/files argument is invalid/);
             });
@@ -773,20 +774,9 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, 'files', defaultBasePath, defaultFormatter, defaultTasks);
+                    instance.includeModuleFiles(defaultName, 'files', defaultFormatter, defaultTasks, defaultDirectory);
 
                 }).to.throw(/files argument is not an array/);
-            });
-
-            it('should throw if passed a falsy basePath', function () {
-
-                let instance = createDefaultInstance();
-
-                expect(function () {
-
-                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, null, defaultFormatter, defaultTasks);
-
-                }).to.throw(/base path is invalid/);
             });
 
             it('should throw if passed a falsy formatter', function () {
@@ -795,7 +785,7 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, null, defaultTasks);
+                    instance.includeModuleFiles(defaultName, defaultFiles, null, defaultTasks, defaultDirectory);
 
                 }).to.throw(/formatter is invalid/);
 
@@ -807,7 +797,131 @@ describe('#includer', function () {
 
                 expect(function () {
 
-                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, 'tasks');
+                    instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, 'tasks', defaultDirectory);
+
+                }).to.throw(/tasks argument is not an array/);
+
+            });
+        });
+
+        it('should call #copyFiles.copy() with the specified arguments', function () {
+
+            copyFilesMock.copy.stub.returns([]);
+
+            let instance = createDefaultInstance();
+
+            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks, defaultDirectory);
+
+            assertCopied(defaultFiles, 'app\\dir');
+        });
+
+        it('should call #logInclude() with the specified arguments', function () {
+
+            let copiedPaths = [
+                'app\\dir\\path-file1',
+                'app\\dir\\path-file2',
+                'app\\dir\\path1-file1',
+                'app\\dir\\path1-file2'
+            ];
+
+            copyFilesMock.copy.stub.returns(copiedPaths);
+
+            let instance = createDefaultInstance();
+
+            let logIncludesSpy = sinon.spy(instance, 'logInclude');
+
+            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks, defaultDirectory);
+
+            let expectedPaths = [
+                'dir\\path-file1',
+                'dir\\path-file2',
+                'dir\\path1-file1',
+                'dir\\path1-file2'
+            ];
+
+            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
+        });
+    });
+
+    describe('#includeSeparatedModuleFiles()', function () {
+
+        let defaultName = 'name',
+            defaultFiles = [
+                'dir/path/file1',
+                'dir/path/file2',
+                'dir/path1/file1',
+                'dir/path1/file2'
+            ],
+            defaultBasePath = 'dir',
+            defaultFormatter = 'formatter',
+            defaultTasks = ['task1', 'task2'],
+            defaultDirectory = 'dir';
+
+        describe('validation', function () {
+
+            it('should throw if passed a falsy name', function () {
+
+                let instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(null, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
+
+                }).to.throw(/name is invalid/);
+            });
+
+            it('should throw if passed a falsy files argument', function () {
+
+                let instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, null, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
+
+                }).to.throw(/files argument is invalid/);
+            });
+
+            it('should throw if files is not an array', function () {
+
+                let instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, 'files', defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
+
+                }).to.throw(/files argument is not an array/);
+            });
+
+            it('should throw if passed a falsy basePath', function () {
+
+                let instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, null, defaultFormatter, defaultTasks, defaultDirectory);
+
+                }).to.throw(/base path is invalid/);
+            });
+
+            it('should throw if passed a falsy formatter', function () {
+
+                let instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, null, defaultTasks, defaultDirectory);
+
+                }).to.throw(/formatter is invalid/);
+
+            });
+
+            it('should throw if the tasks argument is not an array', function () {
+
+                let instance = createDefaultInstance();
+
+                expect(function () {
+
+                    instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, 'tasks', defaultDirectory);
 
                 }).to.throw(/tasks argument is not an array/);
 
@@ -820,9 +934,9 @@ describe('#includer', function () {
 
             let instance = createDefaultInstance();
 
-            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
+            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
-            assertCopiedStructure(defaultFiles, 'app\\name', defaultBasePath);
+            assertCopiedStructure(defaultFiles, 'app\\dir', defaultBasePath);
         });
 
         it('should call #logInclude() with the specified arguments', function () {
@@ -840,7 +954,7 @@ describe('#includer', function () {
 
             let logIncludesSpy = sinon.spy(instance, 'logInclude');
 
-            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks);
+            instance.includeSeparatedModuleFiles(defaultName, defaultFiles, defaultBasePath, defaultFormatter, defaultTasks, defaultDirectory);
 
             let expectedPaths = [
                 'path\\file1',
@@ -852,116 +966,5 @@ describe('#includer', function () {
             assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
         });
 
-    });
-
-    describe('#includeModuleFiles()', function () {
-
-        let defaultName = 'name',
-            defaultFiles = [
-                'dir/path/file1',
-                'dir/path/file2',
-                'dir/path1/file1',
-                'dir/path1/file2'
-            ],
-            defaultFormatter = 'formatter',
-            defaultTasks = ['task1', 'task2'];
-
-        describe('validation', function () {
-
-            it('should throw if passed a falsy name', function () {
-
-                let instance = createDefaultInstance();
-
-                expect(function () {
-
-                    instance.includeModuleFiles(null, defaultFiles, defaultFormatter, defaultTasks);
-
-                }).to.throw(/name is invalid/);
-            });
-
-            it('should throw if passed a falsy files argument', function () {
-
-                let instance = createDefaultInstance();
-
-                expect(function () {
-
-                    instance.includeModuleFiles(defaultName, null, defaultFormatter, defaultTasks);
-
-                }).to.throw(/files argument is invalid/);
-            });
-
-            it('should throw if files is not an array', function () {
-
-                let instance = createDefaultInstance();
-
-                expect(function () {
-
-                    instance.includeModuleFiles(defaultName, 'files', defaultFormatter, defaultTasks);
-
-                }).to.throw(/files argument is not an array/);
-            });
-
-            it('should throw if passed a falsy formatter', function () {
-
-                let instance = createDefaultInstance();
-
-                expect(function () {
-
-                    instance.includeModuleFiles(defaultName, defaultFiles, null, defaultTasks);
-
-                }).to.throw(/formatter is invalid/);
-
-            });
-
-            it('should throw if the tasks argument is not an array', function () {
-
-                let instance = createDefaultInstance();
-
-                expect(function () {
-
-                    instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, 'tasks');
-
-                }).to.throw(/tasks argument is not an array/);
-
-            });
-        });
-
-        it('should call #copyFiles.copy() with the specified arguments', function () {
-
-            copyFilesMock.copy.stub.returns([]);
-
-            let instance = createDefaultInstance();
-
-            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
-
-            assertCopied(defaultFiles, 'app\\name');
-        });
-
-        it('should call #logInclude() with the specified arguments', function () {
-
-            let copiedPaths = [
-                'app\\name\\path-file1',
-                'app\\name\\path-file2',
-                'app\\name\\path1-file1',
-                'app\\name\\path1-file2'
-            ];
-
-            copyFilesMock.copy.stub.returns(copiedPaths);
-
-            let instance = createDefaultInstance();
-
-            let logIncludesSpy = sinon.spy(instance, 'logInclude');
-
-            instance.includeModuleFiles(defaultName, defaultFiles, defaultFormatter, defaultTasks);
-
-            let expectedPaths = [
-                'name\\path-file1',
-                'name\\path-file2',
-                'name\\path1-file1',
-                'name\\path1-file2'
-            ];
-
-            assertLoggedIncludes(logIncludesSpy, defaultName, expectedPaths, defaultFormatter, defaultTasks);
-        });
     });
 });

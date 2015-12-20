@@ -200,7 +200,7 @@ function includer(indexFile, output) {
         }
     };
 
-    that.includeDirectory = function (name, files, basePath, formatter, tasks) {
+    that.includeDirectory = function (name, files, basePath, formatter, tasks, directoryName) {
 
         if (!name) {
 
@@ -237,7 +237,12 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        let newList = copyFiles.copyStructure(files, output(name).value(), basePath);
+        if (!directoryName) {
+
+            directoryName = name;
+        }
+
+        let newList = copyFiles.copyStructure(files, output(directoryName).value(), basePath);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
@@ -279,7 +284,7 @@ function includer(indexFile, output) {
         injectApplicationFiles(placeholder, newList, formatter, tasks);
     };
 
-    that.includeModuleFiles = function (name, files, formatter, tasks) {
+    that.includeModuleFiles = function (name, files, formatter, tasks, directoryName) {
 
         if (!name) {
 
@@ -311,12 +316,17 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        let newList = copyFiles.copy(files, output(name).value(), renameModuleFile);
+        if (!directoryName) {
+
+            directoryName = name;
+        }
+
+        let newList = copyFiles.copy(files, output(directoryName).value(), renameModuleFile);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
 
-    that.includeSeparatedModuleFiles = function (name, files, basePath, formatter, tasks) {
+    that.includeSeparatedModuleFiles = function (name, files, basePath, formatter, tasks, directoryName) {
 
         if (!name) {
 
@@ -353,7 +363,12 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        let newList = copyFiles.copyStructure(files, output(name).value(), basePath, separateModuleFile);
+        if (!directoryName) {
+
+            directoryName = name;
+        }
+
+        let newList = copyFiles.copyStructure(files, output(directoryName).value(), basePath, separateModuleFile);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
