@@ -37,6 +37,15 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         templates: 'templates'
     };
 
+    const locations = {
+        less: 'less',
+        scripts: 'scripts',
+        thirdParty: 'third-party',
+        headers: 'headers',
+        constants: 'constants',
+        libraries: 'libraries'
+    };
+
     var formatters = includer.formatters;
 
     let names = [];
@@ -93,7 +102,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                 constants.thirdPartyScripts,
                 includes.scripts,
                 includes.basePath,
-                formatters.scriptFormatter
+                formatters.scriptFormatter,
+                [],
+                locations.thirdParty
             );
         });
 
@@ -103,7 +114,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                 constants.thirdPartyStyles,
                 includes.styles,
                 includes.basePath,
-                formatters.styleFormatter
+                formatters.styleFormatter,
+                [],
+                locations.thirdParty
             );
         });
 
@@ -123,10 +136,13 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeModuleFiles(
+                includer.includeDirectory(
                     constants.moduleHeaders,
                     files,
-                    formatters.scriptFormatter
+                    appBuilder.appPath(),
+                    formatters.scriptFormatter,
+                    [],
+                    locations.headers
                 );
             }
         });
@@ -137,10 +153,13 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeModuleFiles(
+                includer.includeDirectory(
                     constants.moduleConstants,
                     files,
-                    formatters.scriptFormatter
+                    appBuilder.appPath(),
+                    formatters.scriptFormatter,
+                    [],
+                    locations.constants
                 );
             }
         });
@@ -151,10 +170,13 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeModuleFiles(
+                includer.includeDirectory(
                     constants.moduleLibraries,
                     files,
-                    formatters.scriptFormatter
+                    appBuilder.appPath(),
+                    formatters.scriptFormatter,
+                    [],
+                    locations.libraries
                 );
             }
         });
@@ -201,7 +223,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                     constants.globalScripts,
                     files,
                     appBuilder.appPath(),
-                    formatters.scriptFormatter
+                    formatters.scriptFormatter,
+                    [],
+                    locations.scripts
                 );
             }
         });
@@ -217,7 +241,8 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                     files,
                     appBuilder.appPath(),
                     formatters.styleFormatter,
-                    ['less']
+                    ['less'],
+                    locations.less
                 );
             }
         });
@@ -226,11 +251,13 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             var files = glob(appBuilder.globalModuleScripts);
 
-            includer.includeSeparatedModuleFiles(
+            includer.includeDirectory(
                 constants.globalModuleScripts,
                 files,
-                appBuilder.modulesDir,
-                formatters.scriptFormatter
+                appBuilder.appPath(),
+                formatters.scriptFormatter,
+                [],
+                locations.scripts
             );
         });
 
@@ -240,12 +267,13 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeSeparatedModuleFiles(
+                includer.includeDirectory(
                     constants.globalModuleLess,
                     files,
-                    appBuilder.modulesDir,
+                    appBuilder.appPath(),
                     formatters.styleFormatter,
-                    ['less']
+                    ['less'],
+                    locations.less
                 );
             }
         });
@@ -260,7 +288,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                     constants.scripts,
                     files,
                     appBuilder.modulesDir,
-                    formatters.scriptFormatter
+                    formatters.scriptFormatter,
+                    [],
+                    locations.scripts
                 );
             }
         });
@@ -276,7 +306,8 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                     files,
                     appBuilder.modulesDir,
                     formatters.styleFormatter,
-                    ['less', 'css-rebase']
+                    ['less', 'css-rebase'],
+                    locations.less
                 );
             }
         });
