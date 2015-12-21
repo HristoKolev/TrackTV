@@ -17,8 +17,8 @@ function includer(indexFile, output) {
 
     let that = Object.create(null);
 
-    let outputIndex = output('index.html'),
-        includeLog = output('includes.json');
+    let outputIndex = path.join(output, 'index.html'),
+        includeLog = path.join(output, 'includes.json');
 
     // custom modules
     let fillContent = require('./fillContent'),
@@ -107,7 +107,7 @@ function includer(indexFile, output) {
 
     that.readIncludes = function () {
 
-        return JSON.parse(fs.readFileSync(includeLog.value()));
+        return JSON.parse(fs.readFileSync(includeLog));
     };
 
     that.writeIncludes = function (includes) {
@@ -124,7 +124,7 @@ function includer(indexFile, output) {
 
         let jsonString = JSON.stringify(includes, null, '\t');
 
-        fs.writeFileSync(includeLog.value(), jsonString);
+        fs.writeFileSync(includeLog, jsonString);
     };
 
     that.createIncludeLog = function () {
@@ -178,14 +178,14 @@ function includer(indexFile, output) {
 
     function injectApplicationFiles(placeholder, files, formatter, tasks) {
 
-        files = removeBaseDir(files, output.value());
+        files = removeBaseDir(files, output);
 
         that.logInclude(placeholder, files, formatter, tasks);
     }
 
     that.copyIndex = function () {
 
-        copyFiles.copy(indexFile, output.value());
+        copyFiles.copy(indexFile, output);
     };
 
     that.updateIncludes = function () {
@@ -196,7 +196,7 @@ function includer(indexFile, output) {
 
         for (let include of includes) {
 
-            fillContent(outputIndex.value(), include.name, listScripts(include.files, include.formatter));
+            fillContent(outputIndex, include.name, listScripts(include.files, include.formatter));
         }
     };
 
@@ -242,7 +242,7 @@ function includer(indexFile, output) {
             directoryName = name;
         }
 
-        let newList = copyFiles.copyStructure(files, output(directoryName).value(), basePath);
+        let newList = copyFiles.copyStructure(files, path.join(output, directoryName), basePath);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
@@ -279,7 +279,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        let newList = copyFiles.copyStructure([file], output.value(), basePath);
+        let newList = copyFiles.copyStructure([file], output, basePath);
 
         injectApplicationFiles(placeholder, newList, formatter, tasks);
     };
@@ -321,7 +321,7 @@ function includer(indexFile, output) {
             directoryName = name;
         }
 
-        let newList = copyFiles.copy(files, output(directoryName).value(), renameModuleFile);
+        let newList = copyFiles.copy(files, path.join(output, directoryName), renameModuleFile);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };
@@ -368,7 +368,7 @@ function includer(indexFile, output) {
             directoryName = name;
         }
 
-        let newList = copyFiles.copyStructure(files, output(directoryName).value(), basePath, separateModuleFile);
+        let newList = copyFiles.copyStructure(files, path.join(output, directoryName), basePath, separateModuleFile);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };

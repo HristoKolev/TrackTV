@@ -9,8 +9,6 @@ let chai = require('chai'),
 
 chai.use(sinonChai);
 
-let pathChain = require('../modules/pathChain');
-
 let assertCompositionMultitest = require('../testing/assertComposition').multitest;
 
 let fsMock = mockHelper('fs', {
@@ -57,7 +55,7 @@ describe('#includer', function () {
         ]);
     });
 
-    let defaultOutput = pathChain.instance('app'),
+    let defaultOutput = 'app',
         defaultLogFile = 'app\\includes.json',
         defaultIndex = 'index.html',
         defaultOutputIndex = 'app\\index.html';
@@ -968,3 +966,5 @@ describe('#includer', function () {
 
     });
 });
+
+afterEach(function () {});
