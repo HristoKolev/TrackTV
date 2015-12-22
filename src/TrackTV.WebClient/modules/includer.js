@@ -50,33 +50,6 @@ function includer(indexFile, output) {
         return files;
     }
 
-    function getModuleInfo(fileName) {
-
-        let extension = path.extname(fileName);
-        let baseName = path.basename(fileName, extension);
-        let moduleName = path.basename(path.dirname(fileName));
-
-        return {
-            extension: extension,
-            baseName: baseName,
-            moduleName: moduleName
-        };
-    }
-
-    function renameModuleFile(fileName) {
-
-        let moduleInfo = getModuleInfo(fileName);
-
-        return path.join(moduleInfo.moduleName + '-' + moduleInfo.baseName + moduleInfo.extension);
-    }
-
-    function separateModuleFile(fileName) {
-
-        let moduleInfo = getModuleInfo(fileName);
-
-        return path.join(moduleInfo.moduleName, moduleInfo.baseName + moduleInfo.extension);
-    }
-
     function getFormatter(name) {
 
         let formattersByName = {
@@ -200,6 +173,43 @@ function includer(indexFile, output) {
         }
     };
 
+    that.includeFile = function (placeholder, file, basePath, formatter, tasks) {
+
+        if (!placeholder) {
+
+            throw new Error('The placeholder is invalid.');
+        }
+
+        if (!file) {
+
+            throw new Error('The file is invalid.');
+        }
+
+        if (!basePath) {
+
+            throw new Error('The base path is invalid.');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
+        let newList = copyFiles.copyStructure([file], output, basePath);
+
+        injectApplicationFiles(placeholder, newList, formatter, tasks);
+    };
+
     that.includeDirectory = function (name, files, basePath, formatter, tasks, directoryName) {
 
         if (!name) {
@@ -247,86 +257,7 @@ function includer(indexFile, output) {
         injectApplicationFiles(name, newList, formatter, tasks);
     };
 
-    that.includeFile = function (placeholder, file, basePath, formatter, tasks) {
-
-        if (!placeholder) {
-
-            throw new Error('The placeholder is invalid.');
-        }
-
-        if (!file) {
-
-            throw new Error('The file is invalid.');
-        }
-
-        if (!basePath) {
-
-            throw new Error('The base path is invalid.');
-        }
-
-        if (!formatter) {
-
-            throw new Error('The formatter is invalid.');
-        }
-
-        if (!tasks) {
-
-            tasks = [];
-        }
-
-        if (!Array.isArray(tasks)) {
-
-            throw new Error('The tasks argument is not an array.');
-        }
-
-        let newList = copyFiles.copyStructure([file], output, basePath);
-
-        injectApplicationFiles(placeholder, newList, formatter, tasks);
-    };
-
-    that.includeModuleFiles = function (name, files, formatter, tasks, directoryName) {
-
-        if (!name) {
-
-            throw new Error('The name is invalid.');
-        }
-
-        if (!files) {
-
-            throw new Error('The files argument is invalid.');
-        }
-
-        if (!Array.isArray(files)) {
-
-            throw new Error('The files argument is not an array');
-        }
-
-        if (!formatter) {
-
-            throw new Error('The formatter is invalid.');
-        }
-
-        if (!tasks) {
-
-            tasks = [];
-        }
-
-        if (!Array.isArray(tasks)) {
-
-            throw new Error('The tasks argument is not an array.');
-        }
-
-        if (!directoryName) {
-
-            directoryName = name;
-        }
-
-        let newList = copyFiles.copy(files, path.join(output, directoryName), renameModuleFile);
-
-        injectApplicationFiles(name, newList, formatter, tasks);
-    };
-
-    that.includeSeparatedModuleFiles = function (name, files, basePath, formatter, tasks, directoryName) {
+    that.includeFiles = function (name, files, basePath, formatter, tasks) {
 
         if (!name) {
 
@@ -363,12 +294,7 @@ function includer(indexFile, output) {
             throw new Error('The tasks argument is not an array.');
         }
 
-        if (!directoryName) {
-
-            directoryName = name;
-        }
-
-        let newList = copyFiles.copyStructure(files, path.join(output, directoryName), basePath, separateModuleFile);
+        let newList = copyFiles.copyStructure(files, output, basePath);
 
         injectApplicationFiles(name, newList, formatter, tasks);
     };

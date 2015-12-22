@@ -13,7 +13,7 @@ describe('#urlResolve()', function () {
     });
 
     const defaultOutput = '.\\wwwroot',
-        defaultFilePath = '.\\wwwroot\\main-less-styles\\main\\calendar\\calendar.less',
+        defaultFilePath = '.\\wwwroot\\main\\calendar\\calendar.less',
         defaultResourcePath = 'content/dir/file1',
         defaultIncludeResourcePath = 'include/dir/file1',
         defaultImplicitResourcePath = 'dir/file1';
@@ -100,7 +100,7 @@ describe('#urlResolve()', function () {
 
             let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
-            expect(result).to.equal('../../../content/global/dir/file1');
+            expect(result).to.equal('../../content/global/dir/file1');
         });
 
         it('should resolve global include path if explicitly selected ', function () {
@@ -109,7 +109,7 @@ describe('#urlResolve()', function () {
 
             let result = urlResolve(defaultOutput, defaultFilePath, resourcePath);
 
-            expect(result).to.equal('../../../include/global/dir/file1');
+            expect(result).to.equal('../../include/global/dir/file1');
         });
     });
 
@@ -119,73 +119,73 @@ describe('#urlResolve()', function () {
 
             let result = urlResolve(defaultOutput, defaultFilePath, defaultResourcePath);
 
-            expect(result).to.equal('../../../content/local/main/calendar/dir/file1');
+            expect(result).to.equal('../../content/local/main/calendar/dir/file1');
         });
 
         it('should resolve local include path', function () {
 
             let result = urlResolve(defaultOutput, defaultFilePath, defaultIncludeResourcePath);
 
-            expect(result).to.equal('../../../include/local/main/calendar/dir/file1');
+            expect(result).to.equal('../../include/local/main/calendar/dir/file1');
         });
 
         it('should default to local content path if not explicitly stated', function () {
 
             let result = urlResolve(defaultOutput, defaultFilePath, defaultImplicitResourcePath);
 
-            expect(result).to.equal('../../../content/local/main/calendar/dir/file1');
+            expect(result).to.equal('../../content/local/main/calendar/dir/file1');
         });
     });
 
     describe('module files', function () {
 
-        const filePath = '.\\wwwroot\\main-less-styles\\main\\calendar.less';
+        const filePath = '.\\wwwroot\\main\\calendar.less';
 
         it('should resolve module path', function () {
 
             let result = urlResolve(defaultOutput, filePath, defaultResourcePath);
 
-            expect(result).to.equal('../../content/module/main/dir/file1');
+            expect(result).to.equal('../content/module/main/dir/file1');
         });
 
         it('should resolve module include path', function () {
 
             let result = urlResolve(defaultOutput, filePath, defaultIncludeResourcePath);
 
-            expect(result).to.equal('../../include/module/main/dir/file1');
+            expect(result).to.equal('../include/module/main/dir/file1');
         });
 
         it('should default to module content path if not explicitly stated', function () {
 
             let result = urlResolve(defaultOutput, filePath, defaultImplicitResourcePath);
 
-            expect(result).to.equal('../../content/module/main/dir/file1');
+            expect(result).to.equal('../content/module/main/dir/file1');
         });
     });
 
     describe('global files', function () {
 
-        const filePath = '.\\wwwroot\\main-less-styles\\calendar.less';
+        const filePath = '.\\wwwroot\\calendar.less';
 
         it('should resolve module path', function () {
 
             let result = urlResolve(defaultOutput, filePath, defaultResourcePath);
 
-            expect(result).to.equal('../content/global/dir/file1');
+            expect(result).to.equal('content/global/dir/file1');
         });
 
         it('should resolve module include path', function () {
 
             let result = urlResolve(defaultOutput, filePath, defaultIncludeResourcePath);
 
-            expect(result).to.equal('../include/global/dir/file1');
+            expect(result).to.equal('include/global/dir/file1');
         });
 
         it('should default to global content path if not explicitly stated', function () {
 
             let result = urlResolve(defaultOutput, filePath, defaultImplicitResourcePath);
 
-            expect(result).to.equal('../content/global/dir/file1');
+            expect(result).to.equal('content/global/dir/file1');
         });
     });
 });

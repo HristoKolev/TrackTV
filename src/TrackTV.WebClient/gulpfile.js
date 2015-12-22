@@ -11,7 +11,7 @@ gulp.task('default', function () {
 });
 
 //gulp.task('build', function () {
-
+//
 //    runSequence(
 //        'build-clean',
 //        'build-index',
@@ -36,10 +36,15 @@ gulp.task('default', function () {
 
 gulp.task('test-task', function () {
 
-    const copyTemplates = require('./modules/copyTemplates');
+    const glob = require('glob-all').sync,
+        _ = require('underscore'),
+        path = require('path');
 
-    let list = copyTemplates(['app/module/submodule/index.html'], 'app', 'wwwroot');
+    let root = 'wwwroot';
 
-    console.log(list);
+    let paths = _(glob(path.join(root, '**')))
+        .map(p => path.relative(root, p));
+
+    console.log(paths);
 
 });

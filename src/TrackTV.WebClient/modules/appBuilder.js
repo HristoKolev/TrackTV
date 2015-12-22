@@ -145,8 +145,6 @@ function appBuilder(rootPath) {
 
     that.contentPath = that.appPath('content');
 
-    that.modulesDir = that.appPath();
-
     that.getModules = function getModules() {
 
         return _.chain(fs.readdirSync(rootPath))

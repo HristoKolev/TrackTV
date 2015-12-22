@@ -8,14 +8,9 @@ const fileClass = Object.freeze({
 
 function getParts(filePath) {
 
-    let parts = filePath.split(/[/\\]/g);
+    const parts = filePath.split(/[/\\]/g);
 
     parts.pop();
-
-    if (parts.length === 0) {
-
-        throw new Error('The file path does not have the minimum of 2 parts. filePath:' + filePath);
-    }
 
     return parts;
 }
@@ -25,8 +20,6 @@ function getModuleName(filePath) {
     var parts = getParts(filePath);
 
     parts.reverse();
-
-    parts.pop();
 
     let moduleName = parts.pop();
 
@@ -51,13 +44,13 @@ function parse(filePath) {
 
     let parts = getParts(filePath);
 
-    if (parts.length === 1) {
+    if (parts.length === 0) {
 
         return {
             fileClass: fileClass.global
         };
     }
-    else if (parts.length === 2) {
+    else if (parts.length === 1) {
 
         return {
             fileClass: fileClass.moduleGlobal,

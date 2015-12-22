@@ -23,26 +23,18 @@ describe('#modulePathParse()', function () {
             }).to.throw(/file path is invalid/);
         });
 
-        it('should throw if the file path has less than 2 parts', function () {
-
-            expect(function () {
-
-                modulePathParse('file');
-
-            }).to.throw(/minimum of 2 parts/);
-        });
     });
 
     it('should parse global path', function () {
 
-        let info = modulePathParse('name/file1');
+        let info = modulePathParse('file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.global);
     });
 
     it('should parse global module path', function () {
 
-        let info = modulePathParse('name/module/file1');
+        let info = modulePathParse('module/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.moduleGlobal);
         expect(info.moduleName).to.equal('module');
@@ -50,7 +42,7 @@ describe('#modulePathParse()', function () {
 
     it('should parse local path', function () {
 
-        let info = modulePathParse('name/module/submodule/file1');
+        let info = modulePathParse('module/submodule/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.local);
         expect(info.moduleName).to.equal('module');
@@ -59,7 +51,7 @@ describe('#modulePathParse()', function () {
 
     it('should parse nested submodules', function () {
 
-        let info = modulePathParse('name/module/submodule1/submodule2/submoduleN/file1');
+        let info = modulePathParse('module/submodule1/submodule2/submoduleN/file1');
 
         expect(info.fileClass).to.equal(modulePathParse.fileClass.local);
         expect(info.moduleName).to.equal('module');

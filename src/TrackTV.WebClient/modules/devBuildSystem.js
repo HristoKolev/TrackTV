@@ -16,10 +16,10 @@ const copyFiles = require('./copyFiles'),
 
 function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
-    var that = Object.create(null);
+    const that = Object.create(null);
 
     // modules
-    var constants = {
+    const constants = {
         thirdPartyScripts: 'third-party-scripts',
         thirdPartyStyles: 'third-party-styles',
         initFile: 'init-file',
@@ -34,7 +34,7 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         globalLess: 'global-less',
         globalModuleLess: 'global-module-less',
         lessFiles: 'main-less-styles',
-        templates: 'templates'
+        templates: 'local-templates'
     };
 
     const locations = {
@@ -46,9 +46,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         libraries: 'libraries'
     };
 
-    var formatters = includer.formatters;
+    const formatters = includer.formatters;
 
-    let names = [];
+    const names = [];
 
     function register(name, func) {
 
@@ -66,9 +66,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             mocha.addFile(validationsFilePath);
 
-            mocha.run(function (failed) {
+            mocha.run(function (failedTestsCount) {
 
-                if (failed === 0) {
+                if (failedTestsCount === 0) {
 
                     callback();
                 }
@@ -92,7 +92,6 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
         register('dev-init', function () {
 
             includer.createIncludeLog();
-
             includer.copyIndex();
         });
 
@@ -136,13 +135,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.moduleHeaders,
                     files,
                     appBuilder.appPath(),
                     formatters.scriptFormatter,
-                    [],
-                    locations.headers
+                    []
                 );
             }
         });
@@ -153,13 +151,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.moduleConstants,
                     files,
                     appBuilder.appPath(),
                     formatters.scriptFormatter,
-                    [],
-                    locations.constants
+                    []
                 );
             }
         });
@@ -170,13 +167,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.moduleLibraries,
                     files,
                     appBuilder.appPath(),
                     formatters.scriptFormatter,
-                    [],
-                    locations.libraries
+                    []
                 );
             }
         });
@@ -219,13 +215,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.globalScripts,
                     files,
                     appBuilder.appPath(),
                     formatters.scriptFormatter,
-                    [],
-                    locations.scripts
+                    []
                 );
             }
         });
@@ -236,13 +231,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.globalLess,
                     files,
                     appBuilder.appPath(),
                     formatters.styleFormatter,
-                    ['less'],
-                    locations.less
+                    ['less']
                 );
             }
         });
@@ -251,13 +245,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             var files = glob(appBuilder.globalModuleScripts);
 
-            includer.includeDirectory(
+            includer.includeFiles(
                 constants.globalModuleScripts,
                 files,
                 appBuilder.appPath(),
                 formatters.scriptFormatter,
-                [],
-                locations.scripts
+                []
             );
         });
 
@@ -267,13 +260,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.globalModuleLess,
                     files,
                     appBuilder.appPath(),
                     formatters.styleFormatter,
-                    ['less'],
-                    locations.less
+                    ['less']
                 );
             }
         });
@@ -284,13 +276,12 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.scripts,
                     files,
-                    appBuilder.modulesDir,
+                    appBuilder.appPath(),
                     formatters.scriptFormatter,
-                    [],
-                    locations.scripts
+                    []
                 );
             }
         });
@@ -301,40 +292,30 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
 
             if (files.length) {
 
-                includer.includeDirectory(
+                includer.includeFiles(
                     constants.lessFiles,
                     files,
-                    appBuilder.modulesDir,
+                    appBuilder.appPath(),
                     formatters.styleFormatter,
-                    ['less', 'css-rebase'],
-                    locations.less
+                    ['less', 'css-rebase']
                 );
             }
         });
 
         register('dev-process-templates', function () {
 
-            let paths = glob(appBuilder.templates);
+            var files = glob(appBuilder.templates);
 
-            let templatePaths = [];
+            if (files.length) {
 
-            let templateList = copyTemplates(paths, appBuilder.appPath(), output.value());
-
-            for (let template of templateList) {
-
-                let resultPaths = copyFiles.copy(template.targetPath, template.destinationPath);
-
-                var templatePath = path.relative(output.value(), resultPaths[0]);
-
-                templatePaths.push(templatePath);
+                includer.includeFiles(
+                    constants.templates,
+                    files,
+                    appBuilder.appPath(),
+                    formatters.none,
+                    ['html-rebase']
+                );
             }
-
-            includer.logInclude(
-                constants.templates,
-                templatePaths,
-                formatters.none,
-                ['html-rebase']
-            );
         });
 
         register('dev-process-includes', function (callback) {
@@ -363,31 +344,9 @@ function devBuildSystem(appBuilder, output, includer, includes, runner) {
                 if (paths.length > 0) {
 
                     copyFiles.copyStructure(paths, directory.destinationPath, directory.targetPath);
-
                 }
             }
         });
-
-        ////////////////////////////////////////////////////////////////////////////////////
-
-        //register('dev-templates', function () {
-
-        //    return appStream.libTemplatesStream()
-        //        .pipe(libTemplatesPath.destStream());
-        //});
-
-        //register('dev-fonts', function () {
-
-        //    return appStream.libFontsStream()
-        //        .pipe(libFontsPath.destStream());
-        //});
-
-        //register('dev-less', function () {
-
-        //    return appStream.appStylesStream()
-        //        .pipe(mergedPath.destStream())
-        //        .on('error', console.error);
-        //});
 
         return names;
     };
