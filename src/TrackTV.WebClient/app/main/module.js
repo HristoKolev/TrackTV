@@ -1,19 +1,26 @@
 (function () {
     'use strict';
 
-    var name = 'main';
+    var name = 'main',
+        dependencies = [
+            'ngRoute',
+            'ngCookies',
+            'ngAnimate',
+            'ui.gravatar',
+            'tt.services',
+            'tt.directives',
+            'tt.filters',
+            'angularUtils.directives.dirPagination'
+        ],
+        module = angular.module(name, dependencies);
 
-    var dependencies = [
-        'ngRoute',
-        'ngCookies',
-        'ngAnimate',
-        'ui.gravatar',
-        'tt.services',
-        'tt.directives',
-        'tt.filters',
-        'angularUtils.directives.dirPagination'
-    ];
+    window.toastr.options = {
+        closeButton: true,
+        positionClass: 'toast-top-center',
+        timeOut: 2000
+    };
 
-    window.ngModules.main = angular.module(name, dependencies);
+    module.value('toastr', window.toastr);
 
+    window.ngModules.main = module;
 }());

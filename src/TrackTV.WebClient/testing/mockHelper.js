@@ -4,17 +4,78 @@ const sinon = require('sinon'),
     mockery = require('mockery'),
     _ = require('underscore');
 
-function isFunction(functionToCheck) {
-
-    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
-}
+const isFunction = require('../modules/isFunction');
 
 function parseSettings(settings) {
 
-    return {
-        shouldStub: settings.indexOf('stub') !== -1,
-        shouldSpy: settings.indexOf('spy') !== -1
+    if (!settings) {
+
+        throw new Error('The settings object is invalid');
+    }
+
+    if (Array.isArray(settings)) {
+
+        settings = {
+            flags: settings
+        };
+    }
+
+    if (!settings.flags) {
+
+        settings.flags = [];
+    }
+
+    let flags = {
+        stub: settings.flags.indexOf('stub') !== -1,
+        spy: settings.flags.indexOf('spy') !== -1,
+        stubObject: settings.flags.indexOf('stubObject') !== -1
     };
+
+    const result = {};
+
+    function attachFlags(obj) {
+
+        if (!obj) {
+
+            obj = flags;
+        }
+
+        for (let index in obj) { // jshint ignore:line
+
+            //noinspection JSUnfilteredForInLoop
+            result[index] = obj[index];
+        }
+    }
+
+    if (settings.returnUndefined) {
+
+        result.shouldReturn = true;
+        result.returnValue = undefined;
+    }
+    else if (settings.returnValue !== undefined) {
+
+        result.shouldReturn = true;
+        result.returnValue = settings.returnValue;
+
+        if (isFunction(result.returnValue)) {
+
+            attachFlags({
+                spy: flags.spy
+            });
+        }
+    }
+    else if (flags.stubObject) {
+
+        attachFlags({
+            stubObject: flags.stubObject
+        });
+    }
+    else {
+
+        attachFlags();
+    }
+
+    return result;
 }
 
 function forwardFunction(func) {
@@ -43,54 +104,55 @@ function mockRequire(moduleName) {
 
 function getMock(moduleName, optionsObj, originalModule) {
 
-    let functionNames = Object.keys(optionsObj);
+    let keys = Object.keys(optionsObj);
 
     let result = {};
     let mock = {};
 
     let substitutes = [];
 
-    for (let funcName of functionNames) {
+    for (let memberName of keys) {
 
-        let settings = parseSettings(optionsObj[funcName]);
+        let settings = parseSettings(optionsObj[memberName]);
 
-        result[funcName] = {};
+        result[memberName] = {};
 
-        if (settings.shouldStub) {
+        if (settings.stubObject) {
+
+            mock[memberName] = undefined;
+
+            result[memberName].setValue = function (value) {
+
+                mock[memberName] = value;
+            };
+        } else if (settings.stub) {
 
             let stub = sinon.stub();
             substitutes.push(stub);
 
-            mock[funcName] = forwardFunction(stub);
+            mock[memberName] = forwardFunction(stub);
 
-            result[funcName].stub = stub;
+            result[memberName].stub = stub;
+        }
+        else if (settings.shouldReturn) {
+
+            mock[memberName] = settings.returnValue;
+        }
+        else if (originalModule) {
+
+            mock[memberName] = forwardFunction(originalModule[memberName]);
         }
         else {
 
-            let mockFunc = _.find(optionsObj[funcName], e => isFunction(e));
-
-            if (mockFunc) {
-
-                mock[funcName] = mockFunc;
-
-            } else if (originalModule) {
-
-                let fallthrough = originalModule[funcName];
-
-                mock[funcName] = forwardFunction(fallthrough);
-            }
-            else {
-
-                mock[funcName] = forwardFunction();
-            }
+            mock[memberName] = forwardFunction();
         }
 
-        if (settings.shouldSpy) {
+        if (settings.spy) {
 
-            let spy = sinon.spy(mock, funcName);
+            let spy = sinon.spy(mock, memberName);
             substitutes.push(spy);
 
-            result[funcName].spy = spy;
+            result[memberName].spy = spy;
         }
     }
 
@@ -107,17 +169,14 @@ function getMock(moduleName, optionsObj, originalModule) {
         }
     };
 
-    result.deregister = function () {
-
-        mockery.deregisterMock(moduleName);
-    };
+    result.deregister = () => mockery.deregisterMock(moduleName);
 
     result.mock = mock;
 
     return result;
 }
 
-function fromFunction(moduleName, optionsArray, originalFunction) {
+function fromFunction(moduleName, optionsArray) {
 
     const homeObject = {};
     const result = {};
@@ -126,41 +185,39 @@ function fromFunction(moduleName, optionsArray, originalFunction) {
 
     const options = parseSettings(optionsArray);
 
-    if (options.shouldStub) {
+    if (isFunction(options)) {
 
-        let stub = sinon.stub();
-
-        homeObject.func = forwardFunction(stub);
-
-        result.stub = stub;
-
-        substitutes.push(stub);
+        homeObject.func = options;
     }
     else {
 
-        let mockFunc = _.find(optionsArray, e => isFunction(e));
+        if (options.stub) {
 
-        if (mockFunc) {
+            let stub = sinon.stub();
 
-            homeObject.func = mockFunc;
+            homeObject.func = forwardFunction(stub);
 
-        } else if (originalFunction) {
+            result.stub = stub;
 
-            homeObject.func = forwardFunction(originalFunction);
+            substitutes.push(stub);
+        }
+        else if (options.shouldReturn) {
+
+            homeObject.func = options.returnValue;
         }
         else {
 
             homeObject.func = forwardFunction();
         }
-    }
 
-    if (options.shouldSpy) {
+        if (options.spy) {
 
-        let spy = sinon.spy(homeObject, 'func');
+            let spy = sinon.spy(homeObject, 'func');
 
-        result.spy = spy;
+            result.spy = spy;
 
-        substitutes.push(spy);
+            substitutes.push(spy);
+        }
     }
 
     if (moduleName !== null) {
@@ -176,10 +233,7 @@ function fromFunction(moduleName, optionsArray, originalFunction) {
         }
     };
 
-    result.deregister = function () {
-
-        mockery.deregisterMock(moduleName);
-    };
+    result.deregister = () => mockery.deregisterMock(moduleName);
 
     result.mock = homeObject.func;
 

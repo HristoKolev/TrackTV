@@ -36,15 +36,18 @@ gulp.task('default', function () {
 
 gulp.task('test-task', function () {
 
-    const glob = require('glob-all').sync,
-        _ = require('underscore'),
-        path = require('path');
+    //const glob = require('glob-all').sync,
+    //    _ = require('underscore'),
+    //    path = require('path');
+    //
+    //let root = 'wwwroot';
+    //
+    //let paths = _(glob(path.join(root, '**')))
+    //    .map(p => path.relative(root, p));
+    //
+    //console.log(paths);
 
-    let root = 'wwwroot';
+    const appBuilder = require('./modules/instances/appBuilder');
 
-    let paths = _(glob(path.join(root, '**')))
-        .map(p => path.relative(root, p));
-
-    console.log(paths);
-
+    console.log(appBuilder.globalModuleLess);
 });

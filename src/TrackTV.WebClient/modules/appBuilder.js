@@ -1,171 +1,127 @@
 'use strict';
 
 const path = require('path'),
-    glob = require('glob-all'),
+    glob = require('glob-all').sync,
     _ = require('underscore'),
     fs = require('fs');
 
-const linuxStylePath = require('./linuxStylePath');
+const linuxStylePath = require('./linuxStylePath'),
+    fsExtend = require('../modules/fs-extend');
 
-function level(input, masterArray) {
-
-    if (!masterArray) {
-
-        masterArray = [];
-    }
-
-    if (Array.isArray(input)) {
-
-        for (let element of input) {
-
-            level(element, masterArray);
-        }
-    }
-    else {
-
-        masterArray.push(input);
-    }
-
-    return masterArray;
-}
-
-function directoryExists(dirPath) {
-
-    try {
-
-        return fs.statSync(dirPath).isDirectory();
-    }
-    catch (err) {
-
-        return false;
-    }
-}
+let appConfig = require('../config/appConfig');
 
 const specialDirectories = ['content', 'include'],
-    globalSpecialDirectories = _.map(specialDirectories, p => 'global_' + p),
-    excludePattern = _.map(globalSpecialDirectories, p => '!' + p);
+    globalSpecialDirectories = _.map(specialDirectories, p => 'global_' + p);
 
-function appBuilder(rootPath) {
+let exclusionList = [];
 
-    const that = Object.create(null);
+function appPath(relativePath) {
 
-    that.appPath = function appPath(relativePath) {
+    if (Array.isArray(relativePath)) {
 
-        if (Array.isArray(relativePath)) {
+        for (let i = 0; i < relativePath.length; i += 1) {
 
-            for (let i = 0; i < relativePath.length; i += 1) {
-
-                relativePath[i] = appPath(relativePath[i]);
-            }
-
-            return relativePath;
-
-        } else {
-
-            relativePath = relativePath || '';
-
-            let notChar = '!';
-
-            let removedNot = false;
-
-            if (relativePath.startsWith(notChar)) {
-
-                relativePath = relativePath.slice(1);
-                removedNot = true;
-            }
-
-            let result = linuxStylePath(path.join(rootPath, relativePath));
-
-            if (removedNot) {
-
-                result = notChar + result;
-            }
-
-            return result;
-        }
-    };
-
-    const patterns = {
-        indexFile: 'index.html',
-        initFile: 'init.js',
-        routeConfig: 'routeConfig.js',
-
-        moduleHeaders: ['*/module.js', excludePattern.slice()],
-        npmModuleFiles: ['*/npmModules.js', excludePattern.slice()],
-        moduleConstants: ['*/constants.js', excludePattern.slice()],
-        moduleLibraries: ['*/libraries.js', excludePattern.slice()],
-
-        scripts: ['*/*/**/*.js', excludePattern.slice()],
-        templates: ['*/*/**/*.html', excludePattern.slice()],
-        lessFiles: ['*/*/**/*.less', excludePattern.slice()],
-
-        globalScripts: '*.js',
-        globalLess: '*.less',
-
-        globalModuleScripts: ['*/*.js', excludePattern.slice()],
-        globalModuleLess: ['*/*.less', excludePattern.slice()]
-    };
-
-    patterns.sourceFiles = [
-        patterns.initFile,
-        patterns.moduleHeaders,
-        patterns.moduleConstants,
-        patterns.moduleLibraries,
-        patterns.scripts,
-        patterns.routeConfig
-    ];
-
-    patterns.globalScripts = [
-        patterns.globalScripts,
-        '!' + patterns.initFile,
-        '!' + patterns.routeConfig
-    ];
-
-    patterns.globalModuleScripts = [
-        patterns.globalModuleScripts.slice(),
-        '!' + patterns.moduleHeaders[0],
-        '!' + patterns.npmModuleFiles[0],
-        '!' + patterns.moduleConstants[0],
-        '!' + patterns.moduleLibraries[0],
-        excludePattern.slice()
-
-    ];
-
-    for (let key of Object.keys(patterns)) {
-
-        let target = _.uniq(level(patterns[key]));
-
-        if (target.length === 1) {
-
-            target = target[0];
+            relativePath[i] = appPath(relativePath[i]);
         }
 
-        that[key] = that.appPath(target);
+        return relativePath;
+
+    } else {
+
+        relativePath = relativePath || '';
+
+        return linuxStylePath(path.join(appConfig.appPath, relativePath));
     }
+}
 
-    that.contentPath = that.appPath('content');
+function excludeSpecial(array) {
 
-    that.getModules = function getModules() {
+    return _.filter(array, function (e) {
 
-        return _.chain(fs.readdirSync(rootPath))
-            .without('global_content', 'global_include')
+        for (let directory of globalSpecialDirectories) {
+
+            if (e.startsWith(directory)) {
+
+                return false;
+            }
+        }
+
+        return true;
+    });
+}
+
+function localize(array) {
+
+    return _.map(array, p => path.relative(appConfig.appPath, p));
+}
+
+function addToExclusionList(array) {
+
+    if (Array.isArray(array)) {
+
+        exclusionList = exclusionList.concat(array);
+    }
+    else {
+        exclusionList.push(array);
+    }
+}
+
+function excludeFiles(array) {
+
+    return _.filter(array, e => !_.contains(exclusionList, e));
+}
+
+function localGlob(p) {
+
+    let paths = excludeFiles(excludeSpecial(localize(glob(appPath(p)))));
+
+    addToExclusionList(paths);
+
+    return paths;
+}
+
+module.exports = {
+
+    appPath: appPath,
+
+    indexFile: localGlob('index.html'),
+    initFile: localGlob('init.js'),
+    routeConfig: localGlob('routeConfig.js'),
+
+    moduleHeaders: localGlob('*/module.js'),
+    npmModuleFiles: localGlob('*/npmModules.js'),
+
+    scripts: localGlob('*/*/**/*.js'),
+    templates: localGlob('*/*/**/*.html'),
+    lessFiles: localGlob('*/*/**/*.less'),
+
+    globalScripts: localGlob('*.js'),
+    globalLess: localGlob('*.less'),
+
+    globalModuleScripts: localGlob('*/*.js'),
+    globalModuleLess: localGlob('*/*.less'),
+
+    getModules: function getModules() {
+
+        return _.chain(fs.readdirSync(appConfig.appPath))
+            .without(...globalSpecialDirectories)
             .map(p => ({
                 name: p,
-                fullPath: path.resolve(path.join(rootPath, p))
+                fullPath: path.resolve(path.join(appConfig.appPath, p))
             }))
-            .filter(p => directoryExists(p.fullPath))
+            .filter(p => fsExtend.directoryExists(p.fullPath))
             .value();
-    };
+    },
 
-    that.getSubmodules = function getSubmodules(modulePath) {
+    getSubmodules: function getSubmodules(modulePath) {
 
         if (!modulePath) {
 
             throw new Error('The module path is invalid.');
         }
 
-        let directories = _.chain(glob.sync(path.join(modulePath, '**/*')))
-            .filter(p => directoryExists(p))
+        let directories = _.chain(glob(path.join(modulePath, '**/*')))
+            .filter(fsExtend.directoryExists)
             .map(p => ({
                 name: path.basename(p),
                 fullPath: p
@@ -173,11 +129,5 @@ function appBuilder(rootPath) {
             .filter(p => specialDirectories.indexOf(p.name) === -1);
 
         return directories.value();
-    };
-
-    return that;
-}
-
-module.exports = {
-    instance: appBuilder
+    }
 };

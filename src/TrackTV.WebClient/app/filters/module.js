@@ -2,8 +2,10 @@
     'use strict';
 
     var name = 'tt.filters',
-        dependencies = [];
+        dependencies = [],
+        module = angular.module(name, dependencies);
 
-    window.ngModules.filters = angular.module(name, dependencies);
+    module.value('moment', window.moment);
 
+    window.ngModules.filters = module;
 }());

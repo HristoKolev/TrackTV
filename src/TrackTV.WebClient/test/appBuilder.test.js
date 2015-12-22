@@ -20,6 +20,10 @@ const fsMock = mockHelper('fs', {
     statSync: ['stub', 'spy']
 });
 
+let appConfigMock = mockHelper('../config/appConfig', {
+    appPath: ['stubObject']
+});
+
 mockery.registerAllowables([
     './linuxStylePath',
     'path',
@@ -27,7 +31,14 @@ mockery.registerAllowables([
     'underscore'
 ]);
 
-const appBuilder = mockHelper.require('../modules/appBuilder');
+function getInstance(appPath) {
+
+    appConfigMock.appPath.setValue(appPath);
+
+    return mockHelper.require('../modules/appBuilder');
+}
+
+const appBuilder = getInstance('app');
 
 const specialDirectoryCount = 2;
 
@@ -37,6 +48,7 @@ describe('#appBuilder', function () {
 
         globMock.resetMocks();
         fsMock.resetMocks();
+        appConfigMock.resetMocks();
 
         mockery.enable();
     });
@@ -49,41 +61,25 @@ describe('#appBuilder', function () {
     describe('module exports', function () {
 
         assertCompositionMultitest.object('appBuilder', appBuilder, [
-            ['instance', 'function']
-        ]);
-    });
 
-    describe('instance exports', function () {
-
-        let builder = appBuilder.instance('./');
-
-        assertCompositionMultitest.object('appBuilder', builder, [
-
-            ['indexFile', 'string'],
-            ['initFile', 'string'],
-            ['routeConfig', 'string'],
+            ['indexFile', 'array'],
+            ['initFile', 'array'],
+            ['routeConfig', 'array'],
 
             ['moduleHeaders', 'array'],
             ['npmModuleFiles', 'array'],
-            ['moduleConstants', 'array'],
-            ['moduleLibraries', 'array'],
 
             ['scripts', 'array'],
             ['templates', 'array'],
             ['lessFiles', 'array'],
 
             ['globalScripts', 'array'],
-            ['globalLess', 'string'],
+            ['globalLess', 'array'],
 
             ['globalModuleScripts', 'array'],
             ['globalModuleLess', 'array'],
 
             ['appPath', 'function'],
-
-            ['sourceFiles', 'array'],
-
-            ['contentPath', 'string'],
-            ['modulesDir', 'string'],
 
             ['getModules', 'function'],
             ['getSubmodules', 'function']
@@ -94,19 +90,19 @@ describe('#appBuilder', function () {
 
         it('should return the application root if called with no or falsy arguments', function () {
 
-            let root = 'path';
+            let appPath = 'app';
 
-            let builder = appBuilder.instance(root);
+            let builder = getInstance(appPath);
 
-            expect(builder.appPath()).to.be.equal(root);
-            expect(builder.appPath(null)).to.be.equal(root);
+            expect(builder.appPath()).to.be.equal(appPath);
+            expect(builder.appPath(null)).to.be.equal(appPath);
         });
 
         it('should return application relative path given a relative path', function () {
 
-            let rootPath = 'app';
+            let appPath = 'app';
 
-            let builder = appBuilder.instance(rootPath);
+            let builder = getInstance(appPath);
 
             let path = 'file';
 
@@ -115,7 +111,7 @@ describe('#appBuilder', function () {
 
         it('should convert windows style paths to linux style paths', function () {
 
-            let builder = appBuilder.instance('dir\\path\\path1');
+            let builder = getInstance('dir\\path\\path1');
 
             let path = builder.appPath('lib\\file');
 
@@ -135,7 +131,7 @@ describe('#appBuilder', function () {
 
         let basePath = 'app';
 
-        let builder = appBuilder.instance(basePath);
+        let builder = getInstance(basePath);
 
         for (let key of Object.keys(builder)) {
 
@@ -158,7 +154,7 @@ describe('#appBuilder', function () {
 
         appPath = appPath || defaultAppPath;
 
-        return appBuilder.instance(appPath);
+        return getInstance(appPath);
     }
 
     let defaultAppContentList = [

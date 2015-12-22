@@ -56,6 +56,7 @@
     <option passfail="false" />
     <option phantom="false" />
     <option plusplus="false" />
+    <option predef="angular" />
     <option proto="false" />
     <option prototypejs="false" />
     <option qunit="false" />
@@ -69,12 +70,12 @@
     <option strict="true" />
     <option sub="false" />
     <option supernew="false" />
-    <option trailing="false" />
+    <option trailing="true" />
     <option typed="false" />
     <option undef="true" />
     <option unused="false" />
     <option validthis="false" />
-    <option white="false" />
+    <option white="true" />
     <option withstmt="false" />
     <option worker="false" />
     <option wsh="false" />
