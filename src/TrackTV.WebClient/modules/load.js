@@ -9,6 +9,6 @@ const tasks = require('./tasks'),
 fixGulp(gulp);
 tasks.load(runner);
 
-const buildSystem = require('./instances/buildSystem');
+const buildSystem = require('./devBuildSystem');
 
 module.exports = buildSystem.registerTasks();

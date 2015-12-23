@@ -10,350 +10,352 @@ const gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     path = require('path');
 
+const output = require('../config/outputConfig').devPath;
+
 const copyFiles = require('./copyFiles'),
-    copyContent = require('./copyContent'),
-    copyTemplates = require('./copyTemplates');
+    appBuilder = require('./appBuilder'),
+    includer = require('./includer'),
+    runner = require('./runner'),
+    includes = require('./instances/bowerComponents');
 
-function devBuildSystem(appBuilder, output, includer, includes, runner) {
+// modules
+const constants = {
+    thirdPartyScripts: 'third-party-scripts',
+    thirdPartyStyles: 'third-party-styles',
+    initFile: 'init-file',
+    moduleHeaders: 'module-headers',
+    moduleConstants: 'module-constants',
+    moduleLibraries: 'module-libraries',
+    routeConfig: 'route-config',
+    browserified: 'browserified',
+    globalScripts: 'global-scripts',
+    globalModuleScripts: 'global-module-scripts',
+    scripts: 'main-scripts',
+    globalLess: 'global-less',
+    globalModuleLess: 'global-module-less',
+    lessFiles: 'main-less-styles',
+    templates: 'local-templates'
+};
 
-    const that = Object.create(null);
+const locations = {
+    less: 'less',
+    scripts: 'scripts',
+    thirdParty: 'third-party',
+    headers: 'headers',
+    constants: 'constants',
+    libraries: 'libraries'
+};
 
-    // modules
-    const constants = {
-        thirdPartyScripts: 'third-party-scripts',
-        thirdPartyStyles: 'third-party-styles',
-        initFile: 'init-file',
-        moduleHeaders: 'module-headers',
-        moduleConstants: 'module-constants',
-        moduleLibraries: 'module-libraries',
-        routeConfig: 'route-config',
-        browserified: 'browserified',
-        globalScripts: 'global-scripts',
-        globalModuleScripts: 'global-module-scripts',
-        scripts: 'main-scripts',
-        globalLess: 'global-less',
-        globalModuleLess: 'global-module-less',
-        lessFiles: 'main-less-styles',
-        templates: 'local-templates'
-    };
+const formatters = includer.formatters;
 
-    const locations = {
-        less: 'less',
-        scripts: 'scripts',
-        thirdParty: 'third-party',
-        headers: 'headers',
-        constants: 'constants',
-        libraries: 'libraries'
-    };
+const names = [];
 
-    const formatters = includer.formatters;
+function register(name, func) {
 
-    const names = [];
+    gulp.task(name, func);
+    names.push(name);
+}
 
-    function register(name, func) {
+function registerTasks() {
 
-        gulp.task(name, func);
-        names.push(name);
-    }
+    register('dev-validate', function (callback) {
 
-    that.registerTasks = function () {
+        let mocha = new Mocha();
 
-        register('dev-validate', function (callback) {
+        let validationsFilePath = path.resolve('./validations.js');
 
-            let mocha = new Mocha();
+        mocha.addFile(validationsFilePath);
 
-            let validationsFilePath = path.resolve('./validations.js');
+        mocha.run(function (failedTestsCount) {
 
-            mocha.addFile(validationsFilePath);
+            if (failedTestsCount === 0) {
 
-            mocha.run(function (failedTestsCount) {
+                callback();
+            }
+            else {
 
-                if (failedTestsCount === 0) {
-
-                    callback();
-                }
-                else {
-
-                    throw new Error('Validation failed.');
-                }
-            });
-        });
-
-        register('dev-clean', function (callback) {
-
-            del.sync([
-                output.value() + '/*',
-                output.value() + '/*/'
-            ], {force: true});
-
-            callback();
-        });
-
-        register('dev-init', function () {
-
-            includer.createIncludeLog();
-            includer.copyIndex();
-        });
-
-        register('dev-include-' + constants.thirdPartyScripts, function () {
-
-            includer.includeDirectory(
-                constants.thirdPartyScripts,
-                includes.scripts,
-                includes.basePath,
-                formatters.scriptFormatter,
-                [],
-                locations.thirdParty
-            );
-        });
-
-        register('dev-include-' + constants.thirdPartyStyles, function () {
-
-            includer.includeDirectory(
-                constants.thirdPartyStyles,
-                includes.styles,
-                includes.basePath,
-                formatters.styleFormatter,
-                [],
-                locations.thirdParty
-            );
-        });
-
-        register('dev-include-' + constants.initFile, function () {
-
-            includer.includeFile(
-                constants.initFile,
-                appBuilder.initFile,
-                appBuilder.appPath(),
-                formatters.scriptFormatter
-            );
-        });
-
-        register('dev-include-' + constants.moduleHeaders, function () {
-
-            var files = glob(appBuilder.moduleHeaders);
-
-            if (files.length) {
-
-                includer.includeFiles(
-                    constants.moduleHeaders,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.scriptFormatter,
-                    []
-                );
+                throw new Error('Validation failed.');
             }
         });
+    });
 
-        register('dev-include-' + constants.moduleConstants, function () {
+    register('dev-clean', function (callback) {
 
-            var files = glob(appBuilder.moduleConstants);
+        del.sync([
+            output + '/*',
+            output + '/*/'
+        ], {force: true});
 
-            if (files.length) {
+        callback();
+    });
 
-                includer.includeFiles(
-                    constants.moduleConstants,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.scriptFormatter,
-                    []
-                );
-            }
-        });
+    register('dev-copy-app', function () {
 
-        register('dev-include-' + constants.moduleLibraries, function () {
+        copyFiles.copyStructure(glob(path.join(appBuilder.appPath(), '**/*.*')), output, appBuilder.appPath());
+    });
 
-            var files = glob(appBuilder.moduleLibraries);
+    register('dev-init', function () {
 
-            if (files.length) {
+        includer.createIncludeLog();
+        //includer.copyIndex();
+    });
 
-                includer.includeFiles(
-                    constants.moduleLibraries,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.scriptFormatter,
-                    []
-                );
-            }
-        });
+    register('dev-include-' + constants.thirdPartyScripts, function () {
 
-        register('dev-include-' + constants.routeConfig, function () {
+        includer.copyAndIncludeDirectory(
+            constants.thirdPartyScripts,
+            includes.scripts,
+            includes.basePath,
+            formatters.scriptFormatter,
+            [],
+            locations.thirdParty
+        );
+    });
 
-            includer.includeFile(
-                constants.routeConfig,
-                appBuilder.routeConfig,
-                appBuilder.appPath(),
-                formatters.scriptFormatter
-            );
-        });
+    register('dev-include-' + constants.thirdPartyStyles, function () {
 
-        register('dev-browserify', function () {
+        includer.copyAndIncludeDirectory(
+            constants.thirdPartyStyles,
+            includes.styles,
+            includes.basePath,
+            formatters.styleFormatter,
+            [],
+            locations.thirdParty
+        );
+    });
 
-            var files = glob(appBuilder.npmModuleFiles);
+    register('dev-include-' + constants.initFile, function () {
 
-            if (files.length) {
+        includer.copyAndIncludeFile(
+            constants.initFile,
+            appBuilder.initFile,
+            appBuilder.appPath(),
+            formatters.scriptFormatter
+        );
+    });
 
-                var fileName = constants.browserified + '.js';
+    register('dev-include-' + constants.moduleHeaders, function () {
 
-                includer.logInclude(constants.browserified, [fileName], formatters.scriptFormatter);
+        var files = glob(appBuilder.moduleHeaders);
 
-                var browserifyOptions = {
-                    debug: true
-                };
+        if (files.length) {
 
-                return browserify(files, browserifyOptions)
-                    .bundle()
-                    .pipe(source(fileName))
-                    .pipe(buffer())
-                    .pipe(gulp.dest(output.value()));
-            }
-        });
-
-        register('dev-include-' + constants.globalScripts, function () {
-
-            var files = glob(appBuilder.globalScripts);
-
-            if (files.length) {
-
-                includer.includeFiles(
-                    constants.globalScripts,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.scriptFormatter,
-                    []
-                );
-            }
-        });
-
-        register('dev-include-' + constants.globalLess, function () {
-
-            var files = glob(appBuilder.globalLess);
-
-            if (files.length) {
-
-                includer.includeFiles(
-                    constants.globalLess,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.styleFormatter,
-                    ['less']
-                );
-            }
-        });
-
-        register('dev-include-' + constants.globalModuleScripts, function () {
-
-            var files = glob(appBuilder.globalModuleScripts);
-
-            includer.includeFiles(
-                constants.globalModuleScripts,
+            includer.copyAndIncludeFiles(
+                constants.moduleHeaders,
                 files,
                 appBuilder.appPath(),
                 formatters.scriptFormatter,
                 []
             );
-        });
+        }
+    });
 
-        register('dev-include-' + constants.globalModuleLess, function () {
+    register('dev-include-' + constants.moduleConstants, function () {
 
-            var files = glob(appBuilder.globalModuleLess);
+        var files = glob(appBuilder.moduleConstants);
 
-            if (files.length) {
+        if (files.length) {
 
-                includer.includeFiles(
-                    constants.globalModuleLess,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.styleFormatter,
-                    ['less']
-                );
-            }
-        });
+            includer.copyAndIncludeFiles(
+                constants.moduleConstants,
+                files,
+                appBuilder.appPath(),
+                formatters.scriptFormatter,
+                []
+            );
+        }
+    });
 
-        register('dev-include-' + constants.scripts, function () {
+    register('dev-include-' + constants.moduleLibraries, function () {
 
-            var files = glob(appBuilder.scripts);
+        var files = glob(appBuilder.moduleLibraries);
 
-            if (files.length) {
+        if (files.length) {
 
-                includer.includeFiles(
-                    constants.scripts,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.scriptFormatter,
-                    []
-                );
-            }
-        });
+            includer.copyAndIncludeFiles(
+                constants.moduleLibraries,
+                files,
+                appBuilder.appPath(),
+                formatters.scriptFormatter,
+                []
+            );
+        }
+    });
 
-        register('dev-include-' + constants.lessFiles, function () {
+    register('dev-include-' + constants.routeConfig, function () {
 
-            var files = glob(appBuilder.lessFiles);
+        includer.copyAndIncludeFile(
+            constants.routeConfig,
+            appBuilder.routeConfig,
+            appBuilder.appPath(),
+            formatters.scriptFormatter
+        );
+    });
 
-            if (files.length) {
+    register('dev-browserify', function () {
 
-                includer.includeFiles(
-                    constants.lessFiles,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.styleFormatter,
-                    ['less', 'css-rebase']
-                );
-            }
-        });
+        var files = glob(appBuilder.npmModuleFiles);
 
-        register('dev-process-templates', function () {
+        if (files.length) {
 
-            var files = glob(appBuilder.templates);
+            var fileName = constants.browserified + '.js';
 
-            if (files.length) {
+            includer.logInclude(constants.browserified, [fileName], formatters.scriptFormatter);
 
-                includer.includeFiles(
-                    constants.templates,
-                    files,
-                    appBuilder.appPath(),
-                    formatters.none,
-                    ['html-rebase']
-                );
-            }
-        });
+            var browserifyOptions = {
+                debug: true
+            };
 
-        register('dev-process-includes', function (callback) {
+            return browserify(files, browserifyOptions)
+                .bundle()
+                .pipe(source(fileName))
+                .pipe(buffer())
+                .pipe(gulp.dest(output));
+        }
+    });
 
-            runner.run(includer.readIncludes(), output.value())
-                .then(function (newIncludes) {
+    register('dev-include-' + constants.globalScripts, function () {
 
-                    includer.writeIncludes(newIncludes);
+        var files = glob(appBuilder.globalScripts);
 
-                }).then(callback);
-        });
+        if (files.length) {
 
-        register('dev-update-includes', function () {
+            includer.copyAndIncludeFiles(
+                constants.globalScripts,
+                files,
+                appBuilder.appPath(),
+                formatters.scriptFormatter,
+                []
+            );
+        }
+    });
 
-            includer.updateIncludes();
-        });
+    register('dev-include-' + constants.globalLess, function () {
 
-        register('dev-copy-content', function () {
+        var files = glob(appBuilder.globalLess);
 
-            let list = copyContent(appBuilder, output.value());
+        if (files.length) {
 
-            for (let directory of list) {
+            includer.copyAndIncludeFiles(
+                constants.globalLess,
+                files,
+                appBuilder.appPath(),
+                formatters.styleFormatter,
+                ['less']
+            );
+        }
+    });
 
-                let paths = glob(path.join(directory.targetPath, '**/*'));
+    register('dev-include-' + constants.globalModuleScripts, function () {
 
-                if (paths.length > 0) {
+        var files = glob(appBuilder.globalModuleScripts);
 
-                    copyFiles.copyStructure(paths, directory.destinationPath, directory.targetPath);
-                }
-            }
-        });
+        includer.copyAndIncludeFiles(
+            constants.globalModuleScripts,
+            files,
+            appBuilder.appPath(),
+            formatters.scriptFormatter,
+            []
+        );
+    });
 
-        return names;
-    };
+    register('dev-include-' + constants.globalModuleLess, function () {
 
-    return that;
+        var files = glob(appBuilder.globalModuleLess);
+
+        if (files.length) {
+
+            includer.copyAndIncludeFiles(
+                constants.globalModuleLess,
+                files,
+                appBuilder.appPath(),
+                formatters.styleFormatter,
+                ['less']
+            );
+        }
+    });
+
+    register('dev-include-' + constants.scripts, function () {
+
+        var files = glob(appBuilder.scripts);
+
+        if (files.length) {
+
+            includer.copyAndIncludeFiles(
+                constants.scripts,
+                files,
+                appBuilder.appPath(),
+                formatters.scriptFormatter,
+                []
+            );
+        }
+    });
+
+    register('dev-include-' + constants.lessFiles, function () {
+
+        var files = glob(appBuilder.lessFiles);
+
+        if (files.length) {
+
+            includer.copyAndIncludeFiles(
+                constants.lessFiles,
+                files,
+                appBuilder.appPath(),
+                formatters.styleFormatter,
+                ['less', 'css-rebase']
+            );
+        }
+    });
+
+    register('dev-process-templates', function () {
+
+        var files = glob(appBuilder.templates);
+
+        if (files.length) {
+
+            includer.copyAndIncludeFiles(
+                constants.templates,
+                files,
+                appBuilder.appPath(),
+                formatters.none,
+                ['html-rebase']
+            );
+        }
+    });
+
+    register('dev-process-includes', function (callback) {
+
+        runner.run(includer.readIncludes(), output)
+            .then(function (newIncludes) {
+
+                includer.writeIncludes(newIncludes);
+
+            }).then(callback);
+    });
+
+    register('dev-update-includes', function () {
+
+        includer.updateIncludes();
+    });
+
+    //register('dev-copy-content', function () {
+    //
+    //    let list = copyContent(appBuilder, output);
+    //
+    //    for (let directory of list) {
+    //
+    //        let paths = glob(path.join(directory.targetPath, '**/*'));
+    //
+    //        if (paths.length > 0) {
+    //
+    //            copyFiles.copyStructure(paths, directory.destinationPath, directory.targetPath);
+    //        }
+    //    }
+    //});
+
+    return names;
 }
 
 module.exports = {
-    instance: devBuildSystem
+    registerTasks
 };

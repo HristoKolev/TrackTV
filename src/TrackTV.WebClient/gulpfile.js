@@ -36,18 +36,13 @@ gulp.task('default', function () {
 
 gulp.task('test-task', function () {
 
-    //const glob = require('glob-all').sync,
-    //    _ = require('underscore'),
-    //    path = require('path');
-    //
-    //let root = 'wwwroot';
-    //
-    //let paths = _(glob(path.join(root, '**')))
-    //    .map(p => path.relative(root, p));
-    //
-    //console.log(paths);
+    const glob = require('glob-all').sync,
+        _ = require('underscore'),
+        path = require('path'),
+        copyFiles = require('./modules/copyFiles');
 
-    const appBuilder = require('./modules/instances/appBuilder');
+    let appPath = 'app';
+    let outputPath = 'wwwroot';
 
-    console.log(appBuilder.globalModuleLess);
+    copyFiles.copyStructure(glob(path.join(appPath, '**/*.*')), outputPath, appPath);
 });
