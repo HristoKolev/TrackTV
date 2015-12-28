@@ -147,10 +147,10 @@ describe('#includer', function () {
 
     describe('#logInclude()', function () {
 
-        let defaultName = 'name';
-        let defaultFiles = ['file1', 'file2', 'file3'];
-        let defaultFormatter = 'formatter';
-        let defaultTasks = ['task1', 'task2'];
+        let defaultName = 'name',
+            defaultFiles = ['file1', 'file2', 'file3'],
+            defaultFormatter = 'formatter',
+            defaultTasks = ['task1', 'task2'];
 
         describe('validation', function () {
 
