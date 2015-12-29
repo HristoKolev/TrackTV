@@ -279,11 +279,13 @@ function copyAndIncludeFiles(name, files, basePath, formatter, tasks) {
 
 module.exports = {
     formatters,
+
     readIncludes,
     writeIncludes,
     createIncludeLog,
     logInclude,
     updateIncludes,
+
     copyAndIncludeFile,
     copyAndIncludeDirectory,
     copyAndIncludeFiles

@@ -80,9 +80,41 @@ function localGlob(p) {
     return paths;
 }
 
+function getModules() {
+
+    return _.chain(fs.readdirSync(appConfig.appPath))
+        .without(...globalSpecialDirectories)
+        .map(p => ({
+            name: p,
+            fullPath: path.resolve(path.join(appConfig.appPath, p))
+        }))
+        .filter(p => fsExtend.directoryExists(p.fullPath))
+        .value();
+}
+
+function getSubmodules(modulePath) {
+
+    if (!modulePath) {
+
+        throw new Error('The module path is invalid.');
+    }
+
+    let directories = _.chain(glob(path.join(modulePath, '**/*')))
+        .filter(fsExtend.directoryExists)
+        .map(p => ({
+            name: path.basename(p),
+            fullPath: p
+        }))
+        .filter(p => specialDirectories.indexOf(p.name) === -1);
+
+    return directories.value();
+}
+
 module.exports = {
 
-    appPath: appPath,
+    appPath,
+    getModules,
+    getSubmodules,
 
     indexFile: localGlob('index.html'),
     initFile: localGlob('init.js'),
@@ -99,35 +131,5 @@ module.exports = {
     globalLess: localGlob('*.less'),
 
     globalModuleScripts: localGlob('*/*.js'),
-    globalModuleLess: localGlob('*/*.less'),
-
-    getModules: function getModules() {
-
-        return _.chain(fs.readdirSync(appConfig.appPath))
-            .without(...globalSpecialDirectories)
-            .map(p => ({
-                name: p,
-                fullPath: path.resolve(path.join(appConfig.appPath, p))
-            }))
-            .filter(p => fsExtend.directoryExists(p.fullPath))
-            .value();
-    },
-
-    getSubmodules: function getSubmodules(modulePath) {
-
-        if (!modulePath) {
-
-            throw new Error('The module path is invalid.');
-        }
-
-        let directories = _.chain(glob(path.join(modulePath, '**/*')))
-            .filter(fsExtend.directoryExists)
-            .map(p => ({
-                name: path.basename(p),
-                fullPath: p
-            }))
-            .filter(p => specialDirectories.indexOf(p.name) === -1);
-
-        return directories.value();
-    }
+    globalModuleLess: localGlob('*/*.less')
 };
