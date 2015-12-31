@@ -34,15 +34,15 @@ gulp.task('default', function () {
 //    );
 //});
 
-gulp.task('test-task', function () {
-
-    const glob = require('glob-all').sync,
-        _ = require('underscore'),
-        path = require('path'),
-        copyFiles = require('./modules/copyFiles');
-
-    let appPath = 'app';
-    let outputPath = 'wwwroot';
-
-    copyFiles.copyStructure(glob(path.join(appPath, '**/*.*')), outputPath, appPath);
-});
+//gulp.task('test-task', function () {
+//
+//    const glob = require('glob-all').sync,
+//        _ = require('underscore'),
+//        path = require('path'),
+//        copyFiles = require('./modules/copyFiles');
+//
+//    let appPath = 'app';
+//    let outputPath = 'wwwroot';
+//
+//    copyFiles.copyStructure(glob(path.join(appPath, '**/*.*')), outputPath, appPath);
+//});
