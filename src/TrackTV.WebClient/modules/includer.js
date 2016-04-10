@@ -12,281 +12,275 @@ const fillContent = require('./fillContent'),
 let outputIndex = path.join(outputConfig.devPath, 'index.html'),
     includeLog = path.join(outputConfig.devPath, 'includes.json');
 
-let formatters = {
-    scriptFormatter: 'script',
-    styleFormatter: 'style',
-    none: 'none'
-};
+module.exports = function () {
 
-function removeBaseDir(files, baseDir) {
+    const publicApi = {
 
-    files = files.slice();
-
-    for (let i = 0; i < files.length; i += 1) {
-
-        if (files[i].indexOf(baseDir) !== 0) {
-
-            throw new Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + files[i]);
+        formatters: {
+            scriptFormatter: 'script',
+            styleFormatter: 'style',
+            none: 'none'
         }
-
-        files[i] = path.relative(baseDir, files[i]);
-    }
-
-    return files;
-}
-
-function getFormatter(name) {
-
-    let formattersByName = {
-        [formatters.scriptFormatter]: resourcePath => `<script src="${ resourcePath }"></script>`,
-        [formatters.styleFormatter]: resourcePath  => `<link rel="stylesheet" href="${ resourcePath }">`,
-        [formatters.none]: resourcePath => resourcePath
     };
 
-    let formatter = formattersByName[name];
+    function removeBaseDir(files, baseDir) {
 
-    if (!formatter) {
+        files = files.slice();
 
-        throw new Error('Unknown formatter name: ' + name);
+        for (let i = 0; i < files.length; i += 1) {
+
+            if (files[i].indexOf(baseDir) !== 0) {
+
+                throw new Error('This file does not start with the provided base directory. baseDir: ' + baseDir + '; fileName: ' + files[i]);
+            }
+
+            files[i] = path.relative(baseDir, files[i]);
+        }
+
+        return files;
     }
 
-    return formatter;
-}
+    function getFormatter(name) {
 
-function addFormatter(includes) {
+        let formattersByName = {
+            [publicApi.formatters.scriptFormatter]: resourcePath => `<script src="${ resourcePath }"></script>`,
+            [publicApi.formatters.styleFormatter]: resourcePath  => `<link rel="stylesheet" href="${ resourcePath }">`,
+            [publicApi.formatters.none]: resourcePath => resourcePath
+        };
 
-    for (let i = 0; i < includes.length; i += 1) {
+        let formatter = formattersByName[name];
 
-        includes[i].formatter = getFormatter(includes[i].formatter);
+        if (!formatter) {
+
+            throw new Error('Unknown formatter name: ' + name);
+        }
+
+        return formatter;
     }
 
-    return includes;
-}
+    function addFormatter(includes) {
 
-function readIncludes() {
+        for (let i = 0; i < includes.length; i += 1) {
 
-    return JSON.parse(fs.readFileSync(includeLog));
-}
+            includes[i].formatter = getFormatter(includes[i].formatter);
+        }
 
-function writeIncludes(includes) {
-
-    if (!includes) {
-
-        throw new Error('The includes are invalid.');
+        return includes;
     }
 
-    if (!Array.isArray(includes)) {
+    publicApi.readIncludes = function () {
 
-        throw new Error('The includes are not an array.');
+        return JSON.parse(fs.readFileSync(includeLog));
+    };
+
+    publicApi.writeIncludes = function (includes) {
+
+        if (!includes) {
+
+            throw new Error('The includes are invalid.');
+        }
+
+        if (!Array.isArray(includes)) {
+
+            throw new Error('The includes are not an array.');
+        }
+
+        let jsonString = JSON.stringify(includes, null, '\t');
+
+        fs.writeFileSync(includeLog, jsonString);
+    };
+
+    publicApi.createIncludeLog = function () {
+
+        publicApi.writeIncludes([]);
+    };
+
+    publicApi.logInclude = function (name, files, formatter, tasks) {
+
+        if (!name) {
+
+            throw new Error('The name is invalid.');
+        }
+
+        if (!files) {
+
+            throw new Error('The files argument is invalid.');
+        }
+
+        if (!Array.isArray(files)) {
+
+            throw new Error('The files argument is not an array.');
+        }
+
+        if (!formatter) {
+
+            throw new Error('The formatter is invalid.');
+        }
+
+        if (!tasks) {
+
+            tasks = [];
+        }
+
+        if (!Array.isArray(tasks)) {
+
+            throw new Error('The tasks argument is not an array.');
+        }
+
+        let includes = publicApi.readIncludes();
+
+        includes.push({
+            name: name,
+            files: files,
+            formatter: formatter,
+            tasks: tasks
+        });
+
+        publicApi.writeIncludes(includes);
+    };
+
+    function injectApplicationFiles(placeholder, files, formatter, tasks) {
+
+        files = removeBaseDir(files, outputConfig.devPath);
+
+        publicApi.logInclude(placeholder, files, formatter, tasks);
     }
 
-    let jsonString = JSON.stringify(includes, null, '\t');
+    publicApi.updateIncludes = function () {
 
-    fs.writeFileSync(includeLog, jsonString);
-}
+        let includes = addFormatter(publicApi.readIncludes());
 
-function createIncludeLog() {
+        for (let include of includes) {
 
-    writeIncludes([]);
-}
+            fillContent(outputIndex, include.name, listScripts(include.files, include.formatter));
+        }
+    };
 
-function logInclude(name, files, formatter, tasks) {
+    publicApi.copyAndIncludeFile = function (placeholder, file, basePath, formatter, tasks) {
 
-    if (!name) {
+        if (!placeholder) {
 
-        throw new Error('The name is invalid.');
-    }
+            throw new Error('The placeholder is invalid.');
+        }
 
-    if (!files) {
+        if (!file) {
 
-        throw new Error('The files argument is invalid.');
-    }
+            throw new Error('The file is invalid.');
+        }
 
-    if (!Array.isArray(files)) {
+        if (!basePath) {
 
-        throw new Error('The files argument is not an array.');
-    }
+            throw new Error('The base path is invalid.');
+        }
 
-    if (!formatter) {
+        if (!formatter) {
 
-        throw new Error('The formatter is invalid.');
-    }
+            throw new Error('The formatter is invalid.');
+        }
 
-    if (!tasks) {
+        if (!tasks) {
 
-        tasks = [];
-    }
+            tasks = [];
+        }
 
-    if (!Array.isArray(tasks)) {
+        if (!Array.isArray(tasks)) {
 
-        throw new Error('The tasks argument is not an array.');
-    }
+            throw new Error('The tasks argument is not an array.');
+        }
 
-    let includes = readIncludes();
+        let newList = copyFiles.copyStructure([file], outputConfig.devPath, basePath);
 
-    includes.push({
-        name: name,
-        files: files,
-        formatter: formatter,
-        tasks: tasks
-    });
+        injectApplicationFiles(placeholder, newList, formatter, tasks);
+    };
 
-    writeIncludes(includes);
-}
+    publicApi.copyAndIncludeDirectory = function (name, files, basePath, formatter, tasks, directoryName) {
 
-function injectApplicationFiles(placeholder, files, formatter, tasks) {
+        if (!name) {
 
-    files = removeBaseDir(files, outputConfig.devPath);
+            throw new Error('The name is invalid.');
+        }
 
-    logInclude(placeholder, files, formatter, tasks);
-}
+        if (!files) {
 
-function updateIncludes() {
+            throw new Error('The files argument is invalid.');
+        }
 
-    let includes = addFormatter(readIncludes());
+        if (!Array.isArray(files)) {
 
-    for (let include of includes) {
+            throw new Error('The files argument is not an array');
+        }
 
-        fillContent(outputIndex, include.name, listScripts(include.files, include.formatter));
-    }
-}
+        if (!basePath) {
 
-function copyAndIncludeFile(placeholder, file, basePath, formatter, tasks) {
+            throw new Error('The base path is invalid.');
+        }
 
-    if (!placeholder) {
+        if (!formatter) {
 
-        throw new Error('The placeholder is invalid.');
-    }
+            throw new Error('The formatter is invalid.');
+        }
 
-    if (!file) {
+        if (!tasks) {
 
-        throw new Error('The file is invalid.');
-    }
+            tasks = [];
+        }
 
-    if (!basePath) {
+        if (!Array.isArray(tasks)) {
 
-        throw new Error('The base path is invalid.');
-    }
+            throw new Error('The tasks argument is not an array.');
+        }
 
-    if (!formatter) {
+        if (!directoryName) {
 
-        throw new Error('The formatter is invalid.');
-    }
+            directoryName = name;
+        }
 
-    if (!tasks) {
+        let newList = copyFiles.copyStructure(files, path.join(outputConfig.devPath, directoryName), basePath);
 
-        tasks = [];
-    }
+        injectApplicationFiles(name, newList, formatter, tasks);
+    };
 
-    if (!Array.isArray(tasks)) {
+    publicApi.copyAndIncludeFiles = function (name, files, basePath, formatter, tasks) {
 
-        throw new Error('The tasks argument is not an array.');
-    }
+        if (!name) {
 
-    let newList = copyFiles.copyStructure([file], outputConfig.devPath, basePath);
+            throw new Error('The name is invalid.');
+        }
 
-    injectApplicationFiles(placeholder, newList, formatter, tasks);
-}
+        if (!files) {
 
-function copyAndIncludeDirectory(name, files, basePath, formatter, tasks, directoryName) {
+            throw new Error('The files argument is invalid.');
+        }
 
-    if (!name) {
+        if (!Array.isArray(files)) {
 
-        throw new Error('The name is invalid.');
-    }
+            throw new Error('The files argument is not an array');
+        }
 
-    if (!files) {
+        if (!basePath) {
 
-        throw new Error('The files argument is invalid.');
-    }
+            throw new Error('The base path is invalid.');
+        }
 
-    if (!Array.isArray(files)) {
+        if (!formatter) {
 
-        throw new Error('The files argument is not an array');
-    }
+            throw new Error('The formatter is invalid.');
+        }
 
-    if (!basePath) {
+        if (!tasks) {
 
-        throw new Error('The base path is invalid.');
-    }
+            tasks = [];
+        }
 
-    if (!formatter) {
+        if (!Array.isArray(tasks)) {
 
-        throw new Error('The formatter is invalid.');
-    }
+            throw new Error('The tasks argument is not an array.');
+        }
 
-    if (!tasks) {
+        let newList = copyFiles.copyStructure(files, outputConfig.devPath, basePath);
 
-        tasks = [];
-    }
+        injectApplicationFiles(name, newList, formatter, tasks);
+    };
 
-    if (!Array.isArray(tasks)) {
-
-        throw new Error('The tasks argument is not an array.');
-    }
-
-    if (!directoryName) {
-
-        directoryName = name;
-    }
-
-    let newList = copyFiles.copyStructure(files, path.join(outputConfig.devPath, directoryName), basePath);
-
-    injectApplicationFiles(name, newList, formatter, tasks);
-}
-
-function copyAndIncludeFiles(name, files, basePath, formatter, tasks) {
-
-    if (!name) {
-
-        throw new Error('The name is invalid.');
-    }
-
-    if (!files) {
-
-        throw new Error('The files argument is invalid.');
-    }
-
-    if (!Array.isArray(files)) {
-
-        throw new Error('The files argument is not an array');
-    }
-
-    if (!basePath) {
-
-        throw new Error('The base path is invalid.');
-    }
-
-    if (!formatter) {
-
-        throw new Error('The formatter is invalid.');
-    }
-
-    if (!tasks) {
-
-        tasks = [];
-    }
-
-    if (!Array.isArray(tasks)) {
-
-        throw new Error('The tasks argument is not an array.');
-    }
-
-    let newList = copyFiles.copyStructure(files, outputConfig.devPath, basePath);
-
-    injectApplicationFiles(name, newList, formatter, tasks);
-}
-
-module.exports = {
-    formatters,
-
-    readIncludes,
-    writeIncludes,
-    createIncludeLog,
-    logInclude,
-    updateIncludes,
-
-    copyAndIncludeFile,
-    copyAndIncludeDirectory,
-    copyAndIncludeFiles
+    return publicApi;
 };

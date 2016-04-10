@@ -63,8 +63,8 @@ describe('#appBuilder', function () {
         assertCompositionMultitest.object('appBuilder', appBuilder, [
 
             ['indexFile', 'array'],
-            ['initFile', 'array'],
-            ['routeConfig', 'array'],
+            ['initFile', 'string'],
+            ['routeConfig', 'string'],
 
             ['moduleHeaders', 'array'],
             ['npmModuleFiles', 'array'],
@@ -117,33 +117,6 @@ describe('#appBuilder', function () {
 
             expect(path).to.equal('dir/path/path1/lib/file');
         });
-    });
-
-    describe('all properties of type string', function () {
-
-        function assertBasePath(name, path, basePath) {
-
-            it(name, function () {
-
-                expect(path.indexOf(basePath)).to.be.equal(0);
-            });
-        }
-
-        let basePath = 'app';
-
-        let builder = getInstance(basePath);
-
-        for (let key of Object.keys(builder)) {
-
-            let value = builder[key];
-
-            if (typeof value === 'string') {
-
-                let name = 'should start with the application base path. Property:  #' + key;
-
-                assertBasePath(name, value, basePath);
-            }
-        }
     });
 
     const defaultAppPath = 'app';

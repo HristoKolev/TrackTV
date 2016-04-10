@@ -117,8 +117,8 @@ module.exports = {
     getSubmodules,
 
     indexFile: localGlob('index.html'),
-    initFile: localGlob('init.js'),
-    routeConfig: localGlob('routeConfig.js'),
+    initFile: localGlob('init.js')[0] || '',
+    routeConfig: localGlob('routeConfig.js')[0] || '',
 
     moduleHeaders: localGlob('*/module.js'),
     npmModuleFiles: localGlob('*/npmModules.js'),

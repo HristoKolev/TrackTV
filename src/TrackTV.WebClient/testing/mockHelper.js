@@ -89,11 +89,11 @@ function forwardFunction(func) {
     };
 }
 
-function mockRequire(moduleName) {
+function mockRequire(moduleName, useCleanCache) {
 
     mockery.registerAllowable(moduleName);
 
-    mockery.enable();
+    mockery.enable({useCleanCache: !!useCleanCache});
 
     let module = require(moduleName);
 

@@ -5,10 +5,7 @@ const gulp = require('gulp'),
 
 let taskNames = require('./modules/load');
 
-gulp.task('default', function () {
-
-    runSequence(...taskNames);
-});
+gulp.task('default', () => runSequence(...taskNames));
 
 //gulp.task('build', function () {
 //

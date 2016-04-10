@@ -14,7 +14,7 @@ const output = require('../config/outputConfig').devPath;
 
 const copyFiles = require('./copyFiles'),
     appBuilder = require('./appBuilder'),
-    includer = require('./includer'),
+    includer = require('./includer')(),
     runner = require('./runner'),
     includes = require('./instances/bowerComponents');
 
@@ -56,13 +56,18 @@ function register(name, func) {
     names.push(name);
 }
 
+function globApp(...args) {
+
+    return glob(appBuilder.appPath(...args));
+}
+
 function registerTasks() {
 
     register('dev-validate', function (callback) {
 
-        let mocha = new Mocha();
+        const mocha = new Mocha();
 
-        let validationsFilePath = path.resolve('./validations.js');
+        const validationsFilePath = path.resolve('./validations.js');
 
         mocha.addFile(validationsFilePath);
 
@@ -97,7 +102,6 @@ function registerTasks() {
     register('dev-init', function () {
 
         includer.createIncludeLog();
-        //includer.copyIndex();
     });
 
     register('dev-include-' + constants.thirdPartyScripts, function () {
@@ -128,7 +132,7 @@ function registerTasks() {
 
         includer.copyAndIncludeFile(
             constants.initFile,
-            appBuilder.initFile,
+            appBuilder.appPath(appBuilder.initFile),
             appBuilder.appPath(),
             formatters.scriptFormatter
         );
@@ -136,7 +140,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.moduleHeaders, function () {
 
-        var files = glob(appBuilder.moduleHeaders);
+        const files = globApp(appBuilder.moduleHeaders);
 
         if (files.length) {
 
@@ -150,43 +154,11 @@ function registerTasks() {
         }
     });
 
-    register('dev-include-' + constants.moduleConstants, function () {
-
-        var files = glob(appBuilder.moduleConstants);
-
-        if (files.length) {
-
-            includer.copyAndIncludeFiles(
-                constants.moduleConstants,
-                files,
-                appBuilder.appPath(),
-                formatters.scriptFormatter,
-                []
-            );
-        }
-    });
-
-    register('dev-include-' + constants.moduleLibraries, function () {
-
-        var files = glob(appBuilder.moduleLibraries);
-
-        if (files.length) {
-
-            includer.copyAndIncludeFiles(
-                constants.moduleLibraries,
-                files,
-                appBuilder.appPath(),
-                formatters.scriptFormatter,
-                []
-            );
-        }
-    });
-
     register('dev-include-' + constants.routeConfig, function () {
 
         includer.copyAndIncludeFile(
             constants.routeConfig,
-            appBuilder.routeConfig,
+            appBuilder.appPath(appBuilder.routeConfig),
             appBuilder.appPath(),
             formatters.scriptFormatter
         );
@@ -194,15 +166,15 @@ function registerTasks() {
 
     register('dev-browserify', function () {
 
-        var files = glob(appBuilder.npmModuleFiles);
+        const files = globApp(appBuilder.npmModuleFiles);
 
         if (files.length) {
 
-            var fileName = constants.browserified + '.js';
+            const fileName = constants.browserified + '.js';
 
             includer.logInclude(constants.browserified, [fileName], formatters.scriptFormatter);
 
-            var browserifyOptions = {
+            const browserifyOptions = {
                 debug: true
             };
 
@@ -216,7 +188,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.globalScripts, function () {
 
-        var files = glob(appBuilder.globalScripts);
+        var files = globApp(appBuilder.globalScripts);
 
         if (files.length) {
 
@@ -232,7 +204,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.globalLess, function () {
 
-        var files = glob(appBuilder.globalLess);
+        const files = globApp(appBuilder.globalLess);
 
         if (files.length) {
 
@@ -248,7 +220,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.globalModuleScripts, function () {
 
-        var files = glob(appBuilder.globalModuleScripts);
+        const files = globApp(appBuilder.globalModuleScripts);
 
         includer.copyAndIncludeFiles(
             constants.globalModuleScripts,
@@ -261,7 +233,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.globalModuleLess, function () {
 
-        var files = glob(appBuilder.globalModuleLess);
+        const files = globApp(appBuilder.globalModuleLess);
 
         if (files.length) {
 
@@ -277,7 +249,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.scripts, function () {
 
-        var files = glob(appBuilder.scripts);
+        const files = globApp(appBuilder.scripts);
 
         if (files.length) {
 
@@ -293,7 +265,7 @@ function registerTasks() {
 
     register('dev-include-' + constants.lessFiles, function () {
 
-        var files = glob(appBuilder.lessFiles);
+        const files = globApp(appBuilder.lessFiles);
 
         if (files.length) {
 
@@ -309,7 +281,7 @@ function registerTasks() {
 
     register('dev-process-templates', function () {
 
-        var files = glob(appBuilder.templates);
+        const files = globApp(appBuilder.templates);
 
         if (files.length) {
 

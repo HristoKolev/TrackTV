@@ -45,7 +45,7 @@ function createNewIncluder() {
 
     outputConfigMock.devPath.setValue(defaultOutput);
 
-    return mockHelper.require('../modules/includer');
+    return mockHelper.require('../modules/includer')();
 }
 
 let includer = createNewIncluder();
