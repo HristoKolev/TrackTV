@@ -16,7 +16,8 @@ const copyFiles = require('./copyFiles'),
     appBuilder = require('./appBuilder'),
     includer = require('./includer')(),
     runner = require('./runner'),
-    includes = require('./instances/bowerComponents');
+    includes = require('./instances/bowerComponents'),
+    copyContent = require('./copyContent');
 
 // modules
 const constants = {
@@ -34,7 +35,8 @@ const constants = {
     globalLess: 'global-less',
     globalModuleLess: 'global-module-less',
     lessFiles: 'main-less-styles',
-    templates: 'local-templates'
+    templates: 'local-templates',
+    indexFile: 'index-file'
 };
 
 const locations = {
@@ -62,6 +64,11 @@ function globApp(...args) {
 }
 
 function registerTasks() {
+
+    if (names.length) {
+
+        return names;
+    }
 
     register('dev-validate', function (callback) {
 
@@ -295,6 +302,17 @@ function registerTasks() {
         }
     });
 
+    register('dev-process-' + constants.indexFile, function () {
+
+        includer.copyAndIncludeFile(
+            constants.indexFile,
+            appBuilder.appPath(appBuilder.indexFile),
+            appBuilder.appPath(),
+            formatters.none,
+            ['html-rebase']
+        );
+    });
+
     register('dev-process-includes', function (callback) {
 
         runner.run(includer.readIncludes(), output)
@@ -310,20 +328,20 @@ function registerTasks() {
         includer.updateIncludes();
     });
 
-    //register('dev-copy-content', function () {
-    //
-    //    let list = copyContent(appBuilder, output);
-    //
-    //    for (let directory of list) {
-    //
-    //        let paths = glob(path.join(directory.targetPath, '**/*'));
-    //
-    //        if (paths.length > 0) {
-    //
-    //            copyFiles.copyStructure(paths, directory.destinationPath, directory.targetPath);
-    //        }
-    //    }
-    //});
+    register('dev-copy-content', function () {
+
+        let list = copyContent(appBuilder, output);
+
+        for (let directory of list) {
+
+            let paths = glob(path.join(directory.targetPath, '**/*'));
+
+            if (paths.length > 0) {
+
+                copyFiles.copyStructure(paths, directory.destinationPath, directory.targetPath);
+            }
+        }
+    });
 
     return names;
 }

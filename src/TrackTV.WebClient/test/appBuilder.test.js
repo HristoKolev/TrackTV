@@ -62,7 +62,7 @@ describe('#appBuilder', function () {
 
         assertCompositionMultitest.object('appBuilder', appBuilder, [
 
-            ['indexFile', 'array'],
+            ['indexFile', 'string'],
             ['initFile', 'string'],
             ['routeConfig', 'string'],
 

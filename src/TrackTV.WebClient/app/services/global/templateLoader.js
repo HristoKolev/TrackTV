@@ -6,7 +6,7 @@
 
             var states = {
                 ready: 'LOAD_STATE_READY',
-                loading: 'LOAD_STATE_LOADING',
+                loading: 'LOAD_STATE_LOADING'
             };
 
             var globalScope;

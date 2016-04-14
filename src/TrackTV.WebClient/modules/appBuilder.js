@@ -116,7 +116,7 @@ module.exports = {
     getModules,
     getSubmodules,
 
-    indexFile: localGlob('index.html'),
+    indexFile: localGlob('index.html')[0] || '',
     initFile: localGlob('init.js')[0] || '',
     routeConfig: localGlob('routeConfig.js')[0] || '',
 

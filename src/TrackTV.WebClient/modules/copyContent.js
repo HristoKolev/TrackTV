@@ -63,7 +63,7 @@ function getModuleList(modules, outputPath) {
 
                 list.push({
                     targetPath: targetPath,
-                    destinationPath: destinationPath,
+                    destinationPath: destinationPath
                 });
             }
         }
@@ -87,7 +87,7 @@ function getGlobalList(appPath, outputPath) {
             list.push({
 
                 targetPath: targetPath,
-                destinationPath: destinationPath,
+                destinationPath: destinationPath
             });
         }
     }
