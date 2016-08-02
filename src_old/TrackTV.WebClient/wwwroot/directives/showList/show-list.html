@@ -1,0 +1,7 @@
+<div ng-if="shows.length" class="row">
+    <div ng-repeat="show in shows" tt-short-show="" data-show="show" class="text-center col-md-3 show-small"></div>
+</div>
+
+<div ng-if="!shows.length">
+    <h3 class="text-center show-group-title">No Shows</h3>
+</div>

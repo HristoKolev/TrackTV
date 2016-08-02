@@ -9,13 +9,13 @@
     <ProjectGuid>b4db6a83-8b40-4fbe-aafc-4644c1f28cbd</ProjectGuid>
     <RootNamespace>TrackTV.WebClient</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
     <DevelopmentServerPort>60381</DevelopmentServerPort>
   </PropertyGroup>
-  <ItemGroup>    
+  <ItemGroup>
     <DnxInvisibleFolder Include="bower_components\" />
     <DnxInvisibleFolder Include="dist\" />
   </ItemGroup>

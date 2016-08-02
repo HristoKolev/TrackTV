@@ -1,0 +1,30 @@
+<form name="registerForm" class="form-horizontal">
+    <fieldset>
+        <legend class="col-lg-10 col-lg-offset-2">Create New User</legend>
+        <div class="form-group">
+            <label for="email" class="col-md-2 control-label">E-mail</label>
+            <div class="col-md-10">
+                <input id="email" type="text" placeholder="E-mail" ng-model="user.email" required="required" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-md-2 control-label">Password</label>
+            <div class="col-md-10">
+                <input id="password" type="password" placeholder="Password" ng-model="user.password" required="required" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmation" class="col-md-2 control-label">Confirm Password</label>
+            <div class="col-md-10">
+                <input id="confirmation" type="password" placeholder="Confirm Password" ng-model="user.confirmPassword" required="required" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-primary" ng-click="register(user)" ng-disabled="registerForm.$invalid">Register</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
