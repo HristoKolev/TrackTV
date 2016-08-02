@@ -58,10 +58,7 @@ function register(name, func) {
     names.push(name);
 }
 
-function globApp(...args) {
-
-    return glob(appBuilder.appPath(...args));
-}
+const globApp = (...args) => glob(appBuilder.appPath(...args));
 
 function registerTasks() {
 

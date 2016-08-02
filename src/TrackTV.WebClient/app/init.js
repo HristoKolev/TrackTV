@@ -1,34 +1,24 @@
 (function () {
     'use strict';
 
-    function getSettings() {
+    window.ngModules = {};
 
-        function syncRequest(url) {
+    function syncRequest(url) {
 
-            var result;
+        var result;
 
-            $.ajax({
-                type: 'GET',
-                url: url,
-                dataType: 'json',
-                success: function (data) {
-                    result = data;
-                },
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function (data) {
+                result = data;
+            },
 
-                async: false
-            });
+            async: false
+        });
 
-            return result;
-        }
-
-        return {
-            templateConfig: syncRequest('app/templateConfig.json'),
-            development: true
-        };
+        return result;
     }
-
-    window.settings = window.settings || getSettings();
-
-    window.ngModules = {};    
 
 }());
