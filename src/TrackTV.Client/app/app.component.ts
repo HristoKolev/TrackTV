@@ -8,13 +8,15 @@ const typeBinder = new TypeBinder();
 applyBindings(typeBinder);
 
 @Component({
+    moduleId: module.id,
     selector: 'app-component',
-    templateUrl: './app/app.component.html',
-    styleUrls: ['./app/app.component.css'],
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css'],
     providers: [
         HTTP_PROVIDERS,
         ...typeBinder.bindings
-    ]
+    ],
+
 })
 export class AppComponent {
 
