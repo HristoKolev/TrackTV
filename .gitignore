@@ -211,3 +211,4 @@ typings/
 
 **/app/**/*.js
 **/app/**/*.js.map
+**/app/**/*.css
