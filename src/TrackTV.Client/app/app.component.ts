@@ -1,21 +1,12 @@
 import {Component} from  'angular2/core';
-import {HTTP_PROVIDERS} from 'angular2/http';
-import {ApiPath, Identity, Authentication} from "./services/index";
-import {TypeBinder} from './shared/index';
-import {applyBindings} from './typeBindings';
 
-const typeBinder = new TypeBinder();
-applyBindings(typeBinder);
+import {ApiPath, Identity, Authentication} from "./services/index";
 
 @Component({
     moduleId: module.id,
     selector: 'app-component',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.css'],
-    providers: [
-        HTTP_PROVIDERS,
-        ...typeBinder.bindings
-    ],
 
 })
 export class AppComponent {
