@@ -1,11 +1,13 @@
 import {Component} from  'angular2/core';
 import {ApiPath, Identity, Authentication} from "./services/index";
+import {FooterComponent} from './directives/index';
 
 @Component({
     moduleId: module.id,
     selector: 'app-component',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.css'],
+    directives: [FooterComponent]
 
 })
 export class AppComponent {
