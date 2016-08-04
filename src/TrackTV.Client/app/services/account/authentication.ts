@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core'
-import {Observable} from 'rxjs/Rx'
-import {Http, Headers, RequestOptions, Response} from 'angular2/http'
+import {Injectable} from 'angular2/core';
+import {Observable} from 'rxjs/Rx';
+import {Http, Headers, RequestOptions, Response} from 'angular2/http';
 import {Identity} from "./identity";
 import {ApiPath} from "../apiPath";
 

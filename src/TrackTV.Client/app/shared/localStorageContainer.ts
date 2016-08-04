@@ -1,4 +1,4 @@
-import {PersistentContainer} from "./persistentContainer";
+import {PersistentContainer} from './persistentContainer';
 
 export class LocalStorageContainer<T> implements PersistentContainer<T> {
 

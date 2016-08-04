@@ -1,5 +1,4 @@
 import {Component} from  'angular2/core';
-
 import {ApiPath, Identity, Authentication} from "./services/index";
 
 @Component({

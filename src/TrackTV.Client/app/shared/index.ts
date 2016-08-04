@@ -1,3 +1,3 @@
-export * from './persistentContainer'
-export * from './localStorageContainer'
-export * from './typeBinder'
+export * from './persistentContainer';
+export * from './localStorageContainer';
+export * from './typeBinder';
