@@ -1,4 +1,5 @@
 import {Injectable} from 'angular2/core';
+
 import {PersistentContainer, PersistentContainerKey} from '../../shared/index';
 
 export interface User {

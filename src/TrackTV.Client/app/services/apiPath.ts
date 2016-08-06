@@ -12,17 +12,17 @@ export class ApiPath {
         return this.baseServiceUrl + '/token';
     }
 
-    public rawPath(name) : string {
+    public rawPath(name : string) : string {
 
         return this.baseApiPath + name;
     }
 
-    public service(serviceName) {
+    public service(serviceName : string) : (path : string) => string {
 
-        return path => this.rawPath('/' + serviceName + path);
+        return (path : string) => this.rawPath('/' + serviceName + path);
     }
 
-    public path(name) : string {
+    public path(name : string) : string {
 
         return this.baseServiceUrl + (name || '');
     }

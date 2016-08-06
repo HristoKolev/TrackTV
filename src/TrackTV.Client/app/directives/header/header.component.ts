@@ -1,10 +1,15 @@
 import {Component} from  'angular2/core';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
+
+import * as toastr from 'toastr';
+
 import {Identity, Authentication} from  '../../services/index';
 
 @Component({
     moduleId: module.id,
     selector: 'header-component',
     templateUrl: 'header.component.html',
+    directives: [ROUTER_DIRECTIVES]
 })
 export class HeaderComponent {
 

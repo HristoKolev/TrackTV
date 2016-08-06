@@ -1,24 +1,12 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
 import {Http, Headers, RequestOptions, Response} from 'angular2/http';
+
+import * as $ from 'jquery';
+
 import {Identity} from "./identity";
 import {ApiPath} from "../apiPath";
-
-export class RegisterUser {
-
-    email : string;
-
-    password : string;
-    confirmPassword : string;
-}
-
-export class LoginUser {
-
-    username : string;
-    password : string;
-
-    grant_type : string;
-}
+import {RegisterUser, RegisterError, LoginUser, LoginError} from './authenticationModels';
 
 @Injectable()
 export class Authentication {
@@ -28,35 +16,71 @@ export class Authentication {
                 private apiPath : ApiPath) {
     }
 
-    private account : (string) => string = this.apiPath.service('account');
+    private account : (arg : string) => string = this.apiPath.service('account');
+
+    private getUrlEncodedOptions() : RequestOptions {
+
+        const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+
+        return new RequestOptions({headers: new Headers(headers)});
+    }
+
+    private getAuthenticationOptions() : RequestOptions {
+
+        const headers = this.identity.addAuthorizationHeader();
+
+        return new RequestOptions({headers: new Headers(headers)});
+    }
 
     public signup(user : RegisterUser) {
 
-        return this.http.post(this.account('/register'), JSON.stringify(user));
+        return this.http.post(this.account('/register'), $.param(user), this.getUrlEncodedOptions())
+            .catch((err : Response) => {
+
+                let errorData = err.json();
+
+                if (errorData.modelState && errorData.modelState['model.Password']) {
+
+                    return Observable.throw(RegisterError.InvalidPassword);
+                }
+
+                return Observable.throw(RegisterError.ServerError);
+            });
     }
 
     public login(user : LoginUser) {
 
         user.grant_type = 'password';
 
-        return this.http.post(this.apiPath.loginPath, JSON.stringify(user));
+        return this.http.post(this.apiPath.loginPath, $.param(user), this.getUrlEncodedOptions())
+            .map((res : Response) => res.json())
+            .do(user => {
+
+                this.identity.load(user);
+            })
+            .catch((res : Response) => {
+
+                const error = res.json();
+
+                if (error && error.error_description === 'The user name or password is incorrect.') {
+
+                    return Observable.throw(LoginError.InvalidCredentials);
+                }
+
+                return Observable.throw(LoginError.ServerError);
+            });
     }
 
     public logout() {
 
-        var headers = this.identity.addAuthorizationHeader();
-
-        let observable : Observable<Response> =
-            this.http.post(this.account('/logout'), undefined, new RequestOptions({headers: new Headers(headers)}));
-
-        return observable
+        return this.http.post(this.account('/logout'), undefined, this.getAuthenticationOptions())
             .do((response : Response) => this.identity.removeUser())
             .catch((error : Response) => {
 
                 // removing the user, despite the server being unavailable
                 this.identity.removeUser();
 
-                return Observable.throw(error.json().error)
+                return Observable.throw(error.json())
             });
     }
 }

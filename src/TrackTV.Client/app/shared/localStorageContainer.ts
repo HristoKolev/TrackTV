@@ -4,21 +4,23 @@ export class LocalStorageContainer<T> implements PersistentContainer<T> {
 
     get(key : string) : T {
 
-        if (localStorage[key] === undefined) {
+        const value = localStorage.getItem(key);
+
+        if (value === undefined) {
 
             return undefined;
         }
 
-        return <T>JSON.parse(localStorage[key]);
+        return <T>JSON.parse(value);
     }
 
     set(key : string, value : T) : void {
 
-        localStorage[key] = JSON.stringify(value);
+        localStorage.setItem(key, JSON.stringify(value));
     }
 
     remove(key : string) : void {
 
-        this.set(key, undefined);
+        localStorage.removeItem(key);
     }
 }

@@ -1,0 +1,34 @@
+<form novalidate class="form-horizontal" *ngIf="formActive" [ngFormModel]="loginForm" (ngSubmit)="login()">
+    <fieldset>
+
+        <legend class="col-md-10 col-md-offset-2">Login</legend>
+
+        <div class="form-group">
+
+            <label class="col-md-2 control-label" for="inputEmail">Email</label>
+
+            <div class="col-md-10">
+
+                <input class="form-control" id="inputEmail" type="text" placeholder="Email"
+                       ngControl="username" #username="ngForm">
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <label class="col-md-2 control-label" for="inputPassword">Password</label>
+
+            <div class="col-md-10">
+                <input class="form-control" id="inputPassword" type="password" placeholder="Password"
+                       ngControl="password" #password="ngForm">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+
+                <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid"> Login</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

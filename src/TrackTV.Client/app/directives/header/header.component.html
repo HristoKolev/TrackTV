@@ -48,14 +48,14 @@
                         </li>
                         <li *ngIf="identity.isAuthenticated">
                             <a href="/#/manage">
-                                <img gravatar-src="user.username" alt="" title="{{ user.username }}"
+                                <img gravatar-src="identity.username" alt="" title="{{ identity.username }}"
                                      gravatar-size="40"/>
                                 {{ identity.username }}
                             </a>
                         </li>
 
                         <li>
-                            <a href="#" (click)="logout()">Log off</a>
+                            <button (click)="logout()">Log off</button>
                         </li>
                     </ul>
 
@@ -63,12 +63,8 @@
 
                 <ul class="nav navbar-nav navbar-right" *ngIf="!identity.isAuthenticated">
 
-                    <li>
-                        <a href="/#/register" id="registerLink">Register</a>
-                    </li>
-                    <li>
-                        <a href="/#/login" id="loginLink">Log in</a>
-                    </li>
+                    <li><a [routerLink]="['Register']" id="registerLink">Register</a></li>
+                    <li><a [routerLink]="['Login']" id="loginLink">Log in</a></li>
                 </ul>
             </div>
         </div>
