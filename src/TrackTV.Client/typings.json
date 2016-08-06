@@ -1,7 +1,9 @@
 {
   "globalDependencies": {
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
     "node": "registry:dt/node#6.0.0+20160802155038",
-    "systemjs": "registry:dt/systemjs#0.19.29+20160702105636"
+    "systemjs": "registry:dt/systemjs#0.19.29+20160702105636",
+    "toastr": "registry:dt/toastr#2.1.1+20160510010435"
   }
 }

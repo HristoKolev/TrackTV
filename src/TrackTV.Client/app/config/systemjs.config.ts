@@ -4,7 +4,11 @@ System.config({
             format: 'cjs',
             defaultExtension: 'js'
         }
-    }
+    },
+    paths: {
+        jquery: './node_modules/jquery/dist/jquery.js',
+        toastr: './node_modules/toastr/toastr.js',
+    },
 });
 
 System.import('app/main')

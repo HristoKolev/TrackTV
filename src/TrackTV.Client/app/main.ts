@@ -13,5 +13,3 @@ const globalDependencies = [
 ];
 
 bootstrap(AppComponent, globalDependencies);
-
-
