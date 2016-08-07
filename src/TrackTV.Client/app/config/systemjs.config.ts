@@ -1,6 +1,5 @@
 System.config({
     map: {
-        'rxjs': 'node_modules/rxjs',
         '@angular': 'node_modules/@angular'
     },
     packages: {
@@ -8,19 +7,24 @@ System.config({
             main: 'main',
             defaultExtension: 'js'
         },
-        'rxjs': {main: 'index.js'},
-        '@angular/core': {main: 'index.js'},
-        '@angular/common': {main: 'index.js'},
-        '@angular/compiler': {main: 'index.js'},
-        '@angular/router': {main: 'index.js'},
-        '@angular/platform-browser': {main: 'index.js'},
-        '@angular/platform-browser-dynamic': {main: 'index.js'},
-        '@angular/forms': {main: 'index.js'},
-        '@angular/http': {main: 'index.js'},
+        '@angular/core': {main: 'core.umd.min.js'},
+        '@angular/common': {main: 'common.umd.min.js'},
+        '@angular/compiler': {main: 'compiler.umd.min.js'},
+        '@angular/platform-browser': {main: 'platform-browser.umd.min.js'},
+        '@angular/platform-browser-dynamic': {main: 'platform-browser-dynamic.umd.min.js'},
+
+        '@angular/router': {main: 'router.umd.min.js'},
+
+        '@angular/forms': {main: 'forms.umd.min.js'},
+        '@angular/http': {main: 'http.umd.min.js'},
+    },
+    meta: {
+        '@angular/*': {'format': 'cjs'}
     },
     paths: {
         jquery: './node_modules/jquery/dist/jquery.js',
         toastr: './node_modules/toastr/toastr.js',
+        'node_modules/@angular/*': 'node_modules/@angular/*/bundles',
     },
 });
 
