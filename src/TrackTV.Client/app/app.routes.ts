@@ -1,19 +1,17 @@
-import {RouteDefinition} from 'angular2/router';
+import {provideRouter, RouterConfig} from '@angular/router';
 
 import {LoginComponent, RegisterComponent} from  './account/index';
 import {ShowsComponent} from  './shows/shows.component';
 
-export const RouteNames = {
-    Login: 'Login',
-    Register: 'Register',
-    Shows: 'Shows',
-    ShowsByGenre: 'ShowsByGenre',
-};
+const routes : RouterConfig = [
 
-export const routeDefinitions : RouteDefinition[] = [
+    {path: '', component: LoginComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: 'shows', component: ShowsComponent},
+    {path: 'shows/genre/:genre', component: ShowsComponent},
+];
 
-    {name: RouteNames.Login, path: '/login', component: LoginComponent},
-    {name: RouteNames.Register, path: '/register', component: RegisterComponent},
-    {name: RouteNames.Shows, path: '/shows', component: ShowsComponent},
-    {name: RouteNames.ShowsByGenre, path: '/shows/genre/:genre', component: ShowsComponent},
+export const routerProviders = [
+    provideRouter(routes)
 ];

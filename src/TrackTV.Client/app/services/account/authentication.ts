@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
-import {Http, Headers, RequestOptions, Response} from 'angular2/http';
+import {Http, Headers, RequestOptions, Response} from '@angular/http';
 
 import * as $ from 'jquery';
 

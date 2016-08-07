@@ -1,22 +1,17 @@
-import {bootstrap} from 'angular2/platform/browser';
-import {HTTP_PROVIDERS} from 'angular2/http';
-import {ROUTER_PROVIDERS} from 'angular2/router';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {HTTP_PROVIDERS} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {TypeBinder} from './shared/index';
-import {applyBindings} from './app.bindings';
+import {typeBindings} from './app.bindings';
+import {routerProviders} from  './app.routes';
 
 import {configureToastr} from  './config/toastr.confing';
 
 configureToastr();
 
-const typeBinder = new TypeBinder();
-applyBindings(typeBinder);
-
-const globalDependencies = [
+bootstrap(AppComponent, [
     HTTP_PROVIDERS,
-    ROUTER_PROVIDERS,
-    ...typeBinder.bindings
-];
 
-bootstrap(AppComponent, globalDependencies);
+    routerProviders,
+    typeBindings,
+]);

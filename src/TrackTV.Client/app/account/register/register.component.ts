@@ -1,11 +1,10 @@
-import {Component} from  'angular2/core';
-import {Control, ControlGroup, FormBuilder, Validators} from  'angular2/common';
-import {Router} from  'angular2/router';
+import {Component} from  '@angular/core';
+import {Control, ControlGroup, FormBuilder, Validators} from  '@angular/common';
+import {Router} from  '@angular/router';
 
 import * as toastr from 'toastr';
 
 import {Authentication, RegisterUser, RegisterError} from "../../services/index";
-import {RouteNames} from  '../../app.routes';
 
 @Component({
     moduleId: module.id,
@@ -48,7 +47,7 @@ export class RegisterComponent {
 
         this.resetForm();
 
-        this.router.navigate([RouteNames.Login]);
+        this.router.navigate(['/login']);
     }
 
     private notifyRegisterError(error : RegisterError) : void {

@@ -1,5 +1,5 @@
-import {Component, OnInit} from  'angular2/core';
-import {RouteParams} from  'angular2/router';
+import {Component, OnInit} from  '@angular/core';
+import {ActivatedRoute} from  '@angular/router';
 import {ShowsService, SimpleShows} from  '../services/index';
 import {GenrePanelComponent} from  '../directives/index';
 
@@ -16,21 +16,25 @@ export class ShowsComponent implements OnInit {
     genreName : string;
 
     constructor(private showService : ShowsService,
-                private routeParams : RouteParams) {
+                private activatedRoute : ActivatedRoute) {
     }
 
     ngOnInit() : void {
 
-        const genreName = this.routeParams.get('genre');
+        this.activatedRoute.params.subscribe(params => {
 
-        if (genreName) {
+            const genreName = params['genre'];
 
-            this.genreName = genreName;
-        }
-        else {
+            if (genreName) {
 
-            this.showService.top()
-                .subscribe((shows : SimpleShows) => this.shows = shows);
-        }
+                this.genreName = genreName;
+            }
+            else {
+
+                this.showService.top()
+                    .subscribe((shows : SimpleShows) => this.shows = shows);
+            }
+        });
+
     }
 }
