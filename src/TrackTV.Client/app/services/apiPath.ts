@@ -22,7 +22,7 @@ export class ApiPath {
         return (path : string) => this.rawPath('/' + serviceName + path);
     }
 
-    public path(name : string) : string {
+    public path(name? : string) : string {
 
         return this.baseServiceUrl + (name || '');
     }

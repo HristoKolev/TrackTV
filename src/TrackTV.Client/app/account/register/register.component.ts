@@ -4,8 +4,8 @@ import {Router} from  'angular2/router';
 
 import * as toastr from 'toastr';
 
-import {Authentication, RegisterUser, RegisterError} from "../services/index";
-import {RouteNames} from  '../app.routes';
+import {Authentication, RegisterUser, RegisterError} from "../../services/index";
+import {RouteNames} from  '../../app.routes';
 
 @Component({
     moduleId: module.id,

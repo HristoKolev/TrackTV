@@ -3,7 +3,7 @@ import {Control, ControlGroup, FormBuilder, Validators} from  'angular2/common';
 
 import * as toastr from 'toastr';
 
-import {Authentication, LoginUser, LoginError} from "../services/index";
+import {Authentication, LoginUser, LoginError} from "../../services/index";
 
 @Component({
     moduleId: module.id,

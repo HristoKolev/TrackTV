@@ -14,6 +14,7 @@ export class Authentication {
     constructor(private http : Http,
                 private identity : Identity,
                 private apiPath : ApiPath) {
+
     }
 
     private account : (arg : string) => string = this.apiPath.service('account');
