@@ -5,7 +5,7 @@ import {ShowsComponent} from  './shows/shows.component';
 
 const routes : RouterConfig = [
 
-    {path: '', component: LoginComponent},
+    {path: '', component: ShowsComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'shows', component: ShowsComponent},

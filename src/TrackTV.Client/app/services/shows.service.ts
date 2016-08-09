@@ -25,18 +25,42 @@ export class ShowsService {
         }
     }
 
+    private parseSimpleShows(res : Response) : SimpleShows {
+
+        const data : SimpleShows = res.json() as SimpleShows;
+
+        this.addBaseUrl(data.running);
+        this.addBaseUrl(data.ended);
+
+        return data;
+    }
+
     public top() : Observable<SimpleShows> {
 
         return this.http.get(this.shows('/top'), undefined)
-            .map((res : Response) : SimpleShows => {
+            .map(res => this.parseSimpleShows(res));
+    }
 
-                const data : SimpleShows = res.json() as SimpleShows;
+    public genre(name : string) : Observable<SimpleShows> {
 
-                this.addBaseUrl(data.running);
-                this.addBaseUrl(data.ended);
+        return this.http.get(this.shows('/genre/' + name), undefined)
+            .map(res => this.parseSimpleShows(res));
+    }
 
-                return data;
-            });
+    public search(query : string, page? : number) : Observable<SimpleShows> {
+
+        page = page || 1;
+
+        return this.http.get(this.shows('/search/' + query + '/' + page), undefined)
+            .map(res => this.parseSimpleShows(res));
+    }
+
+    public network(name : string, page? : number) : Observable<SimpleShows> {
+
+        page = page || 1;
+
+        return this.http.get(this.shows('/network/' + name + '/' + page), undefined)
+            .map(res => this.parseSimpleShows(res));
     }
 }
 

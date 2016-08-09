@@ -1,0 +1,14 @@
+﻿﻿
+<div>
+    <a>
+        <img [src]="show.poster" [alt]="show.name" [title]="show.name" class="poster-small"/>
+    </a>
+
+    <strong class="text-center show-title-small">
+        <a>{{ show.name }}</a>
+    </strong>
+</div>
+
+<span class="info-small">
+    Subscribers : {{ show.subscriberCount }} | Episodes : {{ show.episodeCount }}
+</span>

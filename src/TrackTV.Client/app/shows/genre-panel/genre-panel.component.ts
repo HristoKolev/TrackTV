@@ -11,6 +11,4 @@ import {Genre} from '../../services/index';
 export class GenrePanelComponent {
 
     @Input() genres : Genre[];
-
-    list : number[] = [1, 2, 3];
 }

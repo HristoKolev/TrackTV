@@ -1,0 +1,9 @@
+<div class="well genre-panel text-center">
+
+    <a *ngFor="let genre of genres"
+       [routerLink]="['/shows/genre/', genre.userFriendlyId]"
+       class="btn btn-default">
+        {{ genre.name }}
+    </a>
+
+</div>

@@ -1,13 +1,14 @@
 import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
 import {ShowsService, SimpleShows} from  '../services/index';
-import {GenrePanelComponent} from  '../directives/index';
+import {GenrePanelComponent, ShowListComponent, CapitaliseWords} from  './index';
 
 @Component({
     moduleId: module.id,
     selector: 'shows-component',
     templateUrl: 'shows.component.html',
-    directives: [GenrePanelComponent]
+    directives: [GenrePanelComponent, ShowListComponent],
+    pipes: [CapitaliseWords]
 })
 export class ShowsComponent implements OnInit {
 
@@ -28,6 +29,9 @@ export class ShowsComponent implements OnInit {
             if (genreName) {
 
                 this.genreName = genreName;
+
+                this.showService.genre(genreName)
+                    .subscribe((shows : SimpleShows) => this.shows = shows);
             }
             else {
 

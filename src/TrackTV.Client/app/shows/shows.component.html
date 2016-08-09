@@ -1,23 +1,29 @@
 ﻿﻿
 <div class="shows-container">
+
     <div *ngIf="shows">
 
         <genre-panel-component [genres]="shows.genres"></genre-panel-component>
 
         <div>
-            <h1 class="text-center show-group-title">Top Shows</h1>
+            <h1 class="text-center show-group-title">
 
-            <div tt-show-list data-shows="shows.running"></div>
+                Top Shows
+                <span *ngIf="genreName"> in {{genreName | capitaliseWords}}</span>
+            </h1>
+
+
+            <show-list-component [shows]="shows.running"></show-list-component>
 
         </div>
 
         <div>
             <h1 class="text-center show-group-title">
                 Top <span class="ended-word">Ended</span> Shows
+                <span *ngIf="genreName"> in {{genreName | capitaliseWords}}</span>
             </h1>
 
-            <div tt-show-list data-shows="shows.ended"></div>
-
+            <show-list-component [shows]="shows.ended"></show-list-component>
         </div>
     </div>
 </div>
