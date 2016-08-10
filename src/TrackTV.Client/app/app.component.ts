@@ -8,7 +8,6 @@ import {FooterComponent, HeaderComponent} from './directives/index';
     moduleId: module.id,
     selector: 'app-component',
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css'],
     directives: [ROUTER_DIRECTIVES, HeaderComponent, FooterComponent]
 })
 
