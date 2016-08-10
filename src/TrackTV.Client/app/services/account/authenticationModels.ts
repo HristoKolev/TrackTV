@@ -3,12 +3,14 @@ export class RegisterUser {
     email : string;
 
     password : string;
+
     confirmPassword : string;
 }
 
 export class LoginUser {
 
     username : string;
+
     password : string;
 
     grant_type : string;
@@ -17,12 +19,15 @@ export class LoginUser {
 export enum LoginError {
 
     ServerError = 1,
+
     InvalidCredentials
 }
 
 export enum  RegisterError{
 
     ServerError = 1,
+
     InvalidEmail,
+        
     InvalidPassword
 }

@@ -1,0 +1,27 @@
+<div *ngIf="shows.length">
+
+    <div class="row">
+
+        <short-show-component
+                *ngFor="let show of shows | paginate: {itemsPerPage: pageSize, currentPage: currentPage, totalItems:totalCount}"
+                class="text-center col-md-3 show-small"
+                [show]="show">
+
+        </short-show-component>
+
+    </div>
+
+
+    <pagination-controls
+            (pageChange)="changed($event)"
+            maxSize="7"
+            directionLinks="true"
+            class="text-center"
+            autoHide="true">
+    </pagination-controls>
+
+</div>
+
+<div *ngIf="!shows.length">
+    <h3 class="text-center show-group-title">No Shows</h3>
+</div>

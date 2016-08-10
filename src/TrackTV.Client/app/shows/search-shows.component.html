@@ -1,0 +1,21 @@
+<div class="shows-container" *ngIf="shows && shows.length">
+    <h1 class="text-center show-group-title">
+        Search for '<span class="text-success">{{ query }}</span>'
+    </h1>
+
+    <paged-show-list-component [shows]="shows"
+                               [totalCount]="totalCount"
+                               [currentPage]="currentPage"
+                               [pageSize]="pageSize"
+                               (pageChange)="populateShows($event)">
+    </paged-show-list-component>
+</div>
+
+
+<div class="shows-container" *ngIf="shows && !shows.length">
+
+    <h1 class="text-center show-group-title">
+
+        Nothing found for '<span class="search-query">{{ query }}</span>'
+    </h1>
+</div>

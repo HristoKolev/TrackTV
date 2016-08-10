@@ -2,21 +2,21 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
-import {ApiPath, SimpleShows, SimpleShow} from "./index";
+import {ApiPath} from './apiPath';
+import {SimpleShows, SimpleShow, NetworkShows, SearchShows} from "./showModels";
 
 @Injectable()
 export class ShowsService {
 
     constructor(private http : Http,
                 private apiPath : ApiPath) {
-
     }
 
     private shows : (path : string) => string = this.apiPath.service('shows');
 
     private addBaseUrl(shows : SimpleShow[]) : void {
 
-        let baseUrl = this.apiPath.path();
+        const baseUrl = this.apiPath.path();
 
         for (let show of shows) {
 
@@ -25,12 +25,24 @@ export class ShowsService {
         }
     }
 
-    private parseSimpleShows(res : Response) : SimpleShows {
+    private parseSimpleShows(res : Response) : any {
 
-        const data : SimpleShows = res.json() as SimpleShows;
+        const data = res.json();
 
-        this.addBaseUrl(data.running);
-        this.addBaseUrl(data.ended);
+        if (data.running) {
+
+            this.addBaseUrl(data.running);
+        }
+
+        if (data.ended) {
+
+            this.addBaseUrl(data.ended);
+        }
+
+        if (data.shows) {
+
+            this.addBaseUrl(data.shows);
+        }
 
         return data;
     }
@@ -47,17 +59,13 @@ export class ShowsService {
             .map(res => this.parseSimpleShows(res));
     }
 
-    public search(query : string, page? : number) : Observable<SimpleShows> {
-
-        page = page || 1;
+    public search(query : string, page : number = 1) : Observable<SearchShows> {
 
         return this.http.get(this.shows('/search/' + query + '/' + page), undefined)
             .map(res => this.parseSimpleShows(res));
     }
 
-    public network(name : string, page? : number) : Observable<SimpleShows> {
-
-        page = page || 1;
+    public network(name : string, page : number = 1) : Observable<NetworkShows> {
 
         return this.http.get(this.shows('/network/' + name + '/' + page), undefined)
             .map(res => this.parseSimpleShows(res));

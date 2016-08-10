@@ -13,7 +13,7 @@
 
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/#/" id="logo-link">
+                        <a [routerLink]="['/shows']" id="logo-link">
                             <img src="/app/assets/logo-image.png" alt="Logo"/>
                         </a>
                     </li>
@@ -25,13 +25,13 @@
                         <a href="/#/myshows">My Shows</a>
                     </li>
                     <li>
-                        <a ng-href="/#/shows">Browse</a>
+                        <a [routerLink]="['/shows']">Browse</a>
                     </li>
 
                     <li>
                         <form class="navbar-form navbar-left search-form">
-                            <input type="text" class="form-control col-lg-8" placeholder="Search" ng-model="query">
-                            <button class="btn btn-success" ng-click="search(query)">Go</button>
+                            <input type="text" class="form-control col-lg-8" placeholder="Search" [(ngModel)]="query">
+                            <button class="btn btn-success" [routerLink]="['/shows/search', query]">Go</button>
                         </form>
                     </li>
                 </ul>

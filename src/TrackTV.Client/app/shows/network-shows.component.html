@@ -1,0 +1,19 @@
+<div class="shows-container" *ngIf="shows && shows.length">
+    <h1 class="text-center show-group-title">
+        Shows on '<span class="text-success">{{ networkName }}</span>'
+    </h1>
+
+    <paged-show-list-component [shows]="shows"
+                               [totalCount]="totalCount"
+                               [currentPage]="currentPage"
+                               [pageSize]="pageSize"
+                               (pageChange)="populateShows($event)">
+    </paged-show-list-component>
+</div>
+
+<div class="shows-container" *ngIf="shows && !shows.length">
+
+    <h1 class="text-center show-group-title">
+        No shows on '<span class="text-error">{{ networkName }}</span>'
+    </h1>
+</div>

@@ -28,3 +28,21 @@ export interface SimpleShows {
 
     genres : Genre[];
 }
+
+export interface SearchShows {
+
+    count : number;
+
+    shows : SimpleShow[];
+
+    query : string;
+}
+
+export interface NetworkShows {
+
+    count : number;
+
+    shows : SimpleShow[];
+
+    networkName : string;
+}

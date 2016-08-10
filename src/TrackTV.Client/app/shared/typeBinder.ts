@@ -1,10 +1,8 @@
-import {provide} from '@angular/core';
-
 export class TypeBinder {
 
     public bindings : any[] = [];
 
-    bind(interfaceObject : any, implementationObject : any) {
+    bind(interfaceObject : any, implementationObject : any) : void {
 
         if (!interfaceObject) {
 
@@ -16,10 +14,10 @@ export class TypeBinder {
             throw new Error('The implementation object is falsy.');
         }
 
-        this.bindings.push(provide(interfaceObject, {useClass: implementationObject}))
+        this.bindings.push({provide: interfaceObject, useClass: implementationObject})
     }
 
-    bindToSelf(obj : any) {
+    bindToSelf(obj : any) : void {
 
         this.bind(obj, obj)
     }
