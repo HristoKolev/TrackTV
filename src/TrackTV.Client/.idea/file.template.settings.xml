@@ -3,6 +3,7 @@
   <component name="ExportableFileTemplateSettings">
     <default_templates>
       <template name="Angular2 Component.ts" reformat="true" live-template-enabled="true" />
+      <template name="Angular2 Pipe.ts" reformat="true" live-template-enabled="true" />
       <template name="Angular2 Service.ts" reformat="true" live-template-enabled="true" />
     </default_templates>
   </component>

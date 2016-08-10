@@ -25,7 +25,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="13">
+          <list size="15">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -39,6 +39,8 @@
             <item index="10" class="java.lang.String" itemvalue="genre-panel-component" />
             <item index="11" class="java.lang.String" itemvalue="short-show-component" />
             <item index="12" class="java.lang.String" itemvalue="show-list-component" />
+            <item index="13" class="java.lang.String" itemvalue="paged-show-list-component" />
+            <item index="14" class="java.lang.String" itemvalue="pagination-controls" />
           </list>
         </value>
       </option>
