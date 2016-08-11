@@ -5,7 +5,7 @@ import {Observable} from  'rxjs';
 import {AuthenticatedService} from  './authenticatedService';
 import {Identity} from  './account/identity';
 import {ApiPath} from  './apiPath';
-import {ShowDetails} from  './showModels';
+import {ShowDetails} from  './show.models';
 
 @Injectable()
 export class ShowService extends AuthenticatedService {

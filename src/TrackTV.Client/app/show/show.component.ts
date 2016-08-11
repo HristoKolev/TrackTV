@@ -1,11 +1,7 @@
 import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute, ROUTER_DIRECTIVES} from  '@angular/router';
 import {ShowService, ShowDetails, Identity} from  '../services/index';
-
-import {DoubleDigit} from  './doubleDigit.pipe';
-import {PremieredDate} from  './premieredDate.pipe';
-import {Querify} from  './querify.pipe';
-import {WeekDayName} from  './weekDayName.pipe';
+import {DoubleDigit, PremieredDate, Querify, WeekDayName} from  './pipes/index';
 
 @Component({
     moduleId: module.id,

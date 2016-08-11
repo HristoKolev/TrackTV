@@ -3,7 +3,7 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
 import {ApiPath} from './apiPath';
-import {SimpleShows, SimpleShow, NetworkShows, SearchShows} from "./showModels";
+import {SimpleShows, SimpleShow, NetworkShows, SearchShows} from "./show.models";
 
 @Injectable()
 export class ShowsService {
