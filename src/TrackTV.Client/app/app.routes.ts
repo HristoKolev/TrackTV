@@ -2,6 +2,7 @@ import {provideRouter, RouterConfig} from '@angular/router';
 
 import {LoginComponent, RegisterComponent} from  './account/index';
 import {ShowsComponent, NetworkShowsComponent, SearchShowsComponent} from  './shows/index';
+import {ShowComponent} from  './show/show.component';
 
 const routes : RouterConfig = [
 
@@ -12,6 +13,7 @@ const routes : RouterConfig = [
     {path: 'shows/genre/:genre', component: ShowsComponent},
     {path: 'shows/network/:network', component: NetworkShowsComponent},
     {path: 'shows/search/:query', component: SearchShowsComponent},
+    {path: 'show/:show', component: ShowComponent},
 ];
 
 export const routerProviders = [provideRouter(routes)];

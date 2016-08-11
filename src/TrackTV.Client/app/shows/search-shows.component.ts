@@ -12,7 +12,7 @@ import {PagedShowListComponent} from './paged-show-list/paged-show-list.componen
 })
 export class SearchShowsComponent implements OnInit {
 
-    constructor(private showService : ShowsService,
+    constructor(private showsService : ShowsService,
                 private activatedRoute : ActivatedRoute) {
     }
 
@@ -33,7 +33,7 @@ export class SearchShowsComponent implements OnInit {
         this.activatedRoute.params
             .subscribe(params => {
 
-                this.showService.search(params['query'], page)
+                this.showsService.search(params['query'], page)
                     .subscribe((data : SearchShows) => {
 
                         this.shows = data.shows || [];

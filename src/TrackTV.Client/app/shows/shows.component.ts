@@ -18,7 +18,7 @@ export class ShowsComponent implements OnInit {
 
     genreName : string;
 
-    constructor(private showService : ShowsService,
+    constructor(private showsService : ShowsService,
                 private activatedRoute : ActivatedRoute) {
     }
 
@@ -32,12 +32,12 @@ export class ShowsComponent implements OnInit {
 
                 this.genreName = genreName;
 
-                this.showService.genre(genreName)
+                this.showsService.genre(genreName)
                     .subscribe((shows : SimpleShows) => this.shows = shows);
             }
             else {
 
-                this.showService.top()
+                this.showsService.top()
                     .subscribe((shows : SimpleShows) => this.shows = shows);
             }
         });

@@ -12,7 +12,7 @@ import {PagedShowListComponent} from './paged-show-list/paged-show-list.componen
 })
 export class NetworkShowsComponent implements OnInit {
 
-    constructor(private showService : ShowsService,
+    constructor(private showsService : ShowsService,
                 private activatedRoute : ActivatedRoute) {
     }
 
@@ -21,7 +21,7 @@ export class NetworkShowsComponent implements OnInit {
     totalCount : number;
 
     networkName : string;
-
+    
     currentPage : number;
 
     pageSize : number = 24;
@@ -33,7 +33,7 @@ export class NetworkShowsComponent implements OnInit {
         this.activatedRoute.params
             .subscribe(params => {
 
-                this.showService.network(params['network'], page)
+                this.showsService.network(params['network'], page)
                     .subscribe((data : NetworkShows) => {
 
                         this.shows = data.shows || [];

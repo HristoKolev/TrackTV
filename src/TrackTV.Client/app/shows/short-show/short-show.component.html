@@ -1,11 +1,11 @@
 ﻿﻿
 <div>
-    <a>
+    <a [routerLink]="['/show', show.userFriendlyId]">
         <img [src]="show.poster" [alt]="show.name" [title]="show.name" class="poster-small"/>
     </a>
 
     <strong class="text-center show-title-small">
-        <a>{{ show.name }}</a>
+        <a [routerLink]="['/show', show.userFriendlyId]">{{ show.name }}</a>
     </strong>
 </div>
 

@@ -1,6 +1,6 @@
 System.config({
     map: {
-        '@angular': 'node_modules/@angular'
+        '@angular': 'node_modules/@angular',
     },
     packages: {
         'app': {
@@ -25,6 +25,8 @@ System.config({
         jquery: './node_modules/jquery/dist/jquery.js',
         toastr: './node_modules/toastr/toastr.js',
         'node_modules/@angular/*': 'node_modules/@angular/*/bundles',
+        'underscore.string': './node_modules/underscore.string/dist/underscore.string.js',
+        'moment': './node_modules/moment/moment.js',
     },
 });
 

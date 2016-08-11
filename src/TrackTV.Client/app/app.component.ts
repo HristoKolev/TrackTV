@@ -3,6 +3,7 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
 
 import {FooterComponent, HeaderComponent} from './directives/index';
 
+import {ShowService} from  './services/show.service';
 
 @Component({
     moduleId: module.id,
@@ -12,5 +13,10 @@ import {FooterComponent, HeaderComponent} from './directives/index';
 })
 
 export class AppComponent {
+
+    constructor(showService : ShowService) {
+
+        (<any>window).show = showService;
+    }
 }
 
