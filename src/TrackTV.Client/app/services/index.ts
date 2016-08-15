@@ -6,3 +6,4 @@ export * from './shows.service';
 export * from './show.models';
 export * from './authenticatedService';
 export * from './show.service';
+export * from './subscription.service';

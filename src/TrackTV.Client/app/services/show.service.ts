@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from  '@angular/http';
+import {Http, Response, RequestOptions} from  '@angular/http';
 import {Observable} from  'rxjs';
 
 import {AuthenticatedService} from  './authenticatedService';
@@ -23,7 +23,14 @@ export class ShowService extends AuthenticatedService {
 
     public getShow(name : string) : Observable<ShowDetails> {
 
-        return this.http.get(this.show('/' + name))
+        let options : RequestOptions = undefined;
+
+        if (this.identity.isAuthenticated) {
+
+            options = this.authenticatedOptions;
+        }
+
+        return this.http.get(this.show('/' + name), options)
             .map((res : Response) => {
 
                 const data = res.json();

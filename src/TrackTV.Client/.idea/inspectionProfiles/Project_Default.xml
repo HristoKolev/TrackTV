@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="13">
+          <list size="14">
             <item index="0" class="java.lang.String" itemvalue="*ngif" />
             <item index="1" class="java.lang.String" itemvalue="(click)" />
             <item index="2" class="java.lang.String" itemvalue="[routerlink]" />
@@ -19,6 +19,7 @@
             <item index="10" class="java.lang.String" itemvalue="[src]" />
             <item index="11" class="java.lang.String" itemvalue="[ngswitch]" />
             <item index="12" class="java.lang.String" itemvalue="*ngswitchcase" />
+            <item index="13" class="java.lang.String" itemvalue="[(ngmodel)]" />
           </list>
         </value>
       </option>

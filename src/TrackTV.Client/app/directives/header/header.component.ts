@@ -22,7 +22,9 @@ export class HeaderComponent {
         toastr.success('Successful Logout!');
     }
 
-    public logout() {
+    public logout($event : any) {
+
+        $event.preventDefault();
 
         this.authentication.logout().subscribe(this.notify, this.notify);
     }

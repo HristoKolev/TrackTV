@@ -1,12 +1,13 @@
-import {Identity} from  './account/identity';
 import {Headers, RequestOptions} from '@angular/http';
+
+import {Identity} from  './account/identity';
 
 export abstract class AuthenticatedService {
 
     constructor(protected identity : Identity) {
     }
 
-    protected authenticatedOptions() : RequestOptions {
+    protected get authenticatedOptions() : RequestOptions {
 
         if (!this.identity.isAuthenticated) {
 

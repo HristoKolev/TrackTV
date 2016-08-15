@@ -1,5 +1,6 @@
 <nav class="navbar navbar-default">
     <div class="container" id="nav-container">
+        
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
@@ -7,6 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
+
         <div class="navbar-collapse collapse">
 
             <div class="navbar-section pull-left">
@@ -18,20 +20,20 @@
                         </a>
                     </li>
 
-                    <li *ngIf="identity.isAuthenticated">
-                        <a href="/#/calendar">Calendar</a>
-                    </li>
-                    <li *ngIf="identity.isAuthenticated">
-                        <a href="/#/myshows">My Shows</a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/shows']">Browse</a>
-                    </li>
+                    <li *ngIf="identity.isAuthenticated"><a href="/#/calendar">Calendar</a></li>
+                    <li *ngIf="identity.isAuthenticated"><a href="/#/myshows">My Shows</a></li>
+
+                    <li><a [routerLink]="['/shows']">Browse</a></li>
 
                     <li>
                         <form class="navbar-form navbar-left search-form">
-                            <input type="text" class="form-control col-lg-8" placeholder="Search" [(ngModel)]="query">
-                            <button class="btn btn-success" [routerLink]="['/shows/search', query]">Go</button>
+
+                            <input type="text" class="form-control col-lg-8"
+                                   placeholder="Search" [(ngModel)]="query">
+
+                            <button class="btn btn-success"
+                                    [routerLink]="['/shows/search', query]">Go
+                            </button>
                         </form>
                     </li>
                 </ul>
@@ -43,19 +45,22 @@
                 <form id="logoutForm" class="navbar-right" *ngIf="identity.isAuthenticated">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li *ngIf="identity.isAdmin">
-                            <a href="/#/admin/manageshows">Admin</a>
-                        </li>
+
+                        <li *ngIf="identity.isAdmin"><a href="/#/admin/manageshows">Admin</a></li>
+
                         <li *ngIf="identity.isAuthenticated">
+
                             <a href="/#/manage">
+
                                 <img gravatar-src="identity.username" alt="" title="{{ identity.username }}"
                                      gravatar-size="40"/>
+
                                 {{ identity.username }}
                             </a>
                         </li>
 
                         <li>
-                            <button (click)="logout()">Log off</button>
+                            <a href (click)="logout($event)">Log off</a>
                         </li>
                     </ul>
 
