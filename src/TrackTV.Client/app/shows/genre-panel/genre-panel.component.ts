@@ -1,12 +1,10 @@
 import {Component, Input} from  '@angular/core';
-import {ROUTER_DIRECTIVES} from  '@angular/router';
 import {Genre} from '../../services/index';
 
 @Component({
     moduleId: module.id,
     selector: 'genre-panel-component',
-    templateUrl: 'genre-panel.component.html',
-    directives: [ROUTER_DIRECTIVES]
+    templateUrl: 'genre-panel.component.html'
 })
 export class GenrePanelComponent {
 

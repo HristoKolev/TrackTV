@@ -2,13 +2,12 @@ import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
 
 import {ShowsService, NetworkShows, SimpleShow} from  '../services/index';
-import {PagedShowListComponent} from './paged-show-list/paged-show-list.component';
-
+ 
 @Component({
     moduleId: module.id,
     selector: 'network-shows-component',
     templateUrl: 'network-shows.component.html',
-    directives: [PagedShowListComponent]
+
 })
 export class NetworkShowsComponent implements OnInit {
 
@@ -21,7 +20,7 @@ export class NetworkShowsComponent implements OnInit {
     totalCount : number;
 
     networkName : string;
-    
+
     currentPage : number;
 
     pageSize : number = 24;

@@ -1,16 +1,12 @@
 import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
 import {ShowsService, SimpleShows} from  '../services/index';
-import {CapitaliseWords} from  './capitaliseWords.pipe';
-import {GenrePanelComponent} from  './genre-panel/genre-panel.component';
-import {ShowListComponent} from  './show-list/show-list.component';
 
 @Component({
     moduleId: module.id,
     selector: 'shows-component',
     templateUrl: 'shows.component.html',
-    directives: [GenrePanelComponent, ShowListComponent],
-    pipes: [CapitaliseWords]
+
 })
 export class ShowsComponent implements OnInit {
 

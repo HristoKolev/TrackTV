@@ -1,4 +1,4 @@
-﻿﻿<form novalidate class="form-horizontal" *ngIf="formActive" [ngFormModel]="registerForm" (ngSubmit)="register()">
+﻿﻿<form novalidate class="form-horizontal" *ngIf="formActive" [formGroup]="registerForm" (ngSubmit)="register()">
     <fieldset>
 
         <legend class="col-md-10 col-md-offset-2">Create New User</legend>
@@ -10,7 +10,7 @@
             <div class="col-md-10">
 
                 <input id="email" type="text" placeholder="E-mail" class="form-control"
-                       ngControl="email" #email="ngForm"/>
+                       formControlName="email"/>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
 
             <div class="col-md-10">
                 <input id="password" type="password" placeholder="Password" class="form-control"
-                       ngControl="password" #password="ngForm"/>
+                       formControlName="password"/>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
 
             <div class="col-md-10">
                 <input id="confirmation" type="password" placeholder="Confirm Password" class="form-control"
-                       ngControl="confirmPassword" #confirmPassword="ngForm"/>
+                       formControlName="confirmPassword"/>
             </div>
         </div>
 

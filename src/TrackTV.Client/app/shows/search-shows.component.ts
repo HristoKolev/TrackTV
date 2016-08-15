@@ -2,13 +2,11 @@ import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
 
 import {ShowsService, SearchShows, SimpleShow} from  '../services/index';
-import {PagedShowListComponent} from './paged-show-list/paged-show-list.component';
 
 @Component({
     moduleId: module.id,
     selector: 'search-shows-component',
     templateUrl: 'search-shows.component.html',
-    directives: [PagedShowListComponent]
 })
 export class SearchShowsComponent implements OnInit {
 

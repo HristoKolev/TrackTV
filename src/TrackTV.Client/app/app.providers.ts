@@ -12,4 +12,8 @@ binder.bindToSelf(ShowsService);
 binder.bindToSelf(ShowService);
 binder.bindToSelf(SubscriptionService);
 
+import {PaginationService} from 'ng2-pagination';
+
+binder.bindToSelf(PaginationService);
+
 export const typeBindings = binder.bindings;

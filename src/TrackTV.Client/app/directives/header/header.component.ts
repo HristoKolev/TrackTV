@@ -1,6 +1,5 @@
 import {Component} from  '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
-
+ 
 import * as toastr from 'toastr';
 
 import {Identity, Authentication} from  '../../services/index';
@@ -8,8 +7,7 @@ import {Identity, Authentication} from  '../../services/index';
 @Component({
     moduleId: module.id,
     selector: 'header-component',
-    templateUrl: 'header.component.html',
-    directives: [ROUTER_DIRECTIVES]
+    templateUrl: 'header.component.html'
 })
 export class HeaderComponent {
 

@@ -1,5 +1,5 @@
 import {Component} from  '@angular/core';
-import {Control, ControlGroup, FormBuilder, Validators} from  '@angular/common';
+import {FormGroup, FormControl, Validators} from  '@angular/forms';
 
 import * as toastr from 'toastr';
 
@@ -12,20 +12,21 @@ import {Authentication, LoginUser, LoginError} from "../../services/index";
 })
 export class LoginComponent {
 
-    loginForm : ControlGroup;
+    loginForm : FormGroup;
 
     formActive : boolean = true;
 
-    constructor(private formBuilder : FormBuilder, private authentication : Authentication) {
+    constructor(private authentication : Authentication) {
 
         this.createForm();
     }
 
     private createForm() : void {
 
-        this.loginForm = this.formBuilder.group({
-            username: new Control(null, Validators.compose([Validators.required, Validators.minLength(6)])),
-            password: new Control(null, Validators.compose([Validators.required, Validators.minLength(6)])),
+        this.loginForm = new FormGroup({
+
+            username: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
         });
     }
 
@@ -63,8 +64,8 @@ export class LoginComponent {
     login() {
 
         let user = new LoginUser();
-        user.username = this.loginForm.find('username').value;
-        user.password = this.loginForm.find('password').value;
+        user.username = this.loginForm.get('username').value;
+        user.password = this.loginForm.get('password').value;
 
         this.authentication.login(user)
             .subscribe(this.notifyLoginSuccess.bind(this), this.notifyLoginError.bind(this));

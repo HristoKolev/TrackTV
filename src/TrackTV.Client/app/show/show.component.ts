@@ -1,14 +1,12 @@
 import {Component, OnInit} from  '@angular/core';
-import {ActivatedRoute, ROUTER_DIRECTIVES} from  '@angular/router';
+import {ActivatedRoute} from  '@angular/router';
 import {ShowService, ShowDetails, Identity, SubscriptionService} from  '../services/index';
-import {DoubleDigit, PremieredDate, Querify, WeekDayName} from  './pipes/index';
 
 @Component({
     moduleId: module.id,
     selector: 'show-component',
     templateUrl: 'show.component.html',
-    pipes: [DoubleDigit, PremieredDate, Querify, WeekDayName],
-    directives: [ROUTER_DIRECTIVES]
+
 })
 export class ShowComponent implements OnInit {
 

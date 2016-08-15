@@ -1,6 +1,6 @@
 import {Component} from  '@angular/core';
-import {Control, ControlGroup, FormBuilder, Validators} from  '@angular/common';
 import {Router} from  '@angular/router';
+import {FormGroup, FormControl, Validators} from  '@angular/forms';
 
 import * as toastr from 'toastr';
 
@@ -13,12 +13,11 @@ import {Authentication, RegisterUser, RegisterError} from "../../services/index"
 })
 export class RegisterComponent {
 
-    registerForm : ControlGroup;
+    registerForm : FormGroup;
 
     formActive : boolean = true;
 
     constructor(private router : Router,
-                private formBuilder : FormBuilder,
                 private authentication : Authentication) {
 
         this.createForm();
@@ -26,10 +25,10 @@ export class RegisterComponent {
 
     private createForm() : void {
 
-        this.registerForm = this.formBuilder.group({
-            email: new Control(null, Validators.compose([Validators.required, Validators.minLength(6)])),
-            password: new Control(null, Validators.compose([Validators.required, Validators.minLength(6)])),
-            confirmPassword: new Control(null, Validators.compose([Validators.required, Validators.minLength(6)])),
+        this.registerForm = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            confirmPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
         });
     }
 
@@ -68,9 +67,9 @@ export class RegisterComponent {
     register() {
 
         let user = new RegisterUser();
-        user.email = this.registerForm.find('email').value;
-        user.password = this.registerForm.find('password').value;
-        user.confirmPassword = this.registerForm.find('confirmPassword').value;
+        user.email = this.registerForm.get('email').value;
+        user.password = this.registerForm.get('password').value;
+        user.confirmPassword = this.registerForm.get('confirmPassword').value;
 
         this.authentication.signup(user)
             .subscribe(this.notifyLoginSuccess.bind(this), this.notifyRegisterError.bind(this));
