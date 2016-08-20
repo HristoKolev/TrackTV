@@ -1,4 +1,4 @@
-import {HeaderComponent, FooterComponent} from  './directives/index';
+import {HeaderComponent, FooterComponent} from  './layout/index';
 import {LoginComponent, RegisterComponent} from  './account/index';
 import {ShowComponent} from  './show/show.component';
 
