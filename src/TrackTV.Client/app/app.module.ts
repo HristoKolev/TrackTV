@@ -1,13 +1,13 @@
-import {NgModule}      from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule}  from '@angular/router';
-import {HttpModule}  from '@angular/http';
+import {RouterModule} from '@angular/router';
+import {HttpModule} from '@angular/http';
 import {FormsModule, ReactiveFormsModule} from  '@angular/forms';
 
-import {AppComponent}  from './app.component';
+import {AppComponent} from './app.component';
 
 import {typeBindings} from './app.providers';
-import {routes} from  './app.routes';
+import {routes} from './app.routes';
 import {appDeclarations} from  './app.declarations';
 
 @NgModule({
