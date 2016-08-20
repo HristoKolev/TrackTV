@@ -1,4 +1,4 @@
-import {Component} from  '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -6,5 +6,4 @@ import {Component} from  '@angular/core';
     templateUrl: 'my-shows.component.html',
 })
 export class MyShowsComponent {
-
 }
