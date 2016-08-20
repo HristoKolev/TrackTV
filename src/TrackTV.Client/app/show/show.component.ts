@@ -6,7 +6,7 @@ import {ShowService, ShowDetails, Identity, SubscriptionService} from  '../servi
     moduleId: module.id,
     selector: 'show-component',
     templateUrl: 'show.component.html',
-
+    styleUrls: ['show.component.css']
 })
 export class ShowComponent implements OnInit {
 
