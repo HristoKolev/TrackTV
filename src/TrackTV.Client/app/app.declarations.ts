@@ -1,6 +1,7 @@
 import {HeaderComponent, FooterComponent} from  './layout/index';
 import {LoginComponent, RegisterComponent} from  './account/index';
 import {ShowComponent} from  './show/show.component';
+import {MyShowsComponent} from  './my-shows/my-shows.component';
 
 import {
     ShowsComponent,
@@ -26,7 +27,8 @@ const appComponents : any[] = [
     ShowsComponent, NetworkShowsComponent, SearchShowsComponent,
     ShortShowComponent,
     GenrePanelComponent, PagedShowListComponent,
-    ShowListComponent
+    ShowListComponent,
+    MyShowsComponent
 ];
 
 const appPipes : any[] = [
