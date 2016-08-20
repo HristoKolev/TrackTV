@@ -12,7 +12,10 @@ import {
     ShowListComponent
 } from  './shows/index';
 
-import {DoubleDigit, PremieredDate, Querify, WeekDayName} from  './show/pipes/index';
+import {DoubleDigit} from  './show/pipes/doubleDigit.pipe';
+import {PremieredDate} from  './show/pipes/premieredDate.pipe';
+import {Querify} from  './show/pipes/querify.pipe';
+import {WeekDayName} from  './show/pipes/weekDayName.pipe';
 import {CapitaliseWords} from  './shows/capitaliseWords.pipe';
 
 const appComponents : any[] = [
@@ -45,4 +48,3 @@ const libPipes : any[] = [
 ];
 
 export const appDeclarations : any[] = [...appComponents, ...appPipes, ...libComponents, ...libPipes];
-
