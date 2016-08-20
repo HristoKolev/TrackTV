@@ -2,11 +2,8 @@ import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {AuthenticatedService} from  './authenticatedService';
-import {Identity} from  './account/identity';
-import {ApiPath} from  './apiPath';
-import {ShowDetails} from  './show.models';
-
+import {AuthenticatedService, Identity, ApiPath, ShowDetails} from  '../services/index';
+ 
 @Injectable()
 export class ShowService extends AuthenticatedService {
 

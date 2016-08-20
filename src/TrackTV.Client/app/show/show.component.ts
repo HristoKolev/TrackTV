@@ -1,6 +1,7 @@
 import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
-import {ShowService, ShowDetails, Identity, SubscriptionService} from  '../services/index';
+import {ShowDetails, Identity, SubscriptionService} from  '../services/index';
+import {ShowService} from  './show.service';
 
 @Component({
     moduleId: module.id,
