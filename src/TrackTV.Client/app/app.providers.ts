@@ -1,6 +1,7 @@
 import {TypeBinder, PersistentContainer, LocalStorageContainer} from './shared/index';
 import {ApiPath, Identity, Authentication, ShowsService, SubscriptionService} from './services/index';
 import {ShowService} from  './show/show.service';
+import {MyShowsService} from  './my-shows/my-shows.service';
 
 const binder = new TypeBinder();
 
@@ -12,6 +13,7 @@ binder.bindToSelf(Authentication);
 binder.bindToSelf(ShowsService);
 binder.bindToSelf(ShowService);
 binder.bindToSelf(SubscriptionService);
+binder.bindToSelf(MyShowsService);
 
 import {PaginationService} from 'ng2-pagination';
 
