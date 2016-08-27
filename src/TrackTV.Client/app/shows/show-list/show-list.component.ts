@@ -8,5 +8,6 @@ import {SimpleShow} from '../../services/index';
 })
 export class ShowListComponent {
 
-    @Input() shows : SimpleShow[];
+    @Input()
+    private shows : SimpleShow[];
 }

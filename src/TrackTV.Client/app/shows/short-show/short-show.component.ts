@@ -8,5 +8,6 @@ import {SimpleShow} from '../../services/index';
 })
 export class ShortShowComponent {
 
-    @Input() show : SimpleShow;
+    @Input()
+    private show : SimpleShow;
 }

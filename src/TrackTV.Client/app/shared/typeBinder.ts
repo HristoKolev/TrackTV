@@ -2,7 +2,7 @@ export class TypeBinder {
 
     public bindings : any[] = [];
 
-    bind(interfaceObject : any, implementationObject : any) : void {
+    public bind(interfaceObject : any, implementationObject : any) : void {
 
         if (!interfaceObject) {
 
@@ -17,7 +17,7 @@ export class TypeBinder {
         this.bindings.push({provide: interfaceObject, useClass: implementationObject})
     }
 
-    bindToSelf(obj : any) : void {
+    public bindToSelf(obj : any) : void {
 
         this.bind(obj, obj)
     }

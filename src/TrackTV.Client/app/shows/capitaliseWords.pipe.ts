@@ -3,7 +3,7 @@ import {Pipe, PipeTransform} from  '@angular/core';
 @Pipe({name: 'capitaliseWords'})
 export class CapitaliseWords implements PipeTransform {
 
-    transform(value : string, ...args : any[]) : string {
+    public transform(value : string, ...args : any[]) : string {
 
         let lastCharacter : string = '';
 

@@ -8,5 +8,6 @@ import {Genre} from '../../services/index';
 })
 export class GenrePanelComponent {
 
-    @Input() genres : Genre[];
+    @Input()
+    private genres : Genre[];
 }

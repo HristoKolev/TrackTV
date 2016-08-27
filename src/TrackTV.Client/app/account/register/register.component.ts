@@ -13,9 +13,9 @@ import {Authentication, RegisterUser, RegisterError} from "../../services/index"
 })
 export class RegisterComponent {
 
-    registerForm : FormGroup;
+    private registerForm : FormGroup;
 
-    formActive : boolean = true;
+    private formActive : boolean = true;
 
     constructor(private router : Router,
                 private authentication : Authentication) {
@@ -64,7 +64,7 @@ export class RegisterComponent {
         toastr.error(message);
     }
 
-    register() {
+    private  register() {
 
         let user = new RegisterUser();
         user.email = this.registerForm.get('email').value;

@@ -11,7 +11,7 @@ import {Identity, Authentication} from  '../../services/index';
 })
 export class HeaderComponent {
 
-    constructor(public identity : Identity,
+    constructor(private identity : Identity,
                 private authentication : Authentication) {
     }
 
@@ -20,7 +20,7 @@ export class HeaderComponent {
         toastr.success('Successful Logout!');
     }
 
-    public logout($event : any) {
+    private logout($event : any) {
 
         $event.preventDefault();
 

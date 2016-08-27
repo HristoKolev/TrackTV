@@ -12,9 +12,9 @@ import {Authentication, LoginUser, LoginError} from "../../services/index";
 })
 export class LoginComponent {
 
-    loginForm : FormGroup;
+    private loginForm : FormGroup;
 
-    formActive : boolean = true;
+    private formActive : boolean = true;
 
     constructor(private authentication : Authentication) {
 
@@ -61,7 +61,7 @@ export class LoginComponent {
         setTimeout(() => this.formActive = true, 0);
     }
 
-    login() {
+    private login() {
 
         let user = new LoginUser();
         user.username = this.loginForm.get('username').value;

@@ -1,19 +1,21 @@
-import {HeaderComponent, FooterComponent} from  './layout/index';
-import {LoginComponent, RegisterComponent} from  './account/index';
+import {HeaderComponent} from  './layout/header/header.component';
+import {FooterComponent} from  './layout/footer/footer.component';
+
+import {LoginComponent} from  './account/login/login.component';
+import {RegisterComponent} from  './account/register/register.component';
+
 import {ShowComponent} from  './show/show.component';
 import {MyShowsComponent} from  './my-shows/my-shows.component';
 import {PagedMyShowListComponent} from  './my-shows/paged-my-show-list/paged-my-show-list.component';
 import {MyEpisodeComponent} from "./my-shows/my-episode/my-episode.component";
 
-import {
-    ShowsComponent,
-    NetworkShowsComponent,
-    SearchShowsComponent,
-    ShortShowComponent,
-    GenrePanelComponent,
-    PagedShowListComponent,
-    ShowListComponent
-} from  './shows/index';
+import {ShowsComponent} from  './shows/shows.component';
+import {NetworkShowsComponent} from  './shows/network-shows.component';
+import {SearchShowsComponent} from  './shows/search-shows.component';
+import {ShortShowComponent} from  './shows/short-show/short-show.component';
+import {GenrePanelComponent} from  './shows/genre-panel/genre-panel.component';
+import {PagedShowListComponent} from  './shows/paged-show-list/paged-show-list.component';
+import {ShowListComponent} from  './shows/show-list/show-list.component';
 
 import {DoubleDigit} from  './show/pipes/doubleDigit.pipe';
 import {PremieredDate} from  './show/pipes/premieredDate.pipe';

@@ -10,15 +10,15 @@ import {ShowsService, SimpleShows} from  '../services/index';
 })
 export class ShowsComponent implements OnInit {
 
-    shows : SimpleShows;
+    private shows : SimpleShows;
 
-    genreName : string;
+    private genreName : string;
 
     constructor(private showsService : ShowsService,
                 private activatedRoute : ActivatedRoute) {
     }
 
-    ngOnInit() : void {
+    public  ngOnInit() : void {
 
         this.activatedRoute.params.subscribe(params => {
 

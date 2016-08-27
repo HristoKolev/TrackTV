@@ -13,7 +13,7 @@ export class WeekDayName implements PipeTransform {
         'Sunday'
     ];
 
-    transform(number : number, ...args : any[]) : string {
+    public transform(number : number, ...args : any[]) : string {
 
         return this.daysOfWeek[number - 1];
     }

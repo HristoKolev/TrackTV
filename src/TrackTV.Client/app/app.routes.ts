@@ -1,9 +1,13 @@
 import {RouterConfig} from '@angular/router';
 
-import {LoginComponent, RegisterComponent} from  './account/index';
-import {ShowsComponent, NetworkShowsComponent, SearchShowsComponent} from  './shows/index';
+import {LoginComponent} from  './account/login/login.component';
+import {RegisterComponent} from  './account/register/register.component';
+
+import {ShowsComponent} from './shows/shows.component';
+import {NetworkShowsComponent} from  './shows/network-shows.component';
+import {SearchShowsComponent} from  './shows/search-shows.component';
 import {ShowComponent} from  './show/show.component';
-import {MyShowsComponent} from  './my-shows/my-shows.component';
+import {MyShowsComponent} from './my-shows/my-shows.component';
 
 export const routes : RouterConfig = [
 

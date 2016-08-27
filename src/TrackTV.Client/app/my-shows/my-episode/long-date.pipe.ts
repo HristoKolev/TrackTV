@@ -3,7 +3,7 @@ import {Pipe, PipeTransform} from  '@angular/core';
 @Pipe({name: 'longDate'})
 export class LongDate implements PipeTransform {
 
-    transform(date : Date, ...args : any[]) : any {
+    transform(date : Date, ...args : any[]) : string {
 
         if (!(date instanceof Date)) {
 

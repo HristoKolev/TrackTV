@@ -18,12 +18,12 @@ export class SubscriptionService extends AuthenticatedService {
 
     private subscription : (path : string) => string = this.apiPath.service('subscription');
 
-    subscribe(id : number) : Observable<Response> {
+    public subscribe(id : number) : Observable<Response> {
 
         return this.http.post(this.subscription('/subscribe/' + id), undefined, this.authenticatedOptions);
     }
 
-    unsubscribe(id : number) : Observable<Response> {
+    public unsubscribe(id : number) : Observable<Response> {
 
         return this.http.post(this.subscription('/unsubscribe/' + id), undefined, this.authenticatedOptions);
     }

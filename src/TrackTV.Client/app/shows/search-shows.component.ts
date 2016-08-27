@@ -14,17 +14,17 @@ export class SearchShowsComponent implements OnInit {
                 private activatedRoute : ActivatedRoute) {
     }
 
-    shows : SimpleShow[];
+    private shows : SimpleShow[];
 
-    totalCount : number;
+    private totalCount : number;
 
-    query : string;
+    private query : string;
 
-    currentPage : number;
+    private currentPage : number;
 
-    pageSize : number = 24;
+    private pageSize : number = 24;
 
-    populateShows(page : number = 1) {
+    private populateShows(page : number = 1) {
 
         this.currentPage = page;
 
@@ -41,7 +41,7 @@ export class SearchShowsComponent implements OnInit {
             });
     }
 
-    ngOnInit() : void {
+    public ngOnInit() : void {
 
         this.populateShows();
     }

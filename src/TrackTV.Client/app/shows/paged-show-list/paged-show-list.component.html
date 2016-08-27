@@ -3,7 +3,7 @@
     <div class="row">
 
         <short-show-component
-                *ngFor="let show of shows | paginate: {itemsPerPage: pageSize, currentPage: currentPage, totalItems:totalCount}"
+                *ngFor="let show of shows | paginate: paginationConfig"
                 class="text-center col-md-3 show-small"
                 [show]="show">
 

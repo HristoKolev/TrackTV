@@ -9,17 +9,31 @@ import {SimpleShow} from  '../../services/index';
 })
 export class PagedShowListComponent {
 
-    @Input() shows : SimpleShow[];
+    @Input()
+    private shows : SimpleShow[];
 
-    @Input() totalCount : number;
+    @Input()
+    private totalCount : number;
 
-    @Input() currentPage : number;
+    @Input()
+    private currentPage : number;
 
-    @Input() pageSize : number;
+    @Input()
+    private pageSize : number;
 
-    @Output() pageChange : EventEmitter<number> = new EventEmitter<number>();
+    @Output()
+    private pageChange : EventEmitter<number> = new EventEmitter<number>();
 
-    changed(page : number) {
+    private get paginationConfig() {
+
+        return {
+            itemsPerPage: this.pageSize,
+            currentPage: this.currentPage,
+            totalItems: this.totalCount
+        };
+    }
+
+    private changed(page : number) {
 
         this.pageChange.emit(page);
     }

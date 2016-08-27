@@ -4,7 +4,7 @@ import * as moment from 'moment';
 @Pipe({name: 'premieredDate'})
 export class PremieredDate implements PipeTransform {
 
-    transform(date : Date, ...args : any[]) : string {
+    public transform(date : Date, ...args : any[]) : string {
 
         if (date instanceof String) {
 

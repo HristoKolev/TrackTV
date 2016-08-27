@@ -2,7 +2,7 @@ import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
 
 import {ShowsService, NetworkShows, SimpleShow} from  '../services/index';
- 
+
 @Component({
     moduleId: module.id,
     selector: 'network-shows-component',
@@ -15,17 +15,17 @@ export class NetworkShowsComponent implements OnInit {
                 private activatedRoute : ActivatedRoute) {
     }
 
-    shows : SimpleShow[];
+    private shows : SimpleShow[];
 
-    totalCount : number;
+    private totalCount : number;
 
-    networkName : string;
+    private networkName : string;
 
-    currentPage : number;
+    private currentPage : number;
 
-    pageSize : number = 24;
+    private pageSize : number = 24;
 
-    populateShows(page : number = 1) {
+    private populateShows(page : number = 1) {
 
         this.currentPage = page;
 
@@ -42,7 +42,7 @@ export class NetworkShowsComponent implements OnInit {
             });
     }
 
-    ngOnInit() : any {
+    public ngOnInit() : any {
 
         this.populateShows();
     }
