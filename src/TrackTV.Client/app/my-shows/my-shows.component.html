@@ -1,0 +1,39 @@
+﻿﻿<h1 *ngIf="continuing" class="text-center show-group-title">
+    Current Shows ({{ continuing.count }})
+</h1>
+
+<paged-my-show-list-component
+        *ngIf="continuing"
+
+        [pageSize]="pageSize"
+        (subscribe)="subscribe($event)"
+        (unsubscribe)="unsubscribe($event)"
+        [showNextEpisode]="true"
+
+        [shows]="continuing.shows"
+        [totalCount]="continuing.count"
+        [currentPage]="currentContinuingPage"
+        [paginationId]="'continuingShows'"
+        (pageChange)="getContinuing($event)">
+
+</paged-my-show-list-component>
+
+<h1 *ngIf="ended" class="text-center show-group-title">
+    <span class="ended-word">Ended</span> Shows({{ ended.count }})
+</h1>
+
+<paged-my-show-list-component
+        *ngIf="ended"
+
+        [pageSize]="pageSize"
+        (subscribe)="subscribe($event)"
+        (unsubscribe)="unsubscribe($event)"
+        [showNextEpisode]="true"
+
+        [shows]="ended.shows"
+        [totalCount]="ended.count"
+        [currentPage]="currentEndedPage"
+        [paginationId]="'endShows'"
+        (getEnded)="getContinuing($event)">
+
+</paged-my-show-list-component>

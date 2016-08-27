@@ -21,7 +21,7 @@
                     </li>
 
                     <li *ngIf="identity.isAuthenticated"><a href="/#/calendar">Calendar</a></li>
-                    <li *ngIf="identity.isAuthenticated"><a href="/#/myshows">My Shows</a></li>
+                    <li *ngIf="identity.isAuthenticated"><a [routerLink]="['/myshows']">My Shows</a></li>
 
                     <li><a [routerLink]="['/shows']">Browse</a></li>
 

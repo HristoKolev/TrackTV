@@ -1,0 +1,66 @@
+﻿﻿
+<div *ngIf="shows">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="col-md-3 danger">Show</th>
+                <th class="col-md-3 danger">Last Episode</th>
+                <th class="col-md-3 danger">
+                    <span *ngIf="showNextEpisode">Next Episode</span></th>
+                <th class="col-md-3 danger"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let show of shows | paginate: paginationConfig">
+
+                <td class="col-md-3">
+
+                    <strong class="my-show-title">
+
+                        <a [routerLink]="['/show', show.userFriendlyId]">{{ show.name }}</a>
+                    </strong>
+                </td>
+
+                <td class="col-md-3">
+
+                    <span *ngIf="show.lastEpisode"
+                          tt-my-episode data-episode="show.lastEpisode"></span>
+                </td>
+
+                <td class="col-md-3">
+
+                    <span *ngIf="showNextEpisode && show.nextEpisode"
+                          tt-my-episode
+                          data-episode="show.nextEpisode"></span>
+                </td>
+
+
+                <td class="col-md-3">
+                    <button *ngIf="!show.unsubscribed"
+                            (click)="unsubscribeClicked(show)"
+                            class="btn btn-danger my-show-unsubscribe-button btn-subscribtion">
+                        Unsubscribe
+                    </button>
+
+                    <button *ngIf="show.unsubscribed"
+                            (click)="subscribeClicked(show)"
+                            class="btn btn-danger btn-subscribtion">
+                        Undo
+                    </button>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+    <pagination-controls
+            (pageChange)="pageChanged($event)"
+            maxSize="7"
+            directionLinks="true"
+            class="text-center"
+            id="{{paginationId}}">
+
+    </pagination-controls>
+</div>
