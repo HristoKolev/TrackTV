@@ -24,15 +24,14 @@
 
                 <td class="col-md-3">
 
-                    <span *ngIf="show.lastEpisode"
-                          tt-my-episode data-episode="show.lastEpisode"></span>
+                    <my-episode-component *ngIf="show.lastEpisode"
+                                          [episode]="show.lastEpisode"></my-episode-component>
                 </td>
 
                 <td class="col-md-3">
 
-                    <span *ngIf="showNextEpisode && show.nextEpisode"
-                          tt-my-episode
-                          data-episode="show.nextEpisode"></span>
+                    <my-episode-component *ngIf="showNextEpisode && show.nextEpisode"
+                                          [episode]="show.nextEpisode"></my-episode-component>
                 </td>
 
 
@@ -60,7 +59,8 @@
             maxSize="7"
             directionLinks="true"
             class="text-center"
-            id="{{paginationId}}">
+            id="{{paginationId}}"
+            autoHide="true">
 
     </pagination-controls>
 </div>

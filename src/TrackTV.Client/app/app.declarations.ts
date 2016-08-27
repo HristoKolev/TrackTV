@@ -3,6 +3,7 @@ import {LoginComponent, RegisterComponent} from  './account/index';
 import {ShowComponent} from  './show/show.component';
 import {MyShowsComponent} from  './my-shows/my-shows.component';
 import {PagedMyShowListComponent} from  './my-shows/paged-my-show-list/paged-my-show-list.component';
+import {MyEpisodeComponent} from "./my-shows/my-episode/my-episode.component";
 
 import {
     ShowsComponent,
@@ -20,6 +21,10 @@ import {Querify} from  './show/pipes/querify.pipe';
 import {WeekDayName} from  './show/pipes/weekDayName.pipe';
 import {CapitaliseWords} from  './shows/capitaliseWords.pipe';
 
+import {LongDate} from  './my-shows/my-episode/long-date.pipe';
+
+import {PaginatePipe, PaginationControlsCmp} from 'ng2-pagination';
+
 const appComponents : any[] = [
 
     HeaderComponent, FooterComponent,
@@ -30,16 +35,16 @@ const appComponents : any[] = [
     GenrePanelComponent, PagedShowListComponent,
     ShowListComponent,
     MyShowsComponent,
-    PagedMyShowListComponent
+    PagedMyShowListComponent,
+    MyEpisodeComponent
 ];
 
 const appPipes : any[] = [
 
     DoubleDigit, PremieredDate, Querify, WeekDayName,
-    CapitaliseWords
+    CapitaliseWords,
+    LongDate
 ];
-
-import {PaginatePipe, PaginationControlsCmp} from 'ng2-pagination';
 
 const libComponents : any[] = [
 
