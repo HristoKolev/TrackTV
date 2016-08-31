@@ -9,6 +9,8 @@ import {SearchShowsComponent} from  './shows/search-shows.component';
 import {ShowComponent} from  './show/show.component';
 import {MyShowsComponent} from './my-shows/my-shows.component';
 import {AuthGuard} from "./services/AuthGuard.service";
+import {LogoutComponent} from  './account/logout/logout.component';
+import {LogoutGuard} from  './account/logout/logout-guard.service';
 
 export const routes : RouterConfig = [
 
@@ -21,4 +23,5 @@ export const routes : RouterConfig = [
     {path: 'shows/search/:query', component: SearchShowsComponent},
     {path: 'show/:show', component: ShowComponent},
     {path: 'myshows', component: MyShowsComponent, canActivate: [AuthGuard]},
+    {path: 'logout', component: LogoutComponent, canActivate: [LogoutGuard]}
 ];

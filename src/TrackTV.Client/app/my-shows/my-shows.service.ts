@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {ApiPath, Authentication} from '../services/index';
+import {ApiPath, Identity} from '../services/index';
 import {MyShows} from  './my-shows.models';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class MyShowsService {
 
     constructor(private http : Http,
                 private apiPath : ApiPath,
-                private  authentication : Authentication) {
+                private  identity : Identity) {
 
     }
 
@@ -18,13 +18,13 @@ export class MyShowsService {
 
     continuing(page = 1) : Observable<MyShows> {
 
-        return this.http.get(this.myShows('/continuing/' + page), this.authentication.authenticatedOptions)
+        return this.http.get(this.myShows('/continuing/' + page), this.identity.authenticatedOptions)
             .map(this.processResponse);
     }
 
     ended(page = 1) : Observable<MyShows> {
 
-        return this.http.get(this.myShows('/ended/' + page), this.authentication.authenticatedOptions)
+        return this.http.get(this.myShows('/ended/' + page), this.identity.authenticatedOptions)
             .map(this.processResponse);
     }
 

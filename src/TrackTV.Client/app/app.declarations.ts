@@ -16,6 +16,7 @@ import {ShortShowComponent} from  './shows/short-show/short-show.component';
 import {GenrePanelComponent} from  './shows/genre-panel/genre-panel.component';
 import {PagedShowListComponent} from  './shows/paged-show-list/paged-show-list.component';
 import {ShowListComponent} from  './shows/show-list/show-list.component';
+import {LogoutComponent} from  './account/logout/logout.component';
 
 import {DoubleDigit} from  './show/pipes/doubleDigit.pipe';
 import {PremieredDate} from  './show/pipes/premieredDate.pipe';
@@ -38,7 +39,8 @@ const appComponents : any[] = [
     ShowListComponent,
     MyShowsComponent,
     PagedMyShowListComponent,
-    MyEpisodeComponent
+    MyEpisodeComponent,
+    LogoutComponent
 ];
 
 const appPipes : any[] = [

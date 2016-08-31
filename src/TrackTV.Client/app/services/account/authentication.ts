@@ -72,7 +72,7 @@ export class Authentication {
             });
     }
 
-    public logout() {
+    public logout() : Observable<Response> {
 
         return this.http.post(this.account('/logout'), undefined, this.getAuthenticationOptions())
             .do((response : Response) => this.identity.removeUser())
@@ -83,18 +83,5 @@ export class Authentication {
 
                 return Observable.throw(error.json())
             });
-    }
-
-    public get authenticatedOptions() : RequestOptions {
-
-        if (!this.identity.isAuthenticated) {
-
-            throw new Error('The user is not authenticated.');
-        }
-
-        return new RequestOptions({
-
-            headers: new Headers(this.identity.addAuthorizationHeader())
-        });
     }
 }

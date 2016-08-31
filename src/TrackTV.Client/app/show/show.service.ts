@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {Authentication, Identity, ApiPath} from  '../services/index';
+import {Identity, ApiPath} from  '../services/index';
 import {ShowDetails} from  './show.models';
 
 @Injectable()
@@ -10,8 +10,7 @@ export class ShowService {
 
     constructor(private identity : Identity,
                 private apiPath : ApiPath,
-                private http : Http,
-                private authentication : Authentication) {
+                private http : Http) {
 
     }
 
@@ -39,7 +38,7 @@ export class ShowService {
 
         if (this.identity.isAuthenticated) {
 
-            options = this.authentication.authenticatedOptions;
+            options = this.identity.authenticatedOptions;
         }
 
         return this.http.get(this.show('/' + name), options)

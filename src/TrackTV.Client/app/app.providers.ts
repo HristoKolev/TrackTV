@@ -4,6 +4,7 @@ import {ShowService} from './show/show.service';
 import {MyShowsService} from './my-shows/my-shows.service';
 import {AuthGuard} from './services/AuthGuard.service';
 import {ShowsService} from './shows/shows.service';
+import {LogoutGuard} from './account/logout/logout-guard.service';
 
 const binder = new TypeBinder();
 
@@ -17,8 +18,10 @@ binder.bindToSelf(ShowService);
 binder.bindToSelf(SubscriptionService);
 binder.bindToSelf(MyShowsService);
 binder.bindToSelf(AuthGuard);
+binder.bindToSelf(LogoutGuard);
 
 import {PaginationService} from 'ng2-pagination';
+
 
 binder.bindToSelf(PaginationService);
 

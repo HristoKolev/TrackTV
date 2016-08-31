@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {RequestOptions, Headers} from  '@angular/http';
 
 import {PersistentContainer, PersistentContainerKey} from '../../shared/index';
 
@@ -15,7 +16,7 @@ export interface User {
 export class Identity {
 
     constructor(container : PersistentContainer<User>) {
- 
+
         this.storage = new PersistentContainerKey(container, 'user');
     }
 
@@ -107,5 +108,18 @@ export class Identity {
         } else {
             return false;
         }
+    }
+
+    public get authenticatedOptions() : RequestOptions {
+
+        if (!this.isAuthenticated) {
+
+            throw new Error('The user is not authenticated.');
+        }
+
+        return new RequestOptions({
+
+            headers: new Headers(this.addAuthorizationHeader())
+        });
     }
 }
