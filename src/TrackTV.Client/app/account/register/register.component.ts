@@ -4,7 +4,8 @@ import {FormGroup, FormControl, Validators} from  '@angular/forms';
 
 import * as toastr from 'toastr';
 
-import {Authentication, RegisterUser, RegisterError} from "../../services/index";
+import {Authentication} from '../authentication.service';
+import {RegisterUser, RegisterError} from "../authentication.models";
 
 @Component({
     moduleId: module.id,

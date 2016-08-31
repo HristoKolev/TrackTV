@@ -4,7 +4,8 @@ import {Router} from  '@angular/router';
 
 import * as toastr from 'toastr';
 
-import {Authentication, LoginUser, LoginError} from "../../services/index";
+import {Authentication} from '../authentication.service';
+import {LoginUser, LoginError} from '../authentication.models';
 
 @Component({
     moduleId: module.id,

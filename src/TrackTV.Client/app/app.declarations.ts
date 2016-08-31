@@ -1,9 +1,6 @@
 import {HeaderComponent} from  './layout/header/header.component';
 import {FooterComponent} from  './layout/footer/footer.component';
 
-import {LoginComponent} from  './account/login/login.component';
-import {RegisterComponent} from  './account/register/register.component';
-
 import {ShowComponent} from  './show/show.component';
 import {MyShowsComponent} from  './my-shows/my-shows.component';
 import {PagedMyShowListComponent} from  './my-shows/paged-my-show-list/paged-my-show-list.component';
@@ -16,7 +13,6 @@ import {ShortShowComponent} from  './shows/short-show/short-show.component';
 import {GenrePanelComponent} from  './shows/genre-panel/genre-panel.component';
 import {PagedShowListComponent} from  './shows/paged-show-list/paged-show-list.component';
 import {ShowListComponent} from  './shows/show-list/show-list.component';
-import {LogoutComponent} from  './account/logout/logout.component';
 
 import {DoubleDigit} from  './show/pipes/doubleDigit.pipe';
 import {PremieredDate} from  './show/pipes/premieredDate.pipe';
@@ -31,7 +27,7 @@ import {PaginatePipe, PaginationControlsCmp} from 'ng2-pagination';
 const appComponents : any[] = [
 
     HeaderComponent, FooterComponent,
-    LoginComponent, RegisterComponent,
+
     ShowComponent,
     ShowsComponent, NetworkShowsComponent, SearchShowsComponent,
     ShortShowComponent,
@@ -40,7 +36,7 @@ const appComponents : any[] = [
     MyShowsComponent,
     PagedMyShowListComponent,
     MyEpisodeComponent,
-    LogoutComponent
+
 ];
 
 const appPipes : any[] = [

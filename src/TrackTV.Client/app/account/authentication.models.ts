@@ -28,6 +28,6 @@ export enum  RegisterError{
     ServerError = 1,
 
     InvalidEmail,
-        
+
     InvalidPassword
 }

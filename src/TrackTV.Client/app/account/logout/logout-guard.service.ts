@@ -4,7 +4,9 @@ import {Observable} from  'rxjs';
 
 import * as toastr from 'toastr';
 
-import {Authentication, Identity} from  '../../services/index';
+import {Authentication} from '../authentication.service';
+
+import {Identity} from  '../../services/index';
 
 @Injectable()
 export class LogoutGuard implements CanActivate {

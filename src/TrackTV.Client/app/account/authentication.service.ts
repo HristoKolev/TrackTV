@@ -4,9 +4,9 @@ import {Http, Headers, RequestOptions, Response} from '@angular/http';
 
 import * as $ from 'jquery';
 
-import {Identity} from "./identity";
-import {ApiPath} from "../apiPath";
-import {RegisterUser, RegisterError, LoginUser, LoginError} from './authenticationModels';
+import {Identity} from "./../services/account/identity";
+import {ApiPath} from "../services/apiPath";
+import {RegisterUser, RegisterError, LoginUser, LoginError} from './authentication.models';
 
 @Injectable()
 export class Authentication {
