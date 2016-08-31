@@ -2,21 +2,36 @@ import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {AuthenticatedService, Identity, ApiPath, ShowDetails} from  '../services/index';
- 
+import {Authentication, Identity, ApiPath} from  '../services/index';
+import {ShowDetails} from  './show.models';
+
 @Injectable()
-export class ShowService extends AuthenticatedService {
+export class ShowService {
 
-    constructor(identity : Identity,
+    constructor(private identity : Identity,
                 private apiPath : ApiPath,
-                private http : Http) {
+                private http : Http,
+                private authentication : Authentication) {
 
-        super(identity);
     }
 
     private show : (path : string) => string = this.apiPath.service('show');
 
     private baseUrl : string = this.apiPath.path();
+
+    private processData(res : Response) {
+
+        const data = res.json();
+
+        data.banner = this.baseUrl + data.banner;
+
+        if (data.firstAired) {
+
+            data.firstAired = new Date(data.firstAired);
+        }
+
+        return data as ShowDetails;
+    }
 
     public getShow(name : string) : Observable<ShowDetails> {
 
@@ -24,22 +39,10 @@ export class ShowService extends AuthenticatedService {
 
         if (this.identity.isAuthenticated) {
 
-            options = this.authenticatedOptions;
+            options = this.authentication.authenticatedOptions;
         }
 
         return this.http.get(this.show('/' + name), options)
-            .map((res : Response) => {
-
-                const data = res.json();
-
-                data.banner = this.baseUrl + data.banner;
-
-                if (data.firstAired) {
-
-                    data.firstAired = new Date(data.firstAired);
-                }
-
-                return data as ShowDetails;
-            });
+            .map((res : Response) => this.processData(res));
     }
 }

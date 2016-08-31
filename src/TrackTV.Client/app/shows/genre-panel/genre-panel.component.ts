@@ -1,5 +1,6 @@
 import {Component, Input} from  '@angular/core';
-import {Genre} from '../../services/index';
+
+import {Genre} from  '../shows.models';
 
 @Component({
     moduleId: module.id,

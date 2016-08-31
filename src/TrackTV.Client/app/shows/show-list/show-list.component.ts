@@ -1,5 +1,5 @@
 import {Component, Input} from  '@angular/core';
-import {SimpleShow} from '../../services/index';
+import {SimpleShow} from '../shows.models';
 
 @Component({
     moduleId: module.id,

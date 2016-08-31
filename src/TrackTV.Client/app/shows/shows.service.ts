@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
-import {ApiPath} from './apiPath';
-import {SimpleShows, SimpleShow, NetworkShows, SearchShows} from "./show.models";
+import {ApiPath} from './../services/apiPath';
+import {SimpleShows, SimpleShow, NetworkShows, SearchShows} from './shows.models';
 
 @Injectable()
 export class ShowsService {

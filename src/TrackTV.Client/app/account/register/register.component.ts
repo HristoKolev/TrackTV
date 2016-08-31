@@ -64,7 +64,7 @@ export class RegisterComponent {
         toastr.error(message);
     }
 
-    private  register() {
+    private register() {
 
         let user = new RegisterUser();
         user.email = this.registerForm.get('email').value;
@@ -74,5 +74,4 @@ export class RegisterComponent {
         this.authentication.signup(user)
             .subscribe(this.notifyLoginSuccess.bind(this), this.notifyRegisterError.bind(this));
     }
-
 }

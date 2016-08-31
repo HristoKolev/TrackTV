@@ -1,7 +1,8 @@
 import {Component, OnInit} from  '@angular/core';
 import {ActivatedRoute} from  '@angular/router';
 
-import {ShowsService, SearchShows, SimpleShow} from  '../services/index';
+import {ShowsService} from  './shows.service';
+import {SearchShows, SimpleShow} from  './shows.models';
 
 @Component({
     moduleId: module.id,

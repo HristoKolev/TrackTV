@@ -1,5 +1,6 @@
 import {Component} from  '@angular/core';
 import {FormGroup, FormControl, Validators} from  '@angular/forms';
+import {Router} from  '@angular/router';
 
 import * as toastr from 'toastr';
 
@@ -16,7 +17,8 @@ export class LoginComponent {
 
     private formActive : boolean = true;
 
-    constructor(private authentication : Authentication) {
+    constructor(private authentication : Authentication,
+                private router : Router) {
 
         this.createForm();
     }
@@ -61,6 +63,13 @@ export class LoginComponent {
         setTimeout(() => this.formActive = true, 0);
     }
 
+    private onSuccessfulLogin() {
+
+        this.notifyLoginSuccess();
+
+        this.router.navigate(['/shows']);
+    }
+
     private login() {
 
         let user = new LoginUser();
@@ -68,6 +77,6 @@ export class LoginComponent {
         user.password = this.loginForm.get('password').value;
 
         this.authentication.login(user)
-            .subscribe(this.notifyLoginSuccess.bind(this), this.notifyLoginError.bind(this));
+            .subscribe(this.onSuccessfulLogin.bind(this), this.notifyLoginError.bind(this));
     }
 }
