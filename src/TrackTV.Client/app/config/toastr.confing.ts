@@ -4,7 +4,7 @@ export function configureToastr() {
 
     toastr.options = {
         closeButton: true,
-        positionClass: 'toast-top-center',
+        positionClass: 'toast-bottom-left',
         timeOut: 2000
     };
 }
