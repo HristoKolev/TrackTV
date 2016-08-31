@@ -14,7 +14,7 @@ export class SubscriptionService {
 
     }
 
-    private subscription : (path : string) => string = this.apiPath.service('subscription');
+    private subscription : (path : string) => string = this.apiPath.service('/subscription');
 
     public subscribe(id : number) : Observable<Response> {
 

@@ -1,9 +1,9 @@
 import {TypeBinder, PersistentContainer, LocalStorageContainer} from './shared/index';
 import {ApiPath, Identity, Authentication, SubscriptionService} from './services/index';
-import {ShowService} from  './show/show.service';
-import {MyShowsService} from  './my-shows/my-shows.service';
-import {AuthGuard} from  './services/AuthGuard.service';
-import {ShowsService} from  './shows/shows.service';
+import {ShowService} from './show/show.service';
+import {MyShowsService} from './my-shows/my-shows.service';
+import {AuthGuard} from './services/AuthGuard.service';
+import {ShowsService} from './shows/shows.service';
 
 const binder = new TypeBinder();
 

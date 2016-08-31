@@ -29,7 +29,6 @@ export class ShowComponent implements OnInit {
                     .subscribe((data : ShowDetails) => {
 
                         this.show = data;
-                        console.log(this.show);
                     });
             });
     }
@@ -42,7 +41,6 @@ export class ShowComponent implements OnInit {
                 this.show.isUserSubscribed = true;
                 this.show.subscriberCount += 1;
             });
-
     }
 
     private unsubscribe(id : number) {

@@ -15,7 +15,7 @@ export class ShowService {
 
     }
 
-    private show : (path : string) => string = this.apiPath.service('show');
+    private show : (path : string) => string = this.apiPath.service('/show');
 
     private baseUrl : string = this.apiPath.path();
 

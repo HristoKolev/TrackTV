@@ -19,11 +19,11 @@ export class ApiPath {
 
     public service(serviceName : string) : (path : string) => string {
 
-        return (path : string) => this.rawPath('/' + serviceName + path);
+        return (path : string) => this.rawPath(serviceName + path);
     }
 
-    public path(name? : string) : string {
+    public path(name : string = '') : string {
 
-        return this.baseServiceUrl + (name || '');
+        return this.baseServiceUrl + name;
     }
 }

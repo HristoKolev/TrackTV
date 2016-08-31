@@ -17,7 +17,7 @@ export class Authentication {
 
     }
 
-    private account : (arg : string) => string = this.apiPath.service('account');
+    private account : (arg : string) => string = this.apiPath.service('/account');
 
     private getUrlEncodedOptions() : RequestOptions {
 
