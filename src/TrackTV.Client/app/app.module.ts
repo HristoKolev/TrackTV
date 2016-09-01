@@ -11,6 +11,8 @@ import {routes} from './app.routes';
 import {appDeclarations} from  './app.declarations';
 
 import {AccountModule} from './account/account.module';
+import {ShowModule} from './show/show.module';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
     imports: [
@@ -18,7 +20,11 @@ import {AccountModule} from './account/account.module';
         RouterModule.forRoot(routes),
         FormsModule,
         HttpModule,
-        AccountModule
+
+        SharedModule,
+
+        AccountModule,
+        ShowModule
     ],
     providers: [...typeBindings],
     declarations: [AppComponent, ...appDeclarations],

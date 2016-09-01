@@ -1,8 +1,10 @@
-import {Component, OnInit} from  '@angular/core';
-import {ActivatedRoute} from  '@angular/router';
-import { Identity, SubscriptionService} from  '../services/index';
-import {ShowService} from  './show.service';
-import {ShowDetails} from  './show.models';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+
+import {Identity, SubscriptionService} from '../shared/index';
+
+import {ShowService} from './show.service';
+import {ShowDetails} from './show.models';
 
 @Component({
     moduleId: module.id,

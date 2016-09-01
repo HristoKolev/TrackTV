@@ -11,10 +11,13 @@ import {Authentication} from './authentication.service';
 
 import {accountRouting} from './account.routes';
 
+import {SharedModule} from '../shared/shared.module';
+
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        SharedModule,
         accountRouting
     ],
     declarations: [

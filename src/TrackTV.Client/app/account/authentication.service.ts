@@ -4,8 +4,7 @@ import {Http, Headers, RequestOptions, Response} from '@angular/http';
 
 import * as $ from 'jquery';
 
-import {Identity} from "./../services/account/identity";
-import {ApiPath} from "../services/apiPath";
+import {Identity, ApiPath} from "../shared/index";
 import {RegisterUser, RegisterError, LoginUser, LoginError} from './authentication.models';
 
 @Injectable()

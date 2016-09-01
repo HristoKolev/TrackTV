@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {Identity} from  '../services/index';
-import {ApiPath} from  './apiPath';
+import {Identity} from  '../shared/index';
+import {ApiPath} from  './apiPath.service';
 
 @Injectable()
 export class SubscriptionService {

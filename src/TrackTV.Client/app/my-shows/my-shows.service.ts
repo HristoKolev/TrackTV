@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {ApiPath, Identity} from '../services/index';
+import {ApiPath, Identity} from '../shared/index';
 import {MyShows} from  './my-shows.models';
 
 @Injectable()

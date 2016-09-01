@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import * as toastr from "toastr";
 
-import {SubscriptionService} from '../services/index';
+import {SubscriptionService} from '../shared/index';
 import {MyShow, MyShows} from './my-shows.models';
 import {MyShowsService} from "./my-shows.service";
 

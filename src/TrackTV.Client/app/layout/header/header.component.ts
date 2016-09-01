@@ -1,6 +1,6 @@
 import {Component} from  '@angular/core';
 
-import {Identity} from  '../../services/index';
+import {Identity} from  '../../shared/index';
 
 @Component({
     moduleId: module.id,

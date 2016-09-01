@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions} from  '@angular/http';
 import {Observable} from  'rxjs';
 
-import {Identity, ApiPath} from  '../services/index';
+import {Identity, ApiPath} from  '../shared/index';
 import {ShowDetails} from  './show.models';
 
 @Injectable()

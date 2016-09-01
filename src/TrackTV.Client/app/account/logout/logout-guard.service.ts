@@ -6,7 +6,7 @@ import * as toastr from 'toastr';
 
 import {Authentication} from '../authentication.service';
 
-import {Identity} from  '../../services/index';
+import {Identity} from  '../../shared/index';
 
 @Injectable()
 export class LogoutGuard implements CanActivate {
