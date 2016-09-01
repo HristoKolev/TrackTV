@@ -14,7 +14,7 @@ import {ShowsComponent} from './shows.component';
 
 import {ShowsService} from './shows.service';
 
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from '../shared/shared.module';
 
 import {showsRouting} from './shows.routes';
 

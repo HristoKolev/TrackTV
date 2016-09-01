@@ -25,7 +25,7 @@ export class LogoutGuard implements CanActivate {
         if (this.identity.isAuthenticated) {
 
             this.authentication.logout()
-                .subscribe(this.afterLogout.bind(this), this.afterLogout.bind(this));
+                .subscribe(() => this.afterLogout(), () => this.afterLogout());
 
         }
 

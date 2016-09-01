@@ -18,23 +18,16 @@ export class Authentication {
 
     private account : (arg : string) => string = this.apiPath.service('/account');
 
-    private getUrlEncodedOptions() : RequestOptions {
+    private get urlEncodedOptions() : RequestOptions {
 
         const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
         return new RequestOptions({headers: new Headers(headers)});
     }
 
-    private getAuthenticationOptions() : RequestOptions {
-
-        const headers = this.identity.addAuthorizationHeader();
-
-        return new RequestOptions({headers: new Headers(headers)});
-    }
-
     public signup(user : RegisterUser) {
 
-        return this.http.post(this.account('/register'), $.param(user), this.getUrlEncodedOptions())
+        return this.http.post(this.account('/register'), $.param(user), this.urlEncodedOptions)
             .catch((err : Response) => {
 
                 let errorData = err.json();
@@ -52,7 +45,7 @@ export class Authentication {
 
         user.grant_type = 'password';
 
-        return this.http.post(this.apiPath.loginPath, $.param(user), this.getUrlEncodedOptions())
+        return this.http.post(this.apiPath.loginPath, $.param(user), this.urlEncodedOptions)
             .map((res : Response) => res.json())
             .do(user => {
 
@@ -73,7 +66,7 @@ export class Authentication {
 
     public logout() : Observable<Response> {
 
-        return this.http.post(this.account('/logout'), undefined, this.getAuthenticationOptions())
+        return this.http.post(this.account('/logout'), undefined, this.identity.authenticatedOptions)
             .do((response : Response) => this.identity.removeUser())
             .catch((error : Response) => {
 
