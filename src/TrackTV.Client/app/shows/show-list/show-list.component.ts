@@ -1,4 +1,5 @@
 import {Component, Input} from  '@angular/core';
+
 import {SimpleShow} from '../shows.models';
 
 @Component({

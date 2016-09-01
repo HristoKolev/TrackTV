@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
 
 import {DoubleDigit} from './doubleDigit.pipe';
 import {PersistentContainer} from './persistentContainer';
@@ -10,22 +11,33 @@ import {AuthGuard} from './auth-guard.service';
 import {Identity} from './identity.service';
 import {SubscriptionService} from './subscription.service';
 
+import {PaginationService, PaginatePipe, PaginationControlsCmp} from 'ng2-pagination';
+
 @NgModule({
     imports: [
         BrowserModule,
+        HttpModule,
     ],
     declarations: [
-        DoubleDigit
+        DoubleDigit,
+
+        PaginatePipe,
+        PaginationControlsCmp
     ],
     providers: [
         {provide: PersistentContainer, useClass: LocalStorageContainer},
         ApiPath,
         AuthGuard,
         Identity,
-        SubscriptionService
+        SubscriptionService,
+
+        PaginationService,
     ],
     exports: [
-        DoubleDigit
+        DoubleDigit,
+
+        PaginatePipe,
+        PaginationControlsCmp
     ]
 })
 export class SharedModule {

@@ -1,33 +1,31 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
-import {HttpModule} from '@angular/http';
-import {FormsModule} from  '@angular/forms';
 
 import {AppComponent} from './app.component';
-
-import {typeBindings} from './app.providers';
-import {routes} from './app.routes';
-import {appDeclarations} from  './app.declarations';
 
 import {AccountModule} from './account/account.module';
 import {ShowModule} from './show/show.module';
 import {SharedModule} from './shared/shared.module';
+import {ShowsModule} from './shows/shows.module';
+import {MyShowsModule} from './my-shows/my-shows.module';
+import {LayoutModule} from "./layout/layout.module";
 
 @NgModule({
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes),
-        FormsModule,
-        HttpModule,
+        RouterModule.forRoot([]),
 
         SharedModule,
 
+        LayoutModule,
         AccountModule,
-        ShowModule
+        ShowModule,
+        ShowsModule,
+        MyShowsModule,
     ],
-    providers: [...typeBindings],
-    declarations: [AppComponent, ...appDeclarations],
+    providers: [],
+    declarations: [AppComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {
