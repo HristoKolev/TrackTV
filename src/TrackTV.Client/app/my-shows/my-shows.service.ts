@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from  '@angular/http';
-import {Observable} from  'rxjs';
+import {Http, Response} from '@angular/http';
+
+import {Observable} from 'rxjs';
 
 import {ApiPath, Identity} from '../shared/index';
-import {MyShows} from  './my-shows.models';
+import {MyShows} from './my-shows.models';
 
 @Injectable()
 export class MyShowsService {
@@ -16,16 +17,16 @@ export class MyShowsService {
 
     private myShows : (path : string) => string = this.apiPath.service('/myshows');
 
-    continuing(page = 1) : Observable<MyShows> {
+    public continuing(page = 1) : Observable<MyShows> {
 
         return this.http.get(this.myShows('/continuing/' + page), this.identity.authenticatedOptions)
-            .map(this.processResponse);
+            .map((res : Response) => this.processResponse(res));
     }
 
-    ended(page = 1) : Observable<MyShows> {
+    public ended(page = 1) : Observable<MyShows> {
 
         return this.http.get(this.myShows('/ended/' + page), this.identity.authenticatedOptions)
-            .map(this.processResponse);
+            .map((res : Response) => this.processResponse(res));
     }
 
     private processResponse(res : Response) : MyShows {

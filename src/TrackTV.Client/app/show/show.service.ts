@@ -1,24 +1,25 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions} from  '@angular/http';
-import {Observable} from  'rxjs';
+import {Http, Response, RequestOptions} from '@angular/http';
 
-import {Identity, ApiPath} from  '../shared/index';
-import {ShowDetails} from  './show.models';
+import {Observable} from 'rxjs';
+
+import {ShowDetails} from './show.models';
+
+import {Identity, ApiPath} from '../shared/index';
 
 @Injectable()
 export class ShowService {
-
-    constructor(private identity : Identity,
-                private apiPath : ApiPath,
-                private http : Http) {
-
-    }
 
     private show : (path : string) => string = this.apiPath.service('/show');
 
     private baseUrl : string = this.apiPath.path();
 
-    private processData(res : Response) {
+    constructor(private identity : Identity,
+                private apiPath : ApiPath,
+                private http : Http) {
+    }
+
+    private processData(res : Response) : ShowDetails {
 
         const data = res.json();
 

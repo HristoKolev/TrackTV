@@ -1,8 +1,10 @@
-import {Component, OnInit} from  '@angular/core';
-import {ActivatedRoute} from  '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import {ShowsService} from  './shows.service';
-import {SimpleShows} from  './shows.models';
+import {Subscription} from 'rxjs';
+
+import {ShowsService} from './shows.service';
+import {SimpleShows} from './shows.models';
 
 @Component({
     moduleId: module.id,
@@ -10,19 +12,21 @@ import {SimpleShows} from  './shows.models';
     templateUrl: 'shows.component.html',
 
 })
-export class ShowsComponent implements OnInit {
+export class ShowsComponent implements OnInit, OnDestroy {
 
     private shows : SimpleShows;
 
     private genreName : string;
 
+    private routeSubscription : Subscription;
+
     constructor(private showsService : ShowsService,
                 private activatedRoute : ActivatedRoute) {
     }
 
-    public  ngOnInit() : void {
+    public ngOnInit() : void {
 
-        this.activatedRoute.params.subscribe(params => {
+        this.routeSubscription = this.activatedRoute.params.subscribe(params => {
 
             const genreName = params['genre'];
 
@@ -39,6 +43,10 @@ export class ShowsComponent implements OnInit {
                     .subscribe((shows : SimpleShows) => this.shows = shows);
             }
         });
+    }
 
+    public ngOnDestroy() : void {
+
+        this.routeSubscription.unsubscribe();
     }
 }

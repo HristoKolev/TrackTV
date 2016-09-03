@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+
+import {Subscription} from 'rxjs';
 
 import {Identity, SubscriptionService} from '../shared/index';
 
@@ -12,7 +14,11 @@ import {ShowDetails} from './show.models';
     templateUrl: 'show.component.html',
     styleUrls: ['show.component.css']
 })
-export class ShowComponent implements OnInit {
+export class ShowComponent implements OnInit, OnDestroy {
+
+    private show : ShowDetails;
+
+    private routeSubscription : Subscription;
 
     constructor(private showService : ShowService,
                 private subscriptionService : SubscriptionService,
@@ -20,22 +26,7 @@ export class ShowComponent implements OnInit {
                 private identity : Identity) {
     }
 
-    show : ShowDetails;
-
-    ngOnInit() : void {
-
-        this.activatedRoute.params
-            .subscribe(params => {
-
-                this.showService.getShow(params['show'])
-                    .subscribe((data : ShowDetails) => {
-
-                        this.show = data;
-                    });
-            });
-    }
-
-    private subscribe(id : number) {
+    private subscribe(id : number) : void {
 
         this.subscriptionService.subscribe(id)
             .subscribe(res=> {
@@ -45,7 +36,7 @@ export class ShowComponent implements OnInit {
             });
     }
 
-    private unsubscribe(id : number) {
+    private unsubscribe(id : number) : void {
 
         this.subscriptionService.unsubscribe(id)
             .subscribe(res => {
@@ -53,5 +44,20 @@ export class ShowComponent implements OnInit {
                 this.show.isUserSubscribed = false;
                 this.show.subscriberCount -= 1;
             });
+    }
+
+    public ngOnInit() : void {
+
+        this.routeSubscription = this.activatedRoute.params
+            .subscribe(params => {
+
+                this.showService.getShow(params['show'])
+                    .subscribe((data : ShowDetails) => this.show = data);
+            });
+    }
+
+    public ngOnDestroy() : void {
+
+        this.routeSubscription.unsubscribe();
     }
 }

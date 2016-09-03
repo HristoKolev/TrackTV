@@ -1,6 +1,6 @@
-import {Component} from  '@angular/core';
-import {FormGroup, FormControl, Validators} from  '@angular/forms';
-import {Router} from  '@angular/router';
+import {Component} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 import * as toastr from 'toastr';
 

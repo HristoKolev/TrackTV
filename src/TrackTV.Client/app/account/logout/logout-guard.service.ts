@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from  '@angular/router';
-import {Observable} from  'rxjs';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+
+import {Observable} from 'rxjs';
 
 import * as toastr from 'toastr';
 
 import {Authentication} from '../authentication.service';
 
-import {Identity} from  '../../shared/index';
+import {Identity} from '../../shared/index';
 
 @Injectable()
 export class LogoutGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class LogoutGuard implements CanActivate {
         toastr.success('Successful Logout!');
     }
 
-    canActivate(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<boolean>|Promise<boolean>|boolean {
+    public canActivate(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<boolean>|Promise<boolean>|boolean {
 
         if (this.identity.isAuthenticated) {
 

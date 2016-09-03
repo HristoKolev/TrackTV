@@ -10,13 +10,13 @@ import {RegisterUser, RegisterError, LoginUser, LoginError} from './authenticati
 @Injectable()
 export class Authentication {
 
+    private account : (arg : string) => string = this.apiPath.service('/account');
+    
     constructor(private http : Http,
                 private identity : Identity,
                 private apiPath : ApiPath) {
 
     }
-
-    private account : (arg : string) => string = this.apiPath.service('/account');
 
     private get urlEncodedOptions() : RequestOptions {
 

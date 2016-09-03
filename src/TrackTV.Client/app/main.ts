@@ -3,7 +3,7 @@
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule}  from './app.module';
 
-import {configureToastr} from  './config/toastr.confing';
+import {configureToastr} from './config/toastr.confing';
 
 configureToastr();
 

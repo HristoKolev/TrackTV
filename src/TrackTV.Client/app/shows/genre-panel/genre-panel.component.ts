@@ -1,6 +1,6 @@
-import {Component, Input} from  '@angular/core';
+import {Component, Input} from '@angular/core';
 
-import {Genre} from  '../shows.models';
+import {Genre} from '../shows.models';
 
 @Component({
     moduleId: module.id,

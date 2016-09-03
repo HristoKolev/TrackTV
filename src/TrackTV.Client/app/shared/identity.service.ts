@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {RequestOptions, Headers} from  '@angular/http';
+import {RequestOptions, Headers} from '@angular/http';
 
-import {PersistentContainer,PersistentContainerKey} from './persistentContainer';
+import {PersistentContainer, PersistentContainerKey} from './persistentContainer';
 
 export interface User {
 
@@ -15,12 +15,12 @@ export interface User {
 @Injectable()
 export class Identity {
 
+    private storage : PersistentContainerKey<User>;
+
     constructor(container : PersistentContainer<User>) {
 
         this.storage = new PersistentContainerKey(container, 'user');
     }
-
-    private storage : PersistentContainerKey<User>;
 
     private get user() : User {
 
@@ -30,26 +30,6 @@ export class Identity {
     private set user(value : User) {
 
         this.storage.set(value);
-    }
-
-    public load(user : User) {
-
-        if (!user) {
-
-            throw new Error('user is falsy');
-        }
-
-        this.user = user;
-    }
-
-    private clearUserData() : void {
-
-        this.storage.remove();
-    }
-
-    private notAuthenticatedError() : Error {
-
-        return Error('There currently is no authorized user.');
     }
 
     public get isAuthenticated() : boolean {
@@ -67,28 +47,6 @@ export class Identity {
 
             return 'Guest';
         }
-    }
-
-    public addAuthorizationHeader(headers : any = {}) : any {
-
-        if (!this.isAuthenticated) {
-
-            throw this.notAuthenticatedError();
-        }
-
-        headers.Authorization = 'Bearer ' + this.user.access_token;
-
-        return headers;
-    }
-
-    public removeUser() : void {
-
-        if (!this.isAuthenticated) {
-
-            throw this.notAuthenticatedError();
-        }
-
-        this.clearUserData();
     }
 
     public get isAdmin() {
@@ -122,4 +80,47 @@ export class Identity {
             headers: new Headers(this.addAuthorizationHeader())
         });
     }
+
+    public load(user : User) {
+
+        if (!user) {
+
+            throw new Error('user is falsy');
+        }
+
+        this.user = user;
+    }
+
+    private clearUserData() : void {
+
+        this.storage.remove();
+    }
+
+    private notAuthenticatedError() : Error {
+
+        return Error('There currently is no authorized user.');
+    }
+
+    public addAuthorizationHeader(headers : any = {}) : any {
+
+        if (!this.isAuthenticated) {
+
+            throw this.notAuthenticatedError();
+        }
+
+        headers.Authorization = 'Bearer ' + this.user.access_token;
+
+        return headers;
+    }
+
+    public removeUser() : void {
+
+        if (!this.isAuthenticated) {
+
+            throw this.notAuthenticatedError();
+        }
+
+        this.clearUserData();
+    }
+
 }

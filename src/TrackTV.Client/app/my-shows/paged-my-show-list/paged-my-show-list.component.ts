@@ -1,5 +1,6 @@
-import {Component, Input, Output, EventEmitter} from  '@angular/core';
-import {MyShow} from "../my-shows.models";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+
+import {MyShow} from '../my-shows.models';
 
 @Component({
     moduleId: module.id,

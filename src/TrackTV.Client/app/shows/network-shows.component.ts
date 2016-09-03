@@ -1,8 +1,10 @@
-import {Component, OnInit} from  '@angular/core';
-import {ActivatedRoute} from  '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import {ShowsService} from  './shows.service';
-import {NetworkShows, SimpleShow} from  './shows.models';
+import {Subscription} from 'rxjs';
+
+import {ShowsService} from './shows.service';
+import {NetworkShows, SimpleShow} from './shows.models';
 
 @Component({
     moduleId: module.id,
@@ -10,11 +12,7 @@ import {NetworkShows, SimpleShow} from  './shows.models';
     templateUrl: 'network-shows.component.html',
 
 })
-export class NetworkShowsComponent implements OnInit {
-
-    constructor(private showsService : ShowsService,
-                private activatedRoute : ActivatedRoute) {
-    }
+export class NetworkShowsComponent implements OnInit, OnDestroy {
 
     private shows : SimpleShow[];
 
@@ -26,11 +24,17 @@ export class NetworkShowsComponent implements OnInit {
 
     private pageSize : number = 24;
 
-    private populateShows(page : number = 1) {
+    private routeSubscription : Subscription;
+
+    constructor(private showsService : ShowsService,
+                private activatedRoute : ActivatedRoute) {
+    }
+
+    private populateShows(page : number = 1) : void {
 
         this.currentPage = page;
 
-        this.activatedRoute.params
+        this.routeSubscription = this.activatedRoute.params
             .subscribe(params => {
 
                 this.showsService.network(params['network'], page)
@@ -46,5 +50,10 @@ export class NetworkShowsComponent implements OnInit {
     public ngOnInit() : any {
 
         this.populateShows();
+    }
+
+    public ngOnDestroy() : void {
+
+        this.routeSubscription.unsubscribe();
     }
 }

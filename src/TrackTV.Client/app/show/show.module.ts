@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {ShowComponent} from  './show.component';
-import {PremieredDate} from  './pipes/premieredDate.pipe';
-import {Querify} from  './pipes/querify.pipe';
-import {WeekDayName} from  './pipes/weekDayName.pipe';
+import {ShowComponent} from './show.component';
+import {PremieredDate} from './pipes/premieredDate.pipe';
+import {Querify} from './pipes/querify.pipe';
+import {WeekDayName} from './pipes/weekDayName.pipe';
 
 import {ShowService} from './show.service';
 

@@ -1,6 +1,6 @@
-import {Component, Input, Output, EventEmitter} from  '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
-import {SimpleShow} from  '../shows.models';
+import {SimpleShow} from '../shows.models';
 
 @Component({
     moduleId: module.id,
@@ -25,7 +25,7 @@ export class PagedShowListComponent {
     @Output()
     private pageChange : EventEmitter<number> = new EventEmitter<number>();
 
-    private get paginationConfig() {
+    private get paginationConfig() : any {
 
         return {
             itemsPerPage: this.pageSize,
@@ -34,7 +34,7 @@ export class PagedShowListComponent {
         };
     }
 
-    private changed(page : number) {
+    private changed(page : number) : void {
 
         this.pageChange.emit(page);
     }

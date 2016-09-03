@@ -1,19 +1,17 @@
-import {Component, OnInit} from  '@angular/core';
-import {ActivatedRoute} from  '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import {ShowsService} from  './shows.service';
-import {SearchShows, SimpleShow} from  './shows.models';
+import {Subscription} from 'rxjs';
+
+import {ShowsService} from './shows.service';
+import {SearchShows, SimpleShow} from './shows.models';
 
 @Component({
     moduleId: module.id,
     selector: 'search-shows-component',
     templateUrl: 'search-shows.component.html',
 })
-export class SearchShowsComponent implements OnInit {
-
-    constructor(private showsService : ShowsService,
-                private activatedRoute : ActivatedRoute) {
-    }
+export class SearchShowsComponent implements OnInit, OnDestroy {
 
     private shows : SimpleShow[];
 
@@ -25,11 +23,17 @@ export class SearchShowsComponent implements OnInit {
 
     private pageSize : number = 24;
 
+    private routeSubscription : Subscription;
+
+    constructor(private showsService : ShowsService,
+                private activatedRoute : ActivatedRoute) {
+    }
+
     private populateShows(page : number = 1) {
 
         this.currentPage = page;
 
-        this.activatedRoute.params
+        this.routeSubscription = this.activatedRoute.params
             .subscribe(params => {
 
                 this.showsService.search(params['query'], page)
@@ -45,5 +49,10 @@ export class SearchShowsComponent implements OnInit {
     public ngOnInit() : void {
 
         this.populateShows();
+    }
+
+    public ngOnDestroy() : void {
+
+        this.routeSubscription.unsubscribe();
     }
 }

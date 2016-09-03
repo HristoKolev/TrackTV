@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 import * as toastr from "toastr";
 
-import {SubscriptionService} from '../shared/index';
 import {MyShow, MyShows} from './my-shows.models';
 import {MyShowsService} from "./my-shows.service";
+
+import {SubscriptionService} from '../shared/index';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +28,7 @@ export class MyShowsComponent implements OnInit {
                 private myShowsService : MyShowsService) {
     }
 
-    subscribe(show : MyShow) : void {
+    public subscribe(show : MyShow) : void {
 
         this.subscriptionService.subscribe(show.id)
             .subscribe(res => {
@@ -36,7 +37,7 @@ export class MyShowsComponent implements OnInit {
             });
     }
 
-    unsubscribe(show : MyShow) : void {
+    public unsubscribe(show : MyShow) : void {
 
         this.subscriptionService.unsubscribe(show.id)
             .subscribe(res => {
@@ -47,7 +48,7 @@ export class MyShowsComponent implements OnInit {
             });
     }
 
-    getContinuing(page : number) : void {
+    public getContinuing(page : number) : void {
 
         this.myShowsService.continuing(page)
             .subscribe((myShows : MyShows) => {
@@ -56,7 +57,7 @@ export class MyShowsComponent implements OnInit {
             });
     }
 
-    getEnded(page : number) : void {
+    public getEnded(page : number) : void {
 
         this.myShowsService.ended(page)
             .subscribe((myShows : MyShows) => {
@@ -65,7 +66,7 @@ export class MyShowsComponent implements OnInit {
             });
     }
 
-    ngOnInit() : void {
+    public ngOnInit() : void {
 
         this.getContinuing(this.currentContinuingPage);
 
