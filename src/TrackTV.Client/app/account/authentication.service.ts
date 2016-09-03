@@ -4,7 +4,7 @@ import {Http, Headers, RequestOptions, Response} from '@angular/http';
 
 import * as $ from 'jquery';
 
-import {Identity, ApiPath} from "../shared/index";
+import {Identity, ApiPath, User} from "../shared/index";
 import {RegisterUser, RegisterError, LoginUser, LoginError} from './authentication.models';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class Authentication {
         return new RequestOptions({headers: new Headers(headers)});
     }
 
-    public signup(user : RegisterUser) {
+    public signup(user : RegisterUser) : Observable<Response> {
 
         return this.http.post(this.account('/register'), $.param(user), this.urlEncodedOptions)
             .catch((err : Response) => {
@@ -41,15 +41,18 @@ export class Authentication {
             });
     }
 
-    public login(user : LoginUser) {
+    public login(user : LoginUser) : Observable<User> {
 
         user.grant_type = 'password';
 
         return this.http.post(this.apiPath.loginPath, $.param(user), this.urlEncodedOptions)
-            .map((res : Response) => res.json())
-            .do(user => {
+            .map((res : Response) => {
+
+                const user = res.json() as User;
 
                 this.identity.load(user);
+
+                return user;
             })
             .catch((res : Response) => {
 
@@ -67,13 +70,6 @@ export class Authentication {
     public logout() : Observable<Response> {
 
         return this.http.post(this.account('/logout'), undefined, this.identity.authenticatedOptions)
-            .do((response : Response) => this.identity.removeUser())
-            .catch((error : Response) => {
-
-                // removing the user, despite the server being unavailable
-                this.identity.removeUser();
-
-                return Observable.throw(error.json())
-            });
+            .do((response : Response) => this.identity.removeUser());
     }
 }

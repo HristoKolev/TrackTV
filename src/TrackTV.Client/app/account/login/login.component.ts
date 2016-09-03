@@ -64,14 +64,14 @@ export class LoginComponent {
         setTimeout(() => this.formActive = true, 0);
     }
 
-    private onSuccessfulLogin() {
+    private onSuccessfulLogin() : void {
 
         this.notifyLoginSuccess();
 
         this.router.navigate(['/shows']);
     }
 
-    private login() {
+    private login() : void {
 
         let user = new LoginUser();
         user.username = this.loginForm.get('username').value;
