@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
@@ -12,7 +12,7 @@ import {LoginUser, LoginError} from '../authentication.models';
     selector: 'login-component',
     templateUrl: 'login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     private loginForm : FormGroup;
 
@@ -20,8 +20,6 @@ export class LoginComponent {
 
     constructor(private authentication : Authentication,
                 private router : Router) {
-
-        this.createForm();
     }
 
     private createForm() : void {
@@ -73,11 +71,16 @@ export class LoginComponent {
 
     private login() : void {
 
-        let user = new LoginUser();
+        const user = new LoginUser();
         user.username = this.loginForm.get('username').value;
         user.password = this.loginForm.get('password').value;
 
         this.authentication.login(user)
-            .subscribe(this.onSuccessfulLogin.bind(this), this.notifyLoginError.bind(this));
+            .subscribe(() => this.onSuccessfulLogin(), (error : LoginError) => this.notifyLoginError(error));
+    }
+
+    public ngOnInit() : void {
+
+        this.createForm();
     }
 }

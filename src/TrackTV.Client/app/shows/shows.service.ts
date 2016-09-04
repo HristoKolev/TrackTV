@@ -20,7 +20,7 @@ export class ShowsService {
 
         const baseUrl = this.apiPath.path();
 
-        for (let show of shows) {
+        for (const show of shows) {
 
             show.poster = baseUrl + show.poster;
             show.banner = baseUrl + show.banner;

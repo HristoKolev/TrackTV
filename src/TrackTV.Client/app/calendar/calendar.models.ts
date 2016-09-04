@@ -42,4 +42,3 @@ export interface CalendarModel {
 
     weeks : CalendarDay[][];
 }
-

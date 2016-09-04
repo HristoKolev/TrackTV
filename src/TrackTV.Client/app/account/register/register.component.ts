@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
@@ -12,7 +12,7 @@ import {RegisterUser, RegisterError} from "../authentication.models";
     selector: 'register-component',
     templateUrl: 'register.component.html',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
     private registerForm : FormGroup;
 
@@ -20,8 +20,6 @@ export class RegisterComponent {
 
     constructor(private router : Router,
                 private authentication : Authentication) {
-
-        this.createForm();
     }
 
     private createForm() : void {
@@ -67,12 +65,18 @@ export class RegisterComponent {
 
     private register() {
 
-        let user = new RegisterUser();
+        const user = new RegisterUser();
+
         user.email = this.registerForm.get('email').value;
         user.password = this.registerForm.get('password').value;
         user.confirmPassword = this.registerForm.get('confirmPassword').value;
 
         this.authentication.signup(user)
-            .subscribe(this.notifyLoginSuccess.bind(this), this.notifyRegisterError.bind(this));
+            .subscribe(() => this.notifyLoginSuccess(), (error : RegisterError) => this.notifyRegisterError(error));
+    }
+
+    public ngOnInit() : void {
+
+        this.createForm();
     }
 }

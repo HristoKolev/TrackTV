@@ -33,7 +33,7 @@ export class MyShowsService {
 
         const data = res.json() as MyShows;
 
-        for (let show of data.shows) {
+        for (const show of data.shows) {
 
             if (show.lastEpisode) {
 

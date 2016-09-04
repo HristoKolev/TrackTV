@@ -53,7 +53,7 @@ export class Identity {
 
         if (this.isAuthenticated) {
 
-            let isInAdminRole = this.user.isInAdminRole;
+            const isInAdminRole = this.user.isInAdminRole;
 
             switch (isInAdminRole) {
                 case 'True':

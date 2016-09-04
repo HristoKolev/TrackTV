@@ -13,7 +13,6 @@ export class SubscriptionService {
     constructor(private apiPath : ApiPath,
                 private http : Http,
                 private  identity : Identity) {
-
     }
 
     private subscription : (path : string) => string = this.apiPath.service('/subscription');
