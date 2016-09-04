@@ -32,7 +32,7 @@
                                    [(ngModel)]="query" [ngModelOptions]="{standalone: true}">
 
                             <button class="btn btn-success"
-                                    [routerLink]="['/shows/search', query]">Go
+                                    [disabled]="!query" [routerLink]="['/shows/search', query]">Go
                             </button>
                         </form>
                     </li>
