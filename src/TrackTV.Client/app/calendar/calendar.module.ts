@@ -4,6 +4,7 @@ import {SharedModule} from "../shared/shared.module";
 
 import {CalendarService} from './calendar.service';
 
+import {CalendarComponent} from './calendar.component';
 import {MonthName} from './monthName.pipe';
 import {ShortDate} from './shortDate';
 
@@ -16,6 +17,7 @@ import {calendarRouting} from './calendar.routes';
         calendarRouting
     ],
     declarations: [
+        CalendarComponent,
         MonthName,
         ShortDate
     ],
