@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="17">
+          <list size="18">
             <item index="0" class="java.lang.String" itemvalue="*ngif" />
             <item index="1" class="java.lang.String" itemvalue="(click)" />
             <item index="2" class="java.lang.String" itemvalue="[routerlink]" />
@@ -23,6 +23,7 @@
             <item index="14" class="java.lang.String" itemvalue="[formgroup]" />
             <item index="15" class="java.lang.String" itemvalue="formcontrolname" />
             <item index="16" class="java.lang.String" itemvalue="[ngmodeloptions]" />
+            <item index="17" class="java.lang.String" itemvalue="[class.calendar-today]" />
           </list>
         </value>
       </option>
