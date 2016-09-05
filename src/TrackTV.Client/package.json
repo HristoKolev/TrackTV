@@ -5,7 +5,7 @@
   "description": "...",
   "scripts": {
     "start": "gulp && npm run lite",
-    "postinstall": "npm i -g typings && typings install",
+    "postinstall": "typings install",
     "lite": "lite-server"
   },
   "license": "MIT",

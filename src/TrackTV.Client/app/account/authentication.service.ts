@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
 
-import * as $ from 'jquery';
-
 import {Identity, ApiPath, User} from "../shared/index";
 import {RegisterUser, RegisterError, LoginUser, LoginError} from './authentication.models';
 
@@ -11,11 +9,23 @@ import {RegisterUser, RegisterError, LoginUser, LoginError} from './authenticati
 export class Authentication {
 
     private account : (arg : string) => string = this.apiPath.service('/account');
-    
+
     constructor(private http : Http,
                 private identity : Identity,
                 private apiPath : ApiPath) {
+    }
 
+    private queryParams(source : any) : string {
+
+        const array : string[] = [];
+
+        for (let key in source) {
+
+            //noinspection JSUnfilteredForInLoop
+            array.push(encodeURIComponent(key) + "=" + encodeURIComponent(source[key]));
+        }
+
+        return array.join("&");
     }
 
     private get urlEncodedOptions() : RequestOptions {
@@ -27,10 +37,10 @@ export class Authentication {
 
     public signup(user : RegisterUser) : Observable<Response> {
 
-        return this.http.post(this.account('/register'), $.param(user), this.urlEncodedOptions)
+        return this.http.post(this.account('/register'), this.queryParams(user), this.urlEncodedOptions)
             .catch((err : Response) => {
 
-                let errorData = err.json();
+                const errorData = err.json();
 
                 if (errorData.modelState && errorData.modelState['model.Password']) {
 
@@ -45,7 +55,7 @@ export class Authentication {
 
         user.grant_type = 'password';
 
-        return this.http.post(this.apiPath.loginPath, $.param(user), this.urlEncodedOptions)
+        return this.http.post(this.apiPath.loginPath, this.queryParams(user), this.urlEncodedOptions)
             .map((res : Response) => {
 
                 const user = res.json() as User;
@@ -69,7 +79,7 @@ export class Authentication {
 
     public logout() : Observable<Response> {
 
-        return this.http.post(this.account('/logout'), undefined, this.identity.authenticatedOptions)
+        return this.http.post(this.account('/logout'), null, this.identity.authenticatedOptions)
             .do((response : Response) => this.identity.removeUser());
     }
 }
