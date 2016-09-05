@@ -9,7 +9,7 @@ export class CapitaliseWords implements PipeTransform {
 
         let result : string = '';
 
-        for (let character of value) {
+        for (const character of value) {
 
             if (!lastCharacter || !lastCharacter.trim() || lastCharacter === '-') {
 

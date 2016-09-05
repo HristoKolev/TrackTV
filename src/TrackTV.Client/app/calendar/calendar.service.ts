@@ -46,15 +46,15 @@ export class CalendarService {
 
         const data = response.json();
 
-        for (let week of data.month) {
+        for (const week of data.month) {
 
-            for (let day of week) {
+            for (const day of week) {
 
                 day.date = new Date(day.date.toString());
 
                 if (day.episodes) {
 
-                    for (let episode of day.episodes) {
+                    for (const episode of day.episodes) {
 
                         episode.firstAired = new Date(episode.firstAired.toString());
                     }
