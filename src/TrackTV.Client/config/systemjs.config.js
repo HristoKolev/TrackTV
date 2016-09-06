@@ -1,6 +1,7 @@
 System.config({
     map: {
         '@angular': 'node_modules/@angular',
+        'ng2-pagination': 'node_modules/ng2-pagination'
     },
     meta: {
         '@angular/*': {'format': 'cjs'}
@@ -14,10 +15,7 @@ System.config({
         'underscore.string': './node_modules/underscore.string/dist/underscore.string.js',
     },
     packages: {
-        'app': {
-            main: 'main',
-            defaultExtension: 'js'
-        },
+        'app': {main: 'main'},
 
         '@angular/core': {main: 'core.umd.min.js'},
         '@angular/common': {main: 'common.umd.min.js'},
@@ -27,9 +25,8 @@ System.config({
 
         '@angular/router': {main: 'router.umd.min.js'},
         '@angular/http': {main: 'http.umd.min.js'},
-        '@angular/forms': {main: 'forms.umd.min.js'}
+        '@angular/forms': {main: 'forms.umd.min.js'},
+
+        'ng2-pagination': {main: 'index.js'}
     }
 });
-
-System.import('app/main')
-    .then(null, console.error.bind(console));

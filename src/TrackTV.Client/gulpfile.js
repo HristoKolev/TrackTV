@@ -7,7 +7,7 @@ const gulp = require('gulp'),
     watch = require('gulp-watch'),
     path = require('path');
 
-const projectBase = {base: "./"},
+const projectBase = {base: './'},
     tsFiles = './app/**/*.ts',
     lessFiles = './app/**/*.less';
 
