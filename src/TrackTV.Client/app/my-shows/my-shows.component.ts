@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import * as toastr from "toastr";
 
@@ -25,7 +26,8 @@ export class MyShowsComponent implements OnInit {
     private currentEndedPage : number = 1;
 
     constructor(private subscriptionService : SubscriptionService,
-                private myShowsService : MyShowsService) {
+                private myShowsService : MyShowsService,
+                private route : ActivatedRoute) {
     }
 
     public subscribe(show : MyShow) : void {
@@ -68,8 +70,10 @@ export class MyShowsComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.getContinuing(this.currentContinuingPage);
+        this.route.data.forEach((data : {shows : {continuing : MyShows, ended : MyShows}}) => {
 
-        this.getEnded(this.currentEndedPage);
+            this.continuing = data.shows.continuing;
+            this.ended = data.shows.ended;
+        });
     }
 }

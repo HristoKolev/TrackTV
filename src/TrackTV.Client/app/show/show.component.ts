@@ -1,11 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-
-import {Subscription} from 'rxjs';
 
 import {Identity, SubscriptionService} from '../shared/index';
 
-import {ShowService} from './show.service';
 import {ShowDetails} from './show.models';
 
 @Component({
@@ -14,15 +11,12 @@ import {ShowDetails} from './show.models';
     templateUrl: 'show.component.html',
     styleUrls: ['show.component.css']
 })
-export class ShowComponent implements OnInit, OnDestroy {
+export class ShowComponent implements OnInit {
 
     private show : ShowDetails;
 
-    private routeSubscription : Subscription;
-
-    constructor(private showService : ShowService,
-                private subscriptionService : SubscriptionService,
-                private activatedRoute : ActivatedRoute,
+    constructor(private subscriptionService : SubscriptionService,
+                private route : ActivatedRoute,
                 private identity : Identity) {
     }
 
@@ -48,16 +42,9 @@ export class ShowComponent implements OnInit, OnDestroy {
 
     public ngOnInit() : void {
 
-        this.routeSubscription = this.activatedRoute.params
-            .subscribe(params => {
+        this.route.data.forEach((data : { show : ShowDetails }) => {
 
-                this.showService.getShow(params['show'])
-                    .subscribe((data : ShowDetails) => this.show = data);
-            });
-    }
-
-    public ngOnDestroy() : void {
-
-        this.routeSubscription.unsubscribe();
+            this.show = data.show;
+        });
     }
 }

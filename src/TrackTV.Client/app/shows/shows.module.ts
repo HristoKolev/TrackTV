@@ -13,6 +13,8 @@ import {SearchShowsComponent} from './search-shows.component';
 import {ShowsComponent} from './shows.component';
 
 import {ShowsService} from './shows.service';
+import {ShowsResolve} from './shows-resolve.service';
+import {ShowsByGenreResolve} from './shows-by-genre-resolve.service';
 
 import {SharedModule} from '../shared/shared.module';
 
@@ -39,6 +41,8 @@ import {showsRouting} from './shows.routes';
     ],
     providers: [
         ShowsService,
+        ShowsResolve,
+        ShowsByGenreResolve
     ]
 })
 export class ShowsModule {

@@ -7,6 +7,7 @@ import {Querify} from './pipes/querify.pipe';
 import {WeekDayName} from './pipes/weekDayName.pipe';
 
 import {ShowService} from './show.service';
+import {ShowResolve} from './show-resolve.service';
 
 import {showRouting} from './show.routes';
 
@@ -25,7 +26,8 @@ import {SharedModule} from '../shared/shared.module';
         WeekDayName
     ],
     providers: [
-        ShowService
+        ShowService,
+        ShowResolve
     ]
 })
 export class ShowModule {

@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {SharedModule} from "../shared/shared.module";
 
 import {CalendarService} from './calendar.service';
+import {CalendarResolve} from './calendar-resolve.service';
 
 import {CalendarComponent} from './calendar.component';
 import {MonthName} from './monthName.pipe';
@@ -22,7 +23,8 @@ import {calendarRouting} from './calendar.routes';
         ShortDate
     ],
     providers: [
-        CalendarService
+        CalendarService,
+        CalendarResolve
     ]
 })
 export class CalendarModule {

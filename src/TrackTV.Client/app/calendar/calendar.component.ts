@@ -1,9 +1,6 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import {Subscription} from 'rxjs';
-
-import {CalendarService} from './calendar.service';
 import {CalendarModel, CalendarDay, CalendarNavigationInfo} from './calendar.models';
 
 @Component({
@@ -12,9 +9,7 @@ import {CalendarModel, CalendarDay, CalendarNavigationInfo} from './calendar.mod
     templateUrl: 'calendar.component.html',
     styleUrls: ['calendar.component.css']
 })
-export class CalendarComponent implements OnInit, OnDestroy {
-
-    private routeSubscription : Subscription;
+export class CalendarComponent implements OnInit {
 
     private weeks : CalendarDay[][];
 
@@ -30,8 +25,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         'Sunday'
     ];
 
-    constructor(private activatedRoute : ActivatedRoute,
-                private calendarService : CalendarService) {
+    constructor(private route : ActivatedRoute) {
     }
 
     private isToday(date : Date) {
@@ -41,34 +35,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     public ngOnInit() : void {
 
-        this.routeSubscription = this.activatedRoute.params.subscribe(params => {
+        this.route.data.forEach((data : {model : CalendarModel}) => {
 
-            const year : number = params['year'];
-            const month : number = params['month'];
-
-            if (year && month) {
-
-                this.calendarService.getMonth(year, month)
-                    .subscribe((calendarModel : CalendarModel) => {
-
-                        this.weeks = calendarModel.weeks;
-                        this.navigationInfo = calendarModel.navigationInfo;
-                    });
-            }
-            else {
-
-                this.calendarService.currentMonth()
-                    .subscribe((calendarModel : CalendarModel) => {
-
-                        this.weeks = calendarModel.weeks;
-                        this.navigationInfo = calendarModel.navigationInfo;
-                    });
-            }
+            this.weeks = data.model.weeks;
+            this.navigationInfo = data.model.navigationInfo;
         });
-    }
-
-    public ngOnDestroy() : void {
-
-        this.routeSubscription.unsubscribe();
     }
 }

@@ -1,9 +1,6 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import {Subscription} from 'rxjs';
-
-import {ShowsService} from './shows.service';
 import {SimpleShows} from './shows.models';
 
 @Component({
@@ -12,41 +9,21 @@ import {SimpleShows} from './shows.models';
     templateUrl: 'shows.component.html',
 
 })
-export class ShowsComponent implements OnInit, OnDestroy {
+export class ShowsComponent implements OnInit {
 
     private shows : SimpleShows;
 
     private genreName : string;
 
-    private routeSubscription : Subscription;
-
-    constructor(private showsService : ShowsService,
-                private activatedRoute : ActivatedRoute) {
+    constructor(private route : ActivatedRoute) {
     }
 
     public ngOnInit() : void {
 
-        this.routeSubscription = this.activatedRoute.params.subscribe(params => {
+        this.route.data.forEach((data : {showsModel : {shows : SimpleShows, genreName : string}}) => {
 
-            const genreName = params['genre'];
-
-            if (genreName) {
-
-                this.genreName = genreName;
-
-                this.showsService.genre(genreName)
-                    .subscribe((shows : SimpleShows) => this.shows = shows);
-            }
-            else {
-
-                this.showsService.top()
-                    .subscribe((shows : SimpleShows) => this.shows = shows);
-            }
+            this.shows = data.showsModel.shows;
+            this.genreName = data.showsModel.genreName;
         });
-    }
-
-    public ngOnDestroy() : void {
-
-        this.routeSubscription.unsubscribe();
     }
 }
