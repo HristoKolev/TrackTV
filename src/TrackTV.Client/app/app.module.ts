@@ -9,7 +9,7 @@ import {ShowModule} from './show/show.module';
 import {SharedModule} from './shared/shared.module';
 import {ShowsModule} from './shows/shows.module';
 import {MyShowsModule} from './my-shows/my-shows.module';
-import {LayoutModule} from "./layout/layout.module";
+import {LayoutModule} from './layout/layout.module';
 import {CalendarModule} from './calendar/calendar.module';
 
 @NgModule({
