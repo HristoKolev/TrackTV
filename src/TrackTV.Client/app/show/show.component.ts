@@ -5,7 +5,6 @@ import {ShowDetails} from './show.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'show-component',
     templateUrl: 'show.component.html',
     styleUrls: ['show.component.css']
 })
