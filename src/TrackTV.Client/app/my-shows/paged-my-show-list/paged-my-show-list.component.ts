@@ -44,19 +44,4 @@ export class PagedMyShowListComponent {
             totalItems: this.totalCount
         }
     };
-
-    private pageChanged(page : number) {
-
-        this.pageChange.emit(page);
-    }
-
-    private subscribeClicked(show : MyShow) {
-
-        this.subscribe.emit(show);
-    }
-
-    private unsubscribeClicked(show : MyShow) {
-
-        this.unsubscribe.emit(show);
-    }
 }

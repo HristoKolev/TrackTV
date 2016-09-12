@@ -36,14 +36,14 @@
 
 
                 <td class="col-md-3">
-                    <button *ngIf="!show.unsubscribed"
-                            (click)="unsubscribeClicked(show)"
+                    <button *ngIf="show.subscribed"
+                            (click)="unsubscribe.emit(show)"
                             class="btn btn-danger my-show-unsubscribe-button btn-subscribtion">
                         Unsubscribe
                     </button>
 
-                    <button *ngIf="show.unsubscribed"
-                            (click)="subscribeClicked(show)"
+                    <button *ngIf="!show.subscribed"
+                            (click)="subscribe.emit(show)"
                             class="btn btn-danger btn-subscribtion">
                         Undo
                     </button>
@@ -55,7 +55,7 @@
     </table>
 
     <pagination-controls
-            (pageChange)="pageChanged($event)"
+            (pageChange)="pageChange.emit($event)"
             maxSize="7"
             directionLinks="true"
             class="text-center"

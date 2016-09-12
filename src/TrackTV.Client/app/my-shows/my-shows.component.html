@@ -33,7 +33,7 @@
         [shows]="ended.shows"
         [totalCount]="ended.count"
         [currentPage]="currentEndedPage"
-        [paginationId]="'endShows'"
-        (getEnded)="getContinuing($event)">
+        [paginationId]="'endedShows'"
+        (pageChange)="getEnded($event)">
 
 </paged-my-show-list-component>

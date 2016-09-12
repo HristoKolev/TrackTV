@@ -17,7 +17,7 @@ export interface MyShow {
 
     nextEpisode : SimpleEpisode;
 
-    unsubscribed : boolean;
+    subscribed : boolean;
 }
 
 export interface SimpleEpisode {

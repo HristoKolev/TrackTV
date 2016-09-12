@@ -32,7 +32,7 @@ export class MyShowsComponent implements OnInit {
         this.subscriptionService.subscribe(show.id)
             .subscribe(res => {
 
-                show.unsubscribed = false;
+                show.subscribed = true;
             });
     }
 
@@ -41,7 +41,7 @@ export class MyShowsComponent implements OnInit {
         this.subscriptionService.unsubscribe(show.id)
             .subscribe(res => {
 
-                show.unsubscribed = true;
+                show.subscribed = false;
 
                 toastr.success('You have successfully unsubscribed from ' + show.name);
             });
@@ -53,6 +53,7 @@ export class MyShowsComponent implements OnInit {
             .subscribe((myShows : MyShows) => {
 
                 this.continuing = myShows;
+                this.currentContinuingPage = page;
             });
     }
 
@@ -62,6 +63,7 @@ export class MyShowsComponent implements OnInit {
             .subscribe((myShows : MyShows) => {
 
                 this.ended = myShows;
+                this.currentEndedPage = page;
             });
     }
 

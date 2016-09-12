@@ -42,6 +42,8 @@ export class MyShowsService {
 
                 show.nextEpisode.firstAired = new Date(show.nextEpisode.firstAired.toString());
             }
+
+            show.subscribed = true;
         }
 
         return data;
