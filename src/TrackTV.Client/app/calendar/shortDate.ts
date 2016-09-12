@@ -1,5 +1,4 @@
-import {Pipe, PipeTransform} from  '@angular/core';
-
+import {Pipe, PipeTransform} from '@angular/core';
 import * as s from 'underscore.string';
 
 @Pipe({name: 'shortDate'})

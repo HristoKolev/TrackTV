@@ -1,6 +1,5 @@
-import {ModuleWithProviders}  from '@angular/core';
+import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-
 import {ShowsComponent} from './shows.component';
 import {NetworkShowsComponent} from './network-shows.component';
 import {SearchShowsComponent} from './search-shows.component';

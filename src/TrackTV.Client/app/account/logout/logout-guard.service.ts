@@ -1,12 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-
 import {Observable} from 'rxjs';
-
 import * as toastr from 'toastr';
-
 import {Authentication} from '../authentication.service';
-
 import {Identity} from '../../shared/index';
 
 @Injectable()

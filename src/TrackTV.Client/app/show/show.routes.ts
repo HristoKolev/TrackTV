@@ -1,6 +1,5 @@
-import {ModuleWithProviders}  from '@angular/core';
+import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-
 import {ShowComponent} from './show.component';
 import {ShowResolve} from './show-resolve.service';
 

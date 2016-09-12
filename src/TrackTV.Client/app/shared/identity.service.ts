@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {RequestOptions, Headers} from '@angular/http';
-
 import {PersistentContainer, PersistentContainerKey} from './persistentContainer';
 
 export interface User {

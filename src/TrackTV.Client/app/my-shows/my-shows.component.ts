@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-
-import * as toastr from "toastr";
-
+import * as toastr from 'toastr';
 import {MyShow, MyShows} from './my-shows.models';
-import {MyShowsService} from "./my-shows.service";
-
+import {MyShowsService} from './my-shows.service';
 import {SubscriptionService} from '../shared/index';
 
 @Component({

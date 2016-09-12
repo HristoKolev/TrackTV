@@ -1,9 +1,9 @@
 ///<reference path="../typings/index.d.ts"/>
 
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {AppModule}  from './app.module';
+import {AppModule} from './app.module';
+import {configureToastr} from './_config/toastr.config';
 
 platformBrowserDynamic().bootstrapModule(AppModule);
 
-import {configureToastr} from './_config/toastr.config';
 configureToastr();

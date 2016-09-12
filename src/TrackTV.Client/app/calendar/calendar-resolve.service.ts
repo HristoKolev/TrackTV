@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-
 import {Observable} from 'rxjs';
-
 import {CalendarModel} from './calendar.models';
 import {CalendarService} from './calendar.service';
 

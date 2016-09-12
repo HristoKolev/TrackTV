@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-
 import {Observable} from 'rxjs/Observable';
-
 import {MyShowsService} from './my-shows.service';
 import {MyShows} from './my-shows.models';
 

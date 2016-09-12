@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
-
-import {Identity, ApiPath, User} from "../shared/index";
+import {Identity, ApiPath, User} from '../shared/index';
 import {RegisterUser, RegisterError, LoginUser, LoginError} from './authentication.models';
 
 @Injectable()

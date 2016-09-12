@@ -1,6 +1,5 @@
-import {ModuleWithProviders}  from '@angular/core';
+import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-
 import {CalendarComponent} from './calendar.component';
 import {CalendarResolve} from './calendar-resolve.service';
 

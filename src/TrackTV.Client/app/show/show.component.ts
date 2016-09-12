@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-
 import {Identity, SubscriptionService} from '../shared/index';
-
 import {ShowDetails} from './show.models';
 
 @Component({

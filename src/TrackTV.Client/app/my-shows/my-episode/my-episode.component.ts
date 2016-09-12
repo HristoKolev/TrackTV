@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-
-import {SimpleEpisode} from "../my-shows.models";
+import {SimpleEpisode} from '../my-shows.models';
 
 @Component({
     moduleId: module.id,

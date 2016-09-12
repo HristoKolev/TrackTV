@@ -1,6 +1,5 @@
-import {ModuleWithProviders}  from '@angular/core';
+import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-
 import {MyShowsComponent} from './my-shows.component';
 import {AuthGuard} from '../shared/index';
 import {MyShowsResolve} from './my-shows-resolve.service';
