@@ -13,7 +13,7 @@
 
 
     <pagination-controls
-            (pageChange)="changed($event)"
+            (pageChange)="pageChange.emit($event)"
             maxSize="7"
             directionLinks="true"
             class="text-center"

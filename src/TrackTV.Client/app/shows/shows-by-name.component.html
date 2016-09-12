@@ -1,19 +1,21 @@
 <div class="shows-container" *ngIf="shows && shows.length">
     <h1 class="text-center show-group-title">
-        Shows on '<span class="text-success">{{ networkName }}</span>'
+        Search for '<span class="text-success">{{ query }}</span>'
     </h1>
 
     <paged-show-list-component [shows]="shows"
                                [totalCount]="totalCount"
                                [currentPage]="currentPage"
                                [pageSize]="pageSize"
-                               (pageChange)="populateShows($event)">
+                               (pageChange)="getPage($event)">
     </paged-show-list-component>
 </div>
+
 
 <div class="shows-container" *ngIf="shows && !shows.length">
 
     <h1 class="text-center show-group-title">
-        No shows on '<span class="text-error">{{ networkName }}</span>'
+
+        Nothing found for '<span class="search-query">{{ query }}</span>'
     </h1>
 </div>

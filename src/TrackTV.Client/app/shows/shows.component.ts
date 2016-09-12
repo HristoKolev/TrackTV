@@ -4,7 +4,6 @@ import {SimpleShows} from './shows.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'shows-component',
     templateUrl: 'shows.component.html',
 
 })

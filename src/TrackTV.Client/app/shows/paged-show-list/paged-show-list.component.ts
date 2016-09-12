@@ -32,9 +32,4 @@ export class PagedShowListComponent {
             totalItems: this.totalCount
         };
     }
-
-    private changed(page : number) : void {
-
-        this.pageChange.emit(page);
-    }
 }

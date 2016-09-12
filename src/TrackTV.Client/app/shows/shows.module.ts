@@ -5,12 +5,14 @@ import {PagedShowListComponent} from './paged-show-list/paged-show-list.componen
 import {ShortShowComponent} from './short-show/short-show.component';
 import {ShowListComponent} from './show-list/show-list.component';
 import {CapitaliseWords} from './capitaliseWords.pipe';
-import {NetworkShowsComponent} from './network-shows.component';
-import {SearchShowsComponent} from './search-shows.component';
+import {ShowsByNetworkComponent} from './shows-by-network.component';
+import {ShowsByNameComponent} from './shows-by-name.component';
 import {ShowsComponent} from './shows.component';
 import {ShowsService} from './shows.service';
 import {ShowsResolve} from './shows-resolve.service';
+import {ShowsByNetworkResolve} from './shows-by-network-resolve.service';
 import {ShowsByGenreResolve} from './shows-by-genre-resolve.service';
+import {ShowsByNameResolve} from './shows-by-name-resolve.service';
 import {SharedModule} from '../shared/shared.module';
 import {showsRouting} from './shows.routes';
 
@@ -26,8 +28,8 @@ import {showsRouting} from './shows.routes';
         ShortShowComponent,
         ShowListComponent,
 
-        NetworkShowsComponent,
-        SearchShowsComponent,
+        ShowsByNetworkComponent,
+        ShowsByNameComponent,
         ShowsComponent,
 
         CapitaliseWords,
@@ -36,7 +38,9 @@ import {showsRouting} from './shows.routes';
     providers: [
         ShowsService,
         ShowsResolve,
-        ShowsByGenreResolve
+        ShowsByGenreResolve,
+        ShowsByNetworkResolve,
+        ShowsByNameResolve
     ]
 })
 export class ShowsModule {

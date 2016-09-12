@@ -1,0 +1,51 @@
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ShowsService} from './shows.service';
+import {SearchShows, SimpleShow} from './shows.models';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: 'shows-by-name.component.html',
+})
+export class ShowsByNameComponent implements OnInit {
+
+    private shows : SimpleShow[];
+
+    private totalCount : number;
+
+    private query : string;
+
+    private currentPage : number;
+
+    private pageSize : number = 24;
+
+    constructor(private showsService : ShowsService,
+                private route : ActivatedRoute) {
+    }
+
+    private getPage(page : number = 1) {
+
+        this.showsService.search(this.query, page)
+            .subscribe((data : SearchShows) => {
+
+                this.populateShows(data);
+
+                this.currentPage = page;
+            });
+    }
+
+    private populateShows(data : SearchShows) {
+
+        this.shows = data.shows || [];
+        this.totalCount = data.count;
+        this.query = data.query;
+    }
+
+    public ngOnInit() : void {
+
+        this.route.data.forEach((data : {showsModel : {searchShows : SearchShows}}) => {
+
+            this.populateShows(data.showsModel.searchShows)
+        });
+    }
+}
