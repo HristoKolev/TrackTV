@@ -1,4 +1,4 @@
-export class RegisterUser {
+export interface RegisterUser {
 
     email : string;
 
@@ -7,7 +7,7 @@ export class RegisterUser {
     confirmPassword : string;
 }
 
-export class LoginUser {
+export interface LoginUser {
 
     username : string;
 

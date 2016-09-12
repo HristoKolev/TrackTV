@@ -7,17 +7,14 @@ import {LoginUser, LoginError} from '../authentication.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'login-component',
     templateUrl: 'login.component.html',
 })
 export class LoginComponent implements OnInit {
 
     private loginForm : FormGroup;
 
-    private formActive : boolean = true;
-
-    constructor(private authentication : Authentication,
-                private router : Router) {
+    constructor(private router : Router,
+                private authentication : Authentication) {
     }
 
     private createForm() : void {
@@ -45,35 +42,18 @@ export class LoginComponent implements OnInit {
         toastr.error(message);
     }
 
-    private notifyLoginSuccess() : void {
-
-        toastr.success('Successful login!');
-
-        this.resetForm();
-    }
-
-    private resetForm() : void {
-
-        this.createForm();
-
-        this.formActive = false;
-        setTimeout(() => this.formActive = true, 0);
-    }
-
     private onSuccessfulLogin() : void {
 
-        this.notifyLoginSuccess();
+        this.loginForm.reset();
+
+        toastr.success('Successful login!');
 
         this.router.navigate(['/shows']);
     }
 
     private login() : void {
 
-        const user = new LoginUser();
-        user.username = this.loginForm.get('username').value;
-        user.password = this.loginForm.get('password').value;
-
-        this.authentication.login(user)
+        this.authentication.login(this.loginForm.getRawValue() as LoginUser)
             .subscribe(() => this.onSuccessfulLogin(), (error : LoginError) => this.notifyLoginError(error));
     }
 

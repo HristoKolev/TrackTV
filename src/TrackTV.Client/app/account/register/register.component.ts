@@ -3,18 +3,15 @@ import {Router} from '@angular/router';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import * as toastr from 'toastr';
 import {Authentication} from '../authentication.service';
-import {RegisterUser, RegisterError} from '../authentication.models';
+import {RegisterError, RegisterUser} from '../authentication.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'register-component',
     templateUrl: 'register.component.html',
 })
 export class RegisterComponent implements OnInit {
 
     private registerForm : FormGroup;
-
-    private formActive : boolean = true;
 
     constructor(private router : Router,
                 private authentication : Authentication) {
@@ -23,25 +20,18 @@ export class RegisterComponent implements OnInit {
     private createForm() : void {
 
         this.registerForm = new FormGroup({
+
             email: new FormControl(null, [Validators.required, Validators.minLength(6)]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
             confirmPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
         });
     }
 
-    private resetForm() : void {
-
-        this.createForm();
-
-        this.formActive = false;
-        setTimeout(() => this.formActive = true, 0);
-    }
-
-    private notifyLoginSuccess() : void {
+    private notifyRegisterSuccess() : void {
 
         toastr.success('Registration successful!');
 
-        this.resetForm();
+        this.registerForm.reset();
 
         this.router.navigate(['/login']);
     }
@@ -63,14 +53,11 @@ export class RegisterComponent implements OnInit {
 
     private register() {
 
-        const user = new RegisterUser();
-
-        user.email = this.registerForm.get('email').value;
-        user.password = this.registerForm.get('password').value;
-        user.confirmPassword = this.registerForm.get('confirmPassword').value;
-
-        this.authentication.signup(user)
-            .subscribe(() => this.notifyLoginSuccess(), (error : RegisterError) => this.notifyRegisterError(error));
+        this.authentication.signup(this.registerForm.getRawValue() as RegisterUser)
+            .subscribe(
+                () => this.notifyRegisterSuccess(),
+                (error : RegisterError) => this.notifyRegisterError(error)
+            );
     }
 
     public ngOnInit() : void {
