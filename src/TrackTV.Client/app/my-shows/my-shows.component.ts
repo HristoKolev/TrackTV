@@ -68,10 +68,10 @@ export class MyShowsComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {shows : {continuing : MyShows, ended : MyShows}}) => {
+        this.route.data.forEach((data : {model : {continuing : MyShows, ended : MyShows}}) => {
 
-            this.continuing = data.shows.continuing;
-            this.ended = data.shows.ended;
+            this.continuing = data.model.continuing;
+            this.ended = data.model.ended;
         });
     }
 }

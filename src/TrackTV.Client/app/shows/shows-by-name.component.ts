@@ -43,9 +43,9 @@ export class ShowsByNameComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {showsModel : {searchShows : SearchShows}}) => {
+        this.route.data.forEach((data : {model : SearchShows}) => {
 
-            this.populateShows(data.showsModel.searchShows)
+            this.populateShows(data.model);
         });
     }
 }

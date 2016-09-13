@@ -26,7 +26,7 @@ export class CalendarComponent implements OnInit {
     constructor(private route : ActivatedRoute) {
     }
 
-    private isToday(date : Date) {
+    private isToday(date : Date) : boolean {
 
         return date.toDateString() === new Date().toDateString();
     }

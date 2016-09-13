@@ -20,7 +20,7 @@ export class ShowComponent implements OnInit {
     private subscribe(id : number) : void {
 
         this.subscriptionService.subscribe(id)
-            .subscribe(res=> {
+            .subscribe(res => {
 
                 this.show.isUserSubscribed = true;
                 this.show.subscriberCount += 1;
@@ -39,9 +39,9 @@ export class ShowComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : { show : ShowDetails }) => {
+        this.route.data.forEach((data : { model : ShowDetails }) => {
 
-            this.show = data.show;
+            this.show = data.model;
         });
     }
 }

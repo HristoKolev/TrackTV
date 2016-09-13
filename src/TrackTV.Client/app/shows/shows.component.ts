@@ -11,17 +11,14 @@ export class ShowsComponent implements OnInit {
 
     private shows : SimpleShows;
 
-    private genreName : string;
-
     constructor(private route : ActivatedRoute) {
     }
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {showsModel : {shows : SimpleShows, genreName : string}}) => {
+        this.route.data.forEach((data : {model : SimpleShows}) => {
 
-            this.shows = data.showsModel.shows;
-            this.genreName = data.showsModel.genreName;
+            this.shows = data.model;
         });
     }
 }

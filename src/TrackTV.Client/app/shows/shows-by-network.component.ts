@@ -13,7 +13,7 @@ export class ShowsByNetworkComponent implements OnInit {
 
     private totalCount : number;
 
-    private networkName : string;
+    private network : string;
 
     private currentPage : number = 1;
 
@@ -27,12 +27,12 @@ export class ShowsByNetworkComponent implements OnInit {
 
         this.shows = data.shows || [];
         this.totalCount = data.count;
-        this.networkName = data.networkName;
+        this.network = data.networkName;
     }
 
     private getPage(page : number = 1) : void {
 
-        this.showsService.network(this.networkName, page)
+        this.showsService.network(this.network, page)
             .subscribe((data : NetworkShows) => {
 
                 this.populateShows(data);
@@ -43,9 +43,9 @@ export class ShowsByNetworkComponent implements OnInit {
 
     public ngOnInit() : any {
 
-        this.route.data.forEach((data : {showsModel : {networkShows : NetworkShows}}) => {
+        this.route.data.forEach((data : {model : NetworkShows}) => {
 
-            this.populateShows(data.showsModel.networkShows)
+            this.populateShows(data.model)
         });
     }
 }

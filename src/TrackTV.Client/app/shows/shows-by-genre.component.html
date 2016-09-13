@@ -4,15 +4,21 @@
     <genre-panel-component [genres]="shows.genres"></genre-panel-component>
 
     <div>
+        <h1 class="text-center show-group-title">
 
-        <h1 class="text-center show-group-title"> Top Shows </h1>
+            Top Shows <span> in {{genre | capitaliseWords}}</span>
+        </h1>
 
         <show-list-component [shows]="shows.running"></show-list-component>
+
     </div>
 
     <div>
         <h1 class="text-center show-group-title">
+
             Top <span class="ended-word">Ended</span> Shows
+            <span> in {{genre | capitaliseWords}}</span>
+
         </h1>
 
         <show-list-component [shows]="shows.ended"></show-list-component>

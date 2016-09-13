@@ -10,8 +10,10 @@ export class ShowResolve implements Resolve<ShowDetails> {
     constructor(private showService : ShowService) {
     }
 
-    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<ShowDetails> {
 
-        return this.showService.getShow(route.params['show']);
+        const {show} = route.params;
+
+        return this.showService.getShow(show);
     }
 }

@@ -1,12 +1,17 @@
 import {ModuleWithProviders} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {MyShowsComponent} from './my-shows.component';
+import {RouterModule} from '@angular/router';
 import {AuthGuard} from '../shared/index';
+import {MyShowsComponent} from './my-shows.component';
 import {MyShowsResolve} from './my-shows-resolve.service';
 
-const myShowsRoutes : Routes = [
-
-    {path: 'myshows', component: MyShowsComponent, canActivate: [AuthGuard], resolve: {shows: MyShowsResolve}},
-];
-
-export const myShowsRouting : ModuleWithProviders = RouterModule.forChild(myShowsRoutes);
+export const myShowsRouting : ModuleWithProviders = RouterModule.forChild([
+    
+    {
+        path: 'myshows',
+        component: MyShowsComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+            model: MyShowsResolve
+        }
+    },
+]);

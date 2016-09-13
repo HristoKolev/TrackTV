@@ -5,14 +5,13 @@ import {SimpleShows} from './shows.models';
 import {ShowsService} from './shows.service';
 
 @Injectable()
-export class ShowsResolve implements Resolve<{shows : SimpleShows}> {
+export class ShowsResolve implements Resolve<SimpleShows> {
 
     constructor(private showsService : ShowsService) {
     }
 
-    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<SimpleShows> {
 
-        return this.showsService.top()
-            .map((shows : SimpleShows) => ({shows}));
+        return this.showsService.top();
     }
 }

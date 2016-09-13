@@ -1,20 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {SimpleShows, NetworkShows} from './shows.models';
+import {NetworkShows} from './shows.models';
 import {ShowsService} from './shows.service';
 
 @Injectable()
-export class ShowsByNetworkResolve implements Resolve<{networkShows : NetworkShows}> {
+export class ShowsByNetworkResolve implements Resolve<NetworkShows> {
 
     constructor(private showsService : ShowsService) {
     }
 
-    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<NetworkShows> {
 
-        const network = route.params['network'];
+        const {network} = route.params;
 
-        return this.showsService.network(network)
-            .map((networkShows : NetworkShows) => ({networkShows}));
+        return this.showsService.network(network);
     }
 }

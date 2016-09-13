@@ -10,10 +10,9 @@ export class CalendarResolve implements Resolve<CalendarModel> {
     constructor(private calendarService : CalendarService) {
     }
 
-    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<CalendarModel> {
 
-        const year : number = route.params['year'];
-        const month : number = route.params['month'];
+        const {year, month} = route.params;
 
         if (year && month) {
 
@@ -23,6 +22,5 @@ export class CalendarResolve implements Resolve<CalendarModel> {
 
             return this.calendarService.currentMonth();
         }
-
     }
 }

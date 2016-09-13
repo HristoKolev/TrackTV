@@ -7,6 +7,7 @@ import {ShowListComponent} from './show-list/show-list.component';
 import {CapitaliseWords} from './capitaliseWords.pipe';
 import {ShowsByNetworkComponent} from './shows-by-network.component';
 import {ShowsByNameComponent} from './shows-by-name.component';
+import {ShowsByGenreComponent} from './shows-by-genre.component';
 import {ShowsComponent} from './shows.component';
 import {ShowsService} from './shows.service';
 import {ShowsResolve} from './shows-resolve.service';
@@ -28,15 +29,17 @@ import {showsRouting} from './shows.routes';
         ShortShowComponent,
         ShowListComponent,
 
+        ShowsComponent,
+        ShowsByGenreComponent,
         ShowsByNetworkComponent,
         ShowsByNameComponent,
-        ShowsComponent,
 
         CapitaliseWords,
 
     ],
     providers: [
         ShowsService,
+        
         ShowsResolve,
         ShowsByGenreResolve,
         ShowsByNetworkResolve,

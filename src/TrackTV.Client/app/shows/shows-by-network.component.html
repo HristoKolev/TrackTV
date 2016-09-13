@@ -1,6 +1,6 @@
 <div class="shows-container" *ngIf="shows && shows.length">
     <h1 class="text-center show-group-title">
-        Shows on '<span class="text-success">{{ networkName }}</span>'
+        Shows on '<span class="text-success">{{ network }}</span>'
     </h1>
 
     <paged-show-list-component [shows]="shows"
@@ -14,6 +14,6 @@
 <div class="shows-container" *ngIf="shows && !shows.length">
 
     <h1 class="text-center show-group-title">
-        No shows on '<span class="text-error">{{ networkName }}</span>'
+        No shows on '<span class="text-error">{{ network }}</span>'
     </h1>
 </div>

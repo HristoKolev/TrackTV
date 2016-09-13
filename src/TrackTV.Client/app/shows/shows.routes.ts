@@ -1,50 +1,42 @@
 import {ModuleWithProviders} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {ShowsComponent} from './shows.component';
-import {ShowsByNetworkComponent} from './shows-by-network.component';
-import {ShowsByNameComponent} from './shows-by-name.component';
 import {ShowsResolve} from './shows-resolve.service';
+import {ShowsByGenreComponent} from './shows-by-genre.component';
 import {ShowsByGenreResolve} from './shows-by-genre-resolve.service';
+import {ShowsByNetworkComponent} from './shows-by-network.component';
 import {ShowsByNetworkResolve} from './shows-by-network-resolve.service';
+import {ShowsByNameComponent} from './shows-by-name.component';
 import {ShowsByNameResolve} from './shows-by-name-resolve.service';
 
-const showsRoutes : Routes = [
+export const showsRouting : ModuleWithProviders = RouterModule.forChild([
 
-    {
-        path: '',
-        component: ShowsComponent,
-        resolve: {
-            showsModel: ShowsResolve
-        }
-    },
     {
         path: 'shows',
         component: ShowsComponent,
         resolve: {
-            showsModel: ShowsResolve
+            model: ShowsResolve
         }
     },
     {
         path: 'shows/genre/:genre',
-        component: ShowsComponent,
+        component: ShowsByGenreComponent,
         resolve: {
-            showsModel: ShowsByGenreResolve
+            model: ShowsByGenreResolve
         }
     },
     {
         path: 'shows/network/:network',
         component: ShowsByNetworkComponent,
         resolve: {
-            showsModel: ShowsByNetworkResolve
+            model: ShowsByNetworkResolve
         }
     },
     {
         path: 'shows/search/:query',
         component: ShowsByNameComponent,
         resolve: {
-            showsModel: ShowsByNameResolve
+            model: ShowsByNameResolve
         }
     }
-];
-
-export const showsRouting : ModuleWithProviders = RouterModule.forChild(showsRoutes);
+]);

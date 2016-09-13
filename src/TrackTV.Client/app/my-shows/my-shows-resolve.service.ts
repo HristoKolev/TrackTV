@@ -10,11 +10,14 @@ export class MyShowsResolve implements Resolve<{continuing : MyShows, ended : My
     constructor(private myShowsService : MyShowsService) {
     }
 
-    public  resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public  resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<{continuing : MyShows, ended : MyShows}> {
+        const observables = [
 
-        return Observable.forkJoin(
             this.myShowsService.continuing(),
             this.myShowsService.ended()
-        ).map((data : MyShows[]) => ({continuing: data[0], ended: data[1]}));
+        ];
+
+        return Observable.forkJoin(observables)
+            .map((data : MyShows[]) => ({continuing: data[0], ended: data[1]}));
     }
 }

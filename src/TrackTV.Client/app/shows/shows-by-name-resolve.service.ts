@@ -5,16 +5,15 @@ import {ShowsService} from './shows.service';
 import {SearchShows} from './shows.models';
 
 @Injectable()
-export class ShowsByNameResolve implements Resolve<{searchShows : SearchShows}> {
+export class ShowsByNameResolve implements Resolve<SearchShows> {
 
     constructor(private showsService : ShowsService) {
     }
 
-    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<SearchShows> {
 
-        const query = route.params['query'];
+        const {query} = route.params;
 
-        return this.showsService.search(query)
-            .map((searchShows : SearchShows) => ({searchShows}));
+        return this.showsService.search(query);
     }
 }

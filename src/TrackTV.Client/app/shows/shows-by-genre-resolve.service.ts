@@ -5,16 +5,16 @@ import {SimpleShows} from './shows.models';
 import {ShowsService} from './shows.service';
 
 @Injectable()
-export class ShowsByGenreResolve implements Resolve<{shows : SimpleShows, genreName : string}> {
+export class ShowsByGenreResolve implements Resolve<{shows : SimpleShows, genre : string}> {
 
     constructor(private showsService : ShowsService) {
     }
 
-    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<any>|Promise<any>|any {
+    public resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<{shows : SimpleShows, genre : string}> {
 
-        const genreName = route.params['genre'];
+        const {genre} = route.params;
 
-        return this.showsService.genre(genreName)
-            .map((shows : SimpleShows) => ({shows, genreName}));
+        return this.showsService.genre(genre)
+            .map((shows : SimpleShows) => ({shows, genre}));
     }
 }
