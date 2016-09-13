@@ -7,7 +7,6 @@ import {SubscriptionService} from '../shared/index';
 
 @Component({
     moduleId: module.id,
-    selector: 'my-shows-component',
     templateUrl: 'my-shows.component.html',
 })
 export class MyShowsComponent implements OnInit {

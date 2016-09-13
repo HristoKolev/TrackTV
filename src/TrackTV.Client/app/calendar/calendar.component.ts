@@ -4,7 +4,6 @@ import {CalendarModel, CalendarDay, CalendarNavigationInfo} from './calendar.mod
 
 @Component({
     moduleId: module.id,
-    selector: 'calendar-component',
     templateUrl: 'calendar.component.html',
     styleUrls: ['calendar.component.css']
 })

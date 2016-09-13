@@ -6,7 +6,6 @@ import {NetworkShows, SimpleShow} from './shows.models';
 @Component({
     moduleId: module.id,
     templateUrl: 'shows-by-network.component.html',
-
 })
 export class ShowsByNetworkComponent implements OnInit {
 
