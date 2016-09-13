@@ -6,9 +6,9 @@ export class LocalStorageContainer<T> implements PersistentContainer<T> {
 
         const value = localStorage.getItem(key);
 
-        if (value === undefined) {
+        if (typeof value === 'undefined' || value === null) {
 
-            return undefined;
+            return null;
         }
 
         return <T>JSON.parse(value);

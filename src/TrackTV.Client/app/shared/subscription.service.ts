@@ -16,13 +16,13 @@ export class SubscriptionService {
 
     public subscribe(id : number) : Observable<Response> {
 
-        return this.http.post(this.subscription('/subscribe/' + id), undefined,
+        return this.http.post(this.subscription('/subscribe/' + id), null,
             this.identity.authenticatedOptions);
     }
 
     public unsubscribe(id : number) : Observable<Response> {
 
-        return this.http.post(this.subscription('/unsubscribe/' + id), undefined,
+        return this.http.post(this.subscription('/unsubscribe/' + id), null,
             this.identity.authenticatedOptions);
     }
 }

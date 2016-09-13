@@ -48,25 +48,25 @@ export class ShowsService {
 
     public top() : Observable<SimpleShows> {
 
-        return this.http.get(this.shows('/top'), undefined)
+        return this.http.get(this.shows('/top'), null)
             .map(res => this.parseSimpleShows(res));
     }
 
     public genre(name : string) : Observable<SimpleShows> {
 
-        return this.http.get(this.shows('/genre/' + name), undefined)
+        return this.http.get(this.shows('/genre/' + name), null)
             .map(res => this.parseSimpleShows(res));
     }
 
     public search(query : string, page : number = 1) : Observable<SearchShows> {
 
-        return this.http.get(this.shows('/search/' + query + '/' + page), undefined)
+        return this.http.get(this.shows('/search/' + query + '/' + page), null)
             .map(res => this.parseSimpleShows(res));
     }
 
     public network(name : string, page : number = 1) : Observable<NetworkShows> {
 
-        return this.http.get(this.shows('/network/' + name + '/' + page), undefined)
+        return this.http.get(this.shows('/network/' + name + '/' + page), null)
             .map(res => this.parseSimpleShows(res));
     }
 }

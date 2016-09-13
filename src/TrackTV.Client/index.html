@@ -33,7 +33,10 @@
 
         <script>
             System.import('app/main')
-                    .then(null, console.error.bind(console));
+                    .then(null, function (err) {
+
+                        console.error(err.toString())
+                    });
         </script>
     </head>
 

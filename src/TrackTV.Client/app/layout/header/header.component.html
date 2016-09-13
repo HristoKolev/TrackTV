@@ -52,8 +52,10 @@
 
                             <a href="/#/manage">
 
-                                <img gravatar-src="identity.username" alt="" title="{{ identity.username }}"
-                                     gravatar-size="40"/>
+                                <img gravatar [email]="identity.username"
+                                     [size]="40"
+                                     alt="{{identity.username}}"
+                                     title="{{ identity.username }}"/>
 
                                 {{ identity.username }}
                             </a>

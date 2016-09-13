@@ -32,7 +32,7 @@ export class ShowService {
 
     public getShow(name : string) : Observable<ShowDetails> {
 
-        let options : RequestOptions = undefined;
+        let options : RequestOptions = null;
 
         if (this.identity.isAuthenticated) {
 
