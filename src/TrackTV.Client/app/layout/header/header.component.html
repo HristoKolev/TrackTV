@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-    <div class="container" id="nav-container">
+    <div class="container nav-container">
 
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -15,7 +15,7 @@
 
                 <ul class="nav navbar-nav">
                     <li>
-                        <a [routerLink]="['/shows']" id="logo-link">
+                        <a [routerLink]="['/shows']" class="logo-link">
                             <img src="/app/assets/logo-image.png" alt="Logo"/>
                         </a>
                     </li>
@@ -42,11 +42,15 @@
 
             <div class="navbar-section pull-right">
 
-                <form id="logoutForm" class="navbar-right" *ngIf="identity.isAuthenticated">
+                <form class="navbar-right" *ngIf="identity.isAuthenticated">
 
                     <ul class="nav navbar-nav navbar-right">
 
-                        <li *ngIf="identity.isAdmin"><a href="/#/admin/manageshows">Admin</a></li>
+                        <li *ngIf="identity.isAdmin">
+
+                            <a href="/#/admin/manageshows">Admin</a>
+
+                        </li>
 
                         <li *ngIf="identity.isAuthenticated">
 
@@ -59,10 +63,13 @@
 
                                 {{ identity.username }}
                             </a>
+
                         </li>
 
                         <li>
+
                             <a [routerLink]="['/logout']">Log off</a>
+
                         </li>
                     </ul>
 
@@ -70,8 +77,8 @@
 
                 <ul class="nav navbar-nav navbar-right" *ngIf="!identity.isAuthenticated">
 
-                    <li><a [routerLink]="['/register']" id="registerLink">Register</a></li>
-                    <li><a [routerLink]="['/login']" id="loginLink">Log in</a></li>
+                    <li><a [routerLink]="['/register']">Register</a></li>
+                    <li><a [routerLink]="['/login']">Log in</a></li>
                 </ul>
             </div>
         </div>

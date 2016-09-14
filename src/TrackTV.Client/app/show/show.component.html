@@ -4,7 +4,7 @@
 
         <img [src]="show.banner" [alt]="show.name" [title]="show.name" class="show-banner"/>
 
-        <div *ngIf="identity.isAuthenticated" id="subscribe-unsubscribe-button">
+        <div *ngIf="identity.isAuthenticated">
 
             <button *ngIf="show.isUserSubscribed"
                     (click)="unsubscribe(show.id)"
