@@ -16,6 +16,7 @@ import {ShowsByGenreResolve} from './shows-by-genre-resolve.service';
 import {ShowsByNameResolve} from './shows-by-name-resolve.service';
 import {SharedModule} from '../shared/shared.module';
 import {showsRouting} from './shows.routes';
+import {ShowsByNameGuard} from './shows-by-name-guard.service';
 
 @NgModule({
     imports: [
@@ -39,11 +40,12 @@ import {showsRouting} from './shows.routes';
     ],
     providers: [
         ShowsService,
-        
+
         ShowsResolve,
         ShowsByGenreResolve,
         ShowsByNetworkResolve,
-        ShowsByNameResolve
+        ShowsByNameResolve,
+        ShowsByNameGuard
     ]
 })
 export class ShowsModule {

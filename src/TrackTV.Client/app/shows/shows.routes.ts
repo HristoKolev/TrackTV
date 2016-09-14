@@ -8,6 +8,7 @@ import {ShowsByNetworkComponent} from './shows-by-network.component';
 import {ShowsByNetworkResolve} from './shows-by-network-resolve.service';
 import {ShowsByNameComponent} from './shows-by-name.component';
 import {ShowsByNameResolve} from './shows-by-name-resolve.service';
+import {ShowsByNameGuard} from './shows-by-name-guard.service';
 
 export const showsRouting : ModuleWithProviders = RouterModule.forChild([
 
@@ -35,6 +36,7 @@ export const showsRouting : ModuleWithProviders = RouterModule.forChild([
     {
         path: 'shows/search/:query',
         component: ShowsByNameComponent,
+        canActivate: [ShowsByNameGuard],
         resolve: {
             model: ShowsByNameResolve
         }
