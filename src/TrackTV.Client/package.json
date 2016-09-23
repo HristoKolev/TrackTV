@@ -4,9 +4,7 @@
   "author": "Hristo Kolev",
   "description": "...",
   "scripts": {
-    "start": "gulp && npm run lite",
-    "postinstall": "typings install && gulp",
-    "lite": "lite-server"
+    "postinstall": "gulp"
   },
   "license": "MIT",
   "dependencies": {
@@ -18,9 +16,16 @@
     "@angular/platform-browser": "2.0.0",
     "@angular/platform-browser-dynamic": "2.0.0",
     "@angular/router": "3.0.0",
+    "@types/core-js": "^0.9.34",
+    "@types/jquery": "^2.0.32",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^6.0.40",
+    "@types/toastr": "^2.1.30",
+    "@types/underscore.string": "0.0.30",
     "bootstrap": "^3.3.6",
     "bootswatch": "^3.3.7",
     "core-js": "^2.4.1",
+    "gulp-typescript": "^2.14.1",
     "jquery": "^3.1.0",
     "moment": "^2.14.1",
     "ng2-gravatar-directive": "^1.4.0",
@@ -36,9 +41,6 @@
     "gulp": "^3.9.1",
     "gulp-less": "^3.1.0",
     "gulp-typescript": "^2.13.6",
-    "gulp-watch": "^4.3.9",
-    "lite-server": "^2.1.0",
-    "systemjs-builder": "^0.15.30",
-    "typings": "^1.3.2"
+    "gulp-watch": "^4.3.9"
   }
 }

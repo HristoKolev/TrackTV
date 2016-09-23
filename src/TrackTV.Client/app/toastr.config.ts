@@ -1,10 +1,8 @@
 import * as toastr from 'toastr';
 
-export function configureToastr() {
+export function configureToastr() : void {
 
-    toastr.options = {
-        closeButton: true,
-        positionClass: 'toast-bottom-left',
-        timeOut: 2000
-    };
+    toastr.options.closeButton = true;
+    toastr.options.positionClass = 'toast-bottom-left';
+    toastr.options.timeOut = 2000;
 }
