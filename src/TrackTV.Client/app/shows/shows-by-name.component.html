@@ -1,6 +1,6 @@
 <div class="shows-container" *ngIf="shows && shows.length">
     <h1 class="text-center show-group-title">
-        Search for '<span class="text-success">{{ query }}</span>'
+        Search for '<span class="search-query">{{ query }}</span>'
     </h1>
 
     <paged-show-list-component [shows]="shows"

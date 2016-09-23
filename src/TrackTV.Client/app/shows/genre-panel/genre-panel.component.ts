@@ -4,7 +4,8 @@ import {Genre} from '../shows.models';
 @Component({
     moduleId: module.id,
     selector: 'genre-panel-component',
-    templateUrl: 'genre-panel.component.html'
+    templateUrl: 'genre-panel.component.html',
+    styleUrls: ['genre-panel.component.css']
 })
 export class GenrePanelComponent {
 

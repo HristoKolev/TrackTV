@@ -5,6 +5,7 @@ import {SimpleShow} from '../shows.models';
     moduleId: module.id,
     selector: 'short-show-component',
     templateUrl: 'short-show.component.html',
+    styleUrls: ['short-show.component.css']
 })
 export class ShortShowComponent {
 

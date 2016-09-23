@@ -5,6 +5,7 @@ import {MyShow} from '../my-shows.models';
     moduleId: module.id,
     selector: 'paged-my-show-list-component',
     templateUrl: 'paged-my-show-list.component.html',
+    styleUrls: ['paged-my-show-list.component.css']
 })
 export class PagedMyShowListComponent {
 

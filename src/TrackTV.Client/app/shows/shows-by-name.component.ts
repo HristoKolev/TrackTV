@@ -6,6 +6,7 @@ import {SearchShows, SimpleShow} from './shows.models';
 @Component({
     moduleId: module.id,
     templateUrl: 'shows-by-name.component.html',
+    styleUrls: ['shows-by-name.component.css']
 })
 export class ShowsByNameComponent implements OnInit {
 
