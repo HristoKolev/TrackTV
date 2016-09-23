@@ -59,11 +59,15 @@
                     </li>
 
                     <li class="list-group-item">
-                        <span *ngIf="show.airTime"> {{ show.airDay + 1 | weekDayName }}s at {{ show.airTime.hours | doubleDigit }}:{{ show.airTime.minutes | doubleDigit }}</span>
 
-                        <span *ngIf="!show.airTime">
-                                No Data
-                            </span>
+                        <span *ngIf="show.airTime">
+
+                            {{ show.airDay + 1 | weekDayName }}s at
+                            {{ show.airTime.hours | doubleDigit }}:{{ show.airTime.minutes | doubleDigit }}
+
+                        </span>
+
+                        <span *ngIf="!show.airTime">No Data</span>
                     </li>
                 </ul>
 
