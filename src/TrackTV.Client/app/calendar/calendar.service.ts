@@ -25,8 +25,6 @@ export class CalendarService {
 
     private getHeaderRoutesInfo(date : Date) : CalendarNavigationInfo {
 
-        date = new Date(date.toString());
-
         const info : CalendarNavigationInfo = {} as CalendarNavigationInfo;
 
         info.thisMonth = this.getMonthRouteInfo(date);
