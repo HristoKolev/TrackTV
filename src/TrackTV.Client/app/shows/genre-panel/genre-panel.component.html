@@ -3,6 +3,7 @@
     <a *ngFor="let genre of genres"
        [routerLink]="['/shows/genre/', genre.userFriendlyId]"
        class="btn btn-default">
+
         {{ genre.name }}
     </a>
 
