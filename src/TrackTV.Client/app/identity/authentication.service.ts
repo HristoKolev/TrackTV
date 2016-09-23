@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
-import {Identity, ApiPath, User} from '../shared/index';
 import {RegisterUser, RegisterError, LoginUser, LoginError} from './authentication.models';
+import {Identity, User} from './identity.service';
+import {ApiPath} from '../shared/apiPath.service';
 
 @Injectable()
 export class Authentication {

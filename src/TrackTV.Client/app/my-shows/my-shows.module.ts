@@ -8,12 +8,14 @@ import {MyShowsComponent} from './my-shows.component';
 import {MyShowsResolve} from './my-shows-resolve.service';
 import {SharedModule} from '../shared/shared.module';
 import {myShowsRouting} from './my-shows.routes';
+import {IdentityModule} from '../identity/identity.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
-        myShowsRouting
+        myShowsRouting,
+        IdentityModule
     ],
     declarations: [
 
@@ -21,7 +23,6 @@ import {myShowsRouting} from './my-shows.routes';
         MyEpisodeComponent,
         PagedMyShowListComponent,
         MyShowsComponent,
-
     ],
     providers: [
         MyShowsService,

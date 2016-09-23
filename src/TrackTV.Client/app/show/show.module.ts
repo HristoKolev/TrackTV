@@ -8,11 +8,13 @@ import {ShowService} from './show.service';
 import {ShowResolve} from './show-resolve.service';
 import {showRouting} from './show.routes';
 import {SharedModule} from '../shared/shared.module';
+import {IdentityModule} from '../identity/identity.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
+        IdentityModule,
         showRouting
     ],
     declarations: [

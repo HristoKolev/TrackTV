@@ -3,7 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import * as toastr from 'toastr';
 import {MyShow, MyShows} from './my-shows.models';
 import {MyShowsService} from './my-shows.service';
-import {SubscriptionService} from '../shared/index';
+import {SubscriptionService} from '../shared/subscription.service';
+
 
 @Component({
     moduleId: module.id,

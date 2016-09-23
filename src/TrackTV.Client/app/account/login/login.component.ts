@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import * as toastr from 'toastr';
-import {Authentication} from '../authentication.service';
-import {LoginUser, LoginError} from '../authentication.models';
+import {Authentication} from '../../identity/authentication.service';
+import {LoginUser, LoginError} from '../../identity/authentication.models';
 
 @Component({
     moduleId: module.id,

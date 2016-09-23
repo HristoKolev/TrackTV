@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs';
-import {ApiPath, Identity} from '../shared/index';
 import {MyShows} from './my-shows.models';
+import {ApiPath} from '../shared/apiPath.service';
+import {Identity} from '../identity/identity.service';
 
 @Injectable()
 export class MyShowsService {

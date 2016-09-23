@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RequestOptions, Headers} from '@angular/http';
-import {PersistentContainer, PersistentContainerKey} from './persistentContainer';
+import {PersistentContainer, PersistentContainerKey} from '../shared/persistentContainer';
 
 export interface User {
 
@@ -60,7 +60,8 @@ export class Identity {
                 case 'False':
                     return false;
                 default:
-                    throw Error('The property "isInAdminRole" is not present or has no valid value. Value: ' + isInAdminRole);
+                    throw Error('The property "isInAdminRole" is not present or has no valid value. ' +
+                        'Value: ' + isInAdminRole);
             }
         } else {
             return false;

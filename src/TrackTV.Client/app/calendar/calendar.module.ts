@@ -7,11 +7,13 @@ import {CalendarComponent} from './calendar.component';
 import {MonthName} from './monthName.pipe';
 import {ShortDate} from './shortDate';
 import {calendarRouting} from './calendar.routes';
+import {IdentityModule} from '../identity/identity.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
+        IdentityModule,
         calendarRouting
     ],
     declarations: [

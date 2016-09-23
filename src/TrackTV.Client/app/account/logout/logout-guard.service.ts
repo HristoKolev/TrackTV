@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import * as toastr from 'toastr';
-import {Authentication} from '../authentication.service';
-import {Identity} from '../../shared/index';
+import {Authentication} from '../../identity/authentication.service';
+import {Identity} from '../../identity/identity.service';
+
 
 @Injectable()
 export class LogoutGuard implements CanActivate {

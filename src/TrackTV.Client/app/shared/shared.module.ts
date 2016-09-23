@@ -1,30 +1,25 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {DoubleDigit} from './doubleDigit.pipe';
 import {PersistentContainer} from './persistentContainer';
 import {LocalStorageContainer} from './localStorageContainer';
 import {ApiPath} from './apiPath.service';
-import {AuthGuard} from './auth-guard.service';
-import {Identity} from './identity.service';
 import {SubscriptionService} from './subscription.service';
 import {Ng2PaginationModule, PaginationControlsCmp, PaginatePipe} from 'ng2-pagination';
+import {IdentityModule} from '../identity/identity.module';
 
 @NgModule({
     imports: [
-        BrowserModule,
         HttpModule,
-        Ng2PaginationModule
+        Ng2PaginationModule,
+        IdentityModule
     ],
     declarations: [
         DoubleDigit
-
     ],
     providers: [
         {provide: PersistentContainer, useClass: LocalStorageContainer},
         ApiPath,
-        AuthGuard,
-        Identity,
         SubscriptionService
     ],
     exports: [
