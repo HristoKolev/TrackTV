@@ -23,7 +23,8 @@
     padding: 4px;
 }
 
-table a.calendar-episode-link:not(.btn), .table a.calendar-episode-link:not(.btn) {
+table a.calendar-episode-link:not(.btn),
+.table a.calendar-episode-link:not(.btn) {
     color: #5ea0a4;
     font-size: 13px;
     text-decoration: none;
@@ -61,4 +62,14 @@ table a.calendar-episode-link:not(.btn), .table a.calendar-episode-link:not(.btn
 .calendar-year {
 
     min-height: 25px;
+}
+
+.previous-month-link::before {
+
+    content: '«';
+}
+
+.next-month-link::after {
+
+    content: '»';
 }

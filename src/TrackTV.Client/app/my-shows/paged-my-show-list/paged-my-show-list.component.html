@@ -38,13 +38,13 @@
                 <td class="col-md-3">
                     <button *ngIf="show.subscribed"
                             (click)="unsubscribe.emit(show)"
-                            class="btn btn-danger my-show-unsubscribe-button btn-subscribtion">
+                            class="btn btn-danger my-show-unsubscribe-button btn-subscription">
                         Unsubscribe
                     </button>
 
                     <button *ngIf="!show.subscribed"
                             (click)="subscribe.emit(show)"
-                            class="btn btn-danger btn-subscribtion">
+                            class="btn btn-danger btn-subscription">
                         Undo
                     </button>
                 </td>

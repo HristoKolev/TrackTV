@@ -3,8 +3,8 @@
     <div class="month-list center-block row">
 
         <a [routerLink]="['/calendar', navigationInfo.previosMonth.year, navigationInfo.previosMonth.month]"
-           class="col-sm-4 month-link">
-            « {{ navigationInfo.previosMonth.month | monthName }}
+           class="col-sm-4 month-link previous-month-link">
+            {{ navigationInfo.previosMonth.month | monthName }}
         </a>
 
         <span class="col-sm-4 current-month">
@@ -12,8 +12,8 @@
         </span>
 
         <a [routerLink]="['/calendar', navigationInfo.nextMonth.year, navigationInfo.nextMonth.month]"
-           class="col-sm-4 month-link">
-            {{ navigationInfo.nextMonth.month | monthName }} »
+           class="col-sm-4 month-link next-month-link">
+            {{ navigationInfo.nextMonth.month | monthName }}
         </a>
 
     </div>
@@ -24,13 +24,14 @@
 
         <thead>
             <tr>
-                <th *ngFor="let day of daysOfWeek" class="col-md-1 danger text-center"> {{ day }}</th>
+                <th *ngFor="let day of daysOfWeek" class="danger text-center col-md-1"> {{ day }}</th>
             </tr>
         </thead>
 
         <tbody>
 
             <tr *ngFor="let week of weeks">
+
                 <td *ngFor="let day of week" class="calendar-day" [class.calendar-today]="isToday(day.date)">
 
                     <div class="calendar-date"> {{ day.date | shortDate }}</div>

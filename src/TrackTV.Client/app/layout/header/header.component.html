@@ -16,14 +16,22 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a [routerLink]="['/calendar']" class="logo-link">
+
                             <img src="/assets/logo-image.png" alt="Logo"/>
                         </a>
                     </li>
 
-                    <li *ngIf="identity.isAuthenticated"><a [routerLink]="['/calendar']">Calendar</a></li>
-                    <li *ngIf="identity.isAuthenticated"><a [routerLink]="['/myshows']">My Shows</a></li>
+                    <li *ngIf="identity.isAuthenticated">
+                        <a [routerLink]="['/calendar']">Calendar</a>
+                    </li>
 
-                    <li><a [routerLink]="['/shows']">Browse</a></li>
+                    <li *ngIf="identity.isAuthenticated">
+                        <a [routerLink]="['/myshows']">My Shows</a>
+                    </li>
+
+                    <li>
+                        <a [routerLink]="['/shows']">Browse</a>
+                    </li>
 
                     <li>
                         <form class="navbar-form navbar-left search-form">
@@ -47,29 +55,25 @@
                     <ul class="nav navbar-nav navbar-right">
 
                         <li *ngIf="identity.isAdmin">
-
                             <a href="/#/admin/manageshows">Admin</a>
-
                         </li>
 
                         <li *ngIf="identity.isAuthenticated">
 
                             <a href="/#/manage">
 
-                                <img gravatar [email]="identity.username"
+                                <img gravatar
+                                     [email]="identity.username"
                                      [size]="40"
                                      title="{{ identity.username }}"
                                      class="avatar">
 
                                 {{ identity.username }}
                             </a>
-
                         </li>
 
                         <li>
-
                             <a (click)="logout($event)" class="btn">Log off</a>
-
                         </li>
                     </ul>
 
