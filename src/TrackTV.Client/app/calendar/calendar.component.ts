@@ -10,10 +10,12 @@ import {ResolveData} from '../shared/router.models';
 })
 export class CalendarComponent implements OnInit {
 
+    //noinspection JSMismatchedCollectionQueryUpdate
     private weeks : CalendarDay[][];
 
     private navigationInfo : CalendarNavigationInfo;
 
+    //noinspection JSMismatchedCollectionQueryUpdate
     private readonly daysOfWeek : string[] = [
         'Monday',
         'Tuesday',
