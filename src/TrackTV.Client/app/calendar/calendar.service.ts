@@ -8,7 +8,7 @@ import {Identity} from '../identity/identity.service';
 @Injectable()
 export class CalendarService {
 
-    private calendar : (path : string) => string = this.apiPath.service('/calendar');
+    private readonly calendar : (path : string) => string = this.apiPath.service('/calendar');
 
     constructor(private apiPath : ApiPath,
                 private identity : Identity,

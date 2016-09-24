@@ -4,7 +4,7 @@ import * as s from 'underscore.string';
 @Pipe({name: 'shortDate'})
 export class ShortDate implements PipeTransform {
 
-    private monthNames : string[] = [
+    private readonly monthNames : string[] = [
         'January',
         'February',
         'March',
@@ -19,7 +19,7 @@ export class ShortDate implements PipeTransform {
         'December'
     ];
 
-    transform(date : Date, ...args : any[]) : string {
+    public transform(date : Date, ...args : any[]) : string {
 
         const monthName = this.monthNames[date.getMonth()].substr(0, 3);
 

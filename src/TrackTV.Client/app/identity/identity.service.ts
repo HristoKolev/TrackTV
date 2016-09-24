@@ -14,7 +14,7 @@ export interface User {
 @Injectable()
 export class Identity {
 
-    private storage : PersistentContainerKey<User>;
+    private readonly storage : PersistentContainerKey<User>;
 
     constructor(container : PersistentContainer<User>) {
 

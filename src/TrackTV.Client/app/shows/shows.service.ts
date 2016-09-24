@@ -11,7 +11,7 @@ export class ShowsService {
                 private apiPath : ApiPath) {
     }
 
-    private shows : (path : string) => string = this.apiPath.service('/shows');
+    private readonly shows : (path : string) => string = this.apiPath.service('/shows');
 
     private addBaseUrl(shows : SimpleShow[]) : void {
 

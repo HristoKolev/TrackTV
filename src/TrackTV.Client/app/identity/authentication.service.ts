@@ -8,7 +8,7 @@ import {ApiPath} from '../shared/apiPath.service';
 @Injectable()
 export class Authentication {
 
-    private account : (arg : string) => string = this.apiPath.service('/account');
+    private readonly account : (arg : string) => string = this.apiPath.service('/account');
 
     constructor(private http : Http,
                 private identity : Identity,
@@ -19,7 +19,7 @@ export class Authentication {
 
         const array : string[] = [];
 
-        for (let key in source) {
+        for (const key in source) {
 
             //noinspection JSUnfilteredForInLoop
             array.push(encodeURIComponent(key) + "=" + encodeURIComponent(source[key]));

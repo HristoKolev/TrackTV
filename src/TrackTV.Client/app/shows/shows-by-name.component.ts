@@ -18,7 +18,7 @@ export class ShowsByNameComponent implements OnInit {
 
     private currentPage : number;
 
-    private pageSize : number = 24;
+    private readonly pageSize : number = 24;
 
     constructor(private showsService : ShowsService,
                 private route : ActivatedRoute) {

@@ -3,9 +3,9 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class ApiPath {
 
-    private baseServiceUrl : string = 'http://localhost:5050';
+    private readonly baseServiceUrl : string = 'http://localhost:5050';
 
-    private baseApiPath : string = this.baseServiceUrl + '/api';
+    private readonly baseApiPath : string = this.baseServiceUrl + '/api';
 
     public get loginPath() : string {
 

@@ -16,7 +16,7 @@ export class MyShowsComponent implements OnInit {
 
     private ended : MyShows;
 
-    private pageSize : number = 10;
+    private readonly pageSize : number = 10;
 
     private currentContinuingPage : number = 1;
 

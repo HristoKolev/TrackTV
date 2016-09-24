@@ -8,9 +8,9 @@ import {ApiPath} from '../shared/apiPath.service';
 @Injectable()
 export class ShowService {
 
-    private show : (path : string) => string = this.apiPath.service('/show');
+    private readonly show : (path : string) => string = this.apiPath.service('/show');
 
-    private baseUrl : string = this.apiPath.path();
+    private readonly baseUrl : string = this.apiPath.path();
 
     constructor(private identity : Identity,
                 private apiPath : ApiPath,

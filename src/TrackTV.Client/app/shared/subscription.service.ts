@@ -12,7 +12,7 @@ export class SubscriptionService {
                 private  identity : Identity) {
     }
 
-    private subscription : (path : string) => string = this.apiPath.service('/subscription');
+    private readonly subscription : (path : string) => string = this.apiPath.service('/subscription');
 
     public subscribe(id : number) : Observable<Response> {
 

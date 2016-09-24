@@ -14,7 +14,7 @@ export class CalendarComponent implements OnInit {
 
     private navigationInfo : CalendarNavigationInfo;
 
-    private daysOfWeek : string[] = [
+    private readonly daysOfWeek : string[] = [
         'Monday',
         'Tuesday',
         'Wednesday',

@@ -14,7 +14,7 @@ export class MyShowsService {
 
     }
 
-    private myShows : (path : string) => string = this.apiPath.service('/myshows');
+    private readonly myShows : (path : string) => string = this.apiPath.service('/myshows');
 
     public continuing(page = 1) : Observable<MyShows> {
 

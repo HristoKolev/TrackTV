@@ -3,7 +3,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 @Pipe({name: 'weekDayName'})
 export class WeekDayName implements PipeTransform {
 
-    private daysOfWeek = [
+    private readonly daysOfWeek = [
         'Monday',
         'Tuesday',
         'Wednesday',
