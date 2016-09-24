@@ -35,20 +35,30 @@ export class Authentication {
         return new RequestOptions({headers: new Headers(headers)});
     }
 
+    private parseSignupError(error : any) : RegisterError {
+
+        if (error.modelState && error.modelState['model.Password']) {
+
+            return RegisterError.InvalidPassword;
+        }
+
+        return RegisterError.ServerError;
+    }
+
     public signup(user : RegisterUser) : Observable<Response> {
 
         return this.http.post(this.account('/register'), this.queryParams(user), this.urlEncodedOptions)
-            .catch((err : Response) => {
+            .catch((res : Response) => Observable.throw(this.parseSignupError(res.json())));
+    }
 
-                const errorData = err.json();
+    private parseLoginError(error : any) : LoginError {
 
-                if (errorData.modelState && errorData.modelState['model.Password']) {
+        if (error && error.error_description === 'The user name or password is incorrect.') {
 
-                    return Observable.throw(RegisterError.InvalidPassword);
-                }
+            return LoginError.InvalidCredentials;
+        }
 
-                return Observable.throw(RegisterError.ServerError);
-            });
+        return LoginError.ServerError;
     }
 
     public login(user : LoginUser) : Observable<User> {
@@ -64,17 +74,7 @@ export class Authentication {
 
                 return user;
             })
-            .catch((res : Response) => {
-
-                const error = res.json();
-
-                if (error && error.error_description === 'The user name or password is incorrect.') {
-
-                    return Observable.throw(LoginError.InvalidCredentials);
-                }
-
-                return Observable.throw(LoginError.ServerError);
-            });
+            .catch((res : Response) => Observable.throw(this.parseLoginError(res.json())));
     }
 
     public logout() : Observable<Response> {
