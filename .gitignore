@@ -207,7 +207,7 @@ src/TrackTV.WebClient/dist/
 
 **/project.lock.json
 
-typings/
+.idea/
 
 **/app/**/*.js
 **/app/**/*.js.map
