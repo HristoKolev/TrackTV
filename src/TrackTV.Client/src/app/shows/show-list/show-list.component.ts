@@ -9,5 +9,5 @@ import {SimpleShow} from '../shows.models';
 export class ShowListComponent {
 
     @Input()
-    private shows : SimpleShow[];
+    public shows : SimpleShow[];
 }

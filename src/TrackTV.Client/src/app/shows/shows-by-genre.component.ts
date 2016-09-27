@@ -8,9 +8,9 @@ import {SimpleShows} from './shows.models';
 })
 export class ShowsByGenreComponent {
 
-    private shows : SimpleShows;
+    public shows : SimpleShows;
 
-    private genre : string;
+    public genre : string;
 
     constructor(private route : ActivatedRoute) {
     }

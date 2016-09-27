@@ -11,11 +11,11 @@ import {Identity} from '../identity/identity.service';
 })
 export class ShowComponent implements OnInit {
 
-    private show : ShowDetails;
+    public show : ShowDetails;
 
     constructor(private subscriptionService : SubscriptionService,
                 private route : ActivatedRoute,
-                private identity : Identity) {
+                public identity : Identity) {
     }
 
     private subscribe(id : number) : void {

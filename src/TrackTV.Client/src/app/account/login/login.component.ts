@@ -11,7 +11,7 @@ import {LoginUser, LoginError} from '../../identity/authentication.models';
 })
 export class LoginComponent implements OnInit {
 
-    private loginForm : FormGroup;
+    public loginForm : FormGroup;
 
     constructor(private router : Router,
                 private authentication : Authentication) {
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/shows']);
     }
 
-    private login() : void {
+    public login() : void {
 
         this.authentication.login(this.loginForm.getRawValue() as LoginUser)
             .subscribe(() => this.onSuccessfulLogin(), (error : LoginError) => this.notifyLoginError(error));

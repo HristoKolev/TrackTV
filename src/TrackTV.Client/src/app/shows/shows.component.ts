@@ -9,7 +9,7 @@ import {SimpleShows} from './shows.models';
 })
 export class ShowsComponent implements OnInit {
 
-    private shows : SimpleShows;
+    public shows : SimpleShows;
 
     constructor(private route : ActivatedRoute) {
     }

@@ -214,4 +214,5 @@ src/TrackTV.WebClient/dist/
 **/app/**/*.css
 
 .awcache/
-src/compiled/
+**/src/compiled/
+dist/

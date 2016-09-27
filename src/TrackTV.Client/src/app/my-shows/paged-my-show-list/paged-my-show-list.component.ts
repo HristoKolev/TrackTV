@@ -10,31 +10,31 @@ import {MyShow} from '../my-shows.models';
 export class PagedMyShowListComponent {
 
     @Input()
-    private shows : MyShow[];
+    public shows : MyShow[];
 
     @Input()
-    private totalCount : number;
+    public totalCount : number;
 
     @Input()
-    private currentPage : number;
+    public currentPage : number;
 
     @Input()
-    private pageSize : number;
+    public pageSize : number;
 
     @Input()
-    private showNextEpisode : boolean = true;
+    public showNextEpisode : boolean = true;
 
     @Input()
-    private paginationId : string;
+    public paginationId : string;
 
     @Output()
-    private pageChange : EventEmitter<number> = new EventEmitter<number>();
+    public pageChange : EventEmitter<number> = new EventEmitter<number>();
 
     @Output()
-    private subscribe : EventEmitter<MyShow> = new EventEmitter<MyShow>();
+    public subscribe : EventEmitter<MyShow> = new EventEmitter<MyShow>();
 
     @Output()
-    private unsubscribe : EventEmitter<MyShow> = new EventEmitter<MyShow>();
+    public unsubscribe : EventEmitter<MyShow> = new EventEmitter<MyShow>();
 
     private get paginationConfig() : any {
 

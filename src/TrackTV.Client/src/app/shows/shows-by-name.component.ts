@@ -10,7 +10,7 @@ import {SearchShows, SimpleShow} from './shows.models';
 })
 export class ShowsByNameComponent implements OnInit {
 
-    private shows : SimpleShow[];
+    public shows : SimpleShow[];
 
     private totalCount : number;
 

@@ -10,5 +10,5 @@ import {SimpleShow} from '../shows.models';
 export class ShortShowComponent {
 
     @Input()
-    private show : SimpleShow;
+    public show : SimpleShow;
 }

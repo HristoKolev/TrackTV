@@ -1,15 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RequestOptions, Headers} from '@angular/http';
 import {PersistentContainer, PersistentContainerKey} from '../shared/persistentContainer';
-
-export interface User {
-
-    access_token : string;
-
-    userName : string;
-
-    isInAdminRole : string;
-}
+import {User} from './identity.models';
 
 @Injectable()
 export class Identity {
@@ -18,7 +10,7 @@ export class Identity {
 
     constructor(container : PersistentContainer<User>) {
 
-        this.storage = new PersistentContainerKey(container, 'user');
+        this.storage = new PersistentContainerKey<User>(container, 'user');
     }
 
     private get user() : User {

@@ -12,10 +12,12 @@ import * as toastr from 'toastr';
 })
 export class HeaderComponent {
 
-    constructor(private identity : Identity,
+    constructor(public identity : Identity,
                 private authentication : Authentication,
                 private router : Router) {
     }
+
+    public query : string;
 
     public logout($event : Event) {
 
@@ -31,4 +33,5 @@ export class HeaderComponent {
 
         this.router.navigate(['/shows']);
     }
+
 }

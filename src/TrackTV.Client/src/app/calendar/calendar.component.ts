@@ -11,7 +11,7 @@ import {ResolveData} from '../shared/router.models';
 export class CalendarComponent implements OnInit {
 
     //noinspection JSMismatchedCollectionQueryUpdate
-    private weeks : CalendarDay[][];
+    public weeks : CalendarDay[][];
 
     private navigationInfo : CalendarNavigationInfo;
 

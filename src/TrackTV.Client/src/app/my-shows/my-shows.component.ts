@@ -12,9 +12,9 @@ import {SubscriptionService} from '../shared/subscription.service';
 })
 export class MyShowsComponent implements OnInit {
 
-    private continuing : MyShows;
+    public continuing : MyShows;
 
-    private ended : MyShows;
+    public ended : MyShows;
 
     private readonly pageSize : number = 10;
 

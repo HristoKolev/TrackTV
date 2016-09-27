@@ -11,7 +11,7 @@ import {RegisterError, RegisterUser} from '../../identity/authentication.models'
 })
 export class RegisterComponent implements OnInit {
 
-    private registerForm : FormGroup;
+    public registerForm : FormGroup;
 
     constructor(private router : Router,
                 private authentication : Authentication) {
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
         toastr.error(message);
     }
 
-    private register() {
+    public register() {
 
         this.authentication.signup(this.registerForm.getRawValue() as RegisterUser)
             .subscribe(

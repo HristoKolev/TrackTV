@@ -9,5 +9,5 @@ import {SimpleEpisode} from '../my-shows.models';
 export class MyEpisodeComponent {
 
     @Input()
-    private episode : SimpleEpisode;
+    public episode : SimpleEpisode;
 }

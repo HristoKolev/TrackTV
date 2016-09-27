@@ -9,7 +9,7 @@ import {NetworkShows, SimpleShow} from './shows.models';
 })
 export class ShowsByNetworkComponent implements OnInit {
 
-    private shows : SimpleShow[];
+    public shows : SimpleShow[];
 
     private totalCount : number;
 

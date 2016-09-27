@@ -10,19 +10,19 @@ import {SimpleShow} from '../shows.models';
 export class PagedShowListComponent {
 
     @Input()
-    private shows : SimpleShow[];
+    public shows : SimpleShow[];
 
     @Input()
-    private totalCount : number;
+    public totalCount : number;
 
     @Input()
-    private currentPage : number;
+    public currentPage : number;
 
     @Input()
-    private pageSize : number;
+    public pageSize : number;
 
     @Output()
-    private pageChange : EventEmitter<number> = new EventEmitter<number>();
+    public pageChange : EventEmitter<number> = new EventEmitter<number>();
 
     private get paginationConfig() : any {
 

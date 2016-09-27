@@ -9,13 +9,15 @@ import {MyShowsResolve} from './my-shows-resolve.service';
 import {SharedModule} from '../shared/shared.module';
 import {myShowsRouting} from './my-shows.routes';
 import {IdentityModule} from '../identity/identity.module';
+import {Ng2PaginationModule} from '../ng2-pagination';
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
         myShowsRouting,
-        IdentityModule
+        IdentityModule,
+        Ng2PaginationModule
     ],
     declarations: [
 

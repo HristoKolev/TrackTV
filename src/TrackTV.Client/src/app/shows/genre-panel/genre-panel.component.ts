@@ -10,5 +10,5 @@ import {Genre} from '../shows.models';
 export class GenrePanelComponent {
 
     @Input()
-    private genres : Genre[];
+    public genres : Genre[];
 }
