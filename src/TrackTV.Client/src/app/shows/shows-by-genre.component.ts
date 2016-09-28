@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {SimpleShows} from './shows.models';
+import {SimpleShows, ShowsByGenreModel} from './shows.models';
+import {ResolveData} from '../shared/router.models';
 
 @Component({
     moduleId: module.id,
@@ -17,7 +18,7 @@ export class ShowsByGenreComponent {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {model : {shows : SimpleShows, genre : string}}) => {
+        this.route.data.forEach((data : ResolveData<ShowsByGenreModel>) => {
 
             this.shows = data.model.shows;
             this.genre = data.model.genre

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ShowsService} from './shows.service';
-import {SearchShows, SimpleShow} from './shows.models';
+import {SearchShowsModel, SimpleShow} from './shows.models';
+import {ResolveData} from '../shared/router.models';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +28,7 @@ export class ShowsByNameComponent implements OnInit {
     private getPage(page : number = 1) {
 
         this.showsService.search(this.query, page)
-            .subscribe((data : SearchShows) => {
+            .subscribe((data : SearchShowsModel) => {
 
                 this.populateShows(data);
 
@@ -35,7 +36,7 @@ export class ShowsByNameComponent implements OnInit {
             });
     }
 
-    private populateShows(data : SearchShows) {
+    private populateShows(data : SearchShowsModel) {
 
         this.shows = data.shows || [];
         this.totalCount = data.count;
@@ -44,7 +45,7 @@ export class ShowsByNameComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {model : SearchShows}) => {
+        this.route.data.forEach((data : ResolveData<SearchShowsModel>) => {
 
             this.populateShows(data.model);
         });

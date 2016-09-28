@@ -29,7 +29,12 @@ export interface SimpleShows {
     genres : Genre[];
 }
 
-export interface SearchShows {
+export interface ShowsModel {
+
+    shows : SimpleShows,
+}
+
+export interface SearchShowsModel {
 
     count : number;
 
@@ -38,7 +43,7 @@ export interface SearchShows {
     query : string;
 }
 
-export interface NetworkShows {
+export interface NetworkShowsModel {
 
     count : number;
 
@@ -47,4 +52,9 @@ export interface NetworkShows {
     networkName : string;
 }
 
+export interface ShowsByGenreModel {
 
+    shows : SimpleShows,
+
+    genre : string
+}

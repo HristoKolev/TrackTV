@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import {SimpleShows, SimpleShow, NetworkShows, SearchShows} from './shows.models';
+import {SimpleShows, SimpleShow, NetworkShowsModel, SearchShowsModel} from './shows.models';
 import {ApiPath} from '../shared/apiPath.service';
 
 @Injectable()
@@ -58,13 +58,13 @@ export class ShowsService {
             .map(res => this.parseSimpleShows(res));
     }
 
-    public search(query : string, page : number = 1) : Observable<SearchShows> {
+    public search(query : string, page : number = 1) : Observable<SearchShowsModel> {
 
         return this.http.get(this.shows('/search/' + query + '/' + page), null)
             .map(res => this.parseSimpleShows(res));
     }
 
-    public network(name : string, page : number = 1) : Observable<NetworkShows> {
+    public network(name : string, page : number = 1) : Observable<NetworkShowsModel> {
 
         return this.http.get(this.shows('/network/' + name + '/' + page), null)
             .map(res => this.parseSimpleShows(res));

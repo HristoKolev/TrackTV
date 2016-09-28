@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {SimpleShows} from './shows.models';
+import {SimpleShows, ShowsModel} from './shows.models';
+import {ResolveData} from '../shared/router.models';
 
 @Component({
     moduleId: module.id,
@@ -16,9 +17,9 @@ export class ShowsComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {model : SimpleShows}) => {
+        this.route.data.forEach((data : ResolveData<ShowsModel>) => {
 
-            this.shows = data.model;
+            this.shows = data.model.shows;
         });
     }
 }

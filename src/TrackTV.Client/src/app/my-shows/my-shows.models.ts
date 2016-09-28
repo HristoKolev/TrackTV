@@ -30,3 +30,10 @@ export interface SimpleEpisode {
 
     title : string;
 }
+
+export interface MyShowsModel {
+
+    continuing : MyShows,
+
+    ended : MyShows
+}

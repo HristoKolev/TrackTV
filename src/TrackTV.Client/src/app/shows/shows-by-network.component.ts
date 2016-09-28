@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ShowsService} from './shows.service';
-import {NetworkShows, SimpleShow} from './shows.models';
+import {NetworkShowsModel, SimpleShow} from './shows.models';
+import {ResolveData} from '../shared/router.models';
 
 @Component({
     moduleId: module.id,
@@ -23,7 +24,7 @@ export class ShowsByNetworkComponent implements OnInit {
                 private route : ActivatedRoute) {
     }
 
-    private populateShows(data : NetworkShows) {
+    private populateShows(data : NetworkShowsModel) {
 
         this.shows = data.shows || [];
         this.totalCount = data.count;
@@ -33,7 +34,7 @@ export class ShowsByNetworkComponent implements OnInit {
     private getPage(page : number = 1) : void {
 
         this.showsService.network(this.network, page)
-            .subscribe((data : NetworkShows) => {
+            .subscribe((data : NetworkShowsModel) => {
 
                 this.populateShows(data);
 
@@ -43,7 +44,7 @@ export class ShowsByNetworkComponent implements OnInit {
 
     public ngOnInit() : any {
 
-        this.route.data.forEach((data : {model : NetworkShows}) => {
+        this.route.data.forEach((data : ResolveData<NetworkShowsModel>) => {
 
             this.populateShows(data.model)
         });

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as toastr from 'toastr';
-import {MyShow, MyShows} from './my-shows.models';
+import {MyShow, MyShows, MyShowsModel} from './my-shows.models';
 import {MyShowsService} from './my-shows.service';
 import {SubscriptionService} from '../shared/subscription.service';
-
+import {ResolveData} from '../shared/router.models';
 
 @Component({
     moduleId: module.id,
@@ -69,7 +69,7 @@ export class MyShowsComponent implements OnInit {
 
     public ngOnInit() : void {
 
-        this.route.data.forEach((data : {model : {continuing : MyShows, ended : MyShows}}) => {
+        this.route.data.forEach((data : ResolveData<MyShowsModel>) => {
 
             this.continuing = data.model.continuing;
             this.ended = data.model.ended;
