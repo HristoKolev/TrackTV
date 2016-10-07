@@ -17,7 +17,7 @@ import {ShowsByNameResolve} from './shows-by-name-resolve.service';
 import {SharedModule} from '../shared/shared.module';
 import {showsRouting} from './shows.routes';
 import {ShowsByNameGuard} from './shows-by-name-guard.service';
-import {Ng2PaginationModule} from '../ng2-pagination';
+import {Ng2PaginationModule} from 'ng2-pagination';
 
 @NgModule({
     imports: [
