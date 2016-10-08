@@ -2,7 +2,7 @@
     Current Shows ({{ continuing.count }})
 </h1>
 
-<paged-my-show-list-component
+<paged-my-show-list
         *ngIf="continuing"
 
         [pageSize]="pageSize"
@@ -16,13 +16,13 @@
         [paginationId]="'continuingShows'"
         (pageChange)="getContinuing($event)">
 
-</paged-my-show-list-component>
+</paged-my-show-list>
 
 <h1 *ngIf="ended" class="text-center show-group-title">
     <span class="ended-word">Ended</span> Shows({{ ended.count }})
 </h1>
 
-<paged-my-show-list-component
+<paged-my-show-list
         *ngIf="ended"
 
         [pageSize]="pageSize"
@@ -36,4 +36,4 @@
         [paginationId]="'endedShows'"
         (pageChange)="getEnded($event)">
 
-</paged-my-show-list-component>
+</paged-my-show-list>

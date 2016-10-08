@@ -2,12 +2,12 @@
 
     <div class="row">
 
-        <short-show-component
+        <short-show
                 *ngFor="let show of shows | paginate: paginationConfig"
                 class="text-center col-md-3"
                 [show]="show">
 
-        </short-show-component>
+        </short-show>
 
     </div>
 

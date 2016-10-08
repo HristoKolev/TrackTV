@@ -3,7 +3,7 @@ import {SimpleShow} from '../shows.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'paged-show-list-component',
+    selector: 'paged-show-list',
     templateUrl: 'paged-show-list.component.html',
 
 })

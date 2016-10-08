@@ -6,9 +6,9 @@ import * as toastr from 'toastr';
 
 @Component({
     moduleId: module.id,
-    selector: 'header-component',
-    templateUrl: 'header.component.html',
-    styleUrls: ['header.component.css']
+    selector: 'site-header',
+    templateUrl: 'site-header.component.html',
+    styleUrls: ['site-header.component.css']
 })
 export class HeaderComponent {
 

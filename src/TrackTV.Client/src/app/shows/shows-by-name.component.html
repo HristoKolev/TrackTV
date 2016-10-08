@@ -3,12 +3,12 @@
         Search for '<span class="search-query">{{ query }}</span>'
     </h1>
 
-    <paged-show-list-component [shows]="shows"
+    <paged-show-list [shows]="shows"
                                [totalCount]="totalCount"
                                [currentPage]="currentPage"
                                [pageSize]="pageSize"
                                (pageChange)="getPage($event)">
-    </paged-show-list-component>
+    </paged-show-list>
 </div>
 
 

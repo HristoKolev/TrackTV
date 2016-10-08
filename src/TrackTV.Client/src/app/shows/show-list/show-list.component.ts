@@ -3,7 +3,7 @@ import {SimpleShow} from '../shows.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'show-list-component',
+    selector: 'show-list',
     templateUrl: 'show-list.component.html',
 })
 export class ShowListComponent {

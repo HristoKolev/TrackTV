@@ -3,7 +3,7 @@ import {SimpleShow} from '../shows.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'short-show-component',
+    selector: 'short-show',
     templateUrl: 'short-show.component.html',
     styleUrls: ['short-show.component.css']
 })

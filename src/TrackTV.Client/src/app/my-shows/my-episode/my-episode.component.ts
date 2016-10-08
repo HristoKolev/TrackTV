@@ -3,7 +3,7 @@ import {SimpleEpisode} from '../my-shows.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'my-episode-component',
+    selector: 'my-episode',
     templateUrl: 'my-episode.component.html',
 })
 export class MyEpisodeComponent {

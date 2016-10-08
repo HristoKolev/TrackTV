@@ -3,12 +3,12 @@
         Shows on '<span class="text-success">{{ network }}</span>'
     </h1>
 
-    <paged-show-list-component [shows]="shows"
+    <paged-show-list [shows]="shows"
                                [totalCount]="totalCount"
                                [currentPage]="currentPage"
                                [pageSize]="pageSize"
                                (pageChange)="getPage($event)">
-    </paged-show-list-component>
+    </paged-show-list>
 </div>
 
 <div class="shows-container" *ngIf="shows && !shows.length">

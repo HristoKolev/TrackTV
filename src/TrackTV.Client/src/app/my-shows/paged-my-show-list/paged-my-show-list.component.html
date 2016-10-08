@@ -24,14 +24,14 @@
 
                 <td class="col-md-3">
 
-                    <my-episode-component *ngIf="show.lastEpisode"
-                                          [episode]="show.lastEpisode"></my-episode-component>
+                    <my-episode *ngIf="show.lastEpisode"
+                                          [episode]="show.lastEpisode"></my-episode>
                 </td>
 
                 <td class="col-md-3">
 
-                    <my-episode-component *ngIf="showNextEpisode && show.nextEpisode"
-                                          [episode]="show.nextEpisode"></my-episode-component>
+                    <my-episode *ngIf="showNextEpisode && show.nextEpisode"
+                                          [episode]="show.nextEpisode"></my-episode>
                 </td>
 
 

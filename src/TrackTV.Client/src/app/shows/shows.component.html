@@ -1,13 +1,13 @@
 ﻿﻿
 <div class="shows-container">
 
-    <genre-panel-component [genres]="shows.genres"></genre-panel-component>
+    <genre-panel [genres]="shows.genres"></genre-panel>
 
     <div>
 
         <h1 class="text-center show-group-title"> Top Shows </h1>
 
-        <show-list-component [shows]="shows.running"></show-list-component>
+        <show-list [shows]="shows.running"></show-list>
     </div>
 
     <div>
@@ -15,6 +15,6 @@
             Top <span class="ended-word">Ended</span> Shows
         </h1>
 
-        <show-list-component [shows]="shows.ended"></show-list-component>
+        <show-list [shows]="shows.ended"></show-list>
     </div>
 </div>

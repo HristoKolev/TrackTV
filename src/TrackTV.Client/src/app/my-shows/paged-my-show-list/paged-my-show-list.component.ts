@@ -3,7 +3,7 @@ import {MyShow} from '../my-shows.models';
 
 @Component({
     moduleId: module.id,
-    selector: 'paged-my-show-list-component',
+    selector: 'paged-my-show-list',
     templateUrl: 'paged-my-show-list.component.html',
     styleUrls: ['paged-my-show-list.component.css']
 })
