@@ -1,16 +1,7 @@
-﻿namespace TrackTv
+﻿namespace TrackTv.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public class User
-    {
-        public int Id { get; set; }
-
-        public virtual ICollection<Show> Shows { get; set; } = new List<Show>();
-
-        public string Username { get; set; }
-    }
 
     public class Show
     {
@@ -43,43 +34,5 @@
         public string Poster { get; set; }
 
         public int TvDbId { get; set; }
-    }
-
-    public class Episode
-    {
-        public string Description { get; set; }
-
-        public int Id { get; set; }
-
-        public string ImdbId { get; set; }
-
-        public long LastUpdated { get; set; }
-
-        public int Number { get; set; }
-
-        public string Title { get; set; }
-
-        public int TvDbId { get; set; }
-    }
-
-    public class Network
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-    }
-
-    public class Genre
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-    }
-
-    public class Actor
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
     }
 }
