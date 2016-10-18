@@ -32,6 +32,8 @@
 
         public string Language { get; set; }
 
+        public long LastUpdated { get; set; }
+
         public string Name { get; set; }
 
         public virtual Network Network { get; set; }
@@ -58,9 +60,13 @@
 
         public string ImdbId { get; set; }
 
+        public long LastUpdated { get; set; }
+
         public int Number { get; set; }
 
         public string Title { get; set; }
+
+        public int TvDbId { get; set; }
     }
 
     public class Network
