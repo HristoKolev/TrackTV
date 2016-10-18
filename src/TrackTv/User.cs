@@ -40,6 +40,8 @@
 
         public virtual Network Network { get; set; }
 
+        public string Poster { get; set; }
+
         public int TvDbId { get; set; }
     }
 
