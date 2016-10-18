@@ -24,6 +24,8 @@
 
         public string Description { get; set; }
 
+        public virtual ICollection<Episode> Episodes { get; set; } = new List<Episode>();
+
         public DateTime? FirstAired { get; set; }
 
         public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
@@ -38,18 +40,7 @@
 
         public virtual Network Network { get; set; }
 
-        public virtual ICollection<Season> Seasons { get; set; } = new List<Season>();
-
         public int TvDbId { get; set; }
-    }
-
-    public class Season
-    {
-        public virtual ICollection<Episode> Episodes { get; set; } = new List<Episode>();
-
-        public int Id { get; set; }
-
-        public int Number { get; set; }
     }
 
     public class Episode
