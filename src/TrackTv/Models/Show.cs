@@ -2,14 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using TrackTv.Models.Contracts;
     using TrackTv.Models.Enums;
+    using TrackTv.Models.Joint;
 
     public class Show : ITvDbRecord
     {
-        public virtual ICollection<Actor> Actors { get; set; } = new List<Actor>();
-
         public AirDay? AirDay { get; set; }
 
         public TimeSpan? AirTime { get; set; }
@@ -18,11 +18,11 @@
 
         public string Description { get; set; }
 
-        public virtual ICollection<Episode> Episodes { get; set; } = new List<Episode>();
+        public virtual ICollection<Episode> Episodes { get; } = new List<Episode>();
 
         public DateTime? FirstAired { get; set; }
 
-        public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
+        public int Id { get; set; }
 
         public string ImdbId { get; set; }
 
@@ -30,15 +30,21 @@
 
         public long LastUpdated { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public virtual Network Network { get; set; }
 
         public virtual int NetworkId { get; set; }
 
         public string Poster { get; set; }
 
-        public virtual ICollection<User> Subscribers { get; set; } = new List<User>();
+        public virtual ICollection<ShowsActors> ShowsActors { get; } = new List<ShowsActors>();
+
+        public virtual ICollection<ShowsGenres> ShowsGenres { get; } = new List<ShowsGenres>();
+
+        public virtual ICollection<ShowsUsers> ShowsUsers { get; } = new List<ShowsUsers>();
 
         public int TvDbId { get; set; }
     }
