@@ -3,7 +3,10 @@
     using System;
     using System.Collections.Generic;
 
-    public class Show
+    using TrackTv.Models.Contracts;
+    using TrackTv.Models.Enums;
+
+    public class Show : ITvDbRecord
     {
         public virtual ICollection<Actor> Actors { get; set; } = new List<Actor>();
 
@@ -31,7 +34,11 @@
 
         public virtual Network Network { get; set; }
 
+        public virtual int NetworkId { get; set; }
+
         public string Poster { get; set; }
+
+        public virtual ICollection<User> Subscribers { get; set; } = new List<User>();
 
         public int TvDbId { get; set; }
     }

@@ -1,4 +1,4 @@
-namespace TrackTv.Models
+namespace TrackTv.Models.Enums
 {
     public enum ShowStatus
     {

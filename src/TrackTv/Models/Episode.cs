@@ -1,6 +1,8 @@
 ﻿namespace TrackTv.Models
 {
-    public class Episode
+    using TrackTv.Models.Contracts;
+
+    public class Episode : ITvDbRecord
     {
         public string Description { get; set; }
 
