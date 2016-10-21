@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TrackTv.Migrations
 {
-    public partial class created : Migration
+    public partial class Created : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -77,7 +77,6 @@ namespace TrackTv.Migrations
                     LastUpdated = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     NetworkId = table.Column<int>(nullable: false),
-                    Poster = table.Column<string>(nullable: true),
                     TvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -101,6 +100,7 @@ namespace TrackTv.Migrations
                     ImdbId = table.Column<string>(nullable: true),
                     LastUpdated = table.Column<long>(nullable: false),
                     Number = table.Column<int>(nullable: false),
+                    SeasonNumber = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     TvDbId = table.Column<int>(nullable: false)

@@ -14,6 +14,9 @@
           "type": "platform",
           "version": "1.0.1"
         },
+
+        "TrackTv.Models": "*",
+
         "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
         "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final"
       }

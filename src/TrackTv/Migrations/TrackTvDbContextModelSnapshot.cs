@@ -42,6 +42,8 @@ namespace TrackTv.Migrations
 
                     b.Property<int>("Number");
 
+                    b.Property<int>("SeasonNumber");
+
                     b.Property<int>("ShowId");
 
                     b.Property<string>("Title");
@@ -151,8 +153,6 @@ namespace TrackTv.Migrations
                         .IsRequired();
 
                     b.Property<int>("NetworkId");
-
-                    b.Property<string>("Poster");
 
                     b.Property<int>("TvDbId");
 

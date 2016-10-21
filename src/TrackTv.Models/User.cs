@@ -1,7 +1,6 @@
 namespace TrackTv.Models
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     using TrackTv.Models.Joint;
 
@@ -11,7 +10,6 @@ namespace TrackTv.Models
 
         public virtual ICollection<ShowsUsers> ShowsUsers { get; } = new List<ShowsUsers>();
 
-        [Required]
         public string Username { get; set; }
     }
 }

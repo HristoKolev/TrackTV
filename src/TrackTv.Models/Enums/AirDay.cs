@@ -2,6 +2,8 @@ namespace TrackTv.Models.Enums
 {
     public enum AirDay
     {
+        Unknown,
+
         Monday,
 
         Tuesday,

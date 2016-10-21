@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     using TrackTv.Models.Contracts;
     using TrackTv.Models.Enums;
@@ -30,15 +29,11 @@
 
         public long LastUpdated { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public virtual Network Network { get; set; }
 
         public virtual int NetworkId { get; set; }
-
-        public string Poster { get; set; }
 
         public virtual ICollection<ShowsActors> ShowsActors { get; } = new List<ShowsActors>();
 

@@ -1,7 +1,5 @@
 ﻿namespace TrackTv.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     using TrackTv.Models.Contracts;
 
     public class Episode : ITvDbRecord
@@ -16,7 +14,8 @@
 
         public int Number { get; set; }
 
-        [Required]
+        public int SeasonNumber { get; set; }
+
         public virtual Show Show { get; set; }
 
         public int ShowId { get; set; }
