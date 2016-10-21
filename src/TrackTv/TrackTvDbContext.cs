@@ -7,6 +7,11 @@
 
     public class TrackTvDbContext : DbContext
     {
+        public TrackTvDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+
         public DbSet<Actor> Actors { get; set; }
 
         public DbSet<Episode> Episodes { get; set; }
@@ -17,20 +22,7 @@
 
         public DbSet<Show> Shows { get; set; }
 
-        public DbSet<ShowsActors> ShowsActors { get; set; }
-
-        public DbSet<ShowsGenres> ShowsGenres { get; set; }
-
-        public DbSet<ShowsUsers> ShowsUsers { get; set; }
-
         public DbSet<User> Users { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            builder.UseSqlServer(@"Server=.;Database=TrackTvDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
-
-            base.OnConfiguring(builder);
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
