@@ -160,6 +160,8 @@ namespace TrackTv.Migrations
 
                     b.Property<int>("NetworkId");
 
+                    b.Property<int>("Status");
+
                     b.Property<int>("TvDbId");
 
                     b.HasKey("Id");

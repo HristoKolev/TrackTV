@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
-
     using TrackTv.Models;
     using TrackTv.Models.Enums;
     using TrackTv.Models.Joint;
@@ -59,6 +57,10 @@
             AirDay airDay;
             Enum.TryParse(data.AirsDayOfWeek, out airDay);
             show.AirDay = airDay;
+
+            ShowStatus status;
+            Enum.TryParse(data.Status, out status);
+            show.Status = status;
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {
@@ -134,8 +136,6 @@
                         UpdateShowActorRelationship(relationship, data);
                     }
                 }
-
-                
             }
         }
 

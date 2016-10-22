@@ -2,10 +2,10 @@ namespace TrackTv.Models.Enums
 {
     public enum ShowStatus
     {
-        Ended,
+        Unknown = 0,
 
-        Continuing,
+        Continuing = 1,
 
-        Unknown
+        Ended = 2
     }
 }

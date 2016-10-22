@@ -79,6 +79,7 @@ namespace TrackTv.Migrations
                     LastUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     NetworkId = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     TvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

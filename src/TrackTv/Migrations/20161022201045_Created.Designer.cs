@@ -8,7 +8,7 @@ using TrackTv;
 namespace TrackTv.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
-    [Migration("20161022161004_Created")]
+    [Migration("20161022201045_Created")]
     partial class Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,6 +160,8 @@ namespace TrackTv.Migrations
                         .IsRequired();
 
                     b.Property<int>("NetworkId");
+
+                    b.Property<int>("Status");
 
                     b.Property<int>("TvDbId");
 

@@ -23,6 +23,8 @@
 
         public int Id { get; set; }
 
+        public ShowStatus Status { get; set; }
+
         public string ImdbId { get; set; }
 
         public DateTime LastUpdated { get; set; }
