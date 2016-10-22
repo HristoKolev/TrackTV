@@ -16,19 +16,26 @@
 
         public async Task MainAsync(string[] args)
         {
+            var client = await CreateClient();
+
             using (var context = await CreateContext())
             {
-                // ReSharper disable once StyleCop.SA1305
-                var tvDbClient = new TvDbClient();
+                var fetcher = new Fetcher(context, client);
 
-                var authData = ReadConfig<AuthenticationData>("thetvdb.json");
-
-                await tvDbClient.Authentication.AuthenticateAsync(authData);
-
-                var fetcher = new Fetcher(context, tvDbClient);
-
-                await fetcher.AddShowAsync("tt4574334");
+                await fetcher.AddShowAsync("tt0056751");
             }
+        }
+
+        private static async Task<TvDbClient> CreateClient()
+        {
+            // ReSharper disable once StyleCop.SA1305
+            var client = new TvDbClient();
+
+            var authData = ReadConfig<AuthenticationData>("thetvdb.json");
+
+            await client.Authentication.AuthenticateAsync(authData);
+
+            return client;
         }
 
         private static async Task<TrackTvDbContext> CreateContext()
