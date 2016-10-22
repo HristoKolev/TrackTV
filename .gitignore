@@ -217,3 +217,5 @@ src/TrackTV.WebClient/dist/
 **/src/compiled/
 dist/
 dll/
+
+**/thetvdb.json
