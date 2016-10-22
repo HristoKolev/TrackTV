@@ -18,12 +18,12 @@
         {
             using (var context = await CreateContext())
             {
-                var data = ReadConfig<AuthenticationData>("thetvdb.json");
-
                 // ReSharper disable once StyleCop.SA1305
                 var tvDbClient = new TvDbClient();
 
-                await tvDbClient.Authentication.AuthenticateAsync(data);
+                var authData = ReadConfig<AuthenticationData>("thetvdb.json");
+
+                await tvDbClient.Authentication.AuthenticateAsync(authData);
 
                 var fetcher = new Fetcher(context, tvDbClient);
 
@@ -35,7 +35,9 @@
         {
             var optionsBuilder = new DbContextOptionsBuilder();
 
-            optionsBuilder.UseSqlServer(@"Server=.;Database=TrackTvDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
+            var appSettings = ReadConfig<AppSettings>("appsettings.json");
+
+            optionsBuilder.UseSqlServer(appSettings.ConnectionString);
 
             var context = new TrackTvDbContext(optionsBuilder.Options);
 
