@@ -42,6 +42,8 @@ namespace TrackTv.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<DateTime?>("FirstAired");
+
                     b.Property<string>("ImdbId");
 
                     b.Property<DateTime>("LastUpdated");

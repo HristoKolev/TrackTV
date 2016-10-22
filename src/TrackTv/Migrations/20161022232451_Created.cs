@@ -100,6 +100,7 @@ namespace TrackTv.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
+                    FirstAired = table.Column<DateTime>(nullable: true),
                     ImdbId = table.Column<string>(nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
                     Number = table.Column<int>(nullable: false),

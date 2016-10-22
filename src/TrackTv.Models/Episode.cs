@@ -25,5 +25,7 @@
         public string Title { get; set; }
 
         public int TvDbId { get; set; }
+
+        public DateTime? FirstAired { get; set; }
     }
 }
