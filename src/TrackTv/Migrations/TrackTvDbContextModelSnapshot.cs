@@ -135,7 +135,7 @@ namespace TrackTv.Migrations
 
                     b.Property<int?>("AirDay");
 
-                    b.Property<TimeSpan?>("AirTime");
+                    b.Property<DateTime?>("AirTime");
 
                     b.Property<string>("Banner");
 
@@ -144,8 +144,6 @@ namespace TrackTv.Migrations
                     b.Property<DateTime?>("FirstAired");
 
                     b.Property<string>("ImdbId");
-
-                    b.Property<string>("Language");
 
                     b.Property<long>("LastUpdated");
 

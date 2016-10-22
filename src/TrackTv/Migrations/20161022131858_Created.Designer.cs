@@ -8,7 +8,7 @@ using TrackTv;
 namespace TrackTv.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
-    [Migration("20161021120122_Created")]
+    [Migration("20161022131858_Created")]
     partial class Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,7 +136,7 @@ namespace TrackTv.Migrations
 
                     b.Property<int?>("AirDay");
 
-                    b.Property<TimeSpan?>("AirTime");
+                    b.Property<DateTime?>("AirTime");
 
                     b.Property<string>("Banner");
 
@@ -145,8 +145,6 @@ namespace TrackTv.Migrations
                     b.Property<DateTime?>("FirstAired");
 
                     b.Property<string>("ImdbId");
-
-                    b.Property<string>("Language");
 
                     b.Property<long>("LastUpdated");
 

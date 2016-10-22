@@ -11,7 +11,7 @@
     {
         public AirDay? AirDay { get; set; }
 
-        public TimeSpan? AirTime { get; set; }
+        public DateTime? AirTime { get; set; }
 
         public string Banner { get; set; }
 
@@ -24,8 +24,6 @@
         public int Id { get; set; }
 
         public string ImdbId { get; set; }
-
-        public string Language { get; set; }
 
         public long LastUpdated { get; set; }
 
