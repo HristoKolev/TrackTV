@@ -9,6 +9,7 @@ namespace TrackTv.Models.Joint
         public ShowsActors(Actor actor, string role)
         {
             this.Actor = actor;
+            this.Role = role;
         }
 
         public Actor Actor { get; set; }
