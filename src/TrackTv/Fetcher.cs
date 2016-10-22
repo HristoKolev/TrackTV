@@ -34,10 +34,8 @@
 
         private ITvDbClient TvDbClient { get; }
 
-        public async Task AddShowAsync(string imdbId)
+        public async Task AddShowAsync(int seriesId)
         {
-            int seriesId = await this.SearchShowAsync(imdbId);
-
             var show = new Show();
 
             await this.PopulateShowAsync(show, seriesId);
@@ -47,6 +45,24 @@
             this.Context.Shows.Add(show);
 
             await this.Context.SaveChangesAsync();
+        }
+
+        private static void MapToEpisode(Episode episode, EpisodeRecord data)
+        {
+            episode.Title = data.EpisodeName;
+            episode.Description = data.Overview;
+            episode.ImdbId = data.ImdbId;
+            episode.Number = data.AiredEpisodeNumber.Value;
+            episode.SeasonNumber = data.AiredSeason.Value;
+            episode.TvDbId = data.Id;
+
+            if (!string.IsNullOrWhiteSpace(data.FirstAired))
+            {
+                episode.FirstAired = ParseFirstAired(data.FirstAired);
+            }
+
+            long? lastUpdated = data.LastUpdated;
+            episode.LastUpdated = lastUpdated.ToDateTime();
         }
 
         private static void MapToShow(Series data, Show show)
@@ -70,7 +86,7 @@
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {
-                show.FirstAired = DateTime.ParseExact(data.FirstAired, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                show.FirstAired = ParseFirstAired(data.FirstAired);
             }
 
             if (!string.IsNullOrWhiteSpace(data.AirsTime))
@@ -130,6 +146,11 @@
             return DateTime.ParseExact(formattableString, "yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture);
         }
 
+        private static DateTime ParseFirstAired(string value)
+        {
+            return DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+        }
+
         private static void UpdateActor(Actor actor, ActorData data, DateTime lastUpdated)
         {
             if (lastUpdated > actor.LastUpdated)
@@ -155,7 +176,7 @@
             {
                 var episode = new Episode();
 
-                this.MapToEpisode(episode, record);
+                MapToEpisode(episode, record);
 
                 show.Episodes.Add(episode);
             }
@@ -239,19 +260,6 @@
             return episodes;
         }
 
-        private void MapToEpisode(Episode episode, EpisodeRecord data)
-        {
-            episode.Title = data.EpisodeName;
-            episode.Description = data.Overview;
-            episode.ImdbId = data.ImdbId;
-            episode.Number = data.AiredEpisodeNumber.Value;
-            episode.SeasonNumber = data.AiredSeason.Value;
-            episode.TvDbId = data.Id;
-
-            long? lastUpdated = data.LastUpdated;
-            episode.LastUpdated = lastUpdated.ToDateTime();
-        }
-
         private async Task PopulateActorsAsync(Show show, int seriesId)
         {
             var response = await this.TvDbClient.Series.GetActorsAsync(seriesId);
@@ -316,13 +324,6 @@
             await this.AddGenresAsync(show, response.Data.Genre);
         }
 
-        private async Task<int> SearchShowAsync(string imdbId)
-        {
-            var response = await this.TvDbClient.Search.SearchSeriesByImdbIdAsync(imdbId);
-
-            var series = response.Data.Single();
-
-            return series.Id;
-        }
+        
     }
 }
