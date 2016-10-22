@@ -1,7 +1,6 @@
 ﻿namespace TrackTv.DataRetrieval
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -11,11 +10,7 @@
     using TrackTv.Models.Joint;
 
     using TvDbSharper;
-    using TvDbSharper.BaseSchemas;
-    using TvDbSharper.Clients.Episodes.Json;
-    using TvDbSharper.Clients.Series.Json;
 
-    using Actor = TrackTv.Models.Actor;
     using ActorData = TvDbSharper.Clients.Series.Json.Actor;
 
     public class Fetcher
@@ -48,8 +43,10 @@
             await this.Context.SaveChangesAsync();
         }
 
-        private static void UpdateActor(Actor actor, ActorData data, DateTime lastUpdated)
+        private static void UpdateActor(Actor actor, ActorData data)
         {
+            var lastUpdated = DateTime.Parse(data.LastUpdated);
+
             if (lastUpdated > actor.LastUpdated)
             {
                 actor.LastUpdated = lastUpdated;
@@ -65,9 +62,9 @@
 
         private async Task AddEpisodesAsync(Show show, int seriesId)
         {
-            var basicEpisodes = await this.GetBasicEpisodesAsync(seriesId);
+            var basicEpisodes = await this.TvDbClient.Series.GetBasicEpisodesAsync(seriesId);
             var ids = basicEpisodes.Select(episode => episode.Id).ToArray();
-            var records = await this.GetFullEpisodesAsync(ids);
+            var records = await this.TvDbClient.Episodes.GetFullEpisodesAsync(ids);
 
             foreach (var record in records)
             {
@@ -111,52 +108,6 @@
             }
         }
 
-        private async Task<List<BasicEpisode>> GetBasicEpisodesAsync(int seriesId)
-        {
-            var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
-
-            var firstResponse = await this.TvDbClient.Series.GetEpisodesAsync(seriesId, 1);
-
-            for (int i = 2; i <= firstResponse.Links.Last; i++)
-            {
-                tasks.Add(this.TvDbClient.Series.GetEpisodesAsync(seriesId, i));
-            }
-
-            // ReSharper disable once CoVariantArrayConversion
-            Task.WaitAll(tasks.ToArray());
-
-            var basicEpisodes = new List<BasicEpisode>(firstResponse.Data);
-
-            foreach (var task in tasks)
-            {
-                basicEpisodes.AddRange((await task).Data);
-            }
-
-            return basicEpisodes;
-        }
-
-        private async Task<List<EpisodeRecord>> GetFullEpisodesAsync(int[] ids)
-        {
-            var tasks = new List<Task<TvDbResponse<EpisodeRecord>>>();
-
-            foreach (int id in ids)
-            {
-                tasks.Add(this.TvDbClient.Episodes.GetAsync(id));
-            }
-
-            // ReSharper disable once CoVariantArrayConversion
-            Task.WaitAll(tasks.ToArray());
-
-            var episodes = new List<EpisodeRecord>();
-
-            foreach (var task in tasks)
-            {
-                episodes.Add((await task).Data);
-            }
-
-            return episodes;
-        }
-
         private async Task PopulateActorsAsync(Show show, int seriesId)
         {
             var response = await this.TvDbClient.Series.GetActorsAsync(seriesId);
@@ -174,7 +125,7 @@
                 {
                     actor = existingActorsByTvDbId[data.Id];
 
-                    UpdateActor(actor, data, DateTime.Parse(data.LastUpdated));
+                    UpdateActor(actor, data);
                 }
                 else
                 {
