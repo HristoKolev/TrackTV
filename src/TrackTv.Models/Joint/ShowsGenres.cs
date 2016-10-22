@@ -2,6 +2,15 @@
 {
     public class ShowsGenres
     {
+        public ShowsGenres(Genre genre)
+        {
+            this.Genre = genre;
+        }
+
+        public ShowsGenres()
+        {
+        }
+
         public Genre Genre { get; set; }
 
         public int GenreId { get; set; }

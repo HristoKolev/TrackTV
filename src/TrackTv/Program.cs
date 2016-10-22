@@ -27,7 +27,7 @@
 
                 var fetcher = new Fetcher(context, tvDbClient);
 
-                await fetcher.AddShow("tt4574334");
+                await fetcher.AddShowAsync("tt4574334");
             }
         }
 

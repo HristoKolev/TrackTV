@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using TrackTv.Models;
     using TrackTv.Models.Enums;
     using TrackTv.Models.Joint;
@@ -29,14 +31,14 @@
 
         private ITvDbClient TvDbClient { get; }
 
-        public async Task AddShow(string imdbId)
+        public async Task AddShowAsync(string imdbId)
         {
-            int seriesId = await this.SearchShow(imdbId);
+            int seriesId = await this.SearchShowAsync(imdbId);
 
             var show = new Show();
 
-            await this.PopulateShow(show, seriesId);
-            await this.PopulateActors(show, seriesId);
+            await this.PopulateShowAsync(show, seriesId);
+            await this.PopulateActorsAsync(show, seriesId);
 
             this.Context.Shows.Add(show);
 
@@ -93,7 +95,39 @@
             showsActors.Role = data.Role;
         }
 
-        private async Task PopulateActors(Show show, int seriesId)
+        private async Task AddGenresAsync(Show show, string[] genreNames)
+        {
+            var existingGenresByName = this.Context.Genres.Where(genre => genreNames.Contains(genre.Name))
+                                           .ToDictionary(genre => genre.Name, genre => genre);
+
+            foreach (string genreName in genreNames)
+            {
+                Genre genre;
+
+                if (existingGenresByName.ContainsKey(genreName))
+                {
+                    genre = existingGenresByName[genreName];
+                }
+                else
+                {
+                    genre = new Genre(genreName);
+                }
+
+                if ((show.Id == default(int)) || (genre.Id == default(int)))
+                {
+                    show.ShowsGenres.Add(new ShowsGenres(genre));
+                }
+                else
+                {
+                    if (!await this.Context.ShowsGenres.AnyAsync(x => (x.ShowId == show.Id) && (x.GenreId == genre.Id)))
+                    {
+                        show.ShowsGenres.Add(new ShowsGenres(genre));
+                    }
+                }
+            }
+        }
+
+        private async Task PopulateActorsAsync(Show show, int seriesId)
         {
             var response = await this.TvDbClient.Series.GetActorsAsync(seriesId);
 
@@ -119,7 +153,7 @@
                     actor = new Actor(data.Id, data.Name, lastUpdated, data.Image);
                 }
 
-                if (actor.Id == default(int))
+                if ((show.Id == default(int)) || (actor.Id == default(int)))
                 {
                     show.ShowsActors.Add(new ShowsActors(actor, data.Role));
                 }
@@ -139,7 +173,7 @@
             }
         }
 
-        private async Task PopulateShow(Show show, int seriesId)
+        private async Task PopulateShowAsync(Show show, int seriesId)
         {
             var response = await this.TvDbClient.Series.GetAsync(seriesId);
 
@@ -155,9 +189,11 @@
             }
 
             show.Network = network;
+
+            await this.AddGenresAsync(show, response.Data.Genre);
         }
 
-        private async Task<int> SearchShow(string imdbId)
+        private async Task<int> SearchShowAsync(string imdbId)
         {
             var response = await this.TvDbClient.Search.SearchSeriesByImdbIdAsync(imdbId);
 
