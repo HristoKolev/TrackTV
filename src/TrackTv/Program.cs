@@ -7,6 +7,8 @@
 
     using Newtonsoft.Json;
 
+    using TrackTv.DataRetrieval;
+
     using TvDbSharper;
     using TvDbSharper.Clients.Authentication.Json;
 
