@@ -11,8 +11,6 @@
 
     using TvDbSharper;
 
-    using ActorData = TvDbSharper.Clients.Series.Json.Actor;
-
     public class Fetcher
     {
         // ReSharper disable once StyleCop.SA1305
@@ -41,23 +39,6 @@
             this.Context.Shows.Add(show);
 
             await this.Context.SaveChangesAsync();
-        }
-
-        private static void UpdateActor(Actor actor, ActorData data)
-        {
-            var lastUpdated = DateTime.Parse(data.LastUpdated);
-
-            if (lastUpdated > actor.LastUpdated)
-            {
-                actor.LastUpdated = lastUpdated;
-                actor.Name = data.Name;
-                actor.Image = data.Image;
-            }
-        }
-
-        private static void UpdateShowActorRelationship(ShowsActors showsActors, ActorData data)
-        {
-            showsActors.Role = data.Role;
         }
 
         private async Task AddEpisodesAsync(Show show, int seriesId)
@@ -125,7 +106,7 @@
                 {
                     actor = existingActorsByTvDbId[data.Id];
 
-                    UpdateActor(actor, data);
+                    this.Mapper.UpdateActor(actor, data);
                 }
                 else
                 {
@@ -146,7 +127,7 @@
                     }
                     else
                     {
-                        UpdateShowActorRelationship(relationship, data);
+                        this.Mapper.UpdateShowActorRelationship(relationship, data);
                     }
                 }
             }

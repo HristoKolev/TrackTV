@@ -5,10 +5,14 @@ namespace TrackTv.DataRetrieval
 
     using TrackTv.Models;
     using TrackTv.Models.Enums;
+    using TrackTv.Models.Joint;
 
     using TvDbSharper.Clients.Episodes.Json;
     using TvDbSharper.Clients.Series.Json;
     using TvDbSharper.Clients.Updates;
+
+    using Actor = TrackTv.Models.Actor;
+    using ActorData = TvDbSharper.Clients.Series.Json.Actor;
 
     public class ObjectMapper
     {
@@ -58,6 +62,23 @@ namespace TrackTv.DataRetrieval
             {
                 show.AirTime = ParseAirTime(data.AirsTime);
             }
+        }
+
+        public void UpdateActor(Actor actor, ActorData data)
+        {
+            var lastUpdated = DateTime.Parse(data.LastUpdated);
+
+            if (lastUpdated > actor.LastUpdated)
+            {
+                actor.LastUpdated = lastUpdated;
+                actor.Name = data.Name;
+                actor.Image = data.Image;
+            }
+        }
+
+        public void UpdateShowActorRelationship(ShowsActors showsActors, ActorData data)
+        {
+            showsActors.Role = data.Role;
         }
 
         private static DateTime? ParseAirTime(string value)
