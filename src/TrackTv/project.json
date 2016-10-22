@@ -18,7 +18,9 @@
         "TrackTv.Models": "*",
 
         "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
-        "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final"
+        "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
+
+        "TvDbSharper": "0.5.4"
       }
     }
   }
