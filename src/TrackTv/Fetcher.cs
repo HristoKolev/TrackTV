@@ -163,10 +163,7 @@
 
             var series = response.Data.Single();
 
-            // ReSharper disable once PossibleInvalidOperationException
-            int seriesId = series.Id.Value;
-
-            return seriesId;
+            return series.Id;
         }
     }
 }
