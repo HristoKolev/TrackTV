@@ -8,7 +8,7 @@ using TrackTv;
 namespace TrackTv.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
-    [Migration("20161022131858_Created")]
+    [Migration("20161022161004_Created")]
     partial class Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,8 +22,14 @@ namespace TrackTv.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Image");
+
+                    b.Property<DateTime>("LastUpdated");
+
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<int>("TvDbId");
 
                     b.HasKey("Id");
 
@@ -39,7 +45,7 @@ namespace TrackTv.Migrations
 
                     b.Property<string>("ImdbId");
 
-                    b.Property<long>("LastUpdated");
+                    b.Property<DateTime>("LastUpdated");
 
                     b.Property<int>("Number");
 
@@ -76,6 +82,8 @@ namespace TrackTv.Migrations
                     b.Property<int>("ShowId");
 
                     b.Property<int>("ActorId");
+
+                    b.Property<string>("Role");
 
                     b.HasKey("ShowId", "ActorId");
 
@@ -146,7 +154,7 @@ namespace TrackTv.Migrations
 
                     b.Property<string>("ImdbId");
 
-                    b.Property<long>("LastUpdated");
+                    b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("Name")
                         .IsRequired();

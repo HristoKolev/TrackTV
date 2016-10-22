@@ -1,8 +1,10 @@
 ﻿namespace TrackTv.Models.Contracts
 {
+    using System;
+
     public interface ITvDbRecord
     {
-        long LastUpdated { get; set; }
+        DateTime LastUpdated { get; set; }
 
         int TvDbId { get; set; }
     }

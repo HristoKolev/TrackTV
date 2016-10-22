@@ -1,5 +1,7 @@
 ﻿namespace TrackTv.Models
 {
+    using System;
+
     using TrackTv.Models.Contracts;
 
     public class Episode : ITvDbRecord
@@ -10,7 +12,7 @@
 
         public string ImdbId { get; set; }
 
-        public long LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; }
 
         public int Number { get; set; }
 

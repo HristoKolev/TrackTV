@@ -33,15 +33,13 @@
 
         private static async Task<TrackTvDbContext> CreateContext()
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var configurator = new DbContextConfigurator();
 
-            var appSettings = ReadConfig<AppSettings>("appsettings.json");
-
-            optionsBuilder.UseSqlServer(appSettings.ConnectionString);
-
-            var context = new TrackTvDbContext(optionsBuilder.Options);
+            var context = new TrackTvDbContext(configurator.GetOptions());
 
             await context.Database.MigrateAsync();
+
+            configurator.AttachLogger<SqlLoggerProvider>(context);
 
             return context;
         }

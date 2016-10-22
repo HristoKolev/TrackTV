@@ -25,7 +25,7 @@
 
         public string ImdbId { get; set; }
 
-        public long LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; }
 
         public string Name { get; set; }
 

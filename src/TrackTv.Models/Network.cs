@@ -4,6 +4,15 @@
 
     public class Network
     {
+        public Network(string name)
+        {
+            this.Name = name;
+        }
+
+        public Network()
+        {
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }
