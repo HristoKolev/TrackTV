@@ -17,6 +17,8 @@
 
             using (var db = new TrackTvDbContext(builder.Options))
             {
+                await db.Database.MigrateAsync();
+
                 Console.WriteLine(await db.Shows.AnyAsync());
             }
         }
