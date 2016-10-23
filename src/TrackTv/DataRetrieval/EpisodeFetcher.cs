@@ -9,7 +9,7 @@
     using TvDbSharper.Clients.Episodes.Json;
     using TvDbSharper.Clients.Updates;
 
-    public class EpisodeFetcher : IEpisodeFetcher
+    public class EpisodeFetcher
     {
         public EpisodeFetcher(ITvDbClient client)
         {

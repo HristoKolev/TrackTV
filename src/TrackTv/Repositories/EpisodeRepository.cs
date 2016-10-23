@@ -17,6 +17,16 @@
 
         private TrackTvDbContext Context { get; }
 
+        public async Task<Episode> GetEpisodeById(int id)
+        {
+            return await this.Context.Episodes.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<Episode>> GetEpisodesByShowIdAsync(int id)
+        {
+            return await this.Context.Episodes.Where(x => x.ShowId == id).ToListAsync();
+        }
+
         public async Task<List<Episode>> GetEpisodesByTvDbIdsAsync(int[] ids)
         {
             return await this.Context.Episodes.Where(x => ids.Contains(x.TvDbId)).ToListAsync();

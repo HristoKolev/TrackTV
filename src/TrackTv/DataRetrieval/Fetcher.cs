@@ -13,7 +13,7 @@
     using TvDbSharper.Clients.Updates;
     using TvDbSharper.Clients.Updates.Json;
 
-    public class Fetcher
+    public class Fetcher : IFetcher
     {
         public Fetcher(TrackTvDbContext context, ITvDbClient client)
         {
@@ -34,7 +34,7 @@
 
         private TrackTvDbContext Context { get; }
 
-        private IEpisodeFetcher EpisodeFetcher { get; }
+        private EpisodeFetcher EpisodeFetcher { get; }
 
         private EpisodeRepository EpisodeRepository { get; }
 
@@ -81,6 +81,31 @@
             {
                 await this.EpisodeFetcher.PopulateEpisodeAsync(episode);
             }
+
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEpisodeAsync(int id)
+        {
+            var episode = await this.EpisodeRepository.GetEpisodeById(id);
+
+            await this.EpisodeFetcher.PopulateEpisodeAsync(episode);
+
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEpisodesAsync(int showId)
+        {
+            var episodes = await this.EpisodeRepository.GetEpisodesByShowIdAsync(showId);
+
+            var tasks = new List<Task>();
+
+            foreach (var episode in episodes)
+            {
+                tasks.Add(this.EpisodeFetcher.PopulateEpisodeAsync(episode));
+            }
+
+            Task.WaitAll(tasks.ToArray());
 
             await this.Context.SaveChangesAsync();
         }
