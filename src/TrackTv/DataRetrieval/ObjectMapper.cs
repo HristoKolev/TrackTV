@@ -85,14 +85,15 @@ namespace TrackTv.DataRetrieval
         {
             value = value.Trim();
 
-            if (!value.ToLower().EndsWith("am") && !value.ToLower().EndsWith("pm"))
+            string abbreviation = null;
+
+            if (value.ToLower().EndsWith("am") || value.ToLower().EndsWith("pm"))
             {
-                return null;
+                abbreviation = value.Substring(value.Length - 2, 2).ToLower();
+                value = value.Remove(value.Length - 2, 2).Trim();
             }
 
-            string abbreviation = value.Substring(value.Length - 2, 2).ToLower();
-
-            string hoursAndMinutes = value.Remove(value.Length - 2, 2).Trim();
+            string hoursAndMinutes = value;
 
             if (!hoursAndMinutes.Contains(":"))
             {
@@ -127,9 +128,14 @@ namespace TrackTv.DataRetrieval
                 return null;
             }
 
-            var formattableString = $"0001-01-01 {stringHours.PadLeft(2, '0')}:{stringMinutes.PadLeft(2, '0')} {abbreviation}";
+            if (abbreviation != null)
+            {
+                var formattableString = $"0001-01-01 {stringHours.PadLeft(2, '0')}:{stringMinutes.PadLeft(2, '0')} {abbreviation}";
 
-            return DateTime.ParseExact(formattableString, "yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture);
+                return DateTime.ParseExact(formattableString, "yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture);
+            }
+
+            return new DateTime(1, 1, 1, hours, minutes, 0);
         }
 
         private static DateTime ParseFirstAired(string value)
