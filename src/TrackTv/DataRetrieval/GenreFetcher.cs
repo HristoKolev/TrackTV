@@ -17,7 +17,7 @@
 
         private GenresRepository GenresRepository { get; }
 
-        public async Task AddGenresAsync(Show show, string[] genreNames)
+        public async Task PopulateGenresAsync(Show show, string[] genreNames)
         {
             var existingGenres = await this.GenresRepository.GetGenres(genreNames);
 

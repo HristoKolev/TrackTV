@@ -24,7 +24,7 @@
 
         private NetworkRepository NetworkRepository { get; }
 
-        public async Task UpdateShowAsync(Show show, TvDbResponse<Series> response)
+        public async Task PopulateShowAsync(Show show, TvDbResponse<Series> response)
         {
             this.MapToShow(show, response.Data);
 

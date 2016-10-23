@@ -1,5 +1,6 @@
 ﻿namespace TrackTv
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -24,7 +25,9 @@
             {
                 var fetcher = new Fetcher(context, client);
 
-                await fetcher.AddShowAsync(70851);
+                // await fetcher.AddShowAsync(70851);
+                // await fetcher.UpdateShowAsync(2);
+                await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19));
             }
         }
 

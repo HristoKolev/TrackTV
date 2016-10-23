@@ -25,9 +25,9 @@
 
         private ITvDbClient Client { get; }
 
-        public async Task PopulateActorsAsync(Show show, int seriesId)
+        public async Task PopulateActorsAsync(Show show)
         {
-            var response = await this.Client.Series.GetActorsAsync(seriesId);
+            var response = await this.Client.Series.GetActorsAsync(show.TvDbId);
 
             var ids = response.Data.Select(actor => actor.Id).ToArray();
 
@@ -39,7 +39,7 @@
             {
                 var actor = GetOrCreateActor(actors, data);
 
-                if (show.HasActor(actor))
+                if (!show.HasActor(actor))
                 {
                     show.ShowsActors.Add(new ShowsActors(actor, data.Role));
                 }

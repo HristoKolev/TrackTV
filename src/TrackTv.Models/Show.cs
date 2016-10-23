@@ -30,9 +30,9 @@
 
         public string Name { get; set; }
 
-        public virtual Network Network { get; set; }
+        public Network Network { get; set; }
 
-        public virtual int NetworkId { get; set; }
+        public int NetworkId { get; set; }
 
         public virtual ICollection<ShowsActors> ShowsActors { get; } = new List<ShowsActors>();
 

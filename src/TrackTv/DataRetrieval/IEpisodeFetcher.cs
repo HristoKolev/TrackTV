@@ -6,10 +6,10 @@
 
     public interface IEpisodeFetcher
     {
-        Task AddAllEpisodesAsync(Show show, int seriesId);
+        Task AddAllEpisodesAsync(Show show);
 
-        Task AddNewEpisodesAsync(Show show, int seriesId);
+        Task AddNewEpisodesAsync(Show show);
 
-        Task UpdateEpisodeAsync(Episode episode);
+        Task PopulateEpisodeAsync(Episode episode);
     }
 }

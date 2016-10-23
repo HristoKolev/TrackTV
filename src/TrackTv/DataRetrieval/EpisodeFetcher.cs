@@ -21,16 +21,17 @@
 
         private DateParser DateParser { get; }
 
-        public async Task AddAllEpisodesAsync(Show show, int seriesId)
+        public async Task AddAllEpisodesAsync(Show show)
         {
-            var ids = await this.GetAllEpisodeIdsAsync(seriesId);
+            var ids = await this.GetAllEpisodeIdsAsync(show.TvDbId);
 
             await this.AddEpisodesAsync(show, ids);
         }
 
-        public async Task AddNewEpisodesAsync(Show show, int seriesId)
+        public async Task AddNewEpisodesAsync(Show show)
         {
-            var allIds = await this.GetAllEpisodeIdsAsync(seriesId);
+            var allIds = await this.GetAllEpisodeIdsAsync(show.TvDbId);
+
             var existingIds = show.Episodes.Select(x => x.TvDbId);
 
             var newIds = allIds.Except(existingIds).ToArray();
@@ -38,16 +39,11 @@
             await this.AddEpisodesAsync(show, newIds);
         }
 
-        public async Task UpdateEpisodeAsync(Episode episode)
+        public async Task PopulateEpisodeAsync(Episode episode)
         {
             var response = await this.Client.Episodes.GetAsync(episode.TvDbId);
 
-            long? lastUpdated = response.Data.LastUpdated;
-
-            if (lastUpdated.ToDateTime() > episode.LastUpdated)
-            {
-                this.MapToEpisode(episode, response.Data);
-            }
+            this.MapToEpisode(episode, response.Data);
         }
 
         private async Task AddEpisodesAsync(Show show, int[] ids)
