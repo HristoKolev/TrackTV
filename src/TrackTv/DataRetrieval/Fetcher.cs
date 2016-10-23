@@ -59,8 +59,9 @@
 
         private async Task AddGenresAsync(Show show, string[] genreNames)
         {
-            var existingGenresByName = this.Context.Genres.Where(genre => genreNames.Contains(genre.Name))
-                                           .ToDictionary(genre => genre.Name, genre => genre);
+            var existingGenres = await this.Context.Genres.Where(genre => genreNames.Contains(genre.Name)).ToListAsync();
+
+            var existingGenresByName = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
 
             foreach (string genreName in genreNames)
             {
@@ -94,9 +95,8 @@
             var response = await this.TvDbClient.Series.GetActorsAsync(seriesId);
 
             var actorsTvDbIds = response.Data.Select(actor => actor.Id).ToArray();
-
-            var existingActorsByTvDbId =
-                this.Context.Actors.Where(actor => actorsTvDbIds.Contains(actor.TvDbId)).ToDictionary(actor => actor.TvDbId, actor => actor);
+            var existingActors = await this.Context.Actors.Where(actor => actorsTvDbIds.Contains(actor.TvDbId)).ToListAsync();
+            var existingActorsByTvDbId = existingActors.ToDictionary(actor => actor.TvDbId, actor => actor);
 
             foreach (var data in response.Data)
             {
@@ -119,7 +119,7 @@
                 }
                 else
                 {
-                    var relationship = show.ShowsActors.FirstOrDefault(x => x.ActorId == actor.Id);
+                    var relationship = await show.ShowsActors.AsQueryable().FirstOrDefaultAsync(x => x.ActorId == actor.Id);
 
                     if (relationship == null)
                     {
@@ -141,7 +141,7 @@
 
             string networkName = response.Data.Network;
 
-            var network = this.Context.Networks.FirstOrDefault(x => x.Name.ToLower() == networkName.ToLower());
+            var network = await this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == networkName.ToLower());
 
             if (network == null)
             {
