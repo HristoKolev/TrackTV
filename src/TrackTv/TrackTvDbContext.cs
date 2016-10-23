@@ -1,5 +1,7 @@
 ﻿namespace TrackTv
 {
+    using System;
+
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Models;
@@ -12,9 +14,10 @@
         {
         }
 
-        // public TrackTvDbContext()
-        // {
-        // }
+        public TrackTvDbContext()
+        {
+        }
+
         public DbSet<Actor> Actors { get; set; }
 
         public DbSet<Episode> Episodes { get; set; }
@@ -27,12 +30,17 @@
 
         public DbSet<User> Users { get; set; }
 
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        // optionsBuilder.UseSqlServer(@"Server=.;Database=TrackTvDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Server=.;Database=TrackTvDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
+                Console.WriteLine("Using hardcoded configuration!!!");
+            }
 
-        // base.OnConfiguring(optionsBuilder);
-        // }
+            base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             this.ConfigureManyToManyRelationships(builder);
