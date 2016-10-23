@@ -2,10 +2,9 @@
 {
     using System.Collections.Generic;
 
-    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
 
-    public class Genre : IPersistedModel
+    public class Genre
     {
         public Genre(string name)
         {

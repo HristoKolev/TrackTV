@@ -1,13 +1,11 @@
 ﻿namespace TrackTv.DataRetrieval
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
-
     using TrackTv.Models;
-    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
     using TrackTv.Repositories;
 
@@ -23,11 +21,9 @@
             this.Client = client;
         }
 
-        private ActorsRepository ActorsRepository { get;  }
+        private ActorsRepository ActorsRepository { get; }
 
         private ITvDbClient Client { get; }
-
-  
 
         public async Task PopulateActorsAsync(Show show, int seriesId)
         {
@@ -37,24 +33,13 @@
 
             var existingActors = await this.ActorsRepository.GetActors(ids);
 
-            var existingActorsByTvDbId = existingActors.ToDictionary(actor => actor.TvDbId, actor => actor);
+            var actors = existingActors.ToDictionary(actor => actor.TvDbId, actor => actor);
 
             foreach (var data in response.Data)
             {
-                Actor actor;
+                var actor = GetOrCreateActor(actors, data);
 
-                if (existingActorsByTvDbId.ContainsKey(data.Id))
-                {
-                    actor = existingActorsByTvDbId[data.Id];
-
-                    UpdateActor(actor, data);
-                }
-                else
-                {
-                    actor = new Actor(data.Id, data.Name, DateTime.Parse(data.LastUpdated), data.Image);
-                }
-
-                if (!show.IsPersisted() || !actor.IsPersisted())
+                if (show.HasActor(actor))
                 {
                     show.ShowsActors.Add(new ShowsActors(actor, data.Role));
                 }
@@ -62,16 +47,23 @@
                 {
                     var relationship = show.ShowsActors.FirstOrDefault(x => x.ActorId == actor.Id);
 
-                    if (relationship == null)
-                    {
-                        show.ShowsActors.Add(new ShowsActors(actor, data.Role));
-                    }
-                    else
-                    {
-                        UpdateShowActorRelationship(relationship, data);
-                    }
+                    UpdateShowActorRelationship(relationship, data);
                 }
             }
+        }
+
+        private static Actor GetOrCreateActor(IReadOnlyDictionary<int, Actor> actors, ActorData data)
+        {
+            if (actors.ContainsKey(data.Id))
+            {
+                var actor = actors[data.Id];
+
+                UpdateActor(actor, data);
+
+                return actor;
+            }
+
+            return new Actor(data.Id, data.Name, DateTime.Parse(data.LastUpdated), data.Image);
         }
 
         private static void UpdateActor(Actor actor, ActorData data)

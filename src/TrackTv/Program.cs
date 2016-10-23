@@ -24,7 +24,7 @@
             {
                 var fetcher = new Fetcher(context, client);
 
-                await fetcher.UpdateShowAsync(267440);
+                await fetcher.AddShowAsync(70851);
             }
         }
 

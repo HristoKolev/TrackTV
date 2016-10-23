@@ -1,10 +1,10 @@
 ﻿namespace TrackTv.DataRetrieval
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using TrackTv.Models;
-    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
     using TrackTv.Repositories;
 
@@ -21,33 +21,27 @@
         {
             var existingGenres = await this.GenresRepository.GetGenres(genreNames);
 
-            var existingGenresByName = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
+            var genres = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
 
             foreach (string genreName in genreNames)
             {
-                Genre genre;
+                var genre = GetOrCreateGenre(genres, genreName);
 
-                if (existingGenresByName.ContainsKey(genreName))
-                {
-                    genre = existingGenresByName[genreName];
-                }
-                else
-                {
-                    genre = new Genre(genreName);
-                }
-
-                if (!show.IsPersisted() || !genre.IsPersisted())
+                if (!show.HasGenre(genre))
                 {
                     show.ShowsGenres.Add(new ShowsGenres(genre));
                 }
-                else
-                {
-                    if (!show.ShowsGenres.Any(x => (x.ShowId == show.Id) && (x.GenreId == genre.Id)))
-                    {
-                        show.ShowsGenres.Add(new ShowsGenres(genre));
-                    }
-                }
             }
+        }
+
+        private static Genre GetOrCreateGenre(IReadOnlyDictionary<string, Genre> genres, string genreName)
+        {
+            if (genres.ContainsKey(genreName))
+            {
+                return genres[genreName];
+            }
+
+            return new Genre(genreName);
         }
     }
 }

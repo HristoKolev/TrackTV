@@ -27,7 +27,7 @@
 
         private TrackTvDbContext Context { get; }
 
-        private EpisodeFetcher EpisodeFetcher { get; }
+        private IEpisodeFetcher EpisodeFetcher { get; }
 
         private GenreFetcher GenreFetcher { get; }
 

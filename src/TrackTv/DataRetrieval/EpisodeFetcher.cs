@@ -9,7 +9,7 @@
     using TvDbSharper.Clients.Episodes.Json;
     using TvDbSharper.Clients.Updates;
 
-    public class EpisodeFetcher
+    public class EpisodeFetcher : IEpisodeFetcher
     {
         public EpisodeFetcher(ITvDbClient client)
         {
@@ -36,6 +36,18 @@
             var newIds = allIds.Except(existingIds).ToArray();
 
             await this.AddEpisodesAsync(show, newIds);
+        }
+
+        public async Task UpdateEpisodeAsync(Episode episode)
+        {
+            var response = await this.Client.Episodes.GetAsync(episode.TvDbId);
+
+            long? lastUpdated = response.Data.LastUpdated;
+
+            if (lastUpdated.ToDateTime() > episode.LastUpdated)
+            {
+                this.MapToEpisode(episode, response.Data);
+            }
         }
 
         private async Task AddEpisodesAsync(Show show, int[] ids)

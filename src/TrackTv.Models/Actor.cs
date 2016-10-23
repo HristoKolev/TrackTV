@@ -4,10 +4,9 @@ namespace TrackTv.Models
     using System.Collections.Generic;
 
     using TrackTv.Models.Contracts;
-    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
 
-    public class Actor : ITvDbRecord, IPersistedModel
+    public class Actor : ITvDbRecord
     {
         // ReSharper disable once StyleCop.SA1305
         public Actor(int tvDbId, string name, DateTime lastUpdated, string image)

@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TrackTv.Models.Contracts;
     using TrackTv.Models.Enums;
-    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
 
-    public class Show : ITvDbRecord, IPersistedModel
+    public class Show : ITvDbRecord
     {
         public AirDay? AirDay { get; set; }
 
@@ -44,9 +44,19 @@
 
         public int TvDbId { get; set; }
 
+        public bool HasActor(Actor actor)
+        {
+            return this.ShowsActors.Any(x => ((x.ShowId == this.Id) && (x.ActorId == actor.Id)) || ((x.Show == this) && (x.Actor == actor)));
+        }
+
+        public bool HasGenre(Genre genre)
+        {
+            return this.ShowsGenres.Any(x => ((x.ShowId == this.Id) && (x.GenreId == genre.Id)) || ((x.Show == this) && (x.Genre == genre)));
+        }
+
         public bool HasNetwork()
         {
-            return this.NetworkId != default(int);
+            return (this.NetworkId != default(int)) || (this.Network != null);
         }
     }
 }

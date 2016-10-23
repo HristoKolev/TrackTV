@@ -8,6 +8,8 @@
     {
         public string Description { get; set; }
 
+        public DateTime? FirstAired { get; set; }
+
         public int Id { get; set; }
 
         public string ImdbId { get; set; }
@@ -25,7 +27,5 @@
         public string Title { get; set; }
 
         public int TvDbId { get; set; }
-
-        public DateTime? FirstAired { get; set; }
     }
 }
