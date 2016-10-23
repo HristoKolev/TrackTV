@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Models;
+    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
 
     using TvDbSharper;
@@ -34,17 +35,42 @@
 
             await this.PopulateShowAsync(show, seriesId);
             await this.PopulateActorsAsync(show, seriesId);
-            await this.AddEpisodesAsync(show, seriesId);
+
+            await this.AddAllEpisodes(show, seriesId);
 
             this.Context.Shows.Add(show);
 
             await this.Context.SaveChangesAsync();
         }
 
-        private async Task AddEpisodesAsync(Show show, int seriesId)
+        public async Task UpdateShowAsync(int seriesId)
+        {
+            var show =
+                await
+                    this.Context.Shows.Include(x => x.ShowsGenres)
+                        .Include(x => x.ShowsActors)
+                        .Include(x => x.Network)
+                        .Include(x => x.Episodes)
+                        .FirstOrDefaultAsync(x => x.TvDbId == seriesId);
+
+            await this.PopulateShowAsync(show, seriesId);
+            await this.PopulateActorsAsync(show, seriesId);
+
+            await this.AddNewEpisodesAsync(show, seriesId);
+
+            await this.Context.SaveChangesAsync();
+        }
+
+        private async Task AddAllEpisodes(Show show, int seriesId)
         {
             var basicEpisodes = await this.TvDbClient.Series.GetBasicEpisodesAsync(seriesId);
-            var ids = basicEpisodes.Select(episode => episode.Id).ToArray();
+            var ids = basicEpisodes.Select(x => x.Id).ToArray();
+
+            await this.AddEpisodesAsync(show, ids);
+        }
+
+        private async Task AddEpisodesAsync(Show show, int[] ids)
+        {
             var records = await this.TvDbClient.Episodes.GetFullEpisodesAsync(ids);
 
             foreach (var record in records)
@@ -60,7 +86,6 @@
         private async Task AddGenresAsync(Show show, string[] genreNames)
         {
             var existingGenres = await this.Context.Genres.Where(genre => genreNames.Contains(genre.Name)).ToListAsync();
-
             var existingGenresByName = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
 
             foreach (string genreName in genreNames)
@@ -76,18 +101,38 @@
                     genre = new Genre(genreName);
                 }
 
-                if ((show.Id == default(int)) || (genre.Id == default(int)))
+                if (!show.IsPersisted() || !genre.IsPersisted())
                 {
                     show.ShowsGenres.Add(new ShowsGenres(genre));
                 }
                 else
                 {
-                    if (!await this.Context.ShowsGenres.AnyAsync(x => (x.ShowId == show.Id) && (x.GenreId == genre.Id)))
+                    if (!show.ShowsGenres.Any(x => (x.ShowId == show.Id) && (x.GenreId == genre.Id)))
                     {
                         show.ShowsGenres.Add(new ShowsGenres(genre));
                     }
                 }
             }
+        }
+
+        private async Task AddNetwork(Show show, string networkName)
+        {
+            if (!show.HasNetwork() || (show.Network.Name != networkName))
+            {
+                var existingNetwork = await this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == networkName.ToLower());
+
+                show.Network = existingNetwork ?? new Network(networkName);
+            }
+        }
+
+        private async Task AddNewEpisodesAsync(Show show, int seriesId)
+        {
+            var existingEpisodeIds = show.Episodes.Select(x => x.TvDbId).ToList();
+            var basicEpisodes = await this.TvDbClient.Series.GetBasicEpisodesAsync(seriesId);
+
+            var newIds = basicEpisodes.Select(x => x.Id).ToList().Except(existingEpisodeIds).ToArray();
+
+            await this.AddEpisodesAsync(show, newIds);
         }
 
         private async Task PopulateActorsAsync(Show show, int seriesId)
@@ -113,13 +158,13 @@
                     actor = new Actor(data.Id, data.Name, DateTime.Parse(data.LastUpdated), data.Image);
                 }
 
-                if ((show.Id == default(int)) || (actor.Id == default(int)))
+                if (!show.IsPersisted() || !actor.IsPersisted())
                 {
                     show.ShowsActors.Add(new ShowsActors(actor, data.Role));
                 }
                 else
                 {
-                    var relationship = await show.ShowsActors.AsQueryable().FirstOrDefaultAsync(x => x.ActorId == actor.Id);
+                    var relationship = show.ShowsActors.FirstOrDefault(x => x.ActorId == actor.Id);
 
                     if (relationship == null)
                     {
@@ -141,14 +186,7 @@
 
             string networkName = response.Data.Network;
 
-            var network = await this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == networkName.ToLower());
-
-            if (network == null)
-            {
-                network = new Network(networkName);
-            }
-
-            show.Network = network;
+            await this.AddNetwork(show, networkName);
 
             await this.AddGenresAsync(show, response.Data.Genre);
         }

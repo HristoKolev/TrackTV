@@ -5,9 +5,10 @@
 
     using TrackTv.Models.Contracts;
     using TrackTv.Models.Enums;
+    using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
 
-    public class Show : ITvDbRecord
+    public class Show : ITvDbRecord, IPersistedModel
     {
         public AirDay? AirDay { get; set; }
 
@@ -22,8 +23,6 @@
         public DateTime? FirstAired { get; set; }
 
         public int Id { get; set; }
-
-        public ShowStatus Status { get; set; }
 
         public string ImdbId { get; set; }
 
@@ -41,6 +40,13 @@
 
         public virtual ICollection<ShowsUsers> ShowsUsers { get; } = new List<ShowsUsers>();
 
+        public ShowStatus Status { get; set; }
+
         public int TvDbId { get; set; }
+
+        public bool HasNetwork()
+        {
+            return this.NetworkId != default(int);
+        }
     }
 }
