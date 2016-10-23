@@ -3,24 +3,24 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
-
     using TrackTv.Models;
     using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
+    using TrackTv.Repositories;
 
     public class GenreFetcher
     {
-        public GenreFetcher(TrackTvDbContext context)
+        public GenreFetcher(GenresRepository genresRepository)
         {
-            this.Context = context;
+            this.GenresRepository = genresRepository;
         }
 
-        private TrackTvDbContext Context { get; }
+        private GenresRepository GenresRepository { get; }
 
         public async Task AddGenresAsync(Show show, string[] genreNames)
         {
-            var existingGenres = await this.Context.Genres.Where(genre => genreNames.Contains(genre.Name)).ToListAsync();
+            var existingGenres = await this.GenresRepository.GetGenres(genreNames);
+
             var existingGenresByName = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
 
             foreach (string genreName in genreNames)

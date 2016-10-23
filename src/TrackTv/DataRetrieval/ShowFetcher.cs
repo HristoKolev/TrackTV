@@ -3,10 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
-
     using TrackTv.Models;
     using TrackTv.Models.Enums;
+    using TrackTv.Repositories;
 
     using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series.Json;
@@ -14,16 +13,16 @@
 
     public class ShowFetcher
     {
-        public ShowFetcher(TrackTvDbContext context)
+        public ShowFetcher(NetworkRepository networkRepository)
         {
-            this.Context = context;
+            this.NetworkRepository = networkRepository;
 
             this.DateParser = new DateParser();
         }
 
-        private TrackTvDbContext Context { get; }
-
         private DateParser DateParser { get; }
+
+        private NetworkRepository NetworkRepository { get; }
 
         public async Task UpdateShowAsync(Show show, TvDbResponse<Series> response)
         {
@@ -36,7 +35,7 @@
         {
             if (!show.HasNetwork() || (show.Network.Name != networkName))
             {
-                var existingNetwork = await this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == networkName.ToLower());
+                var existingNetwork = await this.NetworkRepository.GetNetworkByNameAsync(networkName);
 
                 show.Network = existingNetwork ?? new Network(networkName);
             }

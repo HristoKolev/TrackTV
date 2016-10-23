@@ -2,9 +2,8 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
-
     using TrackTv.Models;
+    using TrackTv.Repositories;
 
     using TvDbSharper;
 
@@ -16,9 +15,10 @@
             this.Client = client;
 
             this.EpisodeFetcher = new EpisodeFetcher(client);
-            this.ActorFetcher = new ActorFetcher(context, client);
-            this.GenreFetcher = new GenreFetcher(context);
-            this.ShowFetcher = new ShowFetcher(context);
+            this.ActorFetcher = new ActorFetcher(new ActorsRepository(context), client);
+            this.GenreFetcher = new GenreFetcher(new GenresRepository(context));
+            this.ShowFetcher = new ShowFetcher(new NetworkRepository(context));
+            this.ShowsRepository = new ShowsRepository(context);
         }
 
         private ActorFetcher ActorFetcher { get; }
@@ -32,6 +32,8 @@
         private GenreFetcher GenreFetcher { get; }
 
         private ShowFetcher ShowFetcher { get; }
+
+        private ShowsRepository ShowsRepository { get; }
 
         public async Task AddShowAsync(int seriesId)
         {
@@ -48,13 +50,7 @@
 
         public async Task UpdateShowAsync(int seriesId)
         {
-            var show =
-                await
-                    this.Context.Shows.Include(x => x.ShowsGenres)
-                        .Include(x => x.ShowsActors)
-                        .Include(x => x.Network)
-                        .Include(x => x.Episodes)
-                        .FirstOrDefaultAsync(x => x.TvDbId == seriesId);
+            var show = await this.ShowsRepository.GetFullShowByTvDbId(seriesId);
 
             await this.ProcessShowAsync(show, seriesId);
 

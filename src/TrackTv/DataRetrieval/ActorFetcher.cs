@@ -9,6 +9,7 @@
     using TrackTv.Models;
     using TrackTv.Models.Extensions;
     using TrackTv.Models.Joint;
+    using TrackTv.Repositories;
 
     using TvDbSharper;
 
@@ -16,22 +17,26 @@
 
     public class ActorFetcher
     {
-        public ActorFetcher(TrackTvDbContext context, ITvDbClient client)
+        public ActorFetcher(ActorsRepository actorsRepository, ITvDbClient client)
         {
-            this.Context = context;
+            this.ActorsRepository = actorsRepository;
             this.Client = client;
         }
 
+        private ActorsRepository ActorsRepository { get;  }
+
         private ITvDbClient Client { get; }
 
-        private TrackTvDbContext Context { get; }
+  
 
         public async Task PopulateActorsAsync(Show show, int seriesId)
         {
             var response = await this.Client.Series.GetActorsAsync(seriesId);
 
-            var actorsTvDbIds = response.Data.Select(actor => actor.Id).ToArray();
-            var existingActors = await this.Context.Actors.Where(actor => actorsTvDbIds.Contains(actor.TvDbId)).ToListAsync();
+            var ids = response.Data.Select(actor => actor.Id).ToArray();
+
+            var existingActors = await this.ActorsRepository.GetActors(ids);
+
             var existingActorsByTvDbId = existingActors.ToDictionary(actor => actor.TvDbId, actor => actor);
 
             foreach (var data in response.Data)
