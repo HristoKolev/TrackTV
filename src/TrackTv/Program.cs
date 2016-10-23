@@ -30,7 +30,6 @@
 
         private static async Task<TvDbClient> CreateClient()
         {
-            // ReSharper disable once StyleCop.SA1305
             var client = new TvDbClient();
 
             var authData = ReadConfig<AuthenticationData>("thetvdb.json");
