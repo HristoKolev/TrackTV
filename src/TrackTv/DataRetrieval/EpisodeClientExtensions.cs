@@ -1,34 +1,19 @@
 ﻿namespace TrackTv.DataRetrieval
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
-    using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Episodes;
     using TvDbSharper.Clients.Episodes.Json;
 
     public static class EpisodeClientExtensions
     {
-        public static async Task<List<EpisodeRecord>> GetFullEpisodesAsync(this IEpisodesClient client, int[] ids)
+        public static async Task<IEnumerable<EpisodeRecord>> GetFullEpisodesAsync(this IEpisodesClient client, IEnumerable<int> ids)
         {
-            var tasks = new List<Task<TvDbResponse<EpisodeRecord>>>();
+            var episodes = await Task.WhenAll(ids.Select(client.GetAsync));
 
-            foreach (int id in ids)
-            {
-                tasks.Add(client.GetAsync(id));
-            }
-
-            // ReSharper disable once CoVariantArrayConversion
-            Task.WaitAll(tasks.ToArray());
-
-            var episodes = new List<EpisodeRecord>();
-
-            foreach (var task in tasks)
-            {
-                episodes.Add((await task).Data);
-            }
-
-            return episodes;
+            return episodes.Select(x => x.Data);
         }
     }
 }

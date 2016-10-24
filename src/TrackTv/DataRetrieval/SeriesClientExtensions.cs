@@ -1,6 +1,7 @@
 ﻿namespace TrackTv.DataRetrieval
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using TvDbSharper.BaseSchemas;
@@ -9,7 +10,7 @@
 
     public static class SeriesClientExtensions
     {
-        public static async Task<List<BasicEpisode>> GetBasicEpisodesAsync(this ISeriesClient client, int seriesId)
+        public static async Task<IEnumerable<BasicEpisode>> GetBasicEpisodesAsync(this ISeriesClient client, int seriesId)
         {
             var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
 
@@ -20,17 +21,11 @@
                 tasks.Add(client.GetEpisodesAsync(seriesId, i));
             }
 
-            // ReSharper disable once CoVariantArrayConversion
-            Task.WaitAll(tasks.ToArray());
+            var results = await Task.WhenAll(tasks);
 
-            var basicEpisodes = new List<BasicEpisode>(firstResponse.Data);
+            var episodes = firstResponse.Data.Concat(results.SelectMany(x => x.Data));
 
-            foreach (var task in tasks)
-            {
-                basicEpisodes.AddRange((await task).Data);
-            }
-
-            return basicEpisodes;
+            return episodes;
         }
     }
 }
