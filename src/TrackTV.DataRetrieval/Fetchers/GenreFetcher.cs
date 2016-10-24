@@ -4,19 +4,20 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using TrackTV.Data.Repositories.Contracts;
+    using TrackTV.DataRetrieval.Fetchers.Contracts;
+
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 
-    using TrackTV.Data.Repositories;
-
-    public class GenreFetcher
+    public class GenreFetcher : IGenreFetcher
     {
-        public GenreFetcher(GenresRepository genresRepository)
+        public GenreFetcher(IGenresRepository genresRepository)
         {
             this.GenresRepository = genresRepository;
         }
 
-        private GenresRepository GenresRepository { get; }
+        private IGenresRepository GenresRepository { get; }
 
         public async Task PopulateGenresAsync(Show show, string[] genreNames)
         {

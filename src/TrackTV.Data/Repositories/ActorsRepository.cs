@@ -5,9 +5,11 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using TrackTV.Data.Repositories.Contracts;
+
     using TrackTv.Models;
 
-    public class ActorsRepository
+    public class ActorsRepository : IActorsRepository
     {
         public ActorsRepository(TrackTvDbContext context)
         {

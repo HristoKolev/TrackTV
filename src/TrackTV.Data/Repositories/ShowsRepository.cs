@@ -7,9 +7,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query;
 
+    using TrackTV.Data.Repositories.Contracts;
+
     using TrackTv.Models;
 
-    public class ShowsRepository
+    public class ShowsRepository : IShowsRepository
     {
         public ShowsRepository(TrackTvDbContext context)
         {

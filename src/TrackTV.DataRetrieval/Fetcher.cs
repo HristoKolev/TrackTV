@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using TrackTV.Data;
+    using TrackTV.Data.Repositories.Contracts;
+    using TrackTV.DataRetrieval.Fetchers.Contracts;
+
     using TrackTv.Models;
     using TrackTv.Models.Contracts;
-
-    using TrackTV.Data;
-    using TrackTV.Data.Repositories;
-    using TrackTV.DataRetrieval.Fetchers;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Updates;
@@ -18,34 +18,41 @@
 
     public class Fetcher : IFetcher
     {
-        public Fetcher(TrackTvDbContext context, ITvDbClient client)
+        public Fetcher(
+            TrackTvDbContext context,
+            ITvDbClient client,
+            IEpisodeFetcher episodeFetcher,
+            IActorFetcher actorFetcher,
+            IGenreFetcher genreFetcher,
+            IShowFetcher showFetcher,
+            IShowsRepository showsRepository,
+            IEpisodeRepository episodeRepository)
         {
             this.Context = context;
             this.Client = client;
-
-            this.EpisodeFetcher = new EpisodeFetcher(client);
-            this.ActorFetcher = new ActorFetcher(new ActorsRepository(context), client);
-            this.GenreFetcher = new GenreFetcher(new GenresRepository(context));
-            this.ShowFetcher = new ShowFetcher(new NetworkRepository(context));
-            this.ShowsRepository = new ShowsRepository(context);
-            this.EpisodeRepository = new EpisodeRepository(context);
+            this.EpisodeFetcher = episodeFetcher;
+            this.ActorFetcher = actorFetcher;
+            this.GenreFetcher = genreFetcher;
+            this.ShowFetcher = showFetcher;
+            this.ShowsRepository = showsRepository;
+            this.EpisodeRepository = episodeRepository;
         }
 
-        private ActorFetcher ActorFetcher { get; }
+        private IActorFetcher ActorFetcher { get; }
 
         private ITvDbClient Client { get; }
 
         private TrackTvDbContext Context { get; }
 
-        private EpisodeFetcher EpisodeFetcher { get; }
+        private IEpisodeFetcher EpisodeFetcher { get; }
 
-        private EpisodeRepository EpisodeRepository { get; }
+        private IEpisodeRepository EpisodeRepository { get; }
 
-        private GenreFetcher GenreFetcher { get; }
+        private IGenreFetcher GenreFetcher { get; }
 
-        private ShowFetcher ShowFetcher { get; }
+        private IShowFetcher ShowFetcher { get; }
 
-        private ShowsRepository ShowsRepository { get; }
+        private IShowsRepository ShowsRepository { get; }
 
         public async Task AddShowAsync(int theTvDbId)
         {

@@ -10,7 +10,9 @@
     using TrackTv.Configuration;
 
     using TrackTV.Data;
+    using TrackTV.Data.Repositories;
     using TrackTV.DataRetrieval;
+    using TrackTV.DataRetrieval.Fetchers;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Authentication.Json;
@@ -25,7 +27,7 @@
 
             using (var context = await CreateContext())
             {
-                var fetcher = new Fetcher(context, client);
+                var fetcher = CreateFetcher(context, client);
 
                 await fetcher.AddShowAsync(70851);
 
@@ -56,6 +58,25 @@
             configurator.AttachLogger<SqlLoggerProvider>(context);
 
             return context;
+        }
+
+        private static Fetcher CreateFetcher(TrackTvDbContext context, TvDbClient client)
+        {
+            var actorsRepository = new ActorsRepository(context);
+            var networkRepository = new NetworkRepository(context);
+            var episodeRepository = new EpisodeRepository(context);
+            var genresRepository = new GenresRepository(context);
+            var showsRepository = new ShowsRepository(context);
+
+            var episodeFetcher = new EpisodeFetcher(client);
+            var actorFetcher = new ActorFetcher(actorsRepository, client);
+            var showFetcher = new ShowFetcher(networkRepository);
+            var genreFetcher = new GenreFetcher(genresRepository);
+
+            var fetcher = new Fetcher(context, client, episodeFetcher, actorFetcher, genreFetcher, showFetcher, showsRepository,
+                episodeRepository);
+
+            return fetcher;
         }
 
         private static T ReadConfig<T>(string path) => JsonConvert.DeserializeObject<T>(File.ReadAllText(path));

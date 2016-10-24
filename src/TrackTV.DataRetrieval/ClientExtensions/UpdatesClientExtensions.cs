@@ -1,4 +1,4 @@
-﻿namespace TrackTV.DataRetrieval.ClientExtensions
+namespace TrackTV.DataRetrieval.ClientExtensions
 {
     using System;
     using System.Collections.Generic;
@@ -37,21 +37,6 @@
             };
         }
 
-        private static Update[] FilterResults(IEnumerable<TvDbResponse<Update[]>> responses)
-        {
-            var results = new Dictionary<int, Update>();
-
-            foreach (var update in responses.SelectMany(x => x.Data))
-            {
-                if (!results.ContainsKey(update.Id) || (update.LastUpdated > results[update.Id].LastUpdated))
-                {
-                    results[update.Id] = update;
-                }
-            }
-
-            return results.Select(x => x.Value).ToArray();
-        }
-
         private static Dictionary<DateTime, DateTime> BreakDownRanges(DateTime fromTime, DateTime toTime, TimeSpan maxRangeLength)
         {
             var ranges = new Dictionary<DateTime, DateTime>();
@@ -69,6 +54,21 @@
             }
 
             return ranges;
+        }
+
+        private static Update[] FilterResults(IEnumerable<TvDbResponse<Update[]>> responses)
+        {
+            var results = new Dictionary<int, Update>();
+
+            foreach (var update in responses.SelectMany(x => x.Data))
+            {
+                if (!results.ContainsKey(update.Id) || (update.LastUpdated > results[update.Id].LastUpdated))
+                {
+                    results[update.Id] = update;
+                }
+            }
+
+            return results.Select(x => x.Value).ToArray();
         }
 
         private static async Task<TvDbResponse<Update[]>[]> GetResponsesAsync(IUpdatesClient client, Dictionary<DateTime, DateTime> ranges)

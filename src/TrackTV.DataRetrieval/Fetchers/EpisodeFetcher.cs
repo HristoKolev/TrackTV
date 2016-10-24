@@ -3,15 +3,16 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Models;
-
     using TrackTV.DataRetrieval.ClientExtensions;
+    using TrackTV.DataRetrieval.Fetchers.Contracts;
+
+    using TrackTv.Models;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Episodes.Json;
     using TvDbSharper.Clients.Updates;
 
-    public class EpisodeFetcher
+    public class EpisodeFetcher : IEpisodeFetcher
     {
         public EpisodeFetcher(ITvDbClient client)
         {

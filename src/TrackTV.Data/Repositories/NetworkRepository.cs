@@ -4,9 +4,11 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using TrackTV.Data.Repositories.Contracts;
+
     using TrackTv.Models;
 
-    public class NetworkRepository
+    public class NetworkRepository : INetworkRepository
     {
         public NetworkRepository(TrackTvDbContext context)
         {

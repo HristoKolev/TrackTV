@@ -6,9 +6,11 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using TrackTV.Data.Repositories.Contracts;
+
     using TrackTv.Models;
 
-    public class EpisodeRepository
+    public class EpisodeRepository : IEpisodeRepository
     {
         public EpisodeRepository(TrackTvDbContext context)
         {

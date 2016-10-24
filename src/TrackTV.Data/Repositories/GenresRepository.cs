@@ -5,9 +5,11 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using TrackTV.Data.Repositories.Contracts;
+
     using TrackTv.Models;
 
-    public class GenresRepository
+    public class GenresRepository : IGenresRepository
     {
         public GenresRepository(TrackTvDbContext context)
         {

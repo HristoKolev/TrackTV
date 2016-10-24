@@ -5,24 +5,25 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using TrackTV.Data.Repositories.Contracts;
+    using TrackTV.DataRetrieval.Fetchers.Contracts;
+
     using TrackTv.Models;
     using TrackTv.Models.Joint;
-
-    using TrackTV.Data.Repositories;
 
     using TvDbSharper;
 
     using ActorData = TvDbSharper.Clients.Series.Json.Actor;
 
-    public class ActorFetcher
+    public class ActorFetcher : IActorFetcher
     {
-        public ActorFetcher(ActorsRepository actorsRepository, ITvDbClient client)
+        public ActorFetcher(IActorsRepository actorsRepository, ITvDbClient client)
         {
             this.ActorsRepository = actorsRepository;
             this.Client = client;
         }
 
-        private ActorsRepository ActorsRepository { get; }
+        private IActorsRepository ActorsRepository { get; }
 
         private ITvDbClient Client { get; }
 

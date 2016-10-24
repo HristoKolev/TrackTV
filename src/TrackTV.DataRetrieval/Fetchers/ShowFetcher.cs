@@ -3,18 +3,19 @@
     using System;
     using System.Threading.Tasks;
 
+    using TrackTV.Data.Repositories.Contracts;
+    using TrackTV.DataRetrieval.Fetchers.Contracts;
+
     using TrackTv.Models;
     using TrackTv.Models.Enums;
-
-    using TrackTV.Data.Repositories;
 
     using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series.Json;
     using TvDbSharper.Clients.Updates;
 
-    public class ShowFetcher
+    public class ShowFetcher : IShowFetcher
     {
-        public ShowFetcher(NetworkRepository networkRepository)
+        public ShowFetcher(INetworkRepository networkRepository)
         {
             this.NetworkRepository = networkRepository;
 
@@ -23,7 +24,7 @@
 
         private DateParser DateParser { get; }
 
-        private NetworkRepository NetworkRepository { get; }
+        private INetworkRepository NetworkRepository { get; }
 
         public async Task PopulateShowAsync(Show show, TvDbResponse<Series> response)
         {
