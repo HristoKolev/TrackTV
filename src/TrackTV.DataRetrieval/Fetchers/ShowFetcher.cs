@@ -1,11 +1,12 @@
-﻿namespace TrackTv.DataRetrieval
+﻿namespace TrackTV.DataRetrieval.Fetchers
 {
     using System;
     using System.Threading.Tasks;
 
     using TrackTv.Models;
     using TrackTv.Models.Enums;
-    using TrackTv.Repositories;
+
+    using TrackTV.Data.Repositories;
 
     using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series.Json;

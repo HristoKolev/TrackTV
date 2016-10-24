@@ -1,4 +1,4 @@
-﻿namespace TrackTv
+namespace TrackTv.Configuration
 {
     public class AppSettings
     {

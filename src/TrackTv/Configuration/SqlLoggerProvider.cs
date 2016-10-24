@@ -1,4 +1,4 @@
-﻿namespace TrackTv
+namespace TrackTv.Configuration
 {
     using System;
     using System.IO;
@@ -47,7 +47,7 @@
                     Console.ResetColor();
                 }
 
-                File.AppendAllText(@".\sql.log", formatter(state, exception));
+                // File.AppendAllText(@".\sql.log", formatter(state, exception));
             }
         }
     }

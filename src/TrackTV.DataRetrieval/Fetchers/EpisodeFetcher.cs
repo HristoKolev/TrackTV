@@ -1,9 +1,11 @@
-﻿namespace TrackTv.DataRetrieval
+﻿namespace TrackTV.DataRetrieval.Fetchers
 {
     using System.Linq;
     using System.Threading.Tasks;
 
     using TrackTv.Models;
+
+    using TrackTV.DataRetrieval.ClientExtensions;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Episodes.Json;

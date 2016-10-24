@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval
+﻿namespace TrackTV.DataRetrieval.Fetchers
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,8 @@
 
     using TrackTv.Models;
     using TrackTv.Models.Joint;
-    using TrackTv.Repositories;
+
+    using TrackTV.Data.Repositories;
 
     using TvDbSharper;
 

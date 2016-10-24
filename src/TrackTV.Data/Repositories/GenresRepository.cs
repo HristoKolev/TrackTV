@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Repositories
+﻿namespace TrackTV.Data.Repositories
 {
     using System.Linq;
     using System.Threading.Tasks;

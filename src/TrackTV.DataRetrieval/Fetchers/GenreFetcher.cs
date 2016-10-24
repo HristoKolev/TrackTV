@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval
+﻿namespace TrackTV.DataRetrieval.Fetchers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,7 +6,8 @@
 
     using TrackTv.Models;
     using TrackTv.Models.Joint;
-    using TrackTv.Repositories;
+
+    using TrackTV.Data.Repositories;
 
     public class GenreFetcher
     {

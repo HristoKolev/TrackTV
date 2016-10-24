@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Repositories
+﻿namespace TrackTV.Data.Repositories
 {
     using System.Collections.Generic;
     using System.Linq;

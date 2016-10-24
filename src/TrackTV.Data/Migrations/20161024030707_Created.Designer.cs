@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using TrackTv;
+using TrackTV.Data;
 
-namespace TrackTv.Migrations
+namespace TrackTV.Data.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
-    [Migration("20161022232451_Created")]
+    [Migration("20161024030707_Created")]
     partial class Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

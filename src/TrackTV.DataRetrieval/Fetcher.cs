@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval
+﻿namespace TrackTV.DataRetrieval
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,10 @@
 
     using TrackTv.Models;
     using TrackTv.Models.Contracts;
-    using TrackTv.Repositories;
+
+    using TrackTV.Data;
+    using TrackTV.Data.Repositories;
+    using TrackTV.DataRetrieval.Fetchers;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Updates;
@@ -105,7 +108,7 @@
                 tasks.Add(this.EpisodeFetcher.PopulateEpisodeAsync(episode));
             }
 
-            Task.WaitAll(tasks.ToArray());
+            await Task.WhenAll(tasks);
 
             await this.Context.SaveChangesAsync();
         }

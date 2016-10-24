@@ -1,4 +1,4 @@
-﻿namespace TrackTv
+﻿namespace TrackTv.Configuration
 {
     using System;
     using System.IO;
@@ -9,6 +9,8 @@
     using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
+
+    using TrackTV.Data;
 
     public class DbContextConfigurator
     {

@@ -1,6 +1,5 @@
 ﻿namespace TrackTv
 {
-    using System;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -8,7 +7,10 @@
 
     using Newtonsoft.Json;
 
-    using TrackTv.DataRetrieval;
+    using TrackTv.Configuration;
+
+    using TrackTV.Data;
+    using TrackTV.DataRetrieval;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Authentication.Json;
@@ -25,9 +27,10 @@
             {
                 var fetcher = new Fetcher(context, client);
 
-                // await fetcher.AddShowAsync(70851);
+                await fetcher.AddShowAsync(70851);
+
                 // await fetcher.UpdateShowAsync(2);
-                await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19));
+                // await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19));
             }
         }
 

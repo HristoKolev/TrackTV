@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace TrackTv.Migrations
+namespace TrackTV.Data.Migrations
 {
     public partial class Created : Migration
     {
