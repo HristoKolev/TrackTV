@@ -30,13 +30,13 @@
 
         public async Task PopulateActorsAsync(Show show)
         {
-            var response = await this.Client.GetActorsAsync(show.TvDbId);
+            var response = await this.Client.GetActorsAsync(show.TheTvDbId);
 
             var ids = response.Data.Select(actor => actor.Id).ToArray();
 
             var existingActors = await this.ActorsRepository.GetActors(ids);
 
-            var actors = existingActors.ToDictionary(actor => actor.TvDbId, actor => actor);
+            var actors = existingActors.ToDictionary(actor => actor.TheTvDbId, actor => actor);
 
             foreach (var data in response.Data)
             {

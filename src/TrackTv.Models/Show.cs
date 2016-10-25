@@ -42,7 +42,7 @@
 
         public ShowStatus Status { get; set; }
 
-        public int TvDbId { get; set; }
+        public int TheTvDbId { get; set; }
 
         public bool HasActor(Actor actor)
         {

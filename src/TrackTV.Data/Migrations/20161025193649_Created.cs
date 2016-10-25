@@ -18,7 +18,7 @@ namespace TrackTV.Data.Migrations
                     Image = table.Column<string>(nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    TvDbId = table.Column<int>(nullable: false)
+                    TheTvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +80,7 @@ namespace TrackTV.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     NetworkId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    TvDbId = table.Column<int>(nullable: false)
+                    TheTvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,8 +106,8 @@ namespace TrackTV.Data.Migrations
                     Number = table.Column<int>(nullable: false),
                     SeasonNumber = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    TvDbId = table.Column<int>(nullable: false)
+                    TheTvDbId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -58,7 +58,7 @@
         {
             var show = new Show
             {
-                TvDbId = theTvDbId
+                TheTvDbId = theTvDbId
             };
 
             await this.PopulateShowAsync(show);
@@ -85,7 +85,7 @@
                 await this.EpisodeFetcher.AddNewEpisodesAsync(show);
             }
 
-            var episodes = await this.EpisodeRepository.GetEpisodesByTvDbIdsAsync(ids);
+            var episodes = await this.EpisodeRepository.GetEpisodesByTheTvDbIdsAsync(ids);
 
             foreach (var episode in episodes.Where(x => IsOutdated(x, response.Data)))
             {
@@ -133,12 +133,12 @@
 
         private static bool IsOutdated(ITvDbRecord record, IEnumerable<Update> updates)
         {
-            return LongExtensions.ToDateTime(updates.First(x => x.Id == record.TvDbId).LastUpdated) > record.LastUpdated;
+            return LongExtensions.ToDateTime(updates.First(x => x.Id == record.TheTvDbId).LastUpdated) > record.LastUpdated;
         }
 
         private async Task PopulateShowAsync(Show show)
         {
-            var response = await this.Client.Series.GetAsync(show.TvDbId);
+            var response = await this.Client.Series.GetAsync(show.TheTvDbId);
 
             await this.ShowFetcher.PopulateShowAsync(show, response);
 

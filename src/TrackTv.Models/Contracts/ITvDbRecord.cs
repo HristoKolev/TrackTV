@@ -6,6 +6,6 @@
     {
         DateTime LastUpdated { get; set; }
 
-        int TvDbId { get; set; }
+        int TheTvDbId { get; set; }
     }
 }

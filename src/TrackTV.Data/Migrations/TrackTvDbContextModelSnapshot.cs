@@ -28,7 +28,7 @@ namespace TrackTV.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("TvDbId");
+                    b.Property<int>("TheTvDbId");
 
                     b.HasKey("Id");
 
@@ -54,9 +54,9 @@ namespace TrackTV.Data.Migrations
 
                     b.Property<int>("ShowId");
 
-                    b.Property<string>("Title");
+                    b.Property<int>("TheTvDbId");
 
-                    b.Property<int>("TvDbId");
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -164,7 +164,7 @@ namespace TrackTV.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int>("TvDbId");
+                    b.Property<int>("TheTvDbId");
 
                     b.HasKey("Id");
 

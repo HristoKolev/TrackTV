@@ -29,9 +29,9 @@
             return await this.Context.Episodes.Where(x => x.ShowId == id).ToListAsync();
         }
 
-        public async Task<List<Episode>> GetEpisodesByTvDbIdsAsync(int[] ids)
+        public async Task<List<Episode>> GetEpisodesByTheTvDbIdsAsync(int[] ids)
         {
-            return await this.Context.Episodes.Where(x => ids.Contains(x.TvDbId)).ToListAsync();
+            return await this.Context.Episodes.Where(x => ids.Contains(x.TheTvDbId)).ToListAsync();
         }
     }
 }

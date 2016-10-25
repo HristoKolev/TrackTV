@@ -11,6 +11,6 @@
 
         Task<List<Episode>> GetEpisodesByShowIdAsync(int id);
 
-        Task<List<Episode>> GetEpisodesByTvDbIdsAsync(int[] ids);
+        Task<List<Episode>> GetEpisodesByTheTvDbIdsAsync(int[] ids);
     }
 }

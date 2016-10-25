@@ -9,9 +9,9 @@ namespace TrackTv.Models
     public class Actor : ITvDbRecord
     {
         // ReSharper disable once StyleCop.SA1305
-        public Actor(int tvDbId, string name, DateTime lastUpdated, string image)
+        public Actor(int theTvDbId, string name, DateTime lastUpdated, string image)
         {
-            this.TvDbId = tvDbId;
+            this.TheTvDbId = theTvDbId;
             this.Name = name;
             this.LastUpdated = lastUpdated;
             this.Image = image;
@@ -31,6 +31,6 @@ namespace TrackTv.Models
 
         public virtual ICollection<ShowsActors> ShowsActors { get; } = new List<ShowsActors>();
 
-        public int TvDbId { get; set; }
+        public int TheTvDbId { get; set; }
     }
 }

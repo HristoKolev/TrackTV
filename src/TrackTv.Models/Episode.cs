@@ -26,6 +26,6 @@
 
         public string Title { get; set; }
 
-        public int TvDbId { get; set; }
+        public int TheTvDbId { get; set; }
     }
 }

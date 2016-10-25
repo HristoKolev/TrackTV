@@ -26,16 +26,16 @@
 
         public async Task AddAllEpisodesAsync(Show show)
         {
-            var ids = await this.GetAllEpisodeIdsAsync(show.TvDbId);
+            var ids = await this.GetAllEpisodeIdsAsync(show.TheTvDbId);
 
             await this.AddEpisodesAsync(show, ids);
         }
 
         public async Task AddNewEpisodesAsync(Show show)
         {
-            var allIds = await this.GetAllEpisodeIdsAsync(show.TvDbId);
+            var allIds = await this.GetAllEpisodeIdsAsync(show.TheTvDbId);
 
-            var existingIds = show.Episodes.Select(x => x.TvDbId);
+            var existingIds = show.Episodes.Select(x => x.TheTvDbId);
 
             var newIds = allIds.Except(existingIds).ToArray();
 
@@ -44,7 +44,7 @@
 
         public async Task PopulateEpisodeAsync(Episode episode)
         {
-            var response = await this.Client.Episodes.GetAsync(episode.TvDbId);
+            var response = await this.Client.Episodes.GetAsync(episode.TheTvDbId);
 
             this.MapToEpisode(episode, response.Data);
         }
@@ -77,7 +77,7 @@
             episode.ImdbId = data.ImdbId;
             episode.Number = data.AiredEpisodeNumber.Value;
             episode.SeasonNumber = data.AiredSeason.Value;
-            episode.TvDbId = data.Id;
+            episode.TheTvDbId = data.Id;
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {

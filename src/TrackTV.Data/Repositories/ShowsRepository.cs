@@ -27,7 +27,7 @@
 
         public async Task<List<Show>> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds)
         {
-            return await this.FullShows().Where(x => theTvDbIds.Contains(x.TvDbId)).ToListAsync();
+            return await this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToListAsync();
         }
 
         private IIncludableQueryable<Show, ICollection<Episode>> FullShows()

@@ -45,7 +45,7 @@
 
         private void MapToShow(Show show, Series data)
         {
-            show.TvDbId = data.Id;
+            show.TheTvDbId = data.Id;
             show.Name = data.SeriesName;
             show.Banner = data.Banner;
             show.ImdbId = data.ImdbId;
