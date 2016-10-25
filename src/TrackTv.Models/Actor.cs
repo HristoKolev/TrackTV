@@ -8,7 +8,6 @@ namespace TrackTv.Models
 
     public class Actor : ITvDbRecord
     {
-        // ReSharper disable once StyleCop.SA1305
         public Actor(int theTvDbId, string name, DateTime lastUpdated, string image)
         {
             this.TheTvDbId = theTvDbId;

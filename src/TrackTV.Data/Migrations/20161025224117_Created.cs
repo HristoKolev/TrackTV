@@ -15,9 +15,9 @@ namespace TrackTV.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Image = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(maxLength: 255, nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     TheTvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -31,7 +31,7 @@ namespace TrackTV.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,7 +44,7 @@ namespace TrackTV.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,12 +72,12 @@ namespace TrackTV.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AirDay = table.Column<int>(nullable: true),
                     AirTime = table.Column<DateTime>(nullable: true),
-                    Banner = table.Column<string>(nullable: true),
+                    Banner = table.Column<string>(maxLength: 255, nullable: true),
                     Description = table.Column<string>(nullable: true),
                     FirstAired = table.Column<DateTime>(nullable: true),
-                    ImdbId = table.Column<string>(nullable: true),
+                    ImdbId = table.Column<string>(maxLength: 10, nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     NetworkId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     TheTvDbId = table.Column<int>(nullable: false)
@@ -101,13 +101,13 @@ namespace TrackTV.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
                     FirstAired = table.Column<DateTime>(nullable: true),
-                    ImdbId = table.Column<string>(nullable: true),
+                    ImdbId = table.Column<string>(maxLength: 10, nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
                     Number = table.Column<int>(nullable: false),
                     SeasonNumber = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false),
                     TheTvDbId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -126,7 +126,7 @@ namespace TrackTV.Data.Migrations
                 {
                     ShowId = table.Column<int>(nullable: false),
                     ActorId = table.Column<int>(nullable: false),
-                    Role = table.Column<string>(nullable: true)
+                    Role = table.Column<string>(maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {

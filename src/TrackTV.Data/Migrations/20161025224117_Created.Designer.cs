@@ -8,7 +8,7 @@ using TrackTV.Data;
 namespace TrackTV.Data.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
-    [Migration("20161025193649_Created")]
+    [Migration("20161025224117_Created")]
     partial class Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,12 +22,14 @@ namespace TrackTV.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Image");
+                    b.Property<string>("Image")
+                        .HasAnnotation("MaxLength", 255);
 
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 255);
 
                     b.Property<int>("TheTvDbId");
 
@@ -45,7 +47,8 @@ namespace TrackTV.Data.Migrations
 
                     b.Property<DateTime?>("FirstAired");
 
-                    b.Property<string>("ImdbId");
+                    b.Property<string>("ImdbId")
+                        .HasAnnotation("MaxLength", 10);
 
                     b.Property<DateTime>("LastUpdated");
 
@@ -57,7 +60,9 @@ namespace TrackTV.Data.Migrations
 
                     b.Property<int>("TheTvDbId");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 255);
 
                     b.HasKey("Id");
 
@@ -72,7 +77,8 @@ namespace TrackTV.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 100);
 
                     b.HasKey("Id");
 
@@ -85,7 +91,8 @@ namespace TrackTV.Data.Migrations
 
                     b.Property<int>("ActorId");
 
-                    b.Property<string>("Role");
+                    b.Property<string>("Role")
+                        .HasAnnotation("MaxLength", 255);
 
                     b.HasKey("ShowId", "ActorId");
 
@@ -132,7 +139,8 @@ namespace TrackTV.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 40);
 
                     b.HasKey("Id");
 
@@ -148,18 +156,21 @@ namespace TrackTV.Data.Migrations
 
                     b.Property<DateTime?>("AirTime");
 
-                    b.Property<string>("Banner");
+                    b.Property<string>("Banner")
+                        .HasAnnotation("MaxLength", 255);
 
                     b.Property<string>("Description");
 
                     b.Property<DateTime?>("FirstAired");
 
-                    b.Property<string>("ImdbId");
+                    b.Property<string>("ImdbId")
+                        .HasAnnotation("MaxLength", 10);
 
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 255);
 
                     b.Property<int>("NetworkId");
 
