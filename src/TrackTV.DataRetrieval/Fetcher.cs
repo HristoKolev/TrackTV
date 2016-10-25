@@ -72,13 +72,13 @@
 
         public async Task UpdateAllRecordsAsync(DateTime from)
         {
-            var updates = await this.Client.Updates.GetAsync(from);
+            var response = await this.Client.Updates.GetAsync(from);
 
-            var ids = updates.Data.Select(x => x.Id).ToArray();
+            var ids = response.Data.Select(x => x.Id).ToArray();
 
             var shows = await this.ShowsRepository.GetFullShowsByTheTvDbIdsAsync(ids);
 
-            foreach (var show in shows.Where(x => IsOutdated(x, updates.Data)))
+            foreach (var show in shows.Where(x => IsOutdated(x, response.Data)))
             {
                 await this.PopulateShowAsync(show);
 
@@ -87,7 +87,7 @@
 
             var episodes = await this.EpisodeRepository.GetEpisodesByTvDbIdsAsync(ids);
 
-            foreach (var episode in episodes.Where(x => IsOutdated(x, updates.Data)))
+            foreach (var episode in episodes.Where(x => IsOutdated(x, response.Data)))
             {
                 await this.EpisodeFetcher.PopulateEpisodeAsync(episode);
             }

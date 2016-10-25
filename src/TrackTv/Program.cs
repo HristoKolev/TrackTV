@@ -60,7 +60,7 @@
             return context;
         }
 
-        private static Fetcher CreateFetcher(TrackTvDbContext context, TvDbClient client)
+        private static IFetcher CreateFetcher(TrackTvDbContext context, ITvDbClient client)
         {
             var actorsRepository = new ActorsRepository(context);
             var networkRepository = new NetworkRepository(context);
