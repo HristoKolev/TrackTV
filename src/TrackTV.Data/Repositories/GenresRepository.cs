@@ -18,7 +18,7 @@
 
         private TrackTvDbContext Context { get; }
 
-        public async Task<Genre[]> GetGenres(string[] names)
+        public async Task<Genre[]> GetGenresByNamesAsync(string[] names)
         {
             return await this.Context.Genres.Where(genre => names.Contains(genre.Name)).ToArrayAsync();
         }

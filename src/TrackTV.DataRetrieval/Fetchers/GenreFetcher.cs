@@ -1,5 +1,6 @@
 ﻿namespace TrackTV.DataRetrieval.Fetchers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -21,7 +22,12 @@
 
         public async Task PopulateGenresAsync(Show show, string[] genreNames)
         {
-            var existingGenres = await this.GenresRepository.GetGenres(genreNames);
+            if (genreNames.Length == 0)
+            {
+                throw new ArgumentException("The genre names array is empty.", nameof(genreNames));
+            }
+
+            var existingGenres = await this.GenresRepository.GetGenresByNamesAsync(genreNames);
 
             var genres = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
 

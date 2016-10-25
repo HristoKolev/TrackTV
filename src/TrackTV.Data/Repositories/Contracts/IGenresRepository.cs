@@ -6,6 +6,6 @@
 
     public interface IGenresRepository
     {
-        Task<Genre[]> GetGenres(string[] names);
+        Task<Genre[]> GetGenresByNamesAsync(string[] names);
     }
 }

@@ -46,38 +46,12 @@
 
         public bool HasActor(Actor actor)
         {
-            return this.ShowsActors.Any(x =>
-                       {
-                           if ((x.Show == this) && (x.Actor == actor))
-                           {
-                               return true;
-                           }
-
-                           if ((x.ShowId != default(int)) && (x.ActorId != default(int)) && (x.ShowId == this.Id) && (x.ActorId == actor.Id))
-                           {
-                               return true;
-                           }
-
-                           return false;
-                       });
+            return this.ShowsActors.Any(x => (x.Actor == actor) || ((x.ActorId != default(int)) && (x.ActorId == actor.Id)));
         }
 
         public bool HasGenre(Genre genre)
         {
-            return this.ShowsGenres.Any(x =>
-                       {
-                           if ((x.Show == this) && (x.Genre == genre))
-                           {
-                               return true;
-                           }
-
-                           if ((x.ShowId != default(int)) && (x.GenreId != default(int)) && (x.ShowId == this.Id) && (x.GenreId == genre.Id))
-                           {
-                               return true;
-                           }
-
-                           return false;
-                       });
+            return this.ShowsGenres.Any(x => (x.Genre == genre) || ((x.GenreId != default(int)) && (x.GenreId == genre.Id)));
         }
 
         public bool HasNetwork()
