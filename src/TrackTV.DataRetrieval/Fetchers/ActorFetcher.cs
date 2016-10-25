@@ -12,12 +12,13 @@
     using TrackTv.Models.Joint;
 
     using TvDbSharper;
+    using TvDbSharper.Clients.Series;
 
     using ActorData = TvDbSharper.Clients.Series.Json.Actor;
 
     public class ActorFetcher : IActorFetcher
     {
-        public ActorFetcher(IActorsRepository actorsRepository, ITvDbClient client)
+        public ActorFetcher(IActorsRepository actorsRepository, ISeriesClient client)
         {
             this.ActorsRepository = actorsRepository;
             this.Client = client;
@@ -25,11 +26,11 @@
 
         private IActorsRepository ActorsRepository { get; }
 
-        private ITvDbClient Client { get; }
+        private ISeriesClient Client { get; }
 
         public async Task PopulateActorsAsync(Show show)
         {
-            var response = await this.Client.Series.GetActorsAsync(show.TvDbId);
+            var response = await this.Client.GetActorsAsync(show.TvDbId);
 
             var ids = response.Data.Select(actor => actor.Id).ToArray();
 

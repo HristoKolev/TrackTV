@@ -69,7 +69,7 @@
             var showsRepository = new ShowsRepository(context);
 
             var episodeFetcher = new EpisodeFetcher(client);
-            var actorFetcher = new ActorFetcher(actorsRepository, client);
+            var actorFetcher = new ActorFetcher(actorsRepository, client.Series);
             var showFetcher = new ShowFetcher(networkRepository);
             var genreFetcher = new GenreFetcher(genresRepository);
 
