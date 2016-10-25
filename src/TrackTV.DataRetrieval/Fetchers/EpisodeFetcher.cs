@@ -84,8 +84,7 @@
                 episode.FirstAired = this.DateParser.ParseFirstAired(data.FirstAired);
             }
 
-            long? lastUpdated = data.LastUpdated;
-            episode.LastUpdated = lastUpdated.ToDateTime();
+            episode.LastUpdated = LongExtensions.ToDateTime(data.LastUpdated);
         }
     }
 }
