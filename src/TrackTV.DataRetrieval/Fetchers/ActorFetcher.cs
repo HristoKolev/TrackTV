@@ -11,7 +11,6 @@
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 
-    using TvDbSharper;
     using TvDbSharper.Clients.Series;
 
     using ActorData = TvDbSharper.Clients.Series.Json.Actor;

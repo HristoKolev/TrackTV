@@ -51,7 +51,7 @@
             show.ImdbId = data.ImdbId;
             show.Description = data.Overview;
 
-            show.LastUpdated = LongExtensions.ToDateTime(data.LastUpdated);
+            show.LastUpdated = data.LastUpdated.ToDateTime();
 
             AirDay airDay;
             Enum.TryParse(data.AirsDayOfWeek, out airDay);

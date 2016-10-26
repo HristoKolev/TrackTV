@@ -24,8 +24,8 @@
 
         public int ShowId { get; set; }
 
-        public string Title { get; set; }
-
         public int TheTvDbId { get; set; }
+
+        public string Title { get; set; }
     }
 }

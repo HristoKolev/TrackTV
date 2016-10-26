@@ -48,29 +48,6 @@
             ConfigureProperties(builder);
         }
 
-        private static void ConfigureProperties(ModelBuilder builder)
-        {
-            const int ImdbIdSize = 10;
-
-            builder.Entity<Show>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Show>().Property(t => t.Banner).HasMaxLength(byte.MaxValue);
-            builder.Entity<Show>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
-
-            builder.Entity<Episode>().Property(t => t.Title).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Episode>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
-
-            builder.Entity<Genre>().Property(t => t.Name).HasMaxLength(100).IsRequired();
-
-            builder.Entity<Network>().Property(t => t.Name).HasMaxLength(40).IsRequired();
-
-            builder.Entity<Actor>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Actor>().Property(t => t.Image).HasMaxLength(byte.MaxValue);
-
-            builder.Entity<ShowsActors>().Property(t => t.Role).HasMaxLength(byte.MaxValue);
-
-            builder.Entity<User>().Property(user => user.Username).IsRequired();
-        }
-
         private static void ConfigureManyToManyRelationships(ModelBuilder builder)
         {
             // ShowsUsers
@@ -99,6 +76,29 @@
                    });
             builder.Entity<ShowsGenres>().HasOne(t => t.Show).WithMany(show => show.ShowsGenres).HasForeignKey(t => t.ShowId);
             builder.Entity<ShowsGenres>().HasOne(t => t.Genre).WithMany(genre => genre.ShowsGenres).HasForeignKey(t => t.GenreId);
+        }
+
+        private static void ConfigureProperties(ModelBuilder builder)
+        {
+            const int ImdbIdSize = 10;
+
+            builder.Entity<Show>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Show>().Property(t => t.Banner).HasMaxLength(byte.MaxValue);
+            builder.Entity<Show>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
+
+            builder.Entity<Episode>().Property(t => t.Title).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Episode>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
+
+            builder.Entity<Genre>().Property(t => t.Name).HasMaxLength(100).IsRequired();
+
+            builder.Entity<Network>().Property(t => t.Name).HasMaxLength(40).IsRequired();
+
+            builder.Entity<Actor>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Actor>().Property(t => t.Image).HasMaxLength(byte.MaxValue);
+
+            builder.Entity<ShowsActors>().Property(t => t.Role).HasMaxLength(byte.MaxValue);
+
+            builder.Entity<User>().Property(user => user.Username).IsRequired();
         }
     }
 }

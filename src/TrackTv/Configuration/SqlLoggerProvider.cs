@@ -1,7 +1,6 @@
 namespace TrackTv.Configuration
 {
     using System;
-    using System.IO;
 
     using Microsoft.Extensions.Logging;
 

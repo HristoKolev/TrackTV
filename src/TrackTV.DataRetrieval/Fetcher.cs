@@ -133,7 +133,7 @@
 
         private static bool IsOutdated(ITvDbRecord record, IEnumerable<Update> updates)
         {
-            return LongExtensions.ToDateTime(updates.First(x => x.Id == record.TheTvDbId).LastUpdated) > record.LastUpdated;
+            return updates.First(x => x.Id == record.TheTvDbId).LastUpdated.ToDateTime() > record.LastUpdated;
         }
 
         private async Task PopulateShowAsync(Show show)
