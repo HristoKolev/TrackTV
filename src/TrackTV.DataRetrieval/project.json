@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "dependencies": {
@@ -6,11 +6,9 @@
       "type": "platform",
       "version": "1.0.1"
     },
-
     "TrackTv.Models": "*",
     "TrackTV.Data": "*",
-
-    "TvDbSharper": "0.5.6"
+    "TvDbSharper": "0.5.7"
   },
 
   "frameworks": {
