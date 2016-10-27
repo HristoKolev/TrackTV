@@ -27,9 +27,7 @@
                 throw new ArgumentException("The genre names array is empty.", nameof(genreNames));
             }
 
-            var existingGenres = await this.GenresRepository.GetGenresByNamesAsync(genreNames);
-
-            var genres = existingGenres.ToDictionary(genre => genre.Name, genre => genre);
+            var genres = await this.GenresRepository.GetGenresByNamesAsync(genreNames);
 
             foreach (string genreName in genreNames)
             {
@@ -42,14 +40,11 @@
             }
         }
 
-        private static Genre GetOrCreateGenre(IReadOnlyDictionary<string, Genre> genres, string genreName)
+        private static Genre GetOrCreateGenre(IEnumerable<Genre> genres, string genreName)
         {
-            if (genres.ContainsKey(genreName))
-            {
-                return genres[genreName];
-            }
+            var genre = genres.FirstOrDefault(x => x.Name == genreName);
 
-            return new Genre(genreName);
+            return genre ?? new Genre(genreName);
         }
     }
 }

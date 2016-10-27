@@ -33,9 +33,7 @@
 
             var ids = response.Data.Select(actor => actor.Id).ToArray();
 
-            var existingActors = await this.ActorsRepository.GetActors(ids);
-
-            var actors = existingActors.ToDictionary(actor => actor.TheTvDbId, actor => actor);
+            var actors = await this.ActorsRepository.GetActorsByTheTvDbIdsAsync(ids);
 
             foreach (var data in response.Data)
             {
@@ -54,18 +52,16 @@
             }
         }
 
-        private static Actor GetOrCreateActor(IReadOnlyDictionary<int, Actor> actors, ActorData data)
+        private static Actor GetOrCreateActor(IEnumerable<Actor> actors, ActorData data)
         {
-            if (actors.ContainsKey(data.Id))
+            var actor = actors.FirstOrDefault(x => x.TheTvDbId == data.Id);
+
+            if (actor != null)
             {
-                var actor = actors[data.Id];
-
                 UpdateActor(actor, data);
-
-                return actor;
             }
 
-            return new Actor(data.Id, data.Name, DateTime.Parse(data.LastUpdated), data.Image);
+            return actor ?? new Actor(data.Id, data.Name, DateTime.Parse(data.LastUpdated), data.Image);
         }
 
         private static void UpdateActor(Actor actor, ActorData data)

@@ -6,6 +6,6 @@
 
     public interface IActorsRepository
     {
-        Task<Actor[]> GetActors(int[] ids);
+        Task<Actor[]> GetActorsByTheTvDbIdsAsync(int[] ids);
     }
 }
