@@ -13,12 +13,12 @@
 
     public class ShowsRepository : IShowsRepository
     {
-        public ShowsRepository(TrackTvDbContext context)
+        public ShowsRepository(ICoreDataContext context)
         {
             this.Context = context;
         }
 
-        private TrackTvDbContext Context { get; }
+        private ICoreDataContext Context { get; }
 
         public async Task<Show> GetFullShowById(int id)
         {

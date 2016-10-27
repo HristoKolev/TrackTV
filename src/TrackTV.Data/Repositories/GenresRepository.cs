@@ -11,12 +11,12 @@
 
     public class GenresRepository : IGenresRepository
     {
-        public GenresRepository(TrackTvDbContext context)
+        public GenresRepository(ICoreDataContext context)
         {
             this.Context = context;
         }
 
-        private TrackTvDbContext Context { get; }
+        private ICoreDataContext Context { get; }
 
         public async Task<Genre[]> GetGenresByNamesAsync(string[] names)
         {

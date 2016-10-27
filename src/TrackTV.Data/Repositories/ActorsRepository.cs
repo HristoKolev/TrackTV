@@ -11,12 +11,12 @@
 
     public class ActorsRepository : IActorsRepository
     {
-        public ActorsRepository(TrackTvDbContext context)
+        public ActorsRepository(ICoreDataContext context)
         {
             this.Context = context;
         }
 
-        private TrackTvDbContext Context { get; }
+        private ICoreDataContext Context { get; }
 
         public async Task<Actor[]> GetActors(int[] ids)
         {

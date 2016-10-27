@@ -7,7 +7,7 @@
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 
-    public class TrackTvDbContext : DbContext
+    public class TrackTvDbContext : DbContext, ICoreDataContext
     {
         public TrackTvDbContext(DbContextOptions options)
             : base(options)
@@ -27,6 +27,12 @@
         public DbSet<Network> Networks { get; set; }
 
         public DbSet<Show> Shows { get; set; }
+
+        public DbSet<ShowsActors> ShowsActors { get; set; }
+
+        public DbSet<ShowsGenres> ShowsGenres { get; set; }
+
+        public DbSet<ShowsUsers> ShowsUsers { get; set; }
 
         public DbSet<User> Users { get; set; }
 

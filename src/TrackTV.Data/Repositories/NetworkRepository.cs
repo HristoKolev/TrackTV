@@ -10,12 +10,12 @@
 
     public class NetworkRepository : INetworkRepository
     {
-        public NetworkRepository(TrackTvDbContext context)
+        public NetworkRepository(ICoreDataContext context)
         {
             this.Context = context;
         }
 
-        private TrackTvDbContext Context { get; }
+        private ICoreDataContext Context { get; }
 
         public async Task<Network> GetNetworkByNameAsync(string name)
         {

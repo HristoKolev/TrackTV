@@ -12,12 +12,12 @@
 
     public class EpisodeRepository : IEpisodeRepository
     {
-        public EpisodeRepository(TrackTvDbContext context)
+        public EpisodeRepository(ICoreDataContext context)
         {
             this.Context = context;
         }
 
-        private TrackTvDbContext Context { get; }
+        private ICoreDataContext Context { get; }
 
         public async Task<Episode> GetEpisodeById(int id)
         {
