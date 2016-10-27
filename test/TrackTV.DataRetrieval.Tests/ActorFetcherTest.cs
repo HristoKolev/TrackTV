@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using NSubstitute;
@@ -12,6 +11,7 @@
     using TrackTV.DataRetrieval.Fetchers;
 
     using TrackTv.Models;
+    using TrackTv.Models.Joint;
 
     using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series;
@@ -42,7 +42,7 @@
                 {
                     Id = i,
                     Name = $"Actor {i}",
-                    LastUpdated = $"0001-01-0{i + 1}",
+                    LastUpdated = $"0001-02-0{i + 1}",
                     Image = $"Image {i}"
                 });
             }
@@ -73,6 +73,71 @@
             for (int i = 0; i < response.Data.Length; i++)
             {
                 Assert.Equal(actors[i], relationships[i].Actor);
+                Assert.Equal(response.Data[i].Role, relationships[i].Role);
+
+                Assert.Equal(response.Data[i].Id, actors[i].TheTvDbId);
+                Assert.Equal(response.Data[i].Name, actors[i].Name);
+                Assert.Equal(response.Data[i].Image, actors[i].Image);
+                Assert.Equal(response.Data[i].LastUpdated, actors[i].LastUpdated.ToString("yyyy-MM-dd"));
+            }
+        }
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task PopulateActorsAsync_should_add_existing_and_new_actors()
+        {
+            var repository = Substitute.For<IActorsRepository>();
+            var client = Substitute.For<ISeriesClient>();
+
+            var response = new TvDbResponse<ActorData[]>();
+
+            var data = new List<ActorData>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                data.Add(new ActorData
+                {
+                    Id = i,
+                    Name = $"Actor {i}",
+                    LastUpdated = $"0001-01-0{i + 1}",
+                    Image = $"Image {i}",
+                    Role = $"Role {i}"
+                });
+            }
+
+            response.Data = data.ToArray();
+
+            var show = new Show
+            {
+                TheTvDbId = 42
+            };
+
+            var actors = response.Data.Take(2).Select(x => new Actor
+                                 {
+                                     TheTvDbId = x.Id
+                                 }).ToArray();
+
+            RigRepository(repository, actors);
+            RigClient(client, show.TheTvDbId, response);
+
+            var fetcher = new ActorFetcher(repository, client);
+
+            await fetcher.PopulateActorsAsync(show);
+
+            var relationships = show.ShowsActors.ToArray();
+
+            Assert.Equal(response.Data.Length, relationships.Length);
+
+            Assert.Equal(actors[0], relationships[0].Actor);
+            Assert.Equal(actors[1], relationships[1].Actor);
+            Assert.Equal(response.Data[2].Id, relationships[2].Actor.TheTvDbId);
+            Assert.Equal(response.Data[3].Id, relationships[3].Actor.TheTvDbId);
+            Assert.Equal(response.Data[4].Id, relationships[4].Actor.TheTvDbId);
+
+            for (int i = 0; i < response.Data.Length; i++)
+            {
+                Assert.Equal(response.Data[i].Role, relationships[i].Role);
             }
         }
 
@@ -176,7 +241,7 @@
             var fetcher = new ActorFetcher(repository, client);
             await fetcher.PopulateActorsAsync(show);
 
-            await AssertClientCalledAsync(client, show.TheTvDbId);
+            await client.Received().GetActorsAsync(show.TheTvDbId);
         }
 
         [Fact]
@@ -229,19 +294,61 @@
             var fetcher = new ActorFetcher(repository, client);
             await fetcher.PopulateActorsAsync(show);
 
-            await AssertRepositoryCalledAsync(repository, expectedIds);
+            await repository.Received().GetActorsByTheTvDbIdsAsync(Arg.Is<int[]>(x => x.All(expectedIds.Contains)));
         }
 
-        private static async Task AssertClientCalledAsync(ISeriesClient client, int theTvDbId)
-        {
-            await client.Received().GetActorsAsync(theTvDbId);
-        }
+        [Fact]
 
-        private static async Task AssertRepositoryCalledAsync(IActorsRepository repository, int[] expectedIds)
+        // ReSharper disable once InconsistentNaming
+        public async Task PopulateActorsAsync_should_update_role_on_existing_actor()
         {
-            Expression<Predicate<int[]>> allInIds = x => x.All(expectedIds.Contains);
+            var repository = Substitute.For<IActorsRepository>();
+            var client = Substitute.For<ISeriesClient>();
 
-            await repository.Received().GetActorsByTheTvDbIdsAsync(Arg.Is(allInIds));
+            var response = new TvDbResponse<ActorData[]>
+            {
+                Data = new[]
+                {
+                    new ActorData
+                    {
+                        Id = 1,
+                        Name = "Actor 1",
+                        LastUpdated = "0001-02-01",
+                        Image = "Image 1",
+                        Role = "Role 1"
+                    }
+                }
+            };
+
+            var actor = new Actor
+            {
+                TheTvDbId = 1
+            };
+
+            var show = new Show
+            {
+                TheTvDbId = 42,
+                ShowsActors = {
+                    new ShowsActors
+                    {
+                        Actor = actor
+                    }
+                }
+            };
+
+            var actors = new List<Actor>
+            {
+                actor
+            };
+
+            RigRepository(repository, actors.ToArray());
+            RigClient(client, show.TheTvDbId, response);
+
+            var fetcher = new ActorFetcher(repository, client);
+
+            await fetcher.PopulateActorsAsync(show);
+
+            Assert.Equal(response.Data.First().Role, show.ShowsActors.First().Role);
         }
 
         private static void RigClient(ISeriesClient client, int theTvDbId, TvDbResponse<ActorData[]> actorResponse)
@@ -251,9 +358,7 @@
 
         private static void RigRepository(IActorsRepository repository, Actor[] actors, int[] expectedIds)
         {
-            Expression<Predicate<int[]>> allInIds = x => x.All(expectedIds.Contains);
-
-            repository.GetActorsByTheTvDbIdsAsync(Arg.Is(allInIds)).Returns(actors);
+            repository.GetActorsByTheTvDbIdsAsync(Arg.Is<int[]>(x => x.All(expectedIds.Contains))).Returns(actors);
         }
 
         private static void RigRepository(IActorsRepository repository, Actor[] actors)
