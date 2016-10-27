@@ -1,14 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TrackTv.Models;
-
-namespace TrackTV.Data
+﻿namespace TrackTV.Data
 {
+    using Microsoft.EntityFrameworkCore;
+
+    using TrackTv.Models;
+
     public interface ICoreDataContext
     {
-        DbSet<Actor> Actors { get; set; }
-        DbSet<Episode> Episodes { get; set; }
-        DbSet<Genre> Genres { get; set; }
-        DbSet<Network> Networks { get; set; }
-        DbSet<Show> Shows { get; set; }
+        DbSet<Actor> Actors { get; }
+
+        DbSet<Episode> Episodes { get; }
+
+        DbSet<Genre> Genres { get; }
+
+        DbSet<Network> Networks { get; }
+
+        DbSet<Show> Shows { get; }
     }
 }
