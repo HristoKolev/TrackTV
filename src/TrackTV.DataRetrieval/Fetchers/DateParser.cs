@@ -5,66 +5,94 @@ namespace TrackTV.DataRetrieval.Fetchers
 
     public class DateParser
     {
+        private const int AbbreviationLength = 2;
+
+        private const string Am = "am";
+
+        private const string Pm = "pm";
+
         public DateTime? ParseAirTime(string value)
         {
-            value = value.Trim();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new InvalidOperationException("The value is null or white space.");
+            }
+
+            string time = value.Trim().ToLower();
 
             string abbreviation = null;
 
-            if (value.ToLower().EndsWith("am") || value.ToLower().EndsWith("pm"))
+            if (time.EndsWith(Am) || time.EndsWith(Pm))
             {
-                abbreviation = value.Substring(value.Length - 2, 2).ToLower();
-                value = value.Remove(value.Length - 2, 2).Trim();
+                abbreviation = time.Substring(time.Length - AbbreviationLength, AbbreviationLength);
+                time = time.Remove(time.Length - AbbreviationLength, AbbreviationLength).Trim();
             }
 
-            string hoursAndMinutes = value;
-
-            if (!hoursAndMinutes.Contains(":"))
+            if (!time.Contains(":"))
             {
                 return null;
             }
 
-            string stringHours = hoursAndMinutes.Split(':')[0];
+            string[] hoursAndMinutes = time.Split(':');
 
-            int hours;
+            string stringHours = hoursAndMinutes[0];
+            string stringMinutes = hoursAndMinutes[1];
 
-            if (!int.TryParse(stringHours, out hours))
-            {
-                return null;
-            }
+            int hour;
 
-            if ((hours < 1) || (hours > 12))
-            {
-                return null;
-            }
-
-            string stringMinutes = hoursAndMinutes.Replace(stringHours + ":", string.Empty);
-
-            int minutes;
-
-            if (!int.TryParse(stringMinutes, out minutes))
-            {
-                return null;
-            }
-
-            if ((minutes < 0) || (minutes > 59))
+            if (!int.TryParse(stringHours, out hour))
             {
                 return null;
             }
 
             if (abbreviation != null)
             {
-                var formattableString = $"0001-01-01 {stringHours.PadLeft(2, '0')}:{stringMinutes.PadLeft(2, '0')} {abbreviation}";
-
-                return DateTime.ParseExact(formattableString, "yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture);
+                if ((hour < 1) || (hour > 12))
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                if ((hour < 0) || (hour > 23))
+                {
+                    return null;
+                }
             }
 
-            return new DateTime(1, 1, 1, hours, minutes, 0);
+            int minute;
+
+            if (!int.TryParse(stringMinutes, out minute))
+            {
+                return null;
+            }
+
+            if ((minute < 0) || (minute > 59))
+            {
+                return null;
+            }
+
+            if ((abbreviation == Am) && (hour == 12))
+            {
+                return Create(hour - 12, minute);
+            }
+
+            if ((abbreviation == Pm) && (hour != 12))
+            {
+                return Create(hour + 12, minute);
+            }
+
+            return Create(hour, minute);
         }
 
         public DateTime ParseFirstAired(string value)
         {
             return DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+        }
+
+        private static DateTime Create(int hour, int minute)
+        {
+            return new DateTime(1, 1, 1, hour, minute, 0);
         }
     }
 }
