@@ -1,5 +1,6 @@
 ﻿namespace TrackTV.DataRetrieval.Fetchers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -33,11 +34,11 @@
 
         public async Task AddNewEpisodesAsync(Show show)
         {
-            var allIds = await this.GetAllEpisodeIdsAsync(show.TheTvDbId);
+            var ids = await this.GetAllEpisodeIdsAsync(show.TheTvDbId);
 
             var existingIds = show.Episodes.Select(x => x.TheTvDbId);
 
-            var newIds = allIds.Except(existingIds).ToArray();
+            var newIds = ids.Except(existingIds).ToArray();
 
             await this.AddEpisodesAsync(show, newIds);
         }
@@ -49,7 +50,7 @@
             this.MapToEpisode(episode, response.Data);
         }
 
-        private async Task AddEpisodesAsync(Show show, int[] ids)
+        private async Task AddEpisodesAsync(Show show, IEnumerable<int> ids)
         {
             var records = await this.Client.Episodes.GetFullEpisodesAsync(ids);
 

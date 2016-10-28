@@ -140,7 +140,7 @@
         {
             var response = await this.Client.Series.GetAsync(show.TheTvDbId);
 
-            await this.ShowFetcher.PopulateShowAsync(show, response);
+            await this.ShowFetcher.PopulateShowAsync(show, response.Data);
 
             await this.GenreFetcher.PopulateGenresAsync(show, response.Data.Genre);
 

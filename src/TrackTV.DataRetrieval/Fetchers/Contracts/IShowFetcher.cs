@@ -9,6 +9,6 @@
 
     public interface IShowFetcher
     {
-        Task PopulateShowAsync(Show show, TvDbResponse<Series> response);
+        Task PopulateShowAsync(Show show, Series data);
     }
 }

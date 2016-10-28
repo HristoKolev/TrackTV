@@ -9,7 +9,6 @@
     using TrackTv.Models;
     using TrackTv.Models.Enums;
 
-    using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series.Json;
     using TvDbSharper.Clients.Updates;
 
@@ -26,11 +25,11 @@
 
         private INetworkRepository NetworkRepository { get; }
 
-        public async Task PopulateShowAsync(Show show, TvDbResponse<Series> response)
+        public async Task PopulateShowAsync(Show show, Series data)
         {
-            this.MapToShow(show, response.Data);
+            this.MapToShow(show, data);
 
-            await this.AddNetworkAsync(show, response.Data.Network);
+            await this.AddNetworkAsync(show, data.Network);
         }
 
         private async Task AddNetworkAsync(Show show, string networkName)
