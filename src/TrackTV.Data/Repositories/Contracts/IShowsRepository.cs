@@ -10,5 +10,7 @@
         Task<Show> GetFullShowById(int id);
 
         Task<List<Show>> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds);
+
+        Task SaveChangesAsync();
     }
 }

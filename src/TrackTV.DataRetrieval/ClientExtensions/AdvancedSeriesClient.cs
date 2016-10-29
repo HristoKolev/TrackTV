@@ -8,17 +8,24 @@
     using TvDbSharper.Clients.Series;
     using TvDbSharper.Clients.Series.Json;
 
-    public static class SeriesClientExtensions
+    public class AdvancedSeriesClient : IAdvancedSeriesClient
     {
-        public static async Task<IEnumerable<BasicEpisode>> GetBasicEpisodesAsync(this ISeriesClient client, int seriesId)
+        public AdvancedSeriesClient(ISeriesClient client)
+        {
+            this.Client = client;
+        }
+
+        private ISeriesClient Client { get; }
+
+        public async Task<IEnumerable<BasicEpisode>> GetBasicEpisodesAsync(int seriesId)
         {
             var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
 
-            var firstResponse = await client.GetEpisodesAsync(seriesId, 1);
+            var firstResponse = await this.Client.GetEpisodesAsync(seriesId, 1);
 
             for (int i = 2; i <= firstResponse.Links.Last; i++)
             {
-                tasks.Add(client.GetEpisodesAsync(seriesId, i));
+                tasks.Add(this.Client.GetEpisodesAsync(seriesId, i));
             }
 
             var results = await Task.WhenAll(tasks);

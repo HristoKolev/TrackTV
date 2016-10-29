@@ -18,9 +18,9 @@
 
         private ICoreDataContext Context { get; }
 
-        public async Task<Genre[]> GetGenresByNamesAsync(string[] names)
+        public Task<Genre[]> GetGenresByNamesAsync(string[] names)
         {
-            return await this.Context.Genres.Where(genre => names.Contains(genre.Name)).ToArrayAsync();
+            return this.Context.Genres.Where(genre => names.Contains(genre.Name)).ToArrayAsync();
         }
     }
 }

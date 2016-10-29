@@ -12,6 +12,7 @@
     using TrackTV.Data;
     using TrackTV.Data.Repositories;
     using TrackTV.DataRetrieval;
+    using TrackTV.DataRetrieval.ClientExtensions;
     using TrackTV.DataRetrieval.Fetchers;
 
     using TvDbSharper;
@@ -68,7 +69,10 @@
             var genresRepository = new GenresRepository(context);
             var showsRepository = new ShowsRepository(context);
 
-            var episodeFetcher = new EpisodeFetcher(client);
+            var advancedEpisodesClient = new AdvancedEpisodeClient(client.Episodes);
+            var advancedSeriesClient = new AdvancedSeriesClient(client.Series);
+
+            var episodeFetcher = new EpisodeFetcher(client.Episodes, advancedEpisodesClient, advancedSeriesClient);
             var actorFetcher = new ActorFetcher(actorsRepository, client.Series);
             var showFetcher = new ShowFetcher(networkRepository);
             var genreFetcher = new GenreFetcher(genresRepository);

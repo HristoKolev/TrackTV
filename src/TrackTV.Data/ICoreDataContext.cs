@@ -1,5 +1,8 @@
 ﻿namespace TrackTV.Data
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Models;
@@ -15,5 +18,7 @@
         DbSet<Network> Networks { get; }
 
         DbSet<Show> Shows { get; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

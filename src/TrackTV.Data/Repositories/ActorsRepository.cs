@@ -18,9 +18,9 @@
 
         private ICoreDataContext Context { get; }
 
-        public async Task<Actor[]> GetActorsByTheTvDbIdsAsync(int[] ids)
+        public Task<Actor[]> GetActorsByTheTvDbIdsAsync(int[] ids)
         {
-            return await this.Context.Actors.Where(actor => ids.Contains(actor.TheTvDbId)).ToArrayAsync();
+            return this.Context.Actors.Where(actor => ids.Contains(actor.TheTvDbId)).ToArrayAsync();
         }
     }
 }

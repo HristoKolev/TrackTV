@@ -17,9 +17,9 @@
 
         private ICoreDataContext Context { get; }
 
-        public async Task<Network> GetNetworkByNameAsync(string name)
+        public Task<Network> GetNetworkByNameAsync(string name)
         {
-            return await this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+            return this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
         }
     }
 }

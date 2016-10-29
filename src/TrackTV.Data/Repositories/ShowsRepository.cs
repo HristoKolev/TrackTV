@@ -20,20 +20,25 @@
 
         private ICoreDataContext Context { get; }
 
-        public async Task<Show> GetFullShowById(int id)
+        public Task<Show> GetFullShowById(int id)
         {
-            return await this.FullShows().FirstOrDefaultAsync(x => x.Id == id);
+            return this.FullShows().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<Show>> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds)
+        public Task<List<Show>> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds)
         {
-            return await this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToListAsync();
+            return this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToListAsync();
         }
 
         private IIncludableQueryable<Show, ICollection<Episode>> FullShows()
         {
             return
                 this.Context.Shows.Include(x => x.ShowsGenres).Include(x => x.ShowsActors).Include(x => x.Network).Include(x => x.Episodes);
+        }
+
+        private Task SaveChangesAsync()
+        {
+            return this.Context.SaveChangesAsync();
         }
     }
 }
