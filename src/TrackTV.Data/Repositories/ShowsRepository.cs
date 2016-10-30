@@ -30,15 +30,15 @@
             return this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToListAsync();
         }
 
+        public Task SaveChangesAsync()
+        {
+            return this.Context.SaveChangesAsync();
+        }
+
         private IIncludableQueryable<Show, ICollection<Episode>> FullShows()
         {
             return
                 this.Context.Shows.Include(x => x.ShowsGenres).Include(x => x.ShowsActors).Include(x => x.Network).Include(x => x.Episodes);
-        }
-
-        private Task SaveChangesAsync()
-        {
-            return this.Context.SaveChangesAsync();
         }
     }
 }
