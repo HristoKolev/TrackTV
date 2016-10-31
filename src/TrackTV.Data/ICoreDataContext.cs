@@ -18,7 +18,5 @@
         DbSet<Network> Networks { get; }
 
         DbSet<Show> Shows { get; }
-
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }
