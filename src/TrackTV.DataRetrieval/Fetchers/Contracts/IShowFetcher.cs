@@ -4,7 +4,6 @@
 
     using TrackTv.Models;
 
-    using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series.Json;
 
     public interface IShowFetcher

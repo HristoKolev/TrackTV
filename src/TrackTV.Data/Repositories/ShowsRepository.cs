@@ -29,7 +29,7 @@
         {
             return this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToListAsync();
         }
- 
+
         private IIncludableQueryable<Show, ICollection<Episode>> FullShows()
         {
             return

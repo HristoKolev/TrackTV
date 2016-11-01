@@ -10,8 +10,8 @@
       "version": "1.0.1"
     },
     "TrackTv.Models": "*",
-    "TrackTV.Data": "*",
-    "TrackTV.DataRetrieval": "*",
+    "TrackTv.Data": "*",
+    "TrackTv.DataRetrieval": "*",
     "TvDbSharper": "0.5.7",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
     "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",

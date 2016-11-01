@@ -7,8 +7,8 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>0dfdb10e-fbb4-46f3-9c61-34181a9d9db4</ProjectGuid>
-    <RootNamespace>TrackTv.DataRetrieval</RootNamespace>
+    <ProjectGuid>0dfcd03e-6232-45d6-a834-edca91cb6d33</ProjectGuid>
+    <RootNamespace>TrackTv.Services</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
