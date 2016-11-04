@@ -17,25 +17,26 @@
         // ReSharper disable once InconsistentNaming
         public async Task GetGenresByNamesAsync_should_return_genres_by_names()
         {
-            var context = CreateContext(nameof(this.GetGenresByNamesAsync_should_return_genres_by_names));
-
-            await SeedGenresAsync(context);
-
-            var repo = new GenresRepository(context);
-
-            var names = new[]
+            using (var context = CreateContext())
             {
-                "action",
-                "crime"
-            };
+                await SeedGenresAsync(context);
 
-            var genres = await repo.GetGenresByNamesAsync(names);
+                var repo = new GenresRepository(context);
 
-            Assert.Equal(names.Length, genres.Length);
+                var names = new[]
+                {
+                    "action",
+                    "crime"
+                };
 
-            for (int i = 0; i < names.Length; i++)
-            {
-                Assert.Equal(names[i], genres[i].Name);
+                var genres = await repo.GetGenresByNamesAsync(names);
+
+                Assert.Equal(names.Length, genres.Length);
+
+                for (int i = 0; i < names.Length; i++)
+                {
+                    Assert.Equal(names[i], genres[i].Name);
+                }
             }
         }
 

@@ -1,15 +1,18 @@
 ﻿namespace TrackTv.Data.Tests
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
 
     using TrackTV.Data;
 
     public class BaseRepositoryTest
     {
-        protected static TrackTvDbContext CreateContext(string databaseName)
+        protected static TrackTvDbContext CreateContext()
         {
+            var serviceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
+
             var builder = new DbContextOptionsBuilder<TrackTvDbContext>();
-            builder.UseInMemoryDatabase(databaseName);
+            builder.UseInMemoryDatabase().UseInternalServiceProvider(serviceProvider);
 
             var context = new TrackTvDbContext(builder.Options);
             context.Database.EnsureDeleted();

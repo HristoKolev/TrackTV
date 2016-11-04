@@ -19,17 +19,18 @@
         // ReSharper disable once InconsistentNaming
         public async Task GetFullShowById_should_return_full_show_by_id()
         {
-            var context = CreateContext(nameof(this.GetFullShowById_should_return_full_show_by_id));
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
 
-            await SeedGenresAsync(context);
+                var repo = new ShowsRepository(context);
 
-            var repo = new ShowsRepository(context);
+                var show = await repo.GetFullShowById(2);
 
-            var show = await repo.GetFullShowById(2);
+                Assert.Equal("Show2", show.Name);
 
-            Assert.Equal("Show2", show.Name);
-
-            AssertIsFull(show);
+                AssertIsFull(show);
+            }
         }
 
         [Fact]
@@ -37,27 +38,28 @@
         // ReSharper disable once InconsistentNaming
         public async Task GetFullShowsByTheTvDbIdsAsync_should_return_full_shows_by_ids()
         {
-            var context = CreateContext(nameof(this.GetFullShowsByTheTvDbIdsAsync_should_return_full_shows_by_ids));
-
-            await SeedGenresAsync(context);
-
-            var repo = new ShowsRepository(context);
-
-            int[] ids = {
-                1002,
-                1003,
-                1004
-            };
-
-            var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids);
-
-            Assert.Equal(ids.Length, shows.Count);
-
-            for (int i = 0; i < ids.Length; i++)
+            using (var context = CreateContext())
             {
-                Assert.Equal(ids[i], shows[i].TheTvDbId);
+                await SeedGenresAsync(context);
 
-                AssertIsFull(shows[i]);
+                var repo = new ShowsRepository(context);
+
+                int[] ids = {
+                    1002,
+                    1003,
+                    1004
+                };
+
+                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids);
+
+                Assert.Equal(ids.Length, shows.Count);
+
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    Assert.Equal(ids[i], shows[i].TheTvDbId);
+
+                    AssertIsFull(shows[i]);
+                }
             }
         }
 

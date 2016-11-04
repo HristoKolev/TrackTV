@@ -17,17 +17,18 @@
         // ReSharper disable once InconsistentNaming
         public async Task GetNetworkByNameAsync_should_return_network_by_name()
         {
-            var context = CreateContext(nameof(this.GetNetworkByNameAsync_should_return_network_by_name));
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
 
-            await SeedGenresAsync(context);
+                var repo = new NetworkRepository(context);
 
-            var repo = new NetworkRepository(context);
+                const string Name = "bbc";
 
-            const string Name = "bbc";
+                var network = await repo.GetNetworkByNameAsync(Name);
 
-            var network = await repo.GetNetworkByNameAsync(Name);
-
-            Assert.Equal(Name, network.Name);
+                Assert.Equal(Name, network.Name);
+            }
         }
 
         private static async Task SeedGenresAsync(TrackTvDbContext context, IEnumerable<Network> networks = null)
