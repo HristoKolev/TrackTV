@@ -5,4 +5,9 @@ build_script:
 
     dotnet build **\project.json
 test_script:
-- cmd: dotnet test test\TrackTv.Tests
+- cmd: >-
+    dotnet test test\TrackTv.Tests
+
+    dotnet test test\TrackTv.Data.Tests
+
+    dotnet test test\TrackTv.DataRetrieval.Tests
