@@ -12,6 +12,7 @@
     "TrackTv.Models": "*",
     "TrackTv.Data": "*",
     "TrackTv.DataRetrieval": "*",
+    "TrackTv.Services": "*",
     "TvDbSharper": "0.5.7",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
     "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",

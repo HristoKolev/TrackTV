@@ -52,7 +52,7 @@
 
                 var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids);
 
-                Assert.Equal(ids.Length, shows.Count);
+                Assert.Equal(ids.Length, shows.Length);
 
                 for (int i = 0; i < ids.Length; i++)
                 {

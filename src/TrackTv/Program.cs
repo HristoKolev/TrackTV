@@ -1,5 +1,6 @@
 ﻿namespace TrackTv
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@
     using Newtonsoft.Json;
 
     using TrackTv.Configuration;
+    using TrackTv.Services.Show;
+    using TrackTv.Services.Shows;
 
     using TrackTV.Data;
     using TrackTV.Data.Repositories;
@@ -28,9 +31,25 @@
 
             using (var context = await CreateContext())
             {
-                var fetcher = CreateFetcher(context, client);
+                //var fetcher = CreateFetcher(context, client);
 
-                await fetcher.AddShowAsync(70851);
+                //await fetcher.AddShowAsync(70851);
+                //await fetcher.AddShowAsync(78804);
+                //await fetcher.AddShowAsync(83237);
+                //await fetcher.AddShowAsync(70851);
+                //await fetcher.AddShowAsync(72449);
+                //await fetcher.AddShowAsync(82066);
+                //await fetcher.AddShowAsync(292124);
+                //await fetcher.AddShowAsync(296762);
+
+                var showsRepo = new ShowsRepository(context);
+                var usersRepo = new UsersRepository(context);
+
+                var showService = new ShowsService(showsRepo);
+
+                var shows = await showService.GetTopShowsAsync();
+
+                Console.WriteLine(JsonConvert.SerializeObject(shows, Formatting.Indented));
 
                 // await fetcher.UpdateShowAsync(2);
                 // await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19));

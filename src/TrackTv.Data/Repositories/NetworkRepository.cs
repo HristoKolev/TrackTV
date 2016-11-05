@@ -10,16 +10,16 @@
 
     public class NetworkRepository : INetworkRepository
     {
-        public NetworkRepository(ICoreDataContext context)
+        public NetworkRepository(ICoreDataStore dataStore)
         {
-            this.Context = context;
+            this.DataStore = dataStore;
         }
 
-        private ICoreDataContext Context { get; }
+        private ICoreDataStore DataStore { get; }
 
         public Task<Network> GetNetworkByNameAsync(string name)
         {
-            return this.Context.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+            return this.DataStore.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
         }
     }
 }

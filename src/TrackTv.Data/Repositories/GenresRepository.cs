@@ -11,16 +11,16 @@
 
     public class GenresRepository : IGenresRepository
     {
-        public GenresRepository(ICoreDataContext context)
+        public GenresRepository(ICoreDataStore dataStore)
         {
-            this.Context = context;
+            this.DataStore = dataStore;
         }
 
-        private ICoreDataContext Context { get; }
+        private ICoreDataStore DataStore { get; }
 
         public Task<Genre[]> GetGenresByNamesAsync(string[] names)
         {
-            return this.Context.Genres.Where(genre => names.Contains(genre.Name)).OrderBy(x => x.Name).ToArrayAsync();
+            return this.DataStore.Genres.Where(genre => names.Contains(genre.Name)).OrderBy(x => x.Name).ToArrayAsync();
         }
     }
 }

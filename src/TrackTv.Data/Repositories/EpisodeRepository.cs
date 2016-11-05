@@ -12,26 +12,26 @@
 
     public class EpisodeRepository : IEpisodeRepository
     {
-        public EpisodeRepository(ICoreDataContext context)
+        public EpisodeRepository(ICoreDataStore dataStore)
         {
-            this.Context = context;
+            this.DataStore = dataStore;
         }
 
-        private ICoreDataContext Context { get; }
+        private ICoreDataStore DataStore { get; }
 
         public Task<Episode> GetEpisodeById(int id)
         {
-            return this.Context.Episodes.FirstOrDefaultAsync(x => x.Id == id);
+            return this.DataStore.Episodes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<List<Episode>> GetEpisodesByShowIdAsync(int id)
         {
-            return this.Context.Episodes.Where(x => x.ShowId == id).ToListAsync();
+            return this.DataStore.Episodes.Where(x => x.ShowId == id).ToListAsync();
         }
 
         public Task<List<Episode>> GetEpisodesByTheTvDbIdsAsync(int[] ids)
         {
-            return this.Context.Episodes.Where(x => ids.Contains(x.TheTvDbId)).ToListAsync();
+            return this.DataStore.Episodes.Where(x => ids.Contains(x.TheTvDbId)).ToListAsync();
         }
     }
 }
