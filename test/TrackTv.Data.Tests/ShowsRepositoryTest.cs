@@ -25,7 +25,7 @@
 
                 var repo = new ShowsRepository(context);
 
-                var show = await repo.GetFullShowById(2);
+                var show = await repo.GetFullShowByIdAsync(2);
 
                 Assert.Equal("Show2", show.Name);
 

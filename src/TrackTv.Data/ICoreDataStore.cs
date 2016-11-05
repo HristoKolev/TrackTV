@@ -18,5 +18,7 @@
         DbSet<Show> Shows { get; }
 
         DbSet<ShowsGenres> ShowsGenres { get; }
+
+        DbSet<ShowsUsers> ShowsUsers { get; }
     }
 }

@@ -16,11 +16,13 @@
 
         Task<SubscriberSummary[]> CountSubscribersAsync(int[] ids);
 
-        Task<Show> GetFullShowById(int id);
+        Task<Show> GetFullShowByIdAsync(int id);
 
         Task<Show[]> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds);
 
-        Task<Show> GetShowWithNetworkById(int id);
+        Task<Show[]> GetShowsByUserIdAsync(int userId);
+
+        Task<Show> GetShowWithNetworkByIdAsync(int id);
 
         Task<Show[]> GetTopAsync(int page, int pageSize);
 

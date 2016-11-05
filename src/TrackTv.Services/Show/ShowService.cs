@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Show
+namespace TrackTv.Services.Show
 {
     using System.Threading.Tasks;
 
@@ -21,7 +21,7 @@
 
         public async Task<FullShow> GetFullShowAsync(int id)
         {
-            var show = await this.ShowsRepository.GetShowWithNetworkById(id);
+            var show = await this.ShowsRepository.GetShowWithNetworkByIdAsync(id);
 
             var model = new FullShow
             {

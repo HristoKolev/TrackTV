@@ -122,7 +122,7 @@
 
         public async Task UpdateShowAsync(int id)
         {
-            var show = await this.ShowsRepository.GetFullShowById(id);
+            var show = await this.ShowsRepository.GetFullShowByIdAsync(id);
 
             await this.PopulateShowAsync(show);
 

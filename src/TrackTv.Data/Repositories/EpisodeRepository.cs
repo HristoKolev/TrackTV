@@ -1,5 +1,6 @@
 ﻿namespace TrackTV.Data.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -8,6 +9,7 @@
 
     using TrackTV.Data.Repositories.Contracts;
 
+    using TrackTv.Data.Repositories.Models;
     using TrackTv.Models;
 
     public class EpisodeRepository : IEpisodeRepository
@@ -32,6 +34,24 @@
         public Task<List<Episode>> GetEpisodesByTheTvDbIdsAsync(int[] ids)
         {
             return this.DataStore.Episodes.Where(x => ids.Contains(x.TheTvDbId)).ToListAsync();
+        }
+
+        public Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] ids, DateTime time)
+        {
+            var summariesQuery = this.DataStore.Shows.Where(x => ids.Contains(x.Id)).Select(s => new EpisodesSummary
+                                     {
+                                         ShowId = s.Id,
+                                         LastEpisode =
+                                             s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired <= time))
+                                              .OrderByDescending(e => e.FirstAired)
+                                              .FirstOrDefault(),
+                                         NextEpisode =
+                                             s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired > time))
+                                              .OrderBy(e => e.FirstAired)
+                                              .FirstOrDefault()
+                                     });
+
+            return summariesQuery.ToArrayAsync();
         }
     }
 }

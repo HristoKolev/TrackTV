@@ -54,7 +54,7 @@
                        }).ToArrayAsync();
         }
 
-        public Task<Show> GetFullShowById(int id)
+        public Task<Show> GetFullShowByIdAsync(int id)
         {
             return this.FullShows().FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -64,7 +64,12 @@
             return this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToArrayAsync();
         }
 
-        public Task<Show> GetShowWithNetworkById(int id)
+        public Task<Show[]> GetShowsByUserIdAsync(int userId)
+        {
+            return this.DataStore.ShowsUsers.Where(x => x.UserId == userId).Select(x => x.Show).ToArrayAsync();
+        }
+
+        public Task<Show> GetShowWithNetworkByIdAsync(int id)
         {
             return this.DataStore.Shows.AsNoTracking().Include(x => x.Network).FirstOrDefaultAsync(x => x.Id == id);
         }

@@ -9,6 +9,7 @@
     using Newtonsoft.Json;
 
     using TrackTv.Configuration;
+    using TrackTv.Services.MyShows;
     using TrackTv.Services.Show;
     using TrackTv.Services.Shows;
 
@@ -44,12 +45,13 @@
 
                 var showsRepo = new ShowsRepository(context);
                 var usersRepo = new UsersRepository(context);
+                var episodeRepo = new EpisodeRepository(context);
 
-                var showService = new ShowsService(showsRepo);
+                var service = new MyShowsService(showsRepo, episodeRepo);
 
-                var shows = await showService.GetTopShowsAsync();
+                var data = await service.GetAllAsync(1);
 
-                Console.WriteLine(JsonConvert.SerializeObject(shows, Formatting.Indented));
+                Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
 
                 // await fetcher.UpdateShowAsync(2);
                 // await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19));
