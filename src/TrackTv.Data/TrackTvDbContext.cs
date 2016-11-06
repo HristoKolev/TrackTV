@@ -7,7 +7,7 @@
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 
-    public class TrackTvDbContext : DbContext, ICoreDataStore, IUsersContext
+    public class TrackTvDbContext : DbContext, ICoreDataStore, IUsersStore
     {
         public TrackTvDbContext(DbContextOptions options)
             : base(options)
