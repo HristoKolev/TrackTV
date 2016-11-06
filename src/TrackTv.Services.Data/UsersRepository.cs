@@ -28,13 +28,11 @@
             return this.Context.ShowsUsers.AnyAsync(x => (x.UserId == userId) && (x.ShowId == showId));
         }
 
-        public async Task RemoveSubscriptionAsync(int userId, int showId)
+        public Task RemoveSubscriptionAsync(int userId, int showId)
         {
-            var subscription = await this.Context.ShowsUsers.FirstOrDefaultAsync(x => (x.UserId == userId) && (x.ShowId == showId));
+            this.Context.ShowsUsers.Remove(new ShowsUsers(userId, showId));
 
-            this.Context.ShowsUsers.Remove(subscription);
-
-            await this.Context.SaveChangesAsync();
+            return this.Context.SaveChangesAsync();
         }
     }
 }
