@@ -8,7 +8,6 @@
     },
 
     "TrackTv.Models": "*",
-    "TrackTv.Data": "*",
     "TrackTv.Services.Data": "*"
   },
 
