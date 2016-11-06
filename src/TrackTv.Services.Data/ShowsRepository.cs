@@ -50,7 +50,7 @@
 
         public Task<Show[]> GetShowsByUserIdAsync(int userId)
         {
-            return this.DataStore.ShowsUsers.Where(x => x.UserId == userId).Select(x => x.Show).ToArrayAsync();
+            return this.DataStore.ShowsUsers.AsNoTracking().Where(x => x.UserId == userId).Select(x => x.Show).ToArrayAsync();
         }
 
         public Task<Show> GetShowWithNetworkByIdAsync(int id)

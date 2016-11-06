@@ -12,6 +12,7 @@
     using TrackTv.Data;
     using TrackTv.Services.Calendar;
     using TrackTv.Services.Data;
+    using TrackTv.Services.MyShows;
 
     public class ServicesProgram
     {
@@ -20,13 +21,15 @@
             using (var context = await CreateContext())
             {
                 var episodeRepo = new EpisodeRepository(context);
+                var showsRepo = new ShowsRepository(context);
 
                 var calendar = new GregorianCalendar();
+
                 var episodeCalendar = new EpisodeCalendar(episodeRepo, calendar);
 
-                var service = new CalendarService(episodeCalendar);
+                var service = new MyShowsService(showsRepo, episodeRepo);
 
-                var data = await service.GetCalendarAsync(1);
+                var data = await service.GetAllAsync(1);
 
                 Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
             }

@@ -38,7 +38,8 @@
         public Task<Episode[]> GetMonthlyEpisodesAsync(int userId, DateTime startDay, DateTime endDay)
         {
             return
-                this.DataStore.Episodes.Include(e => e.Show)
+                this.DataStore.Episodes.AsNoTracking()
+                    .Include(e => e.Show)
                     .Where(e => e.Show.ShowsUsers.Any(x => x.UserId == userId))
                     .Where(episode => (episode.FirstAired > startDay) && (episode.FirstAired < endDay))
                     .ToArrayAsync();
