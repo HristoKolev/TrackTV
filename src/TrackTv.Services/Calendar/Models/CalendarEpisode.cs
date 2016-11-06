@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Calendar
+﻿namespace TrackTv.Services.Calendar.Models
 {
     using System;
 
@@ -10,9 +10,9 @@
 
         public int SeasonNumber { get; set; }
 
-        public string ShowName { get; set; }
-
         public int ShowId { get; set; }
+
+        public string ShowName { get; set; }
 
         public string Title { get; set; }
     }

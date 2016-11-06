@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TrackTv.Services.Tests")]
+[assembly: AssemblyProduct("TrackTv.DataRetrieval.Data")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("56974a0b-05cb-415f-9a0b-db70bd787c65")]
+[assembly: Guid("0241ddbd-c874-48a2-a214-ac2944c2be58")]

@@ -1,12 +1,10 @@
-﻿namespace TrackTv.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Data.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTV.Data;
-    using TrackTV.Data.Repositories;
-
+    using TrackTv.Data;
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 

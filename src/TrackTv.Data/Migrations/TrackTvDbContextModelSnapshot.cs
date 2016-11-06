@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using TrackTV.Data;
+using TrackTv.Data;
 
-namespace TrackTV.Data.Migrations
+namespace TrackTv.Data.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
     partial class TrackTvDbContextModelSnapshot : ModelSnapshot

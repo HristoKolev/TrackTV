@@ -1,4 +1,4 @@
-namespace TrackTV.DataRetrieval.Fetchers
+namespace TrackTv.DataRetrieval.Fetchers
 {
     using System;
     using System.Globalization;

@@ -10,7 +10,7 @@
 
     using Newtonsoft.Json;
 
-    using TrackTV.Data;
+    using TrackTv.Data;
 
     public class DbContextConfigurator
     {

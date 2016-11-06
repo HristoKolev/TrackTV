@@ -1,9 +1,8 @@
-﻿namespace TrackTV.Data.Repositories.Contracts
+﻿namespace TrackTv.Data
 {
     using System.Threading.Tasks;
 
-    using TrackTV.Data.Repositories.Models;
-
+    using TrackTv.Data.Repositories.Models;
     using TrackTv.Models;
 
     public interface IShowsRepository
@@ -15,10 +14,6 @@
         Task<int> CountByGenreAsync(string genreName);
 
         Task<SubscriberSummary[]> CountSubscribersAsync(int[] ids);
-
-        Task<Show> GetFullShowByIdAsync(int id);
-
-        Task<Show[]> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds);
 
         Task<Show[]> GetShowsByUserIdAsync(int userId);
 

@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Data.Repositories.Exceptions
+﻿namespace TrackTv.Data.Repositories.Exceptions
 {
     using System;
 

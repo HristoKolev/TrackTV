@@ -6,8 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTV.Data.Repositories.Contracts;
-
+    using TrackTv.Data;
     using TrackTv.Models;
     using TrackTv.Services.Calendar.Models;
 

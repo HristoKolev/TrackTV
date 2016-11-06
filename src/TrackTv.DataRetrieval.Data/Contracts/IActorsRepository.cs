@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Data.Repositories.Contracts
+﻿namespace TrackTv.DataRetrieval.Data.Contracts
 {
     using System.Threading.Tasks;
 

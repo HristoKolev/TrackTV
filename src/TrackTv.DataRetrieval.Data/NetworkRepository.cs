@@ -1,11 +1,11 @@
-﻿namespace TrackTV.Data.Repositories
+﻿namespace TrackTv.DataRetrieval.Data
 {
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
-    using TrackTV.Data.Repositories.Contracts;
-
+    using TrackTv.Data;
+    using TrackTv.DataRetrieval.Data.Contracts;
     using TrackTv.Models;
 
     public class NetworkRepository : INetworkRepository

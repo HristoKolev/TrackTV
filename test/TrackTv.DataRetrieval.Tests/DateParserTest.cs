@@ -1,9 +1,9 @@
-﻿namespace TrackTV.DataRetrieval.Tests
+﻿namespace TrackTv.DataRetrieval.Tests
 {
     using System;
     using System.Globalization;
 
-    using TrackTV.DataRetrieval.Fetchers;
+    using TrackTv.DataRetrieval.Fetchers;
 
     using Xunit;
 

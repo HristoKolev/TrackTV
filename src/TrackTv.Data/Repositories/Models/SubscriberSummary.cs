@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Data.Repositories.Models
+﻿namespace TrackTv.Data.Repositories.Models
 {
     public class SubscriberSummary
     {

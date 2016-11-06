@@ -1,4 +1,4 @@
-﻿namespace TrackTV.DataRetrieval.Tests
+﻿namespace TrackTv.DataRetrieval.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -8,9 +8,8 @@
 
     using NSubstitute;
 
-    using TrackTV.DataRetrieval.ClientExtensions;
-    using TrackTV.DataRetrieval.Fetchers;
-
+    using TrackTv.DataRetrieval.ClientExtensions;
+    using TrackTv.DataRetrieval.Fetchers;
     using TrackTv.Models;
 
     using TvDbSharper.BaseSchemas;

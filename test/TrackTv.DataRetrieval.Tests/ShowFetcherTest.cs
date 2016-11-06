@@ -1,13 +1,12 @@
-﻿namespace TrackTV.DataRetrieval.Tests
+﻿namespace TrackTv.DataRetrieval.Tests
 {
     using System;
     using System.Threading.Tasks;
 
     using NSubstitute;
 
-    using TrackTV.Data.Repositories.Contracts;
-    using TrackTV.DataRetrieval.Fetchers;
-
+    using TrackTv.DataRetrieval.Data.Contracts;
+    using TrackTv.DataRetrieval.Fetchers;
     using TrackTv.Models;
     using TrackTv.Models.Enums;
 

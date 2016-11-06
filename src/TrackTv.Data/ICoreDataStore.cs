@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Data
+﻿namespace TrackTv.Data
 {
     using Microsoft.EntityFrameworkCore;
 

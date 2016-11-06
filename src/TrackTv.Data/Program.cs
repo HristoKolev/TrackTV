@@ -1,4 +1,4 @@
-﻿namespace TrackTV.Data
+﻿namespace TrackTv.Data
 {
     // ReSharper disable once UnusedMember.Global
     public class Program

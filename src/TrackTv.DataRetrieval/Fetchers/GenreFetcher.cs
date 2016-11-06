@@ -1,13 +1,12 @@
-﻿namespace TrackTV.DataRetrieval.Fetchers
+﻿namespace TrackTv.DataRetrieval.Fetchers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTV.Data.Repositories.Contracts;
-    using TrackTV.DataRetrieval.Fetchers.Contracts;
-
+    using TrackTv.DataRetrieval.Data.Contracts;
+    using TrackTv.DataRetrieval.Fetchers.Contracts;
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 

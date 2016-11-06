@@ -1,9 +1,9 @@
-﻿namespace TrackTv.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Data.Tests
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
-    using TrackTV.Data;
+    using TrackTv.Data;
 
     public class BaseRepositoryTest
     {

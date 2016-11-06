@@ -1,4 +1,4 @@
-namespace TrackTV.DataRetrieval.Fetchers.Contracts
+namespace TrackTv.DataRetrieval.Fetchers.Contracts
 {
     using System.Threading.Tasks;
 
