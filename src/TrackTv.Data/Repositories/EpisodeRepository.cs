@@ -38,20 +38,18 @@
 
         public Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] ids, DateTime time)
         {
-            var summariesQuery = this.DataStore.Shows.Where(x => ids.Contains(x.Id)).Select(s => new EpisodesSummary
-                                     {
-                                         ShowId = s.Id,
-                                         LastEpisode =
-                                             s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired <= time))
-                                              .OrderByDescending(e => e.FirstAired)
-                                              .FirstOrDefault(),
-                                         NextEpisode =
-                                             s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired > time))
-                                              .OrderBy(e => e.FirstAired)
-                                              .FirstOrDefault()
-                                     });
-
-            return summariesQuery.ToArrayAsync();
+            return this.DataStore.Shows.Where(x => ids.Contains(x.Id)).Select(s => new EpisodesSummary
+                       {
+                           ShowId = s.Id,
+                           LastEpisode =
+                               s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired <= time))
+                                .OrderByDescending(e => e.FirstAired)
+                                .FirstOrDefault(),
+                           NextEpisode =
+                               s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired > time))
+                                .OrderBy(e => e.FirstAired)
+                                .FirstOrDefault()
+                       }).ToArrayAsync();
         }
 
         public Task<Episode[]> GetMonthlyEpisodesAsync(int userId, DateTime startDay, DateTime endDay)
