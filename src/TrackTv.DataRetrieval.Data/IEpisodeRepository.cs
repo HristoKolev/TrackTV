@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval.Data.Contracts
+﻿namespace TrackTv.DataRetrieval.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

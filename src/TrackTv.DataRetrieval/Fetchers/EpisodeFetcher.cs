@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using TrackTv.DataRetrieval.ClientExtensions;
-    using TrackTv.DataRetrieval.Fetchers.Contracts;
     using TrackTv.Models;
 
     using TvDbSharper.Clients.Episodes;

@@ -6,8 +6,8 @@
     using System.Threading.Tasks;
 
     using TrackTv.Data;
-    using TrackTv.DataRetrieval.Data.Contracts;
-    using TrackTv.DataRetrieval.Fetchers.Contracts;
+    using TrackTv.DataRetrieval.Data;
+    using TrackTv.DataRetrieval.Fetchers;
     using TrackTv.Models;
     using TrackTv.Models.Contracts;
 

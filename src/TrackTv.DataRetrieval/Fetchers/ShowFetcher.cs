@@ -3,8 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using TrackTv.DataRetrieval.Data.Contracts;
-    using TrackTv.DataRetrieval.Fetchers.Contracts;
+    using TrackTv.DataRetrieval.Data;
     using TrackTv.Models;
     using TrackTv.Models.Enums;
 

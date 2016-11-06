@@ -8,7 +8,6 @@
     using Microsoft.EntityFrameworkCore.Query;
 
     using TrackTv.Data;
-    using TrackTv.DataRetrieval.Data.Contracts;
     using TrackTv.Models;
 
     public class ShowsRepository : IShowsRepository

@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Data;
+    using TrackTv.Data.Repositories;
     using TrackTv.Data.Repositories.Models;
     using TrackTv.Models;
     using TrackTv.Services.MyShows.Models;

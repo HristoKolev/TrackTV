@@ -6,7 +6,7 @@
 
     using NSubstitute;
 
-    using TrackTv.DataRetrieval.Data.Contracts;
+    using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
     using TrackTv.Models;
 
