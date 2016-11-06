@@ -16,5 +16,7 @@
         Task<List<Episode>> GetEpisodesByTheTvDbIdsAsync(int[] ids);
 
         Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] ids, DateTime time);
+
+        Task<Episode[]> GetMonthlyEpisodesAsync(int userId, DateTime startDay, DateTime endDay);
     }
 }

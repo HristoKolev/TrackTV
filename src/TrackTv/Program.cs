@@ -1,6 +1,7 @@
 ﻿namespace TrackTv
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -9,15 +10,14 @@
     using Newtonsoft.Json;
 
     using TrackTv.Configuration;
-    using TrackTv.Services.MyShows;
-    using TrackTv.Services.Show;
-    using TrackTv.Services.Shows;
 
     using TrackTV.Data;
     using TrackTV.Data.Repositories;
     using TrackTV.DataRetrieval;
     using TrackTV.DataRetrieval.ClientExtensions;
     using TrackTV.DataRetrieval.Fetchers;
+
+    using TrackTv.Services.Calendar;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Authentication.Json;
@@ -32,24 +32,26 @@
 
             using (var context = await CreateContext())
             {
-                //var fetcher = CreateFetcher(context, client);
+                // var fetcher = CreateFetcher(context, client);
 
-                //await fetcher.AddShowAsync(70851);
-                //await fetcher.AddShowAsync(78804);
-                //await fetcher.AddShowAsync(83237);
-                //await fetcher.AddShowAsync(70851);
-                //await fetcher.AddShowAsync(72449);
-                //await fetcher.AddShowAsync(82066);
-                //await fetcher.AddShowAsync(292124);
-                //await fetcher.AddShowAsync(296762);
-
+                // await fetcher.AddShowAsync(70851);
+                // await fetcher.AddShowAsync(78804);
+                // await fetcher.AddShowAsync(83237);
+                // await fetcher.AddShowAsync(70851);
+                // await fetcher.AddShowAsync(72449);
+                // await fetcher.AddShowAsync(82066);
+                // await fetcher.AddShowAsync(292124);
+                // await fetcher.AddShowAsync(296762);
                 var showsRepo = new ShowsRepository(context);
                 var usersRepo = new UsersRepository(context);
                 var episodeRepo = new EpisodeRepository(context);
 
-                var service = new MyShowsService(showsRepo, episodeRepo);
+                var calendar = new GregorianCalendar();
+                var episodeCalendar = new EpisodeCalendar(episodeRepo, calendar);
 
-                var data = await service.GetAllAsync(1);
+                var service = new CalendarService(episodeCalendar);
+
+                var data = await service.GetCalendarAsync(1);
 
                 Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
 
