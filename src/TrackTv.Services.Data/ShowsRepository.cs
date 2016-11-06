@@ -1,13 +1,14 @@
-﻿namespace TrackTv.Data.Repositories
+﻿namespace TrackTv.Services.Data
 {
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
-    using TrackTv.Data.Repositories.Exceptions;
-    using TrackTv.Data.Repositories.Models;
+    using TrackTv.Data;
     using TrackTv.Models;
+    using TrackTv.Services.Data.Exceptions;
+    using TrackTv.Services.Data.Models;
 
     public class ShowsRepository : IShowsRepository
     {

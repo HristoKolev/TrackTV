@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Data
+﻿namespace TrackTv.Services.Data
 {
     using System.Linq;
 

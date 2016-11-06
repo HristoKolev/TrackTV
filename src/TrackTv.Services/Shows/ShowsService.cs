@@ -4,9 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Data.Repositories;
-    using TrackTv.Data.Repositories.Models;
     using TrackTv.Models;
+    using TrackTv.Services.Data;
+    using TrackTv.Services.Data.Models;
     using TrackTv.Services.Shows.Models;
 
     public class ShowsService

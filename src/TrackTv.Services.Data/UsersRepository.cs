@@ -1,8 +1,10 @@
-﻿namespace TrackTv.Data.Repositories
+﻿namespace TrackTv.Services.Data
 {
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
+
+    using TrackTv.Data;
 
     public class UsersRepository : IUsersRepository
     {

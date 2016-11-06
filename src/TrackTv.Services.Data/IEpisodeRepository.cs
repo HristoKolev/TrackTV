@@ -1,10 +1,10 @@
-﻿namespace TrackTv.Data.Repositories
+﻿namespace TrackTv.Services.Data
 {
     using System;
     using System.Threading.Tasks;
 
-    using TrackTv.Data.Repositories.Models;
     using TrackTv.Models;
+    using TrackTv.Services.Data.Models;
 
     public interface IEpisodeRepository
     {

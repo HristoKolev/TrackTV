@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Data.Repositories
+﻿namespace TrackTv.Services.Data
 {
     using System;
     using System.Linq;
@@ -6,8 +6,9 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using TrackTv.Data.Repositories.Models;
+    using TrackTv.Data;
     using TrackTv.Models;
+    using TrackTv.Services.Data.Models;
 
     public class EpisodeRepository : IEpisodeRepository
     {

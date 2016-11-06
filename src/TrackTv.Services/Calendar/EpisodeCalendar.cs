@@ -6,9 +6,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Data.Repositories;
     using TrackTv.Models;
     using TrackTv.Services.Calendar.Models;
+    using TrackTv.Services.Data;
 
     public class EpisodeCalendar : IEpisodeCalendar
     {

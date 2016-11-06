@@ -2,7 +2,7 @@ namespace TrackTv.Services.Show
 {
     using System.Threading.Tasks;
 
-    using TrackTv.Data.Repositories;
+    using TrackTv.Services.Data;
     using TrackTv.Services.Show.Models;
 
     public class ShowService

@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Data.Repositories.Models
+﻿namespace TrackTv.Services.Data.Models
 {
     using TrackTv.Models;
 
