@@ -1,18 +1,15 @@
 ﻿namespace TrackTv
 {
-    using System;
     using System.Globalization;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
-    using Newtonsoft.Json;
-
     using TrackTv.Configuration;
     using TrackTv.Data;
     using TrackTv.Services.Calendar;
     using TrackTv.Services.Data;
-    using TrackTv.Services.MyShows;
+    using TrackTv.Services.Subscription;
 
     public class ServicesProgram
     {
@@ -22,16 +19,16 @@
             {
                 var episodeRepo = new EpisodeRepository(context);
                 var showsRepo = new ShowsRepository(context);
+                var usersRepo = new UsersRepository(context);
 
                 var calendar = new GregorianCalendar();
-
                 var episodeCalendar = new EpisodeCalendar(episodeRepo, calendar);
 
-                var service = new MyShowsService(showsRepo, episodeRepo);
+                var service = new SubscriptionService(usersRepo);
 
-                var data = await service.GetAllAsync(1);
+                await service.Subscribe(5, 8);
 
-                Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
+                // Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
             }
         }
 

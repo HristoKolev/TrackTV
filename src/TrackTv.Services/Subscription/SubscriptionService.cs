@@ -13,14 +13,14 @@
 
         private IUsersRepository UsersRepository { get; }
 
-        public async Task Subscribe(int userId, int showId)
+        public Task Subscribe(int userId, int showId)
         {
-            await this.UsersRepository.AddSubscriptionAsync(userId, showId);
+            return this.UsersRepository.AddSubscriptionAsync(userId, showId);
         }
 
-        public async Task UnSubscribe(int userId, int showId)
+        public Task UnSubscribe(int userId, int showId)
         {
-            await this.UsersRepository.RemoveSubscriptionAsync(userId, showId);
+            return this.UsersRepository.RemoveSubscriptionAsync(userId, showId);
         }
     }
 }

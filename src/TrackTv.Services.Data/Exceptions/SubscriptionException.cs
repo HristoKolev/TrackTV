@@ -2,14 +2,14 @@
 {
     using System;
 
-    public class InvalidQueryException : Exception
+    public class SubscriptionException : Exception
     {
-        public InvalidQueryException(string message)
+        public SubscriptionException(string message)
             : base(message)
         {
         }
 
-        public InvalidQueryException(string message, Exception inner)
+        public SubscriptionException(string message, Exception inner)
             : base(message, inner)
         {
         }
