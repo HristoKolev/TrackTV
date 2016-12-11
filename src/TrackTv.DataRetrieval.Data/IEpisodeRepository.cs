@@ -1,6 +1,5 @@
 ﻿namespace TrackTv.DataRetrieval.Data
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using TrackTv.Models;
@@ -9,8 +8,8 @@
     {
         Task<Episode> GetEpisodeById(int id);
 
-        Task<List<Episode>> GetEpisodesByShowIdAsync(int id);
+        Task<Episode[]> GetEpisodesByShowIdAsync(int id);
 
-        Task<List<Episode>> GetEpisodesByTheTvDbIdsAsync(int[] ids);
+        Task<Episode[]> GetEpisodesByTheTvDbIdsAsync(int[] ids);
     }
 }
