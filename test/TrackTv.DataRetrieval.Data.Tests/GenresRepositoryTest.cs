@@ -1,5 +1,6 @@
 ﻿namespace TrackTv.DataRetrieval.Data.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -10,6 +11,47 @@
 
     public class GenresRepositoryTest : BaseRepositoryTest
     {
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task GetGenresByNamesAsync_should_return_empty_array_if_no_matching_genres_are_found()
+        {
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
+
+                var repo = new GenresRepository(context);
+
+                var names = new[]
+                {
+                    "action1",
+                    "crime1"
+                };
+
+                var genres = await repo.GetGenresByNamesAsync(names);
+
+                Assert.Equal(0, genres.Length);
+            }
+        }
+
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task GetGenresByNamesAsync_should_return_empty_array_if_the_genre_names_array_is_empty()
+        {
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
+
+                var repo = new GenresRepository(context);
+
+                var genres = await repo.GetGenresByNamesAsync(Array.Empty<string>());
+
+                Assert.Equal(0, genres.Length);
+            }
+        }
+
         [Fact]
 
         // ReSharper disable once InconsistentNaming

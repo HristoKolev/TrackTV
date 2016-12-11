@@ -1,5 +1,6 @@
 ﻿namespace TrackTv.DataRetrieval.Data.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -34,6 +35,23 @@
         [Fact]
 
         // ReSharper disable once InconsistentNaming
+        public async Task GetFullShowById_should_return_null_if_the_id_does_not_exists()
+        {
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
+
+                var repo = new ShowsRepository(context);
+
+                var show = await repo.GetFullShowByIdAsync(10000);
+
+                Assert.Null(show);
+            }
+        }
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
         public async Task GetFullShowsByTheTvDbIdsAsync_should_return_full_shows_by_ids()
         {
             using (var context = CreateContext())
@@ -58,6 +76,44 @@
 
                     AssertIsFull(shows[i]);
                 }
+            }
+        }
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task GetFullShowsByTheTvDbIdsAsync_should_return_null_if_ids_array_is_empty()
+        {
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
+
+                var repo = new ShowsRepository(context);
+
+                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(Array.Empty<int>());
+
+                Assert.Equal(0, shows.Length);
+            }
+        }
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task GetFullShowsByTheTvDbIdsAsync_should_return_null_if_no_id_matches()
+        {
+            using (var context = CreateContext())
+            {
+                await SeedGenresAsync(context);
+
+                var repo = new ShowsRepository(context);
+
+                int[] ids = {
+                    999999999
+                };
+
+                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids);
+
+                Assert.Equal(0, shows.Length);
             }
         }
 
