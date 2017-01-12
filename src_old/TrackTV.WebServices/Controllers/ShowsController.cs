@@ -3,7 +3,6 @@
     using System.Web.Http;
 
     using TrackTV.Services;
-    using TrackTV.Services.VewModels.Shows;
 
     public class ShowsController : ApiController
     {
