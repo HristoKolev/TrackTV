@@ -64,9 +64,7 @@
 
             await this.EpisodeFetcher.AddAllEpisodesAsync(show);
 
-            this.Context.Shows.Add(show);
-
-            await this.Context.SaveChangesAsync();
+            await this.ShowsRepository.AddShowAsync(show);
         }
 
         public async Task UpdateAllRecordsAsync(DateTime from)

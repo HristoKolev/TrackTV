@@ -6,6 +6,8 @@
 
     public interface IShowsRepository
     {
+        Task AddShowAsync(Show show);
+
         Task<Show> GetFullShowByIdAsync(int id);
 
         Task<Show[]> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds);

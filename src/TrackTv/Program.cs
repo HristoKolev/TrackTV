@@ -8,8 +8,8 @@
 
         public async Task MainAsync(string[] args)
         {
-            await new ServicesProgram().DoAsync();
-            //await new DataEntryProgram().DoAsync();
+            //await new ServicesProgram().DoAsync();
+            await new DataEntryProgram().DoAsync();
         }
     }
 }
