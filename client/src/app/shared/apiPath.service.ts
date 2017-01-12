@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class ApiPath {
 
-    private readonly baseServiceUrl : string = 'http://localhost:5050';
+    private readonly baseServiceUrl : string = 'http://localhost:7000';
 
     private readonly baseApiPath : string = this.baseServiceUrl + '/api';
 
