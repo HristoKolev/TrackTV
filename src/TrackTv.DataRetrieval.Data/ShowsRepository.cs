@@ -41,7 +41,6 @@ namespace TrackTv.DataRetrieval.Data
 
         public async Task UpdateShowAsync(Show show)
         {
- 
             this.DataStore.ChangeTracker.TrackGraph(show, node =>
             {
                 var entity = node.Entry.Entity;
