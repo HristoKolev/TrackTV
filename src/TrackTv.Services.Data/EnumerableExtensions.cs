@@ -1,9 +1,11 @@
-﻿namespace TrackTv.Services.Data
+﻿using System.Collections.Generic;
+
+namespace TrackTv.Services.Data
 {
     using System;
     using System.Linq;
 
-    public static class QueryableExtensions
+    public static class EnumerableExtensions
     {
         private const int MaxPageSize = 50;
 

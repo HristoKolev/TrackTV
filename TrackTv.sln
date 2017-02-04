@@ -35,6 +35,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TrackTv.Services.Data", "sr
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TrackTv.Models.Tests", "test\TrackTv.Models.Tests\TrackTv.Models.Tests.xproj", "{3441E8DD-84B2-4C73-94FF-1D1B76CCA7EE}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TrackTv.Services.Data.Tests", "test\TrackTv.Services.Data.Tests\TrackTv.Services.Data.Tests.xproj", "{551B0114-8E2A-4939-A5CE-E52FD661229F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{3441E8DD-84B2-4C73-94FF-1D1B76CCA7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3441E8DD-84B2-4C73-94FF-1D1B76CCA7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3441E8DD-84B2-4C73-94FF-1D1B76CCA7EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551B0114-8E2A-4939-A5CE-E52FD661229F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551B0114-8E2A-4939-A5CE-E52FD661229F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551B0114-8E2A-4939-A5CE-E52FD661229F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551B0114-8E2A-4939-A5CE-E52FD661229F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,5 +107,6 @@ Global
 		{DEF02711-C234-4836-8B52-9D85B394FBAE} = {F5701B60-DD65-4ABF-8BED-66A81D9402D8}
 		{572B1A94-7409-439F-8AB6-066ECA7EA058} = {500DBF52-3E0F-438C-BAFE-15F1470CAB50}
 		{3441E8DD-84B2-4C73-94FF-1D1B76CCA7EE} = {F5701B60-DD65-4ABF-8BED-66A81D9402D8}
+		{551B0114-8E2A-4939-A5CE-E52FD661229F} = {F5701B60-DD65-4ABF-8BED-66A81D9402D8}
 	EndGlobalSection
 EndGlobal
