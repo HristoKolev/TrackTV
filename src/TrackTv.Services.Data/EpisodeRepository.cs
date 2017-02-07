@@ -12,7 +12,7 @@
 
     public class EpisodeRepository : IEpisodeRepository
     {
-        public EpisodeRepository(ICoreDataStore dataStore)
+        public EpisodeRepository(ICoreDataStore dataStore) 
         {
             this.DataStore = dataStore;
         }
@@ -25,11 +25,11 @@
                        {
                            ShowId = s.Id,
                            LastEpisode =
-                               s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired <= time))
+                               s.Episodes.Where(e => e.FirstAired != null && e.FirstAired <= time)
                                 .OrderByDescending(e => e.FirstAired)
                                 .FirstOrDefault(),
                            NextEpisode =
-                               s.Episodes.Where(e => (e.FirstAired != null) && (e.FirstAired > time))
+                               s.Episodes.Where(e => e.FirstAired != null && e.FirstAired > time)
                                 .OrderBy(e => e.FirstAired)
                                 .FirstOrDefault()
                        }).ToArrayAsync();
