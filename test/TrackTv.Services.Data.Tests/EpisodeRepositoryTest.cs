@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using TrackTv.Data;
 using TrackTv.Models;
+using TrackTv.Models.Joint;
 
 using Xunit;
 
@@ -12,6 +13,8 @@ namespace TrackTv.Services.Data.Tests
     public class EpisodeRepositoryTest : BaseRepositoryTest
     {
         private const int WeekLength = 7;
+
+        private const int ReferenceUserId = 10;
 
         private DateTime ReferenceDate { get; } = new DateTime(2000, 1, 1);
 
@@ -53,6 +56,26 @@ namespace TrackTv.Services.Data.Tests
             }
         }
 
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task GetMonthlyEpisodesAsync_includes_the_show()
+        {
+            using (var context = CreateContext())
+            {
+                await this.SeedEpisodesAsync(context);
+
+                var repository = new EpisodeRepository(context);
+
+                var episodes = await repository.GetMonthlyEpisodesAsync(ReferenceUserId, this.ReferenceDate, this.ReferenceDate.AddDays(30));
+
+                foreach (var episode in episodes)
+                {
+                    Assert.NotNull(episode.Show);
+                }
+            }
+        }
+
         private async Task SeedEpisodesAsync(TrackTvDbContext context, IEnumerable<Show> shows = null)
         {
             if (shows == null)
@@ -65,6 +88,11 @@ namespace TrackTv.Services.Data.Tests
                     {
                         Id = i
                     };
+
+                    show.ShowsUsers.Add(new ShowsUsers
+                    {
+                        UserId = ReferenceUserId
+                    });
 
                     for (int j = 1; j < 10; j++)
                     {

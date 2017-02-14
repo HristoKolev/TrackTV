@@ -20,7 +20,7 @@
         public async Task AddSubscriptionAsync(int userId, int showId)
         {
             var relationship =
-                await this.Context.ShowsUsers.AsNoTracking().SingleOrDefaultAsync(r => (r.UserId == userId) && (r.ShowId == showId));
+                await this.Context.ShowsUsers.AsNoTracking().SingleOrDefaultAsync(r => r.UserId == userId && r.ShowId == showId);
 
             if (relationship != null)
             {
@@ -34,13 +34,13 @@
 
         public Task<bool> IsUserSubscribedAsync(int userId, int showId)
         {
-            return this.Context.ShowsUsers.AnyAsync(x => (x.UserId == userId) && (x.ShowId == showId));
+            return this.Context.ShowsUsers.AnyAsync(x => x.UserId == userId && x.ShowId == showId);
         }
 
         public async Task RemoveSubscriptionAsync(int userId, int showId)
         {
             var relationship =
-                await this.Context.ShowsUsers.AsNoTracking().SingleOrDefaultAsync(r => (r.UserId == userId) && (r.ShowId == showId));
+                await this.Context.ShowsUsers.AsNoTracking().SingleOrDefaultAsync(r => r.UserId == userId && r.ShowId == showId);
 
             if (relationship == null)
             {

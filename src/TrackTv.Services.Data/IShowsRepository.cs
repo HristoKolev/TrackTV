@@ -13,7 +13,7 @@
 
         Task<int> CountByGenreAsync(string genreName);
 
-        Task<SubscriberSummary[]> CountSubscribersAsync(int[] ids);
+        Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds);
 
         Task<Show[]> GetShowsByUserIdAsync(int userId);
 

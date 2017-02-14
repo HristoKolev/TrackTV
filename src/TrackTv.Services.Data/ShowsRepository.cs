@@ -39,12 +39,12 @@
             return this.DataStore.ShowsGenres.Where(x => x.Genre.Name.ToLower() == genreName.ToLower()).CountAsync();
         }
 
-        public Task<SubscriberSummary[]> CountSubscribersAsync(int[] ids)
+        public Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
         {
-            return this.DataStore.Shows.Where(x => ids.Contains(x.Id)).Select(x => new SubscriberSummary
+            return this.DataStore.Shows.Where(x => showIds.Contains(x.Id)).Select(x => new SubscriberSummary
                        {
                            ShowId = x.Id,
-                           SubscriberCount = x.ShowsUsers.Count()
+                           SubscriberCount = x.ShowsUsers.Count
                        }).ToArrayAsync();
         }
 
