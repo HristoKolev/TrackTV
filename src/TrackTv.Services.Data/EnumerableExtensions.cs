@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TrackTv.Services.Data
+﻿namespace TrackTv.Services.Data
 {
     using System;
     using System.Linq;

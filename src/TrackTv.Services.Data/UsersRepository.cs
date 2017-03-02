@@ -24,7 +24,7 @@
 
             if (relationship != null)
             {
-                throw new SubscriptionException($"The user is already subscribed to the specified show: (UserId={userId}, ShowId={showId})");
+                throw new SubscriptionException($"The user is already subscribed to this show: (UserId={userId}, ShowId={showId})");
             }
 
             this.Context.ShowsUsers.Add(new ShowsUsers(userId, showId));
@@ -40,7 +40,7 @@
         public async Task RemoveSubscriptionAsync(int userId, int showId)
         {
             var relationship =
-                await this.Context.ShowsUsers.AsNoTracking().SingleOrDefaultAsync(r => r.UserId == userId && r.ShowId == showId);
+                await this.Context.ShowsUsers.SingleOrDefaultAsync(r => r.UserId == userId && r.ShowId == showId);
 
             if (relationship == null)
             {
