@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "testRunner": "xunit",
@@ -6,18 +6,15 @@
   "dependencies": {
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
-
     "TrackTv.DataRetrieval": "*",
-
-    "xunit": "2.2.0-beta2-build3300",
+    "xunit": "2.2.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-
-    "NSubstitute": "2.0.0-rc"
+    "NSubstitute": "2.0.2"
   },
 
   "frameworks": {
-    "netcoreapp1.0": {}
+    "netcoreapp1.1": {}
   }
 }
