@@ -38,8 +38,7 @@
         public void Configure(
             IApplicationBuilder app,
             IHostingEnvironment env,
-            ILoggerFactory loggerFactory,
-            RoleManager<IdentityRole> roleManager)
+            ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
