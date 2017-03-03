@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TrackTv.WebServices.Models.AccountViewModels
+﻿namespace TrackTv.WebServices.Models.AccountViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ForgotPasswordViewModel
     {
         [Required]

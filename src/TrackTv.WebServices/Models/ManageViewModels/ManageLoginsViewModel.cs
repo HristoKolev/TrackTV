@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Authentication;
-using Microsoft.AspNetCore.Identity;
-
-namespace TrackTv.WebServices.Models.ManageViewModels
+﻿namespace TrackTv.WebServices.Models.ManageViewModels
 {
+    using System.Collections.Generic;
+
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Identity;
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

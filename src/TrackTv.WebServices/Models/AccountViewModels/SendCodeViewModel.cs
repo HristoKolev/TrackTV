@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace TrackTv.WebServices.Models.AccountViewModels
+﻿namespace TrackTv.WebServices.Models.AccountViewModels
 {
+    using System.Collections.Generic;
+
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     public class SendCodeViewModel
     {
-        public string SelectedProvider { get; set; }
-
         public ICollection<SelectListItem> Providers { get; set; }
+
+        public bool RememberMe { get; set; }
 
         public string ReturnUrl { get; set; }
 
-        public bool RememberMe { get; set; }
+        public string SelectedProvider { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TrackTv.WebServices.Models.ManageViewModels
+﻿namespace TrackTv.WebServices.Models.ManageViewModels
 {
     public class FactorViewModel
     {
