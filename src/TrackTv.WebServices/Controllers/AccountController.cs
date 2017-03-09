@@ -17,16 +17,6 @@
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly IEmailSender _emailSender;
-
-        private readonly ILogger _logger;
-
-        private readonly SignInManager<ApplicationUser> _signInManager;
-
-        private readonly ISmsSender _smsSender;
-
-        private readonly UserManager<ApplicationUser> _userManager;
-
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -34,12 +24,22 @@
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._emailSender = emailSender;
-            this._smsSender = smsSender;
-            this._logger = loggerFactory.CreateLogger<AccountController>();
+            this.UserManager = userManager;
+            this.SignInManager = signInManager;
+            this.EmailSender = emailSender;
+            this.SmsSender = smsSender;
+            this.Logger = loggerFactory.CreateLogger<AccountController>();
         }
+
+        private IEmailSender EmailSender { get; }
+
+        private ILogger Logger { get; }
+
+        private SignInManager<ApplicationUser> SignInManager { get; }
+
+        private ISmsSender SmsSender { get; }
+
+        private UserManager<ApplicationUser> UserManager { get; }
 
         // GET: /Account/ConfirmEmail
         [HttpGet]
@@ -51,14 +51,14 @@
                 return this.View("Error");
             }
 
-            var user = await this._userManager.FindByIdAsync(userId);
+            var user = await this.UserManager.FindByIdAsync(userId).ConfigureAwait(false);
 
             if (user == null)
             {
                 return this.View("Error");
             }
 
-            var result = await this._userManager.ConfirmEmailAsync(user, code);
+            var result = await this.UserManager.ConfirmEmailAsync(user, code).ConfigureAwait(false);
 
             return this.View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -74,7 +74,7 @@
             {
                 ReturnUrl = returnUrl
             });
-            var properties = this._signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            var properties = this.SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
 
             return this.Challenge(properties, provider);
         }
@@ -91,7 +91,7 @@
                 return this.View(nameof(Login));
             }
 
-            var info = await this._signInManager.GetExternalLoginInfoAsync();
+            var info = await this.SignInManager.GetExternalLoginInfoAsync().ConfigureAwait(false);
 
             if (info == null)
             {
@@ -99,11 +99,13 @@
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await this._signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            var result =
+                await this.SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false)
+                          .ConfigureAwait(false);
 
             if (result.Succeeded)
             {
-                this._logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+                this.Logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
 
                 return this.RedirectToLocal(returnUrl);
             }
@@ -143,7 +145,7 @@
             if (this.ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
-                var info = await this._signInManager.GetExternalLoginInfoAsync();
+                var info = await this.SignInManager.GetExternalLoginInfoAsync().ConfigureAwait(false);
 
                 if (info == null)
                 {
@@ -155,17 +157,17 @@
                     UserName = model.Email,
                     Email = model.Email
                 };
-                var result = await this._userManager.CreateAsync(user);
+                var result = await this.UserManager.CreateAsync(user).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    result = await this._userManager.AddLoginAsync(user, info);
+                    result = await this.UserManager.AddLoginAsync(user, info).ConfigureAwait(false);
 
                     if (result.Succeeded)
                     {
-                        await this._signInManager.SignInAsync(user, isPersistent: false);
+                        await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
 
-                        this._logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+                        this.Logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
 
                         return this.RedirectToLocal(returnUrl);
                     }
@@ -195,9 +197,9 @@
         {
             if (this.ModelState.IsValid)
             {
-                var user = await this._userManager.FindByNameAsync(model.Email);
+                var user = await this.UserManager.FindByNameAsync(model.Email).ConfigureAwait(false);
 
-                if (user == null || !await this._userManager.IsEmailConfirmedAsync(user))
+                if (user == null || !await this.UserManager.IsEmailConfirmedAsync(user).ConfigureAwait(false))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return this.View("ForgotPasswordConfirmation");
@@ -246,12 +248,13 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this._signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                                 lockoutOnFailure: false);
+                var result =
+                    await this.SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false)
+                              .ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    this._logger.LogInformation(1, "User logged in.");
+                    this.Logger.LogInformation(1, "User logged in.");
 
                     return this.RedirectToLocal(returnUrl);
                 }
@@ -267,7 +270,7 @@
 
                 if (result.IsLockedOut)
                 {
-                    this._logger.LogWarning(2, "User account locked out.");
+                    this.Logger.LogWarning(2, "User account locked out.");
 
                     return this.View("Lockout");
                 }
@@ -286,9 +289,9 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
-            await this._signInManager.SignOutAsync();
+            await this.SignInManager.SignOutAsync().ConfigureAwait(false);
 
-            this._logger.LogInformation(4, "User logged out.");
+            this.Logger.LogInformation(4, "User logged out.");
 
             return this.RedirectToAction(nameof(HomeController.Index), "Home");
         }
@@ -318,7 +321,7 @@
                     UserName = model.Email,
                     Email = model.Email
                 };
-                var result = await this._userManager.CreateAsync(user, model.Password);
+                var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
@@ -328,9 +331,9 @@
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     // await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     // $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await this._signInManager.SignInAsync(user, isPersistent: false);
+                    await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
 
-                    this._logger.LogInformation(3, "User created a new account with password.");
+                    this.Logger.LogInformation(3, "User created a new account with password.");
 
                     return this.RedirectToLocal(returnUrl);
                 }
@@ -361,7 +364,7 @@
                 return this.View(model);
             }
 
-            var user = await this._userManager.FindByNameAsync(model.Email);
+            var user = await this.UserManager.FindByNameAsync(model.Email).ConfigureAwait(false);
 
             if (user == null)
             {
@@ -369,7 +372,7 @@
                 return this.RedirectToAction(nameof(this.ResetPasswordConfirmation), "Account");
             }
 
-            var result = await this._userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            var result = await this.UserManager.ResetPasswordAsync(user, model.Code, model.Password).ConfigureAwait(false);
 
             if (result.Succeeded)
             {
@@ -393,14 +396,14 @@
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
         {
-            var user = await this._signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.SignInManager.GetTwoFactorAuthenticationUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
                 return this.View("Error");
             }
 
-            var userFactors = await this._userManager.GetValidTwoFactorProvidersAsync(user);
+            var userFactors = await this.UserManager.GetValidTwoFactorProvidersAsync(user).ConfigureAwait(false);
 
             var factorOptions = userFactors.Select(purpose => new SelectListItem
             {
@@ -427,7 +430,7 @@
                 return this.View();
             }
 
-            var user = await this._signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.SignInManager.GetTwoFactorAuthenticationUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
@@ -435,7 +438,7 @@
             }
 
             // Generate the token and send it
-            var code = await this._userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
+            var code = await this.UserManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider).ConfigureAwait(false);
 
             if (string.IsNullOrWhiteSpace(code))
             {
@@ -446,11 +449,15 @@
 
             if (model.SelectedProvider == "Email")
             {
-                await this._emailSender.SendEmailAsync(await this._userManager.GetEmailAsync(user), "Security Code", message);
+                string email = await this.UserManager.GetEmailAsync(user).ConfigureAwait(false);
+
+                await this.EmailSender.SendEmailAsync(email, "Security Code", message).ConfigureAwait(false);
             }
             else if (model.SelectedProvider == "Phone")
             {
-                await this._smsSender.SendSmsAsync(await this._userManager.GetPhoneNumberAsync(user), message);
+                string number = await this.UserManager.GetPhoneNumberAsync(user).ConfigureAwait(false);
+
+                await this.SmsSender.SendSmsAsync(number, message).ConfigureAwait(false);
             }
 
             return this.RedirectToAction(nameof(VerifyCode), new
@@ -467,7 +474,7 @@
         public async Task<IActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
         {
             // Require that the user has already logged in via username/password or external login
-            var user = await this._signInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await this.SignInManager.GetTwoFactorAuthenticationUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
@@ -496,7 +503,9 @@
             // The following code protects for brute force attacks against the two factor codes.
             // If a user enters incorrect codes for a specified amount of time then the user account
             // will be locked out for a specified amount of time.
-            var result = await this._signInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, model.RememberBrowser);
+            var result =
+                await this.SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, model.RememberBrowser)
+                          .ConfigureAwait(false);
 
             if (result.Succeeded)
             {
@@ -505,7 +514,7 @@
 
             if (result.IsLockedOut)
             {
-                this._logger.LogWarning(7, "User account locked out.");
+                this.Logger.LogWarning(7, "User account locked out.");
 
                 return this.View("Lockout");
             }
@@ -525,7 +534,7 @@
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return this._userManager.GetUserAsync(this.HttpContext.User);
+            return this.UserManager.GetUserAsync(this.HttpContext.User);
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
