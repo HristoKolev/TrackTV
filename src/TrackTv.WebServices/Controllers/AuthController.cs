@@ -39,7 +39,7 @@
 
             if (request.IsPasswordGrantType())
             {
-                var user = await this.UserManager.FindByNameAsync(request.Username);
+                var user = await this.UserManager.FindByNameAsync(request.Username).ConfigureAwait(false);
 
                 if (user == null)
                 {
@@ -51,7 +51,7 @@
                 }
 
                 // Ensure the user is allowed to sign in.
-                if (!await this.SignInManager.CanSignInAsync(user))
+                if (!await this.SignInManager.CanSignInAsync(user).ConfigureAwait(false))
                 {
                     return this.BadRequest(new OpenIdConnectResponse
                     {
@@ -61,7 +61,7 @@
                 }
 
                 // Reject the token request if two-factor authentication has been enabled by the user.
-                if (this.UserManager.SupportsUserTwoFactor && await this.UserManager.GetTwoFactorEnabledAsync(user))
+                if (this.UserManager.SupportsUserTwoFactor && await this.UserManager.GetTwoFactorEnabledAsync(user).ConfigureAwait(false))
                 {
                     return this.BadRequest(new OpenIdConnectResponse
                     {
@@ -71,7 +71,7 @@
                 }
 
                 // Ensure the user is not already locked out.
-                if (this.UserManager.SupportsUserLockout && await this.UserManager.IsLockedOutAsync(user))
+                if (this.UserManager.SupportsUserLockout && await this.UserManager.IsLockedOutAsync(user).ConfigureAwait(false))
                 {
                     return this.BadRequest(new OpenIdConnectResponse
                     {
@@ -81,11 +81,11 @@
                 }
 
                 // Ensure the password is valid.
-                if (!await this.UserManager.CheckPasswordAsync(user, request.Password))
+                if (!await this.UserManager.CheckPasswordAsync(user, request.Password).ConfigureAwait(false))
                 {
                     if (this.UserManager.SupportsUserLockout)
                     {
-                        await this.UserManager.AccessFailedAsync(user);
+                        await this.UserManager.AccessFailedAsync(user).ConfigureAwait(false);
                     }
 
                     return this.BadRequest(new OpenIdConnectResponse
@@ -97,11 +97,11 @@
 
                 if (this.UserManager.SupportsUserLockout)
                 {
-                    await this.UserManager.ResetAccessFailedCountAsync(user);
+                    await this.UserManager.ResetAccessFailedCountAsync(user).ConfigureAwait(false);
                 }
 
                 // Create a new authentication ticket.
-                var ticket = await this.CreateTicketAsync(request, user);
+                var ticket = await this.CreateTicketAsync(request, user).ConfigureAwait(false);
 
                 return this.SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
             }
@@ -117,7 +117,7 @@
         {
             // Create a new ClaimsPrincipal containing the claims that
             // will be used to create an id_token, a token or a code.
-            var principal = await this.SignInManager.CreateUserPrincipalAsync(user);
+            var principal = await this.SignInManager.CreateUserPrincipalAsync(user).ConfigureAwait(false);
 
             // Note: by default, claims are NOT automatically included in the access and identity tokens.
             // To allow OpenIddict to serialize them, you must attach them a destination, that specifies
