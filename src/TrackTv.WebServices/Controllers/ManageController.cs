@@ -15,16 +15,6 @@
     [Authorize]
     public class ManageController : Controller
     {
-        private readonly IEmailSender _emailSender;
-
-        private readonly ILogger _logger;
-
-        private readonly SignInManager<ApplicationUser> _signInManager;
-
-        private readonly ISmsSender _smsSender;
-
-        private readonly UserManager<ApplicationUser> _userManager;
-
         public ManageController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -32,11 +22,11 @@
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._emailSender = emailSender;
-            this._smsSender = smsSender;
-            this._logger = loggerFactory.CreateLogger<ManageController>();
+            this.UserManager = userManager;
+            this.SignInManager = signInManager;
+            this.EmailSender = emailSender;
+            this.SmsSender = smsSender;
+            this.Logger = loggerFactory.CreateLogger<ManageController>();
         }
 
         public enum ManageMessageId
@@ -58,6 +48,16 @@
             Error
         }
 
+        private IEmailSender EmailSender { get; }
+
+        private ILogger Logger { get; }
+
+        private SignInManager<ApplicationUser> SignInManager { get; }
+
+        private ISmsSender SmsSender { get; }
+
+        private UserManager<ApplicationUser> UserManager { get; }
+
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
         {
@@ -75,14 +75,17 @@
             }
 
             // Generate the token and send it
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
+
             if (user == null)
             {
                 return this.View("Error");
             }
 
-            var code = await this._userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
-            await this._smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
+            var code = await this.UserManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber).ConfigureAwait(false);
+
+            await this.SmsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code).ConfigureAwait(false);
+
             return this.RedirectToAction(nameof(VerifyPhoneNumber), new
             {
                 model.PhoneNumber
@@ -106,14 +109,18 @@
                 return this.View(model);
             }
 
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
+
             if (user != null)
             {
-                var result = await this._userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                var result = await this.UserManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword).ConfigureAwait(false);
+
                 if (result.Succeeded)
                 {
-                    await this._signInManager.SignInAsync(user, isPersistent: false);
-                    this._logger.LogInformation(3, "User changed their password successfully.");
+                    await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
+
+                    this.Logger.LogInformation(3, "User changed their password successfully.");
+
                     return this.RedirectToAction(nameof(this.Index), new
                     {
                         Message = ManageMessageId.ChangePasswordSuccess
@@ -121,6 +128,7 @@
                 }
 
                 this.AddErrors(result);
+
                 return this.View(model);
             }
 
@@ -135,12 +143,15 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisableTwoFactorAuthentication()
         {
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
+
             if (user != null)
             {
-                await this._userManager.SetTwoFactorEnabledAsync(user, false);
-                await this._signInManager.SignInAsync(user, isPersistent: false);
-                this._logger.LogInformation(2, "User disabled two-factor authentication.");
+                await this.UserManager.SetTwoFactorEnabledAsync(user, false).ConfigureAwait(false);
+
+                await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
+
+                this.Logger.LogInformation(2, "User disabled two-factor authentication.");
             }
 
             return this.RedirectToAction(nameof(this.Index), "Manage");
@@ -151,12 +162,15 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableTwoFactorAuthentication()
         {
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
+
             if (user != null)
             {
-                await this._userManager.SetTwoFactorEnabledAsync(user, true);
-                await this._signInManager.SignInAsync(user, isPersistent: false);
-                this._logger.LogInformation(1, "User enabled two-factor authentication.");
+                await this.UserManager.SetTwoFactorEnabledAsync(user, true).ConfigureAwait(false);
+
+                await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
+
+                this.Logger.LogInformation(1, "User enabled two-factor authentication.");
             }
 
             return this.RedirectToAction(nameof(this.Index), "Manage");
@@ -166,21 +180,36 @@
         [HttpGet]
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
-            this.ViewData["StatusMessage"] = message == ManageMessageId.ChangePasswordSuccess
-                                                 ? "Your password has been changed."
-                                                 : message == ManageMessageId.SetPasswordSuccess
-                                                     ? "Your password has been set."
-                                                     : message == ManageMessageId.SetTwoFactorSuccess
-                                                         ? "Your two-factor authentication provider has been set."
-                                                         : message == ManageMessageId.Error
-                                                             ? "An error has occurred."
-                                                             : message == ManageMessageId.AddPhoneSuccess
-                                                                 ? "Your phone number was added."
-                                                                 : message == ManageMessageId.RemovePhoneSuccess
-                                                                     ? "Your phone number was removed."
-                                                                     : string.Empty;
+            string statusMessage;
 
-            var user = await this.GetCurrentUserAsync();
+            switch (message)
+            {
+                case ManageMessageId.ChangePasswordSuccess :
+                    statusMessage = "Your password has been changed.";
+                    break;
+                case ManageMessageId.SetPasswordSuccess :
+                    statusMessage = "Your password has been set.";
+                    break;
+                case ManageMessageId.SetTwoFactorSuccess :
+                    statusMessage = "Your two-factor authentication provider has been set.";
+                    break;
+                case ManageMessageId.Error :
+                    statusMessage = "An error has occurred.";
+                    break;
+                case ManageMessageId.AddPhoneSuccess :
+                    statusMessage = "Your phone number was added.";
+                    break;
+                case ManageMessageId.RemovePhoneSuccess :
+                    statusMessage = "Your phone number was removed.";
+                    break;
+                default :
+                    statusMessage = string.Empty;
+                    break;
+            }
+
+            this.ViewData["StatusMessage"] = statusMessage;
+
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
@@ -189,11 +218,11 @@
 
             var model = new IndexViewModel
             {
-                HasPassword = await this._userManager.HasPasswordAsync(user),
-                PhoneNumber = await this._userManager.GetPhoneNumberAsync(user),
-                TwoFactor = await this._userManager.GetTwoFactorEnabledAsync(user),
-                Logins = await this._userManager.GetLoginsAsync(user),
-                BrowserRemembered = await this._signInManager.IsTwoFactorClientRememberedAsync(user)
+                HasPassword = await this.UserManager.HasPasswordAsync(user).ConfigureAwait(false),
+                PhoneNumber = await this.UserManager.GetPhoneNumberAsync(user).ConfigureAwait(false),
+                TwoFactor = await this.UserManager.GetTwoFactorEnabledAsync(user).ConfigureAwait(false),
+                Logins = await this.UserManager.GetLoginsAsync(user).ConfigureAwait(false),
+                BrowserRemembered = await this.SignInManager.IsTwoFactorClientRememberedAsync(user).ConfigureAwait(false)
             };
 
             return this.View(model);
@@ -207,8 +236,8 @@
             // Request a redirect to the external login provider to link a login for the current user
             var redirectUrl = this.Url.Action("LinkLoginCallback", "Manage");
 
-            var properties = this._signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl,
-                this._userManager.GetUserId(this.User));
+            var properties = this.SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl,
+                this.UserManager.GetUserId(this.User));
 
             return this.Challenge(properties, provider);
         }
@@ -217,14 +246,16 @@
         [HttpGet]
         public async Task<ActionResult> LinkLoginCallback()
         {
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
                 return this.View("Error");
             }
 
-            var info = await this._signInManager.GetExternalLoginInfoAsync(await this._userManager.GetUserIdAsync(user));
+            string expectedXsrf = await this.UserManager.GetUserIdAsync(user).ConfigureAwait(false);
+
+            var info = await this.SignInManager.GetExternalLoginInfoAsync(expectedXsrf).ConfigureAwait(false);
 
             if (info == null)
             {
@@ -234,7 +265,7 @@
                 });
             }
 
-            var result = await this._userManager.AddLoginAsync(user, info);
+            var result = await this.UserManager.AddLoginAsync(user, info).ConfigureAwait(false);
 
             var message = result.Succeeded ? ManageMessageId.AddLoginSuccess : ManageMessageId.Error;
 
@@ -248,23 +279,37 @@
         [HttpGet]
         public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
         {
-            this.ViewData["StatusMessage"] = message == ManageMessageId.RemoveLoginSuccess
-                                                 ? "The external login was removed."
-                                                 : message == ManageMessageId.AddLoginSuccess
-                                                     ? "The external login was added."
-                                                     : message == ManageMessageId.Error ? "An error has occurred." : string.Empty;
+            string statusMessage;
 
-            var user = await this.GetCurrentUserAsync();
+            switch (message)
+            {
+                case ManageMessageId.RemoveLoginSuccess :
+                    statusMessage = "The external login was removed.";
+                    break;
+                case ManageMessageId.AddLoginSuccess :
+                    statusMessage = "The external login was added.";
+                    break;
+                case ManageMessageId.Error :
+                    statusMessage = "An error has occurred.";
+                    break;
+                default :
+                    statusMessage = string.Empty;
+                    break;
+            }
+
+            this.ViewData["StatusMessage"] = statusMessage;
+
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
                 return this.View("Error");
             }
 
-            var userLogins = await this._userManager.GetLoginsAsync(user);
+            var userLogins = await this.UserManager.GetLoginsAsync(user).ConfigureAwait(false);
 
             var otherLogins =
-                this._signInManager.GetExternalAuthenticationSchemes()
+                this.SignInManager.GetExternalAuthenticationSchemes()
                     .Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider))
                     .ToList();
 
@@ -284,15 +329,16 @@
         {
             ManageMessageId? message = ManageMessageId.Error;
 
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user != null)
             {
-                var result = await this._userManager.RemoveLoginAsync(user, account.LoginProvider, account.ProviderKey);
+                var result = await this.UserManager.RemoveLoginAsync(user, account.LoginProvider, account.ProviderKey).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    await this._signInManager.SignInAsync(user, isPersistent: false);
+                    await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
+
                     message = ManageMessageId.RemoveLoginSuccess;
                 }
             }
@@ -308,15 +354,15 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemovePhoneNumber()
         {
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user != null)
             {
-                var result = await this._userManager.SetPhoneNumberAsync(user, null);
+                var result = await this.UserManager.SetPhoneNumberAsync(user, null).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    await this._signInManager.SignInAsync(user, isPersistent: false);
+                    await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
 
                     return this.RedirectToAction(nameof(this.Index), new
                     {
@@ -348,15 +394,15 @@
                 return this.View(model);
             }
 
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user != null)
             {
-                var result = await this._userManager.AddPasswordAsync(user, model.NewPassword);
+                var result = await this.UserManager.AddPasswordAsync(user, model.NewPassword).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    await this._signInManager.SignInAsync(user, isPersistent: false);
+                    await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
 
                     return this.RedirectToAction(nameof(this.Index), new
                     {
@@ -379,22 +425,25 @@
         [HttpGet]
         public async Task<IActionResult> VerifyPhoneNumber(string phoneNumber)
         {
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user == null)
             {
                 return this.View("Error");
             }
 
-            var code = await this._userManager.GenerateChangePhoneNumberTokenAsync(user, phoneNumber);
+            var code = await this.UserManager.GenerateChangePhoneNumberTokenAsync(user, phoneNumber).ConfigureAwait(false);
 
             // Send an SMS to verify the phone number
-            return phoneNumber == null
-                       ? this.View("Error")
-                       : this.View(new VerifyPhoneNumberViewModel
-                       {
-                           PhoneNumber = phoneNumber
-                       });
+            if (phoneNumber == null)
+            {
+                return this.View("Error");
+            }
+
+            return this.View(new VerifyPhoneNumberViewModel
+            {
+                PhoneNumber = phoneNumber
+            });
         }
 
         // POST: /Manage/VerifyPhoneNumber
@@ -407,15 +456,15 @@
                 return this.View(model);
             }
 
-            var user = await this.GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync().ConfigureAwait(false);
 
             if (user != null)
             {
-                var result = await this._userManager.ChangePhoneNumberAsync(user, model.PhoneNumber, model.Code);
+                var result = await this.UserManager.ChangePhoneNumberAsync(user, model.PhoneNumber, model.Code).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    await this._signInManager.SignInAsync(user, isPersistent: false);
+                    await this.SignInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
 
                     return this.RedirectToAction(nameof(this.Index), new
                     {
@@ -440,7 +489,7 @@
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return this._userManager.GetUserAsync(this.HttpContext.User);
+            return this.UserManager.GetUserAsync(this.HttpContext.User);
         }
     }
 }
