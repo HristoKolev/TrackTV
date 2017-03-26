@@ -34,7 +34,6 @@
             }
         }
 
-
         [Fact]
 
         // ReSharper disable once InconsistentNaming

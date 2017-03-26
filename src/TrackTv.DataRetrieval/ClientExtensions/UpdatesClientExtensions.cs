@@ -22,12 +22,12 @@ namespace TrackTv.DataRetrieval.ClientExtensions
 
             if (toTime - fromTime <= maxRangeLength)
             {
-                return await client.GetAsync(fromTime, toTime);
+                return await client.GetAsync(fromTime, toTime).ConfigureAwait(false);
             }
 
             var ranges = BreakDownRanges(fromTime, toTime, maxRangeLength);
 
-            var responses = await GetResponsesAsync(client, ranges);
+            var responses = await GetResponsesAsync(client, ranges).ConfigureAwait(false);
 
             var updates = FilterResults(responses);
 
@@ -62,7 +62,7 @@ namespace TrackTv.DataRetrieval.ClientExtensions
 
             foreach (var update in responses.SelectMany(x => x.Data))
             {
-                if (!results.ContainsKey(update.Id) || (update.LastUpdated > results[update.Id].LastUpdated))
+                if (!results.ContainsKey(update.Id) || update.LastUpdated > results[update.Id].LastUpdated)
                 {
                     results[update.Id] = update;
                 }
@@ -71,7 +71,7 @@ namespace TrackTv.DataRetrieval.ClientExtensions
             return results.Select(x => x.Value).ToArray();
         }
 
-        private static async Task<TvDbResponse<Update[]>[]> GetResponsesAsync(IUpdatesClient client, Dictionary<DateTime, DateTime> ranges)
+        private static Task<TvDbResponse<Update[]>[]> GetResponsesAsync(IUpdatesClient client, Dictionary<DateTime, DateTime> ranges)
         {
             var tasks = new List<Task<TvDbResponse<Update[]>>>();
 
@@ -80,7 +80,7 @@ namespace TrackTv.DataRetrieval.ClientExtensions
                 tasks.Add(client.GetAsync(range.Key, range.Value));
             }
 
-            return await Task.WhenAll(tasks);
+            return Task.WhenAll(tasks);
         }
     }
 }

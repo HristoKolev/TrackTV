@@ -15,11 +15,11 @@
     {
         public async Task DoAsync()
         {
-            using (var context = await CreateContext())
+            using (var context = await CreateContext().ConfigureAwait(false))
             {
                 var episodeRepo = new EpisodeRepository(context);
                 var showsRepo = new ShowsRepository(context);
-                var usersRepo = new UsersRepository(context);
+                var usersRepo = new ProfilesRepository(context);
 
                 var calendar = new GregorianCalendar();
                 var episodeCalendar = new EpisodeCalendar(episodeRepo, calendar);

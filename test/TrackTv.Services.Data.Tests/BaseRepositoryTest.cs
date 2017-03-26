@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
-using TrackTv.Data;
-
-namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Data.Tests
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+
+    using TrackTv.Data;
+
     public class BaseRepositoryTest
     {
         protected static TrackTvDbContext CreateContext()

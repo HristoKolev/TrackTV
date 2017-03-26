@@ -18,7 +18,7 @@
 
         public async Task<IEnumerable<EpisodeRecord>> GetFullEpisodesAsync(IEnumerable<int> ids)
         {
-            var episodes = await Task.WhenAll(ids.Select(this.EpisodesClient.GetAsync));
+            var episodes = await Task.WhenAll(ids.Select(this.EpisodesClient.GetAsync)).ConfigureAwait(false);
 
             return episodes.Select(x => x.Data);
         }

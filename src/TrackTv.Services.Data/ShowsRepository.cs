@@ -12,16 +12,16 @@
 
     public class ShowsRepository : IShowsRepository
     {
-        public ShowsRepository(ICoreDataStore dataStore)
+        public ShowsRepository(TrackTvDbContext dbContext)
         {
-            this.DataStore = dataStore;
+            this.DbContext = dbContext;
         }
 
-        private ICoreDataStore DataStore { get; }
+        private TrackTvDbContext DbContext { get; }
 
         public Task<int> CountAllAsync()
         {
-            return this.DataStore.Shows.CountAsync();
+            return this.DbContext.Shows.CountAsync();
         }
 
         public Task<int> CountAllResultsAsync(string query)
@@ -31,43 +31,43 @@
                 throw new InvalidQueryException("The query is null or an empty string.");
             }
 
-            return this.DataStore.Shows.CountAsync(x => x.Name.ToLower().Contains(query.ToLower()));
+            return this.DbContext.Shows.CountAsync(x => x.Name.ToLower().Contains(query.ToLower()));
         }
 
         public Task<int> CountByGenreAsync(string genreName)
         {
-            return this.DataStore.ShowsGenres.Where(x => x.Genre.Name.ToLower() == genreName.ToLower()).CountAsync();
+            return this.DbContext.ShowsGenres.Where(x => x.Genre.Name.ToLower() == genreName.ToLower()).CountAsync();
         }
 
         public Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
         {
-            return this.DataStore.Shows.Where(x => showIds.Contains(x.Id)).Select(x => new SubscriberSummary
-                       {
-                           ShowId = x.Id,
-                           SubscriberCount = x.ShowsUsers.Count
-                       }).ToArrayAsync();
+            return this.DbContext.Shows.Where(x => showIds.Contains(x.Id)).Select(x => new SubscriberSummary
+            {
+                ShowId = x.Id,
+                SubscriberCount = x.ShowsUsers.Count
+            }).ToArrayAsync();
         }
 
-        public Task<Show[]> GetShowsByUserIdAsync(int userId)
+        public Task<Show[]> GetShowsByProfileIdAsync(int profileId)
         {
-            return this.DataStore.ShowsUsers.AsNoTracking().Where(x => x.UserId == userId).Select(x => x.Show).ToArrayAsync();
+            return this.DbContext.ShowsProfiles.AsNoTracking().Where(x => x.ProfileId == profileId).Select(x => x.Show).ToArrayAsync();
         }
 
         public Task<Show> GetShowWithNetworkByIdAsync(int id)
         {
-            return this.DataStore.Shows.AsNoTracking().Include(x => x.Network).FirstOrDefaultAsync(x => x.Id == id);
+            return this.DbContext.Shows.AsNoTracking().Include(x => x.Network).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<Show[]> GetTopAsync(int page, int pageSize)
         {
             return
-                this.DataStore.Shows.AsNoTracking().OrderByDescending(show => show.ShowsUsers.Count()).Page(page, pageSize).ToArrayAsync();
+                this.DbContext.Shows.AsNoTracking().OrderByDescending(show => show.ShowsUsers.Count()).Page(page, pageSize).ToArrayAsync();
         }
 
         public Task<Show[]> GetTopByGenreAsync(string genreName, int page, int pageSize)
         {
             return
-                this.DataStore.Shows.AsNoTracking()
+                this.DbContext.Shows.AsNoTracking()
                     .Where(x => x.ShowsGenres.Any(g => g.Genre.Name.ToLower() == genreName.ToLower()))
                     .OrderByDescending(show => show.ShowsUsers.Count())
                     .Page(page, pageSize)
@@ -82,7 +82,7 @@
             }
 
             return
-                this.DataStore.Shows.AsNoTracking()
+                this.DbContext.Shows.AsNoTracking()
                     .Where(x => x.Name.ToLower().Contains(query.ToLower()))
                     .OrderByDescending(show => show.ShowsUsers.Count())
                     .Page(page, pageSize)

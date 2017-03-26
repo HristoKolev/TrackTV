@@ -27,14 +27,14 @@
         {
             this.MapToShow(show, data);
 
-            await this.AddNetworkAsync(show, data.Network);
+            await this.AddNetworkAsync(show, data.Network).ConfigureAwait(false);
         }
 
         private async Task AddNetworkAsync(Show show, string networkName)
         {
-            if (!show.HasNetwork() || (show.Network.Name != networkName))
+            if (!show.HasNetwork() || show.Network.Name != networkName)
             {
-                var existingNetwork = await this.NetworkRepository.GetNetworkByNameAsync(networkName);
+                var existingNetwork = await this.NetworkRepository.GetNetworkByNameAsync(networkName).ConfigureAwait(false);
 
                 show.Network = existingNetwork ?? new Network(networkName);
             }

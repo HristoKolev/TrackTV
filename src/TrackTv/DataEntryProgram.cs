@@ -22,23 +22,23 @@
     {
         public async Task DoAsync()
         {
-            var client = await CreateClient();
+            var client = await CreateClient().ConfigureAwait(false);
 
-            using (var context = await CreateContext())
+            using (var context = await CreateContext().ConfigureAwait(false))
             {
                 var fetcher = CreateFetcher(context, client);
 
-                await fetcher.AddShowAsync(70851);
-                await fetcher.AddShowAsync(78804);
-                await fetcher.AddShowAsync(83237);
-                await fetcher.AddShowAsync(70851);
-                await fetcher.AddShowAsync(72449);
-                await fetcher.AddShowAsync(82066);
-                await fetcher.AddShowAsync(292124);
-                await fetcher.AddShowAsync(296762);
+                await fetcher.AddShowAsync(70851).ConfigureAwait(false);
+                await fetcher.AddShowAsync(78804).ConfigureAwait(false);
+                await fetcher.AddShowAsync(83237).ConfigureAwait(false);
+                await fetcher.AddShowAsync(70851).ConfigureAwait(false);
+                await fetcher.AddShowAsync(72449).ConfigureAwait(false);
+                await fetcher.AddShowAsync(82066).ConfigureAwait(false);
+                await fetcher.AddShowAsync(292124).ConfigureAwait(false);
+                await fetcher.AddShowAsync(296762).ConfigureAwait(false);
 
-                await fetcher.UpdateShowAsync(2);
-                await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19));
+                await fetcher.UpdateShowAsync(2).ConfigureAwait(false);
+                await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19)).ConfigureAwait(false);
             }
         }
 
@@ -48,7 +48,7 @@
 
             var authData = ReadConfig<AuthenticationData>("thetvdb.json");
 
-            await client.Authentication.AuthenticateAsync(authData);
+            await client.Authentication.AuthenticateAsync(authData).ConfigureAwait(false);
 
             return client;
         }

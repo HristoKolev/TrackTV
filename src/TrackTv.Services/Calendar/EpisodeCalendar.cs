@@ -27,13 +27,13 @@
 
         private IEpisodeRepository EpisodeRepository { get; }
 
-        public async Task<CalendarDay[][]> CreateAsync(int userId, DateTime currentDate)
+        public async Task<CalendarDay[][]> CreateAsync(int profileId, DateTime currentDate)
         {
             var startDate = this.GetStartDate(currentDate);
 
             var endDate = startDate.AddDays(CalendarLength);
 
-            var monthlyEpisodes = await this.GetMonthlyEpisodesAsync(userId, startDate, endDate);
+            var monthlyEpisodes = await this.GetMonthlyEpisodesAsync(profileId, startDate, endDate).ConfigureAwait(false);
 
             var month = ConstructMonth();
 
@@ -55,8 +55,7 @@
         private static void AddEpisodes(ICollection<CalendarDay> week, IEnumerable<CalendarEpisode> allEpisodes, DateTime currentDay)
         {
             var dailyEpisodes =
-                allEpisodes.Where(
-                    e => (e.FirstAired != null) && (e.FirstAired.Value >= currentDay) && (e.FirstAired < currentDay.AddDays(1)));
+                allEpisodes.Where(e => e.FirstAired != null && e.FirstAired.Value >= currentDay && e.FirstAired < currentDay.AddDays(1));
 
             week.Add(new CalendarDay
             {
@@ -90,9 +89,9 @@
             };
         }
 
-        private async Task<CalendarEpisode[]> GetMonthlyEpisodesAsync(int userId, DateTime startDay, DateTime endDay)
+        private async Task<CalendarEpisode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay)
         {
-            var episodes = await this.EpisodeRepository.GetMonthlyEpisodesAsync(userId, startDay, endDay);
+            var episodes = await this.EpisodeRepository.GetMonthlyEpisodesAsync(profileId, startDay, endDay).ConfigureAwait(false);
 
             return episodes.Select(MapToModel).ToArray();
         }

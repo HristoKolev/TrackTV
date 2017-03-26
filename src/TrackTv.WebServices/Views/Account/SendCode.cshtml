@@ -1,4 +1,7 @@
-﻿@model SendCodeViewModel
+﻿@using System.IO
+@using Microsoft.AspNetCore.Mvc.Razor
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@model SendCodeViewModel
 @{
     ViewData["Title"] = "Send Verification Code";
 }
@@ -6,7 +9,7 @@
 <h2>@ViewData["Title"].</h2>
 
 <form asp-controller="Account" asp-action="SendCode" asp-route-returnurl="@Model.ReturnUrl" method="post" class="form-horizontal">
-    <input asp-for="RememberMe" type="hidden" />
+    <input asp-for="RememberMe" type="hidden"/>
     <div class="row">
         <div class="col-md-8">
             Select Two-Factor Authentication Provider:
@@ -17,5 +20,5 @@
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -25,7 +25,7 @@
                 throw new ArgumentException("The genre names array is empty.", nameof(genreNames));
             }
 
-            var genres = await this.GenresRepository.GetGenresByNamesAsync(genreNames);
+            var genres = await this.GenresRepository.GetGenresByNamesAsync(genreNames).ConfigureAwait(false);
 
             foreach (string genreName in genreNames)
             {

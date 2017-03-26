@@ -7,6 +7,6 @@
 
     public interface IEpisodeCalendar
     {
-        Task<CalendarDay[][]> CreateAsync(int userId, DateTime currentDate);
+        Task<CalendarDay[][]> CreateAsync(int profileId, DateTime currentDate);
     }
 }

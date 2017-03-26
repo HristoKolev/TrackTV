@@ -1,5 +1,6 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
@@ -11,6 +12,7 @@
             return this.View();
         }
 
+        [Authorize]
         public IActionResult Contact()
         {
             this.ViewData["Message"] = "Your contact page.";

@@ -21,14 +21,14 @@
         {
             var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
 
-            var firstResponse = await this.Client.GetEpisodesAsync(seriesId, 1);
+            var firstResponse = await this.Client.GetEpisodesAsync(seriesId, 1).ConfigureAwait(false);
 
             for (int i = 2; i <= firstResponse.Links.Last; i++)
             {
                 tasks.Add(this.Client.GetEpisodesAsync(seriesId, i));
             }
 
-            var results = await Task.WhenAll(tasks);
+            var results = await Task.WhenAll(tasks).ConfigureAwait(false);
 
             var episodes = firstResponse.Data.Concat(results.SelectMany(x => x.Data));
 

@@ -10,26 +10,26 @@
 
     public class EpisodeRepository : IEpisodeRepository
     {
-        public EpisodeRepository(ICoreDataStore dataStore)
+        public EpisodeRepository(TrackTvDbContext dbContext)
         {
-            this.DataStore = dataStore;
+            this.DbContext = dbContext;
         }
 
-        private ICoreDataStore DataStore { get; }
+        private TrackTvDbContext DbContext { get; }
 
         public Task<Episode> GetEpisodeById(int id)
         {
-            return this.DataStore.Episodes.FirstOrDefaultAsync(x => x.Id == id);
+            return this.DbContext.Episodes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<Episode[]> GetEpisodesByShowIdAsync(int id)
         {
-            return this.DataStore.Episodes.Where(x => x.ShowId == id).ToArrayAsync();
+            return this.DbContext.Episodes.Where(x => x.ShowId == id).ToArrayAsync();
         }
 
         public Task<Episode[]> GetEpisodesByTheTvDbIdsAsync(int[] ids)
         {
-            return this.DataStore.Episodes.Where(x => ids.Contains(x.TheTvDbId)).ToArrayAsync();
+            return this.DbContext.Episodes.Where(x => ids.Contains(x.TheTvDbId)).ToArrayAsync();
         }
     }
 }

@@ -60,50 +60,50 @@
                 TheTvDbId = theTvDbId
             };
 
-            await this.PopulateShowAsync(show);
+            await this.PopulateShowAsync(show).ConfigureAwait(false);
 
-            await this.EpisodeFetcher.AddAllEpisodesAsync(show);
+            await this.EpisodeFetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
 
-            await this.ShowsRepository.AddShowAsync(show);
+            await this.ShowsRepository.AddShowAsync(show).ConfigureAwait(false);
         }
 
         public async Task UpdateAllRecordsAsync(DateTime from)
         {
-            var response = await this.Client.Updates.GetAsync(from);
+            var response = await this.Client.Updates.GetAsync(from).ConfigureAwait(false);
 
             var ids = response.Data.Select(x => x.Id).ToArray();
 
-            var shows = await this.ShowsRepository.GetFullShowsByTheTvDbIdsAsync(ids);
+            var shows = await this.ShowsRepository.GetFullShowsByTheTvDbIdsAsync(ids).ConfigureAwait(false);
 
             foreach (var show in shows.Where(x => IsOutdated(x, response.Data)))
             {
-                await this.PopulateShowAsync(show);
+                await this.PopulateShowAsync(show).ConfigureAwait(false);
 
-                await this.EpisodeFetcher.AddNewEpisodesAsync(show);
+                await this.EpisodeFetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
             }
 
-            var episodes = await this.EpisodeRepository.GetEpisodesByTheTvDbIdsAsync(ids);
+            var episodes = await this.EpisodeRepository.GetEpisodesByTheTvDbIdsAsync(ids).ConfigureAwait(false);
 
             foreach (var episode in episodes.Where(x => IsOutdated(x, response.Data)))
             {
-                await this.EpisodeFetcher.PopulateEpisodeAsync(episode);
+                await this.EpisodeFetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
             }
 
-            await this.Context.SaveChangesAsync();
+            await this.Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task UpdateEpisodeAsync(int id)
         {
-            var episode = await this.EpisodeRepository.GetEpisodeById(id);
+            var episode = await this.EpisodeRepository.GetEpisodeById(id).ConfigureAwait(false);
 
-            await this.EpisodeFetcher.PopulateEpisodeAsync(episode);
+            await this.EpisodeFetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
 
-            await this.Context.SaveChangesAsync();
+            await this.Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task UpdateEpisodesAsync(int showId)
         {
-            var episodes = await this.EpisodeRepository.GetEpisodesByShowIdAsync(showId);
+            var episodes = await this.EpisodeRepository.GetEpisodesByShowIdAsync(showId).ConfigureAwait(false);
 
             var tasks = new List<Task>();
 
@@ -112,20 +112,20 @@
                 tasks.Add(this.EpisodeFetcher.PopulateEpisodeAsync(episode));
             }
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).ConfigureAwait(false);
 
-            await this.Context.SaveChangesAsync();
+            await this.Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task UpdateShowAsync(int id)
         {
-            var show = await this.ShowsRepository.GetFullShowByIdAsync(id);
+            var show = await this.ShowsRepository.GetFullShowByIdAsync(id).ConfigureAwait(false);
 
-            await this.PopulateShowAsync(show);
+            await this.PopulateShowAsync(show).ConfigureAwait(false);
 
-            await this.EpisodeFetcher.AddNewEpisodesAsync(show);
+            await this.EpisodeFetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
 
-            await this.Context.SaveChangesAsync();
+            await this.Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         private static bool IsOutdated(ITvDbRecord record, IEnumerable<Update> updates)
@@ -135,13 +135,13 @@
 
         private async Task PopulateShowAsync(Show show)
         {
-            var response = await this.Client.Series.GetAsync(show.TheTvDbId);
+            var response = await this.Client.Series.GetAsync(show.TheTvDbId).ConfigureAwait(false);
 
-            await this.ShowFetcher.PopulateShowAsync(show, response.Data);
+            await this.ShowFetcher.PopulateShowAsync(show, response.Data).ConfigureAwait(false);
 
-            await this.GenreFetcher.PopulateGenresAsync(show, response.Data.Genre);
+            await this.GenreFetcher.PopulateGenresAsync(show, response.Data.Genre).ConfigureAwait(false);
 
-            await this.ActorFetcher.PopulateActorsAsync(show);
+            await this.ActorFetcher.PopulateActorsAsync(show).ConfigureAwait(false);
         }
     }
 }

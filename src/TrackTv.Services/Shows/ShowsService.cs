@@ -22,33 +22,33 @@
 
         public async Task<PagedResponse<ShowSummary[]>> GetByGenreAsync(string genreName, int page = 1, int pageSize = DefaultPageSize)
         {
-            var shows = await this.ShowsRepository.GetTopByGenreAsync(genreName, page, pageSize);
+            var shows = await this.ShowsRepository.GetTopByGenreAsync(genreName, page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray());
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray()).ConfigureAwait(false);
 
-            int totalCount = await this.ShowsRepository.CountByGenreAsync(genreName);
+            int totalCount = await this.ShowsRepository.CountByGenreAsync(genreName).ConfigureAwait(false);
 
             return ConstructResponse(shows, subscriberCounts, totalCount);
         }
 
         public async Task<PagedResponse<ShowSummary[]>> GetTopShowsAsync(int page = 1, int pageSize = DefaultPageSize)
         {
-            var shows = await this.ShowsRepository.GetTopAsync(page, pageSize);
+            var shows = await this.ShowsRepository.GetTopAsync(page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray());
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray()).ConfigureAwait(false);
 
-            int totalCount = await this.ShowsRepository.CountAllAsync();
+            int totalCount = await this.ShowsRepository.CountAllAsync().ConfigureAwait(false);
 
             return ConstructResponse(shows, subscriberCounts, totalCount);
         }
 
         public async Task<PagedResponse<ShowSummary[]>> SearchTopShowsAsync(string query, int page = 1, int pageSize = DefaultPageSize)
         {
-            var shows = await this.ShowsRepository.SearchTopAsync(query, page, pageSize);
+            var shows = await this.ShowsRepository.SearchTopAsync(query, page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray());
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray()).ConfigureAwait(false);
 
-            int totalCount = await this.ShowsRepository.CountAllResultsAsync(query);
+            int totalCount = await this.ShowsRepository.CountAllResultsAsync(query).ConfigureAwait(false);
 
             return ConstructResponse(shows, subscriberCounts, totalCount);
         }

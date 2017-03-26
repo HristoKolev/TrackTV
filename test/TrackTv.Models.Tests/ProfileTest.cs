@@ -6,18 +6,18 @@
 
     using Xunit;
 
-    public class UserTest
+    public class ProfileTest
     {
         [Fact]
 
         // ReSharper disable once InconsistentNaming
         public void ShowsUsers_Is_Initialize()
         {
-            var user = new User();
+            var user = new Profile();
 
             Assert.NotNull(user.ShowsUsers);
 
-            Assert.IsType<List<ShowsUsers>>(user.ShowsUsers);
+            Assert.IsType<List<ShowsProfiles>>(user.ShowsUsers);
         }
     }
 }

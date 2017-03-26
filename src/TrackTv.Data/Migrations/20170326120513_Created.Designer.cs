@@ -4,17 +4,18 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TrackTv.Data;
+using TrackTv.Models.Enums;
 
 namespace TrackTv.Data.Migrations
 {
     [DbContext(typeof(TrackTvDbContext))]
-    [Migration("20161025224117_Created")]
+    [Migration("20170326120513_Created")]
     partial class Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.1")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TrackTv.Models.Actor", b =>
@@ -23,13 +24,13 @@ namespace TrackTv.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Image")
-                        .HasAnnotation("MaxLength", 255);
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 255);
+                        .HasMaxLength(255);
 
                     b.Property<int>("TheTvDbId");
 
@@ -48,7 +49,7 @@ namespace TrackTv.Data.Migrations
                     b.Property<DateTime?>("FirstAired");
 
                     b.Property<string>("ImdbId")
-                        .HasAnnotation("MaxLength", 10);
+                        .HasMaxLength(10);
 
                     b.Property<DateTime>("LastUpdated");
 
@@ -62,7 +63,7 @@ namespace TrackTv.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 255);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -78,7 +79,7 @@ namespace TrackTv.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -92,13 +93,11 @@ namespace TrackTv.Data.Migrations
                     b.Property<int>("ActorId");
 
                     b.Property<string>("Role")
-                        .HasAnnotation("MaxLength", 255);
+                        .HasMaxLength(255);
 
                     b.HasKey("ShowId", "ActorId");
 
                     b.HasIndex("ActorId");
-
-                    b.HasIndex("ShowId");
 
                     b.ToTable("ShowsActors");
                 });
@@ -113,24 +112,20 @@ namespace TrackTv.Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.HasIndex("ShowId");
-
                     b.ToTable("ShowsGenres");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Joint.ShowsUsers", b =>
+            modelBuilder.Entity("TrackTv.Models.Joint.ShowsProfiles", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("ProfileId");
 
                     b.Property<int>("ShowId");
 
-                    b.HasKey("UserId", "ShowId");
+                    b.HasKey("ProfileId", "ShowId");
 
                     b.HasIndex("ShowId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ShowsUsers");
+                    b.ToTable("ShowsProfiles");
                 });
 
             modelBuilder.Entity("TrackTv.Models.Network", b =>
@@ -140,11 +135,24 @@ namespace TrackTv.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 40);
+                        .HasMaxLength(40);
 
                     b.HasKey("Id");
 
                     b.ToTable("Networks");
+                });
+
+            modelBuilder.Entity("TrackTv.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Username")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("TrackTv.Models.Show", b =>
@@ -157,20 +165,20 @@ namespace TrackTv.Data.Migrations
                     b.Property<DateTime?>("AirTime");
 
                     b.Property<string>("Banner")
-                        .HasAnnotation("MaxLength", 255);
+                        .HasMaxLength(255);
 
                     b.Property<string>("Description");
 
                     b.Property<DateTime?>("FirstAired");
 
                     b.Property<string>("ImdbId")
-                        .HasAnnotation("MaxLength", 10);
+                        .HasMaxLength(10);
 
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 255);
+                        .HasMaxLength(255);
 
                     b.Property<int>("NetworkId");
 
@@ -183,19 +191,6 @@ namespace TrackTv.Data.Migrations
                     b.HasIndex("NetworkId");
 
                     b.ToTable("Shows");
-                });
-
-            modelBuilder.Entity("TrackTv.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Username")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TrackTv.Models.Episode", b =>
@@ -232,16 +227,16 @@ namespace TrackTv.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Joint.ShowsUsers", b =>
+            modelBuilder.Entity("TrackTv.Models.Joint.ShowsProfiles", b =>
                 {
+                    b.HasOne("TrackTv.Models.Profile", "Profile")
+                        .WithMany("ShowsUsers")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("TrackTv.Models.Show", "Show")
                         .WithMany("ShowsUsers")
                         .HasForeignKey("ShowId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TrackTv.Models.User", "User")
-                        .WithMany("ShowsUsers")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

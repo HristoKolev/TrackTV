@@ -44,9 +44,9 @@
             var show = new Show();
 
             show.ShowsActors.Add(new ShowsActors
-                {
-                    ActorId = 0
-                });
+            {
+                ActorId = 0
+            });
 
             Assert.False(show.HasActor(actor));
         }
@@ -64,9 +64,9 @@
             var show = new Show();
 
             show.ShowsActors.Add(new ShowsActors
-                {
-                    ActorId = actor.Id
-                });
+            {
+                ActorId = actor.Id
+            });
 
             Assert.True(show.HasActor(actor));
         }
@@ -98,9 +98,9 @@
             var show = new Show();
 
             show.ShowsGenres.Add(new ShowsGenres
-                {
-                    GenreId = genre.Id
-                });
+            {
+                GenreId = genre.Id
+            });
 
             Assert.True(show.HasGenre(genre));
         }
@@ -115,9 +115,9 @@
             var show = new Show();
 
             show.ShowsGenres.Add(new ShowsGenres
-                {
-                    GenreId = 0
-                });
+            {
+                GenreId = 0
+            });
 
             Assert.False(show.HasGenre(genre));
         }
@@ -196,7 +196,7 @@
 
             Assert.NotNull(show.ShowsUsers);
 
-            Assert.IsType<List<ShowsUsers>>(show.ShowsUsers);
+            Assert.IsType<List<ShowsProfiles>>(show.ShowsUsers);
         }
     }
 }

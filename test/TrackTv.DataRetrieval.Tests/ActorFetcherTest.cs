@@ -54,9 +54,9 @@
             };
 
             var actors = response.Data.Select(x => new Actor
-                                 {
-                                     TheTvDbId = x.Id
-                                 }).ToArray();
+            {
+                TheTvDbId = x.Id
+            }).ToArray();
 
             RigRepository(repository, actors);
             RigClient(client, show.TheTvDbId, response);
@@ -113,9 +113,9 @@
             };
 
             var actors = response.Data.Take(2).Select(x => new Actor
-                                 {
-                                     TheTvDbId = x.Id
-                                 }).ToArray();
+            {
+                TheTvDbId = x.Id
+            }).ToArray();
 
             RigRepository(repository, actors);
             RigClient(client, show.TheTvDbId, response);

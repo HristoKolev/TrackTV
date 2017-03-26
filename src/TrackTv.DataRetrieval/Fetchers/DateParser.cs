@@ -47,14 +47,14 @@ namespace TrackTv.DataRetrieval.Fetchers
 
             if (abbreviation != null)
             {
-                if ((hour < 1) || (hour > 12))
+                if (hour < 1 || hour > 12)
                 {
                     return null;
                 }
             }
             else
             {
-                if ((hour < 0) || (hour > 23))
+                if (hour < 0 || hour > 23)
                 {
                     return null;
                 }
@@ -67,17 +67,17 @@ namespace TrackTv.DataRetrieval.Fetchers
                 return null;
             }
 
-            if ((minute < 0) || (minute > 59))
+            if (minute < 0 || minute > 59)
             {
                 return null;
             }
 
-            if ((abbreviation == Am) && (hour == 12))
+            if (abbreviation == Am && hour == 12)
             {
                 return Create(hour - 12, minute);
             }
 
-            if ((abbreviation == Pm) && (hour != 12))
+            if (abbreviation == Pm && hour != 12)
             {
                 return Create(hour + 12, minute);
             }

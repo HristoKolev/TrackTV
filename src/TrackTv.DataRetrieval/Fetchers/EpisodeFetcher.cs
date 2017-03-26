@@ -36,32 +36,32 @@
 
         public async Task AddAllEpisodesAsync(Show show)
         {
-            var ids = await this.GetAllEpisodeIdsAsync(show.TheTvDbId);
+            var ids = await this.GetAllEpisodeIdsAsync(show.TheTvDbId).ConfigureAwait(false);
 
-            await this.AddEpisodesAsync(show, ids);
+            await this.AddEpisodesAsync(show, ids).ConfigureAwait(false);
         }
 
         public async Task AddNewEpisodesAsync(Show show)
         {
-            var ids = await this.GetAllEpisodeIdsAsync(show.TheTvDbId);
+            var ids = await this.GetAllEpisodeIdsAsync(show.TheTvDbId).ConfigureAwait(false);
 
             var existingIds = show.Episodes.Select(x => x.TheTvDbId);
 
             var newIds = ids.Except(existingIds).ToArray();
 
-            await this.AddEpisodesAsync(show, newIds);
+            await this.AddEpisodesAsync(show, newIds).ConfigureAwait(false);
         }
 
         public async Task PopulateEpisodeAsync(Episode episode)
         {
-            var response = await this.EpisodesClient.GetAsync(episode.TheTvDbId);
+            var response = await this.EpisodesClient.GetAsync(episode.TheTvDbId).ConfigureAwait(false);
 
             this.MapToEpisode(episode, response.Data);
         }
 
         private async Task AddEpisodesAsync(Show show, IEnumerable<int> ids)
         {
-            var records = await this.AdvancedEpisodeClient.GetFullEpisodesAsync(ids);
+            var records = await this.AdvancedEpisodeClient.GetFullEpisodesAsync(ids).ConfigureAwait(false);
 
             foreach (var record in records)
             {
@@ -75,7 +75,7 @@
 
         private async Task<int[]> GetAllEpisodeIdsAsync(int seriesId)
         {
-            var basicEpisodes = await this.AdvancedSeriesClient.GetBasicEpisodesAsync(seriesId);
+            var basicEpisodes = await this.AdvancedSeriesClient.GetBasicEpisodesAsync(seriesId).ConfigureAwait(false);
 
             return basicEpisodes.Select(x => x.Id).ToArray();
         }

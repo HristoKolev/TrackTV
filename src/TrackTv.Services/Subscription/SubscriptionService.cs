@@ -6,21 +6,21 @@
 
     public class SubscriptionService
     {
-        public SubscriptionService(IUsersRepository usersRepository)
+        public SubscriptionService(IProfilesRepository profilesRepository)
         {
-            this.UsersRepository = usersRepository;
+            this.ProfilesRepository = profilesRepository;
         }
 
-        private IUsersRepository UsersRepository { get; }
+        private IProfilesRepository ProfilesRepository { get; }
 
-        public Task Subscribe(int userId, int showId)
+        public Task Subscribe(int profileId, int showId)
         {
-            return this.UsersRepository.AddSubscriptionAsync(userId, showId);
+            return this.ProfilesRepository.AddSubscriptionAsync(profileId, showId);
         }
 
-        public Task UnSubscribe(int userId, int showId)
+        public Task UnSubscribe(int profileId, int showId)
         {
-            return this.UsersRepository.RemoveSubscriptionAsync(userId, showId);
+            return this.ProfilesRepository.RemoveSubscriptionAsync(profileId, showId);
         }
     }
 }

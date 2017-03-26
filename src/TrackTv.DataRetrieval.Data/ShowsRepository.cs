@@ -1,13 +1,11 @@
-﻿using System.Reflection;
-
-namespace TrackTv.DataRetrieval.Data
+﻿namespace TrackTv.DataRetrieval.Data
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Query;
 
     using TrackTv.Data;
@@ -15,18 +13,18 @@ namespace TrackTv.DataRetrieval.Data
 
     public class ShowsRepository : IShowsRepository
     {
-        public ShowsRepository(ICoreDataStore dataStore)
+        public ShowsRepository(TrackTvDbContext dbContext)
         {
-            this.DataStore = dataStore;
+            this.DbContext = dbContext;
         }
 
-        private ICoreDataStore DataStore { get; }
+        private TrackTvDbContext DbContext { get; }
 
         public async Task AddShowAsync(Show show)
         {
-            this.DataStore.Shows.Add(show);
+            this.DbContext.Shows.Add(show);
 
-            await this.DataStore.SaveChangesAsync();
+            await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public Task<Show> GetFullShowByIdAsync(int id)
@@ -41,7 +39,7 @@ namespace TrackTv.DataRetrieval.Data
 
         public async Task UpdateShowAsync(Show show)
         {
-            this.DataStore.ChangeTracker.TrackGraph(show, node =>
+            this.DbContext.ChangeTracker.TrackGraph(show, node =>
             {
                 var entity = node.Entry.Entity;
 
@@ -50,13 +48,13 @@ namespace TrackTv.DataRetrieval.Data
                 node.Entry.State = id == default(int) ? EntityState.Added : EntityState.Modified;
             });
 
-            await this.DataStore.SaveChangesAsync();
+            await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         private IIncludableQueryable<Show, ICollection<Episode>> FullShows()
         {
             return
-                this.DataStore.Shows.Include(x => x.ShowsGenres)
+                this.DbContext.Shows.Include(x => x.ShowsGenres)
                     .Include(x => x.ShowsActors)
                     .Include(x => x.Network)
                     .Include(x => x.Episodes);

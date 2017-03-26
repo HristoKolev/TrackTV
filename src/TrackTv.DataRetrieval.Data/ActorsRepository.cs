@@ -10,16 +10,16 @@
 
     public class ActorsRepository : IActorsRepository
     {
-        public ActorsRepository(ICoreDataStore dataStore)
+        public ActorsRepository(TrackTvDbContext dbContext)
         {
-            this.DataStore = dataStore;
+            this.DbContext = dbContext;
         }
 
-        private ICoreDataStore DataStore { get; }
+        private TrackTvDbContext DbContext { get; }
 
         public Task<Actor[]> GetActorsByTheTvDbIdsAsync(int[] ids)
         {
-            return this.DataStore.Actors.Where(actor => ids.Contains(actor.TheTvDbId)).ToArrayAsync();
+            return this.DbContext.Actors.Where(actor => ids.Contains(actor.TheTvDbId)).ToArrayAsync();
         }
     }
 }

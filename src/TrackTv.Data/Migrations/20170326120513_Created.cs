@@ -52,7 +52,7 @@ namespace TrackTv.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Profiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -61,7 +61,7 @@ namespace TrackTv.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Profiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,25 +170,25 @@ namespace TrackTv.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShowsUsers",
+                name: "ShowsProfiles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
+                    ProfileId = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShowsUsers", x => new { x.UserId, x.ShowId });
+                    table.PrimaryKey("PK_ShowsProfiles", x => new { x.ProfileId, x.ShowId });
                     table.ForeignKey(
-                        name: "FK_ShowsUsers_Shows_ShowId",
-                        column: x => x.ShowId,
-                        principalTable: "Shows",
+                        name: "FK_ShowsProfiles_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShowsUsers_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_ShowsProfiles_Shows_ShowId",
+                        column: x => x.ShowId,
+                        principalTable: "Shows",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -204,29 +204,14 @@ namespace TrackTv.Data.Migrations
                 column: "ActorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShowsActors_ShowId",
-                table: "ShowsActors",
-                column: "ShowId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ShowsGenres_GenreId",
                 table: "ShowsGenres",
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShowsGenres_ShowId",
-                table: "ShowsGenres",
+                name: "IX_ShowsProfiles_ShowId",
+                table: "ShowsProfiles",
                 column: "ShowId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShowsUsers_ShowId",
-                table: "ShowsUsers",
-                column: "ShowId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShowsUsers_UserId",
-                table: "ShowsUsers",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shows_NetworkId",
@@ -246,7 +231,7 @@ namespace TrackTv.Data.Migrations
                 name: "ShowsGenres");
 
             migrationBuilder.DropTable(
-                name: "ShowsUsers");
+                name: "ShowsProfiles");
 
             migrationBuilder.DropTable(
                 name: "Actors");
@@ -255,10 +240,10 @@ namespace TrackTv.Data.Migrations
                 name: "Genres");
 
             migrationBuilder.DropTable(
-                name: "Shows");
+                name: "Profiles");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Shows");
 
             migrationBuilder.DropTable(
                 name: "Networks");

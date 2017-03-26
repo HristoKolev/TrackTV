@@ -14,11 +14,11 @@
 
         private IEpisodeCalendar EpisodeCalendar { get; }
 
-        public Task<CalendarDay[][]> GetCalendarAsync(int userId)
+        public Task<CalendarDay[][]> GetCalendarAsync(int profileId)
         {
             var now = DateTime.UtcNow;
 
-            return this.EpisodeCalendar.CreateAsync(userId, now);
+            return this.EpisodeCalendar.CreateAsync(profileId, now);
         }
     }
 }

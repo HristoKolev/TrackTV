@@ -7,7 +7,7 @@
     using TrackTv.Models;
     using TrackTv.Models.Joint;
 
-    public class TrackTvDbContext : DbContext, ICoreDataStore, IUsersStore
+    public class TrackTvDbContext : DbContext
     {
         public TrackTvDbContext(DbContextOptions options)
             : base(options)
@@ -26,15 +26,15 @@
 
         public DbSet<Network> Networks { get; set; }
 
+        public DbSet<Profile> Profiles { get; set; }
+
         public DbSet<Show> Shows { get; set; }
 
         public DbSet<ShowsActors> ShowsActors { get; set; }
 
         public DbSet<ShowsGenres> ShowsGenres { get; set; }
 
-        public DbSet<ShowsUsers> ShowsUsers { get; set; }
-
-        public DbSet<User> Users { get; set; }
+        public DbSet<ShowsProfiles> ShowsProfiles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,30 +56,30 @@
 
         private static void ConfigureManyToManyRelationships(ModelBuilder builder)
         {
-            // ShowsUsers
-            builder.Entity<ShowsUsers>().HasKey(t => new
-                   {
-                       t.UserId,
-                       t.ShowId
-                   });
-            builder.Entity<ShowsUsers>().HasOne(t => t.User).WithMany(user => user.ShowsUsers).HasForeignKey(t => t.UserId);
-            builder.Entity<ShowsUsers>().HasOne(t => t.Show).WithMany(show => show.ShowsUsers).HasForeignKey(t => t.ShowId);
+            // ShowsProfiles
+            builder.Entity<ShowsProfiles>().HasKey(t => new
+            {
+                t.ProfileId,
+                t.ShowId
+            });
+            builder.Entity<ShowsProfiles>().HasOne(t => t.Profile).WithMany(user => user.ShowsUsers).HasForeignKey(t => t.ProfileId);
+            builder.Entity<ShowsProfiles>().HasOne(t => t.Show).WithMany(show => show.ShowsUsers).HasForeignKey(t => t.ShowId);
 
             // ShowsActors
             builder.Entity<ShowsActors>().HasKey(t => new
-                   {
-                       t.ShowId,
-                       t.ActorId
-                   });
+            {
+                t.ShowId,
+                t.ActorId
+            });
             builder.Entity<ShowsActors>().HasOne(t => t.Show).WithMany(show => show.ShowsActors).HasForeignKey(t => t.ShowId);
             builder.Entity<ShowsActors>().HasOne(t => t.Actor).WithMany(actor => actor.ShowsActors).HasForeignKey(t => t.ActorId);
 
             // ShowsGenres
             builder.Entity<ShowsGenres>().HasKey(t => new
-                   {
-                       t.ShowId,
-                       t.GenreId
-                   });
+            {
+                t.ShowId,
+                t.GenreId
+            });
             builder.Entity<ShowsGenres>().HasOne(t => t.Show).WithMany(show => show.ShowsGenres).HasForeignKey(t => t.ShowId);
             builder.Entity<ShowsGenres>().HasOne(t => t.Genre).WithMany(genre => genre.ShowsGenres).HasForeignKey(t => t.GenreId);
         }
@@ -104,7 +104,7 @@
 
             builder.Entity<ShowsActors>().Property(t => t.Role).HasMaxLength(byte.MaxValue);
 
-            builder.Entity<User>().Property(user => user.Username).IsRequired();
+            builder.Entity<Profile>().Property(user => user.Username).IsRequired();
         }
     }
 }

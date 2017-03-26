@@ -10,6 +10,6 @@
     {
         Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] ids, DateTime time);
 
-        Task<Episode[]> GetMonthlyEpisodesAsync(int userId, DateTime startDay, DateTime endDay);
+        Task<Episode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay);
     }
 }

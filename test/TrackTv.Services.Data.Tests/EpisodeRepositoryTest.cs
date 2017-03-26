@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using TrackTv.Data;
-using TrackTv.Models;
-using TrackTv.Models.Joint;
-
-using Xunit;
-
-namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Data.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using TrackTv.Data;
+    using TrackTv.Models;
+    using TrackTv.Models.Joint;
+
+    using Xunit;
+
     public class EpisodeRepositoryTest : BaseRepositoryTest
     {
-        private const int WeekLength = 7;
+        private const int ReferenceProfileId = 10;
 
-        private const int ReferenceUserId = 10;
+        private const int WeekLength = 7;
 
         private DateTime ReferenceDate { get; } = new DateTime(2000, 1, 1);
 
@@ -25,11 +25,12 @@ namespace TrackTv.Services.Data.Tests
         {
             using (var context = CreateContext())
             {
-                await this.SeedEpisodesAsync(context);
+                await this.SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
-                int[] ids = {
+                int[] ids =
+                {
                     1,
                     2,
                     3
@@ -37,7 +38,7 @@ namespace TrackTv.Services.Data.Tests
 
                 for (int i = 0; i <= 60; i++)
                 {
-                    var summaries = await repository.GetEpisodesSummariesAsync(ids, this.ReferenceDate.AddDays(i));
+                    var summaries = await repository.GetEpisodesSummariesAsync(ids, this.ReferenceDate.AddDays(i)).ConfigureAwait(false);
 
                     foreach (var summary in summaries)
                     {
@@ -63,11 +64,13 @@ namespace TrackTv.Services.Data.Tests
         {
             using (var context = CreateContext())
             {
-                await this.SeedEpisodesAsync(context);
+                await this.SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
-                var episodes = await repository.GetMonthlyEpisodesAsync(ReferenceUserId, this.ReferenceDate, this.ReferenceDate.AddDays(30));
+                var episodes =
+                    await repository.GetMonthlyEpisodesAsync(ReferenceProfileId, this.ReferenceDate, this.ReferenceDate.AddDays(30))
+                                    .ConfigureAwait(false);
 
                 foreach (var episode in episodes)
                 {
@@ -89,9 +92,9 @@ namespace TrackTv.Services.Data.Tests
                         Id = i
                     };
 
-                    show.ShowsUsers.Add(new ShowsUsers
+                    show.ShowsUsers.Add(new ShowsProfiles
                     {
-                        UserId = ReferenceUserId
+                        ProfileId = ReferenceProfileId
                     });
 
                     for (int j = 1; j < 10; j++)
@@ -112,7 +115,7 @@ namespace TrackTv.Services.Data.Tests
             }
 
             context.Shows.AddRange(shows);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

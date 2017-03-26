@@ -22,15 +22,15 @@
 
         private IShowsRepository ShowsRepository { get; }
 
-        public async Task<MyShow[]> GetAllAsync(int userId)
+        public async Task<MyShow[]> GetAllAsync(int profileId)
         {
             var now = DateTime.UtcNow;
 
-            var shows = await this.ShowsRepository.GetShowsByUserIdAsync(userId);
+            var shows = await this.ShowsRepository.GetShowsByProfileIdAsync(profileId).ConfigureAwait(false);
 
             var ids = shows.Select(x => x.Id).ToArray();
 
-            var episodesSummaries = await this.EpisodeRepository.GetEpisodesSummariesAsync(ids, now);
+            var episodesSummaries = await this.EpisodeRepository.GetEpisodesSummariesAsync(ids, now).ConfigureAwait(false);
 
             return MapToModels(shows, episodesSummaries);
         }

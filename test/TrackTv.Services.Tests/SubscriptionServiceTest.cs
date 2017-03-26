@@ -14,7 +14,7 @@
         // ReSharper disable once InconsistentNaming
         public void Subscribe_adds_a_subscription_with_the_userId_and_showId()
         {
-            var repo = Substitute.For<IUsersRepository>();
+            var repo = Substitute.For<IProfilesRepository>();
 
             var service = CreateService(repo);
 
@@ -28,7 +28,7 @@
         // ReSharper disable once InconsistentNaming
         public void Unsubscribe_removes_a_subscription_with_the_userId_and_showId()
         {
-            var repo = Substitute.For<IUsersRepository>();
+            var repo = Substitute.For<IProfilesRepository>();
 
             var service = CreateService(repo);
 
@@ -37,9 +37,9 @@
             repo.Received().RemoveSubscriptionAsync(1, 2);
         }
 
-        private static SubscriptionService CreateService(IUsersRepository usersRepository)
+        private static SubscriptionService CreateService(IProfilesRepository profilesRepository)
         {
-            return new SubscriptionService(usersRepository);
+            return new SubscriptionService(profilesRepository);
         }
     }
 }

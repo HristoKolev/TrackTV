@@ -23,19 +23,19 @@
                 {
                     Id = 1
                 });
-                context.Users.Add(new User
+                context.Profiles.Add(new Profile
                 {
                     Id = 2
                 });
 
                 await context.SaveChangesAsync();
 
-                var repository = new UsersRepository(context);
+                var repository = new ProfilesRepository(context);
 
                 await repository.AddSubscriptionAsync(2, 1);
 
                 var relationship =
-                    await context.ShowsUsers.FirstOrDefaultAsync(showsUsers => showsUsers.ShowId == 1 && showsUsers.UserId == 2);
+                    await context.ShowsProfiles.FirstOrDefaultAsync(showsUsers => showsUsers.ShowId == 1 && showsUsers.ProfileId == 2);
 
                 Assert.NotNull(relationship);
             }
@@ -48,21 +48,21 @@
         {
             using (var context = CreateContext())
             {
-                var repository = new UsersRepository(context);
+                var repository = new ProfilesRepository(context);
 
                 var show = new Show
                 {
                     Id = 1
                 };
 
-                var user = new User
+                var user = new Profile
                 {
                     Id = 2
                 };
 
                 context.Shows.Add(show);
-                context.Users.Add(user);
-                context.ShowsUsers.Add(new ShowsUsers(user.Id, show.Id));
+                context.Profiles.Add(user);
+                context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
 
                 await context.SaveChangesAsync();
 
@@ -82,18 +82,18 @@
                     Id = 1
                 };
 
-                var user = new User
+                var user = new Profile
                 {
                     Id = 2
                 };
 
                 context.Shows.Add(show);
-                context.Users.Add(user);
-                context.ShowsUsers.Add(new ShowsUsers(user.Id, show.Id));
+                context.Profiles.Add(user);
+                context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
 
                 await context.SaveChangesAsync();
 
-                var repository = new UsersRepository(context);
+                var repository = new ProfilesRepository(context);
 
                 Assert.True(await repository.IsUserSubscribedAsync(2, 1));
             }
@@ -106,7 +106,7 @@
         {
             using (var context = CreateContext())
             {
-                var repository = new UsersRepository(context);
+                var repository = new ProfilesRepository(context);
 
                 Assert.False(await repository.IsUserSubscribedAsync(2, 1));
             }
@@ -124,22 +124,22 @@
                     Id = 1
                 };
 
-                var user = new User
+                var user = new Profile
                 {
                     Id = 2
                 };
 
                 context.Shows.Add(show);
-                context.Users.Add(user);
-                context.ShowsUsers.Add(new ShowsUsers(user.Id, show.Id));
+                context.Profiles.Add(user);
+                context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
 
                 await context.SaveChangesAsync();
 
-                var repository = new UsersRepository(context);
+                var repository = new ProfilesRepository(context);
 
                 await repository.RemoveSubscriptionAsync(2, 1);
 
-                Assert.Equal(0, await context.ShowsUsers.CountAsync());
+                Assert.Equal(0, await context.ShowsProfiles.CountAsync());
             }
         }
 
@@ -150,7 +150,7 @@
         {
             using (var context = CreateContext())
             {
-                var repository = new UsersRepository(context);
+                var repository = new ProfilesRepository(context);
 
                 await Assert.ThrowsAsync<SubscriptionException>(async () => await repository.RemoveSubscriptionAsync(2, 1));
             }

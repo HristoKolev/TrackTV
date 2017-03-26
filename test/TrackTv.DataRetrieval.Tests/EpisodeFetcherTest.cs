@@ -241,11 +241,11 @@
             };
 
             var episodeRecords = basics.Skip(1).Select(x => new EpisodeRecord
-                                       {
-                                           Id = x.Id,
-                                           AiredEpisodeNumber = 0,
-                                           AiredSeason = 0
-                                       });
+            {
+                Id = x.Id,
+                AiredEpisodeNumber = 0,
+                AiredSeason = 0
+            });
 
             Expression<Predicate<IEnumerable<int>>> isIdsOfBasicsExceptFirst = x => x.SequenceEqual(basics.Skip(1).Select(e => e.Id));
 

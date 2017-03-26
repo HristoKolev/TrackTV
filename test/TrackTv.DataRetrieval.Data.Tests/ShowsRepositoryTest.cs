@@ -26,7 +26,7 @@
 
                 var network = new Network("bbc");
                 var genre = new Genre("action");
-                var user = new User
+                var user = new Profile
                 {
                     Username = "bestOfHumanity"
                 };
@@ -45,90 +45,6 @@
 
                 Assert.Equal(show.TheTvDbId, savedShow.TheTvDbId);
                 Assert.Equal(show.Name, savedShow.Name);
-            }
-        }
-
-        [Fact]
-        // ReSharper disable once InconsistentNaming
-        public async Task UpdateShowAsync_should_update_the_show()
-        {
-            using (var context = CreateContext())
-            {
-                var network = new Network("bbc");
-                var genre = new Genre("action");
-                var user = new User
-                {
-                    Username = "bestOfHumanity"
-                };
-                var actor = new Actor
-                {
-                    Name = "Cat"
-                };
-
-                var show = CreateShow("Show1", 1000, network, genre, actor, user);
-
-                context.Shows.Add(show);
-
-                await context.SaveChangesAsync();
-
-                string newName = "New Name";
-                string newBanner = "New Banner";
-
-                context.Entry(show).State = EntityState.Detached;
-
-                show.Name = newName;
-                show.Banner = newBanner;
-
-                var repository = new ShowsRepository(context);
-
-                await repository.UpdateShowAsync(show);
-                 
-                var savedShow = await context.Shows.SingleOrDefaultAsync();
-
-                Assert.NotNull(savedShow);
-
-                Assert.Equal(newName, savedShow.Name);
-                Assert.Equal(newBanner, savedShow.Banner);
-            }
-        }
-
-        [Fact]
-        // ReSharper disable once InconsistentNaming
-        public async Task UpdateShowAsync_should_update_navigation_properties()
-        {
-            using (var context = CreateContext())
-            {
-                var network = new Network("bbc");
-                var genre = new Genre("action");
-                var user = new User
-                {
-                    Username = "bestOfHumanity"
-                };
-                var actor = new Actor
-                {
-                    Name = "Cat"
-                };
-
-                var show = CreateShow("Show1", 1000, network, genre, actor, user);
-
-                context.Shows.Add(show);
-
-                await context.SaveChangesAsync();
-
-                string newNetworkName = "CatWork";
-                var newNetwork = new Network(newNetworkName);
-
-                show.Network = newNetwork;
-
-                var repository = new ShowsRepository(context);
-
-                await repository.UpdateShowAsync(show);
-                 
-                var savedShow = await context.Shows.Include(s => s.Network).SingleOrDefaultAsync();
-
-                Assert.NotNull(savedShow);
-
-                Assert.Equal(newNetworkName, savedShow.Network.Name);
             }
         }
 
@@ -236,6 +152,92 @@
             }
         }
 
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task UpdateShowAsync_should_update_navigation_properties()
+        {
+            using (var context = CreateContext())
+            {
+                var network = new Network("bbc");
+                var genre = new Genre("action");
+                var user = new Profile
+                {
+                    Username = "bestOfHumanity"
+                };
+                var actor = new Actor
+                {
+                    Name = "Cat"
+                };
+
+                var show = CreateShow("Show1", 1000, network, genre, actor, user);
+
+                context.Shows.Add(show);
+
+                await context.SaveChangesAsync();
+
+                string newNetworkName = "CatWork";
+                var newNetwork = new Network(newNetworkName);
+
+                show.Network = newNetwork;
+
+                var repository = new ShowsRepository(context);
+
+                await repository.UpdateShowAsync(show);
+
+                var savedShow = await context.Shows.Include(s => s.Network).SingleOrDefaultAsync();
+
+                Assert.NotNull(savedShow);
+
+                Assert.Equal(newNetworkName, savedShow.Network.Name);
+            }
+        }
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task UpdateShowAsync_should_update_the_show()
+        {
+            using (var context = CreateContext())
+            {
+                var network = new Network("bbc");
+                var genre = new Genre("action");
+                var user = new Profile
+                {
+                    Username = "bestOfHumanity"
+                };
+                var actor = new Actor
+                {
+                    Name = "Cat"
+                };
+
+                var show = CreateShow("Show1", 1000, network, genre, actor, user);
+
+                context.Shows.Add(show);
+
+                await context.SaveChangesAsync();
+
+                string newName = "New Name";
+                string newBanner = "New Banner";
+
+                context.Entry(show).State = EntityState.Detached;
+
+                show.Name = newName;
+                show.Banner = newBanner;
+
+                var repository = new ShowsRepository(context);
+
+                await repository.UpdateShowAsync(show);
+
+                var savedShow = await context.Shows.SingleOrDefaultAsync();
+
+                Assert.NotNull(savedShow);
+
+                Assert.Equal(newName, savedShow.Name);
+                Assert.Equal(newBanner, savedShow.Banner);
+            }
+        }
+
         private static void AssertIsFull(Show show)
         {
             Assert.NotNull(show.Network);
@@ -245,7 +247,7 @@
             Assert.True(show.ShowsUsers.Any());
         }
 
-        private static Show CreateShow(string name, int theTvDbId, Network network, Genre genre, Actor actor, User user)
+        private static Show CreateShow(string name, int theTvDbId, Network network, Genre genre, Actor actor, Profile profile)
         {
             return new Show
             {
@@ -262,9 +264,9 @@
                     }
                 },
                 ShowsUsers = {
-                    new ShowsUsers
+                    new ShowsProfiles
                     {
-                        User = user
+                        Profile = profile
                     }
                 },
                 Episodes = {
@@ -282,7 +284,7 @@
             {
                 var network = new Network("bbc");
                 var genre = new Genre("action");
-                var user = new User
+                var user = new Profile
                 {
                     Username = "bestOfHumanity"
                 };

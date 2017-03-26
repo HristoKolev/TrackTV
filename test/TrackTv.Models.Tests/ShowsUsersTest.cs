@@ -13,12 +13,12 @@
         {
             int showId = 1;
 
-            int userId = 2;
+            int profileId = 2;
 
-            var showsUsers = new ShowsUsers(userId, showId);
+            var showsUsers = new ShowsProfiles(profileId, showId);
 
             Assert.Equal(showId, showsUsers.ShowId);
-            Assert.Equal(userId, showsUsers.UserId);
+            Assert.Equal(profileId, showsUsers.ProfileId);
         }
     }
 }
