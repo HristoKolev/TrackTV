@@ -6,8 +6,8 @@ build_script:
     dotnet build
 test_script:
 - cmd: >-
-    dotnet test test\TrackTv.DataRetrieval.Tests
+    dotnet test test\TrackTv.DataRetrieval.Tests\TrackTv.DataRetrieval.Tests.csproj
 
-    dotnet test test\TrackTv.Models.Tests
+    dotnet test test\TrackTv.Models.Tests\TrackTv.Models.Tests.csproj
     
-    dotnet test test\TrackTv.Services.Tests
+    dotnet test test\TrackTv.Services.Tests\TrackTv.Services.Tests.csproj
