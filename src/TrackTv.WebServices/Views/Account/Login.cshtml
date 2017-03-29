@@ -1,8 +1,9 @@
 ﻿@using System.IO
 @using Microsoft.AspNetCore.Mvc.Razor
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using TrackTv.Models
 @model LoginViewModel
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Log in";

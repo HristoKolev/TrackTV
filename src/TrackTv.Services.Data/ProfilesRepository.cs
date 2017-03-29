@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Data;
-    using TrackTv.Models.Joint;
+    using TrackTv.Models;
     using TrackTv.Services.Data.Exceptions;
 
     public class ProfilesRepository : IProfilesRepository

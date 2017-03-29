@@ -1,8 +1,9 @@
 ﻿@using System.IO
 @using Microsoft.AspNetCore.Mvc.Razor
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@using TrackTv.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

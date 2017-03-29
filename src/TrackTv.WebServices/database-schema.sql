@@ -9,22 +9,22 @@ END;
 
 GO
 
-CREATE TABLE [AspNetRoles] (
+CREATE TABLE [Roles] (
     [Id] nvarchar(450) NOT NULL,
     [ConcurrencyStamp] nvarchar(max),
-    [Name] nvarchar(256),
-    [NormalizedName] nvarchar(256),
-    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+    [Name] nvarchar(max),
+    [NormalizedName] nvarchar(max),
+    CONSTRAINT [PK_Roles] PRIMARY KEY ([Id])
 );
 
 GO
 
-CREATE TABLE [AspNetUserTokens] (
-    [UserId] nvarchar(450) NOT NULL,
+CREATE TABLE [UserTokens] (
     [LoginProvider] nvarchar(450) NOT NULL,
     [Name] nvarchar(450) NOT NULL,
+    [UserId] nvarchar(450) NOT NULL,
     [Value] nvarchar(max),
-    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name])
+    CONSTRAINT [PK_UserTokens] PRIMARY KEY ([LoginProvider], [Name], [UserId])
 );
 
 GO
@@ -50,34 +50,41 @@ CREATE TABLE [OpenIddictScopes] (
 
 GO
 
-CREATE TABLE [AspNetUsers] (
-    [Id] nvarchar(450) NOT NULL,
-    [AccessFailedCount] int NOT NULL,
-    [ConcurrencyStamp] nvarchar(max),
-    [Email] nvarchar(256),
-    [EmailConfirmed] bit NOT NULL,
-    [LockoutEnabled] bit NOT NULL,
-    [LockoutEnd] datetimeoffset,
-    [NormalizedEmail] nvarchar(256),
-    [NormalizedUserName] nvarchar(256),
-    [PasswordHash] nvarchar(max),
-    [PhoneNumber] nvarchar(max),
-    [PhoneNumberConfirmed] bit NOT NULL,
-    [SecurityStamp] nvarchar(max),
-    [TwoFactorEnabled] bit NOT NULL,
-    [UserName] nvarchar(256),
-    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+CREATE TABLE [Actors] (
+    [Id] int NOT NULL IDENTITY,
+    [Image] nvarchar(255),
+    [LastUpdated] datetime2 NOT NULL,
+    [Name] nvarchar(255) NOT NULL,
+    [TheTvDbId] int NOT NULL,
+    CONSTRAINT [PK_Actors] PRIMARY KEY ([Id])
 );
 
 GO
 
-CREATE TABLE [AspNetRoleClaims] (
+CREATE TABLE [Genres] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(100) NOT NULL,
+    CONSTRAINT [PK_Genres] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Networks] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(40) NOT NULL,
+    CONSTRAINT [PK_Networks] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [RoleClaims] (
     [Id] int NOT NULL IDENTITY,
     [ClaimType] nvarchar(max),
     [ClaimValue] nvarchar(max),
-    [RoleId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+    [IdentityRoleId] nvarchar(450),
+    [RoleId] nvarchar(max),
+    CONSTRAINT [PK_RoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_RoleClaims_Roles_IdentityRoleId] FOREIGN KEY ([IdentityRoleId]) REFERENCES [Roles] ([Id]) ON DELETE NO ACTION
 );
 
 GO
@@ -93,34 +100,21 @@ CREATE TABLE [OpenIddictAuthorizations] (
 
 GO
 
-CREATE TABLE [AspNetUserClaims] (
+CREATE TABLE [Shows] (
     [Id] int NOT NULL IDENTITY,
-    [ClaimType] nvarchar(max),
-    [ClaimValue] nvarchar(max),
-    [UserId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
-);
-
-GO
-
-CREATE TABLE [AspNetUserLogins] (
-    [LoginProvider] nvarchar(450) NOT NULL,
-    [ProviderKey] nvarchar(450) NOT NULL,
-    [ProviderDisplayName] nvarchar(max),
-    [UserId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
-    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
-);
-
-GO
-
-CREATE TABLE [AspNetUserRoles] (
-    [UserId] nvarchar(450) NOT NULL,
-    [RoleId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
-    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+    [AirDay] int,
+    [AirTime] datetime2,
+    [Banner] nvarchar(255),
+    [Description] nvarchar(max),
+    [FirstAired] datetime2,
+    [ImdbId] nvarchar(10),
+    [LastUpdated] datetime2 NOT NULL,
+    [Name] nvarchar(255) NOT NULL,
+    [NetworkId] int NOT NULL,
+    [Status] int NOT NULL,
+    [TheTvDbId] int NOT NULL,
+    CONSTRAINT [PK_Shows] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Shows_Networks_NetworkId] FOREIGN KEY ([NetworkId]) REFERENCES [Networks] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -138,23 +132,130 @@ CREATE TABLE [OpenIddictTokens] (
 
 GO
 
-CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+CREATE TABLE [Episodes] (
+    [Id] int NOT NULL IDENTITY,
+    [Description] nvarchar(max),
+    [FirstAired] datetime2,
+    [ImdbId] nvarchar(10),
+    [LastUpdated] datetime2 NOT NULL,
+    [Number] int NOT NULL,
+    [SeasonNumber] int NOT NULL,
+    [ShowId] int NOT NULL,
+    [TheTvDbId] int NOT NULL,
+    [Title] nvarchar(255) NOT NULL,
+    CONSTRAINT [PK_Episodes] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Episodes_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
+);
 
 GO
 
-CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+CREATE TABLE [ShowsActors] (
+    [ShowId] int NOT NULL,
+    [ActorId] int NOT NULL,
+    [Role] nvarchar(255),
+    CONSTRAINT [PK_ShowsActors] PRIMARY KEY ([ShowId], [ActorId]),
+    CONSTRAINT [FK_ShowsActors_Actors_ActorId] FOREIGN KEY ([ActorId]) REFERENCES [Actors] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ShowsActors_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
+);
 
 GO
 
-CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+CREATE TABLE [ShowsGenres] (
+    [ShowId] int NOT NULL,
+    [GenreId] int NOT NULL,
+    CONSTRAINT [PK_ShowsGenres] PRIMARY KEY ([ShowId], [GenreId]),
+    CONSTRAINT [FK_ShowsGenres_Genres_GenreId] FOREIGN KEY ([GenreId]) REFERENCES [Genres] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ShowsGenres_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
+);
 
 GO
 
-CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+CREATE TABLE [UserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    [IdentityRoleId] nvarchar(450),
+    CONSTRAINT [PK_UserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_UserRoles_Roles_IdentityRoleId] FOREIGN KEY ([IdentityRoleId]) REFERENCES [Roles] ([Id]) ON DELETE NO ACTION
+);
 
 GO
 
-CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+CREATE TABLE [ShowsProfiles] (
+    [ProfileId] int NOT NULL,
+    [ShowId] int NOT NULL,
+    CONSTRAINT [PK_ShowsProfiles] PRIMARY KEY ([ProfileId], [ShowId]),
+    CONSTRAINT [FK_ShowsProfiles_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Users] (
+    [Id] nvarchar(450) NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    [ConcurrencyStamp] nvarchar(max),
+    [Email] nvarchar(max),
+    [EmailConfirmed] bit NOT NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset,
+    [NormalizedEmail] nvarchar(max),
+    [NormalizedUserName] nvarchar(max),
+    [PasswordHash] nvarchar(max),
+    [PhoneNumber] nvarchar(max),
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [ProfileId] int NOT NULL,
+    [SecurityStamp] nvarchar(max),
+    [TwoFactorEnabled] bit NOT NULL,
+    [UserName] nvarchar(max),
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [UserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max),
+    [ClaimValue] nvarchar(max),
+    [UserId] nvarchar(450),
+    CONSTRAINT [PK_UserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_UserClaims_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [UserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max),
+    [UserId] nvarchar(450),
+    CONSTRAINT [PK_UserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_UserLogins_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Profiles] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] nvarchar(450),
+    [Username] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Profiles] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Profiles_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_RoleClaims_IdentityRoleId] ON [RoleClaims] ([IdentityRoleId]);
+
+GO
+
+CREATE INDEX [IX_UserClaims_UserId] ON [UserClaims] ([UserId]);
+
+GO
+
+CREATE INDEX [IX_UserLogins_UserId] ON [UserLogins] ([UserId]);
+
+GO
+
+CREATE INDEX [IX_UserRoles_IdentityRoleId] ON [UserRoles] ([IdentityRoleId]);
 
 GO
 
@@ -174,16 +275,48 @@ CREATE INDEX [IX_OpenIddictTokens_AuthorizationId] ON [OpenIddictTokens] ([Autho
 
 GO
 
-CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+CREATE INDEX [IX_Episodes_ShowId] ON [Episodes] ([ShowId]);
 
 GO
 
-CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+CREATE INDEX [IX_Profiles_UserId] ON [Profiles] ([UserId]);
+
+GO
+
+CREATE INDEX [IX_Shows_NetworkId] ON [Shows] ([NetworkId]);
+
+GO
+
+CREATE INDEX [IX_ShowsActors_ActorId] ON [ShowsActors] ([ActorId]);
+
+GO
+
+CREATE INDEX [IX_ShowsGenres_GenreId] ON [ShowsGenres] ([GenreId]);
+
+GO
+
+CREATE INDEX [IX_ShowsProfiles_ShowId] ON [ShowsProfiles] ([ShowId]);
+
+GO
+
+CREATE INDEX [IX_Users_ProfileId] ON [Users] ([ProfileId]);
+
+GO
+
+ALTER TABLE [UserRoles] ADD CONSTRAINT [FK_UserRoles_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+
+GO
+
+ALTER TABLE [ShowsProfiles] ADD CONSTRAINT [FK_ShowsProfiles_Profiles_ProfileId] FOREIGN KEY ([ProfileId]) REFERENCES [Profiles] ([Id]) ON DELETE CASCADE;
+
+GO
+
+ALTER TABLE [Users] ADD CONSTRAINT [FK_Users_Profiles_ProfileId] FOREIGN KEY ([ProfileId]) REFERENCES [Profiles] ([Id]) ON DELETE CASCADE;
 
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20170305172004_Created', N'1.1.0-rtm-22752');
+VALUES (N'20170329201628_Created', N'1.1.1');
 
 GO
 

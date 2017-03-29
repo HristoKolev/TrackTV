@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Models.Joint
+﻿namespace TrackTv.Models
 {
     public class ShowsGenres
     {

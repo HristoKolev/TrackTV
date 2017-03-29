@@ -4,7 +4,6 @@ namespace TrackTv.Models
     using System.Collections.Generic;
 
     using TrackTv.Models.Contracts;
-    using TrackTv.Models.Joint;
 
     public class Actor : ITvDbRecord
     {

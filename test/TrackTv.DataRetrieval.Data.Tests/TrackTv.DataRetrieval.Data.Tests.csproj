@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TrackTv.Models\TrackTv.Models.csproj" />
     <ProjectReference Include="..\..\src\TrackTv.DataRetrieval.Data\TrackTv.DataRetrieval.Data.csproj" />
   </ItemGroup>
 

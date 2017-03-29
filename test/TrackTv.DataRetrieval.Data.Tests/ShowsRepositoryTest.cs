@@ -9,7 +9,6 @@
 
     using TrackTv.Data;
     using TrackTv.Models;
-    using TrackTv.Models.Joint;
 
     using Xunit;
 

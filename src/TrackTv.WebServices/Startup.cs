@@ -10,9 +10,17 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    using TrackTv.WebServices.Data;
-    using TrackTv.WebServices.Models;
+    using TrackTv.Data;
+    using TrackTv.Models;
     using TrackTv.WebServices.Services;
+
+    public class MyDbContext : TrackTvDbContext
+    {
+        public MyDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+    }
 
     public class Startup
     {
@@ -70,7 +78,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<MyDbContext>(options =>
             {
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
 
@@ -80,9 +88,7 @@
                 options.UseOpenIddict();
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
 
             // Configure Identity to use the same JWT claims as OpenIddict instead
             // of the legacy WS-Federation claims it uses by default (ClaimTypes),
@@ -98,7 +104,7 @@
             services.AddOpenIddict(options =>
             {
                 // Register the Entity Framework stores.
-                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
+                options.AddEntityFrameworkCoreStores<MyDbContext>();
 
                 // Register the ASP.NET Core MVC binder used by OpenIddict.
                 // Note: if you don't call this method, you won't be able to

@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using TrackTv.Models.Joint;
-
     public class Genre
     {
         public Genre(string name)

@@ -10,7 +10,6 @@
     using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
     using TrackTv.Models;
-    using TrackTv.Models.Joint;
 
     using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series;

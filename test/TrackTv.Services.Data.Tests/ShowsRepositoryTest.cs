@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using TrackTv.Models;
-    using TrackTv.Models.Joint;
     using TrackTv.Services.Data.Exceptions;
 
     using Xunit;

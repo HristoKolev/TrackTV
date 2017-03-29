@@ -5,7 +5,6 @@
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Models;
-    using TrackTv.Models.Joint;
     using TrackTv.Services.Data.Exceptions;
 
     using Xunit;

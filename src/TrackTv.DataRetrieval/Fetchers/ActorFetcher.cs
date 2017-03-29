@@ -7,7 +7,6 @@
 
     using TrackTv.DataRetrieval.Data;
     using TrackTv.Models;
-    using TrackTv.Models.Joint;
 
     using TvDbSharper.Clients.Series;
 

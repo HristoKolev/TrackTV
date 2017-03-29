@@ -6,7 +6,6 @@
 
     using TrackTv.Models.Contracts;
     using TrackTv.Models.Enums;
-    using TrackTv.Models.Joint;
 
     public class Show : ITvDbRecord
     {

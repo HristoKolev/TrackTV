@@ -15,19 +15,20 @@
 
     using OpenIddict.Core;
 
+    using TrackTv.Models;
     using TrackTv.WebServices.Models;
 
     public class AuthController : Controller
     {
-        public AuthController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
             this.SignInManager = signInManager;
             this.UserManager = userManager;
         }
 
-        private SignInManager<ApplicationUser> SignInManager { get; }
+        private SignInManager<User> SignInManager { get; }
 
-        private UserManager<ApplicationUser> UserManager { get; }
+        private UserManager<User> UserManager { get; }
 
         [HttpPost("~/connect/token")]
         [Produces("application/json")]
@@ -113,7 +114,7 @@
             });
         }
 
-        private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, ApplicationUser user)
+        private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, User user)
         {
             // Create a new ClaimsPrincipal containing the claims that
             // will be used to create an id_token, a token or a code.

@@ -1,20 +1,14 @@
 ﻿namespace TrackTv.Data
 {
-    using System;
-
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Models;
-    using TrackTv.Models.Joint;
 
-    public class TrackTvDbContext : DbContext
+    public class TrackTvDbContext : IdentityDbContext<User>
     {
         public TrackTvDbContext(DbContextOptions options)
             : base(options)
-        {
-        }
-
-        public TrackTvDbContext()
         {
         }
 
@@ -36,17 +30,6 @@
 
         public DbSet<ShowsProfiles> ShowsProfiles { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=.;Database=TrackTvDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
-                Console.WriteLine("Using hardcoded configuration!!!");
-            }
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             ConfigureManyToManyRelationships(builder);
@@ -56,6 +39,23 @@
 
         private static void ConfigureManyToManyRelationships(ModelBuilder builder)
         {
+            builder.Entity<IdentityUserRole<string>>().HasKey(role => new
+            {
+                role.UserId,
+                role.RoleId
+            });
+            builder.Entity<IdentityUserToken<string>>().HasKey(token => new
+            {
+                token.LoginProvider,
+                token.Name,
+                token.UserId
+            });
+            builder.Entity<IdentityUserLogin<string>>().HasKey(login => new
+            {
+                login.LoginProvider,
+                login.ProviderKey
+            });
+
             // ShowsProfiles
             builder.Entity<ShowsProfiles>().HasKey(t => new
             {

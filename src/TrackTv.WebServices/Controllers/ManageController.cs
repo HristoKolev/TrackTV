@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
+    using TrackTv.Models;
     using TrackTv.WebServices.Models;
     using TrackTv.WebServices.Models.ManageViewModels;
     using TrackTv.WebServices.Services;
@@ -16,8 +17,8 @@
     public class ManageController : Controller
     {
         public ManageController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
@@ -52,11 +53,11 @@
 
         private ILogger Logger { get; }
 
-        private SignInManager<ApplicationUser> SignInManager { get; }
+        private SignInManager<User> SignInManager { get; }
 
         private ISmsSender SmsSender { get; }
 
-        private UserManager<ApplicationUser> UserManager { get; }
+        private UserManager<User> UserManager { get; }
 
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
@@ -487,7 +488,7 @@
             }
         }
 
-        private Task<ApplicationUser> GetCurrentUserAsync()
+        private Task<User> GetCurrentUserAsync()
         {
             return this.UserManager.GetUserAsync(this.HttpContext.User);
         }
