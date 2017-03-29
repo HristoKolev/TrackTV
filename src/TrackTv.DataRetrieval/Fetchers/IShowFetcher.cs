@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    using TrackTv.Models;
+    using TrackTv.Data.Models;
 
     using TvDbSharper.Clients.Series.Json;
 

@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    using TrackTv.Models;
+    using TrackTv.Data.Models;
 
     public class TrackTvDbContext : IdentityDbContext<User>
     {
@@ -56,32 +56,21 @@
                 login.ProviderKey
             });
 
-            // ShowsProfiles
             builder.Entity<ShowsProfiles>().HasKey(t => new
             {
                 t.ProfileId,
                 t.ShowId
             });
-            builder.Entity<ShowsProfiles>().HasOne(t => t.Profile).WithMany(user => user.ShowsUsers).HasForeignKey(t => t.ProfileId);
-            builder.Entity<ShowsProfiles>().HasOne(t => t.Show).WithMany(show => show.ShowsUsers).HasForeignKey(t => t.ShowId);
-
-            // ShowsActors
             builder.Entity<ShowsActors>().HasKey(t => new
             {
                 t.ShowId,
                 t.ActorId
             });
-            builder.Entity<ShowsActors>().HasOne(t => t.Show).WithMany(show => show.ShowsActors).HasForeignKey(t => t.ShowId);
-            builder.Entity<ShowsActors>().HasOne(t => t.Actor).WithMany(actor => actor.ShowsActors).HasForeignKey(t => t.ActorId);
-
-            // ShowsGenres
             builder.Entity<ShowsGenres>().HasKey(t => new
             {
                 t.ShowId,
                 t.GenreId
             });
-            builder.Entity<ShowsGenres>().HasOne(t => t.Show).WithMany(show => show.ShowsGenres).HasForeignKey(t => t.ShowId);
-            builder.Entity<ShowsGenres>().HasOne(t => t.Genre).WithMany(genre => genre.ShowsGenres).HasForeignKey(t => t.GenreId);
         }
 
         private static void ConfigureProperties(ModelBuilder builder)

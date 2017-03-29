@@ -3,9 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
+    using TrackTv.Data.Models;
+    using TrackTv.Data.Models.Enums;
     using TrackTv.DataRetrieval.Data;
-    using TrackTv.Models;
-    using TrackTv.Models.Enums;
 
     using TvDbSharper.Clients.Series.Json;
     using TvDbSharper.Clients.Updates;

@@ -1,5 +1,7 @@
 ﻿namespace TrackTv.Models.Tests
 {
+    using TrackTv.Data.Models;
+
     using Xunit;
 
     public class ShowsGenresTest

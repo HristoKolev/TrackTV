@@ -6,10 +6,10 @@
     using System.Threading.Tasks;
 
     using TrackTv.Data;
+    using TrackTv.Data.Models;
+    using TrackTv.Data.Models.Contracts;
     using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
-    using TrackTv.Models;
-    using TrackTv.Models.Contracts;
 
     using TvDbSharper;
     using TvDbSharper.Clients.Updates;

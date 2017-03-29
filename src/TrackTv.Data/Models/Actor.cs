@@ -1,9 +1,9 @@
-namespace TrackTv.Models
+namespace TrackTv.Data.Models
 {
     using System;
     using System.Collections.Generic;
 
-    using TrackTv.Models.Contracts;
+    using TrackTv.Data.Models.Contracts;
 
     public class Actor : ITvDbRecord
     {

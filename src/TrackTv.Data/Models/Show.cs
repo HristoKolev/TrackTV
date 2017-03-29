@@ -1,11 +1,11 @@
-﻿namespace TrackTv.Models
+﻿namespace TrackTv.Data.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using TrackTv.Models.Contracts;
-    using TrackTv.Models.Enums;
+    using TrackTv.Data.Models.Contracts;
+    using TrackTv.Data.Models.Enums;
 
     public class Show : ITvDbRecord
     {

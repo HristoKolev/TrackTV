@@ -316,7 +316,7 @@ ALTER TABLE [Users] ADD CONSTRAINT [FK_Users_Profiles_ProfileId] FOREIGN KEY ([P
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20170329201628_Created', N'1.1.1');
+VALUES (N'20170329210303_Created', N'1.1.1');
 
 GO
 

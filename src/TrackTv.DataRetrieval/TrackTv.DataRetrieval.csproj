@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TrackTv.DataRetrieval.Data\TrackTv.DataRetrieval.Data.csproj" />
+    <PackageReference Include="TvDbSharper" Version="0.6.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="TvDbSharper" Version="0.6.1" />
+    <ProjectReference Include="..\TrackTv.Data\TrackTv.Data.csproj" />
   </ItemGroup>
 
 </Project>

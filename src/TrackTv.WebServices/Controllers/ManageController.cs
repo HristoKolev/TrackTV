@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
-    using TrackTv.Models;
+    using TrackTv.Data.Models;
     using TrackTv.WebServices.Models;
     using TrackTv.WebServices.Models.ManageViewModels;
     using TrackTv.WebServices.Services;

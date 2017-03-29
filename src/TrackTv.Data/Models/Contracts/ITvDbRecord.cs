@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Models.Contracts
+﻿namespace TrackTv.Data.Models.Contracts
 {
     using System;
 

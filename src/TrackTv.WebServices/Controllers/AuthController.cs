@@ -15,7 +15,7 @@
 
     using OpenIddict.Core;
 
-    using TrackTv.Models;
+    using TrackTv.Data.Models;
     using TrackTv.WebServices.Models;
 
     public class AuthController : Controller

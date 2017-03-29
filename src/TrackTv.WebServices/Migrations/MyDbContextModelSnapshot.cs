@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TrackTv.WebServices;
-using TrackTv.Models.Enums;
+using TrackTv.Data.Models.Enums;
 
 namespace TrackTv.WebServices.Migrations
 {
@@ -195,7 +195,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("OpenIddictTokens");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Actor", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Actor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -216,7 +216,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("Actors");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Episode", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Episode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -249,7 +249,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("Episodes");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Genre", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -263,7 +263,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Network", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Network", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -277,7 +277,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("Networks");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Profile", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -294,7 +294,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("Profiles");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Show", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Show", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -332,7 +332,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("Shows");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.ShowsActors", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.ShowsActors", b =>
                 {
                     b.Property<int>("ShowId");
 
@@ -348,7 +348,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("ShowsActors");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.ShowsGenres", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.ShowsGenres", b =>
                 {
                     b.Property<int>("ShowId");
 
@@ -361,7 +361,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("ShowsGenres");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.ShowsProfiles", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.ShowsProfiles", b =>
                 {
                     b.Property<int>("ProfileId");
 
@@ -374,7 +374,7 @@ namespace TrackTv.WebServices.Migrations
                     b.ToTable("ShowsProfiles");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.User", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -425,14 +425,14 @@ namespace TrackTv.WebServices.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TrackTv.Models.User")
+                    b.HasOne("TrackTv.Data.Models.User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TrackTv.Models.User")
+                    b.HasOne("TrackTv.Data.Models.User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId");
                 });
@@ -443,7 +443,7 @@ namespace TrackTv.WebServices.Migrations
                         .WithMany("Users")
                         .HasForeignKey("IdentityRoleId");
 
-                    b.HasOne("TrackTv.Models.User")
+                    b.HasOne("TrackTv.Data.Models.User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -467,71 +467,71 @@ namespace TrackTv.WebServices.Migrations
                         .HasForeignKey("AuthorizationId");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Episode", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Episode", b =>
                 {
-                    b.HasOne("TrackTv.Models.Show", "Show")
+                    b.HasOne("TrackTv.Data.Models.Show", "Show")
                         .WithMany("Episodes")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Profile", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Profile", b =>
                 {
-                    b.HasOne("TrackTv.Models.User", "User")
+                    b.HasOne("TrackTv.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("TrackTv.Models.Show", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.Show", b =>
                 {
-                    b.HasOne("TrackTv.Models.Network", "Network")
+                    b.HasOne("TrackTv.Data.Models.Network", "Network")
                         .WithMany("Shows")
                         .HasForeignKey("NetworkId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackTv.Models.ShowsActors", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.ShowsActors", b =>
                 {
-                    b.HasOne("TrackTv.Models.Actor", "Actor")
+                    b.HasOne("TrackTv.Data.Models.Actor", "Actor")
                         .WithMany("ShowsActors")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TrackTv.Models.Show", "Show")
+                    b.HasOne("TrackTv.Data.Models.Show", "Show")
                         .WithMany("ShowsActors")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackTv.Models.ShowsGenres", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.ShowsGenres", b =>
                 {
-                    b.HasOne("TrackTv.Models.Genre", "Genre")
+                    b.HasOne("TrackTv.Data.Models.Genre", "Genre")
                         .WithMany("ShowsGenres")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TrackTv.Models.Show", "Show")
+                    b.HasOne("TrackTv.Data.Models.Show", "Show")
                         .WithMany("ShowsGenres")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackTv.Models.ShowsProfiles", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.ShowsProfiles", b =>
                 {
-                    b.HasOne("TrackTv.Models.Profile", "Profile")
+                    b.HasOne("TrackTv.Data.Models.Profile", "Profile")
                         .WithMany("ShowsUsers")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TrackTv.Models.Show", "Show")
+                    b.HasOne("TrackTv.Data.Models.Show", "Show")
                         .WithMany("ShowsUsers")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackTv.Models.User", b =>
+            modelBuilder.Entity("TrackTv.Data.Models.User", b =>
                 {
-                    b.HasOne("TrackTv.Models.Profile", "Profile")
+                    b.HasOne("TrackTv.Data.Models.Profile", "Profile")
                         .WithMany()
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);

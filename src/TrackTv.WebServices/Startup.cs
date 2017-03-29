@@ -11,7 +11,7 @@
     using Microsoft.Extensions.Logging;
 
     using TrackTv.Data;
-    using TrackTv.Models;
+    using TrackTv.Data.Models;
     using TrackTv.WebServices.Services;
 
     public class MyDbContext : TrackTvDbContext

@@ -1,4 +1,4 @@
-namespace TrackTv.Models
+namespace TrackTv.Data.Models
 {
     public class ShowsActors
     {

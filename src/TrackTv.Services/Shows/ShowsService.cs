@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Models;
+    using TrackTv.Data.Models;
     using TrackTv.Services.Data;
     using TrackTv.Services.Data.Models;
     using TrackTv.Services.Shows.Models;

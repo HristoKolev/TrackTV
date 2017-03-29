@@ -5,10 +5,10 @@
 
     using NSubstitute;
 
+    using TrackTv.Data.Models;
+    using TrackTv.Data.Models.Enums;
     using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
-    using TrackTv.Models;
-    using TrackTv.Models.Enums;
 
     using TvDbSharper.Clients.Series.Json;
 

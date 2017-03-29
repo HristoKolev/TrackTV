@@ -4,8 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using TrackTv.Data.Models;
     using TrackTv.DataRetrieval.ClientExtensions;
-    using TrackTv.Models;
 
     using TvDbSharper.Clients.Episodes;
     using TvDbSharper.Clients.Episodes.Json;

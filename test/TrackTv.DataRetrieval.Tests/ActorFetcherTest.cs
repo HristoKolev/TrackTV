@@ -7,9 +7,9 @@
 
     using NSubstitute;
 
+    using TrackTv.Data.Models;
     using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
-    using TrackTv.Models;
 
     using TvDbSharper.BaseSchemas;
     using TvDbSharper.Clients.Series;

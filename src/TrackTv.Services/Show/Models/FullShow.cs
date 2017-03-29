@@ -2,7 +2,7 @@
 {
     using System;
 
-    using TrackTv.Models.Enums;
+    using TrackTv.Data.Models.Enums;
 
     public class FullShow
     {

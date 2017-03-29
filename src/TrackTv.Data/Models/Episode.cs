@@ -1,8 +1,8 @@
-﻿namespace TrackTv.Models
+﻿namespace TrackTv.Data.Models
 {
     using System;
 
-    using TrackTv.Models.Contracts;
+    using TrackTv.Data.Models.Contracts;
 
     public class Episode : ITvDbRecord
     {

@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using TrackTv.Data.Models;
     using TrackTv.DataRetrieval.Data;
-    using TrackTv.Models;
 
     using TvDbSharper.Clients.Series;
 

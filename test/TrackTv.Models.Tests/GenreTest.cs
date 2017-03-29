@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using TrackTv.Data.Models;
+
     using Xunit;
 
     public class GenreTest
