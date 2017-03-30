@@ -26,7 +26,7 @@
 
                 var service = new SubscriptionService(usersRepo);
 
-                await service.Subscribe(5, 8);
+                await service.Subscribe(5, 8).ConfigureAwait(false);
 
                 // Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
             }
@@ -38,7 +38,7 @@
 
             var context = new TrackTvDbContext(configurator.GetOptions());
 
-            await context.Database.MigrateAsync();
+            await context.Database.MigrateAsync().ConfigureAwait(false);
 
             configurator.AttachLogger<SqlLoggerProvider>(context);
 

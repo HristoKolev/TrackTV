@@ -6,10 +6,7 @@ namespace TrackTv.Configuration
 
     public class SqlLoggerProvider : ILoggerProvider
     {
-        public ILogger CreateLogger(string categoryName)
-        {
-            return new SqlLogger();
-        }
+        public ILogger CreateLogger(string categoryName) => new SqlLogger();
 
         public void Dispose()
         {
@@ -18,15 +15,9 @@ namespace TrackTv.Configuration
 
         private class SqlLogger : ILogger
         {
-            public IDisposable BeginScope<TState>(TState state)
-            {
-                return null;
-            }
+            public IDisposable BeginScope<TState>(TState state) => null;
 
-            public bool IsEnabled(LogLevel logLevel)
-            {
-                return true;
-            }
+            public bool IsEnabled(LogLevel logLevel) => true;
 
             public void Log<TState>(
                 LogLevel logLevel,

@@ -23,11 +23,11 @@
 
         private INetworkRepository NetworkRepository { get; }
 
-        public async Task PopulateShowAsync(Show show, Series data)
+        public Task PopulateShowAsync(Show show, Series data)
         {
             this.MapToShow(show, data);
 
-            await this.AddNetworkAsync(show, data.Network).ConfigureAwait(false);
+            return this.AddNetworkAsync(show, data.Network);
         }
 
         private async Task AddNetworkAsync(Show show, string networkName)

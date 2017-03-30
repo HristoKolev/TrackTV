@@ -62,7 +62,7 @@
 
             var fetcher = new ActorFetcher(repository, client);
 
-            await fetcher.PopulateActorsAsync(show);
+            await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
             var relationships = show.ShowsActors.ToArray();
 
@@ -121,7 +121,7 @@
 
             var fetcher = new ActorFetcher(repository, client);
 
-            await fetcher.PopulateActorsAsync(show);
+            await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
             var relationships = show.ShowsActors.ToArray();
 
@@ -174,7 +174,7 @@
 
             var fetcher = new ActorFetcher(repository, client);
 
-            await fetcher.PopulateActorsAsync(show);
+            await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
             var relationships = show.ShowsActors.ToArray();
 
@@ -237,9 +237,9 @@
             RigClient(client, show.TheTvDbId, actorsResponse);
 
             var fetcher = new ActorFetcher(repository, client);
-            await fetcher.PopulateActorsAsync(show);
+            await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
-            await client.Received().GetActorsAsync(show.TheTvDbId);
+            await client.Received().GetActorsAsync(show.TheTvDbId).ConfigureAwait(false);
         }
 
         [Fact]
@@ -290,9 +290,9 @@
             RigClient(client, show.TheTvDbId, actorsResponse);
 
             var fetcher = new ActorFetcher(repository, client);
-            await fetcher.PopulateActorsAsync(show);
+            await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
-            await repository.Received().GetActorsByTheTvDbIdsAsync(Arg.Is<int[]>(x => x.All(expectedIds.Contains)));
+            await repository.Received().GetActorsByTheTvDbIdsAsync(Arg.Is<int[]>(x => x.All(expectedIds.Contains))).ConfigureAwait(false);
         }
 
         [Fact]
@@ -344,7 +344,7 @@
 
             var fetcher = new ActorFetcher(repository, client);
 
-            await fetcher.PopulateActorsAsync(show);
+            await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
             Assert.Equal(response.Data.First().Role, show.ShowsActors.First().Role);
         }

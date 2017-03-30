@@ -39,38 +39,13 @@
 
         private static void ConfigureManyToManyRelationships(ModelBuilder builder)
         {
-            builder.Entity<IdentityUserRole<string>>().HasKey(role => new
-            {
-                role.UserId,
-                role.RoleId
-            });
-            builder.Entity<IdentityUserToken<string>>().HasKey(token => new
-            {
-                token.LoginProvider,
-                token.Name,
-                token.UserId
-            });
-            builder.Entity<IdentityUserLogin<string>>().HasKey(login => new
-            {
-                login.LoginProvider,
-                login.ProviderKey
-            });
+            builder.Entity<IdentityUserRole<string>>().HasKey(role => new { role.UserId, role.RoleId });
+            builder.Entity<IdentityUserToken<string>>().HasKey(token => new { token.LoginProvider, token.Name, token.UserId });
+            builder.Entity<IdentityUserLogin<string>>().HasKey(login => new { login.LoginProvider, login.ProviderKey });
 
-            builder.Entity<ShowsProfiles>().HasKey(t => new
-            {
-                t.ProfileId,
-                t.ShowId
-            });
-            builder.Entity<ShowsActors>().HasKey(t => new
-            {
-                t.ShowId,
-                t.ActorId
-            });
-            builder.Entity<ShowsGenres>().HasKey(t => new
-            {
-                t.ShowId,
-                t.GenreId
-            });
+            builder.Entity<ShowsProfiles>().HasKey(t => new { t.ProfileId, t.ShowId });
+            builder.Entity<ShowsActors>().HasKey(t => new { t.ShowId, t.ActorId });
+            builder.Entity<ShowsGenres>().HasKey(t => new { t.ShowId, t.GenreId });
         }
 
         private static void ConfigureProperties(ModelBuilder builder)

@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Tests.Data
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,7 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
+    using TrackTv.DataRetrieval.Data;
 
     using Xunit;
 
@@ -19,13 +20,13 @@
         {
             using (var context = CreateContext())
             {
-                await SeedEpisodesAsync(context);
+                await SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
                 int id = 2;
 
-                var episode = await repository.GetEpisodeById(id);
+                var episode = await repository.GetEpisodeById(id).ConfigureAwait(false);
 
                 Assert.Equal(id, episode.Id);
             }
@@ -38,13 +39,13 @@
         {
             using (var context = CreateContext())
             {
-                await SeedEpisodesAsync(context);
+                await SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
                 int id = 42;
 
-                var episode = await repository.GetEpisodeById(id);
+                var episode = await repository.GetEpisodeById(id).ConfigureAwait(false);
 
                 Assert.Null(episode);
             }
@@ -57,13 +58,13 @@
         {
             using (var context = CreateContext())
             {
-                await SeedEpisodesAsync(context);
+                await SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
                 int showId = 0;
 
-                var episodes = await repository.GetEpisodesByShowIdAsync(showId);
+                var episodes = await repository.GetEpisodesByShowIdAsync(showId).ConfigureAwait(false);
 
                 Assert.Equal(0, episodes.Length);
             }
@@ -76,13 +77,13 @@
         {
             using (var context = CreateContext())
             {
-                await SeedEpisodesAsync(context);
+                await SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
                 int showId = 100;
 
-                var episodes = await repository.GetEpisodesByShowIdAsync(showId);
+                var episodes = await repository.GetEpisodesByShowIdAsync(showId).ConfigureAwait(false);
 
                 Assert.Equal(1, episodes.Length);
 
@@ -97,11 +98,11 @@
         {
             using (var context = CreateContext())
             {
-                await SeedEpisodesAsync(context);
+                await SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
-                var episodes = await repository.GetEpisodesByTheTvDbIdsAsync(Array.Empty<int>());
+                var episodes = await repository.GetEpisodesByTheTvDbIdsAsync(Array.Empty<int>()).ConfigureAwait(false);
 
                 Assert.Equal(0, episodes.Length);
             }
@@ -114,7 +115,7 @@
         {
             using (var context = CreateContext())
             {
-                await SeedEpisodesAsync(context);
+                await SeedEpisodesAsync(context).ConfigureAwait(false);
 
                 var repository = new EpisodeRepository(context);
 
@@ -124,7 +125,7 @@
                     30
                 };
 
-                var episodes = await repository.GetEpisodesByTheTvDbIdsAsync(ids);
+                var episodes = await repository.GetEpisodesByTheTvDbIdsAsync(ids).ConfigureAwait(false);
 
                 Assert.Equal(ids.Length, episodes.Length);
 
@@ -155,7 +156,7 @@
             }
 
             context.Episodes.AddRange(episodes);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

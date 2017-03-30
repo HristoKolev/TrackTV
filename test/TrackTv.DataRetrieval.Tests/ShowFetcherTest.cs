@@ -36,9 +36,9 @@
 
             var show = new Show();
 
-            await fetcher.PopulateShowAsync(show, data);
+            await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
-            await repository.Received().GetNetworkByNameAsync(data.Network);
+            await repository.Received().GetNetworkByNameAsync(data.Network).ConfigureAwait(false);
 
             Assert.Equal(network, show.Network);
         }
@@ -61,9 +61,9 @@
 
             var show = new Show();
 
-            await fetcher.PopulateShowAsync(show, data);
+            await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
-            await repository.Received().GetNetworkByNameAsync(data.Network);
+            await repository.Received().GetNetworkByNameAsync(data.Network).ConfigureAwait(false);
 
             Assert.Equal(data.Network, show.Network.Name);
         }
@@ -91,7 +91,7 @@
 
             var show = new Show();
 
-            await fetcher.PopulateShowAsync(show, data);
+            await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
             Assert.Equal(data.Network, show.Network.Name);
             Assert.Equal(data.SeriesName, show.Name);
@@ -128,7 +128,7 @@
                 Network = network
             };
 
-            await fetcher.PopulateShowAsync(show, data);
+            await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
             Assert.Equal(network, show.Network);
         }
@@ -152,7 +152,7 @@
                 Network = network
             };
 
-            await fetcher.PopulateShowAsync(show, data);
+            await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
             Assert.Equal(data.Network, show.Network.Name);
         }

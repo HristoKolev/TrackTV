@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Tests.Data
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,7 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
+    using TrackTv.DataRetrieval.Data;
 
     using Xunit;
 
@@ -36,9 +37,9 @@
 
                 var show = CreateShow("Show1", 1000, network, genre, actor, user);
 
-                await repository.AddShowAsync(show);
+                await repository.AddShowAsync(show).ConfigureAwait(false);
 
-                var savedShow = await context.Shows.SingleOrDefaultAsync();
+                var savedShow = await context.Shows.SingleOrDefaultAsync().ConfigureAwait(false);
 
                 Assert.NotNull(savedShow);
 
@@ -54,11 +55,11 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new ShowsRepository(context);
 
-                var show = await repo.GetFullShowByIdAsync(2);
+                var show = await repo.GetFullShowByIdAsync(2).ConfigureAwait(false);
 
                 Assert.Equal("Show2", show.Name);
 
@@ -73,11 +74,11 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new ShowsRepository(context);
 
-                var show = await repo.GetFullShowByIdAsync(10000);
+                var show = await repo.GetFullShowByIdAsync(10000).ConfigureAwait(false);
 
                 Assert.Null(show);
             }
@@ -90,7 +91,7 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new ShowsRepository(context);
 
@@ -100,7 +101,7 @@
                     1004
                 };
 
-                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids);
+                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids).ConfigureAwait(false);
 
                 Assert.Equal(ids.Length, shows.Length);
 
@@ -120,11 +121,11 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new ShowsRepository(context);
 
-                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(Array.Empty<int>());
+                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(Array.Empty<int>()).ConfigureAwait(false);
 
                 Assert.Equal(0, shows.Length);
             }
@@ -137,7 +138,7 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new ShowsRepository(context);
 
@@ -145,7 +146,7 @@
                     999999999
                 };
 
-                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids);
+                var shows = await repo.GetFullShowsByTheTvDbIdsAsync(ids).ConfigureAwait(false);
 
                 Assert.Equal(0, shows.Length);
             }
@@ -173,7 +174,7 @@
 
                 context.Shows.Add(show);
 
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync().ConfigureAwait(false);
 
                 string newNetworkName = "CatWork";
                 var newNetwork = new Network(newNetworkName);
@@ -182,9 +183,9 @@
 
                 var repository = new ShowsRepository(context);
 
-                await repository.UpdateShowAsync(show);
+                await repository.UpdateShowAsync(show).ConfigureAwait(false);
 
-                var savedShow = await context.Shows.Include(s => s.Network).SingleOrDefaultAsync();
+                var savedShow = await context.Shows.Include(s => s.Network).SingleOrDefaultAsync().ConfigureAwait(false);
 
                 Assert.NotNull(savedShow);
 
@@ -214,7 +215,7 @@
 
                 context.Shows.Add(show);
 
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync().ConfigureAwait(false);
 
                 string newName = "New Name";
                 string newBanner = "New Banner";
@@ -226,9 +227,9 @@
 
                 var repository = new ShowsRepository(context);
 
-                await repository.UpdateShowAsync(show);
+                await repository.UpdateShowAsync(show).ConfigureAwait(false);
 
-                var savedShow = await context.Shows.SingleOrDefaultAsync();
+                var savedShow = await context.Shows.SingleOrDefaultAsync().ConfigureAwait(false);
 
                 Assert.NotNull(savedShow);
 
@@ -303,7 +304,7 @@
             }
 
             context.Shows.AddRange(shows);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

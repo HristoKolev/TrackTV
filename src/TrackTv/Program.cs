@@ -4,12 +4,8 @@
 
     public class Program
     {
-        public static void Main(string[] args) => new Program().MainAsync(args).GetAwaiter().GetResult();
+        private static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
 
-        public async Task MainAsync(string[] args)
-        {
-            // await new ServicesProgram().DoAsync();
-            await new DataEntryProgram().DoAsync().ConfigureAwait(false);
-        }
+        private static async Task MainAsync(string[] args) => await new DataEntryProgram().DoAsync().ConfigureAwait(false);
     }
 }

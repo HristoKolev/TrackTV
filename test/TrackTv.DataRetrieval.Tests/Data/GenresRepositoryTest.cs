@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Tests.Data
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,7 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
+    using TrackTv.DataRetrieval.Data;
 
     using Xunit;
 
@@ -18,7 +19,7 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new GenresRepository(context);
 
@@ -28,7 +29,7 @@
                     "crime1"
                 };
 
-                var genres = await repo.GetGenresByNamesAsync(names);
+                var genres = await repo.GetGenresByNamesAsync(names).ConfigureAwait(false);
 
                 Assert.Equal(0, genres.Length);
             }
@@ -41,11 +42,11 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new GenresRepository(context);
 
-                var genres = await repo.GetGenresByNamesAsync(Array.Empty<string>());
+                var genres = await repo.GetGenresByNamesAsync(Array.Empty<string>()).ConfigureAwait(false);
 
                 Assert.Equal(0, genres.Length);
             }
@@ -58,7 +59,7 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new GenresRepository(context);
 
@@ -68,7 +69,7 @@
                     "crime"
                 };
 
-                var genres = await repo.GetGenresByNamesAsync(names);
+                var genres = await repo.GetGenresByNamesAsync(names).ConfigureAwait(false);
 
                 Assert.Equal(names.Length, genres.Length);
 
@@ -94,7 +95,7 @@
             }
 
             context.Genres.AddRange(genres);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

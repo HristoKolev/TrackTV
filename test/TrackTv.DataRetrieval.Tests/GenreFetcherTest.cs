@@ -34,9 +34,9 @@
 
             var show = new Show();
 
-            await fetcher.PopulateGenresAsync(show, names);
+            await fetcher.PopulateGenresAsync(show, names).ConfigureAwait(false);
 
-            await genresRepository.Received().GetGenresByNamesAsync(names);
+            await genresRepository.Received().GetGenresByNamesAsync(names).ConfigureAwait(false);
 
             var relationships = show.ShowsGenres.ToArray();
 
@@ -73,9 +73,9 @@
 
             var show = new Show();
 
-            await fetcher.PopulateGenresAsync(show, names);
+            await fetcher.PopulateGenresAsync(show, names).ConfigureAwait(false);
 
-            await genresRepository.Received().GetGenresByNamesAsync(names);
+            await genresRepository.Received().GetGenresByNamesAsync(names).ConfigureAwait(false);
 
             var relationships = show.ShowsGenres.ToArray();
 
@@ -113,9 +113,9 @@
 
             var show = new Show();
 
-            await fetcher.PopulateGenresAsync(show, names);
+            await fetcher.PopulateGenresAsync(show, names).ConfigureAwait(false);
 
-            await genresRepository.Received().GetGenresByNamesAsync(names);
+            await genresRepository.Received().GetGenresByNamesAsync(names).ConfigureAwait(false);
 
             var relationships = show.ShowsGenres.ToArray();
 
@@ -148,9 +148,9 @@
 
             var show = new Show();
 
-            await fetcher.PopulateGenresAsync(show, names);
+            await fetcher.PopulateGenresAsync(show, names).ConfigureAwait(false);
 
-            await genresRepository.Received().GetGenresByNamesAsync(names);
+            await genresRepository.Received().GetGenresByNamesAsync(names).ConfigureAwait(false);
         }
 
         [Fact]
@@ -160,7 +160,9 @@
         {
             var fetcher = new GenreFetcher(Substitute.For<IGenresRepository>());
 
-            await Assert.ThrowsAsync<ArgumentException>(async () => await fetcher.PopulateGenresAsync(new Show(), Array.Empty<string>()));
+            await Assert.ThrowsAsync<ArgumentException>(
+                            async () => await fetcher.PopulateGenresAsync(new Show(), Array.Empty<string>()).ConfigureAwait(false))
+                        .ConfigureAwait(false);
         }
     }
 }

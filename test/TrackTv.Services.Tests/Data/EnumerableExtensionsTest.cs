@@ -1,7 +1,9 @@
-﻿namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Tests.Data
 {
     using System;
     using System.Linq;
+
+    using TrackTv.Services.Data;
 
     using Xunit;
 

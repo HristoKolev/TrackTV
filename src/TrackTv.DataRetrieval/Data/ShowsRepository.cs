@@ -37,7 +37,7 @@
             return this.FullShows().Where(x => theTvDbIds.Contains(x.TheTvDbId)).ToArrayAsync();
         }
 
-        public async Task UpdateShowAsync(Show show)
+        public Task UpdateShowAsync(Show show)
         {
             this.DbContext.ChangeTracker.TrackGraph(show, node =>
             {
@@ -48,7 +48,7 @@
                 node.Entry.State = id == default(int) ? EntityState.Added : EntityState.Modified;
             });
 
-            await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
+            return this.DbContext.SaveChangesAsync();
         }
 
         private IIncludableQueryable<Show, ICollection<Episode>> FullShows()

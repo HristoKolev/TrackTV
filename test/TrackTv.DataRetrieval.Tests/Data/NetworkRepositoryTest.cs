@@ -1,10 +1,11 @@
-﻿namespace TrackTv.DataRetrieval.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Tests.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
+    using TrackTv.DataRetrieval.Data;
 
     using Xunit;
 
@@ -17,13 +18,13 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new NetworkRepository(context);
 
                 const string Name = "bbc";
 
-                var network = await repo.GetNetworkByNameAsync(Name);
+                var network = await repo.GetNetworkByNameAsync(Name).ConfigureAwait(false);
 
                 Assert.Equal(Name, network.Name);
             }
@@ -36,13 +37,13 @@
         {
             using (var context = CreateContext())
             {
-                await SeedGenresAsync(context);
+                await SeedGenresAsync(context).ConfigureAwait(false);
 
                 var repo = new NetworkRepository(context);
 
                 const string Name = "bbc1";
 
-                var network = await repo.GetNetworkByNameAsync(Name);
+                var network = await repo.GetNetworkByNameAsync(Name).ConfigureAwait(false);
 
                 Assert.Null(network);
             }
@@ -61,7 +62,7 @@
             }
 
             context.Networks.AddRange(networks);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

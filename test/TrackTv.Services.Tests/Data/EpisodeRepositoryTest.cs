@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Tests.Data
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,7 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
+    using TrackTv.Services.Data;
 
     using Xunit;
 

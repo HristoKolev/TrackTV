@@ -1,10 +1,11 @@
-﻿namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Tests.Data
 {
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
     using TrackTv.Data.Models;
+    using TrackTv.Services.Data;
     using TrackTv.Services.Data.Exceptions;
 
     using Xunit;
@@ -27,14 +28,15 @@
                     Id = 2
                 });
 
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync().ConfigureAwait(false);
 
                 var repository = new ProfilesRepository(context);
 
-                await repository.AddSubscriptionAsync(2, 1);
+                await repository.AddSubscriptionAsync(2, 1).ConfigureAwait(false);
 
                 var relationship =
-                    await context.ShowsProfiles.FirstOrDefaultAsync(showsUsers => showsUsers.ShowId == 1 && showsUsers.ProfileId == 2);
+                    await context.ShowsProfiles.FirstOrDefaultAsync(showsUsers => showsUsers.ShowId == 1 && showsUsers.ProfileId == 2)
+                                 .ConfigureAwait(false);
 
                 Assert.NotNull(relationship);
             }
@@ -63,9 +65,10 @@
                 context.Profiles.Add(user);
                 context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
 
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync().ConfigureAwait(false);
 
-                await Assert.ThrowsAsync<SubscriptionException>(async () => await repository.AddSubscriptionAsync(2, 1));
+                await Assert.ThrowsAsync<SubscriptionException>(
+                    async () => await repository.AddSubscriptionAsync(2, 1).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
@@ -90,11 +93,11 @@
                 context.Profiles.Add(user);
                 context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
 
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync().ConfigureAwait(false);
 
                 var repository = new ProfilesRepository(context);
 
-                Assert.True(await repository.IsUserSubscribedAsync(2, 1));
+                Assert.True(await repository.IsUserSubscribedAsync(2, 1).ConfigureAwait(false));
             }
         }
 
@@ -107,7 +110,7 @@
             {
                 var repository = new ProfilesRepository(context);
 
-                Assert.False(await repository.IsUserSubscribedAsync(2, 1));
+                Assert.False(await repository.IsUserSubscribedAsync(2, 1).ConfigureAwait(false));
             }
         }
 
@@ -132,13 +135,13 @@
                 context.Profiles.Add(user);
                 context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
 
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync().ConfigureAwait(false);
 
                 var repository = new ProfilesRepository(context);
 
-                await repository.RemoveSubscriptionAsync(2, 1);
+                await repository.RemoveSubscriptionAsync(2, 1).ConfigureAwait(false);
 
-                Assert.Equal(0, await context.ShowsProfiles.CountAsync());
+                Assert.Equal(0, await context.ShowsProfiles.CountAsync().ConfigureAwait(false));
             }
         }
 
@@ -151,7 +154,8 @@
             {
                 var repository = new ProfilesRepository(context);
 
-                await Assert.ThrowsAsync<SubscriptionException>(async () => await repository.RemoveSubscriptionAsync(2, 1));
+                await Assert.ThrowsAsync<SubscriptionException>(
+                    async () => await repository.RemoveSubscriptionAsync(2, 1).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
     }

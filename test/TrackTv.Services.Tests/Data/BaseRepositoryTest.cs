@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Tests.Data
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;

@@ -59,7 +59,7 @@
 
             var context = new TrackTvDbContext(configurator.GetOptions());
 
-            await context.Database.MigrateAsync();
+            await context.Database.MigrateAsync().ConfigureAwait(false);
 
             configurator.AttachLogger<SqlLoggerProvider>(context);
 

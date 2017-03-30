@@ -1,10 +1,11 @@
-﻿namespace TrackTv.Services.Data.Tests
+﻿namespace TrackTv.Services.Tests.Data
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using TrackTv.Data.Models;
+    using TrackTv.Services.Data;
     using TrackTv.Services.Data.Exceptions;
 
     using Xunit;
@@ -64,7 +65,7 @@
 
                 var repository = new ShowsRepository(context);
 
-                Assert.Equal(5, await repository.CountAllResultsAsync("new show"));
+                Assert.Equal(5, await repository.CountAllResultsAsync("new show").ConfigureAwait(false));
             }
         }
 
@@ -181,7 +182,7 @@
                     3
                 };
 
-                var summaries = await repository.CountSubscribersAsync(showIds);
+                var summaries = await repository.CountSubscribersAsync(showIds).ConfigureAwait(false);
 
                 foreach (int showId in showIds)
                 {

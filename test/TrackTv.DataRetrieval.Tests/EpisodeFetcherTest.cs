@@ -66,7 +66,7 @@
 
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is(isIdsOfBasics)).Returns(episodeRecords);
 
-            await fetcher.AddAllEpisodesAsync(show);
+            await fetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
 
             Assert.Equal(basics.Length, show.Episodes.Count);
 
@@ -92,9 +92,9 @@
             advancedSeriesClient.GetBasicEpisodesAsync(show.TheTvDbId).Returns(Array.Empty<BasicEpisode>());
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is<IEnumerable<int>>(x => !x.Any())).Returns(Array.Empty<EpisodeRecord>());
 
-            await fetcher.AddAllEpisodesAsync(show);
+            await fetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
 
-            await advancedSeriesClient.Received().GetBasicEpisodesAsync(show.TheTvDbId);
+            await advancedSeriesClient.Received().GetBasicEpisodesAsync(show.TheTvDbId).ConfigureAwait(false);
         }
 
         [Fact]
@@ -135,9 +135,9 @@
 
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is(isIdsOfBasics)).Returns(Array.Empty<EpisodeRecord>());
 
-            await fetcher.AddAllEpisodesAsync(show);
+            await fetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
 
-            await advancedEpisodesClient.Received().GetFullEpisodesAsync(Arg.Is(isIdsOfBasics));
+            await advancedEpisodesClient.Received().GetFullEpisodesAsync(Arg.Is(isIdsOfBasics)).ConfigureAwait(false);
         }
 
         [Fact]
@@ -185,7 +185,7 @@
 
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is(isIdsOfBasics)).Returns(episodeRecords);
 
-            await fetcher.AddAllEpisodesAsync(show);
+            await fetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
 
             var record = episodeRecords.First();
             var episode = show.Episodes.First();
@@ -253,7 +253,7 @@
 
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is(isIdsOfBasicsExceptFirst)).Returns(episodeRecords);
 
-            await fetcher.AddNewEpisodesAsync(show);
+            await fetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
 
             Assert.Equal(basics.Length, show.Episodes.Count);
 
@@ -286,9 +286,9 @@
             advancedSeriesClient.GetBasicEpisodesAsync(show.TheTvDbId).Returns(Array.Empty<BasicEpisode>());
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is<IEnumerable<int>>(x => !x.Any())).Returns(Array.Empty<EpisodeRecord>());
 
-            await fetcher.AddNewEpisodesAsync(show);
+            await fetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
 
-            await advancedSeriesClient.Received().GetBasicEpisodesAsync(show.TheTvDbId);
+            await advancedSeriesClient.Received().GetBasicEpisodesAsync(show.TheTvDbId).ConfigureAwait(false);
         }
 
         [Fact]
@@ -336,9 +336,9 @@
 
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is(isIdsOfBasicsExceptFirst)).Returns(Array.Empty<EpisodeRecord>());
 
-            await fetcher.AddNewEpisodesAsync(show);
+            await fetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
 
-            await advancedEpisodesClient.Received().GetFullEpisodesAsync(Arg.Is(isIdsOfBasicsExceptFirst));
+            await advancedEpisodesClient.Received().GetFullEpisodesAsync(Arg.Is(isIdsOfBasicsExceptFirst)).ConfigureAwait(false);
         }
 
         [Fact]
@@ -397,7 +397,7 @@
 
             advancedEpisodesClient.GetFullEpisodesAsync(Arg.Is(isIdsOfBasicsExceptFirst)).Returns(episodeRecords);
 
-            await fetcher.AddNewEpisodesAsync(show);
+            await fetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
 
             var record = episodeRecords.First();
             var episode = show.Episodes.Skip(1).First();
@@ -440,9 +440,9 @@
 
             episodesClient.GetAsync(episode.TheTvDbId).Returns(response);
 
-            await fetcher.PopulateEpisodeAsync(episode);
+            await fetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
 
-            await episodesClient.Received().GetAsync(episode.TheTvDbId);
+            await episodesClient.Received().GetAsync(episode.TheTvDbId).ConfigureAwait(false);
         }
 
         [Fact]
@@ -477,7 +477,7 @@
 
             episodesClient.GetAsync(episode.TheTvDbId).Returns(response);
 
-            await fetcher.PopulateEpisodeAsync(episode);
+            await fetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
 
             var record = response.Data;
 

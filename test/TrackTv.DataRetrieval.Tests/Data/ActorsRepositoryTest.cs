@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval.Data.Tests
+﻿namespace TrackTv.DataRetrieval.Tests.Data
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,7 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
+    using TrackTv.DataRetrieval.Data;
 
     using Xunit;
 
@@ -18,7 +19,7 @@
         {
             using (var context = CreateContext())
             {
-                await SeedActorsAsync(context);
+                await SeedActorsAsync(context).ConfigureAwait(false);
 
                 var repository = new ActorsRepository(context);
 
@@ -28,7 +29,7 @@
                     3
                 };
 
-                var actors = await repository.GetActorsByTheTvDbIdsAsync(ids);
+                var actors = await repository.GetActorsByTheTvDbIdsAsync(ids).ConfigureAwait(false);
 
                 Assert.Equal(ids.Length, actors.Length);
 
@@ -46,11 +47,11 @@
         {
             using (var context = CreateContext())
             {
-                await SeedActorsAsync(context);
+                await SeedActorsAsync(context).ConfigureAwait(false);
 
                 var repository = new ActorsRepository(context);
 
-                var actors = await repository.GetActorsByTheTvDbIdsAsync(Array.Empty<int>());
+                var actors = await repository.GetActorsByTheTvDbIdsAsync(Array.Empty<int>()).ConfigureAwait(false);
 
                 Assert.Equal(0, actors.Length);
             }
@@ -74,7 +75,7 @@
             }
 
             context.Actors.AddRange(actors);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }
