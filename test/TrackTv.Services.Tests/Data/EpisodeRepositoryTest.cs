@@ -92,7 +92,7 @@
                         Id = i
                     };
 
-                    show.ShowsUsers.Add(new ShowsProfiles
+                    show.ShowsProfiles.Add(new ShowsProfiles
                     {
                         ProfileId = ReferenceProfileId
                     });

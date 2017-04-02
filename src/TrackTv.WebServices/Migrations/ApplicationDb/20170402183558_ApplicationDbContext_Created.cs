@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace TrackTv.WebServices.Migrations.AppDb
+namespace TrackTv.WebServices.Migrations.ApplicationDb
 {
-    public partial class AppDbContext_Created : Migration
+    public partial class ApplicationDbContext_Created : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,7 +57,6 @@ namespace TrackTv.WebServices.Migrations.AppDb
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -108,7 +107,7 @@ namespace TrackTv.WebServices.Migrations.AppDb
                     SeasonNumber = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false),
                     TheTvDbId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 255, nullable: false)
+                    Title = table.Column<string>(maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {

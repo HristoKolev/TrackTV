@@ -37,7 +37,7 @@
 
         public virtual ICollection<ShowsGenres> ShowsGenres { get; } = new List<ShowsGenres>();
 
-        public virtual ICollection<ShowsProfiles> ShowsUsers { get; } = new List<ShowsProfiles>();
+        public virtual ICollection<ShowsProfiles> ShowsProfiles { get; } = new List<ShowsProfiles>();
 
         public ShowStatus Status { get; set; }
 

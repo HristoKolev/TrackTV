@@ -19,12 +19,9 @@
 
         public async Task AddSubscriptionAsync(int profileId, int showId)
         {
-            var relationship =
-                await this.DbContext.ShowsProfiles.AsNoTracking()
-                          .SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId)
-                          .ConfigureAwait(false);
+            CheckInput(profileId, showId);
 
-            if (relationship != null)
+            if (await this.IsUserSubscribedAsync(profileId, showId).ConfigureAwait(false))
             {
                 throw new SubscriptionException($"The user is already subscribed to this show: (ProfileId={profileId}, ShowId={showId})");
             }
@@ -36,11 +33,15 @@
 
         public Task<bool> IsUserSubscribedAsync(int profileId, int showId)
         {
+            CheckInput(profileId, showId);
+
             return this.DbContext.ShowsProfiles.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
         }
 
         public async Task RemoveSubscriptionAsync(int profileId, int showId)
         {
+            CheckInput(profileId, showId);
+
             var relationship =
                 await this.DbContext.ShowsProfiles.SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId)
                           .ConfigureAwait(false);
@@ -54,6 +55,19 @@
             this.DbContext.ShowsProfiles.Remove(relationship);
 
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        private static void CheckInput(int profileId, int showId)
+        {
+            if (profileId == default(int))
+            {
+                throw new SubscriptionException("Invalid ProfileId.");
+            }
+
+            if (showId == default(int))
+            {
+                throw new SubscriptionException("Invalid ShowId.");
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
 
     using TrackTv.Data;
 
-    public class AppDbContext : TrackTvDbContext
+    public class ApplicationDbContext : TrackTvDbContext
     {
         /// <summary>
         /// The name of the connection string in the application config file.

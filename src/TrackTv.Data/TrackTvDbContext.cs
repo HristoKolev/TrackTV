@@ -67,7 +67,7 @@
             builder.Entity<Show>().Property(t => t.Banner).HasMaxLength(byte.MaxValue);
             builder.Entity<Show>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
 
-            builder.Entity<Episode>().Property(t => t.Title).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Episode>().Property(t => t.Title).HasMaxLength(byte.MaxValue);
             builder.Entity<Episode>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
 
             builder.Entity<Genre>().Property(t => t.Name).HasMaxLength(100).IsRequired();

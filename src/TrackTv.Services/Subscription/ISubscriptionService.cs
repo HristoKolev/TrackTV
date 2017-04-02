@@ -6,6 +6,6 @@
     {
         Task Subscribe(int profileId, int showId);
 
-        Task UnSubscribe(int profileId, int showId);
+        Task Unsubscribe(int profileId, int showId);
     }
 }

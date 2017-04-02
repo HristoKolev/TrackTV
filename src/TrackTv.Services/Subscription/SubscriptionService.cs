@@ -18,7 +18,7 @@
             return this.ProfilesRepository.AddSubscriptionAsync(profileId, showId);
         }
 
-        public Task UnSubscribe(int profileId, int showId)
+        public Task Unsubscribe(int profileId, int showId)
         {
             return this.ProfilesRepository.RemoveSubscriptionAsync(profileId, showId);
         }

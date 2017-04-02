@@ -244,7 +244,7 @@
             Assert.True(show.Episodes.Any());
             Assert.True(show.ShowsGenres.Any());
             Assert.True(show.ShowsActors.Any());
-            Assert.True(show.ShowsUsers.Any());
+            Assert.True(show.ShowsProfiles.Any());
         }
 
         private static Show CreateShow(string name, int theTvDbId, Network network, Genre genre, Actor actor, Profile profile)
@@ -263,7 +263,7 @@
                         Actor = actor
                     }
                 },
-                ShowsUsers = {
+                ShowsProfiles = {
                     new ShowsProfiles
                     {
                         Profile = profile

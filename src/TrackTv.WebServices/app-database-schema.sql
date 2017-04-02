@@ -38,7 +38,6 @@ GO
 
 CREATE TABLE [Profiles] (
     [Id] int NOT NULL IDENTITY,
-    [UserId] nvarchar(max),
     [Username] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Profiles] PRIMARY KEY ([Id])
 );
@@ -74,7 +73,7 @@ CREATE TABLE [Episodes] (
     [SeasonNumber] int NOT NULL,
     [ShowId] int NOT NULL,
     [TheTvDbId] int NOT NULL,
-    [Title] nvarchar(255) NOT NULL,
+    [Title] nvarchar(255),
     CONSTRAINT [PK_Episodes] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Episodes_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
 );
@@ -133,7 +132,7 @@ CREATE INDEX [IX_ShowsProfiles_ShowId] ON [ShowsProfiles] ([ShowId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20170402112112_AppDbContext_Created', N'1.1.1');
+VALUES (N'20170402183558_ApplicationDbContext_Created', N'1.1.1');
 
 GO
 

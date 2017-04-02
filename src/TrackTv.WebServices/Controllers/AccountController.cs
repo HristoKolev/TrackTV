@@ -319,7 +319,8 @@
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    ProfileId = 1
                 };
                 var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
 

@@ -67,6 +67,11 @@
             {
                 var episode = new Episode();
 
+                if (!record.AiredSeason.HasValue)
+                {
+                    continue;
+                }
+
                 this.MapToEpisode(episode, record);
 
                 show.Episodes.Add(episode);

@@ -37,7 +37,7 @@
                 await fetcher.AddShowAsync(292124).ConfigureAwait(false);
                 await fetcher.AddShowAsync(296762).ConfigureAwait(false);
 
-                await fetcher.UpdateShowAsync(2).ConfigureAwait(false);
+                await fetcher.UpdateShowAsync(1).ConfigureAwait(false);
                 await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19)).ConfigureAwait(false);
             }
         }

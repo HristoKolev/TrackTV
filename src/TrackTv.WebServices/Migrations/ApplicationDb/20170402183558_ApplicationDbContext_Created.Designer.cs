@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using TrackTv.WebServices.Infrastructure;
 using TrackTv.Data.Models.Enums;
 
-namespace TrackTv.WebServices.Migrations.AppDb
+namespace TrackTv.WebServices.Migrations.ApplicationDb
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20170402112112_AppDbContext_Created")]
-    partial class AppDbContext_Created
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20170402183558_ApplicationDbContext_Created")]
+    partial class ApplicationDbContext_Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,7 +62,6 @@ namespace TrackTv.WebServices.Migrations.AppDb
                     b.Property<int>("TheTvDbId");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.HasKey("Id");
@@ -104,8 +103,6 @@ namespace TrackTv.WebServices.Migrations.AppDb
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("UserId");
 
                     b.Property<string>("Username")
                         .IsRequired();
@@ -240,12 +237,12 @@ namespace TrackTv.WebServices.Migrations.AppDb
             modelBuilder.Entity("TrackTv.Data.Models.ShowsProfiles", b =>
                 {
                     b.HasOne("TrackTv.Data.Models.Profile", "Profile")
-                        .WithMany("ShowsUsers")
+                        .WithMany("ShowsProfiles")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TrackTv.Data.Models.Show", "Show")
-                        .WithMany("ShowsUsers")
+                        .WithMany("ShowsProfiles")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

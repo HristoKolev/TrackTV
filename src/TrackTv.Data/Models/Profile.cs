@@ -6,9 +6,7 @@ namespace TrackTv.Data.Models
     {
         public int Id { get; set; }
 
-        public virtual ICollection<ShowsProfiles> ShowsUsers { get; } = new List<ShowsProfiles>();
-
-        public string UserId { get; set; }
+        public virtual ICollection<ShowsProfiles> ShowsProfiles { get; } = new List<ShowsProfiles>();
 
         public string Username { get; set; }
     }

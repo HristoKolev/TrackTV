@@ -194,9 +194,9 @@
         {
             var show = new Show();
 
-            Assert.NotNull(show.ShowsUsers);
+            Assert.NotNull(show.ShowsProfiles);
 
-            Assert.IsType<List<ShowsProfiles>>(show.ShowsUsers);
+            Assert.IsType<List<ShowsProfiles>>(show.ShowsProfiles);
         }
     }
 }

@@ -32,7 +32,7 @@
 
             var service = CreateService(repo);
 
-            service.UnSubscribe(1, 2);
+            service.Unsubscribe(1, 2);
 
             repo.Received().RemoveSubscriptionAsync(1, 2);
         }

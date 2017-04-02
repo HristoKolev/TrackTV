@@ -1,11 +1,15 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
-    using System.Security.Claims;
+    using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.Services.Subscription;
+    using TrackTv.WebServices.Infrastructure;
 
+    [Authorize]
+    [Route("api/[controller]")]
     public class SubscriptionController : Controller
     {
         public SubscriptionController(ISubscriptionService subscriptionService)
@@ -15,20 +19,23 @@
 
         private ISubscriptionService SubscriptionService { get; }
 
-        [HttpPut]
-        public ActionResult Put()
+        [HttpPut("{showId:int}")]
+        public async Task<ActionResult> Put(int showId)
         {
-            string userId = this.User.FindFirstValue("sub");
+            int profileId = this.User.GetProfileId();
 
-            // try
-            // {
-            // this.SubscriptionService.Subscribe()
-            // }
-            // catch (Exception exception)
-            // {
-            // Console.WriteLine(exception);
-            // throw;
-            // }
+            await this.SubscriptionService.Subscribe(profileId, showId).ConfigureAwait(false);
+
+            return this.Ok();
+        }
+
+        [HttpDelete("{showId:int}")]
+        public async Task<ActionResult> Delete(int showId)
+        {
+            int profileId = this.User.GetProfileId();
+
+            await this.SubscriptionService.Unsubscribe(profileId, showId).ConfigureAwait(false);
+
             return this.Ok();
         }
     }

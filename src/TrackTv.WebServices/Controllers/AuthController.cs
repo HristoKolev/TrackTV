@@ -2,6 +2,8 @@
 {
     using System.Diagnostics;
     using System.Linq;
+    using System.Security.Claims;
+    using System.Security.Principal;
     using System.Threading.Tasks;
 
     using AspNet.Security.OpenIdConnect.Extensions;
@@ -113,11 +115,20 @@
             });
         }
 
+        private static void AddCustomClaims(ApplicationUser user, IPrincipal principal)
+        {
+            var identity = (ClaimsIdentity)principal.Identity;
+
+            identity.AddClaim(new Claim(nameof(user.ProfileId), user.ProfileId.ToString()));
+        }
+
         private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, ApplicationUser user)
         {
             // Create a new ClaimsPrincipal containing the claims that
             // will be used to create an id_token, a token or a code.
             var principal = await this.SignInManager.CreateUserPrincipalAsync(user).ConfigureAwait(false);
+
+            AddCustomClaims(user, principal);
 
             // Note: by default, claims are NOT automatically included in the access and identity tokens.
             // To allow OpenIddict to serialize them, you must attach them a destination, that specifies
