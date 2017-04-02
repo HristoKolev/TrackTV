@@ -5,11 +5,13 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using TrackTv.Services.Data.Exceptions;
     using TrackTv.Services.Subscription;
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
     [Route("api/[controller]")]
+    [HandleException(typeof(SubscriptionException))]
     public class SubscriptionController : Controller
     {
         public SubscriptionController(ISubscriptionService subscriptionService)
