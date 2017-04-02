@@ -14,7 +14,6 @@
     using TrackTv.Services.Data;
     using TrackTv.Services.Subscription;
     using TrackTv.WebServices.Infrastructure;
-    using TrackTv.WebServices.Services;
 
     public class Startup
     {
@@ -75,10 +74,6 @@
             this.ConfigureAuth(services);
 
             services.AddMvc();
-
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddTransient<ISubscriptionService, SubscriptionService>();
             services.AddTransient<IProfilesRepository, ProfilesRepository>();

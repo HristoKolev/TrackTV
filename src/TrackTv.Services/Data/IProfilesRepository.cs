@@ -9,5 +9,9 @@
         Task<bool> IsUserSubscribedAsync(int profileId, int showId);
 
         Task RemoveSubscriptionAsync(int profileId, int showId);
+
+        Task<int> CreateProfile(string username);
+
+        Task DeleteProfile(int profileId);
     }
 }

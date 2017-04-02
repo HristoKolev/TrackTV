@@ -19,12 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="wwwroot\**\*">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TrackTv.Data\TrackTv.Data.csproj" />
     <ProjectReference Include="..\TrackTv.Services\TrackTv.Services.csproj" />
   </ItemGroup>

@@ -3,7 +3,7 @@
     using System;
     using System.Security.Claims;
 
-    public static class PrintipalExtensions
+    public static class PrincipalExtensions
     {
         /// <summary>
         /// Returns the ProfileId of the current authenticated user.

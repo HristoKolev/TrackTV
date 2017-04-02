@@ -18,16 +18,23 @@
 
     using OpenIddict.Core;
 
+    using TrackTv.Services.Data;
     using TrackTv.WebServices.Infrastructure;
 
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        public AuthController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public AuthController(
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IProfilesRepository profilesRepository)
         {
             this.SignInManager = signInManager;
             this.UserManager = userManager;
+            this.ProfilesRepository = profilesRepository;
         }
+
+        private IProfilesRepository ProfilesRepository { get; }
 
         private SignInManager<ApplicationUser> SignInManager { get; }
 
@@ -125,11 +132,13 @@
                 return this.BadRequest(this.ModelState);
             }
 
+            int profileId = await this.ProfilesRepository.CreateProfile(model.Email).ConfigureAwait(false);
+
             var user = new ApplicationUser
             {
                 UserName = model.Email,
                 Email = model.Email,
-                ProfileId = 1
+                ProfileId = profileId
             };
             var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
 
@@ -137,6 +146,8 @@
             {
                 return this.Ok();
             }
+
+            await this.ProfilesRepository.DeleteProfile(profileId).ConfigureAwait(false);
 
             return this.BadRequest(result.Errors);
         }

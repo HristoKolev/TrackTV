@@ -31,6 +31,26 @@
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task<int> CreateProfile(string username)
+        {
+            var profile = new Profile(username);
+
+            this.DbContext.Profiles.Add(profile);
+
+            await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
+
+            return profile.Id;
+        }
+
+        public Task DeleteProfile(int profileId)
+        {
+            var profile = this.DbContext.Profiles.Find(profileId);
+
+            this.DbContext.Profiles.Remove(profile);
+
+            return this.DbContext.SaveChangesAsync();
+        }
+
         public Task<bool> IsUserSubscribedAsync(int profileId, int showId)
         {
             CheckInput(profileId, showId);
