@@ -1,5 +1,6 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
     using System.Linq;
     using System.Security.Claims;
@@ -19,6 +20,7 @@
 
     using TrackTv.WebServices.Infrastructure;
 
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         public AuthController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
@@ -115,6 +117,30 @@
             });
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                ProfileId = 1
+            };
+            var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+
+            if (result.Succeeded)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest(result.Errors);
+        }
+
         private static void AddCustomClaims(ApplicationUser user, IPrincipal principal)
         {
             var identity = (ClaimsIdentity)principal.Identity;
@@ -161,5 +187,16 @@
 
             return ticket;
         }
+    }
+
+    public class RegisterViewModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        public string Password { get; set; }
     }
 }
