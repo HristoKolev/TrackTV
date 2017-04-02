@@ -2,8 +2,9 @@
 @using Microsoft.AspNetCore.Mvc.Razor
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
 @using TrackTv.Data.Models
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@using TrackTv.WebServices.Infrastructure
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

@@ -1,7 +1,6 @@
 namespace TrackTv.Data.Models
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Profile
     {
@@ -9,9 +8,6 @@ namespace TrackTv.Data.Models
 
         public virtual ICollection<ShowsProfiles> ShowsUsers { get; } = new List<ShowsProfiles>();
 
-        public User User { get; set; }
-
-        [ForeignKey("User")]
         public string UserId { get; set; }
 
         public string Username { get; set; }

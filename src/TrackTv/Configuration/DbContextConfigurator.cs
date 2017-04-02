@@ -23,9 +23,9 @@
             loggerFactory.AddProvider(Activator.CreateInstance<T>());
         }
 
-        public DbContextOptions GetOptions()
+        public DbContextOptions<TrackTvDbContext> GetOptions()
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
+            var optionsBuilder = new DbContextOptionsBuilder<TrackTvDbContext>();
 
             var appSettings = ReadConfig<AppSettings>("appsettings.json");
 

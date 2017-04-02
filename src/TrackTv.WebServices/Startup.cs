@@ -10,17 +10,10 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    using TrackTv.Data;
-    using TrackTv.Data.Models;
+    using TrackTv.Services.Data;
+    using TrackTv.Services.Subscription;
+    using TrackTv.WebServices.Infrastructure;
     using TrackTv.WebServices.Services;
-
-    public class MyDbContext : TrackTvDbContext
-    {
-        public MyDbContext(DbContextOptions options)
-            : base(options)
-        {
-        }
-    }
 
     public class Startup
     {
@@ -39,6 +32,7 @@
 
             builder.AddEnvironmentVariables();
             this.Configuration = builder.Build();
+            Global.AppConfig = this.Configuration;
         }
 
         private IConfigurationRoot Configuration { get; }
@@ -77,8 +71,24 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this.ConfigureAuth(services);
+
+            services.AddMvc();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
+            services.AddTransient<IProfilesRepository, ProfilesRepository>();
+
+            services.AddScoped<AppDbContext>();
+        }
+
+        private void ConfigureAuth(IServiceCollection services)
+        {
             // Add framework services.
-            services.AddDbContext<MyDbContext>(options =>
+            services.AddDbContext<AuthContext>(options =>
             {
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
 
@@ -88,7 +98,7 @@
                 options.UseOpenIddict();
             });
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AuthContext>().AddDefaultTokenProviders();
 
             // Configure Identity to use the same JWT claims as OpenIddict instead
             // of the legacy WS-Federation claims it uses by default (ClaimTypes),
@@ -104,7 +114,7 @@
             services.AddOpenIddict(options =>
             {
                 // Register the Entity Framework stores.
-                options.AddEntityFrameworkCoreStores<MyDbContext>();
+                options.AddEntityFrameworkCoreStores<AuthContext>();
 
                 // Register the ASP.NET Core MVC binder used by OpenIddict.
                 // Note: if you don't call this method, you won't be able to
@@ -125,12 +135,6 @@
                 // options.UseJsonWebTokens();
                 // options.AddEphemeralSigningKey();
             });
-
-            services.AddMvc();
-
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
         }
     }
 }

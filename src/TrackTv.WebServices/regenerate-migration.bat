@@ -1,5 +1,11 @@
-del Migrations\* /q
-del database-schema.sql
+del Migrations\** /q
+del Migrations\AppDb\* /q
 
-dotnet ef migrations add "Created"
-dotnet ef migrations script -o "database-schema.sql"
+del auth-database-schema.sql
+del app-database-schema.sql
+
+dotnet ef migrations add -c AuthContext "AuthContext_Created"
+dotnet ef migrations script -c AuthContext -o "auth-database-schema.sql"
+
+dotnet ef migrations add -c AppDbContext "AppDbContext_Created"
+dotnet ef migrations script -c AppDbContext -o "app-database-schema.sql"

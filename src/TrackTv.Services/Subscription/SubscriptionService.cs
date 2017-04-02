@@ -4,7 +4,7 @@
 
     using TrackTv.Services.Data;
 
-    public class SubscriptionService
+    public class SubscriptionService : ISubscriptionService
     {
         public SubscriptionService(IProfilesRepository profilesRepository)
         {

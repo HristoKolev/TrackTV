@@ -10,8 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Logging;
 
-    using TrackTv.Data.Models;
-    using TrackTv.WebServices.Models;
+    using TrackTv.WebServices.Infrastructure;
     using TrackTv.WebServices.Models.AccountViewModels;
     using TrackTv.WebServices.Services;
 
@@ -19,8 +18,8 @@
     public class AccountController : Controller
     {
         public AccountController(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
@@ -36,11 +35,11 @@
 
         private ILogger Logger { get; }
 
-        private SignInManager<User> SignInManager { get; }
+        private SignInManager<ApplicationUser> SignInManager { get; }
 
         private ISmsSender SmsSender { get; }
 
-        private UserManager<User> UserManager { get; }
+        private UserManager<ApplicationUser> UserManager { get; }
 
         // GET: /Account/ConfirmEmail
         [HttpGet]
@@ -153,7 +152,7 @@
                     return this.View("ExternalLoginFailure");
                 }
 
-                var user = new User
+                var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email
@@ -317,7 +316,7 @@
 
             if (this.ModelState.IsValid)
             {
-                var user = new User
+                var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email
@@ -533,7 +532,7 @@
             }
         }
 
-        private Task<User> GetCurrentUserAsync()
+        private Task<ApplicationUser> GetCurrentUserAsync()
         {
             return this.UserManager.GetUserAsync(this.HttpContext.User);
         }
