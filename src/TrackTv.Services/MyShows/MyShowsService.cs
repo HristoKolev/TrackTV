@@ -10,7 +10,7 @@
     using TrackTv.Services.Data.Models;
     using TrackTv.Services.MyShows.Models;
 
-    public class MyShowsService
+    public class MyShowsService : IMyShowsService
     {
         public MyShowsService(IShowsRepository showsRepository, IEpisodeRepository episodeRepository)
         {
