@@ -16,19 +16,8 @@
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder =
-                new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
-                                          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+            this.Configuration = BuildConfigurations(env);
 
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets<Startup>();
-            }
-
-            builder.AddEnvironmentVariables();
-            this.Configuration = builder.Build();
             Global.AppConfig = this.Configuration;
         }
 
@@ -44,7 +33,6 @@
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -75,6 +63,18 @@
             var module = new ContainerModule();
 
             module.Register(services);
+        }
+
+        private static IConfigurationRoot BuildConfigurations(IHostingEnvironment env)
+        {
+            var builder =
+                new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
+                                          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            builder.AddEnvironmentVariables();
+
+            return builder.Build();
         }
 
         private void ConfigureAuth(IServiceCollection services)
