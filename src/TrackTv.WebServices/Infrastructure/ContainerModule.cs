@@ -1,9 +1,11 @@
 ﻿namespace TrackTv.WebServices.Infrastructure
 {
+    using System.Globalization;
+
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     using TrackTv.Data;
+    using TrackTv.Services.Calendar;
     using TrackTv.Services.Data;
     using TrackTv.Services.MyShows;
     using TrackTv.Services.Show;
@@ -23,7 +25,11 @@
             services.AddTransient<IShowService, ShowService>();
 
             services.AddTransient<IEpisodeRepository, EpisodeRepository>();
-            services.TryAddTransient<IMyShowsService, MyShowsService>();
+            services.AddTransient<IMyShowsService, MyShowsService>();
+
+            services.AddTransient<Calendar, GregorianCalendar>();
+            services.AddTransient<IEpisodeCalendar, EpisodeCalendar>();
+            services.AddTransient<ICalendarService, CalendarService>();
 
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<TrackTvDbContext, ApplicationDbContext>();

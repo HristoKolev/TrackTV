@@ -5,7 +5,7 @@
 
     using TrackTv.Services.Calendar.Models;
 
-    public class CalendarService
+    public class CalendarService : ICalendarService
     {
         public CalendarService(IEpisodeCalendar episodeCalendar)
         {
