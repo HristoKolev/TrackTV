@@ -39,13 +39,19 @@
             return this.DbContext.ShowsGenres.Where(x => x.Genre.Name.ToLower() == genreName.ToLower()).CountAsync();
         }
 
-        public Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
+        public async Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
         {
-            return this.DbContext.Shows.Where(x => showIds.Contains(x.Id)).Select(x => new SubscriberSummary
+            var summaries = await this.DbContext.Shows.Where(x => showIds.Contains(x.Id)).Select(x => new
             {
                 ShowId = x.Id,
-                SubscriberCount = x.ShowsProfiles.Count
-            }).ToArrayAsync();
+                SubscriberCount = x.ShowsProfiles.Count()
+            }).ToArrayAsync().ConfigureAwait(false);
+
+            return summaries.Select(s => new SubscriberSummary
+            {
+                ShowId = s.ShowId,
+                SubscriberCount = s.SubscriberCount
+            }).ToArray();
         }
 
         public Task<Show[]> GetShowsByProfileIdAsync(int profileId)
@@ -61,7 +67,10 @@
         public Task<Show[]> GetTopAsync(int page, int pageSize)
         {
             return
-                this.DbContext.Shows.AsNoTracking().OrderByDescending(show => show.ShowsProfiles.Count()).Page(page, pageSize).ToArrayAsync();
+                this.DbContext.Shows.AsNoTracking()
+                    .OrderByDescending(show => show.ShowsProfiles.Count())
+                    .Page(page, pageSize)
+                    .ToArrayAsync();
         }
 
         public Task<Show[]> GetTopByGenreAsync(string genreName, int page, int pageSize)

@@ -9,7 +9,7 @@
     using TrackTv.Services.Data.Models;
     using TrackTv.Services.Shows.Models;
 
-    public class ShowsService
+    public class ShowsService : IShowsService
     {
         private const int DefaultPageSize = 50;
 

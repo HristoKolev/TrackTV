@@ -1,10 +1,14 @@
 namespace TrackTv.WebServices.Infrastructure
 {
     using System;
+    using System.Reflection;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
+    /// <summary>
+    /// Catches errors and wraps them in an <see cref="ErrorModel"/> that gets returned from the action with status code of 400.
+    /// </summary>
     public class HandleExceptionAttribute : ExceptionFilterAttribute
     {
         public HandleExceptionAttribute(Type exceptionType)
@@ -16,7 +20,7 @@ namespace TrackTv.WebServices.Infrastructure
 
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception.GetType() == this.ExceptionType)
+            if (this.ExceptionType.IsInstanceOfType(context.Exception))
             {
                 context.Result = new BadRequestObjectResult(new ErrorModel
                 {

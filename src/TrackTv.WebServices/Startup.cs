@@ -10,9 +10,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    using TrackTv.Data;
-    using TrackTv.Services.Data;
-    using TrackTv.Services.Subscription;
     using TrackTv.WebServices.Infrastructure;
 
     public class Startup
@@ -75,11 +72,9 @@
 
             services.AddMvc();
 
-            services.AddTransient<ISubscriptionService, SubscriptionService>();
-            services.AddTransient<IProfilesRepository, ProfilesRepository>();
+            var module = new ContainerModule();
 
-            services.AddScoped<ApplicationDbContext>();
-            services.AddScoped<TrackTvDbContext, ApplicationDbContext>();
+            module.Register(services);
         }
 
         private void ConfigureAuth(IServiceCollection services)

@@ -9,8 +9,8 @@
             this.TotalCount = totalCount;
         }
 
-        public int TotalCount { get; set; }
+        public T Data { get; set; }
 
-        private T Data { get; set; }
+        public int TotalCount { get; set; }
     }
 }
