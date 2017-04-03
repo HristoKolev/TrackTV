@@ -4,6 +4,7 @@
 
     using TrackTv.Data;
     using TrackTv.Services.Data;
+    using TrackTv.Services.Show;
     using TrackTv.Services.Shows;
     using TrackTv.Services.Subscription;
 
@@ -16,6 +17,8 @@
 
             services.AddTransient<IShowsRepository, ShowsRepository>();
             services.AddTransient<IShowsService, ShowsService>();
+
+            services.AddTransient<IShowService, ShowService>();
 
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<TrackTvDbContext, ApplicationDbContext>();
