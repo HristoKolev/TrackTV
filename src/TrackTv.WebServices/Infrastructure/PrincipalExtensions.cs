@@ -1,6 +1,5 @@
 ﻿namespace TrackTv.WebServices.Infrastructure
 {
-    using System;
     using System.Security.Claims;
 
     public static class PrincipalExtensions
@@ -12,7 +11,7 @@
         {
             if (!user.Identity.IsAuthenticated)
             {
-                throw new InvalidOperationException("There is no authenticated user.");
+                return default(int);
             }
 
             string value = user.FindFirst("ProfileId").Value;

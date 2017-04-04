@@ -19,8 +19,9 @@
 
         private ICalendarService CalendarService { get; }
 
-        [HttpGet]
         public async Task<IActionResult> Get()
-            => this.Ok(await this.CalendarService.GetCalendarAsync(this.User.GetProfileId()).ConfigureAwait(false));
+        {
+            return this.Ok(await this.CalendarService.GetCalendarAsync(this.User.GetProfileId()).ConfigureAwait(false));
+        }
     }
 }

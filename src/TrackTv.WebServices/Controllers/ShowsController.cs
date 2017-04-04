@@ -21,14 +21,20 @@
 
         [HttpGet("[action]/{genreName}/{page:int}/{pageSize:int}")]
         public async Task<IActionResult> GetByGenre(string genreName, int page, int pageSize)
-            => this.Ok(await this.ShowsService.GetByGenreAsync(genreName, page, pageSize).ConfigureAwait(false));
+        {
+            return this.Ok(await this.ShowsService.GetByGenreAsync(genreName, page, pageSize).ConfigureAwait(false));
+        }
 
         [HttpGet("[action]/{page:int}/{pageSize:int}")]
         public async Task<IActionResult> GetTopShows(int page, int pageSize)
-            => this.Ok(await this.ShowsService.GetTopShowsAsync(page, pageSize).ConfigureAwait(false));
+        {
+            return this.Ok(await this.ShowsService.GetTopShowsAsync(page, pageSize).ConfigureAwait(false));
+        }
 
         [HttpGet("[action]/{query}/{page:int}/{pageSize:int}")]
         public async Task<IActionResult> SearchTopShows(string query, int page, int pageSize)
-            => this.Ok(await this.ShowsService.SearchTopShowsAsync(query, page, pageSize).ConfigureAwait(false));
+        {
+            return this.Ok(await this.ShowsService.SearchTopShowsAsync(query, page, pageSize).ConfigureAwait(false));
+        }
     }
 }

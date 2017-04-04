@@ -17,7 +17,7 @@ namespace TrackTv.Services.Show
 
         private IShowsRepository ShowsRepository { get; }
 
-        public async Task<FullShow> GetFullShowAsync(int id, int profileId = default(int))
+        public async Task<FullShow> GetFullShowAsync(int id, int profileId)
         {
             var show = await this.ShowsRepository.GetShowWithNetworkByIdAsync(id).ConfigureAwait(false);
 

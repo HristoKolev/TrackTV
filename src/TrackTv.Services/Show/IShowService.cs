@@ -6,6 +6,6 @@
 
     public interface IShowService
     {
-        Task<FullShow> GetFullShowAsync(int id, int profileId = default(int));
+        Task<FullShow> GetFullShowAsync(int id, int profileId);
     }
 }

@@ -19,8 +19,9 @@
 
         private IMyShowsService MyShowsService { get; }
 
-        [HttpGet]
         public async Task<IActionResult> Get()
-            => this.Ok(await this.MyShowsService.GetAllAsync(this.User.GetProfileId()).ConfigureAwait(false));
+        {
+            return this.Ok(await this.MyShowsService.GetAllAsync(this.User.GetProfileId()).ConfigureAwait(false));
+        }
     }
 }
