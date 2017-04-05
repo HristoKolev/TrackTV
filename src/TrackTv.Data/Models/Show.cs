@@ -33,11 +33,11 @@
 
         public int NetworkId { get; set; }
 
-        public virtual ICollection<ShowsActors> ShowsActors { get; } = new List<ShowsActors>();
+        public virtual ICollection<Role> Roles { get; } = new List<Role>();
 
         public virtual ICollection<ShowsGenres> ShowsGenres { get; } = new List<ShowsGenres>();
 
-        public virtual ICollection<ShowsProfiles> ShowsProfiles { get; } = new List<ShowsProfiles>();
+        public virtual ICollection<Subscription> Subscriptions { get; } = new List<Subscription>();
 
         public ShowStatus Status { get; set; }
 
@@ -45,7 +45,7 @@
 
         public bool HasActor(Actor actor)
         {
-            return this.ShowsActors.Any(x => x.Actor == actor || x.ActorId != default(int) && x.ActorId == actor.Id);
+            return this.Roles.Any(x => x.Actor == actor || x.ActorId != default(int) && x.ActorId == actor.Id);
         }
 
         public bool HasGenre(Genre genre)

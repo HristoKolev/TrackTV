@@ -15,7 +15,7 @@ namespace TrackTv.Data.Models
 
         public int Id { get; set; }
 
-        public virtual ICollection<ShowsProfiles> ShowsProfiles { get; } = new List<ShowsProfiles>();
+        public virtual ICollection<Subscription> Subscriptions { get; } = new List<Subscription>();
 
         public string Username { get; set; }
     }

@@ -15,10 +15,10 @@
 
             string role = "Role";
 
-            var showsActors = new ShowsActors(actor, role);
+            var showsActors = new Role(actor, role);
 
             Assert.Equal(actor, showsActors.Actor);
-            Assert.Equal(role, showsActors.Role);
+            Assert.Equal(role, showsActors.RoleName);
         }
     }
 }

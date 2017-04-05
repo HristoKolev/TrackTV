@@ -27,7 +27,7 @@ namespace TrackTv.Data.Models
 
         public string Name { get; set; }
 
-        public virtual ICollection<ShowsActors> ShowsActors { get; } = new List<ShowsActors>();
+        public virtual ICollection<Role> Roles { get; } = new List<Role>();
 
         public int TheTvDbId { get; set; }
     }

@@ -8,7 +8,7 @@ using TrackTv.WebServices.Infrastructure;
 namespace TrackTv.WebServices.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20170402183545_AuthContext_Created")]
+    [Migration("20170404204215_AuthContext_Created")]
     partial class AuthContext_Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -26,7 +26,7 @@
                 throw new SubscriptionException($"The user is already subscribed to this show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            this.DbContext.ShowsProfiles.Add(new ShowsProfiles(profileId, showId));
+            this.DbContext.Subscriptions.Add(new Subscription(profileId, showId));
 
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
@@ -55,7 +55,7 @@
         {
             CheckInput(profileId, showId);
 
-            return this.DbContext.ShowsProfiles.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
+            return this.DbContext.Subscriptions.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
         }
 
         public async Task RemoveSubscriptionAsync(int profileId, int showId)
@@ -63,7 +63,7 @@
             CheckInput(profileId, showId);
 
             var relationship =
-                await this.DbContext.ShowsProfiles.SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId)
+                await this.DbContext.Subscriptions.SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId)
                           .ConfigureAwait(false);
 
             if (relationship == null)
@@ -72,7 +72,7 @@
                     $"The user is not subscribed to the specified show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            this.DbContext.ShowsProfiles.Remove(relationship);
+            this.DbContext.Subscriptions.Remove(relationship);
 
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
         }

@@ -38,11 +38,11 @@
 
                 if (!show.HasActor(actor))
                 {
-                    show.ShowsActors.Add(new ShowsActors(actor, data.Role));
+                    show.Roles.Add(new Role(actor, data.Role));
                 }
                 else
                 {
-                    var relationship = show.ShowsActors.FirstOrDefault(x => x.ActorId == actor.Id);
+                    var relationship = show.Roles.FirstOrDefault(x => x.ActorId == actor.Id);
 
                     UpdateShowActorRelationship(relationship, data);
                 }
@@ -73,9 +73,9 @@
             }
         }
 
-        private static void UpdateShowActorRelationship(ShowsActors showsActors, ActorData data)
+        private static void UpdateShowActorRelationship(Role role, ActorData data)
         {
-            showsActors.Role = data.Role;
+            role.RoleName = data.Role;
         }
     }
 }

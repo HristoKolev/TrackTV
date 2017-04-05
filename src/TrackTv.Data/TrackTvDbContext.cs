@@ -25,13 +25,13 @@
 
         public DbSet<Profile> Profiles { get; set; }
 
-        public DbSet<Show> Shows { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
-        public DbSet<ShowsActors> ShowsActors { get; set; }
+        public DbSet<Show> Shows { get; set; }
 
         public DbSet<ShowsGenres> ShowsGenres { get; set; }
 
-        public DbSet<ShowsProfiles> ShowsProfiles { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,16 +42,6 @@
 
         private static void ConfigureManyToManyRelationships(ModelBuilder builder)
         {
-            builder.Entity<ShowsProfiles>().HasKey(t => new
-            {
-                t.ProfileId,
-                t.ShowId
-            });
-            builder.Entity<ShowsActors>().HasKey(t => new
-            {
-                t.ShowId,
-                t.ActorId
-            });
             builder.Entity<ShowsGenres>().HasKey(t => new
             {
                 t.ShowId,
@@ -77,7 +67,7 @@
             builder.Entity<Actor>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
             builder.Entity<Actor>().Property(t => t.Image).HasMaxLength(byte.MaxValue);
 
-            builder.Entity<ShowsActors>().Property(t => t.Role).HasMaxLength(byte.MaxValue);
+            builder.Entity<Role>().Property(t => t.RoleName).HasMaxLength(byte.MaxValue);
 
             builder.Entity<Profile>().Property(user => user.Username).IsRequired();
         }

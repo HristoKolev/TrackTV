@@ -121,24 +121,26 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShowsActors",
+                name: "Roles",
                 columns: table => new
                 {
-                    ShowId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ActorId = table.Column<int>(nullable: false),
-                    Role = table.Column<string>(maxLength: 255, nullable: true)
+                    RoleName = table.Column<string>(maxLength: 255, nullable: true),
+                    ShowId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShowsActors", x => new { x.ShowId, x.ActorId });
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShowsActors_Actors_ActorId",
+                        name: "FK_Roles_Actors_ActorId",
                         column: x => x.ActorId,
                         principalTable: "Actors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShowsActors_Shows_ShowId",
+                        name: "FK_Roles_Shows_ShowId",
                         column: x => x.ShowId,
                         principalTable: "Shows",
                         principalColumn: "Id",
@@ -170,23 +172,25 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShowsProfiles",
+                name: "Subscriptions",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProfileId = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShowsProfiles", x => new { x.ProfileId, x.ShowId });
+                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShowsProfiles_Profiles_ProfileId",
+                        name: "FK_Subscriptions_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShowsProfiles_Shows_ShowId",
+                        name: "FK_Subscriptions_Shows_ShowId",
                         column: x => x.ShowId,
                         principalTable: "Shows",
                         principalColumn: "Id",
@@ -199,14 +203,19 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 column: "ShowId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Roles_ActorId",
+                table: "Roles",
+                column: "ActorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roles_ShowId",
+                table: "Roles",
+                column: "ShowId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Shows_NetworkId",
                 table: "Shows",
                 column: "NetworkId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShowsActors_ActorId",
-                table: "ShowsActors",
-                column: "ActorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShowsGenres_GenreId",
@@ -214,8 +223,13 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShowsProfiles_ShowId",
-                table: "ShowsProfiles",
+                name: "IX_Subscriptions_ProfileId",
+                table: "Subscriptions",
+                column: "ProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_ShowId",
+                table: "Subscriptions",
                 column: "ShowId");
         }
 
@@ -225,13 +239,13 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 name: "Episodes");
 
             migrationBuilder.DropTable(
-                name: "ShowsActors");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "ShowsGenres");
 
             migrationBuilder.DropTable(
-                name: "ShowsProfiles");
+                name: "Subscriptions");
 
             migrationBuilder.DropTable(
                 name: "Actors");

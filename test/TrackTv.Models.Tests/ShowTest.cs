@@ -29,7 +29,7 @@
 
             var show = new Show();
 
-            show.ShowsActors.Add(new ShowsActors(actor, null));
+            show.Roles.Add(new Role(actor, null));
 
             Assert.True(show.HasActor(actor));
         }
@@ -43,7 +43,7 @@
 
             var show = new Show();
 
-            show.ShowsActors.Add(new ShowsActors
+            show.Roles.Add(new Role
             {
                 ActorId = 0
             });
@@ -63,7 +63,7 @@
 
             var show = new Show();
 
-            show.ShowsActors.Add(new ShowsActors
+            show.Roles.Add(new Role
             {
                 ActorId = actor.Id
             });
@@ -170,9 +170,9 @@
         {
             var show = new Show();
 
-            Assert.NotNull(show.ShowsActors);
+            Assert.NotNull(show.Roles);
 
-            Assert.IsType<List<ShowsActors>>(show.ShowsActors);
+            Assert.IsType<List<Role>>(show.Roles);
         }
 
         [Fact]
@@ -194,9 +194,9 @@
         {
             var show = new Show();
 
-            Assert.NotNull(show.ShowsProfiles);
+            Assert.NotNull(show.Subscriptions);
 
-            Assert.IsType<List<ShowsProfiles>>(show.ShowsProfiles);
+            Assert.IsType<List<Subscription>>(show.Subscriptions);
         }
     }
 }

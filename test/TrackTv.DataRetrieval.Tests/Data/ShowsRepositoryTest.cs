@@ -243,8 +243,8 @@
             Assert.NotNull(show.Network);
             Assert.True(show.Episodes.Any());
             Assert.True(show.ShowsGenres.Any());
-            Assert.True(show.ShowsActors.Any());
-            Assert.True(show.ShowsProfiles.Any());
+            Assert.True(show.Roles.Any());
+            Assert.True(show.Subscriptions.Any());
         }
 
         private static Show CreateShow(string name, int theTvDbId, Network network, Genre genre, Actor actor, Profile profile)
@@ -257,14 +257,14 @@
                 ShowsGenres = {
                     new ShowsGenres(genre)
                 },
-                ShowsActors = {
-                    new ShowsActors
+                Roles = {
+                    new Role
                     {
                         Actor = actor
                     }
                 },
-                ShowsProfiles = {
-                    new ShowsProfiles
+                Subscriptions = {
+                    new Subscription
                     {
                         Profile = profile
                     }

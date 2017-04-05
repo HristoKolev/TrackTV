@@ -35,7 +35,7 @@
                 await repository.AddSubscriptionAsync(2, 1).ConfigureAwait(false);
 
                 var relationship =
-                    await context.ShowsProfiles.FirstOrDefaultAsync(showsUsers => showsUsers.ShowId == 1 && showsUsers.ProfileId == 2)
+                    await context.Subscriptions.FirstOrDefaultAsync(showsUsers => showsUsers.ShowId == 1 && showsUsers.ProfileId == 2)
                                  .ConfigureAwait(false);
 
                 Assert.NotNull(relationship);
@@ -63,7 +63,7 @@
 
                 context.Shows.Add(show);
                 context.Profiles.Add(user);
-                context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
+                context.Subscriptions.Add(new Subscription(user.Id, show.Id));
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -91,7 +91,7 @@
 
                 context.Shows.Add(show);
                 context.Profiles.Add(user);
-                context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
+                context.Subscriptions.Add(new Subscription(user.Id, show.Id));
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -133,7 +133,7 @@
 
                 context.Shows.Add(show);
                 context.Profiles.Add(user);
-                context.ShowsProfiles.Add(new ShowsProfiles(user.Id, show.Id));
+                context.Subscriptions.Add(new Subscription(user.Id, show.Id));
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -141,7 +141,7 @@
 
                 await repository.RemoveSubscriptionAsync(2, 1).ConfigureAwait(false);
 
-                Assert.Equal(0, await context.ShowsProfiles.CountAsync().ConfigureAwait(false));
+                Assert.Equal(0, await context.Subscriptions.CountAsync().ConfigureAwait(false));
             }
         }
 

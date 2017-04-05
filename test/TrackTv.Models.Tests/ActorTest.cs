@@ -34,8 +34,8 @@
         {
             Actor actor = new Actor();
 
-            Assert.NotNull(actor.ShowsActors);
-            Assert.IsType<List<ShowsActors>>(actor.ShowsActors);
+            Assert.NotNull(actor.Roles);
+            Assert.IsType<List<Role>>(actor.Roles);
         }
     }
 }

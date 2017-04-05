@@ -15,7 +15,7 @@
 
             int profileId = 2;
 
-            var showsUsers = new ShowsProfiles(profileId, showId);
+            var showsUsers = new Subscription(profileId, showId);
 
             Assert.Equal(showId, showsUsers.ShowId);
             Assert.Equal(profileId, showsUsers.ProfileId);

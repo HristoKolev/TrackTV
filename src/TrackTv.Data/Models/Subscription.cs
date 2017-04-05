@@ -1,16 +1,18 @@
 ﻿namespace TrackTv.Data.Models
 {
-    public class ShowsProfiles
+    public class Subscription
     {
-        public ShowsProfiles()
+        public Subscription()
         {
         }
 
-        public ShowsProfiles(int profileId, int showId)
+        public Subscription(int profileId, int showId)
         {
             this.ProfileId = profileId;
             this.ShowId = showId;
         }
+
+        public int Id { get; set; }
 
         public Profile Profile { get; set; }
 

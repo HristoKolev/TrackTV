@@ -44,7 +44,7 @@
             var summaries = await this.DbContext.Shows.Where(x => showIds.Contains(x.Id)).Select(x => new
             {
                 ShowId = x.Id,
-                SubscriberCount = x.ShowsProfiles.Count()
+                SubscriberCount = x.Subscriptions.Count()
             }).ToArrayAsync().ConfigureAwait(false);
 
             return summaries.Select(s => new SubscriberSummary
@@ -56,7 +56,7 @@
 
         public Task<Show[]> GetShowsByProfileIdAsync(int profileId)
         {
-            return this.DbContext.ShowsProfiles.AsNoTracking().Where(x => x.ProfileId == profileId).Select(x => x.Show).ToArrayAsync();
+            return this.DbContext.Subscriptions.AsNoTracking().Where(x => x.ProfileId == profileId).Select(x => x.Show).ToArrayAsync();
         }
 
         public Task<Show> GetShowWithNetworkByIdAsync(int id)
@@ -68,7 +68,7 @@
         {
             return
                 this.DbContext.Shows.AsNoTracking()
-                    .OrderByDescending(show => show.ShowsProfiles.Count())
+                    .OrderByDescending(show => show.Subscriptions.Count())
                     .Page(page, pageSize)
                     .ToArrayAsync();
         }
@@ -78,7 +78,7 @@
             return
                 this.DbContext.Shows.AsNoTracking()
                     .Where(x => x.ShowsGenres.Any(g => g.Genre.Name.ToLower() == genreName.ToLower()))
-                    .OrderByDescending(show => show.ShowsProfiles.Count())
+                    .OrderByDescending(show => show.Subscriptions.Count())
                     .Page(page, pageSize)
                     .ToArrayAsync();
         }
@@ -93,7 +93,7 @@
             return
                 this.DbContext.Shows.AsNoTracking()
                     .Where(x => x.Name.ToLower().Contains(query.ToLower()))
-                    .OrderByDescending(show => show.ShowsProfiles.Count())
+                    .OrderByDescending(show => show.Subscriptions.Count())
                     .Page(page, pageSize)
                     .ToArrayAsync();
         }

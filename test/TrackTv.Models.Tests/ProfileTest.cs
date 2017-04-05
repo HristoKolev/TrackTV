@@ -15,9 +15,9 @@
         {
             var user = new Profile();
 
-            Assert.NotNull(user.ShowsProfiles);
+            Assert.NotNull(user.Subscriptions);
 
-            Assert.IsType<List<ShowsProfiles>>(user.ShowsProfiles);
+            Assert.IsType<List<Subscription>>(user.Subscriptions);
         }
     }
 }

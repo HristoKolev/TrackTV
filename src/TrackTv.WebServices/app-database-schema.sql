@@ -80,13 +80,14 @@ CREATE TABLE [Episodes] (
 
 GO
 
-CREATE TABLE [ShowsActors] (
-    [ShowId] int NOT NULL,
+CREATE TABLE [Roles] (
+    [Id] int NOT NULL IDENTITY,
     [ActorId] int NOT NULL,
-    [Role] nvarchar(255),
-    CONSTRAINT [PK_ShowsActors] PRIMARY KEY ([ShowId], [ActorId]),
-    CONSTRAINT [FK_ShowsActors_Actors_ActorId] FOREIGN KEY ([ActorId]) REFERENCES [Actors] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_ShowsActors_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
+    [RoleName] nvarchar(255),
+    [ShowId] int NOT NULL,
+    CONSTRAINT [PK_Roles] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Roles_Actors_ActorId] FOREIGN KEY ([ActorId]) REFERENCES [Actors] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Roles_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -101,12 +102,13 @@ CREATE TABLE [ShowsGenres] (
 
 GO
 
-CREATE TABLE [ShowsProfiles] (
+CREATE TABLE [Subscriptions] (
+    [Id] int NOT NULL IDENTITY,
     [ProfileId] int NOT NULL,
     [ShowId] int NOT NULL,
-    CONSTRAINT [PK_ShowsProfiles] PRIMARY KEY ([ProfileId], [ShowId]),
-    CONSTRAINT [FK_ShowsProfiles_Profiles_ProfileId] FOREIGN KEY ([ProfileId]) REFERENCES [Profiles] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_ShowsProfiles_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [PK_Subscriptions] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Subscriptions_Profiles_ProfileId] FOREIGN KEY ([ProfileId]) REFERENCES [Profiles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Subscriptions_Shows_ShowId] FOREIGN KEY ([ShowId]) REFERENCES [Shows] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -115,11 +117,15 @@ CREATE INDEX [IX_Episodes_ShowId] ON [Episodes] ([ShowId]);
 
 GO
 
-CREATE INDEX [IX_Shows_NetworkId] ON [Shows] ([NetworkId]);
+CREATE INDEX [IX_Roles_ActorId] ON [Roles] ([ActorId]);
 
 GO
 
-CREATE INDEX [IX_ShowsActors_ActorId] ON [ShowsActors] ([ActorId]);
+CREATE INDEX [IX_Roles_ShowId] ON [Roles] ([ShowId]);
+
+GO
+
+CREATE INDEX [IX_Shows_NetworkId] ON [Shows] ([NetworkId]);
 
 GO
 
@@ -127,12 +133,16 @@ CREATE INDEX [IX_ShowsGenres_GenreId] ON [ShowsGenres] ([GenreId]);
 
 GO
 
-CREATE INDEX [IX_ShowsProfiles_ShowId] ON [ShowsProfiles] ([ShowId]);
+CREATE INDEX [IX_Subscriptions_ProfileId] ON [Subscriptions] ([ProfileId]);
+
+GO
+
+CREATE INDEX [IX_Subscriptions_ShowId] ON [Subscriptions] ([ShowId]);
 
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20170402183558_ApplicationDbContext_Created', N'1.1.1');
+VALUES (N'20170404204228_ApplicationDbContext_Created', N'1.1.1');
 
 GO
 

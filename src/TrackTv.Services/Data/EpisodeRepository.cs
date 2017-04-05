@@ -37,7 +37,7 @@
             return
                 this.DbContext.Episodes.AsNoTracking()
                     .Include(e => e.Show)
-                    .Where(e => e.Show.ShowsProfiles.Any(x => x.ProfileId == profileId))
+                    .Where(e => e.Show.Subscriptions.Any(x => x.ProfileId == profileId))
                     .Where(episode => episode.FirstAired > startDay && episode.FirstAired < endDay)
                     .ToArrayAsync();
         }

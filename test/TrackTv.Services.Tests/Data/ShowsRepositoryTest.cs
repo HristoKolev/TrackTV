@@ -158,7 +158,7 @@
 
                     for (int j = 1; j <= 5; j++)
                     {
-                        show.ShowsProfiles.Add(new ShowsProfiles
+                        show.Subscriptions.Add(new Subscription
                         {
                             Profile = new Profile
                             {
@@ -211,7 +211,7 @@
 
                     for (int j = 1; j <= 5; j++)
                     {
-                        show.ShowsProfiles.Add(new ShowsProfiles
+                        show.Subscriptions.Add(new Subscription
                         {
                             Profile = new Profile
                             {
@@ -289,7 +289,7 @@
 
                     for (int j = userCount - 1; j >= 0; j--)
                     {
-                        show.ShowsProfiles.Add(new ShowsProfiles
+                        show.Subscriptions.Add(new Subscription
                         {
                             Profile = new Profile()
                         });
@@ -339,7 +339,7 @@
 
                     for (int j = userCount - 1; j >= 0; j--)
                     {
-                        show.ShowsProfiles.Add(new ShowsProfiles
+                        show.Subscriptions.Add(new Subscription
                         {
                             Profile = new Profile()
                         });
@@ -391,7 +391,7 @@
 
                     for (int j = userCount - 1; j >= 0; j--)
                     {
-                        show.ShowsProfiles.Add(new ShowsProfiles
+                        show.Subscriptions.Add(new Subscription
                         {
                             Profile = new Profile()
                         });

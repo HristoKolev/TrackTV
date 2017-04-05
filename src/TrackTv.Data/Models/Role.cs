@@ -1,22 +1,24 @@
 namespace TrackTv.Data.Models
 {
-    public class ShowsActors
+    public class Role
     {
-        public ShowsActors()
+        public Role()
         {
         }
 
-        public ShowsActors(Actor actor, string role)
+        public Role(Actor actor, string roleName)
         {
             this.Actor = actor;
-            this.Role = role;
+            this.RoleName = roleName;
         }
 
         public Actor Actor { get; set; }
 
         public int ActorId { get; set; }
 
-        public string Role { get; set; }
+        public int Id { get; set; }
+
+        public string RoleName { get; set; }
 
         public Show Show { get; set; }
 

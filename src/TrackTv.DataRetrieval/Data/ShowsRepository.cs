@@ -55,7 +55,7 @@
         {
             return
                 this.DbContext.Shows.Include(x => x.ShowsGenres)
-                    .Include(x => x.ShowsActors)
+                    .Include(x => x.Roles)
                     .Include(x => x.Network)
                     .Include(x => x.Episodes);
         }

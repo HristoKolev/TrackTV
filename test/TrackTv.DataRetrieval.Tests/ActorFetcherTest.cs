@@ -64,14 +64,14 @@
 
             await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
-            var relationships = show.ShowsActors.ToArray();
+            var relationships = show.Roles.ToArray();
 
             Assert.Equal(response.Data.Length, relationships.Length);
 
             for (int i = 0; i < response.Data.Length; i++)
             {
                 Assert.Equal(actors[i], relationships[i].Actor);
-                Assert.Equal(response.Data[i].Role, relationships[i].Role);
+                Assert.Equal(response.Data[i].Role, relationships[i].RoleName);
 
                 Assert.Equal(response.Data[i].Id, actors[i].TheTvDbId);
                 Assert.Equal(response.Data[i].Name, actors[i].Name);
@@ -123,7 +123,7 @@
 
             await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
-            var relationships = show.ShowsActors.ToArray();
+            var relationships = show.Roles.ToArray();
 
             Assert.Equal(response.Data.Length, relationships.Length);
 
@@ -135,7 +135,7 @@
 
             for (int i = 0; i < response.Data.Length; i++)
             {
-                Assert.Equal(response.Data[i].Role, relationships[i].Role);
+                Assert.Equal(response.Data[i].Role, relationships[i].RoleName);
             }
         }
 
@@ -176,7 +176,7 @@
 
             await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
-            var relationships = show.ShowsActors.ToArray();
+            var relationships = show.Roles.ToArray();
 
             Assert.Equal(response.Data.Length, relationships.Length);
 
@@ -326,8 +326,8 @@
             var show = new Show
             {
                 TheTvDbId = 42,
-                ShowsActors = {
-                    new ShowsActors
+                Roles = {
+                    new Role
                     {
                         Actor = actor
                     }
@@ -346,7 +346,7 @@
 
             await fetcher.PopulateActorsAsync(show).ConfigureAwait(false);
 
-            Assert.Equal(response.Data.First().Role, show.ShowsActors.First().Role);
+            Assert.Equal(response.Data.First().Role, show.Roles.First().RoleName);
         }
 
         private static void RigClient(ISeriesClient client, int theTvDbId, TvDbResponse<ActorData[]> actorResponse)
