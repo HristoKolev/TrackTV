@@ -6,7 +6,7 @@
 
     public class TrackTvDbContext : DbContext
     {
-        public TrackTvDbContext(DbContextOptions options)
+        public TrackTvDbContext(DbContextOptions<TrackTvDbContext> options)
             : base(options)
         {
         }

@@ -27,16 +27,20 @@
         public AuthController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            IProfilesRepository profilesRepository)
+            IProfilesRepository profilesRepository,
+            ITransactionScopeFactory transactionScopeFactory)
         {
             this.SignInManager = signInManager;
             this.UserManager = userManager;
             this.ProfilesRepository = profilesRepository;
+            this.TransactionScopeFactory = transactionScopeFactory;
         }
 
         private IProfilesRepository ProfilesRepository { get; }
 
         private SignInManager<ApplicationUser> SignInManager { get; }
+
+        private ITransactionScopeFactory TransactionScopeFactory { get; }
 
         private UserManager<ApplicationUser> UserManager { get; }
 
@@ -132,24 +136,28 @@
                 return this.BadRequest(this.ModelState);
             }
 
-            int profileId = await this.ProfilesRepository.CreateProfile(model.Email).ConfigureAwait(false);
-
-            var user = new ApplicationUser
+            using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
             {
-                UserName = model.Email,
-                Email = model.Email,
-                ProfileId = profileId
-            };
-            var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+                int profileId = await this.ProfilesRepository.CreateProfile(model.Email).ConfigureAwait(false);
 
-            if (result.Succeeded)
-            {
-                return this.Ok();
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    ProfileId = profileId
+                };
+
+                var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+
+                if (result.Succeeded)
+                {
+                    scope.Complete();
+
+                    return this.Ok();
+                }
+
+                return this.BadRequest(result.Errors);
             }
-
-            await this.ProfilesRepository.DeleteProfile(profileId).ConfigureAwait(false);
-
-            return this.BadRequest(result.Errors);
         }
 
         private static void AddCustomClaims(ApplicationUser user, IPrincipal principal)

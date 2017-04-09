@@ -1,5 +1,7 @@
 ﻿namespace TrackTv.WebServices.Infrastructure
 {
+    using System;
+
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
@@ -7,6 +9,11 @@
 
     public class ApplicationDbContext : TrackTvDbContext
     {
+        public ApplicationDbContext()
+        {
+            Console.WriteLine();
+        }
+
         /// <summary>
         /// The name of the connection string in the application config file.
         /// </summary>

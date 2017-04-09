@@ -1,5 +1,7 @@
 ﻿namespace TrackTv.WebServices
 {
+    using System;
+
     using AspNet.Security.OpenIdConnect.Primitives;
 
     using Microsoft.AspNetCore.Builder;
@@ -9,6 +11,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+
+    using StructureMap;
 
     using TrackTv.WebServices.Infrastructure;
 
@@ -24,7 +28,11 @@
         private IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -54,23 +62,30 @@
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             this.ConfigureAuth(services);
 
             services.AddMvc();
 
-            var module = new ContainerModule();
+            var container = new Container();
 
-            module.Register(services);
+            container.Configure(config =>
+            {
+                //Populate the container using the service collection
+                config.Populate(services);
+
+                config.AddRegistry<ContainerRegistry>();
+            });
+
+            return container.GetInstance<IServiceProvider>();
         }
 
         private static IConfigurationRoot BuildConfigurations(IHostingEnvironment env)
         {
-            var builder =
-                new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
-                                          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+            var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
+                                                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             builder.AddEnvironmentVariables();
 

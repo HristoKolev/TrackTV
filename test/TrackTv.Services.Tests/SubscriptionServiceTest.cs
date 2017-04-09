@@ -1,7 +1,10 @@
 ﻿namespace TrackTv.Services.Tests
 {
+    using System.Threading.Tasks;
+
     using NSubstitute;
 
+    using TrackTv.Data.Models;
     using TrackTv.Services.Data;
     using TrackTv.Services.Subscription;
 
@@ -12,29 +15,33 @@
         [Fact]
 
         // ReSharper disable once InconsistentNaming
-        public void Subscribe_adds_a_subscription_with_the_userId_and_showId()
+        public async Task Subscribe_adds_a_subscription_with_the_userId_and_showId()
         {
             var repo = Substitute.For<IProfilesRepository>();
 
             var service = CreateService(repo);
 
-            service.Subscribe(1, 2);
+            await service.Subscribe(1, 2).ConfigureAwait(false);
 
-            repo.Received().AddSubscriptionAsync(1, 2);
+            await repo.Received().AddSubscriptionAsync(1, 2).ConfigureAwait(false);
         }
 
         [Fact]
 
         // ReSharper disable once InconsistentNaming
-        public void Unsubscribe_removes_a_subscription_with_the_userId_and_showId()
+        public async Task Unsubscribe_removes_a_subscription_with_the_userId_and_showId()
         {
             var repo = Substitute.For<IProfilesRepository>();
 
+            var subscription = new Subscription(1, 2);
+
+            repo.GetSubscriptionAsync(1, 2).Returns(subscription);
+
             var service = CreateService(repo);
 
-            service.Unsubscribe(1, 2);
+            await service.Unsubscribe(1, 2).ConfigureAwait(false);
 
-            repo.Received().RemoveSubscriptionAsync(1, 2);
+            await repo.Received().RemoveSubscriptionAsync(subscription).ConfigureAwait(false);
         }
 
         private static SubscriptionService CreateService(IProfilesRepository profilesRepository)

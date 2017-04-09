@@ -5,7 +5,7 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class AuthContext : IdentityDbContext<ApplicationUser>
     {
-        public AuthContext(DbContextOptions options)
+        public AuthContext(DbContextOptions<AuthContext> options)
             : base(options)
         {
         }

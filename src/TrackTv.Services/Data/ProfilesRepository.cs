@@ -6,7 +6,6 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Models;
-    using TrackTv.Services.Data.Exceptions;
 
     public class ProfilesRepository : IProfilesRepository
     {
@@ -19,13 +18,6 @@
 
         public async Task AddSubscriptionAsync(int profileId, int showId)
         {
-            CheckInput(profileId, showId);
-
-            if (await this.IsUserSubscribedAsync(profileId, showId).ConfigureAwait(false))
-            {
-                throw new SubscriptionException($"The user is already subscribed to this show: (ProfileId={profileId}, ShowId={showId})");
-            }
-
             this.DbContext.Subscriptions.Add(new Subscription(profileId, showId));
 
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
@@ -42,52 +34,21 @@
             return profile.Id;
         }
 
-        public Task DeleteProfile(int profileId)
+        public Task<Subscription> GetSubscriptionAsync(int profileId, int showId)
         {
-            var profile = this.DbContext.Profiles.Find(profileId);
-
-            this.DbContext.Profiles.Remove(profile);
-
-            return this.DbContext.SaveChangesAsync();
+            return this.DbContext.Subscriptions.SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId);
         }
 
         public Task<bool> IsUserSubscribedAsync(int profileId, int showId)
         {
-            CheckInput(profileId, showId);
-
             return this.DbContext.Subscriptions.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
         }
 
-        public async Task RemoveSubscriptionAsync(int profileId, int showId)
+        public async Task RemoveSubscriptionAsync(Subscription subscription)
         {
-            CheckInput(profileId, showId);
-
-            var relationship =
-                await this.DbContext.Subscriptions.SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId)
-                          .ConfigureAwait(false);
-
-            if (relationship == null)
-            {
-                throw new SubscriptionException(
-                    $"The user is not subscribed to the specified show: (ProfileId={profileId}, ShowId={showId})");
-            }
-
-            this.DbContext.Subscriptions.Remove(relationship);
+            this.DbContext.Subscriptions.Remove(subscription);
 
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        private static void CheckInput(int profileId, int showId)
-        {
-            if (profileId == default(int))
-            {
-                throw new SubscriptionException("Invalid ProfileId.");
-            }
-
-            if (showId == default(int))
-            {
-                throw new SubscriptionException("Invalid ShowId.");
-            }
         }
     }
 }
