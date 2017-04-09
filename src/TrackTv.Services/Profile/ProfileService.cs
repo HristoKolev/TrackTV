@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using TrackTv.Services.Data;
+    using TrackTv.Services.Profile.Model;
 
     public class ProfileService : IProfileService
     {
@@ -23,12 +24,5 @@
                 Username = profile.Username
             };
         }
-    }
-
-    public class FullProfile
-    {
-        public int Id { get; set; }
-
-        public string Username { get; set; }
     }
 }

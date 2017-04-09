@@ -14,8 +14,4 @@
     <ProjectReference Include="..\TrackTv.Data\TrackTv.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Profile\Model\" />
-  </ItemGroup>
-
 </Project>
