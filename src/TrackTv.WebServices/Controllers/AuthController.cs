@@ -138,7 +138,7 @@
 
             using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
             {
-                int profileId = await this.ProfilesRepository.CreateProfile(model.Email).ConfigureAwait(false);
+                int profileId = await this.ProfilesRepository.CreateProfileAsync(model.Email).ConfigureAwait(false);
 
                 var user = new ApplicationUser
                 {

@@ -10,6 +10,7 @@
     using TrackTv.Services.Calendar;
     using TrackTv.Services.Data;
     using TrackTv.Services.MyShows;
+    using TrackTv.Services.Profile;
     using TrackTv.Services.Show;
     using TrackTv.Services.Shows;
     using TrackTv.Services.Subscription;
@@ -33,6 +34,8 @@
             this.For<IEpisodeCalendar>().Use<EpisodeCalendar>();
             this.For<ICalendarService>().Use<CalendarService>();
 
+            this.For<IProfileService>().Use<ProfileService>();
+
             this.ForConcreteType<ApplicationDbContext>().Configure.ContainerScoped();
 
             this.Forward<ApplicationDbContext, TrackTvDbContext>();
@@ -41,31 +44,4 @@
             this.For<ITransactionScopeFactory>().Use<TransactionScopeFactory>().ContainerScoped();
         }
     }
-
-    //public class RequestLifecycle : ILifecycle
-    //{
-    //    public HttpContext HttpContext { get; set; }
-
-    //    public RequestLifecycle()
-    //    {
-
-    //    }
-
-    //    public string Description => "Cats";
-
-    //    private static LifecycleObjectCache Cache { get; } = new LifecycleObjectCache();
-
-    //    public void EjectAll(ILifecycleContext context)
-    //    {
-    //        Cache.DisposeAndClear();
-    //    }
-
-    //    public IObjectCache FindCache(ILifecycleContext context)
-    //    {
-
-    //        Cache.DisposeAndClear();
-
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }

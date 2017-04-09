@@ -1,6 +1,5 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
-    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -11,13 +10,10 @@
     [Route("api/[controller]")]
     public class ShowController : Controller
     {
-        public ShowController(IShowService showService, IServiceProvider serviceProvider)
+        public ShowController(IShowService showService)
         {
             this.ShowService = showService;
-            this.ServiceProvider = serviceProvider;
         }
-
-        private IServiceProvider ServiceProvider { get; }
 
         private IShowService ShowService { get; }
 

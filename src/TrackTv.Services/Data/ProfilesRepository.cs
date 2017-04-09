@@ -23,7 +23,7 @@
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<int> CreateProfile(string username)
+        public async Task<int> CreateProfileAsync(string username)
         {
             var profile = new Profile(username);
 
@@ -32,6 +32,11 @@
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
 
             return profile.Id;
+        }
+
+        public Task<Profile> GetProfileByIdAsync(int profileId)
+        {
+            return this.DbContext.Profiles.FindAsync(profileId);
         }
 
         public Task<Subscription> GetSubscriptionAsync(int profileId, int showId)

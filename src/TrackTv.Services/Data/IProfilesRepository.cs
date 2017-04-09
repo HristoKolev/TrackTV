@@ -8,7 +8,9 @@
     {
         Task AddSubscriptionAsync(int profileId, int showId);
 
-        Task<int> CreateProfile(string username);
+        Task<int> CreateProfileAsync(string username);
+
+        Task<Profile> GetProfileByIdAsync(int profileId);
 
         Task<Subscription> GetSubscriptionAsync(int profileId, int showId);
 
