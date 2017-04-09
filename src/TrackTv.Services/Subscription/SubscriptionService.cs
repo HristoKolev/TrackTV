@@ -7,30 +7,30 @@
 
     public class SubscriptionService : ISubscriptionService
     {
-        public SubscriptionService(IProfilesRepository profilesRepository)
+        public SubscriptionService(ISubscriptionRepository subscriptionRepository)
         {
-            this.ProfilesRepository = profilesRepository;
+            this.SubscriptionRepository = subscriptionRepository;
         }
 
-        private IProfilesRepository ProfilesRepository { get; }
+        private ISubscriptionRepository SubscriptionRepository { get; }
 
         public async Task Subscribe(int profileId, int showId)
         {
             CheckInput(profileId, showId);
 
-            if (await this.ProfilesRepository.IsUserSubscribedAsync(profileId, showId).ConfigureAwait(false))
+            if (await this.SubscriptionRepository.IsUserSubscribedAsync(profileId, showId).ConfigureAwait(false))
             {
                 throw new SubscriptionException($"The user is already subscribed to this show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            await this.ProfilesRepository.AddSubscriptionAsync(profileId, showId).ConfigureAwait(false);
+            await this.SubscriptionRepository.AddSubscriptionAsync(profileId, showId).ConfigureAwait(false);
         }
 
         public async Task Unsubscribe(int profileId, int showId)
         {
             CheckInput(profileId, showId);
 
-            var subscription = await this.ProfilesRepository.GetSubscriptionAsync(profileId, showId).ConfigureAwait(false);
+            var subscription = await this.SubscriptionRepository.GetSubscriptionAsync(profileId, showId).ConfigureAwait(false);
 
             if (subscription == null)
             {
@@ -38,7 +38,7 @@
                     $"The user is not subscribed to the specified show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            await this.ProfilesRepository.RemoveSubscriptionAsync(subscription).ConfigureAwait(false);
+            await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.Id).ConfigureAwait(false);
         }
 
         private static void CheckInput(int profileId, int showId)

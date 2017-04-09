@@ -19,12 +19,12 @@
             {
                 var episodeRepo = new EpisodeRepository(context);
                 var showsRepo = new ShowsRepository(context);
-                var usersRepo = new ProfilesRepository(context);
+                var subscriptionRepo = new SubscriptionRepository(context);
 
                 var calendar = new GregorianCalendar();
                 var episodeCalendar = new EpisodeCalendar(episodeRepo, calendar);
 
-                var service = new SubscriptionService(usersRepo);
+                var service = new SubscriptionService(subscriptionRepo);
 
                 await service.Subscribe(5, 8).ConfigureAwait(false);
 

@@ -19,8 +19,28 @@
     {
         public ContainerRegistry()
         {
+            this.RegisterServices();
+
+            this.RegisterDataAccess();
+        }
+
+        private void RegisterDataAccess()
+        {
+            this.ForConcreteType<ApplicationDbContext>().Configure.ContainerScoped();
+
+            this.Forward<ApplicationDbContext, TrackTvDbContext>();
+            this.Forward<ApplicationDbContext, DbContext>();
+
+            this.For<ITransactionScopeFactory>().Use<TransactionScopeFactory>().ContainerScoped();
+        }
+
+        private void RegisterServices()
+        {
             this.For<ISubscriptionService>().Use<SubscriptionService>();
+            this.For<ISubscriptionRepository>().Use<SubscriptionRepository>();
+
             this.For<IProfilesRepository>().Use<ProfilesRepository>();
+            this.For<IProfileService>().Use<ProfileService>();
 
             this.For<IShowsRepository>().Use<ShowsRepository>();
             this.For<IShowsService>().Use<ShowsService>();
@@ -33,15 +53,6 @@
             this.For<Calendar>().Use<GregorianCalendar>();
             this.For<IEpisodeCalendar>().Use<EpisodeCalendar>();
             this.For<ICalendarService>().Use<CalendarService>();
-
-            this.For<IProfileService>().Use<ProfileService>();
-
-            this.ForConcreteType<ApplicationDbContext>().Configure.ContainerScoped();
-
-            this.Forward<ApplicationDbContext, TrackTvDbContext>();
-            this.Forward<ApplicationDbContext, DbContext>();
-
-            this.For<ITransactionScopeFactory>().Use<TransactionScopeFactory>().ContainerScoped();
         }
     }
 }

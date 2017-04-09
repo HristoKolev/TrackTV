@@ -30,7 +30,7 @@
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
-                var repository = new ProfilesRepository(context);
+                var repository = new SubscriptionRepository(context);
 
                 await repository.AddSubscriptionAsync(2, 1).ConfigureAwait(false);
 
@@ -95,7 +95,7 @@
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
-                var repository = new ProfilesRepository(context);
+                var repository = new SubscriptionRepository(context);
 
                 Assert.True(await repository.IsUserSubscribedAsync(2, 1).ConfigureAwait(false));
             }
@@ -108,7 +108,7 @@
         {
             using (var context = CreateContext())
             {
-                var repository = new ProfilesRepository(context);
+                var repository = new SubscriptionRepository(context);
 
                 Assert.False(await repository.IsUserSubscribedAsync(2, 1).ConfigureAwait(false));
             }
@@ -137,11 +137,11 @@
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
-                var repository = new ProfilesRepository(context);
+                var repository = new SubscriptionRepository(context);
 
                 var subscription = await repository.GetSubscriptionAsync(2, 1).ConfigureAwait(false);
 
-                await repository.RemoveSubscriptionAsync(subscription).ConfigureAwait(false);
+                await repository.RemoveSubscriptionAsync(subscription.Id).ConfigureAwait(false);
 
                 Assert.Equal(0, await context.Subscriptions.CountAsync().ConfigureAwait(false));
             }

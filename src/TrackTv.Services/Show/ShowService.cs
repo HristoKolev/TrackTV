@@ -7,15 +7,15 @@ namespace TrackTv.Services.Show
 
     public class ShowService : IShowService
     {
-        public ShowService(IShowsRepository showsRepository, IProfilesRepository profilesRepository)
+        public ShowService(IShowsRepository showsRepository, ISubscriptionRepository subscriptionRepository)
         {
             this.ShowsRepository = showsRepository;
-            this.ProfilesRepository = profilesRepository;
+            this.SubscriptionRepository = subscriptionRepository;
         }
 
-        private IProfilesRepository ProfilesRepository { get; }
-
         private IShowsRepository ShowsRepository { get; }
+
+        private ISubscriptionRepository SubscriptionRepository { get; }
 
         public async Task<FullShow> GetFullShowAsync(int id, int profileId)
         {
@@ -42,7 +42,7 @@ namespace TrackTv.Services.Show
 
             if (profileId != default(int))
             {
-                model.IsUserSubscribed = await this.ProfilesRepository.IsUserSubscribedAsync(profileId, id).ConfigureAwait(false);
+                model.IsUserSubscribed = await this.SubscriptionRepository.IsUserSubscribedAsync(profileId, id).ConfigureAwait(false);
             }
 
             return model;

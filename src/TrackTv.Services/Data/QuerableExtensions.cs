@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
 
-    public static class EnumerableExtensions
+    public static class QuerableExtensions
     {
         private const int MaxPageSize = 50;
 
