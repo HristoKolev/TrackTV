@@ -11,17 +11,15 @@
 
         Task<int> CountAllResultsAsync(string query);
 
-        Task<int> CountByGenreAsync(string genreName);
+        Task<int> CountByGenreAsync(int genreId);
 
         Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds);
-
-        Task<Show[]> GetShowsByProfileIdAsync(int profileId);
 
         Task<Show> GetShowWithNetworkByIdAsync(int id);
 
         Task<Show[]> GetTopAsync(int page, int pageSize);
 
-        Task<Show[]> GetTopByGenreAsync(string genreName, int page, int pageSize);
+        Task<Show[]> GetTopByGenreAsync(int genreId, int page, int pageSize);
 
         Task<Show[]> SearchTopAsync(string query, int page, int pageSize);
     }

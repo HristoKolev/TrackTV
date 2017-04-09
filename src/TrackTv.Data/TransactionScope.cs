@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Infrastructure
+﻿namespace TrackTv.Data
 {
     using System;
     using System.Threading.Tasks;
@@ -75,7 +75,7 @@
                 throw new AlreadyInTransactionException("A transaction is already open.");
             }
 
-            this.Scope = new TransactionScope(await this.DbContext.Database.BeginTransactionAsync());
+            this.Scope = new TransactionScope(await this.DbContext.Database.BeginTransactionAsync().ConfigureAwait(false));
 
             return this.Scope;
         }

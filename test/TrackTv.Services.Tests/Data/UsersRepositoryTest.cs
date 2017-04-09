@@ -6,7 +6,6 @@
 
     using TrackTv.Data.Models;
     using TrackTv.Services.Data;
-    using TrackTv.Services.Data.Exceptions;
 
     using Xunit;
 
@@ -97,7 +96,7 @@
 
                 var repository = new SubscriptionRepository(context);
 
-                Assert.True(await repository.IsUserSubscribedAsync(2, 1).ConfigureAwait(false));
+                Assert.True(await repository.IsProfileSubscribedAsync(2, 1).ConfigureAwait(false));
             }
         }
 
@@ -110,7 +109,7 @@
             {
                 var repository = new SubscriptionRepository(context);
 
-                Assert.False(await repository.IsUserSubscribedAsync(2, 1).ConfigureAwait(false));
+                Assert.False(await repository.IsProfileSubscribedAsync(2, 1).ConfigureAwait(false));
             }
         }
 

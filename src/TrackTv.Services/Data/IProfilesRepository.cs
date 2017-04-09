@@ -9,5 +9,7 @@
         Task<int> CreateProfileAsync(string username);
 
         Task<Profile> GetProfileByIdAsync(int profileId);
+
+        Task<bool> ProfileExistsAsync(int profileId);
     }
 }

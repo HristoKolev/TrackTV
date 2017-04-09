@@ -19,9 +19,9 @@
 
         private TrackTvDbContext DbContext { get; }
 
-        public Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] ids, DateTime time)
+        public Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] showIds, DateTime time)
         {
-            return this.DbContext.Shows.Where(x => ids.Contains(x.Id)).Select(s => new EpisodesSummary
+            return this.DbContext.Shows.Where(x => showIds.Contains(x.Id)).Select(s => new EpisodesSummary
             {
                 ShowId = s.Id,
                 LastEpisode =

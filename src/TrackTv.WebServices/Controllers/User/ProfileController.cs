@@ -2,11 +2,13 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.Services.Profile;
     using TrackTv.WebServices.Infrastructure;
 
+    [Authorize]
     [Route("api/[controller]")]
     public class ProfileController : Controller
     {
@@ -19,7 +21,7 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Ok(await this.ProfileService.GetProfileAsync(this.User.GetProfileId()));
+            return this.Ok(await this.ProfileService.GetProfileAsync(this.User.GetProfileId()).ConfigureAwait(false));
         }
     }
 }

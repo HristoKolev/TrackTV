@@ -6,7 +6,6 @@
 
     using TrackTv.Data.Models;
     using TrackTv.Services.Data;
-    using TrackTv.Services.Data.Exceptions;
 
     using Xunit;
 
@@ -69,41 +68,40 @@
             }
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData("  ")]
-        [InlineData("\t")]
+        // [Theory]
+        // [InlineData(null)]
+        // [InlineData("")]
+        // [InlineData(" ")]
+        // [InlineData("  ")]
+        // [InlineData("\t")]
 
-        // ReSharper disable once InconsistentNaming
-        public async Task CountAllResultsAsync_throws_if_query_is_invalid(string query)
-        {
-            using (var context = CreateContext())
-            {
-                var list = new List<Show>();
+        //// ReSharper disable once InconsistentNaming
+        // public async Task CountAllResultsAsync_throws_if_query_is_invalid(string query)
+        // {
+        // using (var context = CreateContext())
+        // {
+        // var list = new List<Show>();
 
-                for (int i = 1; i <= 10; i++)
-                {
-                    var show = new Show
-                    {
-                        Id = i,
-                        Name = i % 2 == 0 ? "new show " + i : "old show " + i
-                    };
+        // for (int i = 1; i <= 10; i++)
+        // {
+        // var show = new Show
+        // {
+        // Id = i,
+        // Name = i % 2 == 0 ? "new show " + i : "old show " + i
+        // };
 
-                    list.Add(show);
-                }
+        // list.Add(show);
+        // }
 
-                context.Shows.AddRange(list);
-                await context.SaveChangesAsync().ConfigureAwait(false);
+        // context.Shows.AddRange(list);
+        // await context.SaveChangesAsync().ConfigureAwait(false);
 
-                var repository = new ShowsRepository(context);
+        // var repository = new ShowsRepository(context);
 
-                await Assert.ThrowsAsync<InvalidQueryException>(
-                    async () => await repository.CountAllResultsAsync(query).ConfigureAwait(false)).ConfigureAwait(false);
-            }
-        }
-
+        // await Assert.ThrowsAsync<InvalidQueryException>(
+        // async () => await repository.CountAllResultsAsync(query).ConfigureAwait(false)).ConfigureAwait(false);
+        // }
+        // }
         [Fact]
 
         // ReSharper disable once InconsistentNaming
@@ -136,7 +134,7 @@
 
                 var repository = new ShowsRepository(context);
 
-                Assert.Equal(5, await repository.CountByGenreAsync("action").ConfigureAwait(false));
+                Assert.Equal(5, await repository.CountByGenreAsync(actionGenre.Id).ConfigureAwait(false));
             }
         }
 
@@ -196,47 +194,6 @@
         [Fact]
 
         // ReSharper disable once InconsistentNaming
-        public async Task GetShowsByProfileIdAsync_returns_correct_count()
-        {
-            using (var context = CreateContext())
-            {
-                var list = new List<Show>();
-
-                for (int i = 1; i <= 10; i++)
-                {
-                    var show = new Show
-                    {
-                        Id = i
-                    };
-
-                    for (int j = 1; j <= 5; j++)
-                    {
-                        show.Subscriptions.Add(new Subscription
-                        {
-                            Profile = new Profile
-                            {
-                                Id = j
-                            }
-                        });
-                    }
-
-                    list.Add(show);
-                }
-
-                context.Shows.AddRange(list);
-                await context.SaveChangesAsync().ConfigureAwait(false);
-
-                var repository = new ShowsRepository(context);
-
-                var shows = await repository.GetShowsByProfileIdAsync(1).ConfigureAwait(false);
-
-                Assert.Equal(10, shows.Length);
-            }
-        }
-
-        [Fact]
-
-        // ReSharper disable once InconsistentNaming
         public async Task GetShowWithNetworkByIdAsync_returns_show_with_the_network()
         {
             using (var context = CreateContext())
@@ -266,6 +223,47 @@
 
                 Assert.Equal(1, firstShow.Id);
                 Assert.NotNull(firstShow.Network);
+            }
+        }
+
+        [Fact]
+
+        // ReSharper disable once InconsistentNaming
+        public async Task GetSubscriptionsByProfileIdAsync_returns_correct_count()
+        {
+            using (var context = CreateContext())
+            {
+                var list = new List<Show>();
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    var show = new Show
+                    {
+                        Id = i
+                    };
+
+                    for (int j = 1; j <= 5; j++)
+                    {
+                        show.Subscriptions.Add(new Subscription
+                        {
+                            Profile = new Profile
+                            {
+                                Id = j
+                            }
+                        });
+                    }
+
+                    list.Add(show);
+                }
+
+                context.Shows.AddRange(list);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+
+                var repository = new SubscriptionRepository(context);
+
+                var shows = await repository.GetSubscriptionsByProfileIdAsync(1).ConfigureAwait(false);
+
+                Assert.Equal(10, shows.Length);
             }
         }
 
@@ -355,7 +353,7 @@
 
                 var repository = new ShowsRepository(context);
 
-                var shows = await repository.GetTopByGenreAsync(dramaGenre.Name, 1, 5).ConfigureAwait(false);
+                var shows = await repository.GetTopByGenreAsync(dramaGenre.Id, 1, 5).ConfigureAwait(false);
 
                 int[] expectedIds =
                 {
@@ -422,20 +420,21 @@
             }
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData("  ")]
-        [InlineData("\t")]
+        // {
+        // public async Task SearchTopAsync_throws_if_the_query_is_invalid(string query)
 
-        // ReSharper disable once InconsistentNaming
-        public async Task SearchTopAsync_throws_if_the_query_is_invalid(string query)
-        {
-            var repository = new ShowsRepository(null);
+        //// ReSharper disable once InconsistentNaming
+        // [InlineData("\t")]
+        // [InlineData("  ")]
+        // [InlineData(" ")]
+        // [InlineData("")]
+        // [InlineData(null)]
 
-            await Assert.ThrowsAsync<InvalidQueryException>(async () => await repository.SearchTopAsync(query, 1, 5).ConfigureAwait(false))
-                        .ConfigureAwait(false);
-        }
+        // [Theory]
+        // var repository = new ShowsRepository(null);
+
+        // await Assert.ThrowsAsync<InvalidQueryException>(async () => await repository.SearchTopAsync(query, 1, 5).ConfigureAwait(false))
+        // .ConfigureAwait(false);
+        // }
     }
 }

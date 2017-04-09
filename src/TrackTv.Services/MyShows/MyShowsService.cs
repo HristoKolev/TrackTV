@@ -8,29 +8,39 @@
     using TrackTv.Data.Models;
     using TrackTv.Services.Data;
     using TrackTv.Services.Data.Models;
+    using TrackTv.Services.Exceptions;
     using TrackTv.Services.MyShows.Models;
 
     public class MyShowsService : IMyShowsService
     {
-        public MyShowsService(IShowsRepository showsRepository, IEpisodeRepository episodeRepository)
+        public MyShowsService(
+            IEpisodeRepository episodeRepository,
+            ISubscriptionRepository subscriptionRepository,
+            IProfilesRepository profilesRepository)
         {
-            this.ShowsRepository = showsRepository;
             this.EpisodeRepository = episodeRepository;
+            this.SubscriptionRepository = subscriptionRepository;
+            this.ProfilesRepository = profilesRepository;
         }
 
         private IEpisodeRepository EpisodeRepository { get; }
 
-        private IShowsRepository ShowsRepository { get; }
+        private IProfilesRepository ProfilesRepository { get; }
 
-        public async Task<MyShow[]> GetAllAsync(int profileId)
+        private ISubscriptionRepository SubscriptionRepository { get; }
+
+        public async Task<MyShow[]> GetAllAsync(int profileId, DateTime time)
         {
-            var now = DateTime.UtcNow;
+            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId).ConfigureAwait(false))
+            {
+                throw new ProfileNotFoundException(profileId);
+            }
 
-            var shows = await this.ShowsRepository.GetShowsByProfileIdAsync(profileId).ConfigureAwait(false);
+            var shows = await this.SubscriptionRepository.GetSubscriptionsByProfileIdAsync(profileId).ConfigureAwait(false);
 
-            var ids = shows.Select(x => x.Id).ToArray();
+            var showIds = shows.Select(x => x.Id).ToArray();
 
-            var episodesSummaries = await this.EpisodeRepository.GetEpisodesSummariesAsync(ids, now).ConfigureAwait(false);
+            var episodesSummaries = await this.EpisodeRepository.GetEpisodesSummariesAsync(showIds, time).ConfigureAwait(false);
 
             return MapToModels(shows, episodesSummaries);
         }

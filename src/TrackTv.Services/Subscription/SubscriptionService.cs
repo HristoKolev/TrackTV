@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using TrackTv.Services.Data;
-    using TrackTv.Services.Data.Exceptions;
+    using TrackTv.Services.Subscription.Models;
 
     public class SubscriptionService : ISubscriptionService
     {
@@ -16,9 +16,7 @@
 
         public async Task Subscribe(int profileId, int showId)
         {
-            CheckInput(profileId, showId);
-
-            if (await this.SubscriptionRepository.IsUserSubscribedAsync(profileId, showId).ConfigureAwait(false))
+            if (await this.SubscriptionRepository.IsProfileSubscribedAsync(profileId, showId).ConfigureAwait(false))
             {
                 throw new SubscriptionException($"The user is already subscribed to this show: (ProfileId={profileId}, ShowId={showId})");
             }
@@ -28,8 +26,6 @@
 
         public async Task Unsubscribe(int profileId, int showId)
         {
-            CheckInput(profileId, showId);
-
             var subscription = await this.SubscriptionRepository.GetSubscriptionAsync(profileId, showId).ConfigureAwait(false);
 
             if (subscription == null)
@@ -39,19 +35,6 @@
             }
 
             await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.Id).ConfigureAwait(false);
-        }
-
-        private static void CheckInput(int profileId, int showId)
-        {
-            if (profileId == default(int))
-            {
-                throw new SubscriptionException("Invalid ProfileId.");
-            }
-
-            if (showId == default(int))
-            {
-                throw new SubscriptionException("Invalid ShowId.");
-            }
         }
     }
 }

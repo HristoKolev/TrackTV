@@ -8,7 +8,7 @@
 
     public interface IEpisodeRepository
     {
-        Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] ids, DateTime time);
+        Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] showIds, DateTime time);
 
         Task<Episode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay);
     }

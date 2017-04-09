@@ -9,6 +9,7 @@
     using TrackTv.Data;
     using TrackTv.Services.Calendar;
     using TrackTv.Services.Data;
+    using TrackTv.Services.Genres;
     using TrackTv.Services.MyShows;
     using TrackTv.Services.Profile;
     using TrackTv.Services.Show;
@@ -49,6 +50,9 @@
 
             this.For<IEpisodeRepository>().Use<EpisodeRepository>();
             this.For<IMyShowsService>().Use<MyShowsService>();
+
+            this.For<IGenresRepository>().Use<GenresRepository>();
+            this.For<IGenresService>().Use<GenresService>();
 
             this.For<Calendar>().Use<GregorianCalendar>();
             this.For<IEpisodeCalendar>().Use<EpisodeCalendar>();

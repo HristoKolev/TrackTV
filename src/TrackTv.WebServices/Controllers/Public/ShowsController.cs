@@ -1,15 +1,12 @@
-﻿namespace TrackTv.WebServices.Controllers
+﻿namespace TrackTv.WebServices.Controllers.Public
 {
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
-    using TrackTv.Services.Data.Exceptions;
     using TrackTv.Services.Shows;
-    using TrackTv.WebServices.Infrastructure;
 
     [Route("api/[controller]")]
-    [HandleException(typeof(InvalidQueryException))]
     public class ShowsController : Controller
     {
         public ShowsController(IShowsService showsService)
@@ -19,10 +16,10 @@
 
         private IShowsService ShowsService { get; }
 
-        [HttpGet("[action]/{genreName}/{page:int}/{pageSize:int}")]
-        public async Task<IActionResult> Genre(string genreName, int page, int pageSize)
+        [HttpGet("[action]/{genreId:int}/{page:int}/{pageSize:int}")]
+        public async Task<IActionResult> Genre(int genreId, int page, int pageSize)
         {
-            return this.Ok(await this.ShowsService.GetByGenreAsync(genreName, page, pageSize).ConfigureAwait(false));
+            return this.Ok(await this.ShowsService.GetByGenreAsync(genreId, page, pageSize).ConfigureAwait(false));
         }
 
         [HttpGet("[action]/{query}/{page:int}/{pageSize:int}")]

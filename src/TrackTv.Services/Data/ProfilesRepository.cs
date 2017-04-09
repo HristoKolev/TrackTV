@@ -31,5 +31,10 @@
         {
             return this.DbContext.Profiles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == profileId);
         }
+
+        public Task<bool> ProfileExistsAsync(int profileId)
+        {
+            return this.DbContext.Profiles.AnyAsync(x => x.Id == profileId);
+        }
     }
 }

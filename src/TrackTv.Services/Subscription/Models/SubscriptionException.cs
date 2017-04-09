@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Data.Exceptions
+﻿namespace TrackTv.Services.Subscription.Models
 {
     using System;
 

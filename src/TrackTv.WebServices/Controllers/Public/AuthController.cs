@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Controllers
+﻿namespace TrackTv.WebServices.Controllers.Public
 {
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
@@ -18,7 +18,8 @@
 
     using OpenIddict.Core;
 
-    using TrackTv.Services.Data;
+    using TrackTv.Data;
+    using TrackTv.Services.Profile;
     using TrackTv.WebServices.Infrastructure;
 
     [Route("api/[controller]")]
@@ -27,16 +28,16 @@
         public AuthController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            IProfilesRepository profilesRepository,
+            IProfileService profilesService,
             ITransactionScopeFactory transactionScopeFactory)
         {
             this.SignInManager = signInManager;
             this.UserManager = userManager;
-            this.ProfilesRepository = profilesRepository;
+            this.ProfilesService = profilesService;
             this.TransactionScopeFactory = transactionScopeFactory;
         }
 
-        private IProfilesRepository ProfilesRepository { get; }
+        private IProfileService ProfilesService { get; }
 
         private SignInManager<ApplicationUser> SignInManager { get; }
 
@@ -138,7 +139,7 @@
 
             using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
             {
-                int profileId = await this.ProfilesRepository.CreateProfileAsync(model.Email).ConfigureAwait(false);
+                int profileId = await this.ProfilesService.CreateProfileAsync(model.Email).ConfigureAwait(false);
 
                 var user = new ApplicationUser
                 {

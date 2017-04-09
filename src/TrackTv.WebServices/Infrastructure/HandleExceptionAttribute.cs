@@ -6,35 +6,61 @@ namespace TrackTv.WebServices.Infrastructure
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
+    using TrackTv.Services.Show.Models;
+    using TrackTv.Services.Shows.Models;
+    using TrackTv.Services.Subscription.Models;
+
     /// <summary>
     /// Catches errors and wraps them in an <see cref="ErrorModel"/> that gets returned from the action with status code of 400.
     /// </summary>
     public class HandleExceptionAttribute : ExceptionFilterAttribute
     {
-        public HandleExceptionAttribute(Type exceptionType)
+        static HandleExceptionAttribute()
         {
-            this.ExceptionType = exceptionType;
+            ApiErrorExceptions = GetApiErrorExceptions();
         }
 
-        private Type ExceptionType { get; }
+        private static Type[] ApiErrorExceptions { get; }
 
         public override void OnException(ExceptionContext context)
         {
-            if (this.ExceptionType.IsInstanceOfType(context.Exception))
+            foreach (var exceptionType in ApiErrorExceptions)
             {
-                context.Result = new BadRequestObjectResult(new ErrorModel
+                if (exceptionType.IsInstanceOfType(context.Exception))
                 {
-                    Message = context.Exception.Message,
-                    ErrorType = this.ExceptionType.Name
-                });
+                    context.Result = new BadRequestObjectResult(new ErrorModel
+                    {
+                        Message = context.Exception.Message,
+                        ErrorCode = exceptionType.Name
+                    });
 
+                    context.ExceptionHandled = true;
+
+                    break;
+                }
+            }
+
+            if (!context.ExceptionHandled)
+            {
+                context.Result = new StatusCodeResult(500);
                 context.ExceptionHandled = true;
             }
         }
 
+        private static Type[] GetApiErrorExceptions()
+        {
+            return new[]
+            {
+                typeof(ShowNotFoundException),
+                typeof(GenreNotFoundException),
+                typeof(InvalidQueryException),
+                typeof(SubscriptionException)
+            };
+        }
+
         private class ErrorModel
         {
-            public string ErrorType { get; set; }
+            public string ErrorCode { get; set; }
 
             public string Message { get; set; }
         }

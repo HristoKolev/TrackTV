@@ -6,7 +6,7 @@
 
     public interface IShowsService
     {
-        Task<PagedResponse<ShowSummary[]>> GetByGenreAsync(string genreName, int page, int pageSize);
+        Task<PagedResponse<ShowSummary[]>> GetByGenreAsync(int genreId, int page, int pageSize);
 
         Task<PagedResponse<ShowSummary[]>> GetTopShowsAsync(int page, int pageSize);
 

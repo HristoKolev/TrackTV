@@ -66,13 +66,13 @@
         {
             this.ConfigureAuth(services);
 
-            services.AddMvc();
+            services.AddMvc(options => { options.Filters.Add(typeof(HandleExceptionAttribute)); });
 
             var container = new Container();
 
             container.Configure(config =>
             {
-                //Populate the container using the service collection
+                // Populate the container using the service collection
                 config.Populate(services);
 
                 config.AddRegistry<ContainerRegistry>();

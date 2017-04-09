@@ -1,5 +1,6 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Ok(await this.MyShowsService.GetAllAsync(this.User.GetProfileId()).ConfigureAwait(false));
+            return this.Ok(await this.MyShowsService.GetAllAsync(this.User.GetProfileId(), DateTime.UtcNow).ConfigureAwait(false));
         }
     }
 }

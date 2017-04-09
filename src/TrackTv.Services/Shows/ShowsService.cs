@@ -7,26 +7,36 @@
     using TrackTv.Data.Models;
     using TrackTv.Services.Data;
     using TrackTv.Services.Data.Models;
+    using TrackTv.Services.Show.Models;
     using TrackTv.Services.Shows.Models;
 
     public class ShowsService : IShowsService
     {
         private const int DefaultPageSize = 50;
 
-        public ShowsService(IShowsRepository showsRepository)
+        public ShowsService(IShowsRepository showsRepository, IGenresRepository genresRepository)
         {
             this.ShowsRepository = showsRepository;
+            this.GenresRepository = genresRepository;
         }
+
+        private IGenresRepository GenresRepository { get; }
 
         private IShowsRepository ShowsRepository { get; }
 
-        public async Task<PagedResponse<ShowSummary[]>> GetByGenreAsync(string genreName, int page = 1, int pageSize = DefaultPageSize)
+        public async Task<PagedResponse<ShowSummary[]>> GetByGenreAsync(int genreId, int page = 1, int pageSize = DefaultPageSize)
         {
-            var shows = await this.ShowsRepository.GetTopByGenreAsync(genreName, page, pageSize).ConfigureAwait(false);
+            if (!await this.GenresRepository.GenreExistsAsync(genreId).ConfigureAwait(false))
+            {
+                throw new GenreNotFoundException(genreId);
+            }
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray()).ConfigureAwait(false);
+            var shows = await this.ShowsRepository.GetTopByGenreAsync(genreId, page, pageSize).ConfigureAwait(false);
 
-            int totalCount = await this.ShowsRepository.CountByGenreAsync(genreName).ConfigureAwait(false);
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray())
+                                             .ConfigureAwait(false);
+
+            int totalCount = await this.ShowsRepository.CountByGenreAsync(genreId).ConfigureAwait(false);
 
             return ConstructResponse(shows, subscriberCounts, totalCount);
         }
@@ -35,7 +45,8 @@
         {
             var shows = await this.ShowsRepository.GetTopAsync(page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray()).ConfigureAwait(false);
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray())
+                                             .ConfigureAwait(false);
 
             int totalCount = await this.ShowsRepository.CountAllAsync().ConfigureAwait(false);
 
@@ -44,9 +55,15 @@
 
         public async Task<PagedResponse<ShowSummary[]>> SearchTopShowsAsync(string query, int page = 1, int pageSize = DefaultPageSize)
         {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                throw new InvalidQueryException("The query is null or an empty string.");
+            }
+
             var shows = await this.ShowsRepository.SearchTopAsync(query, page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray()).ConfigureAwait(false);
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray())
+                                             .ConfigureAwait(false);
 
             int totalCount = await this.ShowsRepository.CountAllResultsAsync(query).ConfigureAwait(false);
 
