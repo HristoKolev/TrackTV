@@ -66,6 +66,7 @@
         {
             this.ConfigureAuth(services);
 
+            services.AddMemoryCache();
             services.AddMvc(options => { options.Filters.Add(typeof(HandleExceptionAttribute)); });
 
             var container = new Container();

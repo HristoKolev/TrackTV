@@ -37,26 +37,32 @@
 
         private void RegisterServices()
         {
-            this.For<ISubscriptionService>().Use<SubscriptionService>();
-            this.For<ISubscriptionRepository>().Use<SubscriptionRepository>();
+            this.For<ISubscriptionRepository>().Use<SubscriptionRepository>().ContainerScoped();
+            this.For<ISubscriptionService>().Use<SubscriptionService>().ContainerScoped();
 
-            this.For<IProfilesRepository>().Use<ProfilesRepository>();
-            this.For<IProfileService>().Use<ProfileService>();
+            this.For<IProfilesRepository>()
+                .Use<CacheProfilesRepository>()
+                .ContainerScoped()
+                .Ctor<IProfilesRepository>()
+                .Is<ProfilesRepository>()
+                .ContainerScoped();
 
-            this.For<IShowsRepository>().Use<ShowsRepository>();
-            this.For<IShowsService>().Use<ShowsService>();
+            this.For<IProfileService>().Use<ProfileService>().ContainerScoped();
 
-            this.For<IShowService>().Use<ShowService>();
+            this.For<IShowsRepository>().Use<ShowsRepository>().ContainerScoped();
+            this.For<IShowsService>().Use<ShowsService>().ContainerScoped();
 
-            this.For<IEpisodeRepository>().Use<EpisodeRepository>();
-            this.For<IMyShowsService>().Use<MyShowsService>();
+            this.For<IShowService>().Use<ShowService>().ContainerScoped();
 
-            this.For<IGenresRepository>().Use<GenresRepository>();
-            this.For<IGenresService>().Use<GenresService>();
+            this.For<IEpisodeRepository>().Use<EpisodeRepository>().ContainerScoped();
+            this.For<IMyShowsService>().Use<MyShowsService>().ContainerScoped();
+
+            this.For<IGenresRepository>().Use<GenresRepository>().ContainerScoped();
+            this.For<IGenresService>().Use<GenresService>().ContainerScoped();
 
             this.For<Calendar>().Use<GregorianCalendar>();
-            this.For<IEpisodeCalendar>().Use<EpisodeCalendar>();
-            this.For<ICalendarService>().Use<CalendarService>();
+            this.For<IEpisodeCalendar>().Use<EpisodeCalendar>().ContainerScoped();
+            this.For<ICalendarService>().Use<CalendarService>().ContainerScoped();
         }
     }
 }
