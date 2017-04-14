@@ -1,7 +1,10 @@
-﻿namespace TrackTv.Services.Show.Models
+﻿namespace TrackTv.Services.Shows.Models
 {
     using System;
 
+    using TrackTv.Services.Exceptions;
+
+    [ExposeError]
     public class InvalidQueryException : Exception
     {
         public InvalidQueryException(string message)
