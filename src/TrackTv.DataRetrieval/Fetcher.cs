@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using TrackTv.Data;
     using TrackTv.Data.Models;
     using TrackTv.Data.Models.Contracts;
@@ -25,7 +27,8 @@
             IGenreFetcher genreFetcher,
             IShowFetcher showFetcher,
             IShowsRepository showsRepository,
-            IEpisodeRepository episodeRepository)
+            IEpisodeRepository episodeRepository,
+            ITransactionScopeFactory transactionScopeFactory)
         {
             this.Context = context;
             this.Client = client;
@@ -35,13 +38,14 @@
             this.ShowFetcher = showFetcher;
             this.ShowsRepository = showsRepository;
             this.EpisodeRepository = episodeRepository;
+            this.TransactionScopeFactory = transactionScopeFactory;
         }
 
         private IActorFetcher ActorFetcher { get; }
 
         private ITvDbClient Client { get; }
 
-        private TrackTvDbContext Context { get; }
+        private DbContext Context { get; }
 
         private IEpisodeFetcher EpisodeFetcher { get; }
 
@@ -53,79 +57,101 @@
 
         private IShowsRepository ShowsRepository { get; }
 
+        private ITransactionScopeFactory TransactionScopeFactory { get; }
+
         public async Task AddShowAsync(int theTvDbId)
         {
-            var show = new Show
+            using (var scope = this.TransactionScopeFactory.CreateScope())
             {
-                TheTvDbId = theTvDbId
-            };
+                var show = new Show
+                {
+                    TheTvDbId = theTvDbId
+                };
 
-            await this.PopulateShowAsync(show).ConfigureAwait(false);
+                await this.PopulateShowAsync(show).ConfigureAwait(false);
 
-            await this.EpisodeFetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
+                await this.EpisodeFetcher.AddAllEpisodesAsync(show).ConfigureAwait(false);
 
-            await this.ShowsRepository.AddShowAsync(show).ConfigureAwait(false);
+                await this.ShowsRepository.AddShowAsync(show).ConfigureAwait(false);
+
+                scope.Complete();
+            }
         }
 
         public async Task UpdateAllRecordsAsync(DateTime from)
         {
-            var response = await this.Client.Updates.GetAsync(from).ConfigureAwait(false);
-
-            var ids = response.Data.Select(x => x.Id).ToArray();
-
-            var shows = await this.ShowsRepository.GetFullShowsByTheTvDbIdsAsync(ids).ConfigureAwait(false);
-
-            foreach (var show in shows.Where(x => IsOutdated(x, response.Data)))
+            using (var scope = this.TransactionScopeFactory.CreateScope())
             {
-                await this.PopulateShowAsync(show).ConfigureAwait(false);
+                var response = await this.Client.Updates.GetAsync(from).ConfigureAwait(false);
 
-                await this.EpisodeFetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
+                var ids = response.Data.Select(x => x.Id).ToArray();
+
+                var shows = await this.ShowsRepository.GetFullShowsByTheTvDbIdsAsync(ids).ConfigureAwait(false);
+
+                foreach (var show in shows.Where(x => IsOutdated(x, response.Data)))
+                {
+                    await this.PopulateShowAsync(show).ConfigureAwait(false);
+
+                    await this.EpisodeFetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
+                }
+
+                var episodes = await this.EpisodeRepository.GetEpisodesByTheTvDbIdsAsync(ids).ConfigureAwait(false);
+
+                foreach (var episode in episodes.Where(x => IsOutdated(x, response.Data)))
+                {
+                    await this.EpisodeFetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
+                }
+
+                await this.Context.SaveChangesAsync().ConfigureAwait(false);
+
+                scope.Complete();
             }
-
-            var episodes = await this.EpisodeRepository.GetEpisodesByTheTvDbIdsAsync(ids).ConfigureAwait(false);
-
-            foreach (var episode in episodes.Where(x => IsOutdated(x, response.Data)))
-            {
-                await this.EpisodeFetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
-            }
-
-            await this.Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task UpdateEpisodeAsync(int id)
+        public async Task UpdateEpisodeAsync(int episodeId)
         {
-            var episode = await this.EpisodeRepository.GetEpisodeById(id).ConfigureAwait(false);
+            using (var scope = this.TransactionScopeFactory.CreateScope())
+            {
+                var episode = await this.EpisodeRepository.GetEpisodeById(episodeId).ConfigureAwait(false);
 
-            await this.EpisodeFetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
+                await this.EpisodeFetcher.PopulateEpisodeAsync(episode).ConfigureAwait(false);
 
-            await this.Context.SaveChangesAsync().ConfigureAwait(false);
+                await this.Context.SaveChangesAsync().ConfigureAwait(false);
+
+                scope.Complete();
+            }
         }
 
         public async Task UpdateEpisodesAsync(int showId)
         {
-            var episodes = await this.EpisodeRepository.GetEpisodesByShowIdAsync(showId).ConfigureAwait(false);
-
-            var tasks = new List<Task>();
-
-            foreach (var episode in episodes)
+            using (var scope = this.TransactionScopeFactory.CreateScope())
             {
-                tasks.Add(this.EpisodeFetcher.PopulateEpisodeAsync(episode));
+                var episodes = await this.EpisodeRepository.GetEpisodesByShowIdAsync(showId).ConfigureAwait(false);
+
+                var tasks = episodes.Select(episode => this.EpisodeFetcher.PopulateEpisodeAsync(episode));
+
+                await Task.WhenAll(tasks).ConfigureAwait(false);
+
+                await this.Context.SaveChangesAsync().ConfigureAwait(false);
+
+                scope.Complete();
             }
-
-            await Task.WhenAll(tasks).ConfigureAwait(false);
-
-            await this.Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task UpdateShowAsync(int id)
+        public async Task UpdateShowAsync(int showId)
         {
-            var show = await this.ShowsRepository.GetFullShowByIdAsync(id).ConfigureAwait(false);
+            using (var scope = this.TransactionScopeFactory.CreateScope())
+            {
+                var show = await this.ShowsRepository.GetFullShowByIdAsync(showId).ConfigureAwait(false);
 
-            await this.PopulateShowAsync(show).ConfigureAwait(false);
+                await this.PopulateShowAsync(show).ConfigureAwait(false);
 
-            await this.EpisodeFetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
+                await this.EpisodeFetcher.AddNewEpisodesAsync(show).ConfigureAwait(false);
 
-            await this.Context.SaveChangesAsync().ConfigureAwait(false);
+                await this.Context.SaveChangesAsync().ConfigureAwait(false);
+
+                scope.Complete();
+            }
         }
 
         private static bool IsOutdated(ITvDbRecord record, IEnumerable<Update> updates)

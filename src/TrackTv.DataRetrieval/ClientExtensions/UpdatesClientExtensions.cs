@@ -11,6 +11,8 @@ namespace TrackTv.DataRetrieval.ClientExtensions
 
     public static class UpdatesClientExtensions
     {
+        private static readonly TimeSpan MaxRangeLength = new TimeSpan(7, 0, 0, 0);
+
         public static async Task<TvDbResponse<Update[]>> GetAccumulatedAsync(this IUpdatesClient client, DateTime fromTime, DateTime toTime)
         {
             if (fromTime > toTime)
@@ -18,14 +20,12 @@ namespace TrackTv.DataRetrieval.ClientExtensions
                 throw new NotSupportedException($"The {nameof(fromTime)} is past the {nameof(toTime)}");
             }
 
-            var maxRangeLength = new TimeSpan(7, 0, 0, 0);
-
-            if (toTime - fromTime <= maxRangeLength)
+            if (toTime - fromTime <= MaxRangeLength)
             {
                 return await client.GetAsync(fromTime, toTime).ConfigureAwait(false);
             }
 
-            var ranges = BreakDownRanges(fromTime, toTime, maxRangeLength);
+            var ranges = BreakDownRanges(fromTime, toTime);
 
             var responses = await GetResponsesAsync(client, ranges).ConfigureAwait(false);
 
@@ -37,15 +37,15 @@ namespace TrackTv.DataRetrieval.ClientExtensions
             };
         }
 
-        private static Dictionary<DateTime, DateTime> BreakDownRanges(DateTime fromTime, DateTime toTime, TimeSpan maxRangeLength)
+        private static IDictionary<DateTime, DateTime> BreakDownRanges(DateTime fromTime, DateTime toTime)
         {
             var ranges = new Dictionary<DateTime, DateTime>();
 
-            while (toTime - fromTime > maxRangeLength)
+            while (toTime - fromTime > MaxRangeLength)
             {
-                ranges.Add(fromTime, fromTime.Add(maxRangeLength));
+                ranges.Add(fromTime, fromTime.Add(MaxRangeLength));
 
-                fromTime = fromTime.Add(maxRangeLength);
+                fromTime = fromTime.Add(MaxRangeLength);
             }
 
             if (fromTime != toTime)
@@ -71,16 +71,9 @@ namespace TrackTv.DataRetrieval.ClientExtensions
             return results.Select(x => x.Value).ToArray();
         }
 
-        private static Task<TvDbResponse<Update[]>[]> GetResponsesAsync(IUpdatesClient client, Dictionary<DateTime, DateTime> ranges)
+        private static Task<TvDbResponse<Update[]>[]> GetResponsesAsync(IUpdatesClient client, IDictionary<DateTime, DateTime> ranges)
         {
-            var tasks = new List<Task<TvDbResponse<Update[]>>>();
-
-            foreach (var range in ranges)
-            {
-                tasks.Add(client.GetAsync(range.Key, range.Value));
-            }
-
-            return Task.WhenAll(tasks);
+            return Task.WhenAll(ranges.Select(range => client.GetAsync(range.Key, range.Value)));
         }
     }
 }

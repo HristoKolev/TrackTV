@@ -15,24 +15,22 @@
     using StructureMap;
 
     using TrackTv.WebServices.Infrastructure;
+    using TrackTv.WebServices.Infrastructure.IocConfig;
 
     public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
-            this.Configuration = BuildConfigurations(env);
+            var config = BuildConfigurations(env);
 
-            Global.AppConfig = this.Configuration;
+            this.Configuration = config;
+            Global.AppConfig = config;
         }
 
         private IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(
-            IApplicationBuilder app,
-            IHostingEnvironment env,
-            ILoggerFactory loggerFactory,
-            IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -69,14 +67,17 @@
             services.AddMemoryCache();
             services.AddMvc(options => { options.Filters.Add(typeof(HandleExceptionAttribute)); });
 
-            var container = new Container();
+            services.AddSingleton(this.Configuration);
 
-            container.Configure(config =>
+            var container = new Container(config =>
             {
                 // Populate the container using the service collection
                 config.Populate(services);
 
-                config.AddRegistry<ContainerRegistry>();
+                config.AddRegistry<ServiceLayerRegistry>();
+                config.AddRegistry<DataAccessRegistry>();
+                config.AddRegistry<TvDbClientRegistry>();
+                config.AddRegistry<DataRetrievalRegistry>();
             });
 
             return container.GetInstance<IServiceProvider>();

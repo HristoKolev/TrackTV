@@ -9,10 +9,10 @@
 
         Task UpdateAllRecordsAsync(DateTime from);
 
-        Task UpdateEpisodeAsync(int id);
+        Task UpdateEpisodeAsync(int episodeId);
 
         Task UpdateEpisodesAsync(int showId);
 
-        Task UpdateShowAsync(int id);
+        Task UpdateShowAsync(int showId);
     }
 }

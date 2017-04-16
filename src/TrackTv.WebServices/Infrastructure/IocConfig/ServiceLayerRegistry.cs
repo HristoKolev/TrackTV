@@ -1,12 +1,9 @@
-﻿namespace TrackTv.WebServices.Infrastructure
+﻿namespace TrackTv.WebServices.Infrastructure.IocConfig
 {
     using System.Globalization;
 
-    using Microsoft.EntityFrameworkCore;
-
     using StructureMap;
 
-    using TrackTv.Data;
     using TrackTv.Services.Calendar;
     using TrackTv.Services.Data;
     using TrackTv.Services.Genres;
@@ -16,26 +13,9 @@
     using TrackTv.Services.Shows;
     using TrackTv.Services.Subscription;
 
-    public class ContainerRegistry : Registry
+    public class ServiceLayerRegistry : Registry
     {
-        public ContainerRegistry()
-        {
-            this.RegisterServices();
-
-            this.RegisterDataAccess();
-        }
-
-        private void RegisterDataAccess()
-        {
-            this.ForConcreteType<ApplicationDbContext>().Configure.ContainerScoped();
-
-            this.Forward<ApplicationDbContext, TrackTvDbContext>();
-            this.Forward<ApplicationDbContext, DbContext>();
-
-            this.For<ITransactionScopeFactory>().Use<TransactionScopeFactory>().ContainerScoped();
-        }
-
-        private void RegisterServices()
+        public ServiceLayerRegistry()
         {
             this.For<ISubscriptionRepository>().Use<SubscriptionRepository>().ContainerScoped();
             this.For<ISubscriptionService>().Use<SubscriptionService>().ContainerScoped();
@@ -60,7 +40,7 @@
             this.For<IGenresRepository>().Use<GenresRepository>().ContainerScoped();
             this.For<IGenresService>().Use<GenresService>().ContainerScoped();
 
-            this.For<Calendar>().Use<GregorianCalendar>();
+            this.For<Calendar>().Use<GregorianCalendar>().AlwaysUnique();
             this.For<IEpisodeCalendar>().Use<EpisodeCalendar>().ContainerScoped();
             this.For<ICalendarService>().Use<CalendarService>().ContainerScoped();
         }

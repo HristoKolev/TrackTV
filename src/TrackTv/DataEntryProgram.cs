@@ -26,26 +26,19 @@
 
             using (var context = await CreateContext().ConfigureAwait(false))
             {
-                var transactionScopeFactory = new TransactionScopeFactory(context);
+                var fetcher = CreateFetcher(context, client);
 
-                using (var scope = await transactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
-                {
-                    var fetcher = CreateFetcher(context, client);
+                await fetcher.AddShowAsync(70851).ConfigureAwait(false);
+                await fetcher.AddShowAsync(78804).ConfigureAwait(false);
+                await fetcher.AddShowAsync(83237).ConfigureAwait(false);
+                await fetcher.AddShowAsync(70851).ConfigureAwait(false);
+                await fetcher.AddShowAsync(72449).ConfigureAwait(false);
+                await fetcher.AddShowAsync(82066).ConfigureAwait(false);
+                await fetcher.AddShowAsync(292124).ConfigureAwait(false);
+                await fetcher.AddShowAsync(296762).ConfigureAwait(false);
 
-                    await fetcher.AddShowAsync(70851).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(78804).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(83237).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(70851).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(72449).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(82066).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(292124).ConfigureAwait(false);
-                    await fetcher.AddShowAsync(296762).ConfigureAwait(false);
-
-                    await fetcher.UpdateShowAsync(1).ConfigureAwait(false);
-                    await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19)).ConfigureAwait(false);
-
-                    // scope.Complete();
-                }
+                await fetcher.UpdateShowAsync(1).ConfigureAwait(false);
+                await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19)).ConfigureAwait(false);
             }
         }
 
@@ -90,7 +83,7 @@
             var genreFetcher = new GenreFetcher(genresRepository);
 
             var fetcher = new Fetcher(context, client, episodeFetcher, actorFetcher, genreFetcher, showFetcher, showsRepository,
-                episodeRepository);
+                episodeRepository, new TransactionScopeFactory(context));
 
             return fetcher;
         }
