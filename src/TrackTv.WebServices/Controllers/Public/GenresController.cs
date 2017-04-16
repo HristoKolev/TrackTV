@@ -6,7 +6,7 @@
 
     using TrackTv.Services.Genres;
 
-    [Route("api/[controller]")]
+    [Route("api/public/[controller]")]
     public class GenresController : Controller
     {
         public GenresController(IGenresService genreService)

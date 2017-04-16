@@ -6,7 +6,7 @@
 
     using TrackTv.Services.Shows;
 
-    [Route("api/[controller]")]
+    [Route("api/public/[controller]")]
     public class ShowsController : Controller
     {
         public ShowsController(IShowsService showsService)

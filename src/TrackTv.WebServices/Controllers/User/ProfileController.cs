@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Controllers
+﻿namespace TrackTv.WebServices.Controllers.User
 {
     using System.Threading.Tasks;
 
@@ -9,7 +9,7 @@
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/user/[controller]")]
     public class ProfileController : Controller
     {
         public ProfileController(IProfileService profileService)

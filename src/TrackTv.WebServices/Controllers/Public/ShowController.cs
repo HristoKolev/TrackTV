@@ -8,7 +8,7 @@
     using TrackTv.Services.Show.Models;
     using TrackTv.WebServices.Infrastructure;
 
-    [Route("api/[controller]")]
+    [Route("api/public/[controller]")]
     public class ShowController : Controller
     {
         public ShowController(IShowService showService)

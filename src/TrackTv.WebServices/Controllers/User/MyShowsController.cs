@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Controllers
+﻿namespace TrackTv.WebServices.Controllers.User
 {
     using System;
     using System.Threading.Tasks;
@@ -10,7 +10,7 @@
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/user/[controller]")]
     public class MyShowsController : Controller
     {
         public MyShowsController(IMyShowsService myShowsService)

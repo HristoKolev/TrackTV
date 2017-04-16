@@ -22,7 +22,7 @@
     using TrackTv.Services.Profile;
     using TrackTv.WebServices.Infrastructure;
 
-    [Route("api/[controller]")]
+    [Route("api/public/[controller]")]
     public class AuthController : Controller
     {
         public AuthController(

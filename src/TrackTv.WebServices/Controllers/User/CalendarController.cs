@@ -10,7 +10,7 @@
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/user/[controller]")]
     public class CalendarController : Controller
     {
         public CalendarController(ICalendarService calendarService)
