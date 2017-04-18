@@ -7,6 +7,7 @@
 
     using TrackTv.DataRetrieval;
     using TrackTv.DataRetrieval.Services;
+    using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
     [Route("api/admin/[controller]")]
@@ -22,6 +23,7 @@
 
         private IFetcher Fetcher { get; }
 
+        [ServiceFilter(typeof(InTransactionFilterAttribute))]
         [HttpPut("[action]/{seriesId}")]
         public async Task<IActionResult> Add(int seriesId)
         {

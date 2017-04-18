@@ -15,9 +15,9 @@ namespace TrackTv.WebServices.Infrastructure
     /// we wrap it in a <see cref="ErrorModel"/> and return it with an status code of 400.</para> 
     /// <para>If the exception doesn't have a <see cref="ExposeErrorAttribute"/> attribute, we return an empty response with status code of 500.</para> 
     /// </summary>
-    public class HandleExceptionAttribute : ExceptionFilterAttribute
+    public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        static HandleExceptionAttribute()
+        static HandleExceptionFilterAttribute()
         {
             ApiErrorExceptions = GetApiErrorExceptions();
         }
@@ -26,8 +26,10 @@ namespace TrackTv.WebServices.Infrastructure
 
         public override void OnException(ExceptionContext context)
         {
-            foreach (var exceptionType in ApiErrorExceptions)
+            for (int i = 0; i < ApiErrorExceptions.Length; i++)
             {
+                Type exceptionType = ApiErrorExceptions[i];
+
                 if (exceptionType.IsInstanceOfType(context.Exception))
                 {
                     context.Result = new BadRequestObjectResult(new ErrorModel

@@ -7,8 +7,10 @@
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.DataRetrieval;
+    using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
+    [ServiceFilter(typeof(InTransactionFilterAttribute))]
     [Route("api/admin/[controller]")]
     public class UpdatesController : Controller
     {

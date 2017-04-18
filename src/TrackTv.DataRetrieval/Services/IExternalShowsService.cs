@@ -4,7 +4,7 @@
 
     public interface IExternalShowsService
     {
-        Task<CatalogShow[]> GetShowsByImdbIdAsync(string ImdbId);
+        Task<CatalogShow[]> GetShowsByImdbIdAsync(string imdbId);
 
         Task<CatalogShow[]> GetShowsByNameAsync(string query);
     }
