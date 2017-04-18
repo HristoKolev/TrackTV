@@ -65,7 +65,7 @@
             this.ConfigureAuth(services);
 
             services.AddMemoryCache();
-            services.AddMvc(options => { options.Filters.Add(typeof(HandleExceptionAttribute)); });
+            services.AddMvc(options => { options.Filters.Add(typeof(HandleExceptionFilterAttribute)); });
 
             services.AddSingleton(this.Configuration);
 
