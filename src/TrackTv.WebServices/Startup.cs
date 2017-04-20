@@ -99,7 +99,7 @@
             // Add framework services.
             services.AddDbContext<AuthContext>(options =>
             {
-                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseMySql(this.Configuration.GetConnectionString("DefaultConnection"));
 
                 // Register the entity sets needed by OpenIddict.
                 // Note: use the generic overload if you need

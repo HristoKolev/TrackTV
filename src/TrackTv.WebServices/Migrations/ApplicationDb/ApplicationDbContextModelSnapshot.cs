@@ -14,8 +14,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "1.1.1");
 
             modelBuilder.Entity("TrackTv.Data.Models.Actor", b =>
                 {
@@ -77,7 +76,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -91,7 +90,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 

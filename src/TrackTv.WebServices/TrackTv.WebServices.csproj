@@ -34,8 +34,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
@@ -51,6 +49,7 @@
     <PackageReference Include="OpenIddict" Version="1.0.0-beta2-0598" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="1.0.0-beta2-0598" />
     <PackageReference Include="OpenIddict.Mvc" Version="1.0.0-beta2-0598" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="1.1.1" />
     <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.3.0" />
   </ItemGroup>
 

@@ -4,8 +4,6 @@
     using System.IO;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
-
     using Newtonsoft.Json;
 
     using TrackTv.Configuration;
@@ -24,21 +22,28 @@
         {
             var client = await CreateClient().ConfigureAwait(false);
 
-            using (var context = await CreateContext().ConfigureAwait(false))
+            using (var context = CreateContext())
             {
+                var transactionScopeFactory = new TransactionScopeFactory(context);
+
                 var fetcher = CreateFetcher(context, client);
 
-                await fetcher.AddShowAsync(70851).ConfigureAwait(false);
-                await fetcher.AddShowAsync(78804).ConfigureAwait(false);
-                await fetcher.AddShowAsync(83237).ConfigureAwait(false);
-                await fetcher.AddShowAsync(70851).ConfigureAwait(false);
-                await fetcher.AddShowAsync(72449).ConfigureAwait(false);
-                await fetcher.AddShowAsync(82066).ConfigureAwait(false);
-                await fetcher.AddShowAsync(292124).ConfigureAwait(false);
-                await fetcher.AddShowAsync(296762).ConfigureAwait(false);
+                using (var scope = await transactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
+                {
+                    await fetcher.AddShowAsync(70851).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(78804).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(83237).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(70851).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(72449).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(82066).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(292124).ConfigureAwait(false);
+                    await fetcher.AddShowAsync(296762).ConfigureAwait(false);
 
-                await fetcher.UpdateShowAsync(1).ConfigureAwait(false);
-                await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19)).ConfigureAwait(false);
+                    await fetcher.UpdateShowAsync(1).ConfigureAwait(false);
+                    await fetcher.UpdateAllRecordsAsync(new DateTime(2016, 10, 19)).ConfigureAwait(false);
+
+                    scope.Complete();
+                }
             }
         }
 
@@ -53,13 +58,13 @@
             return client;
         }
 
-        private static async Task<TrackTvDbContext> CreateContext()
+        private static TrackTvDbContext CreateContext()
         {
             var configurator = new DbContextConfigurator();
 
             var context = new TrackTvDbContext(configurator.GetOptions());
 
-            await context.Database.MigrateAsync().ConfigureAwait(false);
+            context.Database.AutoTransactionsEnabled = false;
 
             configurator.AttachLogger<SqlLoggerProvider>(context);
 
@@ -83,7 +88,7 @@
             var genreFetcher = new GenreFetcher(genresRepository);
 
             var fetcher = new Fetcher(context, client, episodeFetcher, actorFetcher, genreFetcher, showFetcher, showsRepository,
-                episodeRepository, new TransactionScopeFactory(context));
+                episodeRepository);
 
             return fetcher;
         }

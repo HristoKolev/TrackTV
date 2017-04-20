@@ -16,7 +16,7 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Global.AppConfig.GetConnectionString(ConnectionName));
+                optionsBuilder.UseMySql(Global.AppConfig.GetConnectionString(ConnectionName));
             }
         }
     }

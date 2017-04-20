@@ -26,7 +26,9 @@ namespace TrackTv.WebServices.Infrastructure
 
         public Task<Profile> GetProfileByIdAsync(int profileId)
         {
-            return this.ProfilesRepository.GetProfileByIdAsync(profileId);
+            return this.MemoryCache.GetOrCreateAsync(
+                nameof(CacheProfilesRepository) + "_" + nameof(this.GetProfileByIdAsync) + "_" + profileId,
+                entry => this.ProfilesRepository.GetProfileByIdAsync(profileId));
         }
 
         public Task<bool> ProfileExistsAsync(int profileId)

@@ -9,14 +9,13 @@ using TrackTv.Data.Models.Enums;
 namespace TrackTv.WebServices.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170404204228_ApplicationDbContext_Created")]
+    [Migration("20170420205423_ApplicationDbContext_Created")]
     partial class ApplicationDbContext_Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "1.1.1");
 
             modelBuilder.Entity("TrackTv.Data.Models.Actor", b =>
                 {
@@ -78,7 +77,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -92,7 +91,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 

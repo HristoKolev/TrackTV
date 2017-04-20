@@ -1,6 +1,11 @@
 ﻿namespace TrackTv.Data
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using TrackTv.Data.Models;
 
@@ -42,11 +47,12 @@
 
         private static void ConfigureManyToManyRelationships(ModelBuilder builder)
         {
-            builder.Entity<ShowsGenres>().HasKey(t => new
-            {
-                t.ShowId,
-                t.GenreId
-            });
+            builder.Entity<ShowsGenres>()
+                   .HasKey(t => new
+                   {
+                       t.ShowId,
+                       t.GenreId
+                   });
         }
 
         private static void ConfigureProperties(ModelBuilder builder)
@@ -60,9 +66,9 @@
             builder.Entity<Episode>().Property(t => t.Title).HasMaxLength(byte.MaxValue);
             builder.Entity<Episode>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
 
-            builder.Entity<Genre>().Property(t => t.Name).HasMaxLength(100).IsRequired();
+            builder.Entity<Genre>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
 
-            builder.Entity<Network>().Property(t => t.Name).HasMaxLength(40).IsRequired();
+            builder.Entity<Network>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
 
             builder.Entity<Actor>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
             builder.Entity<Actor>().Property(t => t.Image).HasMaxLength(byte.MaxValue);

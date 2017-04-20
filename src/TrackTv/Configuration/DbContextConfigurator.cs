@@ -29,7 +29,7 @@
 
             var appSettings = ReadConfig<AppSettings>("appsettings.json");
 
-            optionsBuilder.UseSqlServer(appSettings.ConnectionString);
+            optionsBuilder.UseMySql(appSettings.ConnectionString);
 
             return optionsBuilder.Options;
         }
