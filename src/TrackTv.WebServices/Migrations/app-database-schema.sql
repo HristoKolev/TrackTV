@@ -105,5 +105,5 @@ CREATE INDEX `IX_Subscriptions_ProfileId` ON `Subscriptions` (`ProfileId`);
 CREATE INDEX `IX_Subscriptions_ShowId` ON `Subscriptions` (`ShowId`);
 
 INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
-VALUES ('20170420205423_ApplicationDbContext_Created', '1.1.1');
+VALUES ('20170421183849_ApplicationDbContext_Created', '1.1.1');
 

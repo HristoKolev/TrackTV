@@ -7,13 +7,13 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
     using StructureMap;
 
+    using TrackTv.Data;
     using TrackTv.WebServices.Infrastructure;
     using TrackTv.WebServices.Infrastructure.IocConfig;
 
@@ -21,10 +21,12 @@
     {
         public Startup(IHostingEnvironment env)
         {
-            var config = BuildConfigurations(env);
+            if (Global.AppConfig == null)
+            {
+                Global.AppConfig = StartupConfig.BuildConfig(new ConfigurationBuilder(), env.ContentRootPath);
+            }
 
-            this.Configuration = config;
-            Global.AppConfig = config;
+            this.Configuration = Global.AppConfig;
         }
 
         private IConfigurationRoot Configuration { get; }
@@ -83,23 +85,12 @@
             return container.GetInstance<IServiceProvider>();
         }
 
-        private static IConfigurationRoot BuildConfigurations(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
-                                                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            builder.AddEnvironmentVariables();
-
-            return builder.Build();
-        }
-
         private void ConfigureAuth(IServiceCollection services)
         {
             // Add framework services.
             services.AddDbContext<AuthContext>(options =>
             {
-                options.UseMySql(this.Configuration.GetConnectionString("DefaultConnection"));
+                options.SelectProvider(this.Configuration.GetConnectionString("DefaultConnection"));
 
                 // Register the entity sets needed by OpenIddict.
                 // Note: use the generic overload if you need

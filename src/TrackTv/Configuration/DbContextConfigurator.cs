@@ -14,7 +14,8 @@
 
     public class DbContextConfigurator
     {
-        public void AttachLogger<T>(TrackTvDbContext context) where T : ILoggerProvider
+        public void AttachLogger<T>(TrackTvDbContext context)
+            where T : ILoggerProvider
         {
             var serviceProvider = context.GetInfrastructure();
 
@@ -29,7 +30,7 @@
 
             var appSettings = ReadConfig<AppSettings>("appsettings.json");
 
-            optionsBuilder.UseMySql(appSettings.ConnectionString);
+            optionsBuilder.SelectProvider(appSettings.ConnectionString);
 
             return optionsBuilder.Options;
         }
