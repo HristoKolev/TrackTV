@@ -14,7 +14,8 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1");
+                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TrackTv.Data.Models.Actor", b =>
                 {

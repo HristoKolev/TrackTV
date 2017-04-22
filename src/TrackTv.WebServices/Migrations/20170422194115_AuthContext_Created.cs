@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TrackTv.WebServices.Migrations
 {
@@ -12,8 +13,7 @@ namespace TrackTv.WebServices.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    Id = table.Column<string>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
@@ -42,8 +42,7 @@ namespace TrackTv.WebServices.Migrations
                 name: "OpenIddictApplications",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    Id = table.Column<string>(nullable: false),
                     ClientId = table.Column<string>(nullable: true),
                     ClientSecret = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
@@ -60,8 +59,7 @@ namespace TrackTv.WebServices.Migrations
                 name: "OpenIddictScopes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    Id = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -73,8 +71,7 @@ namespace TrackTv.WebServices.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -101,7 +98,7 @@ namespace TrackTv.WebServices.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: false)
@@ -121,8 +118,7 @@ namespace TrackTv.WebServices.Migrations
                 name: "OpenIddictAuthorizations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    Id = table.Column<string>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
                     Scope = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true)
@@ -143,7 +139,7 @@ namespace TrackTv.WebServices.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
@@ -207,8 +203,7 @@ namespace TrackTv.WebServices.Migrations
                 name: "OpenIddictTokens",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    Id = table.Column<string>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
                     AuthorizationId = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),

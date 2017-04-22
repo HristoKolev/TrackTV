@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TrackTv.WebServices.Migrations.ApplicationDb
 {
@@ -13,7 +14,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Image = table.Column<string>(maxLength: 255, nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
@@ -29,7 +30,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +43,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
@@ -55,7 +56,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Username = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -68,7 +69,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AirDay = table.Column<int>(nullable: true),
                     AirTime = table.Column<DateTime>(nullable: true),
                     Banner = table.Column<string>(maxLength: 255, nullable: true),
@@ -97,7 +98,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
                     FirstAired = table.Column<DateTime>(nullable: true),
                     ImdbId = table.Column<string>(maxLength: 10, nullable: true),
@@ -124,7 +125,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ActorId = table.Column<int>(nullable: false),
                     RoleName = table.Column<string>(maxLength: 255, nullable: true),
                     ShowId = table.Column<int>(nullable: false)
@@ -175,7 +176,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProfileId = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false)
                 },
