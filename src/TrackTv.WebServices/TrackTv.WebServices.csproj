@@ -21,12 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TrackTv.DataRetrieval\TrackTv.DataRetrieval.csproj" />
     <ProjectReference Include="..\TrackTv.Data\TrackTv.Data.csproj" />
     <ProjectReference Include="..\TrackTv.Services\TrackTv.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.1.0-preview4-final" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
@@ -62,6 +67,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>

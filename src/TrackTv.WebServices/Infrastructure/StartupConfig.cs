@@ -23,6 +23,7 @@
             return builder.UseKestrel(options => ConfigureKestrel(options, config))
                           .UseContentRoot(Directory.GetCurrentDirectory())
                           .UseUrls(config["Server:Urls"])
+                          .UseIISIntegration()
                           .UseConfiguration(config)
                           .UseStartup<Startup>()
                           .Build();
