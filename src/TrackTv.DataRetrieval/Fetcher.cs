@@ -20,7 +20,7 @@
     public class Fetcher : IFetcher
     {
         public Fetcher(
-            TrackTvDbContext context,
+            DbContext context,
             ITvDbClient client,
             IEpisodeFetcher episodeFetcher,
             IActorFetcher actorFetcher,

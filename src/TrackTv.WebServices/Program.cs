@@ -12,7 +12,9 @@
         public static void Main()
         {
             var config = StartupConfig.BuildConfig(new ConfigurationBuilder(), Directory.GetCurrentDirectory());
+
             Global.AppConfig = config;
+
             var host = StartupConfig.BuildHost(new WebHostBuilder(), config);
 
             host.Run();
