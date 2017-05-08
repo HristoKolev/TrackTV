@@ -1,7 +1,8 @@
-#my-page-card {
-  min-height: 100%;
+// using Modernizer CSS classes to detect if browser supports the W3C Touch Events API
+:host-context(.mod-touchevents) [md-button]:hover::after, [md-icon-button]:hover::after {
+    content: none;
 }
 
-ul, li{
-  display: inline;
+#my-page-card {
+  min-height: 100%;
 }

@@ -3,6 +3,7 @@
  */
 const webpack = require('webpack');
 const root = require('../helpers').root;
+const path = require('path');
 
 /**
  * Webpack Plugins
@@ -154,8 +155,8 @@ module.exports = {
    */
   plugins: [
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-      root('./src')
+      /angular(\\|\/)core(\\|\/)@angular/,
+      path.resolve(__dirname, '../src')
     ),
     /**
      * Plugin: DefinePlugin
@@ -173,8 +174,7 @@ module.exports = {
       HMR: false,
       PORT: 3000,
       HOST: JSON.stringify('localhost'),
-      STORE_DEV_TOOLS: JSON.stringify(STORE_DEV_TOOLS),
-      UNIVERSAL: false
+      STORE_DEV_TOOLS: JSON.stringify(STORE_DEV_TOOLS)
     }),
     new NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({

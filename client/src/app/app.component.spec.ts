@@ -5,10 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@angular/material';
 
-import {
-  BrowserTransferStateModule
-} from '../modules/transfer-state/browser-transfer-state.module';
-
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './features/dashboard.component';
 import { NotFound404Component } from './not-found404.component';
@@ -21,7 +17,6 @@ describe('App Component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        BrowserTransferStateModule,
         MaterialModule.forRoot(),
         ReactiveFormsModule,
         RouterTestingModule.withRoutes(routes),

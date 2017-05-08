@@ -1,5 +1,7 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 import { MaterialModule } from '@angular/material';
 
 import { EffectsModule } from '@ngrx/effects';
@@ -7,8 +9,6 @@ import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { useLogMonitor } from '@ngrx/store-log-monitor';
-
-import { TransferHttpModule } from '../modules/transfer-http/transfer-http.module';
 
 import { routes } from './app.routing';
 import { rootReducer } from './reducers';
@@ -28,13 +28,15 @@ if (ENV === 'development' && !AOT &&
 ]);
 
 export const APP_IMPORTS = [
+  BrowserAnimationsModule,
   EffectsModule.run(UserEffects),
-  // MaterialModule,
+  MaterialModule,
   ReactiveFormsModule,
-  RouterModule.forRoot(routes, { useHash: false, preloadingStrategy: PreloadAllModules }),
+  IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
+  RouterModule.forRoot(routes, { useHash: false, preloadingStrategy: IdlePreload }),
   RouterStoreModule.connectRouter(),
   StoreModule.provideStore(rootReducer),
   STORE_DEV_TOOLS_IMPORTS,
-  StoreDevToolsModule,
-  TransferHttpModule
+  StoreDevToolsModule
 ];
+

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { TransferHttp } from '../../modules/transfer-http/transfer-http';
 
 import { AppState } from '../reducers';
 import { Store } from '@ngrx/store';
@@ -19,12 +18,10 @@ export class DashboardComponent implements OnDestroy, OnInit {
   destroyed$: Subject<any> = new Subject<any>();
   form: FormGroup;
   nameLabel = 'Enter your name';
-  testSub$: Observable<string>;
   user: User;
   user$: Observable<User>;
   constructor(
-    private fb: FormBuilder,
-    private http: TransferHttp,
+    fb: FormBuilder,
     private store: Store<AppState>,
     private userActions: UserActions,
   ) {
@@ -38,11 +35,6 @@ export class DashboardComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.form.get('name').setValue(this.user.name);
-    if (UNIVERSAL) {
-      this.testSub$ = this.http.get('http://localhost:8000/data').map(data => {
-        return `${data.greeting} ${data.name}`;
-      });
-    }
   }
 
   clearName() {

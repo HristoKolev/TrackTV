@@ -1,4 +1,4 @@
-<!--<md-sidenav-container fullscreen>
+<md-sidenav-container fullscreen>
   <md-sidenav [opened]="!mobile" #sidenav [mode]="sideNavMode">
     <md-nav-list>
       <ng-template ngFor let-view [ngForOf]="views" let-even="even" let-odd="odd" let-rowIndex="index">
@@ -15,12 +15,8 @@
       <md-icon>menu</md-icon>
     </button> Angular Starter App
   </md-toolbar>
-<md-card id="my-page-card">-->
-  <header>Angular Starter App</header>
-  <ul *ngFor="let view of views">
-    <li><a [routerLink]="view.link">{{view.name}}</a></li>
-  </ul>
+<md-card id="my-page-card">
   <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
-<!--</md-card>
-</md-sidenav-container>-->
+</md-card>
+</md-sidenav-container>
 <my-store-devtools *ngIf="showMonitor"></my-store-devtools>

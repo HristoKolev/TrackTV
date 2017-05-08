@@ -1,5 +1,5 @@
 /**
- * This module is the entry for your App when NOT using universal.
+ * This module is the entry for your App.
  *
  * Make sure to use the 3 constant APP_ imports so you don't have to keep
  * track of your root app dependencies here. Only import directly in this file if
@@ -8,16 +8,11 @@
 
 import { ApplicationRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 import { Store } from '@ngrx/store';
-
-import {
-  BrowserTransferStateModule
-} from '../modules/transfer-state/browser-transfer-state.module';
 
 import { APP_DECLARATIONS } from './app.declarations';
 import { APP_ENTRY_COMPONENTS } from './app.entry-components';
@@ -37,7 +32,6 @@ import { AppState } from './reducers';
   imports: [
     APP_IMPORTS,
     BrowserModule,
-    DEV_SERVER ? [BrowserAnimationsModule, BrowserTransferStateModule] : [],
     HttpModule,
   ],
   bootstrap: [AppComponent],

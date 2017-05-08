@@ -4,13 +4,14 @@
  * If more constants should be added file an issue or create PR.
  */
 import 'ts-helpers';
+const path = require('path');
 
 import {
-  DEV_PORT, PROD_PORT, UNIVERSAL_PORT, EXCLUDE_SOURCE_MAPS, HOST,
+  DEV_PORT, PROD_PORT, EXCLUDE_SOURCE_MAPS, HOST,
   USE_DEV_SERVER_PROXY, DEV_SERVER_PROXY_CONFIG, DEV_SERVER_WATCH_OPTIONS,
   DEV_SOURCE_MAPS, PROD_SOURCE_MAPS, STORE_DEV_TOOLS,
-  MY_COPY_FOLDERS, MY_POLYFILL_DLLS, MY_VENDOR_DLLS, MY_CLIENT_PLUGINS, MY_CLIENT_PRODUCTION_PLUGINS,
-  MY_CLIENT_RULES, SHOW_WEBPACK_BUNDLE_ANALYZER
+  MY_COPY_FOLDERS, MY_POLYFILL_DLLS, MY_VENDOR_DLLS, MY_CLIENT_PLUGINS,
+  MY_CLIENT_PRODUCTION_PLUGINS, MY_CLIENT_RULES
 } from './constants';
 
 const {
@@ -22,17 +23,16 @@ const {
   NoEmitOnErrorsPlugin
 } = require('webpack');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CompressionPlugin = require('compression-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
-const ScriptExtPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const webpackMerge = require('webpack-merge');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const WebpackMd5Hash = require('webpack-md5-hash');
 
-const { hasProcessFlag, includeClientPackages, root, testDll } = require('./helpers.js');
+const { hasProcessFlag, root, testDll } = require('./helpers.js');
 
 const EVENT = process.env.npm_lifecycle_event || '';
 const AOT = EVENT.includes('aot');
@@ -42,17 +42,12 @@ const E2E = EVENT.includes('e2e');
 const HMR = hasProcessFlag('hot');
 const PROD = EVENT.includes('prod');
 const WATCH = hasProcessFlag('watch');
-const UNIVERSAL = EVENT.includes('universal');
 
 let port: number;
-if (!UNIVERSAL) {
-  if (PROD) {
-    port = PROD_PORT;
-  } else {
-    port = DEV_PORT;
-  }
+if (PROD) {
+  port = PROD_PORT;
 } else {
-  port = UNIVERSAL_PORT;
+  port = DEV_PORT;
 }
 
 const PORT = port;
@@ -66,13 +61,11 @@ if (DEV_SERVER) {
 
 const CONSTANTS = {
   AOT: AOT,
-  DEV_SERVER: DEV_SERVER,
   ENV: PROD ? JSON.stringify('production') : JSON.stringify('development'),
   HMR: HMR,
   HOST: JSON.stringify(HOST),
   PORT: PORT,
-  STORE_DEV_TOOLS: JSON.stringify(STORE_DEV_TOOLS),
-  UNIVERSAL: UNIVERSAL
+  STORE_DEV_TOOLS: JSON.stringify(STORE_DEV_TOOLS)
 };
 
 const DLL_VENDORS = [
@@ -84,7 +77,6 @@ const DLL_VENDORS = [
   '@angular/material',
   '@angular/platform-browser',
   '@angular/platform-browser-dynamic',
-  '@angular/platform-server',
   '@angular/router',
   '@ngrx/core',
   '@ngrx/core/add/operator/select.js',
@@ -114,7 +106,7 @@ if (!DEV_SERVER) {
   COPY_FOLDERS.push({ from: 'dll' });
 }
 
-const commonConfig = function webpackConfig(): WebpackConfig {
+const clientConfig = function webpackConfig(): WebpackConfig {
   let config: WebpackConfig = Object.assign({});
 
   config.module = {
@@ -144,12 +136,17 @@ const commonConfig = function webpackConfig(): WebpackConfig {
   config.plugins = [
     new ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)@angular/,
-      root('./src')
+      path.resolve(__dirname, '../src')
     ),
     new ProgressPlugin(),
     new CheckerPlugin(),
     new DefinePlugin(CONSTANTS),
     new NamedModulesPlugin(),
+    new WebpackMd5Hash(),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      metadata: { isDevServer: DEV_SERVER }
+    }),
     ...MY_CLIENT_PLUGINS
   ];
 
@@ -162,10 +159,6 @@ const commonConfig = function webpackConfig(): WebpackConfig {
       new DllReferencePlugin({
         context: '.',
         manifest: require(`./dll/vendor-manifest.json`)
-      }),
-      new HtmlWebpackPlugin({
-        template: 'src/index.html',
-        inject: false
       })
     );
   }
@@ -187,6 +180,10 @@ const commonConfig = function webpackConfig(): WebpackConfig {
   if (PROD) {
     config.plugins.push(
       new NoEmitOnErrorsPlugin(),
+      new UglifyJsPlugin({
+        beautify: false,
+        comments: false
+      }),
       new CompressionPlugin({
         asset: '[path].gz[query]',
         algorithm: 'gzip',
@@ -196,41 +193,15 @@ const commonConfig = function webpackConfig(): WebpackConfig {
       }),
       ...MY_CLIENT_PRODUCTION_PLUGINS,
     );
-    if (!E2E && !WATCH && !UNIVERSAL && SHOW_WEBPACK_BUNDLE_ANALYZER) {
+    if (!E2E && !WATCH) {
       config.plugins.push(
         new BundleAnalyzerPlugin({ analyzerPort: 5000 })
       );
     }
   }
 
-  return config;
-} ();
-
-// type definition for WebpackConfig at the bottom
-const clientConfig = function webpackConfig(): WebpackConfig {
-
-  let config: WebpackConfig = Object.assign({});
-
   config.cache = true;
   PROD ? config.devtool = PROD_SOURCE_MAPS : config.devtool = DEV_SOURCE_MAPS;
-  config.plugins = [];
-
-  if (PROD) {
-    config.plugins.push(
-      new UglifyJsPlugin({
-        beautify: false,
-        comments: false
-      })
-    );
-  }
-
-  if (UNIVERSAL) {
-    config.plugins.push(
-      new ScriptExtPlugin({
-        defaultAttribute: 'defer'
-      })
-    );
-  }
 
   if (DLL) {
     config.entry = {
@@ -270,8 +241,10 @@ const clientConfig = function webpackConfig(): WebpackConfig {
 
   if (!DLL) {
     config.output = {
-      path: root('dist'),
-      filename: 'index.js'
+      path: root('dist/client'),
+      filename: !PROD ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
+      sourceMapFilename: !PROD ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',
+      chunkFilename: !PROD ? '[id].chunk.js' : '[id].[chunkhash].chunk.js'
     };
   } else {
     config.output = {
@@ -314,32 +287,12 @@ const clientConfig = function webpackConfig(): WebpackConfig {
     setTimeout: true
   };
 
-  return config;
+  config.resolve = {
+    extensions: ['.ts', '.js', '.json']
+  };
 
+  return config;
 } ();
 
-const serverConfig: WebpackConfig = {
-  target: 'node',
-  entry: AOT ? './src/server.aot' : './src/server',
-  output: {
-    filename: 'server.js',
-    path: root('dist')
-  }
-};
-
-const defaultConfig = {
-  resolve: {
-    extensions: ['.ts', '.js', '.json']
-  }
-};
-
-if (!UNIVERSAL) {
-  DLL ? console.log('BUILDING DLLs') : console.log('BUILDING APP');
-  module.exports = webpackMerge({}, defaultConfig, commonConfig, clientConfig);
-} else {
-  console.log('BUILDING UNIVERSAL');
-  module.exports = [
-    webpackMerge({}, defaultConfig, commonConfig, clientConfig),
-    webpackMerge({}, defaultConfig, commonConfig, serverConfig)
-  ];
-}
+DLL ? console.log('BUILDING DLLs') : console.log('BUILDING APP');
+module.exports = clientConfig;
