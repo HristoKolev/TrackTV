@@ -65,6 +65,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
 
+  <Target Name="Mytarget" AfterTargets="AfterPublish">
+    <Exec Command="winscp.com /script=.\winscp-script.txt" />
+  </Target>
+
+
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Properties\PublishProfiles\" />
