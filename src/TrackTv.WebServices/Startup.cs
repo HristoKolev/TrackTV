@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -67,7 +68,7 @@
             this.ConfigureAuth(services);
 
             services.AddMemoryCache();
-            services.AddMvc(options => { options.Filters.Add(typeof(HandleExceptionFilterAttribute)); });
+            services.AddMvc(options => { options.Filters.Add(new ServiceFilterAttribute(typeof(HandleExceptionFilterAttribute))); });
 
             services.AddSingleton(this.Configuration);
 
@@ -80,6 +81,7 @@
                 config.AddRegistry<DataAccessRegistry>();
                 config.AddRegistry<TvDbClientRegistry>();
                 config.AddRegistry<DataRetrievalRegistry>();
+                config.AddRegistry<InfrastructureRegistry>();
             });
 
             return container.GetInstance<IServiceProvider>();

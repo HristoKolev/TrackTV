@@ -4,6 +4,10 @@ namespace TrackTv.WebServices.Infrastructure
     using System.Linq;
     using System.Reflection;
 
+    using log4net;
+    using log4net.Util;
+
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -22,7 +26,17 @@ namespace TrackTv.WebServices.Infrastructure
             ApiErrorExceptions = GetApiErrorExceptions();
         }
 
+        public HandleExceptionFilterAttribute(IHostingEnvironment hostingEnvironment, ILog log)
+        {
+            this.HostingEnvironment = hostingEnvironment;
+            this.Log = log;
+        }
+
         private static Type[] ApiErrorExceptions { get; }
+
+        private IHostingEnvironment HostingEnvironment { get; }
+
+        private ILog Log { get; }
 
         public override void OnException(ExceptionContext context)
         {
@@ -32,11 +46,15 @@ namespace TrackTv.WebServices.Infrastructure
 
                 if (exceptionType.IsInstanceOfType(context.Exception))
                 {
-                    context.Result = new BadRequestObjectResult(new ErrorModel
+                    var errorModel = new ErrorModel
                     {
                         Message = context.Exception.Message,
                         ErrorCode = exceptionType.Name
-                    });
+                    };
+
+                    context.Result = new BadRequestObjectResult(errorModel);
+
+                    this.Log.ErrorExt(() => $"Exception was handled. (Message: {errorModel.Message}, ErrorCode: {errorModel.ErrorCode})");
 
                     context.ExceptionHandled = true;
 
@@ -44,8 +62,9 @@ namespace TrackTv.WebServices.Infrastructure
                 }
             }
 
-            if (!context.ExceptionHandled)
+            if (!context.ExceptionHandled && !this.HostingEnvironment.IsDevelopment())
             {
+                this.Log.ErrorExt(() => $"Unhandled exception of type {context.Exception.GetType()}.", context.Exception);
                 context.Result = new StatusCodeResult(500);
                 context.ExceptionHandled = true;
             }
@@ -58,17 +77,13 @@ namespace TrackTv.WebServices.Infrastructure
         {
             var assembly = Assembly.GetEntryAssembly();
 
-            var all = assembly.GetReferencedAssemblies()
-                              .Select(Assembly.Load)
-                              .Concat(new[]
-                              {
-                                  assembly
-                              });
+            var all = assembly.GetReferencedAssemblies().Select(Assembly.Load).Concat(new[]
+            {
+                assembly
+            });
 
-            return all.SelectMany(a => a.DefinedTypes)
-                      .Where(t => t.GetCustomAttribute<ExposeErrorAttribute>() != null)
-                      .Select(t => t.AsType())
-                      .ToArray();
+            return all.SelectMany(a => a.DefinedTypes).Where(t => t.GetCustomAttribute<ExposeErrorAttribute>() != null)
+                      .Select(t => t.AsType()).ToArray();
         }
 
         private class ErrorModel
