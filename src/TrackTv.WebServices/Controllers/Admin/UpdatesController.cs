@@ -9,7 +9,7 @@
     using TrackTv.DataRetrieval;
     using TrackTv.WebServices.Infrastructure;
 
-    [Authorize]
+    [Authorize(Roles = AppRoles.Admin)]
     [ServiceFilter(typeof(InTransactionFilterAttribute))]
     [Route("api/admin/[controller]")]
     public class UpdatesController : Controller

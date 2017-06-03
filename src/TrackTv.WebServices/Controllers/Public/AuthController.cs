@@ -45,6 +45,38 @@
 
         private UserManager<ApplicationUser> UserManager { get; }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
+            {
+                int profileId = await this.ProfilesService.CreateProfileAsync(model.Email).ConfigureAwait(false);
+
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    ProfileId = profileId
+                };
+
+                var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+
+                if (result.Succeeded)
+                {
+                    scope.Complete();
+
+                    return this.Ok();
+                }
+
+                return this.BadRequest(result.Errors);
+            }
+        }
+
         [HttpPost("~/connect/token")]
         [Produces("application/json")]
         public async Task<IActionResult> Token(OpenIdConnectRequest request)
@@ -129,43 +161,12 @@
             });
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest(this.ModelState);
-            }
-
-            using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
-            {
-                int profileId = await this.ProfilesService.CreateProfileAsync(model.Email).ConfigureAwait(false);
-
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    ProfileId = profileId
-                };
-
-                var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
-
-                if (result.Succeeded)
-                {
-                    scope.Complete();
-
-                    return this.Ok();
-                }
-
-                return this.BadRequest(result.Errors);
-            }
-        }
-
         private static void AddCustomClaims(ApplicationUser user, IPrincipal principal)
         {
             var identity = (ClaimsIdentity)principal.Identity;
 
             identity.AddClaim(new Claim(nameof(user.ProfileId), user.ProfileId.ToString()));
+            identity.AddClaim(new Claim(identity.RoleClaimType, user.IsAdmin ? AppRoles.Admin : AppRoles.User));
         }
 
         private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, ApplicationUser user)

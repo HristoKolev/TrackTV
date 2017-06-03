@@ -12,25 +12,22 @@ namespace TrackTv.WebServices.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<IdentityUserRole<string>>()
-                   .HasKey(role => new
-                   {
-                       role.UserId,
-                       role.RoleId
-                   });
-            builder.Entity<IdentityUserToken<string>>()
-                   .HasKey(token => new
-                   {
-                       token.LoginProvider,
-                       token.Name,
-                       token.UserId
-                   });
-            builder.Entity<IdentityUserLogin<string>>()
-                   .HasKey(login => new
-                   {
-                       login.LoginProvider,
-                       login.ProviderKey
-                   });
+            builder.Entity<IdentityUserRole<string>>().HasKey(role => new
+            {
+                role.UserId,
+                role.RoleId
+            });
+            builder.Entity<IdentityUserToken<string>>().HasKey(token => new
+            {
+                token.LoginProvider,
+                token.Name,
+                token.UserId
+            });
+            builder.Entity<IdentityUserLogin<string>>().HasKey(login => new
+            {
+                login.LoginProvider,
+                login.ProviderKey
+            });
 
             base.OnModelCreating(builder);
         }
@@ -38,6 +35,15 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class ApplicationUser : IdentityUser
     {
+        public bool IsAdmin { get; set; }
+
         public int ProfileId { get; set; }
+    }
+
+    public static class AppRoles
+    {
+        public const string Admin = nameof(Admin);
+
+        public const string User = nameof(User);
     }
 }

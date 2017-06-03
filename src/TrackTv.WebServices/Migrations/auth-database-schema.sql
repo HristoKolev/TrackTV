@@ -57,6 +57,7 @@ CREATE TABLE [AspNetUsers] (
     [ConcurrencyStamp] nvarchar(max),
     [Email] nvarchar(256),
     [EmailConfirmed] bit NOT NULL,
+    [IsAdmin] bit NOT NULL,
     [LockoutEnabled] bit NOT NULL,
     [LockoutEnd] datetimeoffset,
     [NormalizedEmail] nvarchar(256),
@@ -185,7 +186,7 @@ CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHER
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20170422194115_AuthContext_Created', N'1.1.1');
+VALUES (N'20170603121157_AuthContext_Created', N'1.1.1');
 
 GO
 

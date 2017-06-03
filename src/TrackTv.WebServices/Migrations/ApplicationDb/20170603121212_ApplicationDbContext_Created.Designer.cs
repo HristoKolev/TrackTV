@@ -9,7 +9,7 @@ using TrackTv.Data.Models.Enums;
 namespace TrackTv.WebServices.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170422194129_ApplicationDbContext_Created")]
+    [Migration("20170603121212_ApplicationDbContext_Created")]
     partial class ApplicationDbContext_Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

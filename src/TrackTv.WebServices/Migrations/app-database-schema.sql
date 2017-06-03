@@ -142,7 +142,7 @@ CREATE INDEX [IX_Subscriptions_ShowId] ON [Subscriptions] ([ShowId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20170422194129_ApplicationDbContext_Created', N'1.1.1');
+VALUES (N'20170603121212_ApplicationDbContext_Created', N'1.1.1');
 
 GO
 

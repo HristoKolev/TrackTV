@@ -9,7 +9,7 @@
     using TrackTv.DataRetrieval.Services;
     using TrackTv.WebServices.Infrastructure;
 
-    [Authorize]
+    [Authorize(Roles = AppRoles.Admin)]
     [Route("api/admin/[controller]")]
     public class ExternalShowsController : Controller
     {
