@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es6", "es2015", "es2016", "es2017"],
+    "lib": ["es5", "dom"],
     "noEmitHelpers": true,
     "skipDefaultLibCheck": true,
     "pretty": true,
@@ -18,8 +18,7 @@
   "exclude": [
     "node_modules",
     "compiled",
-    "e2e/**/*.ts",
-    "src/main.browser.aot.ts"
+    "e2e/**/*.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true,

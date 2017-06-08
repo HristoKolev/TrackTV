@@ -3,7 +3,6 @@
  */
 const webpack = require('webpack');
 const root = require('../helpers').root;
-const path = require('path');
 
 /**
  * Webpack Plugins
@@ -24,10 +23,6 @@ const STORE_DEV_TOOLS = require('../constants').STORE_DEV_TOOLS;
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
 module.exports = {
-
-  entry: {
-    main: './src/main.browser'
-  },
 
   /**
    * Source map for Karma from the help of karma-sourcemap-loader &  karma-webpack
@@ -155,8 +150,8 @@ module.exports = {
    */
   plugins: [
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)@angular/,
-      path.resolve(__dirname, '../src')
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      root('./src')
     ),
     /**
      * Plugin: DefinePlugin
@@ -171,10 +166,8 @@ module.exports = {
     new DefinePlugin({
       AOT: false,
       ENV: JSON.stringify('test'),
-      HMR: false,
       PORT: 3000,
-      HOST: JSON.stringify('localhost'),
-      STORE_DEV_TOOLS: JSON.stringify(STORE_DEV_TOOLS)
+      HOST: JSON.stringify('localhost')
     }),
     new NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({

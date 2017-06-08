@@ -37,12 +37,6 @@ exports.DEV_SERVER_WATCH_OPTIONS = {
   ignored: /node_modules/
 }
 
-/**
- * specifies which @ngrx dev tools will be available when you build and load
- * your app in dev mode. Options are: monitor | logger | both | none
- */
-exports.STORE_DEV_TOOLS = 'monitor'
-
 exports.EXCLUDE_SOURCE_MAPS = [
   // these packages have problems with their sourcemaps
   root('node_modules/@angular'),
@@ -76,6 +70,11 @@ exports.MY_CLIENT_PRODUCTION_PLUGINS = [
 ]
 
 exports.MY_CLIENT_RULES = [
+  {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
+  {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
+  {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
+  {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
+  {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
   // use this to import your own rules for Client webpack config.
 ]
 
