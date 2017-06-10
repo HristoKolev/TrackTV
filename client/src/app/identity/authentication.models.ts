@@ -1,19 +1,19 @@
 export interface RegisterUser {
 
-    email : string;
+    email: string;
 
-    password : string;
+    password: string;
 
-    confirmPassword : string;
+    confirmPassword: string;
 }
 
 export interface LoginUser {
 
-    username : string;
+    username: string;
 
-    password : string;
+    password: string;
 
-    grant_type : string;
+    grant_type: string;
 }
 
 export enum LoginError {

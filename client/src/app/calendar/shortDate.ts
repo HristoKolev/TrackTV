@@ -1,10 +1,10 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import * as s from 'underscore.string';
 
 @Pipe({name: 'shortDate'})
 export class ShortDate implements PipeTransform {
 
-    private readonly monthNames : string[] = [
+    private readonly monthNames: string[] = [
         'January',
         'February',
         'March',
@@ -16,10 +16,10 @@ export class ShortDate implements PipeTransform {
         'September',
         'October',
         'November',
-        'December'
+        'December',
     ];
 
-    public transform(date : Date, ...args : any[]) : string {
+    public transform(date: Date, ...args: any[]): string {
 
         const monthName = this.monthNames[date.getMonth()].substr(0, 3);
 

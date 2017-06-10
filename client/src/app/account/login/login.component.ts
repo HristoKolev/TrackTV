@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as toastr from 'toastr';
-import {Authentication} from '../../identity/authentication.service';
-import {LoginUser, LoginError} from '../../identity/authentication.models';
+import { Authentication } from '../../identity/authentication.service';
+import { LoginError, LoginUser } from '../../identity/authentication.models';
 
 @Component({
     moduleId: module.id,
@@ -11,13 +11,24 @@ import {LoginUser, LoginError} from '../../identity/authentication.models';
 })
 export class LoginComponent implements OnInit {
 
-    public loginForm : FormGroup;
+    public loginForm: FormGroup;
 
-    constructor(private router : Router,
-                private authentication : Authentication) {
+    constructor(private router: Router,
+                private authentication: Authentication) {
     }
 
-    private createForm() : void {
+    public login(): void {
+
+        this.authentication.login(this.loginForm.getRawValue() as LoginUser)
+            .subscribe(() => this.onSuccessfulLogin(), (error: LoginError) => this.notifyLoginError(error));
+    }
+
+    public ngOnInit(): void {
+
+        this.createForm();
+    }
+
+    private createForm(): void {
 
         this.loginForm = new FormGroup({
 
@@ -26,15 +37,14 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    private notifyLoginError(error : LoginError) : void {
+    private notifyLoginError(error: LoginError): void {
 
-        let message : string;
+        let message: string;
 
         if (error === LoginError.InvalidCredentials) {
 
             message = 'Invalid username or password!';
-        }
-        else {
+        } else {
 
             message = 'Server error! Try again in a few minutes.';
         }
@@ -42,23 +52,12 @@ export class LoginComponent implements OnInit {
         toastr.error(message);
     }
 
-    private onSuccessfulLogin() : void {
+    private onSuccessfulLogin(): void {
 
         this.loginForm.reset();
 
         toastr.success('Successful login!');
 
         this.router.navigate(['/shows']);
-    }
-
-    public login() : void {
-
-        this.authentication.login(this.loginForm.getRawValue() as LoginUser)
-            .subscribe(() => this.onSuccessfulLogin(), (error : LoginError) => this.notifyLoginError(error));
-    }
-
-    public ngOnInit() : void {
-
-        this.createForm();
     }
 }

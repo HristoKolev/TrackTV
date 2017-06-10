@@ -48,6 +48,14 @@
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+            {
+                var origins = this.Configuration["CorsUrls"].Split(',');
+
+                builder.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod();
+            });
+
             // Add a middleware used to validate access
             // tokens and protect the API endpoints.
             app.UseOAuthValidation();

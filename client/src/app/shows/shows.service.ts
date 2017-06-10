@@ -1,21 +1,21 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {SimpleShows, SimpleShow, NetworkShowsModel, SearchShowsModel} from './shows.models';
-import {ApiPath} from '../shared/apiPath.service';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { NetworkShowsModel, SearchShowsModel, SimpleShow, SimpleShows } from './shows.models';
+import { ApiPath } from '../shared/apiPath.service';
 
 @Injectable()
 export class ShowsService {
 
-    constructor(private http : Http,
-                private apiPath : ApiPath) {
+    constructor(private http: Http,
+                private apiPath: ApiPath) {
     }
 
-    private readonly shows : (path : string) => string = this.apiPath.service('/shows');
+    private readonly shows: (path: string) => string = this.apiPath.service('/shows');
 
-    private addBaseUrl(shows : SimpleShow[]) : void {
+    private addBaseUrl(shows: SimpleShow[]): void {
 
-        const baseUrl = this.apiPath.path();
+        const baseUrl = 'this.apiPath.path()';
 
         for (const show of shows) {
 
@@ -24,7 +24,7 @@ export class ShowsService {
         }
     }
 
-    private parseSimpleShows(res : Response) : any {
+    private parseSimpleShows(res: Response): any {
 
         const data = res.json();
 
@@ -46,25 +46,25 @@ export class ShowsService {
         return data;
     }
 
-    public top() : Observable<SimpleShows> {
+    public top(): Observable<SimpleShows> {
 
         return this.http.get(this.shows('/top'), null)
             .map(res => this.parseSimpleShows(res));
     }
 
-    public genre(name : string) : Observable<SimpleShows> {
+    public genre(name: string): Observable<SimpleShows> {
 
         return this.http.get(this.shows('/genre/' + name), null)
             .map(res => this.parseSimpleShows(res));
     }
 
-    public search(query : string, page : number = 1) : Observable<SearchShowsModel> {
+    public search(query: string, page: number = 1): Observable<SearchShowsModel> {
 
         return this.http.get(this.shows('/search/' + query + '/' + page), null)
             .map(res => this.parseSimpleShows(res));
     }
 
-    public network(name : string, page : number = 1) : Observable<NetworkShowsModel> {
+    public network(name: string, page: number = 1): Observable<NetworkShowsModel> {
 
         return this.http.get(this.shows('/network/' + name + '/' + page), null)
             .map(res => this.parseSimpleShows(res));

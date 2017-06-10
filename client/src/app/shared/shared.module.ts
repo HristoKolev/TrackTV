@@ -1,27 +1,25 @@
-import {NgModule} from '@angular/core';
-import {HttpModule} from '@angular/http';
-import {DoubleDigit} from './doubleDigit.pipe';
-import {LocalStorageContainer} from './localStorageContainer';
-import {ApiPath} from './apiPath.service';
-import {SubscriptionService} from './subscription.service';
-import {IdentityModule} from '../identity/identity.module';
-import {PersistentContainer} from './persistentContainer';
+import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { DoubleDigit } from './doubleDigit.pipe';
+import { ApiPath } from './apiPath.service';
+import { SubscriptionService } from './subscription.service';
+import { IdentityModule } from '../identity/identity.module';
 
 @NgModule({
     imports: [
         HttpModule,
-        IdentityModule
+        IdentityModule,
     ],
     declarations: [
-        DoubleDigit
+        DoubleDigit,
     ],
     providers: [
         ApiPath,
-        SubscriptionService
+        SubscriptionService,
     ],
     exports: [
-        DoubleDigit
-    ]
+        DoubleDigit,
+    ],
 })
 export class SharedModule {
 }

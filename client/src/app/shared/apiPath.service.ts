@@ -1,29 +1,36 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ApiPath {
 
-    private readonly baseServiceUrl : string = 'http://localhost:7000';
+    private readonly baseServiceUrl: string = 'http://192.168.1.103:7000';
 
-    private readonly baseApiPath : string = this.baseServiceUrl + '/api';
+    public get loginPath(): string {
 
-    public get loginPath() : string {
-
-        return this.baseServiceUrl + '/token';
+        return this.combine(this.baseServiceUrl, '/connect/token');
     }
 
-    public rawPath(name : string) : string {
+    public service(name: string): (...args: string[]) => string {
 
-        return this.baseApiPath + name;
+        return (...args) => this.combine(this.baseServiceUrl, 'api', name, ...args);
     }
 
-    public service(serviceName : string) : (path : string) => string {
+    private combine(...args: string[]): string {
 
-        return (path : string) => this.rawPath(serviceName + path);
-    }
+        const paths = [];
 
-    public path(name : string = '') : string {
+        for (let i = 0; i < args.length; i += 1) {
 
-        return this.baseServiceUrl + name;
+            let arg = args[i].replace(/\\/g, '/').replace(/^\/*/g, '');
+
+            if (i < args.length - 1) {
+
+                arg = arg.replace(/\/*$/g, '');
+            }
+
+            paths.push(arg);
+        }
+
+        return paths.join('/');
     }
 }

@@ -1,34 +1,34 @@
-import {Injectable} from '@angular/core';
-import {RequestOptions, Headers} from '@angular/http';
-import {PersistentContainer, PersistentContainerKey} from '../shared/persistentContainer';
-import {User} from './identity.models';
+import { Injectable } from '@angular/core';
+import { Headers, RequestOptions } from '@angular/http';
+import { PersistentContainer, PersistentContainerKey } from '../shared/persistentContainer';
+import { User } from './identity.models';
 
 @Injectable()
 export class Identity {
 
-    private readonly storage : PersistentContainerKey<User>;
+    private readonly storage: PersistentContainerKey<User>;
 
-    constructor(container : PersistentContainer<User>) {
+    constructor(container: PersistentContainer<User>) {
 
         this.storage = new PersistentContainerKey<User>(container, 'user');
     }
 
-    private get user() : User {
+    private get user(): User {
 
         return this.storage.get();
     }
 
-    private set user(value : User) {
+    private set user(value: User) {
 
         this.storage.set(value);
     }
 
-    public get isAuthenticated() : boolean {
+    public get isAuthenticated(): boolean {
 
         return !!this.storage.get();
     }
 
-    public get username() : string {
+    public get username(): string {
 
         if (this.isAuthenticated) {
 
@@ -60,7 +60,7 @@ export class Identity {
         }
     }
 
-    public get authenticatedOptions() : RequestOptions {
+    public get authenticatedOptions(): RequestOptions {
 
         if (!this.isAuthenticated) {
 
@@ -69,11 +69,11 @@ export class Identity {
 
         return new RequestOptions({
 
-            headers: new Headers(this.addAuthorizationHeader())
+            headers: new Headers(this.addAuthorizationHeader()),
         });
     }
 
-    public load(user : User) {
+    public load(user: User) {
 
         if (!user) {
 
@@ -83,17 +83,17 @@ export class Identity {
         this.user = user;
     }
 
-    private clearUserData() : void {
+    private clearUserData(): void {
 
         this.storage.remove();
     }
 
-    private notAuthenticatedError() : Error {
+    private notAuthenticatedError(): Error {
 
         return Error('There currently is no authorized user.');
     }
 
-    public addAuthorizationHeader(headers : any = {}) : any {
+    public addAuthorizationHeader(headers: any = {}): any {
 
         if (!this.isAuthenticated) {
 
@@ -105,7 +105,7 @@ export class Identity {
         return headers;
     }
 
-    public removeUser() : void {
+    public removeUser(): void {
 
         if (!this.isAuthenticated) {
 

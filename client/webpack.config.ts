@@ -175,6 +175,8 @@ const clientConfig = function webpackConfig(): WebpackConfig {
   config.cache = true;
   PROD ? config.devtool = PROD_SOURCE_MAPS : config.devtool = DEV_SOURCE_MAPS;
 
+  console.log(config.devtool);
+
   if (DLL) {
     config.entry = {
       app_assets: ['./src/main.browser'],

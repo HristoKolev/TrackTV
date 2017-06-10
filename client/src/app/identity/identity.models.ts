@@ -1,8 +1,8 @@
 export interface User {
 
-    access_token : string;
+    access_token: string;
 
-    userName : string;
+    userName: string;
 
-    isInAdminRole : string;
+    isInAdminRole: string;
 }

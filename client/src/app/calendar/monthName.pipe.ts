@@ -1,9 +1,9 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'monthName'})
 export class MonthName implements PipeTransform {
 
-    private readonly monthNames : string[] = [
+    private readonly monthNames: string[] = [
         'January',
         'February',
         'March',
@@ -15,11 +15,11 @@ export class MonthName implements PipeTransform {
         'September',
         'October',
         'November',
-        'December'
+        'December',
     ];
 
-    public transform(number : number, ...args : any[]) : string {
+    public transform(num: number, ...args: any[]): string {
 
-        return this.monthNames[number - 1];
+        return this.monthNames[num - 1];
     }
 }

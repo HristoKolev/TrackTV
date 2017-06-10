@@ -68,7 +68,7 @@
   </ItemGroup>
 
   <Target Name="Mytarget" AfterTargets="AfterPublish">
-    <Exec Command="winscp.com /script=.\winscp-script.txt" />
+    <Exec Command="winscp /script=.\winscp-script.txt" />
   </Target>
 
 

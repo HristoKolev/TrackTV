@@ -1,44 +1,44 @@
 export interface MonthRouteInfo {
 
-    year : number;
+    year: number;
 
-    month : number;
+    month: number;
 }
 
 export interface CalendarNavigationInfo {
 
-    previosMonth : MonthRouteInfo;
+    previosMonth: MonthRouteInfo;
 
-    thisMonth : MonthRouteInfo;
+    thisMonth: MonthRouteInfo;
 
-    nextMonth : MonthRouteInfo;
+    nextMonth: MonthRouteInfo;
 }
 
 export interface CalendarEpisode {
 
-    firstAired : Date;
+    firstAired: Date;
 
-    number : number;
+    number: number;
 
-    seasonNumber : number;
+    seasonNumber: number;
 
-    showName : string;
+    showName: string;
 
-    title : string;
+    title: string;
 
-    userFriendlyId : string;
+    userFriendlyId: string;
 }
 
 export interface  CalendarDay {
 
-    date : Date;
+    date: Date;
 
-    episodes : CalendarEpisode[];
+    episodes: CalendarEpisode[];
 }
 
 export interface CalendarModel {
 
-    navigationInfo : CalendarNavigationInfo;
+    navigationInfo: CalendarNavigationInfo;
 
-    weeks : CalendarDay[][];
+    weeks: CalendarDay[][];
 }

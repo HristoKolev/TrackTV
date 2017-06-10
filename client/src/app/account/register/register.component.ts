@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as toastr from 'toastr';
-import {Authentication} from '../../identity/authentication.service';
-import {RegisterError, RegisterUser} from '../../identity/authentication.models';
+import { Authentication } from '../../identity/authentication.service';
+import { RegisterError, RegisterUser } from '../../identity/authentication.models';
 
 @Component({
     moduleId: module.id,
@@ -11,15 +11,29 @@ import {RegisterError, RegisterUser} from '../../identity/authentication.models'
 })
 export class RegisterComponent implements OnInit {
 
-    public registerForm : FormGroup;
+    public registerForm: FormGroup;
 
-    constructor(private router : Router,
-                private authentication : Authentication) {
+    constructor(private router: Router,
+                private authentication: Authentication) {
     }
 
-    private createForm() : void {
+    public register(): void {
 
-        this.registerForm = new FormGroup({
+        this.authentication.signup(this.registerForm.getRawValue() as RegisterUser)
+            .subscribe(
+                () => this.notifyRegisterSuccess(),
+                (error: RegisterError) => this.notifyRegisterError(error),
+            );
+    }
+
+    public ngOnInit(): void {
+
+        this.registerForm = this.createForm();
+    }
+
+    private createForm(): FormGroup {
+
+        return new FormGroup({
 
             email: new FormControl(null, [Validators.required, Validators.minLength(6)]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
@@ -27,7 +41,7 @@ export class RegisterComponent implements OnInit {
         });
     }
 
-    private notifyRegisterSuccess() : void {
+    private notifyRegisterSuccess(): void {
 
         toastr.success('Registration successful!');
 
@@ -36,9 +50,9 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
     }
 
-    private notifyRegisterError(error : RegisterError) : void {
+    private notifyRegisterError(error: RegisterError): void {
 
-        let message : string;
+        let message: string;
 
         if (error === RegisterError.InvalidPassword) {
 
@@ -49,19 +63,5 @@ export class RegisterComponent implements OnInit {
         }
 
         toastr.error(message);
-    }
-
-    public register() {
-
-        this.authentication.signup(this.registerForm.getRawValue() as RegisterUser)
-            .subscribe(
-                () => this.notifyRegisterSuccess(),
-                (error : RegisterError) => this.notifyRegisterError(error)
-            );
-    }
-
-    public ngOnInit() : void {
-
-        this.createForm();
     }
 }

@@ -1,25 +1,25 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {Identity} from '../../identity/identity.service';
-import {Authentication} from '../../identity/authentication.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Identity } from '../../identity/identity.service';
+import { Authentication } from '../../identity/authentication.service';
 import * as toastr from 'toastr';
 
 @Component({
     moduleId: module.id,
     selector: 'site-header',
     templateUrl: 'site-header.component.html',
-    styleUrls: ['site-header.component.css']
+    styleUrls: ['site-header.component.css'],
 })
 export class HeaderComponent {
 
-    constructor(public identity : Identity,
-                private authentication : Authentication,
-                private router : Router) {
+    public query: string;
+
+    constructor(public identity: Identity,
+                private authentication: Authentication,
+                private router: Router) {
     }
 
-    public query : string;
-
-    public logout($event : Event) {
+    public logout($event: Event) {
 
         $event.preventDefault();
 
@@ -33,5 +33,4 @@ export class HeaderComponent {
 
         this.router.navigate(['/shows']);
     }
-
 }

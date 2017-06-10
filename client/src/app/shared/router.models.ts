@@ -1,5 +1,4 @@
-
 export interface ResolveData<T> {
 
-    model : T;
+    model: T;
 }
