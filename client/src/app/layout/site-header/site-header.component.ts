@@ -23,14 +23,10 @@ export class HeaderComponent {
 
         $event.preventDefault();
 
-        this.authentication.logout()
-            .subscribe(() => this.afterLogout(), () => this.afterLogout());
-    }
-
-    private afterLogout() {
+        this.authentication.logout();
 
         toastr.success('Successful Logout!');
 
-        //this.router.navigate(['/shows']);
     }
+
 }

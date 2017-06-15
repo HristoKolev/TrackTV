@@ -42,10 +42,9 @@ export class Authentication {
             .catch((res: Response) => Observable.throw(this.parseLoginError(res.json())));
     }
 
-    public logout(): Observable<Response> {
+    public logout(): void {
 
-        return this.http.post(this.auth('/logout'), null, this.identity.authenticatedOptions)
-            .do((response: Response) => this.identity.removeUser(), () => this.identity.removeUser());
+        this.identity.removeUser();
     }
 
     private queryParams(source: any): string {
