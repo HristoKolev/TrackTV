@@ -31,6 +31,6 @@ export class HeaderComponent {
 
         toastr.success('Successful Logout!');
 
-        this.router.navigate(['/shows']);
+        //this.router.navigate(['/shows']);
     }
 }

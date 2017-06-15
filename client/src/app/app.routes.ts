@@ -1,9 +1,9 @@
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 export const appRoutes = RouterModule.forRoot([
     {
         path: '',
-        redirectTo: '/calendar',
-        pathMatch: 'full'
-    }
+        redirectTo: '/login',
+        pathMatch: 'full',
+    },
 ]);

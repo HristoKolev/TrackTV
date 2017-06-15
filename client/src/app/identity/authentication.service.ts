@@ -4,7 +4,7 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { LoginError, LoginUser, RegisterError, RegisterUser } from './authentication.models';
 import { Identity } from './identity.service';
 import { ApiPath } from '../shared/apiPath.service';
-import { User } from './identity.models';
+import { User } from '../shared/MutStore';
 
 @Injectable()
 export class Authentication {
@@ -38,6 +38,7 @@ export class Authentication {
 
                 return user;
             })
+
             .catch((res: Response) => Observable.throw(this.parseLoginError(res.json())));
     }
 

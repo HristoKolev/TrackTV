@@ -58,6 +58,6 @@ export class LoginComponent implements OnInit {
 
         toastr.success('Successful login!');
 
-        this.router.navigate(['/shows']);
+        //this.router.navigate(['/shows']);
     }
 }

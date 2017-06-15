@@ -1,40 +1,36 @@
-import { Injectable } from '@angular/core';
 import { Headers, RequestOptions } from '@angular/http';
-import { PersistentContainer, PersistentContainerKey } from '../shared/persistentContainer';
-import { User } from './identity.models';
+import { store, User } from '../shared/MutStore';
 
-@Injectable()
 export class Identity {
-
-    private readonly storage: PersistentContainerKey<User>;
-
-    constructor(container: PersistentContainer<User>) {
-
-        this.storage = new PersistentContainerKey<User>(container, 'user');
-    }
 
     private get user(): User {
 
-        return this.storage.get();
+        return store.payload.user;
     }
 
     private set user(value: User) {
 
-        this.storage.set(value);
+        if (!store.payload.user) {
+
+            store.payload.user = {} as User;
+        }
+
+        Object.assign(store.payload.user, value);
+
+        store.save();
     }
 
     public get isAuthenticated(): boolean {
 
-        return !!this.storage.get();
+        return !!store.payload.user;
     }
 
     public get username(): string {
 
         if (this.isAuthenticated) {
 
-            return this.user.userName;
-        }
-        else {
+            return this.user.username || 'No username';
+        } else {
 
             return 'Guest';
         }
@@ -42,22 +38,7 @@ export class Identity {
 
     public get isAdmin() {
 
-        if (this.isAuthenticated) {
-
-            const isInAdminRole = this.user.isInAdminRole;
-
-            switch (isInAdminRole) {
-                case 'True':
-                    return true;
-                case 'False':
-                    return false;
-                default:
-                    throw Error('The property "isInAdminRole" is not present or has no valid value. ' +
-                        'Value: ' + isInAdminRole);
-            }
-        } else {
-            return false;
-        }
+        return false;
     }
 
     public get authenticatedOptions(): RequestOptions {
@@ -73,6 +54,11 @@ export class Identity {
         });
     }
 
+    constructor() {
+
+        store.load();
+    }
+
     public load(user: User) {
 
         if (!user) {
@@ -81,16 +67,6 @@ export class Identity {
         }
 
         this.user = user;
-    }
-
-    private clearUserData(): void {
-
-        this.storage.remove();
-    }
-
-    private notAuthenticatedError(): Error {
-
-        return Error('There currently is no authorized user.');
     }
 
     public addAuthorizationHeader(headers: any = {}): any {
@@ -115,4 +91,14 @@ export class Identity {
         this.clearUserData();
     }
 
+    private clearUserData(): void {
+
+        store.payload.user = undefined;
+        store.save();
+    }
+
+    private notAuthenticatedError(): Error {
+
+        return Error('There currently is no authorized user.');
+    }
 }
