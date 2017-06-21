@@ -1,105 +1,104 @@
-/**
- * @authors: @qdouble and @AngularClass
- */
+'use strict';
 
 const ENV = process.env.npm_lifecycle_event;
-const runOnce = ENV === 'test:once'
+const runOnce = ENV === 'test:once';
 
-module.exports = function(config) {
-  const testWebpackConfig = require('./webpack.test.js');
+module.exports = function (config) {
 
-  const configuration = {
+    const testWebpackConfig = require('./webpack.test.js');
 
-    // base path that will be used to resolve all patterns (e.g. files, exclude)
-    basePath: '',
+    const configuration = {
 
-    /*
-     * Frameworks to use
-     *
-     * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-     */
-    frameworks: ['jasmine'],
+        // base path that will be used to resolve all patterns (e.g. files, exclude)
+        basePath: '',
 
-    // list of files to exclude
-    exclude: [ ],
+        /*
+         * Frameworks to use
+         *
+         * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+         */
+        frameworks: ['jasmine'],
 
-    /*
-     * list of files / patterns to load in the browser
-     *
-     * we are building the test environment in ./spec-bundle.js
-     */
-    files: [ { pattern: './test-config/spec-bundle.js', watched: false } ],
+        // list of files to exclude
+        exclude: [],
 
-    /*
-     * preprocess matching files before serving them to the browser
-     * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-     */
-    preprocessors: { './test-config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap'] },
+        /*
+         * list of files / patterns to load in the browser
+         *
+         * we are building the test environment in ./spec-bundle.js
+         */
+        files: [{pattern: './test-config/spec-bundle.js', watched: false}],
 
-    // Webpack Config at ./webpack.test.js
-    webpack: testWebpackConfig,
+        /*
+         * preprocess matching files before serving them to the browser
+         * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+         */
+        preprocessors: {'./test-config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']},
 
-    coverageReporter: {
-      type: 'in-memory'
-    },
+        // Webpack Config at ./webpack.test.js
+        webpack: testWebpackConfig,
 
-    remapCoverageReporter: {
-      'text-summary': null,
-      json: './coverage/coverage.json',
-      html: './coverage/html'
-    },
+        coverageReporter: {
+            type: 'in-memory'
+        },
 
-    // Webpack please don't spam the console when running in karma!
-    webpackServer: { noInfo: true },
+        remapCoverageReporter: {
+            'text-summary': null,
+            json: './coverage/coverage.json',
+            html: './coverage/html'
+        },
 
-    /*
-     * test results reporter to use
-     *
-     * possible values: 'dots', 'progress'
-     * available reporters: https://npmjs.org/browse/keyword/karma-reporter
-     */
-    reporters: [ 'mocha', 'coverage', 'remap-coverage' ],
+        // Webpack please don't spam the console when running in karma!
+        webpackServer: {noInfo: true},
 
-    // web server port
-    port: 9876,
+        /*
+         * test results reporter to use
+         *
+         * possible values: 'dots', 'progress'
+         * available reporters: https://npmjs.org/browse/keyword/karma-reporter
+         */
+        reporters: ['mocha', 'coverage', 'remap-coverage'],
 
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
+        // web server port
+        port: 9876,
 
-    /*
-     * level of logging
-     * possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-     */
-    logLevel: config.LOG_INFO,
+        // enable / disable colors in the output (reporters and logs)
+        colors: true,
 
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: !runOnce,
+        /*
+         * level of logging
+         * possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+         */
+        logLevel: config.LOG_INFO,
 
-    /*
-     * start these browsers
-     * available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-     */
-    browsers: [
-      'Chrome'
-    ],
+        // enable / disable watching file and executing tests whenever any file changes
+        autoWatch: !runOnce,
 
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
+        /*
+         * start these browsers
+         * available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+         */
+        browsers: [
+            'Chrome'
+        ],
 
-    /*
-     * Continuous Integration mode
-     * if true, Karma captures browsers, runs the tests and exits
-     */
-    singleRun: runOnce
-  };
+        customLaunchers: {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
 
-  if(process.env.TRAVIS){
-    configuration.browsers = ['Chrome_travis_ci'];
-  }
+        /*
+         * Continuous Integration mode
+         * if true, Karma captures browsers, runs the tests and exits
+         */
+        singleRun: runOnce
+    };
 
-  config.set(configuration);
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
+
+    config.set(configuration);
 };
