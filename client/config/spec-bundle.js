@@ -10,6 +10,8 @@
  * all here! Crazy huh. So we need to do some setup
  */
 
+const {root} = require('./helpers');
+
 Error.stackTraceLimit = Infinity;
 
 require('core-js/es6');
@@ -48,7 +50,7 @@ testing.getTestBed().initTestEnvironment(
  * any file that ends with spec.js and get its path. By passing in true
  * we say do this recursively
  */
-const testContext = require.context('../src/app', true, /\.spec\.ts/);
+const testContext = require.context(root('./src/app'), true, /\.spec\.ts/);
 
 /*
  * get all the files, for each file, call the context function

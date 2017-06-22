@@ -1,17 +1,16 @@
 "use strict";
 
 const compression = require('compression'),
-    express = require('express'),
-    path = require('path');
+    express = require('express');
 
-const {E2E_PORT, HOST, PROD_PORT} = require('./helpers');
+const {E2E_PORT, HOST, PROD_PORT, root} = require('./helpers');
 
 const app = express();
 
 app.use(compression());
-app.use(express.static('dist/client'));
+app.use(express.static(root('dist/client')));
 
-const renderIndex = (req, res) => res.sendFile(path.resolve(__dirname, 'dist/client/index.html'));
+const renderIndex = (req, res) => res.sendFile(root('dist/client/index.html'));
 
 app.get('/*', renderIndex);
 

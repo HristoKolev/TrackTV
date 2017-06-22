@@ -27,15 +27,40 @@ const CONSTANTS = (function () {
     };
 }());
 
-const ifConst = (func, trueVal, falseVal = undefined) => func(CONSTANTS) ? trueVal : falseVal;
+function isFunction(functionToCheck) {
 
-const root = (...args) => path.join(path.resolve(__dirname), ...args);
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
+
+const ifConst = (func, trueVal, falseVal = undefined) => {
+
+    if (func(CONSTANTS)) {
+
+        if (isFunction(trueVal)) {
+
+            return trueVal();
+        }
+
+        return trueVal;
+    } else {
+
+        if (isFunction(falseVal)) {
+
+            return falseVal();
+        }
+
+        return falseVal;
+    }
+};
+
+const root = (...args) => path.join(path.resolve(__dirname, '../'), ...args);
 
 function testDll() {
 
-    if (!fs.existsSync('./dll/polyfill.dll.js') || !fs.existsSync('./dll/vendor.dll.js')) {
+    if (!fs.existsSync(root('./dll/polyfill.dll.js')) || !fs.existsSync(root('./dll/vendor.dll.js'))) {
         throw "DLL files do not exist, please use 'npm run build:dll' once to generate dll files.";
     }
+
 }
 
 exports.HOST = HOST;

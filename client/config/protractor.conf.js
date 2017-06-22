@@ -2,7 +2,7 @@ require('ts-node/register');
 
 const path = require('path');
 
-const {CONSTANTS, root} = require('../helpers');
+const {CONSTANTS, root} = require('./helpers');
 
 exports.config = {
     baseUrl: `http://localhost:${CONSTANTS.E2E_PORT}/`,

@@ -1,8 +1,7 @@
 'use strict';
 
 const webpack = require('webpack');
-const {root} = require('../helpers');
-const path = require('path');
+const {root} = require('./helpers');
 
 /**
  * Webpack Plugins
@@ -154,7 +153,7 @@ module.exports = {
     plugins: [
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,
-            path.resolve(__dirname, '../src')
+            root('./src')
         ),
         /**
          * Plugin: DefinePlugin
