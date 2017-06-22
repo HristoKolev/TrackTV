@@ -1,30 +1,6 @@
-import 'ts-helpers';
-import { DEV_PORT, HOST, PROD_PORT } from './constants';
-
-const CONSTANTS = (function() {
-
-    const EVENT = process.env.npm_lifecycle_event || '';
-
-    const PROD = EVENT.includes('prod');
-
-    return {
-        AOT: EVENT.includes('aot'),
-        ENV: PROD ? JSON.stringify('production') : JSON.stringify('development'),
-        HOST: JSON.stringify(HOST),
-        PORT: PROD ? PROD_PORT : DEV_PORT,
-        DEV_SERVER: EVENT.includes('webdev'),
-        DLL: EVENT.includes('dll'),
-        E2E: EVENT.includes('e2e'),
-        WATCH: process.argv.join('').indexOf('watch') > -1,
-        PROD: PROD,
-    }
-}());
-
 const path = require('path');
 const fs = require('fs');
-
 const {DefinePlugin, DllPlugin, DllReferencePlugin, ProgressPlugin, NoEmitOnErrorsPlugin,} = require('webpack');
-
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -34,39 +10,25 @@ const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const {AotPlugin} = require('@ngtools/webpack');
 
-const root = (args) => path.join.apply(path, [path.resolve(__dirname)].concat(args));
-
-function testDll() {
-
-    if (!fs.existsSync('./dll/polyfill.dll.js') || !fs.existsSync('./dll/vendor.dll.js')) {
-        throw "DLL files do not exist, please use 'npm run build:dll' once to generate dll files.";
-    }
-}
+import 'ts-helpers';
+import { CONSTANTS, ifConst, root, testDll } from './constants';
 
 if (CONSTANTS.DEV_SERVER) {
     testDll();
     console.log(`Starting dev server on: http://${CONSTANTS.HOST}:${CONSTANTS.PORT}`);
 }
 
-const COPY_FOLDERS: any[] = [
-    {from: 'src/assets', to: 'assets'},
-
-];
-
-if (!CONSTANTS.DEV_SERVER) {
-    COPY_FOLDERS.unshift({from: 'src/index.html'});
-} else {
-    COPY_FOLDERS.push({from: 'dll'});
-}
-
 console.log('PRODUCTION BUILD: ', CONSTANTS.PROD);
 console.log('AOT: ', CONSTANTS.AOT);
 
-const clientConfig = function webpackConfig(): WebpackConfig {
+if (CONSTANTS.DLL) {
+    console.log('BUILDING DLLs');
+} else {
+    console.log('BUILDING APP');
+}
 
-    const config: WebpackConfig = Object.assign({});
-
-    config.module = {
+const config: WebpackConfig = {
+    module: {
         rules: [
             {
                 test: /\.js$/,
@@ -95,9 +57,8 @@ const clientConfig = function webpackConfig(): WebpackConfig {
             },
 
         ],
-    };
-
-    config.plugins = [
+    },
+    plugins: [
         new AotPlugin({
             tsConfigPath: root('./src/tsconfig.browser.json'),
             skipCodeGeneration: !CONSTANTS.AOT,
@@ -111,13 +72,54 @@ const clientConfig = function webpackConfig(): WebpackConfig {
             template: 'src/index.html',
             metadata: {isDevServer: CONSTANTS.DEV_SERVER},
         }),
-    ];
 
-    config.cache = true;
-    config.target = 'web';
-    config.devtool = 'source-map';
+        ...ifConst(x => x.DEV_SERVER, [
 
-    config.devServer = {
+                new DllReferencePlugin({
+                    context: '.',
+                    manifest: require(`./dll/polyfill-manifest.json`),
+                }),
+                new DllReferencePlugin({
+                    context: '.',
+                    manifest: require(`./dll/vendor-manifest.json`),
+                }),],
+            []),
+
+        ...ifConst(x => x.DLL, [
+
+                new DllPlugin({
+                    name: '[name]',
+                    path: root('dll/[name]-manifest.json'),
+                }),],
+            [
+
+                new CopyWebpackPlugin([
+                        ...ifConst(x => !x.DEV_SERVER, [{from: 'src/index.html'}], []),
+                        {from: 'src/assets', to: 'assets',},
+                        ...ifConst(x => x.DEV_SERVER, [{from: 'dll'}], [])],
+                    {ignore: ['*dist_root/*']}),
+
+                new CopyWebpackPlugin([{from: 'src/assets/dist_root'}]),
+            ]),
+
+        ...ifConst(x => x.PROD, [
+
+                new NoEmitOnErrorsPlugin(),
+                new UglifyJsPlugin({
+                    beautify: false,
+                    comments: false,
+                }),],
+            []),
+
+        ...ifConst(x => x.PROD && !x.E2E && !x.WATCH, [
+
+                new BundleAnalyzerPlugin({analyzerPort: 5000}),],
+            []),
+    ],
+    cache: true,
+    target: 'web',
+    devtool: 'source-map',
+    devServer: {
         contentBase: CONSTANTS.AOT ? './compiled' : './src',
         port: CONSTANTS.PORT,
         historyApiFallback: {
@@ -130,13 +132,11 @@ const clientConfig = function webpackConfig(): WebpackConfig {
             aggregateTimeout: 300,
             ignored: /node_modules/,
         },
-    };
-
-    config.performance = {
+    },
+    performance: {
         hints: false,
-    };
-
-    config.node = {
+    },
+    node: {
         global: true,
         process: true,
         Buffer: false,
@@ -146,60 +146,11 @@ const clientConfig = function webpackConfig(): WebpackConfig {
         setImmediate: false,
         clearTimeout: true,
         setTimeout: true,
-    };
-
-    config.resolve = {
+    },
+    resolve: {
         extensions: ['.ts', '.js', '.json'],
-    };
-
-    if (CONSTANTS.DEV_SERVER) {
-        config.plugins.push(
-            new DllReferencePlugin({
-                context: '.',
-                manifest: require(`./dll/polyfill-manifest.json`),
-            }),
-            new DllReferencePlugin({
-                context: '.',
-                manifest: require(`./dll/vendor-manifest.json`),
-            }),
-        );
-    }
-
-    if (CONSTANTS.DLL) {
-        config.plugins.push(
-            new DllPlugin({
-                name: '[name]',
-                path: root('dll/[name]-manifest.json'),
-            }),
-        );
-    }
-
-    if (!CONSTANTS.DLL) {
-        config.plugins.push(
-            new CopyWebpackPlugin(COPY_FOLDERS, {ignore: ['*dist_root/*']}),
-            new CopyWebpackPlugin([{from: 'src/assets/dist_root'}]),
-        );
-    }
-
-    if (CONSTANTS.PROD) {
-        config.plugins.push(
-            new NoEmitOnErrorsPlugin(),
-            new UglifyJsPlugin({
-                beautify: false,
-                comments: false,
-            }),
-        );
-    }
-
-    if (CONSTANTS.PROD && !CONSTANTS.E2E && !CONSTANTS.WATCH) {
-
-        config.plugins.push(
-            new BundleAnalyzerPlugin({analyzerPort: 5000}),
-        );
-    }
-
-    if (CONSTANTS.DLL) {
-        config.entry = {
+    },
+    entry: ifConst(x => x.DLL, {
             app_assets: ['./src/main.browser'],
             polyfill: [
                 'sockjs-client',
@@ -230,40 +181,20 @@ const clientConfig = function webpackConfig(): WebpackConfig {
                 'rxjs',
 
             ],
-        };
-    }
-
-    if (!CONSTANTS.DLL) {
-        config.entry = {
+        }, {
             main: root('./src/main.browser.ts'),
-        };
-    }
+        },
+    ),
+    output: ifConst(x => x.DLL, {
+        path: root('dll'),
+        filename: '[name].dll.js',
+        library: '[name]',
+    }, {
+        path: root('dist/client'),
+        filename: !CONSTANTS.PROD ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
+        sourceMapFilename: !CONSTANTS.PROD ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',
+        chunkFilename: !CONSTANTS.PROD ? '[id].chunk.js' : '[id].[chunkhash].chunk.js',
+    }),
+};
 
-    if (!CONSTANTS.DLL) {
-        config.output = {
-            path: root('dist/client'),
-            filename: !CONSTANTS.PROD ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
-            sourceMapFilename: !CONSTANTS.PROD ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',
-            chunkFilename: !CONSTANTS.PROD ? '[id].chunk.js' : '[id].[chunkhash].chunk.js',
-        };
-    }
-
-    if (CONSTANTS.DLL) {
-        config.output = {
-            path: root('dll'),
-            filename: '[name].dll.js',
-            library: '[name]',
-        };
-    }
-
-    return config;
-
-}();
-
-if (CONSTANTS.DLL) {
-    console.log('BUILDING DLLs');
-} else {
-    console.log('BUILDING APP');
-}
-
-module.exports = clientConfig;
+module.exports = config;
