@@ -29,7 +29,7 @@ const CONSTANTS = (function () {
 
 const ifConst = (func, trueVal, falseVal = undefined) => func(CONSTANTS) ? trueVal : falseVal;
 
-const root = (args) => path.join.apply(path, [path.resolve(__dirname)].concat(args));
+const root = (...args) => path.join(path.resolve(__dirname), ...args);
 
 function testDll() {
 

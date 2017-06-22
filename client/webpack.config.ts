@@ -1,17 +1,18 @@
-const path = require('path');
-const fs = require('fs');
-const {DefinePlugin, DllPlugin, DllReferencePlugin, ProgressPlugin, NoEmitOnErrorsPlugin,} = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const {CheckerPlugin} = require('awesome-typescript-loader');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
-const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
-const WebpackMd5Hash = require('webpack-md5-hash');
-const {AotPlugin} = require('@ngtools/webpack');
+const path = require('path'),
+    fs = require('fs'),
+    {DefinePlugin, DllPlugin, DllReferencePlugin, ProgressPlugin, NoEmitOnErrorsPlugin,} = require('webpack'),
+    CopyWebpackPlugin = require('copy-webpack-plugin'),
+    {CheckerPlugin} = require('awesome-typescript-loader'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin'),
+    UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin'),
+    {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer'),
+    WebpackMd5Hash = require('webpack-md5-hash'),
+    {AotPlugin} = require('@ngtools/webpack');
 
 import 'ts-helpers';
-import { CONSTANTS, ifConst, root, testDll } from './constants';
+
+import { CONSTANTS, ifConst, root, testDll } from './helpers';
 
 if (CONSTANTS.DEV_SERVER) {
     testDll();

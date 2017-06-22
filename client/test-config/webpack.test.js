@@ -1,7 +1,7 @@
 'use strict';
 
 const webpack = require('webpack');
-const root = (args) => path.join.apply(path, [path.resolve(__dirname)].concat(args));
+const {root} = require('../helpers');
 const path = require('path');
 
 /**

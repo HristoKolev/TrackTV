@@ -4,9 +4,7 @@ const compression = require('compression'),
     express = require('express'),
     path = require('path');
 
-const E2E_PORT = require('./constants').E2E_PORT;
-const HOST = require('./constants').HOST;
-const PROD_PORT = require('./constants').PROD_PORT;
+const {E2E_PORT, HOST, PROD_PORT} = require('./helpers');
 
 const app = express();
 

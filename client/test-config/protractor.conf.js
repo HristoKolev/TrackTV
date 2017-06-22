@@ -2,12 +2,10 @@ require('ts-node/register');
 
 const path = require('path');
 
-const ports = require('../constants');
-
-const root = (args) => path.join.apply(path, [path.resolve(__dirname)].concat(args));
+const {CONSTANTS, root} = require('../helpers');
 
 exports.config = {
-    baseUrl: `http://localhost:${ports.E2E_PORT}/`,
+    baseUrl: `http://localhost:${CONSTANTS.E2E_PORT}/`,
 
     // use `npm run e2e`
     specs: [
