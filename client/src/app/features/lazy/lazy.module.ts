@@ -20,7 +20,6 @@ const routes: Routes = [
         LazyComponent,
     ],
 })
-
 export class LazyModule {
 }
 

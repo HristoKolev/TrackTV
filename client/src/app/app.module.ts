@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 export const routes: Routes = [
     {path: '', component: DashboardComponent, pathMatch: 'full'},
-    {path: 'lazy', loadChildren: './features/lazy/index#LazyModule'},
+    {path: 'lazy', loadChildren: './features/lazy/lazy.module#LazyModule'},
     {path: '**', component: NotFound404Component},
 ];
 
@@ -33,6 +33,5 @@ export const routes: Routes = [
     exports: [AppComponent],
     providers: [],
 })
-
 export class AppModule {
 }
