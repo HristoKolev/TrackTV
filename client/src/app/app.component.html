@@ -1,9 +1,10 @@
 <header>
-	<h1>Angular Starter App</h1>
-		<ul id="my-navlist">
-			<li *ngFor="let view of views">
-				<a [routerLink]="view.link" routerLinkActive="active-link">{{view.name}}</a>
-			</li>
-		</ul>
+    <h1>Angular Starter App</h1>
+    <ul id="my-navlist">
+        <li *ngFor="let view of views">
+            <a [routerLink]="view.link" routerLinkActive="active-link">{{view.name}}</a>
+        </li>
+    </ul>
 </header>
+
 <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>

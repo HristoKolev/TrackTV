@@ -1,27 +1,41 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { views } from './app-nav-views';
-
 @Component({
-  selector: 'my-app',
-  styleUrls: ['./app.component.scss'],
-  templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'my-app',
+    styleUrls: ['./app.component.scss'],
+    templateUrl: './app.component.html',
+    encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  views = views;
 
-  constructor() { }
+    public views: any[] = [
+        {
+            name: 'Dashboard',
+            link: [''],
+        },
+        {
+            name: 'Lazy',
+            link: ['lazy'],
+        },
+        {
+            name: 'Bad Link',
+            link: ['wronglink'],
+        },
+    ];
 
-  activateEvent(event) {
-    if (ENV === 'development') {
-      console.log('Activate Event:', event);
+    constructor() {
     }
-  }
 
-  deactivateEvent(event) {
-    if (ENV === 'development') {
-      console.log('Deactivate Event', event);
+    activateEvent(event) {
+
+        if (ENV === 'development') {
+            console.log('Activate Event:', event);
+        }
     }
-  }
+
+    deactivateEvent(event) {
+        if (ENV === 'development') {
+            console.log('Deactivate Event', event);
+        }
+    }
 }
