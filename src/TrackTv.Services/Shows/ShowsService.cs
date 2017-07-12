@@ -88,7 +88,8 @@
                 Banner = show.Banner,
                 ImdbId = show.ImdbId,
                 Status = show.Status,
-                SubscriberCount = subscriberCounts.First(x => x.ShowId == show.Id).SubscriberCount
+                SubscriberCount = subscriberCounts.First(x => x.ShowId == show.Id).SubscriberCount,
+                Id = show.Id
             };
         }
     }

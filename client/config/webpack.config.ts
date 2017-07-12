@@ -52,14 +52,12 @@ const config: WebpackConfig = {
             {test: /\.json$/, loader: 'json-loader'},
             {test: /\.html/, loader: 'raw-loader', exclude: [root('src/index.html')]},
             {test: /\.css$/, loader: 'raw-loader'},
-            {
-                test: /\.scss$/,
-                loaders: ['to-string-loader', 'css-loader', 'sass-loader'],
-            },
+            {test: /\.scss$/, loaders: ['to-string-loader', 'css-loader', 'sass-loader'], },
 
         ],
     },
     plugins: [
+
         new AotPlugin({
             tsConfigPath: root('./src/tsconfig.browser.json'),
             skipCodeGeneration: !CONSTANTS.AOT,
@@ -97,7 +95,9 @@ const config: WebpackConfig = {
                 new CopyWebpackPlugin([
                         ...ifConst(x => !x.DEV_SERVER, [{from: root('src/index.html')}], []),
                         {from: root('src/assets'), to: 'assets',},
-                        ...ifConst(x => x.DEV_SERVER, [{from: root('dll')}], [])],
+                        ...ifConst(x => x.DEV_SERVER, [{from: root('dll')}], [])
+                    ],
+
                     {ignore: ['*dist_root/*']}),
 
                 new CopyWebpackPlugin([{from: 'src/assets/dist_root'}]),
@@ -117,13 +117,16 @@ const config: WebpackConfig = {
                 new BundleAnalyzerPlugin({analyzerPort: 5000}),],
             []),
     ],
+
     cache: true,
     target: 'web',
     devtool: 'source-map',
     devServer: {
+
         contentBase: CONSTANTS.AOT ? './compiled' : './src',
         port: CONSTANTS.PORT,
         historyApiFallback: {
+
             disableDotRule: true,
         },
         stats: 'minimal',
@@ -135,9 +138,11 @@ const config: WebpackConfig = {
         },
     },
     performance: {
+
         hints: false,
     },
     node: {
+
         global: true,
         process: true,
         Buffer: false,
@@ -149,9 +154,11 @@ const config: WebpackConfig = {
         setTimeout: true,
     },
     resolve: {
+
         extensions: ['.ts', '.js', '.json'],
     },
     entry: ifConst(x => x.DLL, {
+
             app_assets: [root('./src/main.browser')],
             polyfill: [
                 'sockjs-client',
@@ -187,10 +194,12 @@ const config: WebpackConfig = {
         },
     ),
     output: ifConst(x => x.DLL, {
+
         path: root('dll'),
         filename: '[name].dll.js',
         library: '[name]',
     }, {
+
         path: root('dist/client'),
         filename: !CONSTANTS.PROD ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
         sourceMapFilename: !CONSTANTS.PROD ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',

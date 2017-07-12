@@ -13,5 +13,6 @@
         public ShowStatus Status { get; set; }
 
         public int SubscriberCount { get; set; }
+        public int Id { get; internal set; }
     }
 }
