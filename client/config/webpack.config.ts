@@ -12,7 +12,7 @@ const path = require('path'),
 
 import 'ts-helpers';
 
-import { CONSTANTS, ifConst, root, testDll } from './helpers';
+import { CONSTANTS, IConstants, ifConst, root, testDll } from './helpers';
 
 if (CONSTANTS.DEV_SERVER) {
     testDll();
@@ -52,7 +52,7 @@ const config: WebpackConfig = {
             {test: /\.json$/, loader: 'json-loader'},
             {test: /\.html/, loader: 'raw-loader', exclude: [root('src/index.html')]},
             {test: /\.css$/, loader: 'raw-loader'},
-            {test: /\.scss$/, loaders: ['to-string-loader', 'css-loader', 'sass-loader'], },
+            {test: /\.scss$/, loaders: ['to-string-loader', 'css-loader', 'sass-loader'],},
 
         ],
     },
@@ -72,7 +72,7 @@ const config: WebpackConfig = {
             metadata: {isDevServer: CONSTANTS.DEV_SERVER},
         }),
 
-        ...ifConst(x => x.DEV_SERVER, () => [
+        ...ifConst((x: IConstants) => x.DEV_SERVER, () => [
 
                 new DllReferencePlugin({
                     context: '.',
@@ -84,7 +84,7 @@ const config: WebpackConfig = {
                 }),],
             []),
 
-        ...ifConst(x => x.DLL, () => [
+        ...ifConst((x: IConstants) => x.DLL, () => [
 
                 new DllPlugin({
                     name: '[name]',
@@ -93,9 +93,9 @@ const config: WebpackConfig = {
             () => [
 
                 new CopyWebpackPlugin([
-                        ...ifConst(x => !x.DEV_SERVER, [{from: root('src/index.html')}], []),
+                        ...ifConst((x: IConstants) => !x.DEV_SERVER, [{from: root('src/index.html')}], []),
                         {from: root('src/assets'), to: 'assets',},
-                        ...ifConst(x => x.DEV_SERVER, [{from: root('dll')}], [])
+                        ...ifConst((x: IConstants) => x.DEV_SERVER, [{from: root('dll')}], [])
                     ],
 
                     {ignore: ['*dist_root/*']}),
@@ -103,16 +103,21 @@ const config: WebpackConfig = {
                 new CopyWebpackPlugin([{from: 'src/assets/dist_root'}]),
             ]),
 
-        ...ifConst(x => x.PROD, () => [
+        ...ifConst((x: IConstants) => x.PROD, () => [
 
                 new NoEmitOnErrorsPlugin(),
                 new UglifyJsPlugin({
                     beautify: false,
                     comments: false,
+                }),
+                new DefinePlugin({
+                    'process.env': {
+                        'NODE_ENV': JSON.stringify('production'),
+                    },
                 }),],
             []),
 
-        ...ifConst(x => x.PROD && !x.E2E && !x.WATCH, () => [
+        ...ifConst((x: IConstants) => x.PROD && !x.E2E && !x.WATCH, () => [
 
                 new BundleAnalyzerPlugin({analyzerPort: 5000}),],
             []),
@@ -157,7 +162,7 @@ const config: WebpackConfig = {
 
         extensions: ['.ts', '.js', '.json'],
     },
-    entry: ifConst(x => x.DLL, {
+    entry: ifConst((x: IConstants) => x.DLL, {
 
             app_assets: [root('./src/main.browser')],
             polyfill: [
@@ -193,7 +198,7 @@ const config: WebpackConfig = {
             main: root('./src/main.browser.ts'),
         },
     ),
-    output: ifConst(x => x.DLL, {
+    output: ifConst((x: IConstants) => x.DLL, {
 
         path: root('dll'),
         filename: '[name].dll.js',

@@ -26,14 +26,14 @@ export class AppComponent {
     constructor() {
     }
 
-    activateEvent(event) {
+    activateEvent(event: any) {
 
         if (ENV === 'development') {
             console.log('Activate Event:', event);
         }
     }
 
-    deactivateEvent(event) {
+    deactivateEvent(event: any) {
         if (ENV === 'development') {
             console.log('Deactivate Event', event);
         }

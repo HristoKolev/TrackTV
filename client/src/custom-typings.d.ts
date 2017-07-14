@@ -34,10 +34,10 @@ interface SystemJS {
 }
 
 interface GlobalEnvironment {
-    AOT;
-    ENV;
-    HOST;
-    PORT;
+    AOT: any;
+    ENV: any;
+    HOST: any;
+    PORT: any;
     SystemJS: SystemJS;
     System: SystemJS;
 }

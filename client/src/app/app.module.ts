@@ -6,12 +6,17 @@ import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
 import { AppComponent } from './app.component';
 import { NotFound404Component } from './not-found404.component';
-import { DashboardComponent } from './features/dashboard.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
+import { store } from './store';
+import { NgRedux, NgReduxModule } from '@angular-redux/store';
+import { NgReduxRouter } from './ng-router-cats/router';
+import { NgReduxRouterModule } from './ng-router-cats/index';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
     {path: '', component: DashboardComponent, pathMatch: 'full'},
-    {path: 'lazy', loadChildren: './features/lazy/lazy.module#LazyModule'},
+    {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
     {path: '**', component: NotFound404Component},
 ];
 
@@ -28,10 +33,19 @@ export const routes: Routes = [
         ReactiveFormsModule,
         IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
         RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: IdlePreload}),
+        NgReduxModule,
+        NgReduxRouterModule,
     ],
     bootstrap: [AppComponent],
     exports: [AppComponent],
     providers: [],
 })
 export class AppModule {
+
+    constructor(ngRedux: NgRedux<any>, ngReduxRouter: NgReduxRouter) {
+
+        ngRedux.provideStore(store);
+        ngReduxRouter.initialize();
+    }
 }
+
