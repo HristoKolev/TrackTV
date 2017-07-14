@@ -1,5 +1,5 @@
 import { combineReducers, compose, createStore, GenericStoreEnhancer } from 'redux';
-import { routerReducer } from './ng-router-cats/reducer';
+import { routerReducer } from '../external/angular-redux-router/reducer';
 
 declare const window: any;
 

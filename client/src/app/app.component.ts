@@ -10,16 +10,8 @@ export class AppComponent {
 
     public views: any[] = [
         {
-            name: 'Dashboard',
-            link: [''],
-        },
-        {
             name: 'Lazy',
             link: ['lazy'],
-        },
-        {
-            name: 'Bad Link',
-            link: ['wronglink'],
         },
     ];
 

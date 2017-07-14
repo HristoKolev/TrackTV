@@ -10,12 +10,11 @@ import { NotFound404Component } from './not-found404.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { store } from './store';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
-import { NgReduxRouter } from './ng-router-cats/router';
-import { NgReduxRouterModule } from './ng-router-cats/index';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgReduxRouterModule } from '../external/angular-redux-router/index';
+import { NgReduxRouter } from '../external/angular-redux-router/router';
 
 export const routes: Routes = [
-    {path: '', component: DashboardComponent, pathMatch: 'full'},
+    {path: '', redirectTo: '/lazy', pathMatch: 'full'},
     {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
     {path: '**', component: NotFound404Component},
 ];
@@ -23,7 +22,7 @@ export const routes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        DashboardComponent,
+
         NotFound404Component,
     ],
     entryComponents: [],

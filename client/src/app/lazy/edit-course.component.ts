@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Course, CourseActions, ICoursesState } from './state';
 import { NgRedux } from '@angular-redux/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IRouterState } from '../ng-router-cats/reducer';
-
+import { IRouterState } from '../../external/angular-redux-router/reducer';
 
 @Component({
     template: `
