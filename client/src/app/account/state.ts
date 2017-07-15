@@ -34,11 +34,7 @@ export class AccountActions {
     }
 
     login(user: LoginUser) {
-
-        this.ngRedux.dispatch({
-            type: actionTypes.LOGIN,
-            user,
-        });
+        this.ngRedux.dispatch({type: actionTypes.LOGIN, user});
     }
 }
 

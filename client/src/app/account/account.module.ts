@@ -4,12 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
+import { AccountActions } from './state';
 
 const routes: Routes = [
-    {
-        path: 'login',
-        component: LoginComponent,
-    },
+    {path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
@@ -21,7 +19,9 @@ const routes: Routes = [
     declarations: [
         LoginComponent,
     ],
-    providers: [],
+    providers: [
+        AccountActions,
+    ],
 })
 export class AccountModule {
 }

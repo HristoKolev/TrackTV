@@ -11,13 +11,11 @@ import { IRouterState } from '../../external/angular-redux-router/reducer';
         <label>Description: </label> <input [(ngModel)]="this.course.description"/>
 
         <br/>
-        <br/>
 
         <button (click)="this.addCourse()" [disabled]="!this.course.name || !this.course.description">
-            {{ this.course.courseId === 0 ? 'Add' : 'Update' }}
+            {{ this.course.id === 0 ? 'Add' : 'Update' }}
         </button>
 
-        <br/>
         <br/>
 
         <button [routerLink]="['../', this.course.id + 1]">Increment</button>

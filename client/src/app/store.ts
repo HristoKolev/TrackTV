@@ -29,7 +29,4 @@ const createReducer = (newReducers: any = {}): any => {
 
 export const store = createStore<any>(createReducer(), compose(getDevExtension()));
 
-export const addReducers = (newReducers: any = {}): void => {
-
-    store.replaceReducer(createReducer(newReducers));
-};
+export const addReducers = (newReducers: any = {}): void => store.replaceReducer(createReducer(newReducers));

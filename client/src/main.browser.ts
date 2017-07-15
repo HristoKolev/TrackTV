@@ -11,7 +11,7 @@ if (ENV === 'production') {
 
 export function main() {
     return platformBrowserDynamic().bootstrapModule(AppModule)
-        .catch(err => console.log(err));
+        .catch(console.log.bind(console));
 }
 
 export function bootstrapDomReady() {
