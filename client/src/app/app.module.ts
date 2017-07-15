@@ -13,6 +13,8 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { NgReduxRouterModule } from '../external/angular-redux-router/index';
 import { NgReduxRouter } from '../external/angular-redux-router/router';
 
+import { client, urlEncodeBody } from './shared/http-client';
+
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
     {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
@@ -48,3 +50,8 @@ export class AppModule {
     }
 }
 
+client.post('http://192.168.1.103:7000/connect/token', urlEncodeBody({
+    username: 'a',
+    password: 'a',
+}), {'Content-Type': 'application/x-www-form-urlencoded'})
+    .then(console.log);
