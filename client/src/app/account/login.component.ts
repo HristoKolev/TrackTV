@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AccountActions } from './state';
 
 @Component({
     template: `
@@ -15,7 +16,18 @@ export class LoginComponent {
     username: string;
     password: string;
 
+    constructor(public accountActions: AccountActions) {
+
+    }
+
     submit(): void {
+
         console.log(this.username, this.password);
+
+        this.accountActions.login({
+            username: this.username,
+            password: this.password,
+
+        });
     }
 }
