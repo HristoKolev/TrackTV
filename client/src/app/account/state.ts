@@ -11,6 +11,7 @@ export interface ICurrentSession {
 }
 
 export interface IAccountState {
+    session?: ICurrentSession;
 }
 
 export interface UserLogin {
@@ -30,6 +31,10 @@ const actionTypes = {
 export const accountReducer = (state: IAccountState = initialState, action: any): IAccountState => {
     switch (action.type) {
 
+        case actionTypes.LOGIN_REQUEST_COMPLETED: {
+            return {...state, session: action.response};
+        }
+
         default: {
             return state;
         }
@@ -38,17 +43,15 @@ export const accountReducer = (state: IAccountState = initialState, action: any)
 
 export const loginEpic = (action$: any, state: { account: IAccountState }) => {
 
-    console.log('mine cats');
-
-    return action$.ofType('account/LOGIN_REQUEST_START')
+    return action$.ofType(actionTypes.LOGIN_REQUEST_START)
         .switchMap((action: any) => fetch('http://192.168.1.103:7000/connect/token', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: Object.entries(action.user).map(p => p.join('=')).join('&'),
         }))
-        .do(console.log)
-        .map((res: any) => ({type: 'account/LOGIN_REQUEST_COMPLETED', res}))
-        .catch((res: any) => ({type: 'account/LOGIN_REQUEST_FAILED', res}));
+        .switchMap((x: any) => x.json())
+        .map((response: any) => ({type: actionTypes.LOGIN_REQUEST_COMPLETED, response}))
+        .catch((error: any) => ({type: actionTypes.LOGIN_REQUEST_FAILED, error}));
 };
 
 @Injectable()
@@ -66,3 +69,4 @@ addReducers({
     account: accountReducer,
 });
 
+addEpics([loginEpic]);

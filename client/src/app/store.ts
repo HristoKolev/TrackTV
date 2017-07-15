@@ -29,6 +29,7 @@ export const store = createStore<any>(createReducer(), composeEnhancers(applyMid
 export const addReducers = (newReducers: any = {}): void => store.replaceReducer(createReducer(newReducers));
 
 export const addEpics = (epics: any[]): void => {
+
     for (let epic of epics) {
         epics$.next(epic);
     }
