@@ -13,8 +13,7 @@ import { IRouterState } from '../../external/angular-redux-router/reducer';
         <br/>
         <br/>
 
-        <button (click)="this.addCourse()"
-                [disabled]="!this.course.name || !this.course.description">
+        <button (click)="this.addCourse()" [disabled]="!this.course.name || !this.course.description">
             {{ this.course.courseId === 0 ? 'Add' : 'Update' }}
         </button>
 

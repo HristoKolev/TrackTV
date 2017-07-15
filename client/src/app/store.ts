@@ -6,6 +6,7 @@ declare const window: any;
 const getDevExtension = (): GenericStoreEnhancer => {
 
     if (window.devToolsExtension) {
+
         return window.devToolsExtension() as GenericStoreEnhancer;
     }
 

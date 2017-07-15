@@ -41,7 +41,7 @@ const actionTypes = {
     ADD_COURSE: 'courses/ADD_COURSE',
 };
 
-const coursesReducer = (state: ICoursesState = initialState, action: any): ICoursesState => {
+export const coursesReducer = (state: ICoursesState = initialState, action: any): ICoursesState => {
     switch (action.type) {
         case actionTypes.FILTER_COURSES:
             return {

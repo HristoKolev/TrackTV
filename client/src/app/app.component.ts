@@ -13,6 +13,10 @@ export class AppComponent {
             name: 'Lazy',
             link: ['lazy'],
         },
+        {
+            name: 'Login',
+            link: ['account/login'],
+        },
     ];
 
     constructor() {

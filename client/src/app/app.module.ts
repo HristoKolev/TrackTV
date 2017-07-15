@@ -16,6 +16,7 @@ import { NgReduxRouter } from '../external/angular-redux-router/router';
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
     {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
+    {path: 'account', loadChildren: './account/account.module#AccountModule'},
     {path: '**', component: NotFound404Component},
 ];
 
