@@ -1,31 +1,41 @@
+import { Observable } from 'rxjs/Observable';
+
 export interface FetchResponse {
     status: number;
     body: any;
     headers: any;
+    networkError: boolean;
 }
 
-class HttpClient {
+export class HttpClient {
 
     public baseUrl: string = '';
 
     public defaultHeaders: any = {};
 
-    public get(url: string, headers: any): Promise<FetchResponse> {
+    public get(url: string, headers: any = {}): Observable<FetchResponse> {
 
-        return fetch(this.baseUrl + url, {
+        return Observable.fromPromise(fetch(this.baseUrl + url, {
             method: 'get',
             headers: {...this.defaultHeaders, ...headers},
-        }).then(this.parseResponse);
+        }).then(this.parseResponse, this.handleError));
     }
 
-    public post(url: string, body: any, headers: any): Promise<FetchResponse> {
+    public post(url: string, body: any, headers: any): Observable<FetchResponse> {
 
-        return fetch(this.baseUrl + url, {
+        return Observable.fromPromise(fetch(this.baseUrl + url, {
                 method: 'post',
                 headers: {...this.defaultHeaders, ...headers},
-                body: JSON.stringify(body),
+                body,
             },
-        ).then(this.parseResponse);
+        ).then(this.parseResponse, this.handleError));
+    }
+
+    private handleError(err: any) {
+
+        return {
+            networkError: true,
+        };
     }
 
     private parseResponse(res: any): any {
@@ -39,6 +49,7 @@ class HttpClient {
                         acc[x[0]] = x[1];
                         return acc;
                     }, {}),
+                networkError: false,
             }));
     }
 }
@@ -46,4 +57,11 @@ class HttpClient {
 export const client = new HttpClient();
 
 export const urlEncodeBody = (obj: any) => Object.entries(obj).map(p => p.join('=')).join('&');
+
+export const urlEncodedHeader = {'Content-Type': 'application/x-www-form-urlencoded'};
+
+export const networkAction = (successType: string, failureType: string) => {
+
+    return (response: any) => ({type: response.networkError ? failureType : successType, response});
+};
 

@@ -15,7 +15,7 @@ import { NgRedux } from '@angular-redux/store';
 
             <label for="filterBox">Filter:</label>
 
-            <input type="text" id="filterBox" [(ngModel)]="searchText">
+            <input id="filterBox" [(ngModel)]="searchText">
 
             <div *ngFor="let course of filteredCourses$ | async" class="course">
                 {{course.name}}
