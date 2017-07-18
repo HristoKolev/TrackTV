@@ -1,11 +1,12 @@
-﻿namespace TrackTv.Configuration
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace TrackTv.Configuration
 {
     using System;
     using System.IO;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
-    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
@@ -19,7 +20,7 @@
         {
             var serviceProvider = context.GetInfrastructure();
 
-            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
             loggerFactory.AddProvider(Activator.CreateInstance<T>());
         }

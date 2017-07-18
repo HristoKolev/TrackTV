@@ -1,4 +1,6 @@
-﻿namespace TrackTv.WebServices.Controllers.Public
+﻿using TrackTv.WebServices.Infrastructure;
+
+namespace TrackTv.WebServices.Controllers.Public
 {
     using System.Threading.Tasks;
 
@@ -18,7 +20,9 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Ok(await this.GenresService.GetGenresAsync().ConfigureAwait(false));
+            return this.Success(await this.GenresService
+                                          .GetGenresAsync()
+                                          .ConfigureAwait(false));
         }
     }
 }

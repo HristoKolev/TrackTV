@@ -22,17 +22,21 @@
         [HttpDelete("{showId:int}")]
         public async Task<IActionResult> Delete(int showId)
         {
-            await this.SubscriptionService.Unsubscribe(this.User.GetProfileId(), showId).ConfigureAwait(false);
+            await this.SubscriptionService
+                      .Unsubscribe(this.User.GetProfileId(), showId)
+                      .ConfigureAwait(false);
 
-            return this.Ok();
+            return this.Success();
         }
 
         [HttpPut("{showId:int}")]
         public async Task<IActionResult> Put(int showId)
         {
-            await this.SubscriptionService.Subscribe(this.User.GetProfileId(), showId).ConfigureAwait(false);
+            await this.SubscriptionService
+                      .Subscribe(this.User.GetProfileId(), showId)
+                      .ConfigureAwait(false);
 
-            return this.Ok();
+            return this.Success();
         }
     }
 }

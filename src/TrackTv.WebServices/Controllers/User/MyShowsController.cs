@@ -22,7 +22,9 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Ok(await this.MyShowsService.GetAllAsync(this.User.GetProfileId(), DateTime.UtcNow).ConfigureAwait(false));
+            return this.Success(await this.MyShowsService
+                                     .GetAllAsync(this.User.GetProfileId(), DateTime.UtcNow)
+                                     .ConfigureAwait(false));
         }
     }
 }

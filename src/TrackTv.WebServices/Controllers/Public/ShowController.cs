@@ -21,18 +21,16 @@
         [HttpGet("{showId:int}")]
         public async Task<IActionResult> Get(int showId)
         {
-            FullShow show;
-
             if (this.User.Identity.IsAuthenticated)
             {
-                show = await this.ShowService.GetFullShowAsync(showId, this.User.GetProfileId()).ConfigureAwait(false);
+                return this.Success(await this.ShowService
+                                         .GetFullShowAsync(showId, this.User.GetProfileId())
+                                         .ConfigureAwait(false));
             }
-            else
-            {
-                show = await this.ShowService.GetFullShowAsync(showId).ConfigureAwait(false);
-            }
-
-            return this.Ok(show);
+            
+            return this.Success(await this.ShowService
+                                     .GetFullShowAsync(showId)
+                                     .ConfigureAwait(false));
         }
     }
 }

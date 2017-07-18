@@ -27,21 +27,27 @@
         [HttpPut("[action]/{seriesId}")]
         public async Task<IActionResult> Add(int seriesId)
         {
-            await this.Fetcher.AddShowAsync(seriesId).ConfigureAwait(false);
+            await this.Fetcher
+                      .AddShowAsync(seriesId)
+                      .ConfigureAwait(false);
 
-            return this.Ok();
+            return this.Success();
         }
 
         [HttpGet("[action]/{imdbId}")]
         public async Task<IActionResult> ByImdbId(string imdbId)
         {
-            return this.Ok(await this.ExternalShowsService.GetShowsByImdbIdAsync(imdbId).ConfigureAwait(false));
+            return this.Success(await this.ExternalShowsService
+                                          .GetShowsByImdbIdAsync(imdbId)
+                                          .ConfigureAwait(false));
         }
 
         [HttpGet("{query}")]
         public async Task<IActionResult> Get(string query)
         {
-            return this.Ok(await this.ExternalShowsService.GetShowsByNameAsync(query).ConfigureAwait(false));
+            return this.Success(await this.ExternalShowsService
+                                          .GetShowsByNameAsync(query)
+                                          .ConfigureAwait(false));
         }
     }
 }

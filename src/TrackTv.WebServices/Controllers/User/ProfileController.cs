@@ -21,7 +21,9 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Ok(await this.ProfileService.GetProfileAsync(this.User.GetProfileId()).ConfigureAwait(false));
+            return this.Success(await this.ProfileService
+                                     .GetProfileAsync(this.User.GetProfileId())
+                                     .ConfigureAwait(false));
         }
     }
 }
