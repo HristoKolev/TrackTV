@@ -1,9 +1,9 @@
+using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Controllers;
+
 namespace TrackTv.WebServices.Infrastructure
 {
     using System;
-    using System.Linq;
-    using System.Reflection;
-
     using log4net;
     using log4net.Util;
 
@@ -11,28 +11,19 @@ namespace TrackTv.WebServices.Infrastructure
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    using TrackTv.Services.Exceptions;
-
     /// <summary>
     /// <para>Global Exception handler.</para>
-    /// <para>If the exception has the attribute <see cref="ExposeErrorAttribute"/> 
-    /// we wrap it in a <see cref="ErrorModel"/> and return it with an status code of 400.</para> 
-    /// <para>If the exception doesn't have a <see cref="ExposeErrorAttribute"/> attribute, we return an empty response with status code of 500.</para> 
+    /// <para>If the  controller defines an error message for the exception type,
+    ///  we wrap it in <see cref="ApiResult"/> and return it with status code of 200.</para> 
+    /// <para>If the exception can't be handled, we return an empty response with status code of 500.</para> 
     /// </summary>
     public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        static HandleExceptionFilterAttribute()
-        {
-            ApiErrorExceptions = GetApiErrorExceptions();
-        }
-
         public HandleExceptionFilterAttribute(IHostingEnvironment hostingEnvironment, ILog log)
         {
             this.HostingEnvironment = hostingEnvironment;
             this.Log = log;
         }
-
-        private static Type[] ApiErrorExceptions { get; }
 
         private IHostingEnvironment HostingEnvironment { get; }
 
@@ -40,26 +31,39 @@ namespace TrackTv.WebServices.Infrastructure
 
         public override void OnException(ExceptionContext context)
         {
-            for (int i = 0; i < ApiErrorExceptions.Length; i++)
+            try
             {
-                Type exceptionType = ApiErrorExceptions[i];
+                this.HandleException(context);
+            }
+            catch (Exception ex)
+            {
+                this.Log.ErrorExt(() => "\r\n\r\n" +
+                                        "Exception occured while handling an exception.\r\n\r\n" +
+                                        $"Original exception: {context.Exception}\r\n\r\n" +
+                                        $"Error handler exception: {ex}");
+                
+                throw;
+            }
+        }
 
-                if (exceptionType.IsInstanceOfType(context.Exception))
+        private void HandleException(ExceptionContext context)
+        {
+            var descriptor = (ControllerActionDescriptor) context.ActionDescriptor;
+
+            var exposeAttribute = descriptor.MethodInfo.FirstAttribute<ExposeErrorAttribute>();
+
+            if (exposeAttribute != null && exposeAttribute.ExceptionType.IsInstanceOfType(context.Exception))
+            {
+                context.Result = new ObjectResult(ApiResult.FromErrorMessages(exposeAttribute.Message))
                 {
-                    var errorModel = new ErrorModel
-                    {
-                        Message = context.Exception.Message,
-                        ErrorCode = exceptionType.Name
-                    };
+                    StatusCode = 200
+                };
 
-                    context.Result = new BadRequestObjectResult(errorModel);
+                this.Log.ErrorExt(() => $"Exception was handled. " +
+                                        $"(ExceptionMessage: {context.Exception.Message}, " +
+                                        $"ExceptionName: {context.Exception.GetType().Name})");
 
-                    this.Log.ErrorExt(() => $"Exception was handled. (Message: {errorModel.Message}, ErrorCode: {errorModel.ErrorCode})");
-
-                    context.ExceptionHandled = true;
-
-                    break;
-                }
+                context.ExceptionHandled = true;
             }
 
             if (!context.ExceptionHandled && !this.HostingEnvironment.IsDevelopment())
@@ -69,31 +73,21 @@ namespace TrackTv.WebServices.Infrastructure
                 context.ExceptionHandled = true;
             }
         }
+    }
 
-        /// <summary>
-        /// Returns all types that have the <see cref="ExposeErrorAttribute"/> attribute.
-        /// </summary>
-        private static Type[] GetApiErrorExceptions()
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ExposeErrorAttribute : Attribute
+    {
+        public Type ExceptionType { get; }
+        
+        public string Message { get; }
+
+        public ExposeErrorAttribute(Type exceptionType, string message)
         {
-            var assembly = Assembly.GetEntryAssembly();
-
-            var all = assembly.GetReferencedAssemblies().Select(Assembly.Load).Concat(new[]
-            {
-                assembly
-            });
-
-            return all.SelectMany(a => a.DefinedTypes).Where(t => t.GetCustomAttribute<ExposeErrorAttribute>() != null)
-                      .Select(t => t.AsType()).ToArray();
-        }
-
-        private class ErrorModel
-        {
-            /// <summary>
-            /// The exception type name
-            /// </summary>
-            public string ErrorCode { get; set; }
-
-            public string Message { get; set; }
+            this.ExceptionType = exceptionType;
+            this.Message = message;
+            
+            exceptionType.AssertIs<Exception>();
         }
     }
 }

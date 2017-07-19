@@ -19,6 +19,7 @@
         private IShowService ShowService { get; }
 
         [HttpGet("{showId:int}")]
+        [ExposeError(typeof(ShowNotFoundException), "Show not found.")]
         public async Task<IActionResult> Get(int showId)
         {
             if (this.User.Identity.IsAuthenticated)

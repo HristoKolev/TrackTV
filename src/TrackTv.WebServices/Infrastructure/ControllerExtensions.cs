@@ -1,3 +1,6 @@
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 namespace TrackTv.WebServices.Infrastructure
 {
     using System;
@@ -15,6 +18,16 @@ namespace TrackTv.WebServices.Infrastructure
         {
             return controller.Ok(ApiResult.Ok());
         }
+
+        public static ActionResult Failure(this Controller controller, ModelStateDictionary modelState)
+        {
+            return controller.Ok(ApiResult.FromModelState(modelState));
+        }
+
+        public static ActionResult Failure(this Controller controller, params string[] messages)
+        {
+            return controller.Ok(ApiResult.FromErrorMessages(messages));
+        }
     }
 
     public class ApiResult
@@ -25,13 +38,13 @@ namespace TrackTv.WebServices.Infrastructure
 
         public bool Success => this.ErrorMessages.Length == 0;
 
-        public static ApiResult Error(Exception exception)
+        public static ApiResult FromException(Exception exception)
         {
             return new ApiResult
             {
                 ErrorMessages = new[]
                 {
-                    exception.Message
+                    exception.Message,
                 }
             };
         }
@@ -50,6 +63,26 @@ namespace TrackTv.WebServices.Infrastructure
             return new ApiResult
             {
                 ErrorMessages = Array.Empty<string>(),
+            };
+        }   
+
+        public static ApiResult FromErrorMessages(params string[] messages)
+        {
+            return new ApiResult
+            {
+                ErrorMessages = messages
+            };
+        }
+
+        public static ApiResult FromModelState(ModelStateDictionary modelState)
+        {
+            var messages = modelState.Values
+                                  .Where(entry => entry.ValidationState == ModelValidationState.Invalid)
+                                  .SelectMany(entry => entry.Errors)
+                                  .Select(error => error.ErrorMessage).ToArray();
+            return new ApiResult
+            {
+                ErrorMessages = messages
             };
         }
     }

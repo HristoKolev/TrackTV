@@ -4,7 +4,6 @@
 
     using TrackTv.Services.Exceptions;
 
-    [ExposeError]
     public class InvalidQueryException : Exception
     {
         public InvalidQueryException(string message)

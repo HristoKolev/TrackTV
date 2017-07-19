@@ -30,7 +30,7 @@
             await this.Fetcher
                       .AddShowAsync(seriesId)
                       .ConfigureAwait(false);
-
+            
             return this.Success();
         }
 

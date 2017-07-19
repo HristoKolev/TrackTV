@@ -50,7 +50,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(this.ModelState);
+                return this.Failure(this.ModelState);
             }
 
             using (var scope = await this.TransactionScopeFactory
@@ -76,10 +76,10 @@
                 {
                     scope.Complete();
 
-                    return this.Ok();
+                    return this.Success();
                 }
 
-                return this.BadRequest(result.Errors);
+                return this.Failure(result.Errors.Select(error => error.Description).ToArray());
             }
         }
 

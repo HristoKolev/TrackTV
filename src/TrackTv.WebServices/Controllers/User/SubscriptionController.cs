@@ -1,4 +1,6 @@
-﻿namespace TrackTv.WebServices.Controllers.User
+﻿using TrackTv.Services.Subscription.Models;
+
+namespace TrackTv.WebServices.Controllers.User
 {
     using System.Threading.Tasks;
 
@@ -20,6 +22,7 @@
         private ISubscriptionService SubscriptionService { get; }
 
         [HttpDelete("{showId:int}")]
+        [ExposeError(typeof(SubscriptionException), "You are not subscribed to that show.")]
         public async Task<IActionResult> Delete(int showId)
         {
             await this.SubscriptionService
@@ -30,6 +33,7 @@
         }
 
         [HttpPut("{showId:int}")]
+        [ExposeError(typeof(SubscriptionException), "You are already subscribed to that show.")]
         public async Task<IActionResult> Put(int showId)
         {
             await this.SubscriptionService

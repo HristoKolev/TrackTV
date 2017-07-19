@@ -1,4 +1,5 @@
-﻿using TrackTv.WebServices.Infrastructure;
+﻿using TrackTv.Services.Shows.Models;
+using TrackTv.WebServices.Infrastructure;
 
 namespace TrackTv.WebServices.Controllers.Public
 {
@@ -19,6 +20,7 @@ namespace TrackTv.WebServices.Controllers.Public
         private IShowsService ShowsService { get; }
 
         [HttpGet("[action]/{genreId:int}/{page:int}/{pageSize:int}")]
+        [ExposeError(typeof(GenreNotFoundException), "Can't find the genre you are looking for.")]
         public async Task<IActionResult> Genre(int genreId, int page, int pageSize)
         {
             return this.Success(await this.ShowsService
