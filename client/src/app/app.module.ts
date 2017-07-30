@@ -47,6 +47,6 @@ export class AppModule {
         ngRedux.provideStore(store);
         ngReduxRouter.initialize();
 
-        client.baseUrl = 'http://192.168.1.103:7000';
+        client.baseUrl = 'http://localhost:5000';
     }
 }

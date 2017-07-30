@@ -4,23 +4,17 @@ import { addEpics, addReducers } from '../store';
 import { client, networkAction, urlEncodeBody, urlEncodedHeader } from '../shared/http-client';
 
 export interface ICurrentSession {
-    resource: string;
-    token_type: string;
     access_token: string;
-    expires_in: number;
-    username: string;
 }
 
-export interface ILoginResponse {
-    success: boolean;
-    errorMessages: string[];
-    body?: any;
-    networkError: boolean;
+export interface ICurrentUser {
+    username?: string;
 }
 
 export interface IAccountState {
     session?: ICurrentSession;
-    response?: ILoginResponse;
+    user: ICurrentUser;
+    errorMessages?: string[];
 }
 
 export interface UserLogin {
@@ -39,25 +33,21 @@ export const accountReducer = (state: IAccountState = {} as IAccountState, actio
     switch (action.type) {
 
         case actionTypes.LOGIN_REQUEST_COMPLETED: {
-
             const body = action.response.body;
-
             return {
-                ...state, response: {
-                    success: !body.error,
-                    errorMessages: body.error ? [body.error_description] : [],
-                    body: !body.error ? body : null,
-                    networkError: false,
+                ...state,
+                errorMessages: body.error ? [body.error_description] : [],
+                session: {
+                    access_token: body.access_token,
                 },
+                user: {},
+
             };
         }
         case actionTypes.LOGIN_REQUEST_FAILED: {
-
             const networkError = action.response.networkError;
-
             return {
                 ...state, response: {
-                    networkError,
                     errorMessages: networkError ? ['Server is down. Please, try again later.'] : [],
                     success: false,
                 },

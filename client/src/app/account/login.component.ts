@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AccountActions, IAccountState } from './state';
 import { NgRedux } from '@angular-redux/store';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     template: `
@@ -22,12 +23,14 @@ import { NgRedux } from '@angular-redux/store';
         }
     `],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
     username: string;
     password: string;
 
     accountState: IAccountState;
+
+    subscription: Subscription;
 
     constructor(private accountActions: AccountActions,
                 private ngRedux: NgRedux<any>) {
@@ -36,9 +39,14 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.ngRedux
+        this.subscription = this.ngRedux
             .select((store: { account: IAccountState }) => store.account)
             .subscribe((x: any) => this.accountState = x);
+    }
+
+    public ngOnDestroy(): void {
+
+        this.subscription.unsubscribe();
     }
 
     submit(): void {
