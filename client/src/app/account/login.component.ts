@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs/Subscription';
             <button (click)="this.submit()">Login</button>
         </div>
 
-        <div *ngIf="!this.accountState?.response?.success">
-            <div *ngFor="let message of this.accountState?.response?.errorMessages">
+        <div *ngIf="this.accountState?.errorMessages.length">
+            <div *ngFor="let message of this.accountState?.errorMessages">
                 <div class="errorMessage">{{message}}</div>
             </div>
         </div>

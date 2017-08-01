@@ -12,7 +12,7 @@ import { store } from './store';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { NgReduxRouterModule } from '../external/angular-redux-router/index';
 import { NgReduxRouter } from '../external/angular-redux-router/router';
-import { client } from './shared/http-client';
+import { httpClient } from './shared/http-client';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -47,6 +47,6 @@ export class AppModule {
         ngRedux.provideStore(store);
         ngReduxRouter.initialize();
 
-        client.baseUrl = 'http://localhost:5000';
+        httpClient.baseUrl = 'http://localhost:5000';
     }
 }

@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs/Observable';
+import { store } from '../store';
 
 export interface FetchResponse {
     status: number;
@@ -10,8 +11,6 @@ export interface FetchResponse {
 export class HttpClient {
 
     public baseUrl: string = '';
-
-    public defaultHeaders: any = {};
 
     public get(url: string, headers: any = {}): Observable<FetchResponse> {
 
@@ -52,16 +51,30 @@ export class HttpClient {
                 networkError: false,
             }));
     }
+
+    private get defaultHeaders(): any {
+
+        const headers: any = {};
+
+        const state = store.getState();
+
+        let token;
+
+        if (state.account && state.account.session) {
+
+            token = state.account.session.access_token;
+        }
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        return headers;
+    }
 }
 
-export const client = new HttpClient();
+export const httpClient = new HttpClient();
 
 export const urlEncodeBody = (obj: any) => Object.entries(obj).map(p => p.join('=')).join('&');
 
 export const urlEncodedHeader = {'Content-Type': 'application/x-www-form-urlencoded'};
-
-export const networkAction = (successType: string, failureType: string) => {
-
-    return (response: any) => ({type: response.networkError ? failureType : successType, response});
-};
-
