@@ -11,12 +11,13 @@
     using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
 
-    using TvDbSharper.BaseSchemas;
-    using TvDbSharper.Clients.Series;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     using Xunit;
 
-    using ActorData = TvDbSharper.Clients.Series.Json.Actor;
+    using Actor = TrackTv.Data.Models.Actor;
+    using ActorData = TvDbSharper.Dto.Actor;
 
     public class ActorFetcherTest
     {

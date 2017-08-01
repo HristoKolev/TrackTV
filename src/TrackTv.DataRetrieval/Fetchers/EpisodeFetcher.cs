@@ -7,9 +7,8 @@
     using TrackTv.Data.Models;
     using TrackTv.DataRetrieval.ClientExtensions;
 
-    using TvDbSharper.Clients.Episodes;
-    using TvDbSharper.Clients.Episodes.Json;
-    using TvDbSharper.Clients.Updates;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     public class EpisodeFetcher : IEpisodeFetcher
     {

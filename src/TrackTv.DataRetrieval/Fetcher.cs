@@ -14,8 +14,7 @@
     using TrackTv.DataRetrieval.Fetchers;
 
     using TvDbSharper;
-    using TvDbSharper.Clients.Updates;
-    using TvDbSharper.Clients.Updates.Json;
+    using TvDbSharper.Dto;
 
     public class Fetcher : IFetcher
     {

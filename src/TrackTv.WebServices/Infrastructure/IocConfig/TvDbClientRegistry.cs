@@ -8,13 +8,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using StructureMap;
 
     using TvDbSharper;
-    using TvDbSharper.Clients.Authentication;
-    using TvDbSharper.Clients.Episodes;
-    using TvDbSharper.Clients.Languages;
-    using TvDbSharper.Clients.Search;
-    using TvDbSharper.Clients.Series;
-    using TvDbSharper.Clients.Updates;
-    using TvDbSharper.Clients.Users;
 
     public class TvDbClientRegistry : Registry
     {

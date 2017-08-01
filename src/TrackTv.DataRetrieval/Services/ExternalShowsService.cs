@@ -4,9 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TvDbSharper.Clients.Search;
-    using TvDbSharper.Clients.Search.Json;
-    using TvDbSharper.Errors;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     public class ExternalShowsService : IExternalShowsService
     {
@@ -47,7 +46,7 @@
             }
             catch (TvDbServerException ex)
             {
-                if (ex.Message.Contains("Resource not found"))
+                if (ex.StatusCode == 404)
                 {
                     return Array.Empty<CatalogShow>();
                 }

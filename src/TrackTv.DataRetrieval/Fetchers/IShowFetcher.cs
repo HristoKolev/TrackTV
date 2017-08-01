@@ -4,7 +4,7 @@
 
     using TrackTv.Data.Models;
 
-    using TvDbSharper.Clients.Series.Json;
+    using TvDbSharper.Dto;
 
     public interface IShowFetcher
     {

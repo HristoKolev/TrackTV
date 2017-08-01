@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using TvDbSharper.Clients.Episodes.Json;
+    using TvDbSharper.Dto;
 
     public interface IAdvancedEpisodeClient
     {

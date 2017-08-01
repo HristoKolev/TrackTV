@@ -14,7 +14,7 @@
     using TrackTv.DataRetrieval.Fetchers;
 
     using TvDbSharper;
-    using TvDbSharper.Clients.Authentication.Json;
+    using TvDbSharper.Dto;
 
     public class DataEntryProgram
     {

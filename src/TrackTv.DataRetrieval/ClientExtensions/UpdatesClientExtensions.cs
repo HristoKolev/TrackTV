@@ -5,9 +5,8 @@ namespace TrackTv.DataRetrieval.ClientExtensions
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TvDbSharper.BaseSchemas;
-    using TvDbSharper.Clients.Updates;
-    using TvDbSharper.Clients.Updates.Json;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     public static class UpdatesClientExtensions
     {

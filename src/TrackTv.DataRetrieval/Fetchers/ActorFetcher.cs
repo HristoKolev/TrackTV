@@ -8,9 +8,9 @@
     using TrackTv.Data.Models;
     using TrackTv.DataRetrieval.Data;
 
-    using TvDbSharper.Clients.Series;
+    using TvDbSharper;
 
-    using ActorData = TvDbSharper.Clients.Series.Json.Actor;
+    using ActorData = TvDbSharper.Dto.Actor;
 
     public class ActorFetcher : IActorFetcher
     {

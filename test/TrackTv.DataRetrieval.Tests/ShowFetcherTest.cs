@@ -10,7 +10,7 @@
     using TrackTv.DataRetrieval.Data;
     using TrackTv.DataRetrieval.Fetchers;
 
-    using TvDbSharper.Clients.Series.Json;
+    using TvDbSharper.Dto;
 
     using Xunit;
 

@@ -4,8 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TvDbSharper.Clients.Episodes;
-    using TvDbSharper.Clients.Episodes.Json;
+    using TvDbSharper;
+    
+    using TvDbSharper.Dto;
 
     public class AdvancedEpisodeClient : IAdvancedEpisodeClient
     {

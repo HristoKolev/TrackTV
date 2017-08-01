@@ -12,10 +12,8 @@
     using TrackTv.DataRetrieval.ClientExtensions;
     using TrackTv.DataRetrieval.Fetchers;
 
-    using TvDbSharper.BaseSchemas;
-    using TvDbSharper.Clients.Episodes;
-    using TvDbSharper.Clients.Episodes.Json;
-    using TvDbSharper.Clients.Series.Json;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     using Xunit;
 

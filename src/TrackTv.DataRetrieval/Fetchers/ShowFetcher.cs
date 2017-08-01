@@ -7,8 +7,8 @@
     using TrackTv.Data.Models.Enums;
     using TrackTv.DataRetrieval.Data;
 
-    using TvDbSharper.Clients.Series.Json;
-    using TvDbSharper.Clients.Updates;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     public class ShowFetcher : IShowFetcher
     {

@@ -4,9 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TvDbSharper.BaseSchemas;
-    using TvDbSharper.Clients.Series;
-    using TvDbSharper.Clients.Series.Json;
+    using TvDbSharper;
+    using TvDbSharper.Dto;
 
     public class AdvancedSeriesClient : IAdvancedSeriesClient
     {

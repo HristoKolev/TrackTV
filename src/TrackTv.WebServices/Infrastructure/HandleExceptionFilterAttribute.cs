@@ -1,14 +1,14 @@
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc.Controllers;
-
 namespace TrackTv.WebServices.Infrastructure
 {
     using System;
+    using System.Reflection;
+
     using log4net;
     using log4net.Util;
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Filters;
 
     /// <summary>
@@ -37,18 +37,16 @@ namespace TrackTv.WebServices.Infrastructure
             }
             catch (Exception ex)
             {
-                this.Log.ErrorExt(() => "\r\n\r\n" +
-                                        "Exception occured while handling an exception.\r\n\r\n" +
-                                        $"Original exception: {context.Exception}\r\n\r\n" +
-                                        $"Error handler exception: {ex}");
-                
+                this.Log.ErrorExt(() => "\r\n\r\n" + "Exception occured while handling an exception.\r\n\r\n"
+                                        + $"Original exception: {context.Exception}\r\n\r\n" + $"Error handler exception: {ex}");
+
                 throw;
             }
         }
 
         private void HandleException(ExceptionContext context)
         {
-            var descriptor = (ControllerActionDescriptor) context.ActionDescriptor;
+            var descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
 
             var exposeAttribute = descriptor.MethodInfo.FirstAttribute<ExposeErrorAttribute>();
 
@@ -59,9 +57,8 @@ namespace TrackTv.WebServices.Infrastructure
                     StatusCode = 200
                 };
 
-                this.Log.ErrorExt(() => $"Exception was handled. " +
-                                        $"(ExceptionMessage: {context.Exception.Message}, " +
-                                        $"ExceptionName: {context.Exception.GetType().Name})");
+                this.Log.ErrorExt(() => $"Exception was handled. " + $"(ExceptionMessage: {context.Exception.Message}, "
+                                        + $"ExceptionName: {context.Exception.GetType().Name})");
 
                 context.ExceptionHandled = true;
             }
@@ -78,16 +75,16 @@ namespace TrackTv.WebServices.Infrastructure
     [AttributeUsage(AttributeTargets.Method)]
     public class ExposeErrorAttribute : Attribute
     {
-        public Type ExceptionType { get; }
-        
-        public string Message { get; }
-
         public ExposeErrorAttribute(Type exceptionType, string message)
         {
             this.ExceptionType = exceptionType;
             this.Message = message;
-            
+
             exceptionType.AssertIs<Exception>();
         }
+
+        public Type ExceptionType { get; }
+
+        public string Message { get; }
     }
 }
