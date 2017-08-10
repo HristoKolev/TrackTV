@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { addReducers } from '../store';
+import { addReducers } from '../../infrastructure/redux-store';
 
 export interface Course {
     name: string;

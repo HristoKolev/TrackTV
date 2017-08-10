@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
-import { store } from '../store';
+import { store } from './redux-store';
+import { ISettingsState } from './settings.state';
 
 export interface FetchResponse {
     status: number;
@@ -10,9 +11,14 @@ export interface FetchResponse {
 
 export class HttpClient {
 
-    public baseUrl: string = '';
+    public get baseUrl(): string {
 
-    public get(url: string, headers: any = {}): Observable<FetchResponse> {
+        const settings = store.getState().settings as ISettingsState;
+
+        return settings.baseUrl;
+    }
+
+    public get (url: string, headers: any = {}): Observable<FetchResponse> {
 
         return Observable.fromPromise(fetch(this.baseUrl + url, {
             method: 'get',
@@ -30,11 +36,8 @@ export class HttpClient {
         ).then(this.parseResponse, this.handleError));
     }
 
-    private handleError(err: any) {
-
-        return {
-            networkError: true,
-        };
+    private handleError(error: any) {
+        return {networkError: true};
     }
 
     private parseResponse(res: any): any {

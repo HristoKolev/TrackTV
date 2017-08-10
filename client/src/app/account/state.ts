@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { addEpics, addReducers } from '../store';
-import { httpClient, urlEncodeBody, urlEncodedHeader } from '../shared/http-client';
 import { apiClient, triggerAction } from '../shared/api-client';
+import { addEpics } from '../../infrastructure/redux-epics';
+import { addReducers } from '../../infrastructure/redux-store';
+import { httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
 
 export interface ICurrentSession {
     access_token: string;

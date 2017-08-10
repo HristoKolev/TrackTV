@@ -25,13 +25,13 @@ export class AppComponent {
     activateEvent(event: any) {
 
         if (ENV === 'development') {
-            console.log('Activate Event:', event);
+            console.debug('Activate Event:', event);
         }
     }
 
     deactivateEvent(event: any) {
         if (ENV === 'development') {
-            console.log('Deactivate Event', event);
+            console.debug('Deactivate Event', event);
         }
     }
 }

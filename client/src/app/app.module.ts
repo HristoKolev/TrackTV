@@ -8,11 +8,10 @@ import { AppComponent } from './app.component';
 import { NotFound404Component } from './not-found404.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { store } from './store';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
-import { NgReduxRouterModule } from '../external/angular-redux-router/index';
-import { NgReduxRouter } from '../external/angular-redux-router/router';
-import { httpClient } from './shared/http-client';
+import { CatsReduxRouter, CatsReduxRouterModule } from '../infrastructure/redux-router';
+import { store } from '../infrastructure/redux-store';
+import '../infrastructure/settings.state';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -34,7 +33,7 @@ export const routes: Routes = [
         IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
         RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: IdlePreload}),
         NgReduxModule,
-        NgReduxRouterModule,
+        CatsReduxRouterModule,
     ],
     bootstrap: [AppComponent],
     exports: [AppComponent],
@@ -42,11 +41,8 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-    constructor(ngRedux: NgRedux<any>, ngReduxRouter: NgReduxRouter) {
+    constructor(ngRedux: NgRedux<any>, reduxRouter: CatsReduxRouter) {
 
         ngRedux.provideStore(store);
-        ngReduxRouter.initialize();
-
-        httpClient.baseUrl = 'http://localhost:5000';
     }
 }

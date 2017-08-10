@@ -1,13 +1,12 @@
-import { FetchResponse, httpClient } from './http-client';
 import { Action } from 'redux';
 import { Observable } from 'rxjs/Observable';
+import { FetchResponse, httpClient } from '../../infrastructure/http-client';
 
 class ApiClient {
 
     public profile(): Observable<FetchResponse> {
         return httpClient.get('/api/user/profile');
     }
-
 }
 
 export const apiClient = new ApiClient();
