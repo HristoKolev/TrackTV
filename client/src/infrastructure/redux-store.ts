@@ -1,28 +1,101 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
-import { routerReducer } from './redux-router';
-import { rootEpic } from './redux-epics';
-import * as freeze from 'redux-freeze';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { routerActions } from './redux-router';
+import { freezeMiddleware } from './freeze-middleware';
 
-let allReducers: any = {router: routerReducer};
+export interface RouterState {
 
-const createReducer = (newReducers: any = {}): any => {
+    location: string;
+}
 
-    allReducers = {...allReducers, ...newReducers};
-
-    return combineReducers(allReducers);
+export const routerReducer = (state: RouterState = {} as RouterState, action: any): RouterState => {
+    switch (action.type) {
+        case routerActions.ROUTER_NAVIGATION:
+        case routerActions.ROUTER_ERROR:
+        case routerActions.ROUTER_CANCEL: {
+            return {
+                location: action.location,
+            };
+        }
+        default:
+            return state;
+    }
 };
 
-let store: any;
+class StoreWrapper {
 
-export const initStore = (...enhancers: any[]) => {
+    private store: any;
 
-    store = createStore<any>(createReducer(), compose(applyMiddleware(createEpicMiddleware(rootEpic), freeze), ...enhancers));
+    private allReducers: any;
 
-    return store;
-};
+    private epics$: BehaviorSubject<any>;
 
-export const getStore = () => store;
+    constructor() {
 
-export const addReducers = (newReducers: any = {}): void => store.replaceReducer(createReducer(newReducers));
+        this.allReducers = {router: routerReducer};
 
+        this.epics$ = new BehaviorSubject<any>((actions$: any) => actions$.filter(() => false));
+
+    }
+
+    public initStore(enhancers: any[] = []) {
+
+        const rootEpic = (action$: any, store: any) => this.epics$.mergeMap(epic => epic(action$, store));
+
+        const middleware = [
+            createEpicMiddleware(rootEpic),
+            freezeMiddleware,
+        ];
+
+        const enhancer = compose(
+            applyMiddleware(...middleware),
+            ...enhancers
+        );
+
+        this.store = createStore<any>(this.createReducer(), enhancer);
+
+        return this.store;
+    }
+
+    public addEpics(newEpics: any): void {
+
+        for (let [epicName, epic] of Object.entries(newEpics)) {
+
+            console.log('Adding epic:', epicName);
+
+            this.epics$.next((...args: any[]) => epic(...args)
+                .map((action: any) => ({...action, dispatchedBy: epicName}))
+                .catch(console.error.bind(console)));
+        }
+    }
+
+    public addReducers(newReducers: any = {}): void {
+
+        for (let [reducerName, reducer] of Object.entries(newReducers)) {
+            console.log('Adding reducer:', reducerName);
+        }
+
+        return this.store.replaceReducer(this.createReducer(newReducers));
+    }
+
+    public getState() {
+
+        return this.store.getState();
+    }
+
+    private createReducer(newReducers: any = {}): any {
+
+        this.allReducers = {...this.allReducers, ...newReducers};
+
+        return combineReducers(this.allReducers);
+    }
+}
+
+export const reduxState = new StoreWrapper();
+
+export const actionTypes = (actionPrefix: string) => ({
+    ofType: <T>() => new Proxy({}, {
+        get: (target: any, name: string) => actionPrefix + '/' + name,
+    }) as T,
+});

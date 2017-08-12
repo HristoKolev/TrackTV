@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { actionTypes } from '../../infrastructure/redux-helpers';
+import { actionTypes } from '../../infrastructure/redux-store';
 
 export interface Course {
     name: string;

@@ -9,10 +9,10 @@ import { NotFound404Component } from './not-found404.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
-import { CatsReduxRouter, CatsReduxRouterModule, explicitRouterEpic } from '../infrastructure/redux-router';
-import { addReducers, initStore } from '../infrastructure/redux-store';
-import { settingsReducer } from '../infrastructure/settings.state';
-import { addEpics } from '../infrastructure/redux-epics';
+import { ReduxRouterModule, explicitRouterEpic, ReduxRouter } from '../infrastructure/redux-router';
+
+import { settingsReducer } from './settings.state';
+import { reduxState } from '../infrastructure/redux-store';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -34,7 +34,7 @@ export const routes: Routes = [
         IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
         RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: IdlePreload}),
         NgReduxModule,
-        CatsReduxRouterModule,
+        ReduxRouterModule,
     ],
     bootstrap: [AppComponent],
     exports: [AppComponent],
@@ -42,18 +42,22 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-    constructor(ngRedux: NgRedux<any>, reduxRouter: CatsReduxRouter, devTools: DevToolsExtension, router: Router) {
+    constructor(ngRedux: NgRedux<any>, reduxRouter: ReduxRouter, devTools: DevToolsExtension, router: Router) {
+
+        reduxRouter.init(state => state.router);
 
         const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
 
-        ngRedux.provideStore(initStore(...enhancers));
+        ngRedux.provideStore(reduxState.initStore(enhancers));
 
-        addReducers({
+        reduxState.addReducers({
             settings: settingsReducer,
         });
 
-        addEpics({
+        reduxState.addEpics({
             explicitRouterEpic,
         });
     }
 }
+
+

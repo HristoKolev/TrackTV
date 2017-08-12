@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { apiClient, triggerAction } from '../shared/api-client';
 import { httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
-import { actionTypes } from '../../infrastructure/redux-helpers';
+import { actionTypes } from '../../infrastructure/redux-store';
 
 export interface ICurrentSession {
     access_token: string;

@@ -1,8 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { NavigationCancel, NavigationError, Router, RoutesRecognized } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
-import { Subscription } from 'rxjs/Subscription';
-import { actionTypes } from './redux-helpers';
+import { actionTypes, RouterState } from './redux-store';
 
 export const routerActions = actionTypes('router').ofType<{
     ROUTER_NAVIGATION: string;
@@ -10,25 +9,6 @@ export const routerActions = actionTypes('router').ofType<{
     ROUTER_CANCEL: string;
     ROUTER_ERROR: string;
 }>();
-
-export interface RouterState {
-
-    location: string;
-}
-
-export const routerReducer = (state: RouterState = {} as RouterState, action: any): RouterState => {
-    switch (action.type) {
-        case routerActions.ROUTER_NAVIGATION:
-        case routerActions.ROUTER_ERROR:
-        case routerActions.ROUTER_CANCEL: {
-            return {
-                location: action.location,
-            };
-        }
-        default:
-            return state;
-    }
-};
 
 let angularRouter: Router;
 
@@ -40,21 +20,17 @@ export const explicitRouterEpic = (actions$: any) => actions$
     }));
 
 @Injectable()
-export class CatsReduxRouter {
+export class ReduxRouter {
 
-    private routerSubscription: Subscription;
+    private routerStateSelector: (state: any) => RouterState;
 
-    private storeSubscription: Subscription;
+    public init(routerStateSelector: (state: any) => RouterState) {
 
-    public destroy(): void {
-
-        if (this.routerSubscription) {
-            this.routerSubscription.unsubscribe();
+        if (!routerStateSelector) {
+            throw new Error('The router state selector is falsy.');
         }
 
-        if (this.storeSubscription) {
-            this.storeSubscription.unsubscribe();
-        }
+        this.routerStateSelector = routerStateSelector;
     }
 
     constructor(private router: Router,
@@ -65,13 +41,9 @@ export class CatsReduxRouter {
         let dispatchTriggeredByNavigation = false;
         let navigationTriggeredByDispatch = false;
 
-        this.storeSubscription = store.select((s: any) => s).subscribe((state: any) => {
+        store.select(this.routerStateSelector).subscribe(state => {
 
-            //debugger;
-
-            const location = state.router.location;
-
-            if (location && this.router.url !== location) {
+            if (state.location && this.router.url !== state.location) {
 
                 if (dispatchTriggeredByNavigation) {
                     dispatchTriggeredByNavigation = false;
@@ -79,13 +51,13 @@ export class CatsReduxRouter {
                 }
 
                 navigationTriggeredByDispatch = true;
-                this.router.navigateByUrl(location);
+                this.router.navigateByUrl(state.location);
             }
         });
 
         let location: any;
 
-        this.routerSubscription = this.router.events.subscribe(event => {
+        this.router.events.subscribe(event => {
 
             if (event instanceof RoutesRecognized) {
 
@@ -96,33 +68,25 @@ export class CatsReduxRouter {
                     return;
                 }
 
-                //debugger;
-
                 dispatchTriggeredByNavigation = true;
 
-                this.dispatchRouterAction(routerActions.ROUTER_NAVIGATION, location);
-
+                this.store.dispatch({type: routerActions.ROUTER_NAVIGATION, location});
             } else if (event instanceof NavigationCancel) {
 
-                this.dispatchRouterAction(routerActions.ROUTER_CANCEL, location);
+                this.store.dispatch({type: routerActions.ROUTER_CANCEL, location});
             } else if (event instanceof NavigationError) {
 
-                this.dispatchRouterAction(routerActions.ROUTER_ERROR, location);
+                this.store.dispatch({type: routerActions.ROUTER_ERROR, location});
             }
         });
 
     }
-
-    private dispatchRouterAction(type: string, location: any): void {
-
-        this.store.dispatch({type, location});
-    }
 }
 
 @NgModule({
-    providers: [CatsReduxRouter],
+    providers: [ReduxRouter],
 })
-export class CatsReduxRouterModule {
+export class ReduxRouterModule {
 }
 
 
