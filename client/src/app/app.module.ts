@@ -42,7 +42,7 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-    constructor(ngRedux: NgRedux<any>, reduxRouter: ReduxRouter, devTools: DevToolsExtension, router: Router) {
+    constructor(ngRedux: NgRedux<any>, reduxRouter: ReduxRouter, devTools: DevToolsExtension) {
 
         reduxRouter.init(state => state.router);
 

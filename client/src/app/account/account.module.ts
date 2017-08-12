@@ -36,7 +36,6 @@ export class AccountModule {
             loginEpic,
             profileEpic,
         });
-
     }
 }
 

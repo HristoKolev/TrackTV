@@ -79,7 +79,6 @@ export class ReduxRouter {
                 this.store.dispatch({type: routerActions.ROUTER_ERROR, location});
             }
         });
-
     }
 }
 
@@ -88,5 +87,3 @@ export class ReduxRouter {
 })
 export class ReduxRouterModule {
 }
-
-

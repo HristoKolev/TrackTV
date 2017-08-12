@@ -3,9 +3,9 @@ import { createEpicMiddleware } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { routerActions } from './redux-router';
 import { freezeMiddleware } from './freeze-middleware';
+import { NgModule } from '@angular/core';
 
 export interface RouterState {
-
     location: string;
 }
 
@@ -64,6 +64,10 @@ class StoreWrapper {
 
             console.log('Adding epic:', epicName);
 
+            if (!epic) {
+                console.log(`Epic '${epicName}' is falsy.`);
+            }
+
             this.epics$.next((...args: any[]) => epic(...args)
                 .map((action: any) => ({...action, dispatchedBy: epicName}))
                 .catch(console.error.bind(console)));
@@ -73,7 +77,12 @@ class StoreWrapper {
     public addReducers(newReducers: any = {}): void {
 
         for (let [reducerName, reducer] of Object.entries(newReducers)) {
+
             console.log('Adding reducer:', reducerName);
+
+            if (!reducer) {
+                throw new Error(`Reducer '${reducerName}' is falsy.`);
+            }
         }
 
         return this.store.replaceReducer(this.createReducer(newReducers));

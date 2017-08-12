@@ -18,11 +18,6 @@ export interface IAccountState {
     errorMessages?: string[];
 }
 
-export interface UserLogin {
-    username: string;
-    password: string;
-}
-
 export const sessionActions = actionTypes('account').ofType<{
     LOGIN_REQUEST_START: string;
     LOGIN_REQUEST_SUCCESS: string;
@@ -95,6 +90,11 @@ export const loginEpic = (action$: any): any => action$.ofType(sessionActions.LO
 export const profileEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_SUCCESS)
     .switchMap((action: any) => apiClient.profile())
     .map(triggerAction(sessionActions.PROFILE_REQUEST_SUCCESS, sessionActions.PROFILE_REQUEST_FAILED));
+
+export interface UserLogin {
+    username: string;
+    password: string;
+}
 
 @Injectable()
 export class AccountActions {

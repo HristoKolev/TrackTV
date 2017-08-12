@@ -1,13 +1,11 @@
-const path = require('path'),
-    fs = require('fs'),
-    {DefinePlugin, DllPlugin, DllReferencePlugin, ProgressPlugin, NoEmitOnErrorsPlugin,} = require('webpack'),
-    CopyWebpackPlugin = require('copy-webpack-plugin'),
+const {DefinePlugin, DllPlugin, DllReferencePlugin, ProgressPlugin, NoEmitOnErrorsPlugin} = require('webpack'),
+    copyWebpackPlugin = require('copy-webpack-plugin'),
     {CheckerPlugin} = require('awesome-typescript-loader'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin'),
-    UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin'),
+    htmlWebpackPlugin = require('html-webpack-plugin'),
+    namedModulesPlugin = require('webpack/lib/NamedModulesPlugin'),
+    uglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin'),
     {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer'),
-    WebpackMd5Hash = require('webpack-md5-hash'),
+    webpackMd5Hash = require('webpack-md5-hash'),
     {AotPlugin} = require('@ngtools/webpack');
 
 import 'ts-helpers';
@@ -52,7 +50,7 @@ const config: WebpackConfig = {
             {test: /\.json$/, loader: 'json-loader'},
             {test: /\.html/, loader: 'raw-loader', exclude: [root('src/index.html')]},
             {test: /\.css$/, loader: 'raw-loader'},
-            {test: /\.scss$/, loaders: ['to-string-loader', 'css-loader', 'sass-loader'],},
+            {test: /\.scss$/, loaders: ['to-string-loader', 'css-loader', 'sass-loader']},
 
         ],
     },
@@ -65,9 +63,9 @@ const config: WebpackConfig = {
         new ProgressPlugin(),
         new CheckerPlugin(),
         new DefinePlugin(CONSTANTS),
-        new NamedModulesPlugin(),
-        new WebpackMd5Hash(),
-        new HtmlWebpackPlugin({
+        new namedModulesPlugin(),
+        new webpackMd5Hash(),
+        new htmlWebpackPlugin({
             template: root('src/index.html'),
             metadata: {isDevServer: CONSTANTS.DEV_SERVER},
         }),
@@ -81,7 +79,7 @@ const config: WebpackConfig = {
                 new DllReferencePlugin({
                     context: '.',
                     manifest: require(root(`./dll/vendor-manifest.json`)),
-                }),],
+                })],
             []),
 
         ...ifConst((x: IConstants) => x.DLL, () => [
@@ -89,24 +87,24 @@ const config: WebpackConfig = {
                 new DllPlugin({
                     name: '[name]',
                     path: root('dll/[name]-manifest.json'),
-                }),],
+                })],
             () => [
 
-                new CopyWebpackPlugin([
+                new copyWebpackPlugin([
                         ...ifConst((x: IConstants) => !x.DEV_SERVER, [{from: root('src/index.html')}], []),
-                        {from: root('src/assets'), to: 'assets',},
+                        {from: root('src/assets'), to: 'assets'},
                         ...ifConst((x: IConstants) => x.DEV_SERVER, [{from: root('dll')}], [])
                     ],
 
                     {ignore: ['*dist_root/*']}),
 
-                new CopyWebpackPlugin([{from: 'src/assets/dist_root'}]),
+                new copyWebpackPlugin([{from: 'src/assets/dist_root'}]),
             ]),
 
         ...ifConst((x: IConstants) => x.PROD, () => [
 
                 new NoEmitOnErrorsPlugin(),
-                new UglifyJsPlugin({
+                new uglifyJsPlugin({
                     beautify: false,
                     comments: false,
                 }),
@@ -114,12 +112,12 @@ const config: WebpackConfig = {
                     'process.env': {
                         'NODE_ENV': JSON.stringify('production'),
                     },
-                }),],
+                })],
             []),
 
         ...ifConst((x: IConstants) => x.PROD && !x.E2E && !x.WATCH, () => [
 
-                new BundleAnalyzerPlugin({analyzerPort: 5000}),],
+                new BundleAnalyzerPlugin({analyzerPort: 5000})],
             []),
     ],
 
