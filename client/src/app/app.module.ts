@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
 import { AppComponent } from './app.component';
 import { NotFound404Component } from './not-found404.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgRedux, NgReduxModule } from '@angular-redux/store';
-import { CatsReduxRouter, CatsReduxRouterModule } from '../infrastructure/redux-router';
-import { store } from '../infrastructure/redux-store';
-import '../infrastructure/settings.state';
+import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
+import { CatsReduxRouter, CatsReduxRouterModule, explicitRouterEpic } from '../infrastructure/redux-router';
+import { addReducers, initStore } from '../infrastructure/redux-store';
+import { settingsReducer } from '../infrastructure/settings.state';
+import { addEpics } from '../infrastructure/redux-epics';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -41,8 +42,18 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-    constructor(ngRedux: NgRedux<any>, reduxRouter: CatsReduxRouter) {
+    constructor(ngRedux: NgRedux<any>, reduxRouter: CatsReduxRouter, devTools: DevToolsExtension, router: Router) {
 
-        ngRedux.provideStore(store);
+        const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
+
+        ngRedux.provideStore(initStore(...enhancers));
+
+        addReducers({
+            settings: settingsReducer,
+        });
+
+        addEpics({
+            explicitRouterEpic,
+        });
     }
 }

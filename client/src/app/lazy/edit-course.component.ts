@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Course, CourseActions, ICoursesState } from './state';
+import { Course, CourseActions, ICoursesState } from './courses-state';
 import { NgRedux } from '@angular-redux/store';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
@@ -37,13 +37,13 @@ export class EditCourseComponent implements OnInit {
             .switchMap(id => this.ngRedux.select(state => state.courses.all.filter(c => c.id === id))
                 .map(courses => [...courses, {id, description: '', name: ''}]))
             .map(courses => courses[0])
+            .distinctUntilChanged()
             .subscribe(course => {
-                this.course = course;
+                this.course = {...course};
             });
     }
 
     addCourse() {
-
         this.stateActions.addCourse(this.course);
         this.router.navigate(['../'], {relativeTo: this.route});
     }

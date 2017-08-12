@@ -4,7 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
-import { AccountActions } from './state';
+import { AccountActions, accountReducer, loginEpic, profileEpic } from './account-state';
+import { addReducers } from '../../infrastructure/redux-store';
+import { addEpics } from '../../infrastructure/redux-epics';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -24,4 +26,18 @@ const routes: Routes = [
     ],
 })
 export class AccountModule {
+
+    constructor() {
+
+        addReducers({
+            account: accountReducer,
+        });
+
+        addEpics({
+            loginEpic,
+            profileEpic,
+        });
+
+    }
 }
+

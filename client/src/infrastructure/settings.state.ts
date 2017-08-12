@@ -1,5 +1,3 @@
-import { addReducers } from './redux-store';
-
 export interface ISettingsState {
     baseUrl: string;
 }
@@ -16,6 +14,3 @@ export const settingsReducer = (state: ISettingsState = initialState, action: an
     }
 };
 
-addReducers({
-    settings: settingsReducer,
-});

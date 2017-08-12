@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AccountActions, IAccountState } from './state';
+import { AccountActions, IAccountState } from './account-state';
 import { NgRedux } from '@angular-redux/store';
 import { Subscription } from 'rxjs/Subscription';
 

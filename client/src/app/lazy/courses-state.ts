@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { addReducers } from '../../infrastructure/redux-store';
+import { actionTypes } from '../../infrastructure/redux-helpers';
 
 export interface Course {
     name: string;
@@ -36,20 +36,20 @@ const initialState: ICoursesState = {
     filtered: courses,
 };
 
-const actionTypes = {
-    FILTER_COURSES: 'courses/FILTER_COURSES',
-    ADD_COURSE: 'courses/ADD_COURSE',
-};
+const coursesActions = actionTypes('courses').ofType<{
+    FILTER_COURSES: string;
+    ADD_COURSE: string;
+}>();
 
 export const coursesReducer = (state: ICoursesState = initialState, action: any): ICoursesState => {
     switch (action.type) {
-        case actionTypes.FILTER_COURSES:
+        case coursesActions.FILTER_COURSES:
             return {
                 ...state,
                 filtered: state.all.filter(c => c.name.toLowerCase()
                     .indexOf(action.searchText.toLowerCase()) > -1),
             };
-        case actionTypes.ADD_COURSE: {
+        case coursesActions.ADD_COURSE: {
             return {
                 ...state,
                 all: [...state.all.filter(c => c.id !== action.course.id), action.course],
@@ -72,7 +72,7 @@ export class CourseActions {
     filterCourses(searchText: string) {
 
         this.ngRedux.dispatch({
-            type: actionTypes.FILTER_COURSES,
+            type: coursesActions.FILTER_COURSES,
             searchText,
         });
     }
@@ -82,12 +82,8 @@ export class CourseActions {
         course.id = course.id || nextId++;
 
         this.ngRedux.dispatch({
-            type: actionTypes.ADD_COURSE,
+            type: coursesActions.ADD_COURSE,
             course,
         });
     }
 }
-
-addReducers({
-    courses: coursesReducer,
-});

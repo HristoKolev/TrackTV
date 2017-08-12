@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { apiClient, triggerAction } from '../shared/api-client';
-import { addEpics } from '../../infrastructure/redux-epics';
-import { addReducers } from '../../infrastructure/redux-store';
 import { httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
+import { actionTypes } from '../../infrastructure/redux-helpers';
 
 export interface ICurrentSession {
     access_token: string;
@@ -24,14 +23,14 @@ export interface UserLogin {
     password: string;
 }
 
-const actionTypes = {
-    LOGIN_REQUEST_START: 'account/LOGIN_REQUEST_START',
-    LOGIN_REQUEST_SUCCESS: 'account/LOGIN_REQUEST_SUCCESS',
-    LOGIN_REQUEST_FAILED: 'account/LOGIN_REQUEST_FAILED',
+export const sessionActions = actionTypes('account').ofType<{
+    LOGIN_REQUEST_START: string;
+    LOGIN_REQUEST_SUCCESS: string;
+    LOGIN_REQUEST_FAILED: string;
 
-    PROFILE_REQUEST_SUCCESS: 'account/PROFILE_REQUEST_SUCCESS',
-    PROFILE_REQUEST_FAILED: 'account/PROFILE_REQUEST_FAILED',
-};
+    PROFILE_REQUEST_SUCCESS: string;
+    PROFILE_REQUEST_FAILED: string;
+}>();
 
 const initialState = {
     errorMessages: [],
@@ -41,9 +40,7 @@ export const accountReducer = (state: IAccountState = initialState as IAccountSt
 
     switch (action.type) {
 
-        case actionTypes.LOGIN_REQUEST_SUCCESS: {
-
-            console.log('LOGIN_REQUEST_SUCCESS');
+        case sessionActions.LOGIN_REQUEST_SUCCESS: {
 
             return {
                 ...state,
@@ -52,7 +49,7 @@ export const accountReducer = (state: IAccountState = initialState as IAccountSt
                 },
             };
         }
-        case actionTypes.LOGIN_REQUEST_FAILED: {
+        case sessionActions.LOGIN_REQUEST_FAILED: {
 
             return {
                 ...state,
@@ -62,14 +59,14 @@ export const accountReducer = (state: IAccountState = initialState as IAccountSt
                 ],
             };
         }
-        case actionTypes.PROFILE_REQUEST_SUCCESS: {
+        case sessionActions.PROFILE_REQUEST_SUCCESS: {
 
             return {
                 ...state,
                 user: action.data,
             };
         }
-        case actionTypes.PROFILE_REQUEST_FAILED: {
+        case sessionActions.PROFILE_REQUEST_FAILED: {
 
             return {
                 ...state,
@@ -82,22 +79,22 @@ export const accountReducer = (state: IAccountState = initialState as IAccountSt
     }
 };
 
-export const loginEpic = (action$: any): any => action$.ofType(actionTypes.LOGIN_REQUEST_START)
+export const loginEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_START)
     .switchMap((action: any) => httpClient.post('/connect/token', urlEncodeBody({
         ...action.user,
         grant_type: 'password',
     }), urlEncodedHeader))
     .map((response: any) => {
         if (response.networkError || response.body.error) {
-            return {type: actionTypes.LOGIN_REQUEST_FAILED, response};
+            return {type: sessionActions.LOGIN_REQUEST_FAILED, response};
         } else {
-            return {type: actionTypes.LOGIN_REQUEST_SUCCESS, response};
+            return {type: sessionActions.LOGIN_REQUEST_SUCCESS, response};
         }
     });
 
-export const profileEpic = (action$: any): any => action$.ofType(actionTypes.LOGIN_REQUEST_SUCCESS)
+export const profileEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_SUCCESS)
     .switchMap((action: any) => apiClient.profile())
-    .map(triggerAction(actionTypes.PROFILE_REQUEST_SUCCESS, actionTypes.PROFILE_REQUEST_FAILED));
+    .map(triggerAction(sessionActions.PROFILE_REQUEST_SUCCESS, sessionActions.PROFILE_REQUEST_FAILED));
 
 @Injectable()
 export class AccountActions {
@@ -106,15 +103,6 @@ export class AccountActions {
     }
 
     login(user: UserLogin) {
-        this.ngRedux.dispatch({type: actionTypes.LOGIN_REQUEST_START, user});
+        this.ngRedux.dispatch({type: sessionActions.LOGIN_REQUEST_START, user});
     }
 }
-
-addReducers({
-    account: accountReducer,
-});
-
-addEpics([
-    loginEpic,
-    profileEpic,
-]);

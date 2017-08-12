@@ -2,10 +2,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerReducer } from './redux-router';
 import { rootEpic } from './redux-epics';
-
-declare const window: any;
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+import * as freeze from 'redux-freeze';
 
 let allReducers: any = {router: routerReducer};
 
@@ -16,7 +13,16 @@ const createReducer = (newReducers: any = {}): any => {
     return combineReducers(allReducers);
 };
 
-export const store = createStore<any>(createReducer(), composeEnhancers(applyMiddleware(createEpicMiddleware(rootEpic))));
+let store: any;
+
+export const initStore = (...enhancers: any[]) => {
+
+    store = createStore<any>(createReducer(), compose(applyMiddleware(createEpicMiddleware(rootEpic), freeze), ...enhancers));
+
+    return store;
+};
+
+export const getStore = () => store;
 
 export const addReducers = (newReducers: any = {}): void => store.replaceReducer(createReducer(newReducers));
 

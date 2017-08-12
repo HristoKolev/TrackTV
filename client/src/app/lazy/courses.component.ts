@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Course, CourseActions, ICoursesState } from './state';
+import { Course, CourseActions, ICoursesState } from './courses-state';
 import { NgRedux } from '@angular-redux/store';
 
 @Component({
@@ -17,7 +16,7 @@ import { NgRedux } from '@angular-redux/store';
 
             <input id="filterBox" [(ngModel)]="searchText">
 
-            <div *ngFor="let course of filteredCourses$ | async" class="course">
+            <div *ngFor="let course of courses" class="course">
                 {{course.name}}
                 <button [routerLink]="[ course.id]">Edit</button>
             </div>
@@ -33,7 +32,7 @@ import { NgRedux } from '@angular-redux/store';
 })
 export class CoursesComponent implements OnInit {
 
-    filteredCourses$: Observable<Course[]>;
+    courses: Course[];
 
     constructor(private stateActions: CourseActions,
                 private ngRedux: NgRedux<{ courses: ICoursesState }>) {
@@ -42,9 +41,11 @@ export class CoursesComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.searchText = '';
-
-        this.filteredCourses$ = this.ngRedux.select(x => x.courses.filtered);
+        this.ngRedux.select((state: any) => state.courses.filtered)
+            .distinctUntilChanged()
+            .subscribe((courses: any[]) => {
+                this.courses = [...courses];
+            });
     }
 
     set searchText(val: string) {

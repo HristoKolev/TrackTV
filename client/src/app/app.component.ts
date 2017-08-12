@@ -23,15 +23,8 @@ export class AppComponent {
     }
 
     activateEvent(event: any) {
-
-        if (ENV === 'development') {
-            console.debug('Activate Event:', event);
-        }
     }
 
     deactivateEvent(event: any) {
-        if (ENV === 'development') {
-            console.debug('Deactivate Event', event);
-        }
     }
 }

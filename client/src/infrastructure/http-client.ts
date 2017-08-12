@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { store } from './redux-store';
+import { getStore } from './redux-store';
 import { ISettingsState } from './settings.state';
 
 export interface FetchResponse {
@@ -13,7 +13,7 @@ export class HttpClient {
 
     public get baseUrl(): string {
 
-        const settings = store.getState().settings as ISettingsState;
+        const settings = getStore().getState().settings as ISettingsState;
 
         return settings.baseUrl;
     }
@@ -59,7 +59,7 @@ export class HttpClient {
 
         const headers: any = {};
 
-        const state = store.getState();
+        const state = getStore().getState();
 
         let token;
 

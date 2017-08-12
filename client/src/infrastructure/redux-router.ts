@@ -12,8 +12,7 @@ export const routerActions = actionTypes('router').ofType<{
 }>();
 
 export interface RouterState {
-    navigationId: number;
-    active: boolean;
+
     location: string;
 }
 
@@ -23,9 +22,7 @@ export const routerReducer = (state: RouterState = {} as RouterState, action: an
         case routerActions.ROUTER_ERROR:
         case routerActions.ROUTER_CANCEL: {
             return {
-                location: action.payload.location,
-                navigationId: action.payload.event.id,
-                active: true,
+                location: action.location,
             };
         }
         default:
@@ -33,84 +30,93 @@ export const routerReducer = (state: RouterState = {} as RouterState, action: an
     }
 };
 
+let angularRouter: Router;
+
+export const explicitRouterEpic = (actions$: any) => actions$
+    .ofType(routerActions.ROUTER_NAVIGATION_EXPLICIT)
+    .map((action: any) => ({
+        type: routerActions.ROUTER_NAVIGATION,
+        location: angularRouter.createUrlTree.apply(angularRouter, action.payload).toString(),
+    }));
+
 @Injectable()
 export class CatsReduxRouter {
 
-    private dispatchTriggeredByRouter: boolean = false; // used only in dev mode in combination with routerReducer
-
-    private navigationTriggeredByDispatch: boolean = false; // used only in dev mode in combination with routerReducer
+    private routerSubscription: Subscription;
 
     private storeSubscription: Subscription;
 
-    private routerSubscription: Subscription;
-
     public destroy(): void {
-
-        if (this.storeSubscription) {
-            this.storeSubscription.unsubscribe();
-        }
 
         if (this.routerSubscription) {
             this.routerSubscription.unsubscribe();
+        }
+
+        if (this.storeSubscription) {
+            this.storeSubscription.unsubscribe();
         }
     }
 
     constructor(private router: Router,
                 private store: NgRedux<any>) {
 
-        this.storeSubscription = this.store.select(f => f).subscribe(state => {
+        angularRouter = router;
 
-            const routerStoreState = this.routerSelector(state);
+        let dispatchTriggeredByNavigation = false;
+        let navigationTriggeredByDispatch = false;
 
-            if (!routerStoreState.active || this.dispatchTriggeredByRouter) {
-                return;
-            }
+        this.storeSubscription = store.select((s: any) => s).subscribe((state: any) => {
 
-            if (this.router.url !== routerStoreState.location) {
-                this.navigationTriggeredByDispatch = true;
-                this.router.navigateByUrl(routerStoreState.location);
+            //debugger;
+
+            const location = state.router.location;
+
+            if (location && this.router.url !== location) {
+
+                if (dispatchTriggeredByNavigation) {
+                    dispatchTriggeredByNavigation = false;
+                    return;
+                }
+
+                navigationTriggeredByDispatch = true;
+                this.router.navigateByUrl(location);
             }
         });
 
-        this.routerSubscription = this.router.events.subscribe(event => {
+        let location: any;
 
-            let location: any;
+        this.routerSubscription = this.router.events.subscribe(event => {
 
             if (event instanceof RoutesRecognized) {
 
                 location = event.state.url;
 
-                if (!this.navigationTriggeredByDispatch) {
-                    this.dispatchRouterAction(routerActions.ROUTER_NAVIGATION, {location, event});
+                if (navigationTriggeredByDispatch) {
+                    navigationTriggeredByDispatch = false;
+                    return;
                 }
+
+                //debugger;
+
+                dispatchTriggeredByNavigation = true;
+
+                this.dispatchRouterAction(routerActions.ROUTER_NAVIGATION, location);
 
             } else if (event instanceof NavigationCancel) {
 
-                this.dispatchRouterAction(routerActions.ROUTER_CANCEL, {location, event});
+                this.dispatchRouterAction(routerActions.ROUTER_CANCEL, location);
             } else if (event instanceof NavigationError) {
 
-                this.dispatchRouterAction(routerActions.ROUTER_ERROR, {location, event});
+                this.dispatchRouterAction(routerActions.ROUTER_ERROR, location);
             }
         });
+
     }
 
-    private dispatchRouterAction(type: string, payload: any): void {
+    private dispatchRouterAction(type: string, location: any): void {
 
-        this.dispatchTriggeredByRouter = true;
-
-        try {
-
-            this.store.dispatch({type, payload});
-
-        } finally {
-
-            this.dispatchTriggeredByRouter = false;
-            this.navigationTriggeredByDispatch = false;
-        }
+        this.store.dispatch({type, location});
     }
-
-    private routerSelector = (store: any) => store.router;
-
 }
 
 @NgModule({
@@ -118,3 +124,5 @@ export class CatsReduxRouter {
 })
 export class CatsReduxRouterModule {
 }
+
+
