@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CourseActions, coursesReducer } from './courses-state';
+import { CourseActions, coursesReducer, filterCoursesEpic } from './courses-state';
 import { FormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses.component';
 import { EditCourseComponent } from './edit-course.component';
@@ -32,6 +32,10 @@ export class LazyModule {
 
         reduxState.addReducers({
             courses: coursesReducer,
+        });
+
+        reduxState.addEpics({
+            filterCoursesEpic,
         });
 
     }

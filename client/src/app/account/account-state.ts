@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { apiClient, triggerAction } from '../shared/api-client';
 import { httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
-import { actionTypes } from '../../infrastructure/redux-store';
+import { actionTypes, ReduxEpic, ReduxReducer } from '../../infrastructure/redux-types';
 
 export interface ICurrentSession {
     access_token: string;
@@ -31,7 +31,7 @@ const initialState = {
     errorMessages: [],
 };
 
-export const accountReducer = (state: IAccountState = initialState as IAccountState, action: any): IAccountState => {
+export const accountReducer: ReduxReducer<IAccountState> = (state = initialState, action: any) => {
 
     switch (action.type) {
 
@@ -74,7 +74,7 @@ export const accountReducer = (state: IAccountState = initialState as IAccountSt
     }
 };
 
-export const loginEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_START)
+export const loginEpic: ReduxEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_START)
     .switchMap((action: any) => httpClient.post('/connect/token', urlEncodeBody({
         ...action.user,
         grant_type: 'password',
@@ -87,7 +87,7 @@ export const loginEpic = (action$: any): any => action$.ofType(sessionActions.LO
         }
     });
 
-export const profileEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_SUCCESS)
+export const profileEpic: ReduxEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_SUCCESS)
     .switchMap((action: any) => apiClient.profile())
     .map(triggerAction(sessionActions.PROFILE_REQUEST_SUCCESS, sessionActions.PROFILE_REQUEST_FAILED));
 

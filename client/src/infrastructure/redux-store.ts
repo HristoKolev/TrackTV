@@ -3,13 +3,12 @@ import { createEpicMiddleware } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { routerActions } from './redux-router';
 import { freezeMiddleware } from './freeze-middleware';
-import { NgModule } from '@angular/core';
+import { ReduxEpicMap, ReduxReducer, ReduxReducerMap } from './redux-types';
 
-export interface RouterState {
-    location: string;
-}
+export type RouterState = { location?: string; };
+export type RouterAction = { type: string, location: string };
 
-export const routerReducer = (state: RouterState = {} as RouterState, action: any): RouterState => {
+export const routerReducer: ReduxReducer<RouterState> = (state = {}, action: RouterAction) => {
     switch (action.type) {
         case routerActions.ROUTER_NAVIGATION:
         case routerActions.ROUTER_ERROR:
@@ -18,8 +17,9 @@ export const routerReducer = (state: RouterState = {} as RouterState, action: an
                 location: action.location,
             };
         }
-        default:
+        default: {
             return state;
+        }
     }
 };
 
@@ -27,7 +27,7 @@ class StoreWrapper {
 
     private store: any;
 
-    private allReducers: any;
+    private allReducers: ReduxReducerMap;
 
     private epics$: BehaviorSubject<any>;
 
@@ -58,34 +58,45 @@ class StoreWrapper {
         return this.store;
     }
 
-    public addEpics(newEpics: any): void {
+    public addEpics(epics: ReduxEpicMap): void {
 
-        for (let [epicName, epic] of Object.entries(newEpics)) {
+        for (let [epicName, epic] of Object.entries(epics)) {
 
-            console.log('Adding epic:', epicName);
+            console.log(`Adding epic: '${epicName}'`);
 
             if (!epic) {
-                console.log(`Epic '${epicName}' is falsy.`);
+                throw new Error(`Epic '${epicName}' is falsy.`);
             }
 
-            this.epics$.next((...args: any[]) => epic(...args)
+            this.epics$.next((...args: any[]) => epic.apply(null, args)
                 .map((action: any) => ({...action, dispatchedBy: epicName}))
-                .catch(console.error.bind(console)));
+                .catch((error: any) => {
+
+                    console.error(error);
+
+                    console.warn(`The epic '${epicName}' errored and is being restarted.`);
+
+                    this.addEpics({
+                        [epicName]: epic,
+                    });
+
+                    return [];
+                }));
         }
     }
 
-    public addReducers(newReducers: any = {}): void {
+    public addReducers(reducers: ReduxReducerMap = {}): void {
 
-        for (let [reducerName, reducer] of Object.entries(newReducers)) {
+        for (let [reducerName, reducer] of Object.entries(reducers)) {
 
-            console.log('Adding reducer:', reducerName);
+            console.log(`Adding reducer: '${reducerName}'`);
 
             if (!reducer) {
                 throw new Error(`Reducer '${reducerName}' is falsy.`);
             }
         }
 
-        return this.store.replaceReducer(this.createReducer(newReducers));
+        return this.store.replaceReducer(this.createReducer(reducers));
     }
 
     public getState() {
@@ -93,18 +104,12 @@ class StoreWrapper {
         return this.store.getState();
     }
 
-    private createReducer(newReducers: any = {}): any {
+    private createReducer(reducers: ReduxReducerMap = {}): any {
 
-        this.allReducers = {...this.allReducers, ...newReducers};
+        this.allReducers = {...this.allReducers, ...reducers};
 
         return combineReducers(this.allReducers);
     }
 }
 
 export const reduxState = new StoreWrapper();
-
-export const actionTypes = (actionPrefix: string) => ({
-    ofType: <T>() => new Proxy({}, {
-        get: (target: any, name: string) => actionPrefix + '/' + name,
-    }) as T,
-});

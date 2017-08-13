@@ -1,7 +1,8 @@
 import { Injectable, NgModule } from '@angular/core';
 import { NavigationCancel, NavigationError, Router, RoutesRecognized } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
-import { actionTypes, RouterState } from './redux-store';
+import { actionTypes } from './redux-types';
+import { RouterState } from './redux-store';
 
 export const routerActions = actionTypes('router').ofType<{
     ROUTER_NAVIGATION: string;
@@ -22,26 +23,16 @@ export const explicitRouterEpic = (actions$: any) => actions$
 @Injectable()
 export class ReduxRouter {
 
-    private routerStateSelector: (state: any) => RouterState;
-
     public init(routerStateSelector: (state: any) => RouterState) {
 
         if (!routerStateSelector) {
             throw new Error('The router state selector is falsy.');
         }
 
-        this.routerStateSelector = routerStateSelector;
-    }
-
-    constructor(private router: Router,
-                private store: NgRedux<any>) {
-
-        angularRouter = router;
-
         let dispatchTriggeredByNavigation = false;
         let navigationTriggeredByDispatch = false;
 
-        store.select(this.routerStateSelector).subscribe(state => {
+        this.store.select(routerStateSelector).subscribe(state => {
 
             if (state.location && this.router.url !== state.location) {
 
@@ -79,6 +70,12 @@ export class ReduxRouter {
                 this.store.dispatch({type: routerActions.ROUTER_ERROR, location});
             }
         });
+    }
+
+    constructor(private router: Router,
+                private store: NgRedux<any>) {
+
+        angularRouter = router;
     }
 }
 

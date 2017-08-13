@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { actionTypes } from '../../infrastructure/redux-store';
+import { actionTypes, ReduxEpic, ReduxReducer } from '../../infrastructure/redux-types';
 
 export interface Course {
     name: string;
@@ -11,6 +11,7 @@ export interface Course {
 export interface ICoursesState {
     all: Course[];
     filtered: Course[];
+    filter: string;
 }
 
 const courses: Course[] = [
@@ -34,6 +35,7 @@ const courses: Course[] = [
 const initialState: ICoursesState = {
     all: courses,
     filtered: courses,
+    filter: '',
 };
 
 const coursesActions = actionTypes('courses').ofType<{
@@ -41,13 +43,14 @@ const coursesActions = actionTypes('courses').ofType<{
     ADD_COURSE: string;
 }>();
 
-export const coursesReducer = (state: ICoursesState = initialState, action: any): ICoursesState => {
+export const coursesReducer: ReduxReducer<ICoursesState> = (state = initialState, action: any) => {
     switch (action.type) {
         case coursesActions.FILTER_COURSES:
             return {
                 ...state,
                 filtered: state.all.filter(c => c.name.toLowerCase()
-                    .indexOf(action.searchText.toLowerCase()) > -1),
+                    .indexOf(action.filter.toLowerCase()) > -1),
+                filter: action.filter,
             };
         case coursesActions.ADD_COURSE: {
             return {
@@ -61,6 +64,10 @@ export const coursesReducer = (state: ICoursesState = initialState, action: any)
     }
 };
 
+export const filterCoursesEpic: ReduxEpic = (actions$, store) => actions$
+    .ofType(coursesActions.ADD_COURSE)
+    .map(action => ({type: coursesActions.FILTER_COURSES, filter: store.getState().courses.filter}));
+
 let nextId = courses.length + 1;
 
 @Injectable()
@@ -69,11 +76,11 @@ export class CourseActions {
     constructor(private ngRedux: NgRedux<any>) {
     }
 
-    filterCourses(searchText: string) {
+    filterCourses(filter: string) {
 
         this.ngRedux.dispatch({
             type: coursesActions.FILTER_COURSES,
-            searchText,
+            filter: filter,
         });
     }
 

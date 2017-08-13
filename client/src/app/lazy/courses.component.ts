@@ -5,17 +5,12 @@ import { NgRedux } from '@angular-redux/store';
 @Component({
     template: `
         <section>
-
             <button [routerLink]="0">Add</button>
-
+            <button (click)="this.cats()">Cats</button>
             <br/>
-
             <br/>
-
             <label for="filterBox">Filter:</label>
-
             <input id="filterBox" [(ngModel)]="searchText">
-
             <div *ngFor="let course of courses" class="course">
                 {{course.name}}
                 <button [routerLink]="[ course.id]">Edit</button>
@@ -50,5 +45,12 @@ export class CoursesComponent implements OnInit {
 
     set searchText(val: string) {
         this.stateActions.filterCourses(val);
+    }
+
+    cats() {
+        this.ngRedux.dispatch({
+            type: 'router/ROUTER_NAVIGATION_EXPLICIT',
+            payload: [['/lazy', 2]],
+        });
     }
 }
