@@ -1,10 +1,9 @@
 "use strict";
 
-const ip = require('ip');
 const fs = require('fs');
 const path = require('path');
 
-const HOST = ip.address();
+const HOST = '127.0.0.1';
 const DEV_PORT = 3000;
 const PROD_PORT = 8088;
 
@@ -21,7 +20,6 @@ const CONSTANTS = (function () {
         PORT: PROD ? PROD_PORT : DEV_PORT,
         DEV_SERVER: EVENT.includes('webdev'),
         DLL: EVENT.includes('dll'),
-        E2E: EVENT.includes('e2e'),
         WATCH: process.argv.join('').indexOf('watch') > -1,
         PROD: PROD,
     };
@@ -66,7 +64,6 @@ function testDll() {
 exports.HOST = HOST;
 exports.DEV_PORT = DEV_PORT;
 exports.PROD_PORT = PROD_PORT;
-exports.E2E_PORT = 4201;
 exports.CONSTANTS = CONSTANTS;
 exports.ifConst = ifConst;
 exports.root = root;

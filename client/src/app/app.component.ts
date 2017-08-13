@@ -1,10 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { smartComponent } from '../infrastructure/component-helpers';
 
 @Component({
+    ...smartComponent,
     selector: 'my-app',
     styleUrls: ['./app.component.scss'],
     templateUrl: './app.component.html',
-    encapsulation: ViewEncapsulation.Emulated,
 })
 export class AppComponent {
 

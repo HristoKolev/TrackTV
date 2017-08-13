@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Course, CourseActions, ICoursesState } from './courses-state';
 import { NgRedux } from '@angular-redux/store';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { smartComponent } from '../../infrastructure/component-helpers';
 
 @Component({
+    ...smartComponent,
     template: `
         <label>Name: </label> <input [(ngModel)]="this.course.name"/> <br/>
 

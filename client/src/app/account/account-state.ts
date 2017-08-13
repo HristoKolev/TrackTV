@@ -42,6 +42,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
                 session: {
                     access_token: action.response.body.access_token,
                 },
+                errorMessages: [],
             };
         }
         case sessionActions.LOGIN_REQUEST_FAILED: {
@@ -59,6 +60,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
             return {
                 ...state,
                 user: action.data,
+                errorMessages: [],
             };
         }
         case sessionActions.PROFILE_REQUEST_FAILED: {
