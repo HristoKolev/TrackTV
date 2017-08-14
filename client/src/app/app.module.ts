@@ -4,9 +4,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
-import { AppComponent } from './app.component';
-import { NotFound404Component } from './not-found404.component';
-
+import { AppComponent, NotFound404Component } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { explicitRouterEpic, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';

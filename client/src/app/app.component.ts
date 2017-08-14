@@ -29,3 +29,11 @@ export class AppComponent {
     deactivateEvent(event: any) {
     }
 }
+
+@Component({
+    ...smartComponent,
+    selector: 'my-not-found',
+    template: '<h3>Error 404: Not found</h3>',
+})
+export class NotFound404Component {
+}

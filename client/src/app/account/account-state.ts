@@ -18,7 +18,7 @@ export interface IAccountState {
     errorMessages?: string[];
 }
 
-export const sessionActions = actionTypes('account').ofType<{
+export const accountActions = actionTypes('account').ofType<{
     LOGIN_REQUEST_START: string;
     LOGIN_REQUEST_SUCCESS: string;
     LOGIN_REQUEST_FAILED: string;
@@ -35,8 +35,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
 
     switch (action.type) {
 
-        case sessionActions.LOGIN_REQUEST_SUCCESS: {
-
+        case accountActions.LOGIN_REQUEST_SUCCESS: {
             return {
                 ...state,
                 session: {
@@ -45,7 +44,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
                 errorMessages: [],
             };
         }
-        case sessionActions.LOGIN_REQUEST_FAILED: {
+        case accountActions.LOGIN_REQUEST_FAILED: {
 
             return {
                 ...state,
@@ -55,7 +54,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
                 ],
             };
         }
-        case sessionActions.PROFILE_REQUEST_SUCCESS: {
+        case accountActions.PROFILE_REQUEST_SUCCESS: {
 
             return {
                 ...state,
@@ -63,7 +62,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
                 errorMessages: [],
             };
         }
-        case sessionActions.PROFILE_REQUEST_FAILED: {
+        case accountActions.PROFILE_REQUEST_FAILED: {
 
             return {
                 ...state,
@@ -76,22 +75,22 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
     }
 };
 
-export const loginEpic: ReduxEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_START)
+export const loginEpic: ReduxEpic = (action$: any): any => action$.ofType(accountActions.LOGIN_REQUEST_START)
     .switchMap((action: any) => httpClient.post('/connect/token', urlEncodeBody({
         ...action.user,
         grant_type: 'password',
     }), urlEncodedHeader))
     .map((response: any) => {
         if (response.networkError || response.body.error) {
-            return {type: sessionActions.LOGIN_REQUEST_FAILED, response};
+            return {type: accountActions.LOGIN_REQUEST_FAILED, response};
         } else {
-            return {type: sessionActions.LOGIN_REQUEST_SUCCESS, response};
+            return {type: accountActions.LOGIN_REQUEST_SUCCESS, response};
         }
     });
 
-export const profileEpic: ReduxEpic = (action$: any): any => action$.ofType(sessionActions.LOGIN_REQUEST_SUCCESS)
+export const profileEpic: ReduxEpic = (action$: any): any => action$.ofType(accountActions.LOGIN_REQUEST_SUCCESS)
     .switchMap((action: any) => apiClient.profile())
-    .map(triggerAction(sessionActions.PROFILE_REQUEST_SUCCESS, sessionActions.PROFILE_REQUEST_FAILED));
+    .map(triggerAction(accountActions.PROFILE_REQUEST_SUCCESS, accountActions.PROFILE_REQUEST_FAILED));
 
 export interface UserLogin {
     username: string;
@@ -105,6 +104,6 @@ export class AccountActions {
     }
 
     login(user: UserLogin) {
-        this.ngRedux.dispatch({type: sessionActions.LOGIN_REQUEST_START, user});
+        this.ngRedux.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
     }
 }
