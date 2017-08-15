@@ -7,7 +7,7 @@ export const actionTypes = (actionPrefix: string) => ({
     }) as T,
 });
 
-export type ReduxReducer<TState> = (state: TState, action: any) => TState;
+export type ReduxReducer<TState = any> = (state: TState, action: any) => TState;
 export type ReduxReducerMap = { [key: string]: ReduxReducer<any> };
 
 export type ReduxMetaReducer<TState> = (reducer: ReduxReducer<TState>) => ReduxReducer<TState>;

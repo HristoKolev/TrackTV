@@ -37,7 +37,6 @@ export class LazyModule {
         reduxState.addEpics({
             filterCoursesEpic,
         });
-
     }
 }
 

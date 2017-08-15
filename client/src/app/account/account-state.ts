@@ -36,6 +36,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
     switch (action.type) {
 
         case accountActions.LOGIN_REQUEST_SUCCESS: {
+
             return {
                 ...state,
                 session: {
