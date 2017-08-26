@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { ISettingsState } from '../app/settings.state';
+import { ISettingsState } from '../app/global.state';
 import { reduxState } from './redux-store';
 
 export interface FetchResponse {
@@ -81,3 +81,4 @@ export const httpClient = new HttpClient();
 export const urlEncodeBody = (obj: any) => Object.entries(obj).map(p => p.join('=')).join('&');
 
 export const urlEncodedHeader = {'Content-Type': 'application/x-www-form-urlencoded'};
+

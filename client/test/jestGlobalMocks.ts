@@ -2,7 +2,7 @@ export interface IStorage {
     [key: string]: string;
 }
 
-const mock = () => {
+const storageMock = () => {
     let storage = {} as IStorage;
     return {
         getItem: (key: string) => key in storage ? storage[key] : null,
@@ -12,6 +12,6 @@ const mock = () => {
     };
 };
 
-Object.defineProperty(window, 'localStorage', {value: mock()});
-Object.defineProperty(window, 'sessionStorage', {value: mock()});
+Object.defineProperty(window, 'localStorage', {value: storageMock()});
+Object.defineProperty(window, 'sessionStorage', {value: storageMock()});
 Object.defineProperty(window, 'getComputedStyle', {value: () => ['-webkit-appearance']});

@@ -1,47 +1,7 @@
-import { accountActions, accountReducer } from './account-state';
-import { ReduxReducer } from '../../infrastructure/redux-types';
-
-const testReducer = (reducer: ReduxReducer) => {
-
-    const unknownAction = Object.freeze({type: '@@UNKNOWN_ACTION'});
-
-    it('should return some default value', () => {
-
-        const newState = reducer(undefined, unknownAction);
-
-        expect(newState).toBeTruthy();
-    });
-
-    it('should return old state when passed an unknown action', () => {
-
-        const oldState = {};
-
-        const newState = reducer(oldState, unknownAction);
-
-        expect(newState).toBe(oldState);
-    });
-};
-
-const testReducerWithAction = (reducer: ReduxReducer, action: any) => {
-
-    it('should preserve previous state when passed an action', () => {
-
-        const oldState = {key: '__VALUE__'};
-
-        const newState = reducer(oldState, action);
-
-        expect(oldState.key).toBe(newState.key);
-    });
-
-    it('should return different state from the one that was passed', () => {
-
-        const prevState = {};
-
-        const newState = accountReducer(prevState, action);
-
-        expect(newState).not.toBe(prevState);
-    });
-};
+import { accountActions, accountEpics, accountReducer } from './account-state';
+import { ActionsObservable } from 'redux-observable';
+import { Observable } from 'rxjs';
+import { testReducer, testReducerWithAction } from '../../infrastructure/test-helpers';
 
 describe('accountReducer', () => {
 
@@ -137,7 +97,7 @@ describe('accountReducer', () => {
 
         const defaultAction = {
             type: accountActions.PROFILE_REQUEST_SUCCESS,
-            data: user,
+            payload: user,
         };
 
         testReducerWithAction(accountReducer, defaultAction);
@@ -177,6 +137,211 @@ describe('accountReducer', () => {
 
                 errorMessages,
             });
+        });
+    });
+});
+
+describe('accountEpics', () => {
+
+    describe('loginEpic', () => {
+
+        it('returns correct action when the request is successful', (done) => {
+
+            const response = {body: {}};
+
+            const httpClient = {
+                post: jest.fn(() => (Observable.from([response]))),
+            };
+
+            const {loginEpic} = accountEpics(httpClient, {});
+
+            const inputAction = {type: accountActions.LOGIN_REQUEST_START, user: {username: 'cat', password: 'dog'}};
+
+            const errorCb = jest.fn();
+
+            let action;
+
+            loginEpic(ActionsObservable.from([inputAction]), {}).subscribe((a: any) => action = a, errorCb, done);
+
+            const outputAction = {type: accountActions.LOGIN_REQUEST_SUCCESS, response};
+
+            expect(action).not.toBeUndefined();
+
+            expect(action).toEqual(outputAction);
+
+            expect(errorCb).not.toBeCalled();
+
+            expect(httpClient.post).toBeCalledWith(
+                '/connect/token',
+                `username=cat&password=dog&grant_type=password`,
+                {'Content-Type': 'application/x-www-form-urlencoded'},
+            );
+        });
+
+        it('returns correct action when the network is down', (done) => {
+
+            const response = {networkError: true};
+
+            const httpClient = {
+                post: jest.fn(() => (Observable.from([response]))),
+            };
+
+            const {loginEpic} = accountEpics(httpClient, {});
+
+            const inputAction = {type: accountActions.LOGIN_REQUEST_START, user: {username: 'cat', password: 'dog'}};
+
+            const errorCb = jest.fn();
+
+            let action;
+
+            loginEpic(ActionsObservable.from([inputAction]), {}).subscribe((a: any) => action = a, errorCb, done);
+
+            const outputAction = {type: accountActions.LOGIN_REQUEST_FAILED, response};
+
+            expect(action).not.toBeUndefined();
+
+            expect(action).toEqual(outputAction);
+
+            expect(errorCb).not.toBeCalled();
+
+            expect(httpClient.post).toBeCalledWith(
+                '/connect/token',
+                `username=cat&password=dog&grant_type=password`,
+                {'Content-Type': 'application/x-www-form-urlencoded'},
+            );
+        });
+
+        it('returns correct action when the server returns an error', (done) => {
+
+            const response = {body: {error: {}}};
+
+            const httpClient = {
+                post: jest.fn(() => (Observable.from([response]))),
+            };
+
+            const {loginEpic} = accountEpics(httpClient, {});
+
+            const inputAction = {type: accountActions.LOGIN_REQUEST_START, user: {username: 'cat', password: 'dog'}};
+
+            const errorCb = jest.fn();
+
+            let action;
+
+            loginEpic(ActionsObservable.from([inputAction]), {}).subscribe((a: any) => action = a, errorCb, done);
+
+            const outputAction = {type: accountActions.LOGIN_REQUEST_FAILED, response};
+
+            expect(action).not.toBeUndefined();
+
+            expect(action).toEqual(outputAction);
+
+            expect(errorCb).not.toBeCalled();
+
+            expect(httpClient.post).toBeCalledWith(
+                '/connect/token',
+                `username=cat&password=dog&grant_type=password`,
+                {'Content-Type': 'application/x-www-form-urlencoded'},
+            );
+        });
+    });
+
+    describe('profileEpic', () => {
+
+        it('returns correct action when the network is down', (doneCb) => {
+
+            const apiClient = {
+                profile: jest.fn(() => (Observable.from([{
+                    networkError: true,
+                }]))),
+            };
+
+            const {profileEpic} = accountEpics({}, apiClient);
+
+            const inputAction = {type: accountActions.LOGIN_REQUEST_SUCCESS};
+
+            const errorCb = jest.fn();
+
+            let resultAction;
+
+            profileEpic(ActionsObservable.from([inputAction]), {})
+                .subscribe((a: any) => resultAction = a, errorCb, doneCb);
+
+            expect(resultAction).not.toBeUndefined();
+
+            expect(resultAction).toEqual({
+                type: accountActions.PROFILE_REQUEST_FAILED,
+                errorMessages: ['Server is down. Please, try again later.'],
+            });
+
+            expect(errorCb).not.toBeCalled();
+
+            expect(apiClient.profile).toBeCalled();
+        });
+
+        it('returns correct action when the server returns an error', (doneCb) => {
+
+            const errorMessages = ['Error message'];
+
+            const apiClient = {
+                profile: jest.fn(() => (Observable.from([{
+                    body: {errorMessages},
+                }]))),
+            };
+
+            const {profileEpic} = accountEpics({}, apiClient);
+
+            const inputAction = {type: accountActions.LOGIN_REQUEST_SUCCESS};
+
+            const errorCb = jest.fn();
+
+            let resultAction;
+
+            profileEpic(ActionsObservable.from([inputAction]), {})
+                .subscribe((a: any) => resultAction = a, errorCb, doneCb);
+
+            expect(resultAction).not.toBeUndefined();
+
+            expect(resultAction).toEqual({
+                type: accountActions.PROFILE_REQUEST_FAILED,
+                errorMessages,
+            });
+
+            expect(errorCb).not.toBeCalled();
+
+            expect(apiClient.profile).toBeCalled();
+        });
+
+        it('returns correct action when the request is successful', (doneCb) => {
+
+            const payload = {key: '__VALUE__'};
+
+            const apiClient = {
+                profile: jest.fn(() => (Observable.from([{
+                    body: {payload, success: true},
+                }]))),
+            };
+
+            const {profileEpic} = accountEpics({}, apiClient);
+
+            const inputAction = {type: accountActions.LOGIN_REQUEST_SUCCESS};
+
+            const errorCb = jest.fn();
+
+            let resultAction;
+
+            profileEpic(ActionsObservable.from([inputAction]), {})
+                .subscribe((a: any) => resultAction = a, errorCb, doneCb);
+
+            expect(resultAction).not.toBeUndefined();
+
+            expect(resultAction).toEqual({
+                type: accountActions.PROFILE_REQUEST_SUCCESS,
+                payload,
+            });
+
+            expect(errorCb).not.toBeCalled();
+
+            expect(apiClient.profile).toBeCalled();
         });
     });
 });

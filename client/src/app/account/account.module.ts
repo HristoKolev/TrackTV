@@ -4,8 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
-import { AccountActions, accountReducer, loginEpic, profileEpic } from './account-state';
+import { AccountActions, accountEpics, accountReducer } from './account-state';
 import { reduxState } from '../../infrastructure/redux-store';
+import { httpClient } from '../../infrastructure/http-client';
+import { apiClient } from '../shared/api-client';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -32,10 +34,7 @@ export class AccountModule {
             account: accountReducer,
         });
 
-        reduxState.addEpics({
-            loginEpic,
-            profileEpic,
-        });
+        reduxState.addEpics(accountEpics(httpClient, apiClient));
     }
 }
 

@@ -27,6 +27,6 @@ export const triggerAction = (successActionType: string, failureActionType: stri
             return {type: failureActionType, errorMessages: response.body.errorMessages};
         }
 
-        return {type: successActionType, data: response.body.payload};
+        return {type: successActionType, payload: response.body.payload};
     });
 };
