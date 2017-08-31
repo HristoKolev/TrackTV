@@ -1,20 +1,11 @@
-import { Component } from '@angular/core';
-import { smartComponent } from '../infrastructure/component-helpers';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    ...smartComponent,
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
     selector: 'my-app',
     template: `
-        <header>
-
-            <h1>Cats App</h1>
-
-            <ul id="my-navlist">
-                <li *ngFor="let view of views">
-                    <a [routerLink]="view.link" routerLinkActive="active-link">{{view.name}}</a>
-                </li>
-            </ul>
-        </header>
+        <header-component></header-component>
 
         <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
     `,
@@ -23,29 +14,9 @@ import { smartComponent } from '../infrastructure/component-helpers';
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
-        #my-navlist li {
-            display: inline;
-            list-style-type: none;
-            padding-right: 20px;
-        }
     `],
 })
 export class AppComponent {
-
-    public views: any[] = [
-        {
-            name: 'Lazy',
-            link: ['lazy'],
-        },
-        {
-            name: 'Login',
-            link: ['account/login'],
-        },
-    ];
-
-    constructor() {
-    }
 
     activateEvent(event: any) {
     }
@@ -55,7 +26,8 @@ export class AppComponent {
 }
 
 @Component({
-    ...smartComponent,
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
     selector: 'my-not-found',
     template: '<h3>Error 404: Not found</h3>',
 })

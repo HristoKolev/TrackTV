@@ -1,4 +1,4 @@
-import { IShowsState, showsActions, showsReducer } from './shows-state';
+import { showsActions, showsReducer } from './shows-state';
 import { testReducer, testReducerWithAction } from '../../infrastructure/test-helpers';
 
 describe('showsReducer', () => {
@@ -20,7 +20,7 @@ describe('showsReducer', () => {
 
             const prevState = {};
 
-            const newState = showsReducer(prevState as IShowsState, defaultAction);
+            const newState = showsReducer(prevState, defaultAction);
 
             expect(newState).toEqual({
                 topShows: payload,

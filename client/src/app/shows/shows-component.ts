@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { smartComponent } from '../../infrastructure/component-helpers';
-import { IShowsState, ITopShowsState } from './shows-state';
+import { ShowsActions } from './shows-state';
 
 @Component({
-    ...smartComponent,
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div>{{this.data | json}}</div>
+        <pre>{{this.data | json}}</pre>
     `,
-    styles: [``],
+    styles: [`
+    `],
 })
 export class TopShowsComponent implements OnInit {
 
-    data: ITopShowsState;
+    data: any;
 
-    constructor(private ngRedux: NgRedux<{ shows: IShowsState }>) {
+    constructor(private ngRedux: NgRedux<any>,
+                private showsActions: ShowsActions) {
     }
 
     ngOnInit(): void {
+
+        this.showsActions.fetchTopShows(1);
 
         this.ngRedux.select(state => state.shows.topShows)
             .distinctUntilChanged()

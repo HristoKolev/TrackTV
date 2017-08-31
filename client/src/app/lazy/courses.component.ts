@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Course, CourseActions, ICoursesState } from './courses-state';
 import { NgRedux } from '@angular-redux/store';
-import { smartComponent } from '../../infrastructure/component-helpers';
 
 @Component({
-    ...smartComponent,
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
     template: `
         <section>
             <button [routerLink]="0">Add</button>

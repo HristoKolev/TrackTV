@@ -9,13 +9,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { explicitRouterEpic, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';
 
-import { settingsReducer } from './global.state';
+import { globalErrorReducer, settingsReducer } from './global.state';
 import { reduxState } from '../infrastructure/redux-store';
+import { HeaderComponent } from './layout/header-component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
     {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
     {path: 'account', loadChildren: './account/account.module#AccountModule'},
+    {path: 'shows', loadChildren: './shows/shows.module#ShowsModule'},
     {path: '**', component: NotFound404Component},
 ];
 
@@ -23,6 +25,7 @@ export const routes: Routes = [
     declarations: [
         AppComponent,
         NotFound404Component,
+        HeaderComponent
     ],
     entryComponents: [],
     imports: [
@@ -50,6 +53,7 @@ export class AppModule {
 
         reduxState.addReducers({
             settings: settingsReducer,
+            global: globalErrorReducer
         });
 
         reduxState.addEpics({

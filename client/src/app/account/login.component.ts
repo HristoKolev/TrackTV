@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AccountActions, IAccountState } from './account-state';
 import { NgRedux } from '@angular-redux/store';
 import { Subscription } from 'rxjs/Subscription';
-import { smartComponent } from '../../infrastructure/component-helpers';
 
 @Component({
-    ...smartComponent,
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
     template: `
         <div> Username: <input [(ngModel)]="this.username"/></div>
         <div> Password <input [(ngModel)]="this.password" type="password"/></div>

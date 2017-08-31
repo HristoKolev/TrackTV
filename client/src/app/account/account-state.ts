@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { triggerAction } from '../shared/api-client';
+import { ApiClient } from '../shared/api-client';
 import { urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
 import { actionTypes, ReduxEpic, ReduxEpicMap, ReduxReducer } from '../../infrastructure/redux-types';
 
 export interface ICurrentSession {
-    access_token: string;
+    access_token?: string;
+    isLoggedIn?: boolean;
 }
 
 export interface ICurrentUser {
@@ -29,6 +30,7 @@ export const accountActions = actionTypes('account').ofType<{
 
 const initialState = {
     errorMessages: [],
+    session: {},
 };
 
 export const accountReducer: ReduxReducer<IAccountState> = (state = initialState, action: any) => {
@@ -41,6 +43,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
                 ...state,
                 session: {
                     access_token: action.response.body.access_token,
+                    isLoggedIn: true,
                 },
                 errorMessages: [],
             };
@@ -76,28 +79,39 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
     }
 };
 
-export const accountEpics = (httpClient: any, apiClient: any): ReduxEpicMap => {
+export const accountEpics = (httpClient: any, apiClient: ApiClient): ReduxEpicMap => {
 
     const loginEpic: ReduxEpic = (action$: any): any => action$.ofType(accountActions.LOGIN_REQUEST_START)
-        .switchMap((action: any) => httpClient.post('/connect/token', urlEncodeBody({
-            ...action.user,
-            grant_type: 'password',
-        }), urlEncodedHeader))
-        .map((response: any) => {
-            if (response.networkError || response.body.error) {
-                return {type: accountActions.LOGIN_REQUEST_FAILED, response};
+        .switchMap((action: any) => {
+            return httpClient.post('/connect/token', urlEncodeBody({...action.user, grant_type: 'password'}), urlEncodedHeader)
+                .switchMap((loginResponse: any) => {
+
+                    if (loginResponse.networkError || loginResponse.body.error) {
+                        return {loginResponse};
+                    }
+
+                    return apiClient
+                        .profile(loginResponse.body.access_token)
+                        .map(profileResponse => ({
+                            loginResponse,
+                            profileResponse,
+                        }));
+                });
+        })
+        .map((responses: any) => {
+
+            const {loginResponse, profileResponse} = responses;
+
+            if (loginResponse.networkError || loginResponse.body.error) {
+                return {type: accountActions.LOGIN_REQUEST_FAILED, responses};
             } else {
-                return {type: accountActions.LOGIN_REQUEST_SUCCESS, response};
+                return {type: accountActions.LOGIN_REQUEST_SUCCESS, responses};
             }
         });
 
-    const profileEpic: ReduxEpic = (action$: any): any => action$.ofType(accountActions.LOGIN_REQUEST_SUCCESS)
-        .switchMap((action: any) => apiClient.profile())
-        .map(triggerAction(accountActions.PROFILE_REQUEST_SUCCESS, accountActions.PROFILE_REQUEST_FAILED));
-
     return {
         loginEpic,
-        profileEpic,
+
     };
 };
 
