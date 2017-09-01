@@ -28,7 +28,8 @@ const initialGlobalErrorState: IGlobalErrorState = {
 
 export const globalActions = actionTypes('global').ofType<{
     GLOBAL_ERROR: string;
-    LOGOUT: string;
+    USER_LOGIN: string;
+    USER_LOGOUT: string;
 }>();
 
 export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = initialGlobalErrorState, action) => {
@@ -39,10 +40,43 @@ export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = init
                 errorMessages: action.errorMessages,
             };
         }
-        case  globalActions.LOGOUT: {
+        default: {
+            return state;
+        }
+    }
+};
+
+export interface ISessionState {
+
+    isLoggedIn: boolean;
+    user?: any;
+    access_token?: string;
+}
+
+const initialSessionState: ISessionState = {
+
+    isLoggedIn: false,
+};
+
+export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialSessionState, action: any) => {
+
+    switch (action.type) {
+
+        case globalActions.USER_LOGIN: {
+
             return {
                 ...state,
-                session: {},
+                access_token: action.responses.loginResponse.payload.access_token,
+                isLoggedIn: true,
+                user: action.responses.profileResponse.payload,
+            };
+        }
+        case  globalActions.USER_LOGOUT: {
+            return {
+                ...state,
+                access_token: undefined,
+                user: undefined,
+                isLoggedIn: false,
             };
         }
         default: {

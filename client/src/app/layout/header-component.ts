@@ -16,7 +16,11 @@ import { globalActions } from '../global.state';
                     <button [routerLink]="link.link" routerLinkActive="active-link">{{link.name}}</button>
                 </li>
 
-                <li *ngIf="this.accountState?.session.isLoggedIn">
+                <li *ngIf="!this.sessionState.isLoggedIn">
+                    <button [routerLink]="['/account/login']">Login</button>
+                </li>
+
+                <li *ngIf="this.sessionState.isLoggedIn">
                     <button (click)="this.logout()">Logout</button>
                 </li>
             </ul>
@@ -32,16 +36,17 @@ import { globalActions } from '../global.state';
 })
 export class HeaderComponent implements OnInit {
 
+    //noinspection JSMismatchedCollectionQueryUpdate
     private links: any[];
 
-    private accountState: any;
+    private sessionState: any;
 
     constructor(private ngRedux: NgRedux<any>) {
     }
 
     public ngOnInit(): void {
 
-        const links = [
+        this.links = [
             {
                 name: 'Lazy',
                 link: ['lazy'],
@@ -52,24 +57,16 @@ export class HeaderComponent implements OnInit {
             },
         ];
 
-        this.ngRedux.select(state => state.account)
+        this.ngRedux.select(state => state.session)
             .distinctUntilChanged()
-            .subscribe(accountState => {
-
-                if (accountState && accountState.session.isLoggedIn) {
-
-                    this.links = links;
-                } else {
-                    this.links = [...links, {name: 'Login', link: ['/account/login']}];
-                }
-
-                this.accountState = accountState;
+            .subscribe(sessionState => {
+                this.sessionState = sessionState;
             });
     }
 
     public logout() {
         this.ngRedux.dispatch({
-            type: globalActions.LOGOUT,
+            type: globalActions.USER_LOGOUT,
         });
     }
 }

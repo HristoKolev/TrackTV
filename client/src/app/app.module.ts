@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { explicitRouterEpic, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';
 
-import { globalErrorReducer, settingsReducer } from './global.state';
+import { globalErrorReducer, settingsReducer, userSessionReducer } from './global.state';
 import { reduxState } from '../infrastructure/redux-store';
 import { HeaderComponent } from './layout/header-component';
 
@@ -53,7 +53,8 @@ export class AppModule {
 
         reduxState.addReducers({
             settings: settingsReducer,
-            global: globalErrorReducer
+            global: globalErrorReducer,
+            session: userSessionReducer
         });
 
         reduxState.addEpics({
