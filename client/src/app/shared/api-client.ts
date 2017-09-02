@@ -27,7 +27,15 @@ export class ApiClient {
     public login(userLogin: any): Observable<ApiResponse> {
 
         return httpClient.post('/connect/token', urlEncodeBody({...userLogin, grant_type: 'password'}), urlEncodedHeader)
-            .map(response => response.networkError ? errorResponse([networkIsDownMessage]) : successResponse(response.body));
+            .map(response => {
+                if (response.networkError) {
+                    return errorResponse([networkIsDownMessage]);
+                } else if (response.body.error) {
+                    return errorResponse([response.body.error_description]);
+                } else {
+                    return successResponse(response.body);
+                }
+            });
     }
 
     public topShows(page: number): Observable<FetchResponse> {
