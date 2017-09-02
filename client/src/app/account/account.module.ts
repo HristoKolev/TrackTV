@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { AccountActions, accountEpics, accountReducer } from './account-state';
 import { reduxState } from '../../infrastructure/redux-store';
-import { httpClient } from '../../infrastructure/http-client';
 import { apiClient } from '../shared/api-client';
 
 const routes: Routes = [
@@ -34,7 +33,7 @@ export class AccountModule {
             account: accountReducer,
         });
 
-        reduxState.addEpics(accountEpics(httpClient, apiClient));
+        reduxState.addEpics(accountEpics(apiClient));
     }
 }
 

@@ -9,9 +9,10 @@ import { globalActions } from '../global.state';
     template: `
         <header>
 
-            <h1>Cats App</h1>
+            <h1>TrackTV</h1>
 
             <ul id="my-navlist">
+
                 <li *ngFor="let link of links">
                     <button [routerLink]="link.link" routerLinkActive="active-link">{{link.name}}</button>
                 </li>

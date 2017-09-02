@@ -3,6 +3,7 @@ import { NgRedux } from '@angular-redux/store';
 import { ApiClient, ApiResponse } from '../shared/api-client';
 import { actionTypes, ReduxEpic, ReduxEpicMap, ReduxReducer } from '../../infrastructure/redux-types';
 import { globalActions } from '../global.state';
+import { routerActions } from '../../infrastructure/redux-router';
 
 export interface IAccountState {
 
@@ -52,7 +53,7 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
     }
 };
 
-export const accountEpics = (httpClient: any, apiClient: ApiClient): ReduxEpicMap => {
+export const accountEpics = (apiClient: ApiClient): ReduxEpicMap => {
 
     const loginEpic: ReduxEpic = (action$: any): any => {
 
@@ -77,6 +78,7 @@ export const accountEpics = (httpClient: any, apiClient: ApiClient): ReduxEpicMa
                     return [
                         {type: accountActions.LOGIN_REQUEST_SUCCESS, responses},
                         {type: globalActions.USER_LOGIN, responses},
+                        {type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: [['/shows/top']]},
                     ];
                 }
             });
