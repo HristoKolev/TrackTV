@@ -104,12 +104,17 @@ class StoreWrapper {
         return this.store.getState();
     }
 
+    public dispatch(...args: any[]) {
+        return this.store.dispatch(...args);
+    }
+
     private createReducer(reducers: ReduxReducerMap = {}): any {
 
         this.allReducers = {...this.allReducers, ...reducers};
 
         return combineReducers(this.allReducers);
     }
+
 }
 
 export const reduxState = new StoreWrapper();

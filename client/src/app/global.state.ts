@@ -1,4 +1,5 @@
 import { actionTypes, ReduxReducer } from '../infrastructure/redux-types';
+import { reduxState } from '../infrastructure/redux-store';
 
 export interface ISettingsState {
     baseUrl: string;
@@ -20,16 +21,20 @@ export const settingsReducer: ReduxReducer<ISettingsState> = (state = initialSet
 
 export interface IGlobalErrorState {
     errorMessages: string[];
+    loading: boolean;
 }
 
 const initialGlobalErrorState: IGlobalErrorState = {
     errorMessages: [],
+    loading: false,
 };
 
 export const globalActions = actionTypes('global').ofType<{
     GLOBAL_ERROR: string;
     USER_LOGIN: string;
     USER_LOGOUT: string;
+    START_TRANSITION: string;
+    END_TRANSITION: string;
 }>();
 
 export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = initialGlobalErrorState, action) => {
@@ -38,6 +43,18 @@ export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = init
             return {
                 ...state,
                 errorMessages: action.errorMessages,
+            };
+        }
+        case globalActions.START_TRANSITION: {
+            return {
+                ...state,
+                loading: true,
+            };
+        }
+        case globalActions.END_TRANSITION: {
+            return {
+                ...state,
+                loading: false,
             };
         }
         default: {
@@ -82,5 +99,22 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
         default: {
             return state;
         }
+    }
+};
+
+export const loadingStart = (action: any) => {
+
+    reduxState.dispatch({type: globalActions.START_TRANSITION, triggeredBy: action.type});
+
+    return action;
+};
+
+export const loadingStop = (action: any) => {
+    if (Array.isArray(action)) {
+
+        return [...action, {type: globalActions.END_TRANSITION}];
+    } else {
+
+        return [action, {type: globalActions.END_TRANSITION}];
     }
 };

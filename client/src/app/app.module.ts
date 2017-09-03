@@ -25,7 +25,7 @@ export const routes: Routes = [
     declarations: [
         AppComponent,
         NotFound404Component,
-        HeaderComponent
+        HeaderComponent,
     ],
     entryComponents: [],
     imports: [
@@ -54,11 +54,12 @@ export class AppModule {
         reduxState.addReducers({
             settings: settingsReducer,
             global: globalErrorReducer,
-            session: userSessionReducer
+            session: userSessionReducer,
         });
 
         reduxState.addEpics({
             explicitRouterEpic,
+            logEpic: (actions$: any, store: any) => actions$.do(console.log).filter((x: any) => false),
         });
     }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { ApiClient, ApiResponse } from '../shared/api-client';
 import { actionTypes, ReduxEpic, ReduxEpicMap, ReduxReducer } from '../../infrastructure/redux-types';
-import { globalActions } from '../global.state';
+import { globalActions, loadingStart, loadingStop } from '../global.state';
 import { routerActions } from '../../infrastructure/redux-router';
 
 export interface IAccountState {
@@ -57,7 +57,9 @@ export const accountEpics = (apiClient: ApiClient): ReduxEpicMap => {
 
     const loginEpic: ReduxEpic = (action$: any): any => {
 
-        return action$.ofType(accountActions.LOGIN_REQUEST_START)
+        return action$
+            .ofType(accountActions.LOGIN_REQUEST_START)
+            .map(loadingStart)
             .switchMap((action: any) => apiClient.login(action.user)
                 .switchMap((loginResponse: ApiResponse): any => {
 
@@ -68,7 +70,7 @@ export const accountEpics = (apiClient: ApiClient): ReduxEpicMap => {
                     return apiClient.profile(loginResponse.payload.access_token)
                         .map(profileResponse => ({loginResponse, profileResponse}));
                 }))
-            .switchMap((responses: any) => {
+            .map((responses: any) => {
 
                 const {loginResponse, profileResponse} = responses;
 
@@ -81,7 +83,8 @@ export const accountEpics = (apiClient: ApiClient): ReduxEpicMap => {
                         {type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: [['/shows/top']]},
                     ];
                 }
-            });
+            })
+            .switchMap(loadingStop);
     };
 
     return {
