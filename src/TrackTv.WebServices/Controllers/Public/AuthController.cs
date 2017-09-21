@@ -53,13 +53,9 @@
                 return this.Failure(this.ModelState);
             }
 
-            using (var scope = await this.TransactionScopeFactory
-                                         .CreateScopeAsync()
-                                         .ConfigureAwait(false))
+            using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
             {
-                int profileId = await this.ProfilesService
-                                          .CreateProfileAsync(model.Email)
-                                          .ConfigureAwait(false);
+                int profileId = await this.ProfilesService.CreateProfileAsync(model.Email).ConfigureAwait(false);
 
                 var user = new ApplicationUser
                 {
@@ -68,9 +64,7 @@
                     ProfileId = profileId
                 };
 
-                var result = await this.UserManager
-                                       .CreateAsync(user, model.Password)
-                                       .ConfigureAwait(false);
+                var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {

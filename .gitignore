@@ -211,7 +211,7 @@ src/TrackTV.WebClient/dist/
 
 **/app/**/*.js
 **/app/**/*.js.map
-**/app/**/*.css
+#**/app/**/*.css
 
 .awcache/
 **/compiled/

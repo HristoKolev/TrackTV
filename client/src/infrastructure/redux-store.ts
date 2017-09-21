@@ -11,8 +11,7 @@ export type RouterAction = { type: string, location: string };
 export const routerReducer: ReduxReducer<RouterState> = (state = {}, action: RouterAction) => {
     switch (action.type) {
         case routerActions.ROUTER_NAVIGATION:
-        case routerActions.ROUTER_ERROR:
-        case routerActions.ROUTER_CANCEL: {
+        case routerActions.ROUTER_ERROR: {
             return {
                 location: action.location,
             };

@@ -8,6 +8,9 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
         <header-component></header-component>
 
         <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+
+        <loading-component></loading-component>
+
     `,
     styles: [`
         * {

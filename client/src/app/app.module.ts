@@ -12,6 +12,7 @@ import { explicitRouterEpic, ReduxRouter, ReduxRouterModule } from '../infrastru
 import { globalErrorReducer, settingsReducer, userSessionReducer } from './global.state';
 import { reduxState } from '../infrastructure/redux-store';
 import { HeaderComponent } from './layout/header-component';
+import { LoadingComponent } from './layout/loading-component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
         AppComponent,
         NotFound404Component,
         HeaderComponent,
+        LoadingComponent,
     ],
     entryComponents: [],
     imports: [
