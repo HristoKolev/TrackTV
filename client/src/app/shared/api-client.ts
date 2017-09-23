@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { FetchResponse, httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
 import { reduxState } from '../../infrastructure/redux-store';
 import { ActionsObservable } from 'redux-observable';
-import { globalActions } from '../global.state';
+import { globalActions, loadingStart, loadingStop } from '../global.state';
 import { ReduxEpic } from '../../infrastructure/redux-types';
 
 export interface ApiResponse {
@@ -77,11 +77,17 @@ export const triggerAction = (successActionType: string, failureActionType: stri
     });
 };
 
-export const createApiEpic = (startActionType: string, successActionType: string, apiCall: (action: any) => Observable<any>): ReduxEpic => {
+export const createApiEpic = (startActionType: string,
+                              successActionType: string,
+                              apiCall: (action: any) => Observable<any>,
+                              inTransition: boolean = false): ReduxEpic => {
+
     return (actions$: ActionsObservable<any>, store: any) => {
         return actions$
             .ofType(startActionType)
+            .map(x => inTransition ? loadingStart(x) : x)
             .switchMap(apiCall)
-            .map(triggerAction(successActionType, globalActions.GLOBAL_ERROR));
+            .map(triggerAction(successActionType, globalActions.GLOBAL_ERROR))
+            .switchMap(x => inTransition ? loadingStop(x) : [x]);
     };
 };

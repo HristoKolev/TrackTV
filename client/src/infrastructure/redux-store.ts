@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { routerActions } from './redux-router';
 import { freezeMiddleware } from './freeze-middleware';
 import { ReduxEpicMap, ReduxReducer, ReduxReducerMap } from './redux-types';
+import { globalActions } from '../app/global.state';
 
 export type RouterState = { location?: string; };
 export type RouterAction = { type: string, location: string };
@@ -74,6 +75,8 @@ class StoreWrapper {
                     console.error(error);
 
                     console.warn(`The epic '${epicName}' errored and is being restarted.`);
+
+                    this.dispatch({type: globalActions.END_TRANSITION});
 
                     this.addEpics({
                         [epicName]: epic,
