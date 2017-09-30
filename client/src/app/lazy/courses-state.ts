@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { actionTypes, ReduxEpic, ReduxReducer } from '../../infrastructure/redux-types';
+import { actionTypes, ReduxReducer } from '../../infrastructure/redux-types';
 
 export interface Course {
     name: string;
@@ -56,6 +56,8 @@ export const coursesReducer: ReduxReducer<ICoursesState> = (state = initialState
             return {
                 ...state,
                 all: [...state.all.filter(c => c.id !== action.course.id), action.course],
+                filtered: state.all.filter(c => c.name.toLowerCase()
+                    .indexOf(state.filter.toLowerCase()) > -1),
             };
         }
         default: {
@@ -63,10 +65,6 @@ export const coursesReducer: ReduxReducer<ICoursesState> = (state = initialState
         }
     }
 };
-
-export const filterCoursesEpic: ReduxEpic = (actions$, store) => actions$
-    .ofType(coursesActions.ADD_COURSE)
-    .map(action => ({type: coursesActions.FILTER_COURSES, filter: store.getState().courses.filter}));
 
 let nextId = courses.length + 1;
 

@@ -1,9 +1,9 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { createEpicMiddleware } from 'redux-observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { routerActions } from './redux-router';
 import { freezeMiddleware } from './freeze-middleware';
-import { ReduxEpicMap, ReduxReducer, ReduxReducerMap } from './redux-types';
+import { ReduxReducer, ReduxReducerMap } from './redux-types';
+import createSagaMiddleware from 'redux-saga';
+import { put, takeEvery } from 'redux-saga/effects';
 import { globalActions } from '../app/global.state';
 
 export type RouterState = { location?: string; };
@@ -25,26 +25,21 @@ export const routerReducer: ReduxReducer<RouterState> = (state = {}, action: Rou
 
 class StoreWrapper {
 
+    private sagaMiddleware: any;
+
     private store: any;
 
     private allReducers: ReduxReducerMap;
 
-    private epics$: BehaviorSubject<any>;
-
     constructor() {
-
         this.allReducers = {router: routerReducer};
-
-        this.epics$ = new BehaviorSubject<any>((actions$: any) => actions$.filter(() => false));
-
+        this.sagaMiddleware = createSagaMiddleware();
     }
 
     public initStore(enhancers: any[] = []) {
 
-        const rootEpic = (action$: any, store: any) => this.epics$.mergeMap(epic => epic(action$, store));
-
         const middleware = [
-            createEpicMiddleware(rootEpic),
+            this.sagaMiddleware,
             freezeMiddleware,
         ];
 
@@ -58,32 +53,28 @@ class StoreWrapper {
         return this.store;
     }
 
-    public addEpics(epics: ReduxEpicMap): void {
+    public addSagas(sagas: any = {}) {
+        for (let [sagaName, saga] of Object.entries(sagas)) {
 
-        for (let [epicName, epic] of Object.entries(epics)) {
+            console.log(`Adding saga: '${sagaName}'`);
 
-            console.log(`Adding epic: '${epicName}'`);
+            this.sagaMiddleware.run(function* () {
 
-            if (!epic) {
-                throw new Error(`Epic '${epicName}' is falsy.`);
-            }
+                yield takeEvery(saga.type, function* (...args: any[]) {
 
-            this.epics$.next((...args: any[]) => epic.apply(null, args)
-                .map((action: any) => ({...action, dispatchedBy: epicName}))
-                .catch((error: any) => {
+                    if (saga.inTransition) {
 
-                    console.error(error);
+                        yield put({type: globalActions.START_TRANSITION});
+                    }
 
-                    console.warn(`The epic '${epicName}' errored and is being restarted.`);
+                    yield saga.saga(...args);
 
-                    this.dispatch({type: globalActions.END_TRANSITION});
+                    if (saga.inTransition) {
 
-                    this.addEpics({
-                        [epicName]: epic,
-                    });
-
-                    return [];
-                }));
+                        yield put({type: globalActions.END_TRANSITION});
+                    }
+                });
+            });
         }
     }
 
@@ -104,10 +95,6 @@ class StoreWrapper {
     public getState() {
 
         return this.store.getState();
-    }
-
-    public dispatch(...args: any[]) {
-        return this.store.dispatch(...args);
     }
 
     private createReducer(reducers: ReduxReducerMap = {}): any {

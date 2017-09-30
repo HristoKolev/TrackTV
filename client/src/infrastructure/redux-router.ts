@@ -3,6 +3,7 @@ import { NavigationCancel, NavigationError, Router, RoutesRecognized } from '@an
 import { NgRedux } from '@angular-redux/store';
 import { actionTypes } from './redux-types';
 import { RouterState } from './redux-store';
+import { put } from 'redux-saga/effects';
 
 export const routerActions = actionTypes('router').ofType<{
     ROUTER_NAVIGATION: string;
@@ -13,12 +14,18 @@ export const routerActions = actionTypes('router').ofType<{
 
 let angularRouter: Router;
 
-export const explicitRouterEpic = (actions$: any) => actions$
-    .ofType(routerActions.ROUTER_NAVIGATION_EXPLICIT)
-    .map((action: any) => ({
-        type: routerActions.ROUTER_NAVIGATION,
-        location: angularRouter.createUrlTree.apply(angularRouter, action.payload).toString(),
-    }));
+export const explicitRouterSaga = {
+    type: routerActions.ROUTER_NAVIGATION_EXPLICIT,
+    saga: function* (action: any) {
+
+        const newAction = {
+            type: routerActions.ROUTER_NAVIGATION,
+            location: angularRouter.createUrlTree.apply(angularRouter, action.payload).toString(),
+        };
+
+        yield put(newAction);
+    },
+};
 
 @Injectable()
 export class ReduxRouter {

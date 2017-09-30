@@ -1,5 +1,4 @@
 import { actionTypes, ReduxReducer } from '../infrastructure/redux-types';
-import { reduxState } from '../infrastructure/redux-store';
 
 export interface ISettingsState {
     baseUrl: string;
@@ -7,7 +6,7 @@ export interface ISettingsState {
 }
 
 const initialSettingsState: ISettingsState = {
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'http://192.168.1.103:7000',
     showsPageSize: 10,
 };
 
@@ -99,22 +98,5 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
         default: {
             return state;
         }
-    }
-};
-
-export const loadingStart = (action: any) => {
-
-    reduxState.dispatch({type: globalActions.START_TRANSITION, triggeredBy: action.type});
-
-    return action;
-};
-
-export const loadingStop = (action: any) => {
-    if (Array.isArray(action)) {
-
-        return [...action, {type: globalActions.END_TRANSITION}];
-    } else {
-
-        return [action, {type: globalActions.END_TRANSITION}];
     }
 };

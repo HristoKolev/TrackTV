@@ -4,12 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
-import { AccountActions, accountEpics, accountReducer } from './account-state';
+import { AccountActions, accountSagas, loginReducer, registerReducer } from './account-state';
 import { reduxState } from '../../infrastructure/redux-store';
 import { apiClient } from '../shared/api-client';
+import { SharedModule } from '../shared/shared.module';
+import { RegisterComponent } from './register.component';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
 ];
 
 @NgModule({
@@ -17,9 +20,11 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         FormsModule,
+        SharedModule,
     ],
     declarations: [
         LoginComponent,
+        RegisterComponent,
     ],
     providers: [
         AccountActions,
@@ -30,10 +35,11 @@ export class AccountModule {
     constructor() {
 
         reduxState.addReducers({
-            account: accountReducer,
+            login: loginReducer,
+            register: registerReducer,
         });
 
-        reduxState.addEpics(accountEpics(apiClient));
+        reduxState.addSagas(accountSagas(apiClient));
     }
 }
 

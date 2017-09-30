@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { ApiClient, ApiResponse } from '../shared/api-client';
-import { actionTypes, ReduxEpic, ReduxEpicMap, ReduxReducer } from '../../infrastructure/redux-types';
-import { globalActions, loadingStart, loadingStop } from '../global.state';
+import { ApiClient } from '../shared/api-client';
+import { actionTypes, ReduxReducer } from '../../infrastructure/redux-types';
+import { put } from 'redux-saga/effects';
+import { globalActions } from '../global.state';
 import { routerActions } from '../../infrastructure/redux-router';
 
-export interface IAccountState {
+export interface ILoginState {
+
+    errorMessages?: string[];
+}
+
+export interface IRegisterState {
 
     errorMessages?: string[];
 }
@@ -14,16 +20,21 @@ export const accountActions = actionTypes('account').ofType<{
     LOGIN_REQUEST_START: string;
     LOGIN_REQUEST_SUCCESS: string;
     LOGIN_REQUEST_FAILED: string;
+
+    REGISTER_REQUEST_START: string;
+    REGISTER_REQUEST_SUCCESS: string;
+    REGISTER_REQUEST_FAILED: string;
 }>();
 
 const initialState = {
     errorMessages: [],
 };
 
-export const accountReducer: ReduxReducer<IAccountState> = (state = initialState, action: any) => {
+export const loginReducer: ReduxReducer<ILoginState> = (state = initialState, action: any) => {
 
     switch (action.type) {
 
+        case accountActions.LOGIN_REQUEST_START:
         case accountActions.LOGIN_REQUEST_SUCCESS: {
 
             return {
@@ -53,48 +64,102 @@ export const accountReducer: ReduxReducer<IAccountState> = (state = initialState
     }
 };
 
-export const accountEpics = (apiClient: ApiClient): ReduxEpicMap => {
+export const registerReducer: ReduxReducer<IRegisterState> = (state = initialState, action: any) => {
 
-    const loginEpic: ReduxEpic = (action$: any): any => {
+    switch (action.type) {
 
-        return action$
-            .ofType(accountActions.LOGIN_REQUEST_START)
-            .map(loadingStart)
-            .switchMap((action: any) => apiClient.login(action.user)
-                .switchMap((loginResponse: ApiResponse): any => {
+        case accountActions.REGISTER_REQUEST_START:
+        case accountActions.REGISTER_REQUEST_SUCCESS: {
+            return {
+                ...state,
+                errorMessages: [],
+            };
+        }
+        case accountActions.REGISTER_REQUEST_FAILED: {
 
-                    if (!loginResponse.success) {
-                        return [{loginResponse}];
-                    }
+            return {
+                ...state,
+                errorMessages: action.response.errorMessages,
+            };
+        }
 
-                    return apiClient.profile(loginResponse.payload.access_token)
-                        .map(profileResponse => ({loginResponse, profileResponse}));
-                }))
-            .map((responses: any) => {
-
-                const {loginResponse, profileResponse} = responses;
-
-                if (!loginResponse.success || !profileResponse.success) {
-                    return [{type: accountActions.LOGIN_REQUEST_FAILED, responses}];
-                } else {
-                    return [
-                        {type: accountActions.LOGIN_REQUEST_SUCCESS, responses},
-                        {type: globalActions.USER_LOGIN, responses},
-                        {type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: [['/shows/top']]},
-                    ];
-                }
-            })
-            .switchMap(loadingStop);
-    };
-
-    return {
-        loginEpic,
-    };
+        default: {
+            return state;
+        }
+    }
 };
+
+export const accountSagas = (apiClient: ApiClient) => ({
+    loginSaga: {
+        type: accountActions.LOGIN_REQUEST_START,
+        saga: function* (action: any) {
+
+            yield  put({type: globalActions.START_TRANSITION});
+
+            const loginResponse = yield apiClient.login(action.user);
+
+            if (!loginResponse.success) {
+
+                yield put({type: accountActions.LOGIN_REQUEST_FAILED, responses: {loginResponse}});
+                yield put({type: globalActions.END_TRANSITION});
+                return;
+            }
+
+            const profileResponse = yield apiClient.profile(loginResponse.payload.access_token);
+
+            const responses = {loginResponse, profileResponse};
+
+            if (!profileResponse.success) {
+
+                yield put({type: accountActions.LOGIN_REQUEST_FAILED, responses});
+
+            } else {
+
+                yield put({type: accountActions.LOGIN_REQUEST_SUCCESS, responses});
+                yield put({type: globalActions.USER_LOGIN, responses});
+                yield put({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: [['/shows/top']]});
+            }
+
+            yield put({type: globalActions.END_TRANSITION});
+        },
+    },
+    registerSaga: {
+        type: accountActions.REGISTER_REQUEST_START,
+        saga: function* (action: any) {
+
+            yield put({type: globalActions.START_TRANSITION});
+
+            const response = yield apiClient.register(action.user);
+
+            if (!response.success) {
+
+                yield put({type: accountActions.REGISTER_REQUEST_FAILED, response});
+                yield put({type: globalActions.END_TRANSITION});
+                return;
+            }
+
+            yield put({type: accountActions.REGISTER_REQUEST_SUCCESS, response});
+
+            yield put({
+                type: accountActions.LOGIN_REQUEST_START, user: {
+                    username: action.user.email,
+                    password: action.user.password,
+
+                },
+            });
+        },
+    },
+});
 
 export interface UserLogin {
     username: string;
     password: string;
+}
+
+export interface UserRegister {
+    Email: string;
+    Password: string;
+    // ConfirmPassword: string;
 }
 
 @Injectable()
@@ -105,5 +170,9 @@ export class AccountActions {
 
     login(user: UserLogin) {
         this.ngRedux.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
+    }
+
+    register(user: UserRegister) {
+        this.ngRedux.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
     }
 }

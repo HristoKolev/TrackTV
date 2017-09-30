@@ -7,7 +7,7 @@ import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 import { AppComponent, NotFound404Component } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
-import { explicitRouterEpic, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';
+import { explicitRouterSaga, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';
 
 import { globalErrorReducer, settingsReducer, userSessionReducer } from './global.state';
 import { reduxState } from '../infrastructure/redux-store';
@@ -59,9 +59,14 @@ export class AppModule {
             session: userSessionReducer,
         });
 
-        reduxState.addEpics({
-            explicitRouterEpic,
-            logEpic: (actions$: any, store: any) => actions$.do(console.log).filter((x: any) => false),
+        reduxState.addSagas({
+            explicitRouterSaga,
+            logSaga: {
+                type: '*',
+                saga: function* (action: any): any {
+                    console.log(action);
+                },
+            },
         });
     }
 }

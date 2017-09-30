@@ -1,7 +1,9 @@
-import { actionTypes, ReduxEpicMap, ReduxReducer } from '../../infrastructure/redux-types';
-import { ApiClient, createApiEpic } from '../shared/api-client';
+import { actionTypes, ReduxReducer } from '../../infrastructure/redux-types';
+import { ApiClient, triggerAction } from '../shared/api-client';
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
+import { put } from 'redux-saga/effects';
+import { globalActions } from '../global.state';
 
 export const showsActions = actionTypes('shows').ofType<{
     TOP_SHOWS_REQUEST_START: string;
@@ -35,16 +37,19 @@ export const showsReducer: ReduxReducer = (state = initialState, action: any) =>
     }
 };
 
-export const showsEpics = (apiClient: ApiClient): ReduxEpicMap => {
-
-    const topShowsRequestEpic = createApiEpic(
-        showsActions.TOP_SHOWS_REQUEST_START,
-        showsActions.TOP_SHOWS_REQUEST_SUCCESS,
-        action => apiClient.topShows(action.page),
-    );
+export const showsSagas = (apiClient: ApiClient) => {
 
     return {
-        topShowsRequestEpic,
+        topShowsRequestSaga: {
+            type: showsActions.TOP_SHOWS_REQUEST_START,
+            inTransition: true,
+            saga: function* (action: any) {
+
+                const response = yield apiClient.topShows(action.page);
+
+                yield put(triggerAction(showsActions.TOP_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+            },
+        },
     };
 };
 

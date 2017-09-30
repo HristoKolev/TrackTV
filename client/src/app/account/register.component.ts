@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AccountActions, ILoginState } from './account-state';
+import { AccountActions, IRegisterState } from './account-state';
 import { NgRedux } from '@angular-redux/store';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,21 +7,23 @@ import { Subscription } from 'rxjs/Subscription';
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div> Username: <input [(ngModel)]="this.email"/></div>
+        <div> Email: <input [(ngModel)]="this.email"/></div>
         <div> Password <input [(ngModel)]="this.password" type="password"/></div>
+        <div> Confirm password <input [(ngModel)]="this.confirmPassword" type="password"/></div>
         <div>
-            <button (click)="this.submit()">Login</button>
+            <button (click)="this.submit()">Register</button>
         </div>
 
         <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
     `,
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy {
 
-    username: string;
+    email: string;
     password: string;
+    confirmPassword: string;
 
-    state?: ILoginState;
+    state?: IRegisterState;
 
     subscription: Subscription;
 
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.subscription = this.ngRedux
-            .select((store: { login: ILoginState }) => store.login)
+            .select((store: { register: IRegisterState }) => store.register)
             .subscribe((x: any) => this.state = x);
     }
 
@@ -44,10 +46,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     submit(): void {
 
-        this.accountActions.login({
-            username: this.username,
-            password: this.password,
-
+        this.accountActions.register({
+            Email: this.email,
+            Password: this.password,
+           // ConfirmPassword: this.confirmPassword,
         });
     }
 }

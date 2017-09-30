@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TopShowsComponent } from './shows-component';
 import { reduxState } from '../../infrastructure/redux-store';
-import { ShowsActions, showsEpics, showsReducer } from './shows-state';
+import { ShowsActions, showsSagas, showsReducer } from './shows-state';
 import { apiClient } from '../shared/api-client';
 
 const routes: Routes = [
@@ -29,7 +29,7 @@ export class ShowsModule {
             shows: showsReducer,
         });
 
-        reduxState.addEpics(showsEpics(apiClient));
+        reduxState.addSagas(showsSagas(apiClient));
     }
 }
 

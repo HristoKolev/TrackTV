@@ -12,7 +12,7 @@
       "es2016",
       "es2017"
     ],
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "skipDefaultLibCheck": true,
     "pretty": true,
     "sourceMap": true,

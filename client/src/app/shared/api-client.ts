@@ -1,10 +1,5 @@
-import { Action } from 'redux';
-import { Observable } from 'rxjs/Observable';
-import { FetchResponse, httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
+import { FetchResponse, httpClient, multipartForm, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
 import { reduxState } from '../../infrastructure/redux-store';
-import { ActionsObservable } from 'redux-observable';
-import { globalActions, loadingStart, loadingStop } from '../global.state';
-import { ReduxEpic } from '../../infrastructure/redux-types';
 
 export interface ApiResponse {
     errorMessages: string[];
@@ -14,20 +9,23 @@ export interface ApiResponse {
 
 const networkIsDownMessage = 'Network error. Please, try again later.';
 
+const serverErrorMessage = 'Server error. Please, try again later.';
+
 const errorResponse = (errorMessages: string[]) => ({errorMessages, success: false} as ApiResponse);
 const successResponse = (payload: any) => ({payload, errorMessages: [], success: true} as ApiResponse);
 
 export class ApiClient {
 
-    public profile(token: string): Observable<ApiResponse> {
+    public profile(token: string): Promise<ApiResponse> {
 
-        return httpClient.get('/api/user/profile', {'Authorization': `Bearer ${token}`}).map(this.parseResponse);
+        return httpClient.get('/api/user/profile', {'Authorization': `Bearer ${token}`})
+            .then(this.parseResponse);
     }
 
-    public login(userLogin: any): Observable<ApiResponse> {
+    public login(userLogin: any): Promise<ApiResponse> {
 
         return httpClient.post('/connect/token', urlEncodeBody({...userLogin, grant_type: 'password'}), urlEncodedHeader)
-            .map(response => {
+            .then(response => {
                 if (response.networkError) {
                     return errorResponse([networkIsDownMessage]);
                 } else if (response.body.error) {
@@ -38,7 +36,15 @@ export class ApiClient {
             });
     }
 
-    public topShows(page: number): Observable<FetchResponse> {
+    public register(user: any): Promise<ApiResponse> {
+
+        const form = multipartForm(user);
+
+        return httpClient.post('/api/public/auth/register', form.body, form.headers)
+            .then(this.parseResponse);
+    }
+
+    public topShows(page: number): Promise<FetchResponse> {
 
         const showsPageSize = reduxState.getState().settings.showsPageSize;
 
@@ -51,43 +57,31 @@ export class ApiClient {
             return errorResponse([networkIsDownMessage]);
         }
 
+        if (!response.body) {
+            return errorResponse([serverErrorMessage]);
+        }
+
         return response.body;
+    }
+
+    private get jsHeaders() {
+        return {'Content-Type': 'application/json'};
     }
 }
 
 export const apiClient = new ApiClient();
 
-export type ActionSelector = (response: FetchResponse) => Action;
+export const triggerAction = (successActionType: string, failureActionType: string, response: FetchResponse): any => {
 
-export const triggerAction = (successActionType: string, failureActionType: string): ActionSelector => {
+    if (response.networkError) {
 
-    return (response => {
+        return {type: failureActionType, errorMessages: [networkIsDownMessage]};
+    }
 
-        if (response.networkError) {
+    if (!response.body.success) {
 
-            return {type: failureActionType, errorMessages: [networkIsDownMessage]};
-        }
+        return {type: failureActionType, errorMessages: response.body.errorMessages};
+    }
 
-        if (!response.body.success) {
-
-            return {type: failureActionType, errorMessages: response.body.errorMessages};
-        }
-
-        return {type: successActionType, payload: response.body.payload};
-    });
-};
-
-export const createApiEpic = (startActionType: string,
-                              successActionType: string,
-                              apiCall: (action: any) => Observable<any>,
-                              inTransition: boolean = false): ReduxEpic => {
-
-    return (actions$: ActionsObservable<any>, store: any) => {
-        return actions$
-            .ofType(startActionType)
-            .map(x => inTransition ? loadingStart(x) : x)
-            .switchMap(apiCall)
-            .map(triggerAction(successActionType, globalActions.GLOBAL_ERROR))
-            .switchMap(x => inTransition ? loadingStop(x) : [x]);
-    };
+    return {type: successActionType, payload: response.body.payload};
 };

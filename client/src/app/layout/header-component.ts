@@ -21,6 +21,10 @@ import { globalActions } from '../global.state';
                     <button [routerLink]="['/account/login']">Login</button>
                 </li>
 
+                <li *ngIf="!this.sessionState.isLoggedIn">
+                    <button [routerLink]="['/account/register']">Register</button>
+                </li>
+
                 <li *ngIf="this.sessionState.isLoggedIn">
                     <button (click)="this.logout()">Logout</button>
                 </li>
@@ -38,9 +42,9 @@ import { globalActions } from '../global.state';
 export class HeaderComponent implements OnInit {
 
     //noinspection JSMismatchedCollectionQueryUpdate
-    private links: any[];
+    public links: any[];
 
-    private sessionState: any;
+    public sessionState: any;
 
     constructor(private ngRedux: NgRedux<any>) {
     }
