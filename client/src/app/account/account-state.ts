@@ -20,20 +20,23 @@ export const accountActions = actionTypes('account').ofType<{
     LOGIN_REQUEST_START: string;
     LOGIN_REQUEST_SUCCESS: string;
     LOGIN_REQUEST_FAILED: string;
+    LOGIN_CLEAR_ERROR_MESSAGES: string;
 
     REGISTER_REQUEST_START: string;
     REGISTER_REQUEST_SUCCESS: string;
     REGISTER_REQUEST_FAILED: string;
+    REGISTER_CLEAR_ERROR_MESSAGES: string;
 }>();
 
-const initialState = {
+const initialLoginState = {
     errorMessages: [],
 };
 
-export const loginReducer: ReduxReducer<ILoginState> = (state = initialState, action: any) => {
+export const loginReducer: ReduxReducer<ILoginState> = (state = initialLoginState, action: any) => {
 
     switch (action.type) {
 
+        case accountActions.LOGIN_CLEAR_ERROR_MESSAGES:
         case accountActions.LOGIN_REQUEST_START:
         case accountActions.LOGIN_REQUEST_SUCCESS: {
 
@@ -64,10 +67,15 @@ export const loginReducer: ReduxReducer<ILoginState> = (state = initialState, ac
     }
 };
 
-export const registerReducer: ReduxReducer<IRegisterState> = (state = initialState, action: any) => {
+const initialRegisterState = {
+    errorMessages: [],
+};
+
+export const registerReducer: ReduxReducer<IRegisterState> = (state = initialRegisterState, action: any) => {
 
     switch (action.type) {
 
+        case accountActions.REGISTER_CLEAR_ERROR_MESSAGES:
         case accountActions.REGISTER_REQUEST_START:
         case accountActions.REGISTER_REQUEST_SUCCESS: {
             return {
@@ -142,9 +150,8 @@ export const accountSagas = (apiClient: ApiClient) => ({
 
             yield put({
                 type: accountActions.LOGIN_REQUEST_START, user: {
-                    username: action.user.email,
-                    password: action.user.password,
-
+                    username: action.user.Email,
+                    password: action.user.Password,
                 },
             });
         },
@@ -174,5 +181,13 @@ export class AccountActions {
 
     register(user: UserRegister) {
         this.ngRedux.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
+    }
+
+    clearLoginErrorMessages() {
+        this.ngRedux.dispatch({type: accountActions.LOGIN_CLEAR_ERROR_MESSAGES});
+    }
+
+    clearRegisterErrorMessages() {
+        this.ngRedux.dispatch({type: accountActions.REGISTER_CLEAR_ERROR_MESSAGES});
     }
 }

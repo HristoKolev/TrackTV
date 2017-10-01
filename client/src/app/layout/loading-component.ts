@@ -6,18 +6,12 @@ import { NgRedux } from '@angular-redux/store';
     changeDetection: ChangeDetectionStrategy.Default,
     selector: 'loading-component',
     template: `
-
         <div [ngClass]="{'loaded': !this.global.loading}">
-
             <div id="loader-wrapper">
                 <div id="loader"></div>
-
                 <div class="loader-section"></div>
-
-
             </div>
         </div>
-
     `,
     styleUrls: ['loader.css'],
 })

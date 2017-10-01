@@ -37,6 +37,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.subscription = this.ngRedux
             .select((store: { register: IRegisterState }) => store.register)
             .subscribe((x: any) => this.state = x);
+
+        this.accountActions.clearRegisterErrorMessages();
     }
 
     ngOnDestroy(): void {
@@ -49,7 +51,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.accountActions.register({
             Email: this.email,
             Password: this.password,
-           // ConfirmPassword: this.confirmPassword,
+            // ConfirmPassword: this.confirmPassword,
         });
     }
 }

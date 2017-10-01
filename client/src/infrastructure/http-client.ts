@@ -8,7 +8,7 @@ export interface FetchResponse {
     networkError: boolean;
 }
 
-export class HttpClient {
+class HttpClient {
 
     public get baseUrl(): string {
 

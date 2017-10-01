@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.subscription = this.ngRedux
             .select((store: { login: ILoginState }) => store.login)
             .subscribe((x: any) => this.state = x);
+
+        this.accountActions.clearLoginErrorMessages();
     }
 
     ngOnDestroy(): void {
