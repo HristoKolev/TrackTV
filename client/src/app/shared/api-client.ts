@@ -63,10 +63,6 @@ export class ApiClient {
 
         return response.body;
     }
-
-    private get jsHeaders() {
-        return {'Content-Type': 'application/json'};
-    }
 }
 
 export const apiClient = new ApiClient();

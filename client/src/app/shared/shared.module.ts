@@ -1,6 +1,28 @@
-import { NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ErrorContainerComponent } from './error-container-component';
+
+@Component({
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
+        <div *ngIf="this.errorMessages && this.errorMessages.length">
+            <div *ngFor="let message of this.errorMessages">
+                <div class="errorMessage">{{message}}</div>
+            </div>
+        </div>
+    `,
+    styles: [`
+        .errorMessage {
+            color: red;
+        }
+    `],
+    selector: 'error-container-component',
+})
+export class ErrorContainerComponent {
+
+    @Input()
+    errorMessages: string[];
+}
 
 @NgModule({
     imports: [
@@ -12,4 +34,3 @@ import { ErrorContainerComponent } from './error-container-component';
 })
 export class SharedModule {
 }
-

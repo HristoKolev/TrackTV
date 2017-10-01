@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-import { NgRedux } from '@angular-redux/store';
 import { ApiClient } from '../shared/api-client';
 import { actionTypes, ReduxReducer } from '../../infrastructure/redux-types';
 import { put } from 'redux-saga/effects';
@@ -158,36 +156,3 @@ export const accountSagas = (apiClient: ApiClient) => ({
     },
 });
 
-export interface UserLogin {
-    username: string;
-    password: string;
-}
-
-export interface UserRegister {
-    Email: string;
-    Password: string;
-    // ConfirmPassword: string;
-}
-
-@Injectable()
-export class AccountActions {
-
-    constructor(private ngRedux: NgRedux<any>) {
-    }
-
-    login(user: UserLogin) {
-        this.ngRedux.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
-    }
-
-    register(user: UserRegister) {
-        this.ngRedux.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
-    }
-
-    clearLoginErrorMessages() {
-        this.ngRedux.dispatch({type: accountActions.LOGIN_CLEAR_ERROR_MESSAGES});
-    }
-
-    clearRegisterErrorMessages() {
-        this.ngRedux.dispatch({type: accountActions.REGISTER_CLEAR_ERROR_MESSAGES});
-    }
-}

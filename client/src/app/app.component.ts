@@ -3,14 +3,13 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
-    selector: 'my-app',
+    selector: 'app-component',
     template: `
         <header-component></header-component>
 
         <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
 
         <loading-component></loading-component>
-
     `,
     styles: [`
         * {
@@ -31,7 +30,6 @@ export class AppComponent {
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
-    selector: 'my-not-found',
     template: '<h3>Error 404: Not found</h3>',
 })
 export class NotFound404Component {
