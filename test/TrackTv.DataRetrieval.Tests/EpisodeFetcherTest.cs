@@ -188,10 +188,10 @@
             var record = episodeRecords.First();
             var episode = show.Episodes.First();
 
-            Assert.Equal(record.EpisodeName, episode.Title);
-            Assert.Equal(record.Overview, episode.Description);
+            Assert.Equal(record.EpisodeName, episode.EpisodeTitle);
+            Assert.Equal(record.Overview, episode.EpisodeDescription);
             Assert.Equal(record.ImdbId, episode.ImdbId);
-            Assert.Equal(record.AiredEpisodeNumber, episode.Number);
+            Assert.Equal(record.AiredEpisodeNumber, episode.EpisodeNumber);
             Assert.Equal(record.AiredSeason, episode.SeasonNumber);
 
             Assert.Equal(new DateTime(2005, 3, 26), episode.FirstAired);
@@ -400,10 +400,10 @@
             var record = episodeRecords.First();
             var episode = show.Episodes.Skip(1).First();
 
-            Assert.Equal(record.EpisodeName, episode.Title);
-            Assert.Equal(record.Overview, episode.Description);
+            Assert.Equal(record.EpisodeName, episode.EpisodeTitle);
+            Assert.Equal(record.Overview, episode.EpisodeDescription);
             Assert.Equal(record.ImdbId, episode.ImdbId);
-            Assert.Equal(record.AiredEpisodeNumber, episode.Number);
+            Assert.Equal(record.AiredEpisodeNumber, episode.EpisodeNumber);
             Assert.Equal(record.AiredSeason, episode.SeasonNumber);
 
             Assert.Equal(new DateTime(2005, 3, 26), episode.FirstAired);
@@ -479,10 +479,10 @@
 
             var record = response.Data;
 
-            Assert.Equal(record.EpisodeName, episode.Title);
-            Assert.Equal(record.Overview, episode.Description);
+            Assert.Equal(record.EpisodeName, episode.EpisodeTitle);
+            Assert.Equal(record.Overview, episode.EpisodeDescription);
             Assert.Equal(record.ImdbId, episode.ImdbId);
-            Assert.Equal(record.AiredEpisodeNumber, episode.Number);
+            Assert.Equal(record.AiredEpisodeNumber, episode.EpisodeNumber);
             Assert.Equal(record.AiredSeason, episode.SeasonNumber);
 
             Assert.Equal(new DateTime(2005, 3, 26), episode.FirstAired);

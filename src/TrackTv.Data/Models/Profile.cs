@@ -13,7 +13,7 @@ namespace TrackTv.Data.Models
         {
         }
 
-        public int Id { get; set; }
+        public int ProfileId { get; set; }
 
         public virtual ICollection<Subscription> Subscriptions { get; } = new List<Subscription>();
 

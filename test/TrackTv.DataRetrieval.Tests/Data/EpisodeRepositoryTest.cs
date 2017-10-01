@@ -28,7 +28,7 @@
 
                 var episode = await repository.GetEpisodeById(id).ConfigureAwait(false);
 
-                Assert.Equal(id, episode.Id);
+                Assert.Equal(id, episode.EpisodeId);
             }
         }
 
@@ -146,7 +146,7 @@
                 {
                     list.Add(new Episode
                     {
-                        Id = i,
+                        EpisodeId = i,
                         TheTvDbId = i * 10,
                         ShowId = i * 100
                     });

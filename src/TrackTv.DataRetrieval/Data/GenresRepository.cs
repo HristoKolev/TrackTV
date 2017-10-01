@@ -19,7 +19,7 @@
 
         public Task<Genre[]> GetGenresByNamesAsync(string[] names)
         {
-            return this.DbContext.Genres.Where(genre => names.Contains(genre.Name)).OrderBy(x => x.Name).ToArrayAsync();
+            return this.DbContext.Genres.Where(genre => names.Contains(genre.GenreName)).OrderBy(x => x.GenreName).ToArrayAsync();
         }
     }
 }

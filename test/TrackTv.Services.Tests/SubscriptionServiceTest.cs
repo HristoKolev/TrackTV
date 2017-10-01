@@ -35,7 +35,7 @@
 
             var subscription = new Subscription(1, 2)
             {
-                Id = 42
+                SubscriptionId = 42
             };
 
             repo.GetSubscriptionAsync(1, 2).Returns(subscription);
@@ -44,7 +44,7 @@
 
             await service.Unsubscribe(1, 2).ConfigureAwait(false);
 
-            await repo.Received().RemoveSubscriptionAsync(subscription.Id).ConfigureAwait(false);
+            await repo.Received().RemoveSubscriptionAsync(subscription.SubscriptionId).ConfigureAwait(false);
         }
 
         private static ISubscriptionService CreateService(ISubscriptionRepository subscriptionRepository)

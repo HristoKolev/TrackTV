@@ -41,7 +41,7 @@
 
         public async Task RemoveSubscriptionAsync(int subscriptionId)
         {
-            var subscription = await this.DbContext.Subscriptions.SingleAsync(x => x.Id == subscriptionId).ConfigureAwait(false);
+            var subscription = await this.DbContext.Subscriptions.SingleAsync(x => x.SubscriptionId == subscriptionId).ConfigureAwait(false);
 
             this.DbContext.Subscriptions.Remove(subscription);
 

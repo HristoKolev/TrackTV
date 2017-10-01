@@ -2,8 +2,6 @@
 {
     using System;
 
-    using TrackTv.Services.Exceptions;
-
     public class GenreNotFoundException : Exception
     {
         public GenreNotFoundException()

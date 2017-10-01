@@ -32,7 +32,7 @@
                 };
                 var actor = new Actor
                 {
-                    Name = "Cat"
+                    ActorName = "Cat"
                 };
 
                 var show = CreateShow("Show1", 1000, network, genre, actor, user);
@@ -44,7 +44,7 @@
                 Assert.NotNull(savedShow);
 
                 Assert.Equal(show.TheTvDbId, savedShow.TheTvDbId);
-                Assert.Equal(show.Name, savedShow.Name);
+                Assert.Equal(show.ShowName, savedShow.ShowName);
             }
         }
 
@@ -61,7 +61,7 @@
 
                 var show = await repo.GetFullShowByIdAsync(2).ConfigureAwait(false);
 
-                Assert.Equal("Show2", show.Name);
+                Assert.Equal("Show2", show.ShowName);
 
                 AssertIsFull(show);
             }
@@ -167,7 +167,7 @@
                 };
                 var actor = new Actor
                 {
-                    Name = "Cat"
+                    ActorName = "Cat"
                 };
 
                 var show = CreateShow("Show1", 1000, network, genre, actor, user);
@@ -189,7 +189,7 @@
 
                 Assert.NotNull(savedShow);
 
-                Assert.Equal(newNetworkName, savedShow.Network.Name);
+                Assert.Equal(newNetworkName, savedShow.Network.NetworkName);
             }
         }
 
@@ -208,7 +208,7 @@
                 };
                 var actor = new Actor
                 {
-                    Name = "Cat"
+                    ActorName = "Cat"
                 };
 
                 var show = CreateShow("Show1", 1000, network, genre, actor, user);
@@ -222,8 +222,8 @@
 
                 context.Entry(show).State = EntityState.Detached;
 
-                show.Name = newName;
-                show.Banner = newBanner;
+                show.ShowName = newName;
+                show.ShowBanner = newBanner;
 
                 var repository = new ShowsRepository(context);
 
@@ -233,8 +233,8 @@
 
                 Assert.NotNull(savedShow);
 
-                Assert.Equal(newName, savedShow.Name);
-                Assert.Equal(newBanner, savedShow.Banner);
+                Assert.Equal(newName, savedShow.ShowName);
+                Assert.Equal(newBanner, savedShow.ShowBanner);
             }
         }
 
@@ -251,7 +251,7 @@
         {
             return new Show
             {
-                Name = name,
+                ShowName = name,
                 TheTvDbId = theTvDbId,
                 Network = network,
                 ShowsGenres = {
@@ -272,7 +272,7 @@
                 Episodes = {
                     new Episode
                     {
-                        Title = "Title"
+                        EpisodeTitle = "Title"
                     }
                 }
             };
@@ -290,7 +290,7 @@
                 };
                 var actor = new Actor
                 {
-                    Name = "Cat"
+                    ActorName = "Cat"
                 };
 
                 shows = new[]

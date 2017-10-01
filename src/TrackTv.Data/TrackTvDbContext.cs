@@ -54,19 +54,19 @@
         {
             const int ImdbIdSize = 10;
 
-            builder.Entity<Show>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Show>().Property(t => t.Banner).HasMaxLength(byte.MaxValue);
+            builder.Entity<Show>().Property(t => t.ShowName).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Show>().Property(t => t.ShowBanner).HasMaxLength(byte.MaxValue);
             builder.Entity<Show>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
 
-            builder.Entity<Episode>().Property(t => t.Title).HasMaxLength(byte.MaxValue);
+            builder.Entity<Episode>().Property(t => t.EpisodeTitle).HasMaxLength(byte.MaxValue);
             builder.Entity<Episode>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
 
-            builder.Entity<Genre>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Genre>().Property(t => t.GenreName).HasMaxLength(byte.MaxValue).IsRequired();
 
-            builder.Entity<Network>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Network>().Property(t => t.NetworkName).HasMaxLength(byte.MaxValue).IsRequired();
 
-            builder.Entity<Actor>().Property(t => t.Name).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Actor>().Property(t => t.Image).HasMaxLength(byte.MaxValue);
+            builder.Entity<Actor>().Property(t => t.ActorName).HasMaxLength(byte.MaxValue).IsRequired();
+            builder.Entity<Actor>().Property(t => t.ActorImage).HasMaxLength(byte.MaxValue);
 
             builder.Entity<Role>().Property(t => t.RoleName).HasMaxLength(byte.MaxValue);
 

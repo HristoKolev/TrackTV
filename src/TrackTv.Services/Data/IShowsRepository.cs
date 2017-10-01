@@ -15,7 +15,7 @@
 
         Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds);
 
-        Task<Show> GetShowWithNetworkByIdAsync(int id);
+        Task<Show> GetShowWithNetworkByIdAsync(int showId);
 
         Task<Show[]> GetTopAsync(int page, int pageSize);
 

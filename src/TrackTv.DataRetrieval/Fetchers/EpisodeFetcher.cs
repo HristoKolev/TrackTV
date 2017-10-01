@@ -86,10 +86,10 @@
 
         private void MapToEpisode(Episode episode, EpisodeRecord data)
         {
-            episode.Title = data.EpisodeName;
-            episode.Description = data.Overview;
+            episode.EpisodeTitle = data.EpisodeName;
+            episode.EpisodeDescription = data.Overview;
             episode.ImdbId = data.ImdbId;
-            episode.Number = data.AiredEpisodeNumber.Value;
+            episode.EpisodeNumber = data.AiredEpisodeNumber.Value;
             episode.SeasonNumber = data.AiredSeason.Value;
             episode.TheTvDbId = data.Id;
 

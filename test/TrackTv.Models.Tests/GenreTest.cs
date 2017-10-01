@@ -17,7 +17,7 @@
 
             var genre = new Genre(name);
 
-            Assert.Equal(name, genre.Name);
+            Assert.Equal(name, genre.GenreName);
         }
 
         [Fact]

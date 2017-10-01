@@ -4,18 +4,18 @@
 
     public class Network
     {
-        public Network(string name)
+        public Network(string networkName)
         {
-            this.Name = name;
+            this.NetworkName = networkName;
         }
 
         public Network()
         {
         }
 
-        public int Id { get; set; }
+        public int NetworkId { get; set; }
 
-        public string Name { get; set; }
+        public string NetworkName { get; set; }
 
         public virtual ICollection<Show> Shows { get; } = new List<Show>();
     }

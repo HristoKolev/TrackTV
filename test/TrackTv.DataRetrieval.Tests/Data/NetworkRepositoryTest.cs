@@ -26,7 +26,7 @@
 
                 var network = await repo.GetNetworkByNameAsync(Name).ConfigureAwait(false);
 
-                Assert.Equal(Name, network.Name);
+                Assert.Equal(Name, network.NetworkName);
             }
         }
 

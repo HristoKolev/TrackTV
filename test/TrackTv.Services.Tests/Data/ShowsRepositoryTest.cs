@@ -24,7 +24,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     list.Add(show);
@@ -52,8 +52,8 @@
                 {
                     var show = new Show
                     {
-                        Id = i,
-                        Name = i % 2 == 0 ? "new show " + i : "old show " + i
+                        ShowId = i,
+                        ShowName = i % 2 == 0 ? "new show " + i : "old show " + i
                     };
 
                     list.Add(show);
@@ -118,7 +118,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     show.ShowsGenres.Add(new ShowsGenres
@@ -134,7 +134,7 @@
 
                 var repository = new ShowsRepository(context);
 
-                Assert.Equal(5, await repository.CountByGenreAsync(actionGenre.Id).ConfigureAwait(false));
+                Assert.Equal(5, await repository.CountByGenreAsync(actionGenre.GenreId).ConfigureAwait(false));
             }
         }
 
@@ -151,7 +151,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     for (int j = 1; j <= 5; j++)
@@ -160,7 +160,7 @@
                         {
                             Profile = new Profile
                             {
-                                Id = j
+                                ProfileId = j
                             }
                         });
                     }
@@ -204,10 +204,10 @@
                 {
                     var show = new Show
                     {
-                        Id = i,
+                        ShowId = i,
                         Network = new Network
                         {
-                            Id = i
+                            NetworkId = i
                         }
                     };
 
@@ -221,7 +221,7 @@
 
                 var firstShow = await repository.GetShowWithNetworkByIdAsync(1).ConfigureAwait(false);
 
-                Assert.Equal(1, firstShow.Id);
+                Assert.Equal(1, firstShow.ShowId);
                 Assert.NotNull(firstShow.Network);
             }
         }
@@ -239,7 +239,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     for (int j = 1; j <= 5; j++)
@@ -248,7 +248,7 @@
                         {
                             Profile = new Profile
                             {
-                                Id = j
+                                ProfileId = j
                             }
                         });
                     }
@@ -282,7 +282,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     for (int j = userCount - 1; j >= 0; j--)
@@ -305,7 +305,7 @@
 
                 var shows = await repository.GetTopAsync(1, 5).ConfigureAwait(false);
 
-                Assert.True(shows.Select(x => x.Id).SequenceEqual(Enumerable.Range(1, 5)));
+                Assert.True(shows.Select(x => x.ShowId).SequenceEqual(Enumerable.Range(1, 5)));
             }
         }
 
@@ -327,7 +327,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     show.ShowsGenres.Add(new ShowsGenres
@@ -353,7 +353,7 @@
 
                 var repository = new ShowsRepository(context);
 
-                var shows = await repository.GetTopByGenreAsync(dramaGenre.Id, 1, 5).ConfigureAwait(false);
+                var shows = await repository.GetTopByGenreAsync(dramaGenre.GenreId, 1, 5).ConfigureAwait(false);
 
                 int[] expectedIds =
                 {
@@ -364,7 +364,7 @@
                     9
                 };
 
-                Assert.True(shows.Select(x => x.Id).SequenceEqual(expectedIds));
+                Assert.True(shows.Select(x => x.ShowId).SequenceEqual(expectedIds));
             }
         }
 
@@ -383,8 +383,8 @@
                 {
                     var show = new Show
                     {
-                        Id = i,
-                        Name = i % 2 == 0 ? "new show " + i : "old show " + i
+                        ShowId = i,
+                        ShowName = i % 2 == 0 ? "new show " + i : "old show " + i
                     };
 
                     for (int j = userCount - 1; j >= 0; j--)
@@ -416,7 +416,7 @@
                     9
                 };
 
-                Assert.True(shows.Select(x => x.Id).SequenceEqual(ids));
+                Assert.True(shows.Select(x => x.ShowId).SequenceEqual(ids));
             }
         }
 

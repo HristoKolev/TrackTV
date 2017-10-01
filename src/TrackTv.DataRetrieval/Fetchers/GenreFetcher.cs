@@ -39,7 +39,7 @@
 
         private static Genre GetOrCreateGenre(IEnumerable<Genre> genres, string genreName)
         {
-            var genre = genres.FirstOrDefault(x => x.Name == genreName);
+            var genre = genres.FirstOrDefault(x => x.GenreName == genreName);
 
             return genre ?? new Genre(genreName);
         }

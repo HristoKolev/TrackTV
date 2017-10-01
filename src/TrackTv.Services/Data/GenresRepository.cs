@@ -18,7 +18,7 @@
 
         public Task<bool> GenreExistsAsync(int genreId)
         {
-            return this.DbContext.Genres.AnyAsync(g => g.Id == genreId);
+            return this.DbContext.Genres.AnyAsync(g => g.GenreId == genreId);
         }
 
         public Task<Genre[]> GetGenresAsync()

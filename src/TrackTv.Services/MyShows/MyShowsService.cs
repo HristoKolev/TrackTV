@@ -38,7 +38,7 @@
 
             var shows = await this.SubscriptionRepository.GetSubscriptionsByProfileIdAsync(profileId).ConfigureAwait(false);
 
-            var showIds = shows.Select(x => x.Id).ToArray();
+            var showIds = shows.Select(x => x.ShowId).ToArray();
 
             var episodesSummaries = await this.EpisodeRepository.GetEpisodesSummariesAsync(showIds, time).ConfigureAwait(false);
 
@@ -55,8 +55,8 @@
             return new MyEpisode
             {
                 FirstAired = episode.FirstAired,
-                Title = episode.Title,
-                Number = episode.Number,
+                EpisodeTitle = episode.EpisodeTitle,
+                EpisodeNumber = episode.EpisodeNumber,
                 SeasonNumber = episode.SeasonNumber
             };
         }
@@ -67,13 +67,13 @@
 
             foreach (var show in shows)
             {
-                var summary = episodesSummaries.First(x => x.ShowId == show.Id);
+                var summary = episodesSummaries.First(x => x.ShowId == show.ShowId);
 
                 models.Add(new MyShow
                 {
-                    Name = show.Name,
-                    Banner = show.Banner,
-                    Status = show.Status,
+                    ShowName = show.ShowName,
+                    ShowBanner = show.ShowBanner,
+                    ShowStatus = show.ShowStatus,
                     LastEpisode = EpisodeToModel(summary.LastEpisode),
                     NextEpisode = EpisodeToModel(summary.NextEpisode)
                 });

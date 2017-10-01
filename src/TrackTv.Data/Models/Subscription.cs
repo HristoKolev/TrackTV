@@ -12,8 +12,6 @@
             this.ShowId = showId;
         }
 
-        public int Id { get; set; }
-
         public Profile Profile { get; set; }
 
         public int ProfileId { get; set; }
@@ -21,5 +19,7 @@
         public Show Show { get; set; }
 
         public int ShowId { get; set; }
+
+        public int SubscriptionId { get; set; }
     }
 }

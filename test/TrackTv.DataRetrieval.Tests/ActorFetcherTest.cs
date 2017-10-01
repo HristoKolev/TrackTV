@@ -75,8 +75,8 @@
                 Assert.Equal(response.Data[i].Role, relationships[i].RoleName);
 
                 Assert.Equal(response.Data[i].Id, actors[i].TheTvDbId);
-                Assert.Equal(response.Data[i].Name, actors[i].Name);
-                Assert.Equal(response.Data[i].Image, actors[i].Image);
+                Assert.Equal(response.Data[i].Name, actors[i].ActorName);
+                Assert.Equal(response.Data[i].Image, actors[i].ActorImage);
                 Assert.Equal(response.Data[i].LastUpdated, actors[i].LastUpdated.ToString("yyyy-MM-dd"));
             }
         }
@@ -184,8 +184,8 @@
             for (int i = 0; i < response.Data.Length; i++)
             {
                 Assert.Equal(response.Data[i].Id, relationships[i].Actor.TheTvDbId);
-                Assert.Equal(response.Data[i].Name, relationships[i].Actor.Name);
-                Assert.Equal(response.Data[i].Image, relationships[i].Actor.Image);
+                Assert.Equal(response.Data[i].Name, relationships[i].Actor.ActorName);
+                Assert.Equal(response.Data[i].Image, relationships[i].Actor.ActorImage);
                 Assert.Equal(response.Data[i].LastUpdated, relationships[i].Actor.LastUpdated.ToString("yyyy-MM-dd"));
             }
         }

@@ -21,9 +21,9 @@
 
         public Task<EpisodesSummary[]> GetEpisodesSummariesAsync(int[] showIds, DateTime time)
         {
-            return this.DbContext.Shows.Where(x => showIds.Contains(x.Id)).Select(s => new EpisodesSummary
+            return this.DbContext.Shows.Where(x => showIds.Contains(x.ShowId)).Select(s => new EpisodesSummary
             {
-                ShowId = s.Id,
+                ShowId = s.ShowId,
                 LastEpisode =
                     s.Episodes.Where(e => e.FirstAired != null && e.FirstAired <= time)
                      .OrderByDescending(e => e.FirstAired)

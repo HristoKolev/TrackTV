@@ -13,83 +13,83 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 name: "Actors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ActorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Image = table.Column<string>(maxLength: 255, nullable: true),
+                    ActorImage = table.Column<string>(maxLength: 255, nullable: true),
+                    ActorName = table.Column<string>(maxLength: 255, nullable: false),
                     LastUpdated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     TheTvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Actors", x => x.Id);
+                    table.PrimaryKey("PK_Actors", x => x.ActorId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Genres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    GenreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 255, nullable: false)
+                    GenreName = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genres", x => x.Id);
+                    table.PrimaryKey("PK_Genres", x => x.GenreId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Networks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    NetworkId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 255, nullable: false)
+                    NetworkName = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Networks", x => x.Id);
+                    table.PrimaryKey("PK_Networks", x => x.NetworkId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Profiles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ProfileId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Username = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profiles", x => x.Id);
+                    table.PrimaryKey("PK_Profiles", x => x.ProfileId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Shows",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ShowId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AirDay = table.Column<int>(nullable: true),
                     AirTime = table.Column<DateTime>(nullable: true),
-                    Banner = table.Column<string>(maxLength: 255, nullable: true),
-                    Description = table.Column<string>(nullable: true),
                     FirstAired = table.Column<DateTime>(nullable: true),
                     ImdbId = table.Column<string>(maxLength: 10, nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     NetworkId = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
+                    ShowBanner = table.Column<string>(maxLength: 255, nullable: true),
+                    ShowDescription = table.Column<string>(nullable: true),
+                    ShowName = table.Column<string>(maxLength: 255, nullable: false),
+                    ShowStatus = table.Column<int>(nullable: false),
                     TheTvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shows", x => x.Id);
+                    table.PrimaryKey("PK_Shows", x => x.ShowId);
                     table.ForeignKey(
                         name: "FK_Shows_Networks_NetworkId",
                         column: x => x.NetworkId,
                         principalTable: "Networks",
-                        principalColumn: "Id",
+                        principalColumn: "NetworkId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -97,26 +97,26 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 name: "Episodes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    EpisodeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true),
+                    EpisodeDescription = table.Column<string>(nullable: true),
+                    EpisodeNumber = table.Column<int>(nullable: false),
+                    EpisodeTitle = table.Column<string>(maxLength: 255, nullable: true),
                     FirstAired = table.Column<DateTime>(nullable: true),
                     ImdbId = table.Column<string>(maxLength: 10, nullable: true),
                     LastUpdated = table.Column<DateTime>(nullable: false),
-                    Number = table.Column<int>(nullable: false),
                     SeasonNumber = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false),
-                    TheTvDbId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 255, nullable: true)
+                    TheTvDbId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Episodes", x => x.Id);
+                    table.PrimaryKey("PK_Episodes", x => x.EpisodeId);
                     table.ForeignKey(
                         name: "FK_Episodes_Shows_ShowId",
                         column: x => x.ShowId,
                         principalTable: "Shows",
-                        principalColumn: "Id",
+                        principalColumn: "ShowId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -124,7 +124,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ActorId = table.Column<int>(nullable: false),
                     RoleName = table.Column<string>(maxLength: 255, nullable: true),
@@ -132,18 +132,18 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.RoleId);
                     table.ForeignKey(
                         name: "FK_Roles_Actors_ActorId",
                         column: x => x.ActorId,
                         principalTable: "Actors",
-                        principalColumn: "Id",
+                        principalColumn: "ActorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Roles_Shows_ShowId",
                         column: x => x.ShowId,
                         principalTable: "Shows",
-                        principalColumn: "Id",
+                        principalColumn: "ShowId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -161,13 +161,13 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                         name: "FK_ShowsGenres_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
-                        principalColumn: "Id",
+                        principalColumn: "GenreId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ShowsGenres_Shows_ShowId",
                         column: x => x.ShowId,
                         principalTable: "Shows",
-                        principalColumn: "Id",
+                        principalColumn: "ShowId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -175,25 +175,25 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
                 name: "Subscriptions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    SubscriptionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProfileId = table.Column<int>(nullable: false),
                     ShowId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
+                    table.PrimaryKey("PK_Subscriptions", x => x.SubscriptionId);
                     table.ForeignKey(
                         name: "FK_Subscriptions_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
-                        principalColumn: "Id",
+                        principalColumn: "ProfileId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Subscriptions_Shows_ShowId",
                         column: x => x.ShowId,
                         principalTable: "Shows",
-                        principalColumn: "Id",
+                        principalColumn: "ShowId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

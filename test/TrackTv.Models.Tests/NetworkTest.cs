@@ -17,7 +17,7 @@
 
             var network = new Network(name);
 
-            Assert.Equal(name, network.Name);
+            Assert.Equal(name, network.NetworkName);
         }
 
         [Fact]

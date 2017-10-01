@@ -58,14 +58,14 @@
         {
             var actor = new Actor
             {
-                Id = 42
+                ActorId = 42
             };
 
             var show = new Show();
 
             show.Roles.Add(new Role
             {
-                ActorId = actor.Id
+                ActorId = actor.ActorId
             });
 
             Assert.True(show.HasActor(actor));
@@ -92,14 +92,14 @@
         {
             var genre = new Genre
             {
-                Id = 42
+                GenreId = 42
             };
 
             var show = new Show();
 
             show.ShowsGenres.Add(new ShowsGenres
             {
-                GenreId = genre.Id
+                GenreId = genre.GenreId
             });
 
             Assert.True(show.HasGenre(genre));

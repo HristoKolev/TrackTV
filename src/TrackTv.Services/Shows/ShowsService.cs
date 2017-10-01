@@ -33,7 +33,7 @@
 
             var shows = await this.ShowsRepository.GetTopByGenreAsync(genreId, page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray())
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray())
                                              .ConfigureAwait(false);
 
             int totalCount = await this.ShowsRepository.CountByGenreAsync(genreId).ConfigureAwait(false);
@@ -45,7 +45,7 @@
         {
             var shows = await this.ShowsRepository.GetTopAsync(page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray())
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray())
                                              .ConfigureAwait(false);
 
             int totalCount = await this.ShowsRepository.CountAllAsync().ConfigureAwait(false);
@@ -62,7 +62,7 @@
 
             var shows = await this.ShowsRepository.SearchTopAsync(query, page, pageSize).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.Id).ToArray())
+            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray())
                                              .ConfigureAwait(false);
 
             int totalCount = await this.ShowsRepository.CountAllResultsAsync(query).ConfigureAwait(false);
@@ -84,12 +84,12 @@
         {
             return new ShowSummary
             {
-                Name = show.Name,
-                Banner = show.Banner,
+                ShowName = show.ShowName,
+                ShowBanner = show.ShowBanner,
                 ImdbId = show.ImdbId,
-                Status = show.Status,
-                SubscriberCount = subscriberCounts.First(x => x.ShowId == show.Id).SubscriberCount,
-                Id = show.Id
+                ShowStatus = show.ShowStatus,
+                SubscriberCount = subscriberCounts.First(x => x.ShowId == show.ShowId).SubscriberCount,
+                ShowId = show.ShowId
             };
         }
     }

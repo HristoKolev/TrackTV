@@ -20,11 +20,11 @@
             {
                 context.Shows.Add(new Show
                 {
-                    Id = 1
+                    ShowId = 1
                 });
                 context.Profiles.Add(new Profile
                 {
-                    Id = 2
+                    ProfileId = 2
                 });
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
@@ -80,17 +80,17 @@
             {
                 var show = new Show
                 {
-                    Id = 1
+                    ShowId = 1
                 };
 
                 var user = new Profile
                 {
-                    Id = 2
+                    ProfileId = 2
                 };
 
                 context.Shows.Add(show);
                 context.Profiles.Add(user);
-                context.Subscriptions.Add(new Subscription(user.Id, show.Id));
+                context.Subscriptions.Add(new Subscription(user.ProfileId, show.ShowId));
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -122,17 +122,17 @@
             {
                 var show = new Show
                 {
-                    Id = 1
+                    ShowId = 1
                 };
 
                 var user = new Profile
                 {
-                    Id = 2
+                    ProfileId = 2
                 };
 
                 context.Shows.Add(show);
                 context.Profiles.Add(user);
-                context.Subscriptions.Add(new Subscription(user.Id, show.Id));
+                context.Subscriptions.Add(new Subscription(user.ProfileId, show.ShowId));
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -140,7 +140,7 @@
 
                 var subscription = await repository.GetSubscriptionAsync(2, 1).ConfigureAwait(false);
 
-                await repository.RemoveSubscriptionAsync(subscription.Id).ConfigureAwait(false);
+                await repository.RemoveSubscriptionAsync(subscription.SubscriptionId).ConfigureAwait(false);
 
                 Assert.Equal(0, await context.Subscriptions.CountAsync().ConfigureAwait(false));
             }

@@ -16,7 +16,7 @@ namespace TrackTv.Data.Models
 
         public int ActorId { get; set; }
 
-        public int Id { get; set; }
+        public int RoleId { get; set; }
 
         public string RoleName { get; set; }
 

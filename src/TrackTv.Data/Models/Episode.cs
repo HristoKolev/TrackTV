@@ -6,17 +6,17 @@
 
     public class Episode : ITvDbRecord
     {
-        public string Description { get; set; }
+        public string EpisodeDescription { get; set; }
 
         public DateTime? FirstAired { get; set; }
 
-        public int Id { get; set; }
+        public int EpisodeId { get; set; }
 
         public string ImdbId { get; set; }
 
         public DateTime LastUpdated { get; set; }
 
-        public int Number { get; set; }
+        public int EpisodeNumber { get; set; }
 
         public int SeasonNumber { get; set; }
 
@@ -26,6 +26,6 @@
 
         public int TheTvDbId { get; set; }
 
-        public string Title { get; set; }
+        public string EpisodeTitle { get; set; }
     }
 }

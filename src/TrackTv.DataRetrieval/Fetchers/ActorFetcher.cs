@@ -42,7 +42,7 @@
                 }
                 else
                 {
-                    var relationship = show.Roles.FirstOrDefault(x => x.ActorId == actor.Id);
+                    var relationship = show.Roles.FirstOrDefault(x => x.ActorId == actor.ActorId);
 
                     UpdateShowActorRelationship(relationship, data);
                 }
@@ -68,8 +68,8 @@
             if (lastUpdated > actor.LastUpdated)
             {
                 actor.LastUpdated = lastUpdated;
-                actor.Name = data.Name;
-                actor.Image = data.Image;
+                actor.ActorName = data.Name;
+                actor.ActorImage = data.Image;
             }
         }
 

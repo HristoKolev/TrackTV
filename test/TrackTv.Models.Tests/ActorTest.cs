@@ -22,9 +22,9 @@
             var actor = new Actor(theTvDbId, name, lastUpdated, image);
 
             Assert.Equal(theTvDbId, actor.TheTvDbId);
-            Assert.Equal(name, actor.Name);
+            Assert.Equal(name, actor.ActorName);
             Assert.Equal(lastUpdated, actor.LastUpdated);
-            Assert.Equal(image, actor.Image);
+            Assert.Equal(image, actor.ActorImage);
         }
 
         [Fact]

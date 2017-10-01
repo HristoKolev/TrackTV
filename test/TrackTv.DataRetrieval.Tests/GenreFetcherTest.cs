@@ -42,7 +42,7 @@
 
             for (int i = 0; i < names.Length; i++)
             {
-                Assert.Equal(names[i], relationships[i].Genre.Name);
+                Assert.Equal(names[i], relationships[i].Genre.GenreName);
             }
         }
 
@@ -82,8 +82,8 @@
             Assert.Equal(genres[0], relationships[0].Genre);
             Assert.Equal(genres[1], relationships[1].Genre);
 
-            Assert.Equal(names[2], relationships[2].Genre.Name);
-            Assert.Equal(names[3], relationships[3].Genre.Name);
+            Assert.Equal(names[2], relationships[2].Genre.GenreName);
+            Assert.Equal(names[3], relationships[3].Genre.GenreName);
         }
 
         [Fact]

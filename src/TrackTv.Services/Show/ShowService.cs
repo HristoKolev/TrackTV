@@ -49,16 +49,16 @@ namespace TrackTv.Services.Show
 
             var model = new FullShow
             {
-                Id = show.Id,
+                ShowId = show.ShowId,
                 TheTvDbId = show.TheTvDbId,
-                Name = show.Name,
+                ShowName = show.ShowName,
                 FirstAired = show.FirstAired,
                 AirDay = show.AirDay,
                 ImdbId = show.ImdbId,
-                Banner = show.Banner,
-                Status = show.Status,
-                Description = show.Description,
-                NetworkName = show.Network.Name
+                ShowBanner = show.ShowBanner,
+                ShowStatus = show.ShowStatus,
+                ShowDescription = show.ShowDescription,
+                NetworkName = show.Network.NetworkName
             };
 
             if (show.AirTime.HasValue)

@@ -8,13 +8,13 @@ using TrackTv.WebServices.Infrastructure;
 namespace TrackTv.WebServices.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20170603121157_AuthContext_Created")]
+    [Migration("20171001153352_AuthContext_Created")]
     partial class AuthContext_Created
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>

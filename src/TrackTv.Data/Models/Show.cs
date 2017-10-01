@@ -13,21 +13,21 @@
 
         public DateTime? AirTime { get; set; }
 
-        public string Banner { get; set; }
+        public string ShowBanner { get; set; }
 
-        public string Description { get; set; }
+        public string ShowDescription { get; set; }
 
         public virtual ICollection<Episode> Episodes { get; } = new List<Episode>();
 
         public DateTime? FirstAired { get; set; }
 
-        public int Id { get; set; }
+        public int ShowId { get; set; }
 
         public string ImdbId { get; set; }
 
         public DateTime LastUpdated { get; set; }
 
-        public string Name { get; set; }
+        public string ShowName { get; set; }
 
         public Network Network { get; set; }
 
@@ -39,18 +39,18 @@
 
         public virtual ICollection<Subscription> Subscriptions { get; } = new List<Subscription>();
 
-        public ShowStatus Status { get; set; }
+        public ShowStatus ShowStatus { get; set; }
 
         public int TheTvDbId { get; set; }
 
         public bool HasActor(Actor actor)
         {
-            return this.Roles.Any(x => x.Actor == actor || x.ActorId != default(int) && x.ActorId == actor.Id);
+            return this.Roles.Any(x => x.Actor == actor || x.ActorId != default(int) && x.ActorId == actor.ActorId);
         }
 
         public bool HasGenre(Genre genre)
         {
-            return this.ShowsGenres.Any(x => x.Genre == genre || x.GenreId != default(int) && x.GenreId == genre.Id);
+            return this.ShowsGenres.Any(x => x.Genre == genre || x.GenreId != default(int) && x.GenreId == genre.GenreId);
         }
 
         public bool HasNetwork()

@@ -18,7 +18,7 @@
 
         public Task<Network> GetNetworkByNameAsync(string name)
         {
-            return this.DbContext.Networks.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+            return this.DbContext.Networks.FirstOrDefaultAsync(x => x.NetworkName.ToLower() == name.ToLower());
         }
     }
 }

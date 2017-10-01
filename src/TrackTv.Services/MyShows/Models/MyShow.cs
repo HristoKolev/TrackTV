@@ -4,14 +4,14 @@
 
     public class MyShow
     {
-        public string Banner { get; set; }
+        public string ShowBanner { get; set; }
 
         public MyEpisode LastEpisode { get; set; }
 
-        public string Name { get; set; }
+        public string ShowName { get; set; }
 
         public MyEpisode NextEpisode { get; set; }
 
-        public ShowStatus Status { get; set; }
+        public ShowStatus ShowStatus { get; set; }
     }
 }

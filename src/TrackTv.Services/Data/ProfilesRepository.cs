@@ -24,17 +24,17 @@
 
             await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            return profile.Id;
+            return profile.ProfileId;
         }
 
         public Task<Profile> GetProfileByIdAsync(int profileId)
         {
-            return this.DbContext.Profiles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == profileId);
+            return this.DbContext.Profiles.AsNoTracking().FirstOrDefaultAsync(x => x.ProfileId == profileId);
         }
 
         public Task<bool> ProfileExistsAsync(int profileId)
         {
-            return this.DbContext.Profiles.AnyAsync(x => x.Id == profileId);
+            return this.DbContext.Profiles.AnyAsync(x => x.ProfileId == profileId);
         }
     }
 }

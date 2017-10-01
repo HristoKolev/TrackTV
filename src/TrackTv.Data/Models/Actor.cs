@@ -7,25 +7,25 @@ namespace TrackTv.Data.Models
 
     public class Actor : ITvDbRecord
     {
-        public Actor(int theTvDbId, string name, DateTime lastUpdated, string image)
+        public Actor(int theTvDbId, string actorName, DateTime lastUpdated, string actorImage)
         {
             this.TheTvDbId = theTvDbId;
-            this.Name = name;
+            this.ActorName = actorName;
             this.LastUpdated = lastUpdated;
-            this.Image = image;
+            this.ActorImage = actorImage;
         }
 
         public Actor()
         {
         }
 
-        public int Id { get; set; }
+        public int ActorId { get; set; }
 
-        public string Image { get; set; }
+        public string ActorImage { get; set; }
+
+        public string ActorName { get; set; }
 
         public DateTime LastUpdated { get; set; }
-
-        public string Name { get; set; }
 
         public virtual ICollection<Role> Roles { get; } = new List<Role>();
 

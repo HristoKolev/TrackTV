@@ -89,7 +89,7 @@
                 {
                     var show = new Show
                     {
-                        Id = i
+                        ShowId = i
                     };
 
                     show.Subscriptions.Add(new Subscription
@@ -101,7 +101,7 @@
                     {
                         var episode = new Episode
                         {
-                            Id = (i * 100) + j,
+                            EpisodeId = (i * 100) + j,
                             FirstAired = this.ReferenceDate.AddDays(j * WeekLength)
                         };
 

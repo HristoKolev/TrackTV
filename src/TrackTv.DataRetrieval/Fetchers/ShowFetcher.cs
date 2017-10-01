@@ -32,7 +32,7 @@
 
         private async Task AddNetworkAsync(Show show, string networkName)
         {
-            if (!show.HasNetwork() || show.Network.Name != networkName)
+            if (!show.HasNetwork() || show.Network.NetworkName != networkName)
             {
                 var existingNetwork = await this.NetworkRepository.GetNetworkByNameAsync(networkName).ConfigureAwait(false);
 
@@ -43,10 +43,10 @@
         private void MapToShow(Show show, Series data)
         {
             show.TheTvDbId = data.Id;
-            show.Name = data.SeriesName;
-            show.Banner = data.Banner;
+            show.ShowName = data.SeriesName;
+            show.ShowBanner = data.Banner;
             show.ImdbId = data.ImdbId;
-            show.Description = data.Overview;
+            show.ShowDescription = data.Overview;
 
             show.LastUpdated = data.LastUpdated.ToDateTime();
 
@@ -56,7 +56,7 @@
 
             ShowStatus status;
             Enum.TryParse(data.Status, out status);
-            show.Status = status;
+            show.ShowStatus = status;
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {

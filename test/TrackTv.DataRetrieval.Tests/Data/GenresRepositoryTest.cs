@@ -75,7 +75,7 @@
 
                 for (int i = 0; i < names.Length; i++)
                 {
-                    Assert.Equal(names[i], genres[i].Name);
+                    Assert.Equal(names[i], genres[i].GenreName);
                 }
             }
         }

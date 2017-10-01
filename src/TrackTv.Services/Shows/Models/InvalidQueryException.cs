@@ -2,8 +2,6 @@
 {
     using System;
 
-    using TrackTv.Services.Exceptions;
-
     public class InvalidQueryException : Exception
     {
         public InvalidQueryException(string message)

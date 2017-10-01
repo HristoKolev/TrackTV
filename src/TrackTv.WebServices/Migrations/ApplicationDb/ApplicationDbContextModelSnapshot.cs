@@ -14,36 +14,41 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TrackTv.Data.Models.Actor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ActorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ActorImage")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ActorName")
+                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.Property<DateTime>("LastUpdated");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
                     b.Property<int>("TheTvDbId");
 
-                    b.HasKey("Id");
+                    b.HasKey("ActorId");
 
                     b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("TrackTv.Data.Models.Episode", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EpisodeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("EpisodeDescription");
+
+                    b.Property<int>("EpisodeNumber");
+
+                    b.Property<string>("EpisodeTitle")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("FirstAired");
 
@@ -52,18 +57,13 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<DateTime>("LastUpdated");
 
-                    b.Property<int>("Number");
-
                     b.Property<int>("SeasonNumber");
 
                     b.Property<int>("ShowId");
 
                     b.Property<int>("TheTvDbId");
 
-                    b.Property<string>("Title")
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
+                    b.HasKey("EpisodeId");
 
                     b.HasIndex("ShowId");
 
@@ -72,48 +72,48 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
             modelBuilder.Entity("TrackTv.Data.Models.Genre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GenreId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("GenreName")
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.HasKey("Id");
+                    b.HasKey("GenreId");
 
                     b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("TrackTv.Data.Models.Network", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("NetworkId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NetworkName")
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.HasKey("Id");
+                    b.HasKey("NetworkId");
 
                     b.ToTable("Networks");
                 });
 
             modelBuilder.Entity("TrackTv.Data.Models.Profile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProfileId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Username")
                         .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasKey("ProfileId");
 
                     b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("TrackTv.Data.Models.Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ActorId");
@@ -123,7 +123,7 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<int>("ShowId");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoleId");
 
                     b.HasIndex("ActorId");
 
@@ -134,17 +134,12 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
             modelBuilder.Entity("TrackTv.Data.Models.Show", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ShowId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AirDay");
 
                     b.Property<DateTime?>("AirTime");
-
-                    b.Property<string>("Banner")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Description");
 
                     b.Property<DateTime?>("FirstAired");
 
@@ -153,17 +148,22 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
                     b.Property<DateTime>("LastUpdated");
 
-                    b.Property<string>("Name")
+                    b.Property<int>("NetworkId");
+
+                    b.Property<string>("ShowBanner")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ShowDescription");
+
+                    b.Property<string>("ShowName")
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<int>("NetworkId");
-
-                    b.Property<int>("Status");
+                    b.Property<int>("ShowStatus");
 
                     b.Property<int>("TheTvDbId");
 
-                    b.HasKey("Id");
+                    b.HasKey("ShowId");
 
                     b.HasIndex("NetworkId");
 
@@ -185,14 +185,14 @@ namespace TrackTv.WebServices.Migrations.ApplicationDb
 
             modelBuilder.Entity("TrackTv.Data.Models.Subscription", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SubscriptionId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ProfileId");
 
                     b.Property<int>("ShowId");
 
-                    b.HasKey("Id");
+                    b.HasKey("SubscriptionId");
 
                     b.HasIndex("ProfileId");
 

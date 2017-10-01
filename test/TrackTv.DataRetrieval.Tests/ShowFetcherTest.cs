@@ -65,7 +65,7 @@
 
             await repository.Received().GetNetworkByNameAsync(data.Network).ConfigureAwait(false);
 
-            Assert.Equal(data.Network, show.Network.Name);
+            Assert.Equal(data.Network, show.Network.NetworkName);
         }
 
         [Fact]
@@ -93,12 +93,12 @@
 
             await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
-            Assert.Equal(data.Network, show.Network.Name);
-            Assert.Equal(data.SeriesName, show.Name);
-            Assert.Equal(data.Banner, show.Banner);
-            Assert.Equal(data.Overview, show.Description);
+            Assert.Equal(data.Network, show.Network.NetworkName);
+            Assert.Equal(data.SeriesName, show.ShowName);
+            Assert.Equal(data.Banner, show.ShowBanner);
+            Assert.Equal(data.Overview, show.ShowDescription);
             Assert.Equal(data.ImdbId, show.ImdbId);
-            Assert.Equal(ShowStatus.Continuing, show.Status);
+            Assert.Equal(ShowStatus.Continuing, show.ShowStatus);
             Assert.Equal(AirDay.Monday, show.AirDay);
             Assert.Equal(new DateTime(2016, 10, 28, 10, 45, 8), show.LastUpdated);
 
@@ -154,7 +154,7 @@
 
             await fetcher.PopulateShowAsync(show, data).ConfigureAwait(false);
 
-            Assert.Equal(data.Network, show.Network.Name);
+            Assert.Equal(data.Network, show.Network.NetworkName);
         }
 
         private static ShowFetcher CreateFetcher()

@@ -4,18 +4,18 @@
 
     public class Genre
     {
-        public Genre(string name)
+        public Genre(string genreName)
         {
-            this.Name = name;
+            this.GenreName = genreName;
         }
 
         public Genre()
         {
         }
 
-        public int Id { get; set; }
+        public int GenreId { get; set; }
 
-        public string Name { get; set; }
+        public string GenreName { get; set; }
 
         public virtual ICollection<ShowsGenres> ShowsGenres { get; } = new List<ShowsGenres>();
     }

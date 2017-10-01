@@ -82,11 +82,11 @@
             return new CalendarEpisode
             {
                 FirstAired = episode.FirstAired,
-                Title = episode.Title,
-                Number = episode.Number,
+                EpisodeTitle = episode.EpisodeTitle,
+                EpisodeNumber = episode.EpisodeNumber,
                 SeasonNumber = episode.SeasonNumber,
                 ShowId = episode.ShowId,
-                ShowName = episode.Show.Name
+                ShowName = episode.Show.ShowName
             };
         }
 

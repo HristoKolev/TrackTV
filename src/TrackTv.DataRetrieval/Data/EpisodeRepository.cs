@@ -19,7 +19,7 @@
 
         public Task<Episode> GetEpisodeById(int id)
         {
-            return this.DbContext.Episodes.FirstOrDefaultAsync(x => x.Id == id);
+            return this.DbContext.Episodes.FirstOrDefaultAsync(x => x.EpisodeId == id);
         }
 
         public Task<Episode[]> GetEpisodesByShowIdAsync(int id)

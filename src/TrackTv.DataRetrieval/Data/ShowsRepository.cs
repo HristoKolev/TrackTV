@@ -29,7 +29,7 @@
 
         public Task<Show> GetFullShowByIdAsync(int id)
         {
-            return this.FullShows().FirstOrDefaultAsync(x => x.Id == id);
+            return this.FullShows().FirstOrDefaultAsync(x => x.ShowId == id);
         }
 
         public Task<Show[]> GetFullShowsByTheTvDbIdsAsync(int[] theTvDbIds)
@@ -43,9 +43,9 @@
             {
                 var entity = node.Entry.Entity;
 
-                int id = (int)entity.GetType().GetProperty("Id").GetValue(entity);
+                int showId = (int)entity.GetType().GetProperty(nameof(show.ShowId)).GetValue(entity);
 
-                node.Entry.State = id == default(int) ? EntityState.Added : EntityState.Modified;
+                node.Entry.State = showId == default(int) ? EntityState.Added : EntityState.Modified;
             });
 
             return this.DbContext.SaveChangesAsync();
