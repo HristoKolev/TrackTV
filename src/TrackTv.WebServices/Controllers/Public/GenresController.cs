@@ -1,12 +1,11 @@
-﻿using TrackTv.WebServices.Infrastructure;
-
-namespace TrackTv.WebServices.Controllers.Public
+﻿namespace TrackTv.WebServices.Controllers.Public
 {
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.Services.Genres;
+    using TrackTv.WebServices.Infrastructure;
 
     [Route("api/public/[controller]")]
     public class GenresController : Controller
@@ -20,9 +19,7 @@ namespace TrackTv.WebServices.Controllers.Public
 
         public async Task<IActionResult> Get()
         {
-            return this.Success(await this.GenresService
-                                          .GetGenresAsync()
-                                          .ConfigureAwait(false));
+            return this.Success(await this.GenresService.GetGenresAsync().ConfigureAwait(false));
         }
     }
 }

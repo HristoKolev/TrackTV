@@ -24,14 +24,10 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return this.Success(await this.ShowService
-                                         .GetFullShowAsync(showId, this.User.GetProfileId())
-                                         .ConfigureAwait(false));
+                return this.Success(await this.ShowService.GetFullShowAsync(showId, this.User.GetProfileId()).ConfigureAwait(false));
             }
-            
-            return this.Success(await this.ShowService
-                                     .GetFullShowAsync(showId)
-                                     .ConfigureAwait(false));
+
+            return this.Success(await this.ShowService.GetFullShowAsync(showId).ConfigureAwait(false));
         }
     }
 }

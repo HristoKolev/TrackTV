@@ -20,12 +20,12 @@ export const settingsReducer: ReduxReducer<ISettingsState> = (state = initialSet
 
 export interface IGlobalErrorState {
     errorMessages: string[];
-    loading: boolean;
+    loading: number;
 }
 
 const initialGlobalErrorState: IGlobalErrorState = {
     errorMessages: [],
-    loading: false,
+    loading: 0,
 };
 
 export const globalActions = actionTypes('global').ofType<{
@@ -47,13 +47,13 @@ export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = init
         case globalActions.START_TRANSITION: {
             return {
                 ...state,
-                loading: true,
+                loading: state.loading + 1,
             };
         }
         case globalActions.END_TRANSITION: {
             return {
                 ...state,
-                loading: false,
+                loading: state.loading - 1,
             };
         }
         default: {

@@ -13,7 +13,6 @@ import { NgRedux } from '@angular-redux/store';
             </div>
         </div>
     `,
-    styleUrls: ['loader.css'],
 })
 export class LoadingComponent implements OnInit {
 
@@ -29,5 +28,17 @@ export class LoadingComponent implements OnInit {
             .subscribe(global => {
                 this.global = global;
             });
+
+        this.removeInitialLoader();
+
+    }
+
+    private removeInitialLoader() {
+        setTimeout(() => {
+
+            (window as any).document
+                .getElementById('initial-loader')
+                .remove();
+        }, 0);
     }
 }

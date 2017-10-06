@@ -1,6 +1,4 @@
-﻿using TrackTv.Services.Subscription.Models;
-
-namespace TrackTv.WebServices.Controllers.User
+﻿namespace TrackTv.WebServices.Controllers.User
 {
     using System.Threading.Tasks;
 
@@ -8,6 +6,7 @@ namespace TrackTv.WebServices.Controllers.User
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.Services.Subscription;
+    using TrackTv.Services.Subscription.Models;
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]
@@ -25,9 +24,7 @@ namespace TrackTv.WebServices.Controllers.User
         [ExposeError(typeof(SubscriptionException), "You are not subscribed to that show.")]
         public async Task<IActionResult> Delete(int showId)
         {
-            await this.SubscriptionService
-                      .Unsubscribe(this.User.GetProfileId(), showId)
-                      .ConfigureAwait(false);
+            await this.SubscriptionService.Unsubscribe(this.User.GetProfileId(), showId).ConfigureAwait(false);
 
             return this.Success();
         }
@@ -36,9 +33,7 @@ namespace TrackTv.WebServices.Controllers.User
         [ExposeError(typeof(SubscriptionException), "You are already subscribed to that show.")]
         public async Task<IActionResult> Put(int showId)
         {
-            await this.SubscriptionService
-                      .Subscribe(this.User.GetProfileId(), showId)
-                      .ConfigureAwait(false);
+            await this.SubscriptionService.Subscribe(this.User.GetProfileId(), showId).ConfigureAwait(false);
 
             return this.Success();
         }

@@ -47,7 +47,7 @@ export class AccountActions {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div> Username: <input [(ngModel)]="this.email"/></div>
+        <div> Username: <input [(ngModel)]="this.username"/></div>
         <div> Password <input [(ngModel)]="this.password" type="password"/></div>
         <div>
             <button (click)="this.submit()">Login</button>
@@ -74,6 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.subscription = this.ngRedux
             .select((store: { login: ILoginState }) => store.login)
+            .distinctUntilChanged()
             .subscribe((x: any) => this.state = x);
 
         this.accountActions.clearLoginErrorMessages();
@@ -127,6 +128,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         this.subscription = this.ngRedux
             .select((store: { register: IRegisterState }) => store.register)
+            .distinctUntilChanged()
             .subscribe((x: any) => this.state = x);
 
         this.accountActions.clearRegisterErrorMessages();

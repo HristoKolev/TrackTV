@@ -10,7 +10,7 @@
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize(Roles = AppRoles.Admin)]
-    [ServiceFilter(typeof(InTransactionFilterAttribute))]
+    [ServiceFilter(typeof(InTransactionFilter))]
     [Route("api/admin/[controller]")]
     public class UpdatesController : Controller
     {
@@ -24,9 +24,7 @@
         [HttpPut("[action]/{date}")]
         public async Task<IActionResult> AllRecords(DateTime date)
         {
-            await this.Fetcher
-                      .UpdateAllRecordsAsync(date)
-                      .ConfigureAwait(false);
+            await this.Fetcher.UpdateAllRecordsAsync(date).ConfigureAwait(false);
 
             return this.Success();
         }
@@ -34,9 +32,7 @@
         [HttpPut("[action]/{showId}")]
         public async Task<IActionResult> Show(int showId)
         {
-            await this.Fetcher
-                      .UpdateShowAsync(showId)
-                      .ConfigureAwait(false);
+            await this.Fetcher.UpdateShowAsync(showId).ConfigureAwait(false);
 
             return this.Success();
         }

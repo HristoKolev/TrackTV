@@ -2,18 +2,18 @@
 {
     public class FullGenre
     {
-        public FullGenre(int id, string name)
+        public FullGenre(int genreId, string genreName)
         {
-            this.Id = id;
-            this.Name = name;
+            this.GenreId = genreId;
+            this.GenreName = genreName;
         }
 
         public FullGenre()
         {
         }
 
-        public int Id { get; set; }
+        public int GenreId { get; set; }
 
-        public string Name { get; set; }
+        public string GenreName { get; set; }
     }
 }

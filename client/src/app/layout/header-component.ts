@@ -60,6 +60,10 @@ export class HeaderComponent implements OnInit {
                 name: 'Shows',
                 link: ['shows'],
             },
+            {
+                name: 'Search',
+                link: ['shows/search'],
+            },
         ];
 
         this.ngRedux.select(state => state.session)

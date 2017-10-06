@@ -9,9 +9,9 @@
     /// <summary>
     /// Opens a transaction at the start of the request and if no exception is thrown, commits it at the end.
     /// </summary>
-    public class InTransactionFilterAttribute : IAsyncActionFilter
+    public class InTransactionFilter : IAsyncActionFilter
     {
-        public InTransactionFilterAttribute(ITransactionScopeFactory transactionScopeFactory)
+        public InTransactionFilter(ITransactionScopeFactory transactionScopeFactory)
         {
             this.TransactionScopeFactory = transactionScopeFactory;
         }

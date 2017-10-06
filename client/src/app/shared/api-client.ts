@@ -1,5 +1,6 @@
 import { FetchResponse, httpClient, multipartForm, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
 import { reduxState } from '../../infrastructure/redux-store';
+import { Promise } from 'es6-promise';
 
 export interface ApiResponse {
     errorMessages: string[];
@@ -8,7 +9,6 @@ export interface ApiResponse {
 }
 
 const networkIsDownMessage = 'Network error. Please, try again later.';
-
 const serverErrorMessage = 'Server error. Please, try again later.';
 
 const errorResponse = (errorMessages: string[]) => ({errorMessages, success: false} as ApiResponse);
@@ -46,9 +46,26 @@ export class ApiClient {
 
     public topShows(page: number): Promise<FetchResponse> {
 
-        const showsPageSize = reduxState.getState().settings.showsPageSize;
+        return httpClient.get(`/api/public/shows/top/${page}/${this.showsPageSize}`);
+    }
 
-        return httpClient.get(`/api/public/shows/top/${page}/${showsPageSize}`);
+    public searchShows(query: string, page: number): Promise<FetchResponse> {
+
+        return httpClient.get(`/api/public/shows/search/${query}/${page}/${this.showsPageSize}`);
+    }
+
+    public getGenres(): Promise<FetchResponse> {
+
+        return httpClient.get(`/api/public/genres`);
+    }
+
+    public showsByGenre(genreId: number, page: number): Promise<FetchResponse> {
+
+        return httpClient.get(`/api/public/shows/genre/${genreId}}/${page}/${this.showsPageSize}}`);
+    }
+
+    private get showsPageSize() {
+        return reduxState.getState().settings.showsPageSize;
     }
 
     private parseResponse(response: FetchResponse): ApiResponse {
@@ -63,6 +80,7 @@ export class ApiClient {
 
         return response.body;
     }
+
 }
 
 export const apiClient = new ApiClient();
