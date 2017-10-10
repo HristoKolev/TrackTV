@@ -97,6 +97,9 @@ export class ShowsByGenreComponent implements OnInit {
 
         <pre>{{this.shows | json}}</pre>
 
+        <div *ngFor="let show of this.shows.items">
+            <button [routerLink]="['/show', show.showId]">{{show.showName}}</button>
+        </div>
     `,
 })
 export class TopShowsComponent implements OnInit {
@@ -133,6 +136,10 @@ export class TopShowsComponent implements OnInit {
         <genres-component [genres]="this.genres"></genres-component>
 
         <pre>{{this.shows | json}}</pre>
+
+        <div *ngFor="let show of this.shows.items">
+            <button [routerLink]="['/show', show.showId]">{{show.showName}}</button>
+        </div>
 
     `,
 })
