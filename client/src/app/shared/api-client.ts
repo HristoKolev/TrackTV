@@ -61,7 +61,8 @@ export class ApiClient {
 
     public showsByGenre(genreId: number, page: number): Promise<FetchResponse> {
 
-        return httpClient.get(`/api/public/shows/genre/${genreId}}/${page}/${this.showsPageSize}}`);
+
+        return httpClient.get(`/api/public/shows/genre/${genreId}/${page}/${this.showsPageSize}`);
     }
 
     private get showsPageSize() {

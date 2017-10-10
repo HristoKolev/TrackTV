@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { reduxState } from '../../infrastructure/redux-store';
 import { showsActions, showsReducer, showsSagas } from './shows-state';
@@ -22,14 +22,16 @@ export class ShowsActions {
     searchShows(query: string, page: number) {
         this.ngRedux.dispatch({
             type: showsActions.SEARCH_SHOWS_REQUEST_START,
-            page,
             query,
+            page,
         });
     }
 
-    getGenres() {
+    showsByGenre(genreId: number, page: number) {
         this.ngRedux.dispatch({
-            type: showsActions.GENRES_REQUEST_START,
+            type: showsActions.SHOWS_BY_GENRES_REQUEST_START,
+            genreId,
+            page,
         });
     }
 }
@@ -48,20 +50,35 @@ export class ShowsByGenreComponent implements OnInit {
     shows: any;
     genres: any;
     genre: any;
+    genreId: number;
 
     constructor(private ngRedux: NgRedux<any>,
-                private showsActions: ShowsActions) {
+                private showsActions: ShowsActions,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
 
-        this.showsActions.topShows(1);
+        this.route.paramMap
+            .map(x => x.get('genreId') as string)
+            .map(x => Number.parseInt(x, 10))
+            .subscribe(genreId => {
+
+                this.genreId = genreId;
+                this.showsActions.showsByGenre(genreId, 1);
+            });
 
         this.ngRedux.select(state => state.shows)
             .distinctUntilChanged()
             .subscribe(shows => {
-                this.shows = shows.topShows;
+
+                this.shows = shows.showsByGenre;
                 this.genres = shows.genres;
+
+                if (shows.genres) {
+
+                    this.genre = shows.genres.filter((x: any) => x.genreId === this.genreId)[0];
+                }
             });
     }
 }
@@ -147,7 +164,7 @@ export class SearchShowsComponent implements OnInit {
     changeDetection: ChangeDetectionStrategy.Default,
     selector: 'genres-component',
     template: `
-        <button *ngFor="let genre of this.genres">{{genre.genreName}}</button>
+        <button *ngFor="let genre of this.genres" [routerLink]="['/shows/genre', genre.genreId]">{{genre.genreName}}</button>
     `,
 })
 export class GenresComponent {
@@ -160,6 +177,7 @@ const routes: Routes = [
     {path: '', redirectTo: 'top', pathMatch: 'full'},
     {path: 'top', component: TopShowsComponent},
     {path: 'search', component: SearchShowsComponent},
+    {path: 'genre/:genreId', component: ShowsByGenreComponent},
 ];
 
 @NgModule({
@@ -172,6 +190,7 @@ const routes: Routes = [
         TopShowsComponent,
         SearchShowsComponent,
         GenresComponent,
+        ShowsByGenreComponent,
     ],
     providers: [ShowsActions],
 })
