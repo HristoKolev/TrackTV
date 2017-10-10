@@ -19,6 +19,7 @@ export const routes: Routes = [
     {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
     {path: 'account', loadChildren: './account/account.module#AccountModule'},
     {path: 'shows', loadChildren: './shows/shows.module#ShowsModule'},
+    {path: 'show', loadChildren: './show/show.module#ShowModule'},
     {path: '**', component: NotFound404Component},
 ];
 

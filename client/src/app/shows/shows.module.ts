@@ -42,7 +42,12 @@ export class ShowsActions {
     template: `
         <genres-component [genres]="this.genres"></genres-component>
 
+        <pre>{{this.genre | json}}</pre>
         <pre>{{this.shows | json}}</pre>
+
+        <div *ngFor="let show of this.shows.items">
+            <button [routerLink]="['/show', show.showId]">{{show.showName}}</button>
+        </div>
     `,
 })
 export class ShowsByGenreComponent implements OnInit {

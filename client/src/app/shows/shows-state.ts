@@ -26,6 +26,10 @@ const initialState = {
         totalCount: 0,
         items: [],
     },
+    showsByGenre: {
+        totalCount: 0,
+        items: [],
+    },
 };
 
 export const showsReducer: ReduxReducer = (state = initialState, action: any) => {
@@ -72,55 +76,52 @@ export const showsReducer: ReduxReducer = (state = initialState, action: any) =>
     }
 };
 
-export const showsSagas = (apiClient: ApiClient) => {
+export const showsSagas = (apiClient: ApiClient) => ({
+    topShowsRequestSaga: {
+        type: showsActions.TOP_SHOWS_REQUEST_START,
+        inTransition: true,
+        saga: function* (action: any) {
 
-    return {
-        topShowsRequestSaga: {
-            type: showsActions.TOP_SHOWS_REQUEST_START,
-            inTransition: true,
-            saga: function* (action: any) {
+            const response = yield apiClient.topShows(action.page);
 
-                const response = yield apiClient.topShows(action.page);
+            yield put({type: showsActions.GENRES_REQUEST_START});
 
-                yield put({type: showsActions.GENRES_REQUEST_START});
-
-                yield put(triggerAction(showsActions.TOP_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
-            },
+            yield put(triggerAction(showsActions.TOP_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
-        searchShowsRequestSaga: {
-            type: showsActions.SEARCH_SHOWS_REQUEST_START,
-            inTransition: true,
-            saga: function* (action: any) {
+    },
+    searchShowsRequestSaga: {
+        type: showsActions.SEARCH_SHOWS_REQUEST_START,
+        inTransition: true,
+        saga: function* (action: any) {
 
-                const response = yield apiClient.searchShows(action.query, action.page);
+            const response = yield apiClient.searchShows(action.query, action.page);
 
-                yield put({type: showsActions.GENRES_REQUEST_START});
+            yield put({type: showsActions.GENRES_REQUEST_START});
 
-                yield put(triggerAction(showsActions.SEARCH_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
-            },
+            yield put(triggerAction(showsActions.SEARCH_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
-        genresRequestSaga: {
-            type: showsActions.GENRES_REQUEST_START,
-            inTransition: true,
-            saga: function* (action: any) {
+    },
+    genresRequestSaga: {
+        type: showsActions.GENRES_REQUEST_START,
+        inTransition: true,
+        saga: function* (action: any) {
 
-                const response = yield apiClient.getGenres();
+            const response = yield apiClient.getGenres();
 
-                yield put(triggerAction(showsActions.GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
-            },
-
+            yield put(triggerAction(showsActions.GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
-        showsByGenreRequestSaga: {
-            type: showsActions.SHOWS_BY_GENRES_REQUEST_START,
-            inTransition: true,
-            saga: function* (action: any) {
 
-                const response = yield apiClient.showsByGenre(action.genreId, action.page);
+    },
+    showsByGenreRequestSaga: {
+        type: showsActions.SHOWS_BY_GENRES_REQUEST_START,
+        inTransition: true,
+        saga: function* (action: any) {
 
-                yield put({type: showsActions.GENRES_REQUEST_START});
+            const response = yield apiClient.showsByGenre(action.genreId, action.page);
 
-                yield put(triggerAction(showsActions.SHOWS_BY_GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
-            },
+            yield put({type: showsActions.GENRES_REQUEST_START});
+
+            yield put(triggerAction(showsActions.SHOWS_BY_GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
-    };
-};
+    },
+});

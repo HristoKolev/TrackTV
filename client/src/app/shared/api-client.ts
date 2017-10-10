@@ -44,25 +44,33 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
-    public topShows(page: number): Promise<FetchResponse> {
+    public topShows(page: number): Promise<ApiResponse> {
 
-        return httpClient.get(`/api/public/shows/top/${page}/${this.showsPageSize}`);
+        return httpClient.get(`/api/public/shows/top/${page}/${this.showsPageSize}`)
+            .then(this.parseResponse);
     }
 
-    public searchShows(query: string, page: number): Promise<FetchResponse> {
+    public searchShows(query: string, page: number): Promise<ApiResponse> {
 
-        return httpClient.get(`/api/public/shows/search/${query}/${page}/${this.showsPageSize}`);
+        return httpClient.get(`/api/public/shows/search/${query}/${page}/${this.showsPageSize}`)
+            .then(this.parseResponse);
     }
 
-    public getGenres(): Promise<FetchResponse> {
+    public getGenres(): Promise<ApiResponse> {
 
-        return httpClient.get(`/api/public/genres`);
+        return httpClient.get(`/api/public/genres`)
+            .then(this.parseResponse);
     }
 
-    public showsByGenre(genreId: number, page: number): Promise<FetchResponse> {
+    public showsByGenre(genreId: number, page: number): Promise<ApiResponse> {
 
+        return httpClient.get(`/api/public/shows/genre/${genreId}/${page}/${this.showsPageSize}`)
+            .then(this.parseResponse);
+    }
 
-        return httpClient.get(`/api/public/shows/genre/${genreId}/${page}/${this.showsPageSize}`);
+    public show(showId: number): Promise<ApiResponse> {
+        return httpClient.get(`/api/public/show/${showId}`)
+            .then(this.parseResponse);
     }
 
     private get showsPageSize() {
@@ -86,17 +94,12 @@ export class ApiClient {
 
 export const apiClient = new ApiClient();
 
-export const triggerAction = (successActionType: string, failureActionType: string, response: FetchResponse): any => {
+export const triggerAction = (successActionType: string, failureActionType: string, response: ApiResponse): any => {
 
-    if (response.networkError) {
+    if (response.success) {
 
-        return {type: failureActionType, errorMessages: [networkIsDownMessage]};
+        return {type: successActionType, payload: response.payload};
     }
 
-    if (!response.body.success) {
-
-        return {type: failureActionType, errorMessages: response.body.errorMessages};
-    }
-
-    return {type: successActionType, payload: response.body.payload};
+    return {type: failureActionType, errorMessages: response.errorMessages};
 };
