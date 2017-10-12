@@ -13,6 +13,8 @@ import { globalErrorReducer, settingsReducer, userSessionReducer } from './globa
 import { reduxState } from '../infrastructure/redux-store';
 import { HeaderComponent } from './layout/header-component';
 import { LoadingComponent } from './layout/loading-component';
+import { subscribeSagas } from './shared/subscription.state';
+import { apiClient } from './shared/api-client';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -68,6 +70,7 @@ export class AppModule {
                     console.log(action);
                 },
             },
+            ...subscribeSagas(apiClient),
         });
     }
 }

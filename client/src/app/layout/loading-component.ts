@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     selector: 'loading-component',
     template: `
-        <div [ngClass]="{'loaded': !this.global.loading}">
+        <div [ngClass]="{'loaded': !this.loading}">
             <div id="loader-wrapper">
                 <div id="loader"></div>
                 <div class="loader-section"></div>
@@ -16,7 +17,7 @@ import { NgRedux } from '@angular-redux/store';
 })
 export class LoadingComponent implements OnInit {
 
-    global: any;
+    loading: boolean;
 
     constructor(private ngRedux: NgRedux<any>) {
     }
@@ -25,8 +26,9 @@ export class LoadingComponent implements OnInit {
 
         this.ngRedux.select(state => state.global)
             .distinctUntilChanged()
+            .switchMap(global => Observable.of(global).delay(global.loading > 0 ? 100 : 0))
             .subscribe(global => {
-                this.global = global;
+                this.loading = !!Math.max(global.loading, 0);
             });
 
         this.removeInitialLoader();

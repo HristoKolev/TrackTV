@@ -37,6 +37,30 @@ class HttpClient {
         ).then(this.parseResponse, this.handleError);
     }
 
+    public put(url: string, body: any, headers?: any): Promise<FetchResponse> {
+
+        headers = headers || {};
+
+        return fetch(this.baseUrl + url, {
+                method: 'put',
+                headers: {...this.defaultHeaders, ...headers},
+                body,
+            },
+        ).then(this.parseResponse, this.handleError);
+    }
+
+    public del(url: string, body: any, headers?: any): Promise<FetchResponse> {
+
+        headers = headers || {};
+
+        return fetch(this.baseUrl + url, {
+                method: 'delete',
+                headers: {...this.defaultHeaders, ...headers},
+                body,
+            },
+        ).then(this.parseResponse, this.handleError);
+    }
+
     private handleError(error: any) {
         return {networkError: true};
     }
@@ -72,9 +96,9 @@ class HttpClient {
 
         let token;
 
-        if (state.account && state.account.session) {
+        if (state.session) {
 
-            token = state.account.session.access_token;
+            token = state.session.access_token;
         }
 
         if (token) {
@@ -83,6 +107,7 @@ class HttpClient {
 
         return headers;
     }
+
 }
 
 export const httpClient = new HttpClient();

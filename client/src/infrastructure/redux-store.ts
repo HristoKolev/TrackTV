@@ -54,6 +54,9 @@ class StoreWrapper {
     }
 
     public addSagas(sagas: any = {}) {
+
+        const _this = this;
+
         for (let [sagaName, saga] of Object.entries(sagas)) {
 
             console.log(`Adding saga: '${sagaName}'`);
@@ -67,7 +70,7 @@ class StoreWrapper {
                         yield put({type: globalActions.START_TRANSITION});
                     }
 
-                    yield saga.saga(...args);
+                    yield saga.saga(...args, _this.getState());
 
                     if (saga.inTransition) {
 

@@ -6,6 +6,7 @@ import { NgRedux } from '@angular-redux/store';
 import { reduxState } from '../../infrastructure/redux-store';
 import { showActions, showReducer, showSagas } from './show.state';
 import { apiClient } from '../shared/api-client';
+import { subscriptionActions } from '../shared/subscription.state';
 
 @Injectable()
 export class ShowActions {
@@ -18,6 +19,20 @@ export class ShowActions {
             showId,
         });
     }
+
+    subscribe(showId: number) {
+        this.ngRedux.dispatch({
+            type: subscriptionActions.SUBSCRIBE_REQUEST_START,
+            showId,
+        });
+    }
+
+    unsubscribe(showId: number) {
+        this.ngRedux.dispatch({
+            type: subscriptionActions.UNSUBSCRIBE_REQUEST_START,
+            showId,
+        });
+    }
 }
 
 @Component({
@@ -25,11 +40,17 @@ export class ShowActions {
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
         <pre>{{this.show | json}}</pre>
+
+        <div *ngIf="this.session?.isLoggedIn">
+            <button *ngIf="!this.show?.isUserSubscribed" (click)="subscribe()">Subscribe</button>
+            <button *ngIf="this.show?.isUserSubscribed" (click)="unsubscribe()">Unsubscribe</button>
+        </div>
     `,
 })
 export class ShowComponent implements OnInit {
 
     show: any;
+    session: any;
 
     constructor(private ngRedux: NgRedux<any>,
                 private showActions: ShowActions,
@@ -46,12 +67,21 @@ export class ShowComponent implements OnInit {
                 this.showActions.show(showId);
             });
 
-        this.ngRedux.select(state => state.show)
+        this.ngRedux.select(state => state)
             .distinctUntilChanged()
-            .subscribe(show => {
+            .subscribe(state => {
 
-                this.show = show;
+                this.show = state.show;
+                this.session = state.session;
             });
+    }
+
+    subscribe() {
+        this.showActions.subscribe(this.show.showId);
+    }
+
+    unsubscribe() {
+        this.showActions.unsubscribe(this.show.showId);
     }
 }
 

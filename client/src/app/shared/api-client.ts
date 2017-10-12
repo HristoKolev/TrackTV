@@ -73,6 +73,16 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
+    public subscribe(showId: number): Promise<any> {
+        return httpClient.put(`/api/user/subscription/${showId}`, {})
+            .then(this.parseResponse);
+    }
+
+    public unsubscribe(showId: number): Promise<any> {
+        return httpClient.del(`/api/user/subscription/${showId}`, {})
+            .then(this.parseResponse);
+    }
+
     private get showsPageSize() {
         return reduxState.getState().settings.showsPageSize;
     }

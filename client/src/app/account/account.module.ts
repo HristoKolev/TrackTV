@@ -47,8 +47,8 @@ export class AccountActions {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div> Username: <input [(ngModel)]="this.username"/></div>
-        <div> Password <input [(ngModel)]="this.password" type="password"/></div>
+        <div> Username: <input [(ngModel)]="this.username" id="username"/></div>
+        <div> Password <input [(ngModel)]="this.password" id="password" type="password"/></div>
         <div>
             <button (click)="this.submit()">Login</button>
         </div>
