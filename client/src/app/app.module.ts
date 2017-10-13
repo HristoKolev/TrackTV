@@ -15,6 +15,7 @@ import { HeaderComponent } from './layout/header-component';
 import { LoadingComponent } from './layout/loading-component';
 import { subscribeSagas } from './shared/subscription.state';
 import { apiClient } from './shared/api-client';
+import { ReduxPersist, ReduxPersistModule } from '../infrastructure/redux-persist';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -41,6 +42,7 @@ export const routes: Routes = [
         RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: IdlePreload}),
         NgReduxModule,
         ReduxRouterModule,
+        ReduxPersistModule,
     ],
     bootstrap: [AppComponent],
     exports: [AppComponent],
@@ -48,13 +50,19 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-    constructor(ngRedux: NgRedux<any>, reduxRouter: ReduxRouter, devTools: DevToolsExtension) {
+    constructor(ngRedux: NgRedux<any>, reduxRouter: ReduxRouter, devTools: DevToolsExtension, reduxPersist: ReduxPersist) {
 
         reduxRouter.init(state => state.router);
 
         const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
 
-        ngRedux.provideStore(reduxState.initStore(enhancers));
+        const storedState = reduxPersist.readItems();
+
+        ngRedux.provideStore(reduxState.initStore(enhancers, storedState));
+
+        reduxPersist.initialize({
+            session: 'localStorage',
+        });
 
         reduxState.addReducers({
             settings: settingsReducer,

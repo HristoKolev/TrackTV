@@ -13,5 +13,7 @@
         public MyEpisode NextEpisode { get; set; }
 
         public ShowStatus ShowStatus { get; set; }
+
+        public int ShowId { get; set; }
     }
 }

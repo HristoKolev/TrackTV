@@ -75,7 +75,8 @@
                     ShowBanner = show.ShowBanner,
                     ShowStatus = show.ShowStatus,
                     LastEpisode = EpisodeToModel(summary.LastEpisode),
-                    NextEpisode = EpisodeToModel(summary.NextEpisode)
+                    NextEpisode = EpisodeToModel(summary.NextEpisode),
+                    ShowId = show.ShowId
                 });
             }
 
