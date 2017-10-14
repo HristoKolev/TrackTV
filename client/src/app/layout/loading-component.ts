@@ -19,6 +19,8 @@ export class LoadingComponent implements OnInit {
 
     loading: boolean;
 
+    firstLoad: boolean = true;
+
     constructor(private ngRedux: NgRedux<any>) {
     }
 
@@ -26,13 +28,17 @@ export class LoadingComponent implements OnInit {
 
         this.ngRedux.select(state => state.global)
             .distinctUntilChanged()
-            .switchMap(global => Observable.of(global).delay(global.loading > 0 ? 100 : 0))
+            .switchMap(global => Observable.of(global).delay((global.loading > 0 || this.firstLoad) ? 100 : 0))
             .subscribe(global => {
                 this.loading = !!Math.max(global.loading, 0);
+
+                if (this.firstLoad) {
+
+                    this.firstLoad = false;
+
+                    this.removeInitialLoader();
+                }
             });
-
-        this.removeInitialLoader();
-
     }
 
     private removeInitialLoader() {
