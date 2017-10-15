@@ -17,6 +17,10 @@ import { globalActions } from '../global.state';
                     <button [routerLink]="link.link" routerLinkActive="active-link">{{link.name}}</button>
                 </li>
 
+                <li *ngIf="this.sessionState.isLoggedIn">
+                    <button [routerLink]="['/my-shows']">My Shows</button>
+                </li>
+
                 <li *ngIf="!this.sessionState.isLoggedIn">
                     <button [routerLink]="['/account/login']">Login</button>
                 </li>

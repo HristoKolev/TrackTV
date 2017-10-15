@@ -78,6 +78,11 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
+    public myShows(): Promise<ApiResponse> {
+        return httpClient.get(`/api/user/myshows`)
+            .then(this.parseResponse);
+    }
+
     public unsubscribe(showId: number): Promise<any> {
         return httpClient.del(`/api/user/subscription/${showId}`, {})
             .then(this.parseResponse);

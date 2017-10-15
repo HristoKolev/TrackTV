@@ -23,6 +23,7 @@ export const routes: Routes = [
     {path: 'account', loadChildren: './account/account.module#AccountModule'},
     {path: 'shows', loadChildren: './shows/shows.module#ShowsModule'},
     {path: 'show', loadChildren: './show/show.module#ShowModule'},
+    {path: 'my-shows', loadChildren: './my-shows/my-shows.module#MyShowsModule'},
     {path: '**', component: NotFound404Component},
 ];
 
