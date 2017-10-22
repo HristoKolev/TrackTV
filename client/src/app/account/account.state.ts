@@ -146,12 +146,8 @@ export const accountSagas = (apiClient: ApiClient) => ({
 
             yield put({type: accountActions.REGISTER_REQUEST_SUCCESS, response});
 
-            yield put({
-                type: accountActions.LOGIN_REQUEST_START, user: {
-                    username: action.user.Email,
-                    password: action.user.Password,
-                },
-            });
+            yield put({type: accountActions.LOGIN_REQUEST_START, user: action.user});
+            yield put({type: globalActions.END_TRANSITION});
         },
     },
 });

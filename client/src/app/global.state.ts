@@ -6,7 +6,7 @@ export interface ISettingsState {
 }
 
 const initialSettingsState: ISettingsState = {
-    baseUrl: 'http://192.168.1.103:7000',
+    baseUrl: 'http://192.168.1.104:7001',
     showsPageSize: 10,
 };
 

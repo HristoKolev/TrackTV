@@ -15,9 +15,8 @@ export interface UserLogin {
 }
 
 export interface UserRegister {
-    Email: string;
-    Password: string;
-    // ConfirmPassword: string;
+    username: string;
+    password: string;
 }
 
 @Injectable()
@@ -99,8 +98,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div> Email: <input [(ngModel)]="this.email"/></div>
-        <div> Password <input [(ngModel)]="this.password" type="password"/></div>
+        <div> Email: <input [(ngModel)]="this.username" id="username"/></div>
+        <div> Password <input [(ngModel)]="this.password" id="password" type="password"/></div>
         <div> Confirm password <input [(ngModel)]="this.confirmPassword" type="password"/></div>
         <div>
             <button (click)="this.submit()">Register</button>
@@ -111,7 +110,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-    email: string;
+    username: string;
     password: string;
     confirmPassword: string;
 
@@ -142,9 +141,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     submit(): void {
 
         this.accountActions.register({
-            Email: this.email,
-            Password: this.password,
-            // ConfirmPassword: this.confirmPassword,
+            username: this.username,
+            password: this.password,
         });
     }
 }

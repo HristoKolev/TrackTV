@@ -1,9 +1,9 @@
-Unit]
+[Unit]
 Description=TrackTv REST Services
 
 [Service]
-WorkingDirectory=/home/apps/tracktv/
-ExecStart=/home/apps/tracktv/TrackTv.WebServices
+WorkingDirectory=/var/www/tracktv/public_html/
+ExecStart=/var/www/tracktv/public_html/TrackTv.WebServices
 Restart=always
 
 # Restart service after 10 seconds if dotnet service crashes

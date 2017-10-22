@@ -1,4 +1,4 @@
-import { FetchResponse, httpClient, multipartForm, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
+import { FetchResponse, httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
 import { reduxState } from '../../infrastructure/redux-store';
 import { Promise } from 'es6-promise';
 
@@ -24,23 +24,13 @@ export class ApiClient {
 
     public login(userLogin: any): Promise<ApiResponse> {
 
-        return httpClient.post('/connect/token', urlEncodeBody({...userLogin, grant_type: 'password'}), urlEncodedHeader)
-            .then(response => {
-                if (response.networkError) {
-                    return errorResponse([networkIsDownMessage]);
-                } else if (response.body.error) {
-                    return errorResponse([response.body.error_description]);
-                } else {
-                    return successResponse(response.body);
-                }
-            });
+        return httpClient.post('/api/public/auth/login', JSON.stringify(userLogin))
+            .then(this.parseResponse);
     }
 
     public register(user: any): Promise<ApiResponse> {
 
-        const form = multipartForm(user);
-
-        return httpClient.post('/api/public/auth/register', form.body, form.headers)
+        return httpClient.post('/api/public/auth/register', JSON.stringify(user))
             .then(this.parseResponse);
     }
 

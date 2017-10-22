@@ -29,6 +29,8 @@ class HttpClient {
 
         headers = headers || {};
 
+        headers['Content-Type'] = 'application/json';
+
         return fetch(this.baseUrl + url, {
                 method: 'post',
                 headers: {...this.defaultHeaders, ...headers},
