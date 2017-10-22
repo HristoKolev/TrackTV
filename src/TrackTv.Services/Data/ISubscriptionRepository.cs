@@ -10,7 +10,7 @@
 
         Task<Subscription> GetSubscriptionAsync(int profileId, int showId);
 
-        Task<Show[]> GetSubscriptionsByProfileIdAsync(int profileId);
+        Task<int[]> GetSubscriptionsByProfileIdAsync(int profileId);
 
         Task<bool> IsProfileSubscribedAsync(int profileId, int showId);
 

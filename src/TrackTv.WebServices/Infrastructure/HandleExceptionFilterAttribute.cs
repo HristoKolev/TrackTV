@@ -1,7 +1,6 @@
 namespace TrackTv.WebServices.Infrastructure
 {
     using System;
-    using System.Reflection;
 
     using log4net;
     using log4net.Util;

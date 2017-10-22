@@ -1,24 +1,20 @@
 ﻿namespace TrackTv.WebServices.Controllers.Public
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics;
     using System.Linq;
-    using System.Security.Claims;
-    using System.Security.Principal;
     using System.Threading.Tasks;
 
-    using AspNet.Security.OpenIdConnect.Extensions;
-    using AspNet.Security.OpenIdConnect.Primitives;
-    using AspNet.Security.OpenIdConnect.Server;
+    using IdentityModel.Client;
 
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Http.Authentication;
-    using Microsoft.AspNetCore.Identity;
+    using IdentityServer4.Models;
+
+    using log4net;
+
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
 
-    using OpenIddict.Core;
+    using Newtonsoft.Json;
 
-    using TrackTv.Data;
     using TrackTv.Services.Profile;
     using TrackTv.WebServices.Infrastructure;
 
@@ -26,187 +22,79 @@
     public class AuthController : Controller
     {
         public AuthController(
-            SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager,
             IProfileService profilesService,
-            ITransactionScopeFactory transactionScopeFactory)
+            ApplicationDbContext context,
+            OAuth2Config auth2Config,
+            IConfiguration configuration, ILog logger)
         {
-            this.SignInManager = signInManager;
-            this.UserManager = userManager;
             this.ProfilesService = profilesService;
-            this.TransactionScopeFactory = transactionScopeFactory;
+            this.DbContext = context;
+            this.Auth2Config = auth2Config;
+            this.Configuration = configuration;
+            this.Logger = logger;
         }
+
+        private OAuth2Config Auth2Config { get; }
+
+        private IConfiguration Configuration { get; }
+
+        private ILog Logger { get; }
+
+        private ApplicationDbContext DbContext { get; }
 
         private IProfileService ProfilesService { get; }
 
-        private SignInManager<ApplicationUser> SignInManager { get; }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            string authority = this.Configuration["Server:Urls"].Split(",").First();
 
-        private ITransactionScopeFactory TransactionScopeFactory { get; }
+            this.Logger.Debug(authority);
 
-        private UserManager<ApplicationUser> UserManager { get; }
+            var discoveryResponse = await DiscoveryClient.GetAsync(authority);
+
+            this.Logger.Debug(JsonConvert.SerializeObject(discoveryResponse.Json, Formatting.Indented));
+
+            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, this.Auth2Config.ClientId, this.Auth2Config.ClientSecret);
+
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(model.Username, model.Password, this.Auth2Config.ApiName);
+
+            if (tokenResponse.IsError)
+            {
+                return this.Failure(tokenResponse.Error, tokenResponse.ErrorDescription);
+            }
+
+            return this.Success(tokenResponse.Json);
+        }
 
         [HttpPost("[action]")]
+        [ServiceFilter(typeof(InTransactionFilter))]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.Failure(this.ModelState);
             }
-
-            using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
+          
+            if (this.DbContext.Users.Any(u => u.Username == model.Username))
             {
-                int profileId = await this.ProfilesService.CreateProfileAsync(model.Email).ConfigureAwait(false);
-
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    ProfileId = profileId
-                };
-
-                var result = await this.UserManager.CreateAsync(user, model.Password).ConfigureAwait(false);
-
-                if (result.Succeeded)
-                {
-                    scope.Complete();
-
-                    return this.Success();
-                }
-
-                return this.Failure(result.Errors.Select(error => error.Description).ToArray());
-            }
-        }
-
-        [HttpPost("~/connect/token")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Token(OpenIdConnectRequest request)
-        {
-            Debug.Assert(request.IsTokenRequest(),
-                "The OpenIddict binder for ASP.NET Core MVC is not registered. "
-                + "Make sure services.AddOpenIddict().AddMvcBinders() is correctly called.");
-
-            if (request.IsPasswordGrantType())
-            {
-                var user = await this.UserManager.FindByNameAsync(request.Username).ConfigureAwait(false);
-
-                if (user == null)
-                {
-                    return this.BadRequest(new OpenIdConnectResponse
-                    {
-                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                        ErrorDescription = "The username/password couple is invalid."
-                    });
-                }
-
-                // Ensure the user is allowed to sign in.
-                if (!await this.SignInManager.CanSignInAsync(user).ConfigureAwait(false))
-                {
-                    return this.BadRequest(new OpenIdConnectResponse
-                    {
-                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                        ErrorDescription = "The specified user is not allowed to sign in."
-                    });
-                }
-
-                // Reject the token request if two-factor authentication has been enabled by the user.
-                if (this.UserManager.SupportsUserTwoFactor && await this.UserManager.GetTwoFactorEnabledAsync(user).ConfigureAwait(false))
-                {
-                    return this.BadRequest(new OpenIdConnectResponse
-                    {
-                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                        ErrorDescription = "The specified user is not allowed to sign in."
-                    });
-                }
-
-                // Ensure the user is not already locked out.
-                if (this.UserManager.SupportsUserLockout && await this.UserManager.IsLockedOutAsync(user).ConfigureAwait(false))
-                {
-                    return this.BadRequest(new OpenIdConnectResponse
-                    {
-                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                        ErrorDescription = "The username/password couple is invalid."
-                    });
-                }
-
-                // Ensure the password is valid.
-                if (!await this.UserManager.CheckPasswordAsync(user, request.Password).ConfigureAwait(false))
-                {
-                    if (this.UserManager.SupportsUserLockout)
-                    {
-                        await this.UserManager.AccessFailedAsync(user).ConfigureAwait(false);
-                    }
-
-                    return this.BadRequest(new OpenIdConnectResponse
-                    {
-                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                        ErrorDescription = "The username/password couple is invalid."
-                    });
-                }
-
-                if (this.UserManager.SupportsUserLockout)
-                {
-                    await this.UserManager.ResetAccessFailedCountAsync(user).ConfigureAwait(false);
-                }
-
-                // Create a new authentication ticket.
-                var ticket = await this.CreateTicketAsync(request, user).ConfigureAwait(false);
-
-                return this.SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
+                return this.Failure($"A user with an username '{model.Username}' already exists.");
             }
 
-            return this.BadRequest(new OpenIdConnectResponse
+            var user = new User
             {
-                Error = OpenIdConnectConstants.Errors.UnsupportedGrantType,
-                ErrorDescription = "The specified grant type is not supported."
-            });
-        }
+                Username = model.Username,
+                ProfileId = await this.ProfilesService.CreateProfileAsync(model.Username),
+                Password = model.Password.Sha512(),
+                IsAdmin = false
+            };
 
-        private static void AddCustomClaims(ApplicationUser user, IPrincipal principal)
-        {
-            var identity = (ClaimsIdentity)principal.Identity;
+            // Check the user for validity
+            this.DbContext.Users.Add(user);
 
-            identity.AddClaim(new Claim(nameof(user.ProfileId), user.ProfileId.ToString()));
-            identity.AddClaim(new Claim(identity.RoleClaimType, user.IsAdmin ? AppRoles.Admin : AppRoles.User));
-        }
+            await this.DbContext.SaveChangesAsync();
 
-        private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, ApplicationUser user)
-        {
-            // Create a new ClaimsPrincipal containing the claims that
-            // will be used to create an id_token, a token or a code.
-            var principal = await this.SignInManager.CreateUserPrincipalAsync(user).ConfigureAwait(false);
-
-            AddCustomClaims(user, principal);
-
-            // Note: by default, claims are NOT automatically included in the access and identity tokens.
-            // To allow OpenIddict to serialize them, you must attach them a destination, that specifies
-            // whether they should be included in access tokens, in identity tokens or in both.
-            foreach (var claim in principal.Claims)
-            {
-                // In this sample, every claim is serialized in both the access and the identity tokens.
-                // In a real world application, you'd probably want to exclude confidential claims
-                // or apply a claims policy based on the scopes requested by the client application.
-                claim.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken, OpenIdConnectConstants.Destinations.IdentityToken);
-            }
-
-            // Create a new authentication ticket holding the user identity.
-            var ticket = new AuthenticationTicket(principal, new AuthenticationProperties(),
-                OpenIdConnectServerDefaults.AuthenticationScheme);
-
-            // Set the list of scopes granted to the client application.
-            // Note: the offline_access scope must be granted
-            // to allow OpenIddict to return a refresh token.
-            ticket.SetScopes(new[]
-            {
-                OpenIdConnectConstants.Scopes.OpenId,
-                OpenIdConnectConstants.Scopes.Email,
-                OpenIdConnectConstants.Scopes.Profile,
-                OpenIdConnectConstants.Scopes.OfflineAccess,
-                OpenIddictConstants.Scopes.Roles
-            }.Intersect(request.GetScopes()));
-
-            ticket.SetResources("TrackTv_Api");
-
-            return ticket;
+            return this.Success();
         }
     }
 
@@ -214,7 +102,18 @@
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        public string Password { get; set; }
+    }
+
+    public class LoginViewModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Username { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

@@ -21,45 +21,6 @@
         [Fact]
 
         // ReSharper disable once InconsistentNaming
-        public async Task GetEpisodesSummariesAsync_returns_the_correct_last_and_next_episodes()
-        {
-            using (var context = CreateContext())
-            {
-                await this.SeedEpisodesAsync(context).ConfigureAwait(false);
-
-                var repository = new EpisodeRepository(context);
-
-                int[] ids =
-                {
-                    1,
-                    2,
-                    3
-                };
-
-                for (int i = 0; i <= 60; i++)
-                {
-                    var summaries = await repository.GetEpisodesSummariesAsync(ids, this.ReferenceDate.AddDays(i)).ConfigureAwait(false);
-
-                    foreach (var summary in summaries)
-                    {
-                        if (i < WeekLength)
-                        {
-                            Assert.Equal(null, summary.LastEpisode);
-                        }
-                        else
-                        {
-                            Assert.Equal(this.ReferenceDate.AddDays((i / WeekLength) * WeekLength), summary.LastEpisode.FirstAired);
-                        }
-
-                        Assert.Equal(this.ReferenceDate.AddDays(((i / WeekLength) + 1) * WeekLength), summary.NextEpisode.FirstAired);
-                    }
-                }
-            }
-        }
-
-        [Fact]
-
-        // ReSharper disable once InconsistentNaming
         public async Task GetMonthlyEpisodesAsync_includes_the_show()
         {
             using (var context = CreateContext())
@@ -68,9 +29,9 @@
 
                 var repository = new EpisodeRepository(context);
 
-                var episodes =
-                    await repository.GetMonthlyEpisodesAsync(ReferenceProfileId, this.ReferenceDate, this.ReferenceDate.AddDays(30))
-                                    .ConfigureAwait(false);
+                var episodes = await repository
+                                   .GetMonthlyEpisodesAsync(ReferenceProfileId, this.ReferenceDate, this.ReferenceDate.AddDays(30))
+                                   .ConfigureAwait(false);
 
                 foreach (var episode in episodes)
                 {

@@ -36,13 +36,11 @@
                 throw new ProfileNotFoundException(profileId);
             }
 
-            var shows = await this.SubscriptionRepository.GetSubscriptionsByProfileIdAsync(profileId).ConfigureAwait(false);
-
-            var showIds = shows.Select(x => x.ShowId).ToArray();
-
+            var showIds = await this.SubscriptionRepository.GetSubscriptionsByProfileIdAsync(profileId).ConfigureAwait(false);
+ 
             var episodesSummaries = await this.EpisodeRepository.GetEpisodesSummariesAsync(showIds, time).ConfigureAwait(false);
 
-            return MapToModels(shows, episodesSummaries);
+            return episodesSummaries;
         }
 
         private static MyEpisode EpisodeToModel(Episode episode)

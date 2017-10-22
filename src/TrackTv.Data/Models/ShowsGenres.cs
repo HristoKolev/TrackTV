@@ -12,7 +12,7 @@
         }
 
         public Genre Genre { get; set; }
-
+        
         public int GenreId { get; set; }
 
         public Show Show { get; set; }

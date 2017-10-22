@@ -35,42 +35,11 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            ConfigureManyToManyRelationships(builder);
-
-            ConfigureProperties(builder);
-        }
-
-        private static void ConfigureManyToManyRelationships(ModelBuilder builder)
-        {
-            builder.Entity<ShowsGenres>()
-                   .HasKey(t => new
-                   {
-                       t.ShowId,
-                       t.GenreId
-                   });
-        }
-
-        private static void ConfigureProperties(ModelBuilder builder)
-        {
-            const int ImdbIdSize = 10;
-
-            builder.Entity<Show>().Property(t => t.ShowName).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Show>().Property(t => t.ShowBanner).HasMaxLength(byte.MaxValue);
-            builder.Entity<Show>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
-
-            builder.Entity<Episode>().Property(t => t.EpisodeTitle).HasMaxLength(byte.MaxValue);
-            builder.Entity<Episode>().Property(t => t.ImdbId).HasMaxLength(ImdbIdSize);
-
-            builder.Entity<Genre>().Property(t => t.GenreName).HasMaxLength(byte.MaxValue).IsRequired();
-
-            builder.Entity<Network>().Property(t => t.NetworkName).HasMaxLength(byte.MaxValue).IsRequired();
-
-            builder.Entity<Actor>().Property(t => t.ActorName).HasMaxLength(byte.MaxValue).IsRequired();
-            builder.Entity<Actor>().Property(t => t.ActorImage).HasMaxLength(byte.MaxValue);
-
-            builder.Entity<Role>().Property(t => t.RoleName).HasMaxLength(byte.MaxValue);
-
-            builder.Entity<Profile>().Property(user => user.Username).IsRequired();
+            builder.Entity<ShowsGenres>().HasKey(t => new
+            {
+                t.ShowId,
+                t.GenreId
+            });
         }
     }
 }

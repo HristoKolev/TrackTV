@@ -1,0 +1,16 @@
+Unit]
+Description=TrackTv REST Services
+
+[Service]
+WorkingDirectory=/home/apps/tracktv/
+ExecStart=/home/apps/tracktv/TrackTv.WebServices
+Restart=always
+
+# Restart service after 10 seconds if dotnet service crashes
+RestartSec=3
+SyslogIdentifier=tracktv
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install]
+WantedBy=multi-user.target

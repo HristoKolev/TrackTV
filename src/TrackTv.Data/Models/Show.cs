@@ -13,21 +13,13 @@
 
         public DateTime? AirTime { get; set; }
 
-        public string ShowBanner { get; set; }
-
-        public string ShowDescription { get; set; }
-
         public virtual ICollection<Episode> Episodes { get; } = new List<Episode>();
 
         public DateTime? FirstAired { get; set; }
 
-        public int ShowId { get; set; }
-
         public string ImdbId { get; set; }
 
         public DateTime LastUpdated { get; set; }
-
-        public string ShowName { get; set; }
 
         public Network Network { get; set; }
 
@@ -35,11 +27,19 @@
 
         public virtual ICollection<Role> Roles { get; } = new List<Role>();
 
+        public string ShowBanner { get; set; }
+
+        public string ShowDescription { get; set; }
+
+        public int ShowId { get; set; }
+
+        public string ShowName { get; set; }
+
         public virtual ICollection<ShowsGenres> ShowsGenres { get; } = new List<ShowsGenres>();
 
-        public virtual ICollection<Subscription> Subscriptions { get; } = new List<Subscription>();
-
         public ShowStatus ShowStatus { get; set; }
+
+        public virtual ICollection<Subscription> Subscriptions { get; } = new List<Subscription>();
 
         public int TheTvDbId { get; set; }
 

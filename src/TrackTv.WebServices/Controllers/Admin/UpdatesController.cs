@@ -10,8 +10,8 @@
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize(Roles = AppRoles.Admin)]
-    [ServiceFilter(typeof(InTransactionFilter))]
     [Route("api/admin/[controller]")]
+    [ServiceFilter(typeof(InTransactionFilter))]
     public class UpdatesController : Controller
     {
         public UpdatesController(IFetcher fetcher)

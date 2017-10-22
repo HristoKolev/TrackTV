@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace TrackTv.WebServices.Infrastructure
+﻿namespace TrackTv.WebServices.Infrastructure
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     public static class MethodInfoExtensions
     {
         private static readonly ConcurrentDictionary<MethodInfo, List<Attribute>> Cache

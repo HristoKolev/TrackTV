@@ -1,8 +1,8 @@
 option batch abort
 option confirm off
 
-open ftp://Administrator:123456Mm$@192.168.1.103
+open ssh://root:123456Mm$@192.168.1.104
 
-synchronize remote .\bin\Release\PublishOutput /tracktv
+synchronize remote ./bin/publish /home/apps/tracktv
 
 exit

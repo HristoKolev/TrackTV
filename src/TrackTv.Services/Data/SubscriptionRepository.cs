@@ -29,9 +29,9 @@
             return this.DbContext.Subscriptions.AsNoTracking().SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId);
         }
 
-        public Task<Show[]> GetSubscriptionsByProfileIdAsync(int profileId)
+        public Task<int[]> GetSubscriptionsByProfileIdAsync(int profileId)
         {
-            return this.DbContext.Subscriptions.AsNoTracking().Where(x => x.ProfileId == profileId).Select(x => x.Show).ToArrayAsync();
+            return this.DbContext.Subscriptions.AsNoTracking().Where(x => x.ProfileId == profileId).Select(x => x.ShowId).ToArrayAsync();
         }
 
         public Task<bool> IsProfileSubscribedAsync(int profileId, int showId)
