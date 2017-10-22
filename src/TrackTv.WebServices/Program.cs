@@ -1,7 +1,5 @@
 ﻿namespace TrackTv.WebServices
 {
-    using System.IO;
-
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
 
@@ -11,11 +9,9 @@
     {
         public static void Main()
         {
-            var config = StartupConfig.BuildConfig(new ConfigurationBuilder(), Directory.GetCurrentDirectory());
+            Global.AppConfig = StartupConfig.BuildConfig(new ConfigurationBuilder());
 
-            Global.AppConfig = config;
-
-            var host = StartupConfig.BuildHost(new WebHostBuilder(), config);
+            var host = StartupConfig.BuildHost(new WebHostBuilder(), Global.AppConfig);
 
             host.Run();
         }

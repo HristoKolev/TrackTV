@@ -191,12 +191,11 @@ namespace TrackTv.WebServices.Infrastructure
             services.AddMvcCore().AddAuthorization().AddJsonFormatters();
 
             services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
                 .AddInMemoryApiResources(new List<ApiResource> { resource })
                 .AddInMemoryClients(new List<Client> { client })
                 .AddInMemoryPersistedGrants()
                 .AddProfileService<ProfileService>()
-                .AddSigningCredential(new X509Certificate2(Path.Combine(Directory.GetCurrentDirectory(), "certificate.pfx"), string.Empty));
+                .AddSigningCredential(new X509Certificate2(Path.Combine(Global.GetConfigDirectory(), "certificate.pfx"), string.Empty));
 
             services.AddAuthentication("Bearer").AddIdentityServerAuthentication(options =>
             {

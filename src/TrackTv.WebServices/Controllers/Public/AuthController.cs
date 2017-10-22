@@ -13,8 +13,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
 
-    using Newtonsoft.Json;
-
     using TrackTv.Services.Profile;
     using TrackTv.WebServices.Infrastructure;
 
@@ -25,39 +23,34 @@
             IProfileService profilesService,
             ApplicationDbContext context,
             OAuth2Config auth2Config,
-            IConfiguration configuration, ILog logger)
+            IConfiguration configuration,
+            ILog logger)
         {
             this.ProfilesService = profilesService;
             this.DbContext = context;
             this.Auth2Config = auth2Config;
             this.Configuration = configuration;
-            this.Logger = logger;
         }
 
         private OAuth2Config Auth2Config { get; }
 
         private IConfiguration Configuration { get; }
 
-        private ILog Logger { get; }
-
         private ApplicationDbContext DbContext { get; }
 
         private IProfileService ProfilesService { get; }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             string authority = this.Configuration["Server:Urls"].Split(",").First();
 
-            this.Logger.Debug(authority);
-
             var discoveryResponse = await DiscoveryClient.GetAsync(authority);
-
-            this.Logger.Debug(JsonConvert.SerializeObject(discoveryResponse.Json, Formatting.Indented));
 
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, this.Auth2Config.ClientId, this.Auth2Config.ClientSecret);
 
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(model.Username, model.Password, this.Auth2Config.ApiName);
+            var tokenResponse =
+                await tokenClient.RequestResourceOwnerPasswordAsync(model.Username, model.Password, this.Auth2Config.ApiName);
 
             if (tokenResponse.IsError)
             {
@@ -69,13 +62,13 @@
 
         [HttpPost("[action]")]
         [ServiceFilter(typeof(InTransactionFilter))]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.Failure(this.ModelState);
             }
-          
+
             if (this.DbContext.Users.Any(u => u.Username == model.Username))
             {
                 return this.Failure($"A user with an username '{model.Username}' already exists.");
@@ -101,22 +94,22 @@
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Username { get; set; }
-
-        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         public string Password { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Username { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Username { get; set; }
-
-        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         public string Password { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Username { get; set; }
     }
 }

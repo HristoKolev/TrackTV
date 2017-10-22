@@ -16,7 +16,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             var assembly = Assembly.GetEntryAssembly();
             
             var logRepository = LogManager.GetRepository(assembly);
-            XmlConfigurator.ConfigureAndWatch(logRepository, new FileInfo("log4net-config.xml"));
+            XmlConfigurator.ConfigureAndWatch(logRepository, new FileInfo(Path.Combine(Global.GetConfigDirectory(), "log4net-config.xml")));
             this.For<ILog>().Use("Building log4net logger.", context => LogManager.GetLogger(assembly, "Global logger"));
         }
     }

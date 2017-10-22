@@ -3,6 +3,6 @@ option confirm off
 
 open ssh://root:123456Mm$@192.168.1.104
 
-synchronize remote ./bin/publish /home/apps/tracktv
+synchronize remote ./bin/publish /var/www/tracktv/public_html
 
 exit

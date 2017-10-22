@@ -19,11 +19,6 @@
     {
         public Startup(IHostingEnvironment env)
         {
-            if (Global.AppConfig == null)
-            {
-                Global.AppConfig = StartupConfig.BuildConfig(new ConfigurationBuilder(), env.ContentRootPath);
-            }
-
             this.Configuration = Global.AppConfig;
         }
 

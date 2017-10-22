@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
     using TrackTv.Data;
@@ -23,6 +24,16 @@
             using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
             {
                 var executedContext = await next().ConfigureAwait(false);
+
+                if (executedContext.Result is OkObjectResult jsResult && jsResult.Value is ApiResult apiResult)
+                {
+                    if (apiResult.Success)
+                    {
+                        scope.Complete();
+                    }
+
+                    return;
+                }
 
                 if (executedContext.Exception == null)
                 {

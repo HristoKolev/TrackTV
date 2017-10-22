@@ -10,9 +10,9 @@
     {
         private const string ConfigFile = "appsettings.json";
 
-        public static IConfigurationRoot BuildConfig(IConfigurationBuilder builder, string rootPath)
+        public static IConfigurationRoot BuildConfig(IConfigurationBuilder builder)
         {
-            return builder.SetBasePath(rootPath)
+            return builder.SetBasePath(Global.GetConfigDirectory())
                           .AddJsonFile(ConfigFile, optional: true, reloadOnChange: true)
                           .AddEnvironmentVariables()
                           .Build();
