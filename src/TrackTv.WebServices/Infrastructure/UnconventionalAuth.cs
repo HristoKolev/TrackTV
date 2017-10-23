@@ -195,7 +195,7 @@ namespace TrackTv.WebServices.Infrastructure
                 .AddInMemoryClients(new List<Client> { client })
                 .AddInMemoryPersistedGrants()
                 .AddProfileService<ProfileService>()
-                .AddSigningCredential(new X509Certificate2(Path.Combine(Global.GetConfigDirectory(), "certificate.pfx"), string.Empty));
+                .AddSigningCredential(new X509Certificate2(Path.Combine(Global.ConfigDirectory, "certificate.pfx"), string.Empty));
 
             services.AddAuthentication("Bearer").AddIdentityServerAuthentication(options =>
             {

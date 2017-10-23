@@ -6,7 +6,7 @@
     {
         public static void SelectProvider(this DbContextOptionsBuilder builder, string connectionString)
         {
-            builder.UseSqlServer(connectionString);
+            builder.UseMySql(connectionString);
         }
     }
 }

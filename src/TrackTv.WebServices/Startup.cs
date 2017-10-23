@@ -17,7 +17,7 @@
 
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup()
         {
             this.Configuration = Global.AppConfig;
         }

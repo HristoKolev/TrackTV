@@ -9,11 +9,9 @@
     {
         public static IConfigurationRoot AppConfig { get; set; }
 
-        public static string GetConfigDirectory()
-        {
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                       ? Directory.GetCurrentDirectory()
-                       : Path.Combine(Directory.GetCurrentDirectory(), "../");
-        }
+        public static string ConfigDirectory =>
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? RootDirectory : Path.Combine(RootDirectory, "../");
+
+        public static string RootDirectory => Directory.GetCurrentDirectory();
     }
 }
