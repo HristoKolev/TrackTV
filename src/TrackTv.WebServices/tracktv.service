@@ -6,10 +6,10 @@ WorkingDirectory=/var/www/tracktv/public_html/
 ExecStart=/var/www/tracktv/public_html/TrackTv.WebServices
 Restart=always
 
-# Restart service after 3 seconds if dotnet service crashes
+# Restart service after 10 seconds if dotnet service crashes
 RestartSec=3
 SyslogIdentifier=tracktv
-User=root
+User=kenny
 Environment=ASPNETCORE_ENVIRONMENT=Production 
 
 [Install]
