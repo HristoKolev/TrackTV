@@ -3,10 +3,32 @@ import { NgRedux } from '@angular-redux/store';
 
 type PersistStrategy = 'localStorage' | 'sessionStorage';
 
+const prefix: string = 'redux_';
+
+export const getPersistedState = (): any => {
+
+    const localStorageItems = Object.keys(localStorage)
+        .filter(x => x.startsWith(prefix))
+        .reduce((items, key) => ({
+            ...items,
+            [key.substr(prefix.length)]: JSON.parse(localStorage.getItem(key) || '{}'),
+        }), {});
+
+    const sessionStorageItems = Object.keys(sessionStorage)
+        .filter(x => x.startsWith(prefix))
+        .reduce((items, key) => ({
+            ...items,
+            [key.substr(prefix.length)]: JSON.parse(sessionStorage.getItem(key) || '{}'),
+        }), {});
+
+    return {
+        ...sessionStorageItems,
+        ...localStorageItems
+    };
+};
+
 @Injectable()
 export class ReduxPersist {
-
-    private prefix: string = 'redux_';
 
     constructor(private ngRedux: NgRedux<any>) {
     }
@@ -21,28 +43,6 @@ export class ReduxPersist {
                     this.persist(propertyName, propertyValue, persistStrategy as PersistStrategy);
                 });
         }
-    }
-
-    readItems(): any {
-
-        const localStorageItems = Object.keys(localStorage)
-            .filter(x => x.startsWith(this.prefix))
-            .reduce((items, key) => ({
-                ...items,
-                [key.substr(this.prefix.length)]: JSON.parse(localStorage.getItem(key) || '{}'),
-            }), {});
-
-        const sessionStorageItems = Object.keys(sessionStorage)
-            .filter(x => x.startsWith(this.prefix))
-            .reduce((items, key) => ({
-                ...items,
-                [key.substr(this.prefix.length)]: JSON.parse(sessionStorage.getItem(key) || '{}'),
-            }), {});
-
-        return {
-            ...sessionStorageItems,
-            ...localStorageItems
-        };
     }
 
     private persist(propertyName: string, propertyValue: any, persistStrategy: PersistStrategy) {
@@ -69,7 +69,7 @@ export class ReduxPersist {
 
             const json = JSON.stringify(propertyValue);
 
-            sessionStorage.setItem(this.prefix + propertyName, json);
+            sessionStorage.setItem(prefix + propertyName, json);
 
         } catch (err) {
             throw new Error(
@@ -82,7 +82,7 @@ export class ReduxPersist {
 
             const json = JSON.stringify(propertyValue);
 
-            localStorage.setItem(this.prefix + propertyName, json);
+            localStorage.setItem(prefix + propertyName, json);
 
         } catch (err) {
             throw new Error(

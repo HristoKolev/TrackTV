@@ -1,4 +1,5 @@
 import { actionTypes, ReduxReducer } from '../infrastructure/redux-types';
+import { getPersistedState } from '../infrastructure/redux-persist';
 
 export interface ISettingsState {
     baseUrl: string;
@@ -69,7 +70,9 @@ export interface ISessionState {
     access_token?: string;
 }
 
-const initialSessionState: ISessionState = {
+const persistedState = getPersistedState();
+
+const initialSessionState: ISessionState = persistedState.session || {
 
     isLoggedIn: false,
 };

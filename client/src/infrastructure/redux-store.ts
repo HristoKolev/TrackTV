@@ -36,7 +36,7 @@ class StoreWrapper {
         this.sagaMiddleware = createSagaMiddleware();
     }
 
-    public initStore(enhancers: any[] = [], initialState?: any) {
+    public initStore(enhancers: any[] = []) {
 
         const middleware = [
             this.sagaMiddleware,
@@ -48,7 +48,7 @@ class StoreWrapper {
             ...enhancers
         );
 
-        this.store = createStore<any>(this.createReducer(), initialState, enhancer);
+        this.store = createStore<any>(this.createReducer(), enhancer);
 
         return this.store;
     }

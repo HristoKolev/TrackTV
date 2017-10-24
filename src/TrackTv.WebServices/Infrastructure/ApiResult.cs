@@ -6,29 +6,6 @@ namespace TrackTv.WebServices.Infrastructure
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    public static class ControllerExtensions
-    {
-        public static ActionResult Failure(this ControllerBase controller, ModelStateDictionary modelState)
-        {
-            return controller.Ok(ApiResult.FromModelState(modelState));
-        }
-
-        public static ActionResult Failure(this ControllerBase controller, params string[] messages)
-        {
-            return controller.Ok(ApiResult.FromErrorMessages(messages));
-        }
-
-        public static ActionResult Success<T>(this ControllerBase controller, T payload)
-        {
-            return controller.Ok(ApiResult.Ok(payload));
-        }
-
-        public static ActionResult Success(this ControllerBase controller)
-        {
-            return controller.Ok(ApiResult.Ok());
-        }
-    }
-
     public class ApiResult
     {
         public string[] ErrorMessages { get; set; }
@@ -81,6 +58,29 @@ namespace TrackTv.WebServices.Infrastructure
             {
                 ErrorMessages = Array.Empty<string>()
             };
+        }
+    }
+
+    public static class ControllerExtensions
+    {
+        public static ActionResult Failure(this ControllerBase controller, ModelStateDictionary modelState)
+        {
+            return controller.Ok(ApiResult.FromModelState(modelState));
+        }
+
+        public static ActionResult Failure(this ControllerBase controller, params string[] messages)
+        {
+            return controller.Ok(ApiResult.FromErrorMessages(messages));
+        }
+
+        public static ActionResult Success<T>(this ControllerBase controller, T payload)
+        {
+            return controller.Ok(ApiResult.Ok(payload));
+        }
+
+        public static ActionResult Success(this ControllerBase controller)
+        {
+            return controller.Ok(ApiResult.Ok());
         }
     }
 }

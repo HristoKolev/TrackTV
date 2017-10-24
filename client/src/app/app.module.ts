@@ -57,9 +57,7 @@ export class AppModule {
 
         const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
 
-        const storedState = reduxPersist.readItems();
-
-        ngRedux.provideStore(reduxState.initStore(enhancers, storedState));
+        ngRedux.provideStore(reduxState.initStore(enhancers));
 
         reduxPersist.initialize({
             session: 'localStorage',
