@@ -1,12 +1,18 @@
 import { ApiClient, triggerAction } from '../shared/api-client';
+
 import { actionTypes } from '../../infrastructure/redux-types';
 import { globalActions } from '../global.state';
 import { put } from 'redux-saga/effects';
-import { subscriptionActions } from '../shared/subscription.state';
 
 export const showActions = actionTypes('show').ofType<{
     SHOW_REQUEST_START: string,
     SHOW_REQUEST_SUCCESS: string;
+
+    SUBSCRIBE_REQUEST_START: string,
+    SUBSCRIBE_REQUEST_SUCCESS: string,
+
+    UNSUBSCRIBE_REQUEST_START: string,
+    UNSUBSCRIBE_REQUEST_SUCCESS: string,
 }>();
 
 const initialState = {};
@@ -36,18 +42,39 @@ export const showSagas = (apiClient: ApiClient) => ({
             yield put(triggerAction(showActions.SHOW_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
+    subscribeRequestSaga: {
+        type: showActions.SUBSCRIBE_REQUEST_START,
+        inTransition: true,
+        saga: function* (action: any) {
+
+            const response = yield apiClient.subscribe(action.showId);
+
+            yield put(triggerAction(showActions.SUBSCRIBE_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+        },
+    },
+    unsubscribeRequestSaga: {
+        type: showActions.UNSUBSCRIBE_REQUEST_START,
+        inTransition: true,
+        saga: function* (action: any) {
+
+            const response = yield apiClient.unsubscribe(action.showId);
+
+            yield put(triggerAction(showActions.UNSUBSCRIBE_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+        },
+    },
     showSubscribeFetchSaga: {
-        type: subscriptionActions.SUBSCRIBE_REQUEST_SUCCESS,
+        type: showActions.SUBSCRIBE_REQUEST_SUCCESS,
         inTransition: true,
         saga: function* (action: any, state: any) {
             yield put({type: showActions.SHOW_REQUEST_START, showId: state.show.showId});
         },
     },
     showUnsubscribeFetchSaga: {
-        type: subscriptionActions.UNSUBSCRIBE_REQUEST_SUCCESS,
+        type: showActions.UNSUBSCRIBE_REQUEST_SUCCESS,
         inTransition: true,
         saga: function* (action: any, state: any) {
             yield put({type: showActions.SHOW_REQUEST_START, showId: state.show.showId});
         },
     },
+
 });

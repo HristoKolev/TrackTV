@@ -17,13 +17,32 @@ export class MyShowsActions {
             type: myShowsActions.MY_SHOWS_REQUEST_START,
         });
     }
+
+    subscribe(showId: number) {
+        this.ngRedux.dispatch({
+            type: myShowsActions.MY_SHOWS_SUBSCRIBE_START,
+            showId,
+        });
+    }
+
+    unsubscribe(showId: number) {
+        this.ngRedux.dispatch({
+            type: myShowsActions.MY_SHOWS_UNSUBSCRIBE_START,
+            showId,
+        });
+    }
 }
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <pre>{{this.myShows | json}}</pre>
+        <div *ngFor="let show of this.myShows.shows">
+            {{show.showName}}
+
+            <button *ngIf="show.isSubscribed" (click)="unsubscribe(show.showId)">Unubscribe</button>
+            <button *ngIf="!show.isSubscribed" (click)="subscribe(show.showId)">Subscribe</button>
+        </div>
     `,
 })
 export class MyShowsComponent implements OnInit {
@@ -43,6 +62,14 @@ export class MyShowsComponent implements OnInit {
             });
 
         this.myShowsActions.myShows();
+    }
+
+    subscribe(showId: number) {
+        this.myShowsActions.subscribe(showId);
+    }
+
+    unsubscribe(showId: number) {
+        this.myShowsActions.unsubscribe(showId);
     }
 }
 

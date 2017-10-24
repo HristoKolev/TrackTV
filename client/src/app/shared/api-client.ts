@@ -1,4 +1,4 @@
-import { FetchResponse, httpClient, urlEncodeBody, urlEncodedHeader } from '../../infrastructure/http-client';
+import { FetchResponse, httpClient } from '../../infrastructure/http-client';
 import { reduxState } from '../../infrastructure/redux-store';
 import { Promise } from 'es6-promise';
 
@@ -63,7 +63,7 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
-    public subscribe(showId: number): Promise<any> {
+    public subscribe(showId: number): Promise<ApiResponse> {
         return httpClient.put(`/api/user/subscription/${showId}`, {})
             .then(this.parseResponse);
     }
@@ -73,7 +73,7 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
-    public unsubscribe(showId: number): Promise<any> {
+    public unsubscribe(showId: number): Promise<ApiResponse> {
         return httpClient.del(`/api/user/subscription/${showId}`, {})
             .then(this.parseResponse);
     }
@@ -99,11 +99,11 @@ export class ApiClient {
 
 export const apiClient = new ApiClient();
 
-export const triggerAction = (successActionType: string, failureActionType: string, response: ApiResponse): any => {
+export const triggerAction = (successActionType: string, failureActionType: string, response: ApiResponse, rest: any = {}): any => {
 
     if (response.success) {
 
-        return {type: successActionType, payload: response.payload};
+        return {type: successActionType, payload: response.payload, ...rest};
     }
 
     return {type: failureActionType, errorMessages: response.errorMessages};
