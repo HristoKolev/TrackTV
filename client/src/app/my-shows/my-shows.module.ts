@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewE
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { reduxState } from '../../infrastructure/redux-store';
+import { reduxStore } from '../../infrastructure/redux-store';
 import { myShowsActions, myShowsReducer, myShowsSagas } from './my-shows.state';
 import { apiClient } from '../shared/api-client';
 
@@ -89,10 +89,10 @@ const routes: Routes = [
 export class MyShowsModule {
     constructor() {
 
-        reduxState.addReducers({
+        reduxStore.addReducers({
             myShows: myShowsReducer,
         });
 
-        reduxState.addSagas(myShowsSagas(apiClient));
+        reduxStore.addSagas(myShowsSagas(apiClient));
     }
 }

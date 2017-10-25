@@ -1,5 +1,5 @@
 import { ISettingsState } from '../app/global.state';
-import { reduxState } from './redux-store';
+import { reduxStore } from './redux-store';
 
 export interface FetchResponse {
     status: number;
@@ -12,7 +12,7 @@ class HttpClient {
 
     public get baseUrl(): string {
 
-        const settings = reduxState.getState().settings as ISettingsState;
+        const settings = reduxStore.getState().settings as ISettingsState;
 
         return settings.baseUrl;
     }
@@ -94,7 +94,7 @@ class HttpClient {
 
         const headers: any = {};
 
-        const state = reduxState.getState();
+        const state = reduxStore.getState();
 
         let token;
 

@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { reduxState } from '../../infrastructure/redux-store';
+import { reduxStore } from '../../infrastructure/redux-store';
 import { showActions, showReducer, showSagas } from './show.state';
 import { apiClient } from '../shared/api-client';
 
@@ -100,10 +100,10 @@ const routes: Routes = [
 export class ShowModule {
     constructor() {
 
-        reduxState.addReducers({
+        reduxStore.addReducers({
             show: showReducer,
         });
 
-        reduxState.addSagas(showSagas(apiClient));
+        reduxStore.addSagas(showSagas(apiClient));
     }
 }

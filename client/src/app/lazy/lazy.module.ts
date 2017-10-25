@@ -6,7 +6,7 @@ import { CourseActions, coursesReducer } from './courses-state';
 import { FormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses.component';
 import { EditCourseComponent } from './edit-course.component';
-import { reduxState } from '../../infrastructure/redux-store';
+import { reduxStore } from '../../infrastructure/redux-store';
 
 const routes: Routes = [
     {path: '', component: CoursesComponent},
@@ -30,7 +30,7 @@ const routes: Routes = [
 export class LazyModule {
     constructor() {
 
-        reduxState.addReducers({
+        reduxStore.addReducers({
             courses: coursesReducer,
         });
     }

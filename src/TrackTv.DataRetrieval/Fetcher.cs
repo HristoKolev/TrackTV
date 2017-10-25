@@ -7,7 +7,6 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using TrackTv.Data;
     using TrackTv.Data.Models;
     using TrackTv.Data.Models.Contracts;
     using TrackTv.DataRetrieval.Data;

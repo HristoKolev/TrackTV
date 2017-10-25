@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Injectable, Input, NgModule, OnInit
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { reduxState } from '../../infrastructure/redux-store';
+import { reduxStore } from '../../infrastructure/redux-store';
 import { showsActions, showsReducer, showsSagas } from './shows-state';
 import { apiClient } from '../shared/api-client';
 import { NgRedux } from '@angular-redux/store';
@@ -209,10 +209,10 @@ const routes: Routes = [
 export class ShowsModule {
     constructor() {
 
-        reduxState.addReducers({
+        reduxStore.addReducers({
             shows: showsReducer,
         });
 
-        reduxState.addSagas(showsSagas(apiClient));
+        reduxStore.addSagas(showsSagas(apiClient));
     }
 }

@@ -100,6 +100,10 @@ class StoreWrapper {
         return this.store.getState();
     }
 
+    public dispatch(...args: any[]) {
+        this.store.dispatch(...args);
+    }
+
     private createReducer(reducers: ReduxReducerMap = {}): any {
 
         this.allReducers = {...this.allReducers, ...reducers};
@@ -109,4 +113,4 @@ class StoreWrapper {
 
 }
 
-export const reduxState = new StoreWrapper();
+export const reduxStore = new StoreWrapper();

@@ -10,7 +10,7 @@ import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store'
 import { explicitRouterSaga, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';
 
 import { globalErrorReducer, settingsReducer, userSessionReducer } from './global.state';
-import { reduxState } from '../infrastructure/redux-store';
+import { reduxStore } from '../infrastructure/redux-store';
 import { HeaderComponent } from './layout/header-component';
 import { LoadingComponent } from './layout/loading-component';
 import { apiClient } from './shared/api-client';
@@ -56,19 +56,19 @@ export class AppModule {
 
         const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
 
-        ngRedux.provideStore(reduxState.initStore(enhancers));
+        ngRedux.provideStore(reduxStore.initStore(enhancers));
 
         reduxPersist.initialize({
             session: 'localStorage',
         });
 
-        reduxState.addReducers({
+        reduxStore.addReducers({
             settings: settingsReducer,
             global: globalErrorReducer,
             session: userSessionReducer,
         });
 
-        reduxState.addSagas({
+        reduxStore.addSagas({
             explicitRouterSaga,
             logSaga: {
                 type: '*',

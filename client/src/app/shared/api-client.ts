@@ -1,6 +1,7 @@
 import { FetchResponse, httpClient } from '../../infrastructure/http-client';
-import { reduxState } from '../../infrastructure/redux-store';
+import { reduxStore } from '../../infrastructure/redux-store';
 import { Promise } from 'es6-promise';
+import { globalActions, go } from '../global.state';
 
 export interface ApiResponse {
     errorMessages: string[];
@@ -10,6 +11,7 @@ export interface ApiResponse {
 
 const networkIsDownMessage = 'Network error. Please, try again later.';
 const serverErrorMessage = 'Server error. Please, try again later.';
+const loggedOutMessage = 'You are not logged in.';
 
 const errorResponse = (errorMessages: string[]) => ({errorMessages, success: false} as ApiResponse);
 const successResponse = (payload: any) => ({payload, errorMessages: [], success: true} as ApiResponse);
@@ -79,13 +81,20 @@ export class ApiClient {
     }
 
     private get showsPageSize() {
-        return reduxState.getState().settings.showsPageSize;
+        return reduxStore.getState().settings.showsPageSize;
     }
 
     private parseResponse(response: FetchResponse): ApiResponse {
 
         if (response.networkError) {
             return errorResponse([networkIsDownMessage]);
+        }
+
+        if (response.status === 401) {
+
+            reduxStore.dispatch({type: globalActions.USER_LOGOUT});
+            go(['/shows']);
+            return errorResponse([loggedOutMessage]);
         }
 
         if (!response.body) {

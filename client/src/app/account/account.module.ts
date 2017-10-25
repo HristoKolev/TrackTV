@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { accountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer } from './account.state';
-import { reduxState } from '../../infrastructure/redux-store';
+import { reduxStore } from '../../infrastructure/redux-store';
 import { apiClient } from '../shared/api-client';
 import { SharedModule } from '../shared/shared.module';
 import { Subscription } from 'rxjs/Subscription';
@@ -171,11 +171,11 @@ export class AccountModule {
 
     constructor() {
 
-        reduxState.addReducers({
+        reduxStore.addReducers({
             login: loginReducer,
             register: registerReducer,
         });
 
-        reduxState.addSagas(accountSagas(apiClient));
+        reduxStore.addSagas(accountSagas(apiClient));
     }
 }

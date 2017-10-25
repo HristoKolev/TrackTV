@@ -1,5 +1,7 @@
 import { actionTypes, ReduxReducer } from '../infrastructure/redux-types';
 import { getPersistedState } from '../infrastructure/redux-persist';
+import { routerActions } from '../infrastructure/redux-router';
+import { reduxStore } from '../infrastructure/redux-store';
 
 export interface ISettingsState {
     baseUrl: string;
@@ -103,3 +105,5 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
         }
     }
 };
+
+export const go = (...args: any[]) => reduxStore.dispatch({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: args});
