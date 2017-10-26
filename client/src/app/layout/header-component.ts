@@ -21,6 +21,10 @@ import { reduxStore } from '../../infrastructure/redux-store';
                     <button [routerLink]="['/my-shows']">My Shows</button>
                 </li>
 
+                <li *ngIf="this.sessionState.isLoggedIn">
+                    <button [routerLink]="['/calendar']">Calendar</button>
+                </li>
+
                 <li *ngIf="!this.sessionState.isLoggedIn">
                     <button [routerLink]="['/account/login']">Login</button>
                 </li>
@@ -76,7 +80,7 @@ export class HeaderComponent implements OnInit {
 
     public logout() {
         reduxStore.dispatch({
-            type: globalActions.USER_LOGOUT,
+            type: globalActions.LOGOUT_USER,
         });
 
         go(['/shows']);

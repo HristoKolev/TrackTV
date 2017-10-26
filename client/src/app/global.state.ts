@@ -1,4 +1,4 @@
-import { reduxStore, getPersistedState, routerActions, ReduxReducer, actionTypes } from '../infrastructure/redux-store';
+import { actionTypes, getPersistedState, ReduxReducer, reduxStore, routerActions } from '../infrastructure/redux-store';
 
 export interface ISettingsState {
     baseUrl: string;
@@ -30,8 +30,10 @@ const initialGlobalErrorState: IGlobalErrorState = {
 
 export const globalActions = actionTypes('global').ofType<{
     GLOBAL_ERROR: string;
-    USER_LOGIN: string;
-    USER_LOGOUT: string;
+
+    LOGIN_USER: string;
+    LOGOUT_USER: string;
+
     START_TRANSITION: string;
     END_TRANSITION: string;
 }>();
@@ -80,7 +82,7 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
 
     switch (action.type) {
 
-        case globalActions.USER_LOGIN: {
+        case globalActions.LOGIN_USER: {
 
             return {
                 ...state,
@@ -89,7 +91,7 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
                 user: action.responses.profileResponse.payload,
             };
         }
-        case  globalActions.USER_LOGOUT: {
+        case  globalActions.LOGOUT_USER: {
             return {
                 ...state,
                 access_token: undefined,

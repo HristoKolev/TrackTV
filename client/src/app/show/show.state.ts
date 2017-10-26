@@ -4,9 +4,9 @@ import { globalActions } from '../global.state';
 import { put } from 'redux-saga/effects';
 import { actionTypes } from '../../infrastructure/redux-store';
 
-export const showActions = actionTypes('show').ofType<{
-    SHOW_REQUEST_START: string,
-    SHOW_REQUEST_SUCCESS: string;
+export const showActions = actionTypes('SHOW').ofType<{
+    FETCH_REQUEST_START: string,
+    FETCH_REQUEST_SUCCESS: string;
 
     SUBSCRIBE_REQUEST_START: string,
     SUBSCRIBE_REQUEST_SUCCESS: string,
@@ -19,7 +19,7 @@ const initialState = {};
 
 export const showReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case showActions.SHOW_REQUEST_SUCCESS: {
+        case showActions.FETCH_REQUEST_SUCCESS: {
             return {
                 ...state,
                 ...action.payload,
@@ -33,13 +33,13 @@ export const showReducer = (state = initialState, action: any) => {
 
 export const showSagas = (apiClient: ApiClient) => ({
     showRequestSaga: {
-        type: showActions.SHOW_REQUEST_START,
+        type: showActions.FETCH_REQUEST_START,
         inTransition: true,
         saga: function* (action: any) {
 
             const response = yield apiClient.show(action.showId);
 
-            yield put(triggerAction(showActions.SHOW_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+            yield put(triggerAction(showActions.FETCH_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
     subscribeRequestSaga: {
@@ -66,14 +66,14 @@ export const showSagas = (apiClient: ApiClient) => ({
         type: showActions.SUBSCRIBE_REQUEST_SUCCESS,
         inTransition: true,
         saga: function* (action: any, state: any) {
-            yield put({type: showActions.SHOW_REQUEST_START, showId: state.show.showId});
+            yield put({type: showActions.FETCH_REQUEST_START, showId: state.show.showId});
         },
     },
     showUnsubscribeFetchSaga: {
         type: showActions.UNSUBSCRIBE_REQUEST_SUCCESS,
         inTransition: true,
         saga: function* (action: any, state: any) {
-            yield put({type: showActions.SHOW_REQUEST_START, showId: state.show.showId});
+            yield put({type: showActions.FETCH_REQUEST_START, showId: state.show.showId});
         },
     },
 

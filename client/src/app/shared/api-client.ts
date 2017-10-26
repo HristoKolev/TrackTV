@@ -80,6 +80,11 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
+    public calendar(): Promise<ApiResponse> {
+        return httpClient.get(`/api/user/calendar`)
+            .then(this.parseResponse);
+    }
+
     private get showsPageSize() {
         return reduxStore.getState().settings.showsPageSize;
     }
@@ -92,7 +97,7 @@ export class ApiClient {
 
         if (response.status === 401) {
 
-            reduxStore.dispatch({type: globalActions.USER_LOGOUT});
+            reduxStore.dispatch({type: globalActions.LOGOUT_USER});
             go(['/shows']);
             return errorResponse([loggedOutMessage]);
         }

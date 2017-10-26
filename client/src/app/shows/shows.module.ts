@@ -11,7 +11,7 @@ export class ShowsActions {
 
     topShows(page: number) {
         reduxStore.dispatch({
-            type: showsActions.TOP_SHOWS_REQUEST_START,
+            type: showsActions.FETCH_TOP_SHOWS_REQUEST_START,
             page,
         });
     }
@@ -26,7 +26,7 @@ export class ShowsActions {
 
     showsByGenre(genreId: number, page: number) {
         reduxStore.dispatch({
-            type: showsActions.SHOWS_BY_GENRES_REQUEST_START,
+            type: showsActions.FETCH_SHOWS_BY_GENRES_REQUEST_START,
             genreId,
             page,
         });

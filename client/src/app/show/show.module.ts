@@ -11,7 +11,7 @@ export class ShowActions {
 
     show(showId: number) {
         reduxStore.dispatch({
-            type: showActions.SHOW_REQUEST_START,
+            type: showActions.FETCH_REQUEST_START,
             showId,
         });
     }

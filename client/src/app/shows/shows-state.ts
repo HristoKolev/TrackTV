@@ -3,18 +3,18 @@ import { put } from 'redux-saga/effects';
 import { globalActions } from '../global.state';
 import { actionTypes, ReduxReducer } from '../../infrastructure/redux-store';
 
-export const showsActions = actionTypes('shows').ofType<{
-    TOP_SHOWS_REQUEST_START: string;
-    TOP_SHOWS_REQUEST_SUCCESS: string;
+export const showsActions = actionTypes('SHOWS').ofType<{
+    FETCH_TOP_SHOWS_REQUEST_START: string;
+    FETCH_TOP_SHOWS_REQUEST_SUCCESS: string;
 
     SEARCH_SHOWS_REQUEST_START: string;
     SEARCH_SHOWS_REQUEST_SUCCESS: string;
 
-    GENRES_REQUEST_START: string;
-    GENRES_REQUEST_SUCCESS: string;
+    FETCH_GENRES_REQUEST_START: string;
+    FETCH_GENRES_REQUEST_SUCCESS: string;
 
-    SHOWS_BY_GENRES_REQUEST_START: string;
-    SHOWS_BY_GENRES_REQUEST_SUCCESS: string;
+    FETCH_SHOWS_BY_GENRES_REQUEST_START: string;
+    FETCH_SHOWS_BY_GENRES_REQUEST_SUCCESS: string;
 }>();
 
 const initialState = {
@@ -34,7 +34,7 @@ const initialState = {
 
 export const showsReducer: ReduxReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case showsActions.TOP_SHOWS_REQUEST_SUCCESS: {
+        case showsActions.FETCH_TOP_SHOWS_REQUEST_SUCCESS: {
             return {
                 ...state,
                 topShows: {
@@ -54,7 +54,7 @@ export const showsReducer: ReduxReducer = (state = initialState, action: any) =>
                 },
             };
         }
-        case showsActions.SHOWS_BY_GENRES_REQUEST_SUCCESS: {
+        case showsActions.FETCH_SHOWS_BY_GENRES_REQUEST_SUCCESS: {
             return {
                 ...state,
                 showsByGenre: {
@@ -64,7 +64,7 @@ export const showsReducer: ReduxReducer = (state = initialState, action: any) =>
                 },
             };
         }
-        case showsActions.GENRES_REQUEST_SUCCESS: {
+        case showsActions.FETCH_GENRES_REQUEST_SUCCESS: {
             return {
                 ...state,
                 genres: action.payload,
@@ -78,15 +78,15 @@ export const showsReducer: ReduxReducer = (state = initialState, action: any) =>
 
 export const showsSagas = (apiClient: ApiClient) => ({
     topShowsRequestSaga: {
-        type: showsActions.TOP_SHOWS_REQUEST_START,
+        type: showsActions.FETCH_TOP_SHOWS_REQUEST_START,
         inTransition: true,
         saga: function* (action: any) {
 
             const response = yield apiClient.topShows(action.page);
 
-            yield put({type: showsActions.GENRES_REQUEST_START});
+            yield put({type: showsActions.FETCH_GENRES_REQUEST_START});
 
-            yield put(triggerAction(showsActions.TOP_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+            yield put(triggerAction(showsActions.FETCH_TOP_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
     searchShowsRequestSaga: {
@@ -96,32 +96,32 @@ export const showsSagas = (apiClient: ApiClient) => ({
 
             const response = yield apiClient.searchShows(action.query, action.page);
 
-            yield put({type: showsActions.GENRES_REQUEST_START});
+            yield put({type: showsActions.FETCH_GENRES_REQUEST_START});
 
             yield put(triggerAction(showsActions.SEARCH_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
     genresRequestSaga: {
-        type: showsActions.GENRES_REQUEST_START,
+        type: showsActions.FETCH_GENRES_REQUEST_START,
         inTransition: true,
         saga: function* (action: any) {
 
             const response = yield apiClient.getGenres();
 
-            yield put(triggerAction(showsActions.GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+            yield put(triggerAction(showsActions.FETCH_GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
 
     },
     showsByGenreRequestSaga: {
-        type: showsActions.SHOWS_BY_GENRES_REQUEST_START,
+        type: showsActions.FETCH_SHOWS_BY_GENRES_REQUEST_START,
         inTransition: true,
         saga: function* (action: any) {
 
             const response = yield apiClient.showsByGenre(action.genreId, action.page);
 
-            yield put({type: showsActions.GENRES_REQUEST_START});
+            yield put({type: showsActions.FETCH_GENRES_REQUEST_START});
 
-            yield put(triggerAction(showsActions.SHOWS_BY_GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+            yield put(triggerAction(showsActions.FETCH_SHOWS_BY_GENRES_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
 });

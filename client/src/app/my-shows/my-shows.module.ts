@@ -11,20 +11,20 @@ export class MyShowsActions {
 
     myShows() {
         reduxStore.dispatch({
-            type: myShowsActions.MY_SHOWS_REQUEST_START,
+            type: myShowsActions.FETCH_REQUEST_START,
         });
     }
 
     subscribe(showId: number) {
         reduxStore.dispatch({
-            type: myShowsActions.MY_SHOWS_SUBSCRIBE_START,
+            type: myShowsActions.SUBSCRIBE_REQUEST_START,
             showId,
         });
     }
 
     unsubscribe(showId: number) {
         reduxStore.dispatch({
-            type: myShowsActions.MY_SHOWS_UNSUBSCRIBE_START,
+            type: myShowsActions.UNSUBSCRIBE_REQUEST_START,
             showId,
         });
     }

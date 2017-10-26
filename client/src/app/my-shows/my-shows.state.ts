@@ -3,13 +3,13 @@ import { globalActions } from '../global.state';
 import { put } from 'redux-saga/effects';
 import { actionTypes } from '../../infrastructure/redux-store';
 
-export const myShowsActions = actionTypes('myShows').ofType<{
-    MY_SHOWS_REQUEST_START: string;
-    MY_SHOWS_REQUEST_SUCCESS: string;
-    MY_SHOWS_SUBSCRIBE_START: string;
-    MY_SHOWS_SUBSCRIBE_SUCCESS: string;
-    MY_SHOWS_UNSUBSCRIBE_START: string;
-    MY_SHOWS_UNSUBSCRIBE_SUCCESS: string;
+export const myShowsActions = actionTypes('MY_SHOWS').ofType<{
+    FETCH_REQUEST_START: string;
+    FETCH_REQUEST_SUCCESS: string;
+    SUBSCRIBE_REQUEST_START: string;
+    SUBSCRIBE_REQUEST_SUCCESS: string;
+    UNSUBSCRIBE_REQUEST_START: string;
+    UNSUBSCRIBE_REQUEST_SUCCESS: string;
 }>();
 
 const initialState = {
@@ -18,13 +18,13 @@ const initialState = {
 
 export const myShowsReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case myShowsActions.MY_SHOWS_REQUEST_SUCCESS: {
+        case myShowsActions.FETCH_REQUEST_SUCCESS: {
             return {
                 ...state,
                 shows: action.payload.map((show: any) => ({...show, isSubscribed: true})),
             };
         }
-        case myShowsActions.MY_SHOWS_SUBSCRIBE_SUCCESS: {
+        case myShowsActions.SUBSCRIBE_REQUEST_SUCCESS: {
             return {
                 ...state,
                 shows: state.shows.map((show: any) => {
@@ -41,7 +41,7 @@ export const myShowsReducer = (state = initialState, action: any) => {
                 }),
             };
         }
-        case myShowsActions.MY_SHOWS_UNSUBSCRIBE_SUCCESS: {
+        case myShowsActions.UNSUBSCRIBE_REQUEST_SUCCESS: {
             return {
                 ...state,
                 shows: state.shows.map((show: any) => {
@@ -66,24 +66,24 @@ export const myShowsReducer = (state = initialState, action: any) => {
 
 export const myShowsSagas = (apiClient: ApiClient) => ({
     myShowsRequests: {
-        type: myShowsActions.MY_SHOWS_REQUEST_START,
+        type: myShowsActions.FETCH_REQUEST_START,
         inTransition: true,
         saga: function* () {
 
             const response = yield apiClient.myShows();
 
-            yield put(triggerAction(myShowsActions.MY_SHOWS_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
+            yield put(triggerAction(myShowsActions.FETCH_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
     myShowsSubscribe: {
-        type: myShowsActions.MY_SHOWS_SUBSCRIBE_START,
+        type: myShowsActions.SUBSCRIBE_REQUEST_START,
         inTransition: true,
         saga: function* (action: any) {
 
             const response = yield apiClient.subscribe(action.showId);
 
             yield put(triggerAction(
-                myShowsActions.MY_SHOWS_SUBSCRIBE_SUCCESS,
+                myShowsActions.SUBSCRIBE_REQUEST_SUCCESS,
                 globalActions.GLOBAL_ERROR,
                 response,
                 {showId: action.showId},
@@ -91,14 +91,14 @@ export const myShowsSagas = (apiClient: ApiClient) => ({
         },
     },
     myShowsUnsubscribe: {
-        type: myShowsActions.MY_SHOWS_UNSUBSCRIBE_START,
+        type: myShowsActions.UNSUBSCRIBE_REQUEST_START,
         inTransition: true,
         saga: function* (action: any) {
 
             const response = yield apiClient.unsubscribe(action.showId);
 
             yield put(triggerAction(
-                myShowsActions.MY_SHOWS_UNSUBSCRIBE_SUCCESS,
+                myShowsActions.UNSUBSCRIBE_REQUEST_SUCCESS,
                 globalActions.GLOBAL_ERROR,
                 response,
                 {showId: action.showId},
