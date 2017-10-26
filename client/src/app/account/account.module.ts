@@ -7,7 +7,6 @@ import { reduxStore } from '../../infrastructure/redux-store';
 import { apiClient } from '../shared/api-client';
 import { SharedModule } from '../shared/shared.module';
 import { Subscription } from 'rxjs/Subscription';
-import { NgRedux } from '@angular-redux/store';
 
 export interface UserLogin {
     username: string;
@@ -22,23 +21,20 @@ export interface UserRegister {
 @Injectable()
 export class AccountActions {
 
-    constructor(private ngRedux: NgRedux<any>) {
-    }
-
     login(user: UserLogin) {
-        this.ngRedux.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
+        reduxStore.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
     }
 
     register(user: UserRegister) {
-        this.ngRedux.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
+        reduxStore.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
     }
 
     clearLoginErrorMessages() {
-        this.ngRedux.dispatch({type: accountActions.LOGIN_CLEAR_ERROR_MESSAGES});
+        reduxStore.dispatch({type: accountActions.LOGIN_CLEAR_ERROR_MESSAGES});
     }
 
     clearRegisterErrorMessages() {
-        this.ngRedux.dispatch({type: accountActions.REGISTER_CLEAR_ERROR_MESSAGES});
+        reduxStore.dispatch({type: accountActions.REGISTER_CLEAR_ERROR_MESSAGES});
     }
 }
 
@@ -64,15 +60,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    constructor(private accountActions: AccountActions,
-                private ngRedux: NgRedux<any>) {
+    constructor(private accountActions: AccountActions) {
 
     }
 
     ngOnInit(): void {
 
-        this.subscription = this.ngRedux
-            .select((store: { login: ILoginState }) => store.login)
+        this.subscription = reduxStore.select((store: { login: ILoginState }) => store.login)
             .distinctUntilChanged()
             .subscribe((x: any) => this.state = x);
 
@@ -118,14 +112,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    constructor(private accountActions: AccountActions,
-                private ngRedux: NgRedux<any>) {
-
+    constructor(private accountActions: AccountActions) {
     }
 
     ngOnInit(): void {
 
-        this.subscription = this.ngRedux
+        this.subscription = reduxStore
             .select((store: { register: IRegisterState }) => store.register)
             .distinctUntilChanged()
             .subscribe((x: any) => this.state = x);

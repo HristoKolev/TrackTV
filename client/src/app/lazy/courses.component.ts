@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Course, CourseActions, ICoursesState } from './courses-state';
-import { NgRedux } from '@angular-redux/store';
+import { Course, CourseActions } from './courses-state';
+import { reduxStore } from '../../infrastructure/redux-store';
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
@@ -31,16 +31,14 @@ export class CoursesComponent implements OnInit {
 
     courses: Course[];
 
-    constructor(private stateActions: CourseActions,
-                private ngRedux: NgRedux<{ courses: ICoursesState }>) {
-
+    constructor(private stateActions: CourseActions) {
     }
 
     ngOnInit(): void {
 
-        this.ngRedux.select((state: any) => state.courses.filtered)
+        reduxStore.select((state: any) => state.courses.filtered)
             .distinctUntilChanged()
-            .subscribe((courses: any[]) => {
+            .subscribe((courses) => {
                 this.courses = [...courses];
             });
     }
@@ -50,7 +48,7 @@ export class CoursesComponent implements OnInit {
     }
 
     cats() {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: 'router/ROUTER_NAVIGATION_EXPLICIT',
             payload: [['/lazy', 2]],
         });

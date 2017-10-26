@@ -2,32 +2,29 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
-import { NgRedux } from '@angular-redux/store';
 import { reduxStore } from '../../infrastructure/redux-store';
 import { showActions, showReducer, showSagas } from './show.state';
 import { apiClient } from '../shared/api-client';
 
 @Injectable()
 export class ShowActions {
-    constructor(private ngRedux: NgRedux<any>) {
-    }
 
     show(showId: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: showActions.SHOW_REQUEST_START,
             showId,
         });
     }
 
     subscribe(showId: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: showActions.SUBSCRIBE_REQUEST_START,
             showId,
         });
     }
 
     unsubscribe(showId: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: showActions.UNSUBSCRIBE_REQUEST_START,
             showId,
         });
@@ -51,8 +48,7 @@ export class ShowComponent implements OnInit {
     show: any;
     session: any;
 
-    constructor(private ngRedux: NgRedux<any>,
-                private showActions: ShowActions,
+    constructor(private showActions: ShowActions,
                 private route: ActivatedRoute) {
     }
 
@@ -66,7 +62,7 @@ export class ShowComponent implements OnInit {
                 this.showActions.show(showId);
             });
 
-        this.ngRedux.select(state => state)
+        reduxStore.select(state => state)
             .distinctUntilChanged()
             .subscribe(state => {
 

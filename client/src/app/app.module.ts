@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ApplicationRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -6,15 +6,18 @@ import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
 import { AppComponent, NotFound404Component } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
-import { explicitRouterSaga, ReduxRouter, ReduxRouterModule } from '../infrastructure/redux-router';
 
 import { globalErrorReducer, settingsReducer, userSessionReducer } from './global.state';
-import { reduxStore } from '../infrastructure/redux-store';
+import {
+    explicitRouterSaga,
+    ReduxHelperModule,
+    ReduxPersistService,
+    ReduxRouterService,
+    reduxStore,
+    wrapDevToolsExtension,
+} from '../infrastructure/redux-store';
 import { HeaderComponent } from './layout/header-component';
 import { LoadingComponent } from './layout/loading-component';
-import { apiClient } from './shared/api-client';
-import { ReduxPersist, ReduxPersistModule } from '../infrastructure/redux-persist';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},
@@ -40,9 +43,8 @@ export const routes: Routes = [
         ReactiveFormsModule,
         IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
         RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: IdlePreload}),
-        NgReduxModule,
-        ReduxRouterModule,
-        ReduxPersistModule,
+        ReduxHelperModule,
+
     ],
     bootstrap: [AppComponent],
     exports: [AppComponent],
@@ -50,13 +52,13 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-    constructor(ngRedux: NgRedux<any>, reduxRouter: ReduxRouter, devTools: DevToolsExtension, reduxPersist: ReduxPersist) {
+    constructor(reduxRouter: ReduxRouterService, reduxPersist: ReduxPersistService, appRef: ApplicationRef) {
+
+        const devToolsExtension = wrapDevToolsExtension((window as any).devToolsExtension, appRef);
+
+        reduxStore.initStore([devToolsExtension()]);
 
         reduxRouter.init(state => state.router);
-
-        const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
-
-        ngRedux.provideStore(reduxStore.initStore(enhancers));
 
         reduxPersist.initialize({
             session: 'localStorage',
@@ -79,5 +81,3 @@ export class AppModule {
         });
     }
 }
-
-

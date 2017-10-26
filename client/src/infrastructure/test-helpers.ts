@@ -1,4 +1,5 @@
-import { ReduxReducer } from './redux-types';
+
+import { ReduxReducer } from './redux-store';
 
 export const testReducer = (reducer: ReduxReducer) => {
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Course, CourseActions, ICoursesState } from './courses-state';
-import { NgRedux } from '@angular-redux/store';
+import { Course, CourseActions } from './courses-state';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { reduxStore } from '../../infrastructure/redux-store';
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
@@ -28,7 +28,6 @@ export class EditCourseComponent implements OnInit {
     course: Course;
 
     constructor(private stateActions: CourseActions,
-                private ngRedux: NgRedux<{ courses: ICoursesState }>,
                 private router: Router,
                 private route: ActivatedRoute) {
     }
@@ -36,7 +35,7 @@ export class EditCourseComponent implements OnInit {
     ngOnInit(): void {
 
         this.route.paramMap.map((params: ParamMap) => +(params.get('id') as string))
-            .switchMap(id => this.ngRedux.select(state => state.courses.all.filter(c => c.id === id))
+            .switchMap(id => reduxStore.select(state => state.courses.all.filter((c: any) => c.id === id))
                 .map(courses => [...courses, {id, description: '', name: ''}]))
             .map(courses => courses[0])
             .distinctUntilChanged()

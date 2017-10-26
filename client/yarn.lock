@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@angular-redux/store@^6.5.4":
-  version "6.5.7"
-  resolved "https://registry.yarnpkg.com/@angular-redux/store/-/store-6.5.7.tgz#22c3b4815c89d6cca0ac93dddb7cabec3966f1fc"
-
 "@angular/common@^4.1.0":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-4.3.4.tgz#98fb7d6e8da633ba56844d5c00986ca407aea950"
@@ -4038,10 +4034,6 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
-
-redux-observable@^0.14.1:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/redux-observable/-/redux-observable-0.14.1.tgz#9f3d870c69388fdc427ded6770a3e326f3b69693"
 
 redux-saga@^0.15.6:
   version "0.15.6"

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { NgRedux } from '@angular-redux/store';
-import { globalActions } from '../global.state';
+import { globalActions, go } from '../global.state';
+import { reduxStore } from '../../infrastructure/redux-store';
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
@@ -50,9 +50,6 @@ export class HeaderComponent implements OnInit {
 
     public sessionState: any;
 
-    constructor(private ngRedux: NgRedux<any>) {
-    }
-
     public ngOnInit(): void {
 
         this.links = [
@@ -70,7 +67,7 @@ export class HeaderComponent implements OnInit {
             },
         ];
 
-        this.ngRedux.select(state => state.session)
+        reduxStore.select(state => state.session)
             .distinctUntilChanged()
             .subscribe(sessionState => {
                 this.sessionState = sessionState;
@@ -78,8 +75,10 @@ export class HeaderComponent implements OnInit {
     }
 
     public logout() {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: globalActions.USER_LOGOUT,
         });
+
+        go(['/shows']);
     }
 }

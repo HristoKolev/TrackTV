@@ -5,22 +5,19 @@ import { FormsModule } from '@angular/forms';
 import { reduxStore } from '../../infrastructure/redux-store';
 import { showsActions, showsReducer, showsSagas } from './shows-state';
 import { apiClient } from '../shared/api-client';
-import { NgRedux } from '@angular-redux/store';
 
 @Injectable()
 export class ShowsActions {
-    constructor(private ngRedux: NgRedux<any>) {
-    }
 
     topShows(page: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: showsActions.TOP_SHOWS_REQUEST_START,
             page,
         });
     }
 
     searchShows(query: string, page: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: showsActions.SEARCH_SHOWS_REQUEST_START,
             query,
             page,
@@ -28,7 +25,7 @@ export class ShowsActions {
     }
 
     showsByGenre(genreId: number, page: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: showsActions.SHOWS_BY_GENRES_REQUEST_START,
             genreId,
             page,
@@ -57,8 +54,7 @@ export class ShowsByGenreComponent implements OnInit {
     genre: any;
     genreId: number;
 
-    constructor(private ngRedux: NgRedux<any>,
-                private showsActions: ShowsActions,
+    constructor(private showsActions: ShowsActions,
                 private route: ActivatedRoute) {
     }
 
@@ -73,7 +69,7 @@ export class ShowsByGenreComponent implements OnInit {
                 this.showsActions.showsByGenre(genreId, 1);
             });
 
-        this.ngRedux.select(state => state.shows)
+        reduxStore.select(state => state.shows)
             .distinctUntilChanged()
             .subscribe(shows => {
 
@@ -107,15 +103,14 @@ export class TopShowsComponent implements OnInit {
     shows: any;
     genres: any;
 
-    constructor(private ngRedux: NgRedux<any>,
-                private showsActions: ShowsActions) {
+    constructor(private showsActions: ShowsActions) {
     }
 
     ngOnInit(): void {
 
         this.showsActions.topShows(1);
 
-        this.ngRedux.select(state => state.shows)
+        reduxStore.select(state => state.shows)
             .distinctUntilChanged()
             .subscribe(shows => {
                 this.shows = shows.topShows;
@@ -150,15 +145,14 @@ export class SearchShowsComponent implements OnInit {
 
     query: string;
 
-    constructor(private ngRedux: NgRedux<any>,
-                private showsActions: ShowsActions) {
+    constructor(private showsActions: ShowsActions) {
     }
 
     ngOnInit(): void {
 
         this.showsActions.searchShows(this.query, 1);
 
-        this.ngRedux.select(state => state.shows)
+        reduxStore.select(state => state.shows)
             .distinctUntilChanged()
             .subscribe(shows => {
                 this.shows = shows.searchShows;

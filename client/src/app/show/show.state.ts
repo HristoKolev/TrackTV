@@ -1,8 +1,8 @@
 import { ApiClient, triggerAction } from '../shared/api-client';
 
-import { actionTypes } from '../../infrastructure/redux-types';
 import { globalActions } from '../global.state';
 import { put } from 'redux-saga/effects';
+import { actionTypes } from '../../infrastructure/redux-store';
 
 export const showActions = actionTypes('show').ofType<{
     SHOW_REQUEST_START: string,

@@ -1,8 +1,7 @@
 import { ApiClient } from '../shared/api-client';
-import { actionTypes, ReduxReducer } from '../../infrastructure/redux-types';
 import { put } from 'redux-saga/effects';
 import { globalActions } from '../global.state';
-import { routerActions } from '../../infrastructure/redux-router';
+import { actionTypes, ReduxReducer, routerActions } from '../../infrastructure/redux-store';
 
 export interface ILoginState {
 

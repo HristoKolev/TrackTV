@@ -1,4 +1,3 @@
-import { NgRedux } from '@angular-redux/store';
 import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -9,24 +8,22 @@ import { apiClient } from '../shared/api-client';
 
 @Injectable()
 export class MyShowsActions {
-    constructor(private ngRedux: NgRedux<any>) {
-    }
 
     myShows() {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: myShowsActions.MY_SHOWS_REQUEST_START,
         });
     }
 
     subscribe(showId: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: myShowsActions.MY_SHOWS_SUBSCRIBE_START,
             showId,
         });
     }
 
     unsubscribe(showId: number) {
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: myShowsActions.MY_SHOWS_UNSUBSCRIBE_START,
             showId,
         });
@@ -49,13 +46,12 @@ export class MyShowsComponent implements OnInit {
 
     myShows: any;
 
-    constructor(private ngRedux: NgRedux<any>,
-                private myShowsActions: MyShowsActions) {
+    constructor(private myShowsActions: MyShowsActions) {
     }
 
     ngOnInit(): void {
 
-        this.ngRedux.select(state => state.myShows)
+        reduxStore.select(state => state.myShows)
             .distinctUntilChanged()
             .subscribe(myShows => {
                 this.myShows = myShows;

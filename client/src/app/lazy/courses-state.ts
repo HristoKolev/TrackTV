@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NgRedux } from '@angular-redux/store';
-import { actionTypes, ReduxReducer } from '../../infrastructure/redux-types';
+import { actionTypes, ReduxReducer, reduxStore } from '../../infrastructure/redux-store';
 
 export interface Course {
     name: string;
@@ -71,12 +70,9 @@ let nextId = courses.length + 1;
 @Injectable()
 export class CourseActions {
 
-    constructor(private ngRedux: NgRedux<any>) {
-    }
-
     filterCourses(filter: string) {
 
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: coursesActions.FILTER_COURSES,
             filter: filter,
         });
@@ -86,7 +82,7 @@ export class CourseActions {
 
         course.id = course.id || nextId++;
 
-        this.ngRedux.dispatch({
+        reduxStore.dispatch({
             type: coursesActions.ADD_COURSE,
             course,
         });
