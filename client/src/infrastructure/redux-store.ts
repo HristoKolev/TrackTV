@@ -13,10 +13,6 @@ export const actionTypes = (actionPrefix: string) => ({
 
 export type ReduxReducer<TState = any> = (state: TState, action: any) => TState;
 export type ReduxReducerMap = { [key: string]: ReduxReducer<any> };
-
-export type ReduxMetaReducer<TState> = (reducer: ReduxReducer<TState>) => ReduxReducer<TState>;
-export type ReduxMetaReducerMap = { [key: string]: ReduxMetaReducer<any> };
-
 export type RouterState = { location?: string; };
 export type RouterAction = { type: string, location: string };
 

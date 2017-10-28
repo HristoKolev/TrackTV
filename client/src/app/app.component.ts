@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Default,
     selector: 'app-component',
     template: `
@@ -10,13 +10,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
         <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
 
         <loading-component></loading-component>
+
+        <div id="scrollbar"></div>
     `,
-    styles: [`
-        * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-    `],
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
 

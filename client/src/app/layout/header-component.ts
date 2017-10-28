@@ -11,78 +11,85 @@ import { reduxStore } from '../../infrastructure/redux-store';
 
             <h1>TrackTV</h1>
 
-            <ul id="my-navlist">
+            <nav>
+                <div class="inner-nav">
+                    <i id="bars" class="fa fa-bars" aria-hidden="true" (click)="this.toggleNavigationBars()"></i>
 
-                <li *ngFor="let link of links">
-                    <button [routerLink]="link.link" routerLinkActive="active-link">{{link.name}}</button>
-                </li>
 
-                <li *ngIf="this.sessionState.isLoggedIn">
-                    <button [routerLink]="['/my-shows']">My Shows</button>
-                </li>
+                    <ul [ngClass]="{'closed': this.navigationClosed}">
 
-                <li *ngIf="this.sessionState.isLoggedIn">
-                    <button [routerLink]="['/calendar']">Calendar</button>
-                </li>
+                        <li class="brand">
+                            <i class="fa fa-television" aria-hidden="true"></i>
+                            TrackTv
+                        </li>
 
-                <li *ngIf="!this.sessionState.isLoggedIn">
-                    <button [routerLink]="['/account/login']">Login</button>
-                </li>
+                        <li *ngFor="let link of links">
+                            <a [routerLink]="link.link" *ngIf="link.link" routerLinkActive="active-link"
+                               (click)="this.closeNavigation()">{{link.name}}</a>
 
-                <li *ngIf="!this.sessionState.isLoggedIn">
-                    <button [routerLink]="['/account/register']">Register</button>
-                </li>
-
-                <li *ngIf="this.sessionState.isLoggedIn">
-                    <button (click)="this.logout()">Logout</button>
-                </li>
-            </ul>
+                            <a (click)="link.func(); this.closeNavigation()" *ngIf="link.func" class="func-link">{{link.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </header>
     `,
-    styles: [`
-        #my-navlist li {
-            display: inline;
-            list-style-type: none;
-            padding-right: 20px;
-        }
-    `],
+    styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
 
     //noinspection JSMismatchedCollectionQueryUpdate
-    public links: any[];
+    links: any[];
 
-    public sessionState: any;
+    navigationClosed = true;
 
-    public ngOnInit(): void {
+    ngOnInit(): void {
 
-        this.links = [
-            {
-                name: 'Lazy',
-                link: ['lazy'],
-            },
-            {
-                name: 'Shows',
-                link: ['shows'],
-            },
-            {
-                name: 'Search',
-                link: ['shows/search'],
-            },
+        const allLinks = [
+            {name: 'Calendar', link: ['/calendar'], role: 'user'},
+            {name: 'My Shows', link: ['/my-shows'], role: 'user'},
+            {name: 'Shows', link: ['/shows/top'], role: 'public'},
+            {name: 'Search', link: ['/shows/search'], role: 'public'},
+            {name: 'Login', link: ['/account/login'], role: 'unregistered'},
+            {name: 'Logout', func: () => this.logout(), role: 'user'},
+            {name: 'Register', link: ['/account/register'], role: 'unregistered'},
         ];
 
         reduxStore.select(state => state.session)
             .distinctUntilChanged()
             .subscribe(sessionState => {
-                this.sessionState = sessionState;
+
+                this.links = allLinks.filter(link => {
+                    if (link.role === 'public') {
+                        return true;
+                    }
+
+                    if (link.role === 'user') {
+                        return sessionState.isLoggedIn;
+                    }
+
+                    if (link.role === 'unregistered') {
+                        return !sessionState.isLoggedIn;
+                    }
+
+                    throw new Error(`Invalid role: ${link.role}`);
+                });
             });
     }
 
-    public logout() {
+    logout() {
         reduxStore.dispatch({
             type: globalActions.LOGOUT_USER,
         });
 
         go(['/shows']);
+    }
+
+    toggleNavigationBars() {
+        this.navigationClosed = !this.navigationClosed;
+    }
+
+    closeNavigation() {
+        this.navigationClosed = true;
     }
 }
