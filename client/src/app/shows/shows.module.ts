@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { reduxStore } from '../../infrastructure/redux-store';
 import { showsActions, showsReducer, showsSagas } from './shows-state';
 import { apiClient } from '../shared/api-client';
+import { go } from '../global.state';
 
 @Injectable()
 export class ShowsActions {
@@ -87,15 +88,79 @@ export class ShowsByGenreComponent implements OnInit {
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
+    selector: 'show-summary-component',
+    template: `
+        <div class="tt-card show-card" (click)="showClicked()">
+            <div class="show-title">{{show.showName}}</div>
+            <div class="show-details">Subscriber count: {{show.subscriberCount}} | Status: {{getStatusText(show.showStatus)}}</div>
+            <div><img src="http://192.168.1.104:7001/banners/{{show.showBanner}}"></div>
+        </div>
+    `,
+    styles: [`
+        .show-card {
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .show-details {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .show-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+
+            width: 70%;
+            margin: 0 auto;
+            padding: 10px;
+            border-bottom: 1px solid #f44336;
+        }
+    `],
+})
+export class ShowSummaryComponent {
+
+    @Input()
+    show: any;
+
+    getStatusText(showStatus: number) {
+        switch (showStatus) {
+            case 0: {
+                return 'Ended';
+            }
+            case 1 : {
+                return 'Continuing';
+            }
+            default: {
+                throw new Error(`The showStatus is out of range. Acceptable values: (0, 1); Value: ${showStatus}`);
+            }
+        }
+    }
+
+    showClicked() {
+        go(['/show', this.show.showId]);
+    }
+}
+
+@Component({
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
     template: `
 
-        <genres-component [genres]="this.genres"></genres-component>
+        <!--<genres-component [genres]="this.genres"></genres-component>-->
+
+        <div *ngFor="let show of this.shows.items">
+            <show-summary-component [show]="show"></show-summary-component>
+        </div>
 
         <pre>{{this.shows | json}}</pre>
 
-        <div *ngFor="let show of this.shows.items">
-            <button [routerLink]="['/show', show.showId]">{{show.showName}}</button>
-        </div>
+
     `,
 })
 export class TopShowsComponent implements OnInit {
@@ -197,6 +262,7 @@ const routes: Routes = [
         SearchShowsComponent,
         GenresComponent,
         ShowsByGenreComponent,
+        ShowSummaryComponent,
     ],
     providers: [ShowsActions],
 })
