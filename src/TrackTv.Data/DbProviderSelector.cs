@@ -6,7 +6,10 @@
     {
         public static void SelectProvider(this DbContextOptionsBuilder builder, string connectionString)
         {
-            builder.UseMySql(connectionString);
+            if (!builder.IsConfigured)
+            {
+                builder.UseMySql(connectionString, optionsBuilder => optionsBuilder.MaxBatchSize(100));
+            }
         }
     }
 }
