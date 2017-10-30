@@ -16,8 +16,8 @@ import {
     reduxStore,
     wrapDevToolsExtension,
 } from '../infrastructure/redux-store';
-import { HeaderComponent } from './layout/header-component';
-import { LoadingComponent } from './layout/loading-component';
+import { HeaderComponent } from './layout/header.component';
+import { LoadingComponent } from './layout/loading.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/lazy', pathMatch: 'full'},

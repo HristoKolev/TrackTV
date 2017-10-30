@@ -1,10 +1,40 @@
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
 body {
   background-color: #fff;
-  margin-top: 65px;
+  margin-top: 80px;
+}
+
+.tt-button {
+  padding: 15px;
+  background-color: #f44336;
+  color: white;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tt-button:hover {
+
+  background-color: #d94236;
+}
+
+.tt-input {
+
+  margin: 5px 0;
+  padding: 15px 0 15px 15px;
+  box-sizing: border-box;
+  border: none;
+  background-color: #eee;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.tt-card {
+  border: 1px solid #eee;
+  box-shadow: 5px 5px 5px #eee;
+  padding: 15px;
 }

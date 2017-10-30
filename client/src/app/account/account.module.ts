@@ -42,14 +42,26 @@ export class AccountActions {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div> Username: <input [(ngModel)]="this.username" id="username"/></div>
-        <div> Password <input [(ngModel)]="this.password" id="password" type="password"/></div>
-        <div>
-            <button (click)="this.submit()">Login</button>
-        </div>
+        <div class="form-container tt-card">
 
-        <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+            <television-component>
+                <div>
+                    Welcome to TrackTv.
+                    <br/>
+                    <br/>
+                    Please, login.
+                </div>
+            </television-component>
+
+            <input [(ngModel)]="this.username" id="username" placeholder="Username" class="tt-input"/>
+            <input [(ngModel)]="this.password" id="password" placeholder="Password" type="password" class="tt-input"/>
+
+            <button (click)="this.submit()" class="tt-button">Login</button>
+
+            <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+        </div>
     `,
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
@@ -92,15 +104,28 @@ export class LoginComponent implements OnInit, OnDestroy {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div> Email: <input [(ngModel)]="this.username" id="username"/></div>
-        <div> Password <input [(ngModel)]="this.password" id="password" type="password"/></div>
-        <div> Confirm password <input [(ngModel)]="this.confirmPassword" type="password"/></div>
-        <div>
-            <button (click)="this.submit()">Register</button>
-        </div>
 
-        <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+        <div class="form-container tt-card">
+            <television-component>
+                <div>
+                    Welcome to TrackTv.
+                    <br/>
+                    <br/>
+                    Please, Register.
+                </div>
+            </television-component>
+
+            <input [(ngModel)]="this.username" id="username" placeholder="Username" class="tt-input"/>
+            <input [(ngModel)]="this.password" id="password" type="password" placeholder="Password" class="tt-input"/>
+            <input [(ngModel)]="this.confirmPassword" id="confirm-password" type="password" placeholder="Confirm password"
+                   class="tt-input"/>
+
+            <button (click)="this.submit()" class="tt-button">Register</button>
+
+            <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+        </div>
     `,
+    styleUrls: ['register.component.scss'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 

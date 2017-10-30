@@ -7,11 +7,12 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     template: `
         <header-component></header-component>
 
-        <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+        <router-outlet
+                (activate)="activateEvent($event)"
+                (deactivate)="deactivateEvent($event)">
+        </router-outlet>
 
         <loading-component></loading-component>
-
-        <div id="scrollbar"></div>
     `,
     styleUrls: ['./app.component.scss'],
 })

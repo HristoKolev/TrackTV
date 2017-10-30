@@ -9,15 +9,16 @@ nav {
   ul {
     list-style: none;
     padding: 0;
-    width: 50%;
+    width: 75%;
     margin: 0 auto;
 
     li {
       color: white;
+    }
 
-      &.brand {
-        font-weight: bold;
-      }
+    .brand {
+
+      font-family: 'Lobster', sans-serif;
     }
   }
 
@@ -32,6 +33,7 @@ nav {
 
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
+    user-select: none;
   }
 }
 
@@ -48,7 +50,7 @@ nav {
         padding: 0 20px;
       }
 
-      a.func-link {
+      .func-link {
         cursor: pointer;
       }
 
@@ -81,7 +83,7 @@ nav {
       border-top: 1px solid white;
     }
 
-    ul.closed li:not(.brand) {
+    .closed li:not(.brand) {
       display: none;
     }
   }

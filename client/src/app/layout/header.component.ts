@@ -8,9 +8,6 @@ import { reduxStore } from '../../infrastructure/redux-store';
     selector: 'header-component',
     template: `
         <header>
-
-            <h1>TrackTV</h1>
-
             <nav>
                 <div class="inner-nav">
                     <i id="bars" class="fa fa-bars" aria-hidden="true" (click)="this.toggleNavigationBars()"></i>
