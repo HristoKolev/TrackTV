@@ -154,14 +154,27 @@ export class ShowSummaryComponent {
 
         <!--<genres-component [genres]="this.genres"></genres-component>-->
 
-        <div *ngFor="let show of this.shows.items">
-            <show-summary-component [show]="show"></show-summary-component>
+        <div class="list-wrapper">
+            <show-summary-component *ngFor="let show of this.shows.items" [show]="show"></show-summary-component>
         </div>
 
         <pre>{{this.shows | json}}</pre>
-
-
     `,
+    styles: [`
+        @media (min-width: 768px) {
+
+            .list-wrapper {
+
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .list-wrapper show-summary-component {
+                display: inline-block;
+                max-width: 600px;
+            }
+        }
+    `],
 })
 export class TopShowsComponent implements OnInit {
 
