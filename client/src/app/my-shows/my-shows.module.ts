@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -34,12 +34,7 @@ export class MyShowsActions {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <div *ngFor="let show of this.myShows.shows">
-            {{show.showName}}
-
-            <button *ngIf="show.isSubscribed" (click)="unsubscribe(show.showId)">Unubscribe</button>
-            <button *ngIf="!show.isSubscribed" (click)="subscribe(show.showId)">Subscribe</button>
-        </div>
+        <my-show-component *ngFor="let show of this.myShows.shows" [show]="show"></my-show-component>
     `,
 })
 export class MyShowsComponent implements OnInit {
@@ -59,6 +54,51 @@ export class MyShowsComponent implements OnInit {
 
         this.myShowsActions.myShows();
     }
+}
+
+@Component({
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.Default,
+    selector: 'my-show-component',
+    template: `
+        <div class="tt-card my-show-card">
+
+            <div class="last-episode">
+                <div *ngIf="show.lastEpisode">
+                    {{getEpisodeNumber(show.lastEpisode)}} - {{show.lastEpisode.episodeTitle}}
+                    {{show.lastEpisode.firstAired}}
+                </div>
+            </div>
+
+            <div class="show-plane">
+                {{show.showName}}
+            </div>
+
+            <div class="next-episode">
+                <div *ngIf="show.nextEpisode">
+                    {{getEpisodeNumber(show.nextEpisode)}} - {{show.nextEpisode.episodeTitle}}
+                    {{show.nextEpisode.firstAired}}
+                </div>
+            </div>
+
+            <button *ngIf="show.isSubscribed" (click)="unsubscribe(show.showId)">Unubscribe</button>
+            <button *ngIf="!show.isSubscribed" (click)="subscribe(show.showId)">Subscribe</button>
+        </div>
+    `,
+    styles: [`
+        .my-show-card {
+            margin: 10px;
+            cursor: pointer;
+        }
+    `],
+})
+export class MyShowComponent {
+
+    @Input()
+    show: any;
+
+    constructor(private myShowsActions: MyShowsActions) {
+    }
 
     subscribe(showId: number) {
         this.myShowsActions.subscribe(showId);
@@ -66,6 +106,10 @@ export class MyShowsComponent implements OnInit {
 
     unsubscribe(showId: number) {
         this.myShowsActions.unsubscribe(showId);
+    }
+
+    getEpisodeNumber(episode: any) {
+        return `S${episode.seasonNumber.toString().padStart(2, '0')}E${episode.episodeNumber.toString().padStart(2, '0')}`;
     }
 }
 
@@ -79,7 +123,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         FormsModule,
     ],
-    declarations: [MyShowsComponent],
+    declarations: [MyShowsComponent, MyShowComponent],
     providers: [MyShowsActions],
 })
 export class MyShowsModule {

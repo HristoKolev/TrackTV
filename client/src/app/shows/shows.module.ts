@@ -93,17 +93,20 @@ export class ShowsByGenreComponent implements OnInit {
         <div class="tt-card show-card" (click)="showClicked()">
             <div class="show-title">{{show.showName}}</div>
             <div class="show-details">Subscriber count: {{show.subscriberCount}} | Status: {{getStatusText(show.showStatus)}}</div>
-            <div><img src="http://192.168.1.104:7001/banners/{{show.showBanner}}"></div>
+            <div><img src="http://192.168.1.104:7001/banners/{{show.showBanner}}" class="poster"></div>
         </div>
     `,
     styles: [`
         .show-card {
-            margin: 20px;
+            margin: 10px;
             cursor: pointer;
+            padding: 0;
         }
 
-        img {
-            width: 100%;
+        .poster {
+            width: 94%;
+            margin: 0 10px;
+            margin-bottom: 10px;
         }
 
         .show-details {
@@ -116,10 +119,13 @@ export class ShowsByGenreComponent implements OnInit {
             font-size: 20px;
             font-weight: bold;
 
-            width: 70%;
+            color: white;
+            background-color: #ff6b07;
+
+            width: 100%;
             margin: 0 auto;
-            padding: 10px;
-            border-bottom: 1px solid #f44336;
+            padding: 5px 0;
+            font-family: monospace;
         }
     `],
 })
