@@ -45,8 +45,7 @@ export class HeaderComponent implements OnInit {
         const allLinks = [
             {name: 'Calendar', link: ['/calendar'], role: 'user'},
             {name: 'My Shows', link: ['/my-shows'], role: 'user'},
-            {name: 'Shows', link: ['/shows/top'], role: 'public'},
-            {name: 'Search', link: ['/shows/search'], role: 'public'},
+            {name: 'Shows', link: ['/shows'], role: 'public'},
             {name: 'Login', link: ['/account/login'], role: 'unregistered'},
             {name: 'Logout', func: () => this.logout(), role: 'user'},
             {name: 'Register', link: ['/account/register'], role: 'unregistered'},

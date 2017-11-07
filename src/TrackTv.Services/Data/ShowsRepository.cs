@@ -18,19 +18,21 @@
 
         private TrackTvDbContext DbContext { get; }
 
-        public Task<int> CountAllAsync()
+        public Task<int> CountAllAsync(string showName, int? genreId)
         {
-            return this.DbContext.Shows.CountAsync();
-        }
+            var query = (IQueryable<Show>)this.DbContext.Shows;
 
-        public Task<int> CountAllResultsAsync(string query)
-        {
-            return this.DbContext.Shows.CountAsync(x => x.ShowName.ToLower().Contains(query.ToLower()));
-        }
+            if (!string.IsNullOrWhiteSpace(showName))
+            {
+                query = query.Where(show => show.ShowName.Contains(showName));
+            }
 
-        public Task<int> CountByGenreAsync(int genreId)
-        {
-            return this.DbContext.ShowsGenres.Where(x => x.Genre.GenreId == genreId).CountAsync();
+            if (genreId.HasValue)
+            {
+                query = query.Where(show => show.ShowsGenres.Any(g => g.GenreId == genreId));
+            }
+
+            return query.CountAsync();
         }
 
         public async Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
@@ -38,7 +40,7 @@
             var summaries = await this.DbContext.Shows.Where(x => showIds.Contains(x.ShowId))
                                       .Select(x => new
                                       {
-                                          ShowId = x.ShowId,
+                                          x.ShowId,
                                           SubscriberCount = x.Subscriptions.Count()
                                       })
                                       .ToArrayAsync()
@@ -50,37 +52,28 @@
                                 SubscriberCount = s.SubscriberCount
                             })
                             .ToArray();
-        } 
+        }
+
+        public Task<Show[]> GetShowsAsync(string showName, int? genreId, int page, int pageSize)
+        {
+            var query = this.DbContext.Shows.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(showName))
+            {
+                query = query.Where(show => show.ShowName.Contains(showName));
+            }
+
+            if (genreId.HasValue)
+            {
+                query = query.Where(show => show.ShowsGenres.Any(g => g.GenreId == genreId));
+            }
+
+            return query.OrderByDescending(show => show.Subscriptions.Count()).Page(page, pageSize).ToArrayAsync();
+        }
 
         public Task<Show> GetShowWithNetworkByIdAsync(int showId)
         {
             return this.DbContext.Shows.AsNoTracking().Include(x => x.Network).FirstOrDefaultAsync(x => x.ShowId == showId);
-        }
-
-        public Task<Show[]> GetTopAsync(int page, int pageSize)
-        {
-            return this.DbContext.Shows.AsNoTracking()
-                       .OrderByDescending(show => show.Subscriptions.Count())
-                       .Page(page, pageSize)
-                       .ToArrayAsync();
-        }
-
-        public Task<Show[]> GetTopByGenreAsync(int genreId, int page, int pageSize)
-        {
-            return this.DbContext.Shows.AsNoTracking()
-                       .Where(x => x.ShowsGenres.Any(g => g.Genre.GenreId == genreId))
-                       .OrderByDescending(show => show.Subscriptions.Count())
-                       .Page(page, pageSize)
-                       .ToArrayAsync();
-        }
-
-        public Task<Show[]> SearchTopAsync(string query, int page, int pageSize)
-        {
-            return this.DbContext.Shows.AsNoTracking()
-                       .Where(x => x.ShowName.ToLower().Contains(query.ToLower()))
-                       .OrderByDescending(show => show.Subscriptions.Count())
-                       .Page(page, pageSize)
-                       .ToArrayAsync();
         }
     }
 }

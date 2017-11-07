@@ -122,7 +122,7 @@ export const accountSagas = (apiClient: ApiClient) => ({
 
                 yield put({type: accountActions.LOGIN_REQUEST_SUCCESS, responses});
                 yield put({type: globalActions.LOGIN_USER, responses});
-                yield put({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: [['/shows/top']]});
+                yield put({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: [['/shows']]});
             }
 
             yield put({type: globalActions.END_TRANSITION});

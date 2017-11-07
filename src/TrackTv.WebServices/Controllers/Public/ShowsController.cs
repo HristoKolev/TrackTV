@@ -18,23 +18,22 @@
 
         private IShowsService ShowsService { get; }
 
-        [HttpGet("[action]/{genreId:int}/{page:int}/{pageSize:int}")]
         [ExposeError(typeof(GenreNotFoundException), "Can't find the genre you are looking for.")]
-        public async Task<IActionResult> Genre(int genreId, int page, int pageSize)
+        public async Task<IActionResult> Post([FromBody] ShowsViewModel model)
         {
-            return this.Success(await this.ShowsService.GetByGenreAsync(genreId, page, pageSize).ConfigureAwait(false));
+            return this.Success(await this.ShowsService.GetShowsAsync(model.ShowName, model.GenreId, model.Page, model.PageSize)
+                                          .ConfigureAwait(false));
         }
+    }
 
-        [HttpGet("[action]/{query}/{page:int}/{pageSize:int}")]
-        public async Task<IActionResult> Search(string query, int page, int pageSize)
-        {
-            return this.Success(await this.ShowsService.SearchTopShowsAsync(query, page, pageSize).ConfigureAwait(false));
-        }
+    public class ShowsViewModel
+    {
+        public int? GenreId { get; set; }
 
-        [HttpGet("[action]/{page:int}/{pageSize:int}")]
-        public async Task<IActionResult> Top(int page, int pageSize)
-        {
-            return this.Success(await this.ShowsService.GetTopShowsAsync(page, pageSize).ConfigureAwait(false));
-        }
+        public int Page { get; set; }
+
+        public int PageSize { get; set; }
+
+        public string ShowName { get; set; }
     }
 }

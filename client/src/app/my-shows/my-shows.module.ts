@@ -34,7 +34,7 @@ export class MyShowsActions {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <my-show-component *ngFor="let show of this.myShows.shows" [show]="show"></my-show-component>
+        <my-show-component *ngFor="let show of this.myShows.data" [show]="show"></my-show-component>
     `,
 })
 export class MyShowsComponent implements OnInit {

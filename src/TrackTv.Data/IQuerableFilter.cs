@@ -70,7 +70,7 @@
         IsNotIn
     }
 
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class QueryFilterAttribute : Attribute
     {
         public QueryFilterAttribute(QueryType queryType)
@@ -274,7 +274,7 @@
                 // All properties should be nullable. 
                 // When a property has a value of null,
                 // it means that it should not be used in the filtering logic.
-                if (propertyInfo.PropertyType.IsValueType)
+                if (propertyInfo.PropertyType.IsValueType && propertyInfo.PropertyType.GetGenericTypeDefinition() != typeof(Nullable<>))
                 {
                     string message = "All filter properties must be reference types (use T?).\r\n";
                     message += $"FilterType: {filterType.Name};\r\n ";

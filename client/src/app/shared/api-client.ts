@@ -36,27 +36,21 @@ export class ApiClient {
             .then(this.parseResponse);
     }
 
-    public topShows(page: number): Promise<ApiResponse> {
+    public shows(query: any): Promise<ApiResponse> {
 
-        return httpClient.get(`/api/public/shows/top/${page}/${this.showsPageSize}`)
-            .then(this.parseResponse);
-    }
+        const requestBody = {
+            ...query,
+            pageSize: this.showsPageSize,
+            page: query.page || 1,
+        };
 
-    public searchShows(query: string, page: number): Promise<ApiResponse> {
-
-        return httpClient.get(`/api/public/shows/search/${query}/${page}/${this.showsPageSize}`)
+        return httpClient.post(`/api/public/shows`, JSON.stringify(requestBody))
             .then(this.parseResponse);
     }
 
     public getGenres(): Promise<ApiResponse> {
 
         return httpClient.get(`/api/public/genres`)
-            .then(this.parseResponse);
-    }
-
-    public showsByGenre(genreId: number, page: number): Promise<ApiResponse> {
-
-        return httpClient.get(`/api/public/shows/genre/${genreId}/${page}/${this.showsPageSize}`)
             .then(this.parseResponse);
     }
 

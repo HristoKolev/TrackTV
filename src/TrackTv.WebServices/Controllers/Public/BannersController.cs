@@ -17,10 +17,10 @@
 
         private IHostingEnvironment HostingEnvironment { get; }
 
-        [HttpGet("banners/[action]/{name}")]
-        public async Task<IActionResult> Graphical(string name)
+        [HttpGet("banners/{type}/{name}")]
+        public async Task<IActionResult> Get(string type, string name)
         {
-            string bannerPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "wwwroot", "banners", "graphical");
+            string bannerPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "wwwroot", "banners", type);
 
             string filePath = Path.Combine(bannerPath, name);
 
@@ -34,14 +34,14 @@
                 Directory.CreateDirectory(bannerPath);
             }
 
-            await DownloadFileAsync(name, filePath).ConfigureAwait(false);
+            await DownloadFileAsync(type, name, filePath).ConfigureAwait(false);
 
             return this.PhysicalFile(filePath, GetContentType(name));
         }
 
-        private static async Task DownloadFileAsync(string name, string filePath)
+        private static async Task DownloadFileAsync(string type, string name, string filePath)
         {
-            var request = WebRequest.Create("https://thetvdb.com/banners/graphical/" + Path.GetFileName(name));
+            var request = WebRequest.Create($"https://thetvdb.com/banners/{type}/{name}");
             request.Method = "GET";
             var response = await request.GetResponseAsync().ConfigureAwait(false);
 

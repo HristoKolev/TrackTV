@@ -7,20 +7,12 @@
 
     public interface IShowsRepository
     {
-        Task<int> CountAllAsync();
-
-        Task<int> CountAllResultsAsync(string query);
-
-        Task<int> CountByGenreAsync(int genreId);
+        Task<int> CountAllAsync(string showName, int? genreId);
 
         Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds);
 
+        Task<Show[]> GetShowsAsync(string showName, int? genreId, int page, int pageSize);
+
         Task<Show> GetShowWithNetworkByIdAsync(int showId);
-
-        Task<Show[]> GetTopAsync(int page, int pageSize);
-
-        Task<Show[]> GetTopByGenreAsync(int genreId, int page, int pageSize);
-
-        Task<Show[]> SearchTopAsync(string query, int page, int pageSize);
     }
 }

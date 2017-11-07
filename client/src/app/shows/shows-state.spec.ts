@@ -5,12 +5,12 @@ describe('showsReducer', () => {
 
     testReducer(showsReducer);
 
-    describe('Action: ' + showsActions.FETCH_TOP_SHOWS_REQUEST_SUCCESS, () => {
+    describe('Action: ' + showsActions.FETCH_SHOWS_REQUEST_SUCCESS, () => {
 
         const payload = {key: '__VALUE__'};
 
         const defaultAction = {
-            type: showsActions.FETCH_TOP_SHOWS_REQUEST_SUCCESS,
+            type: showsActions.FETCH_SHOWS_REQUEST_SUCCESS,
             payload,
         };
 

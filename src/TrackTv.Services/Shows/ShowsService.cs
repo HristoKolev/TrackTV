@@ -7,65 +7,27 @@
     using TrackTv.Data.Models;
     using TrackTv.Services.Data;
     using TrackTv.Services.Data.Models;
-    using TrackTv.Services.Show.Models;
     using TrackTv.Services.Shows.Models;
 
     public class ShowsService : IShowsService
     {
         private const int DefaultPageSize = 50;
 
-        public ShowsService(IShowsRepository showsRepository, IGenresRepository genresRepository)
+        public ShowsService(IShowsRepository showsRepository)
         {
             this.ShowsRepository = showsRepository;
-            this.GenresRepository = genresRepository;
         }
-
-        private IGenresRepository GenresRepository { get; }
 
         private IShowsRepository ShowsRepository { get; }
 
-        public async Task<PagedResponse<ShowSummary[]>> GetByGenreAsync(int genreId, int page = 1, int pageSize = DefaultPageSize)
+        public async Task<PagedResponse<ShowSummary[]>> GetShowsAsync(string showName, int? genreId, int page = 1, int pageSize = DefaultPageSize)
         {
-            if (!await this.GenresRepository.GenreExistsAsync(genreId).ConfigureAwait(false))
-            {
-                throw new GenreNotFoundException(genreId);
-            }
+            var shows = await this.ShowsRepository.GetShowsAsync(showName, genreId, page, pageSize).ConfigureAwait(false);
 
-            var shows = await this.ShowsRepository.GetTopByGenreAsync(genreId, page, pageSize).ConfigureAwait(false);
+            var subscriberCounts =
+                await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray()).ConfigureAwait(false);
 
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray())
-                                             .ConfigureAwait(false);
-
-            int totalCount = await this.ShowsRepository.CountByGenreAsync(genreId).ConfigureAwait(false);
-
-            return ConstructResponse(shows, subscriberCounts, totalCount);
-        }
-
-        public async Task<PagedResponse<ShowSummary[]>> GetTopShowsAsync(int page = 1, int pageSize = DefaultPageSize)
-        {
-            var shows = await this.ShowsRepository.GetTopAsync(page, pageSize).ConfigureAwait(false);
-
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray())
-                                             .ConfigureAwait(false);
-
-            int totalCount = await this.ShowsRepository.CountAllAsync().ConfigureAwait(false);
-
-            return ConstructResponse(shows, subscriberCounts, totalCount);
-        }
-
-        public async Task<PagedResponse<ShowSummary[]>> SearchTopShowsAsync(string query, int page = 1, int pageSize = DefaultPageSize)
-        {
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                throw new InvalidQueryException("The query is null or an empty string.");
-            }
-
-            var shows = await this.ShowsRepository.SearchTopAsync(query, page, pageSize).ConfigureAwait(false);
-
-            var subscriberCounts = await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray())
-                                             .ConfigureAwait(false);
-
-            int totalCount = await this.ShowsRepository.CountAllResultsAsync(query).ConfigureAwait(false);
+            int totalCount = await this.ShowsRepository.CountAllAsync(showName, genreId).ConfigureAwait(false);
 
             return ConstructResponse(shows, subscriberCounts, totalCount);
         }
