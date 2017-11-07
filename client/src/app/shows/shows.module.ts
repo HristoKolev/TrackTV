@@ -5,9 +5,23 @@ import { FormsModule } from '@angular/forms';
 import { reduxStore } from '../../infrastructure/redux-store';
 import { showsActions, showsReducer, showsSagas } from './shows-state';
 import { apiClient } from '../shared/api-client';
+import { Observable } from 'rxjs/Observable';
 
 const parseParams = (paramMap: ParamMap) => paramMap.keys
     .reduce((result: any, key: string) => ({...result, [key]: paramMap.get(key)}), {});
+
+const removeFalsyProperties = (obj: any): any => {
+    const result = {} as any;
+
+    for (let [key, value] of Object.entries(obj)) {
+        if (value) {
+
+            result[key] = value;
+        }
+    }
+
+    return result;
+};
 
 @Injectable()
 export class ShowsActions {
@@ -23,25 +37,37 @@ export class ShowsActions {
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     template: `
+        <div *ngIf="state | async as data">
+            <div class="filter-controls">
+                <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
+                <select class="tt-input" [(ngModel)]="this.query.genreId">
+                    <option value="">All Genres</option>
+                    <option *ngFor="let genre of data.genres"
+                            [ngValue]="genre.genreId" [attr.value]="genre.genreId">
+                        {{genre.genreName}}
+                    </option>
+                </select>
+                <button class="tt-button" [routerLink]="['./']"
+                        [queryParams]="this.cleanQuery">Search
+                </button>
+            </div>
 
-        <div class="filter-controls">
-            <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
-            <select class="tt-input" [(ngModel)]="this.query.genreId">
-                <option *ngFor="let genre of this.data.genres"
-                        [ngValue]="genre.genreId" [attr.value]="genre.genreId">
-                    {{genre.genreName}}
-                </option>
-            </select>
-            <button class="tt-button" [routerLink]="['./']"
-                    [queryParams]="this.query">Search
-            </button>
-        </div>
-
-        <div class="list-wrapper">
-            <show-summary-component *ngFor="let show of this.data.items" [show]="show"></show-summary-component>
+            <div class="list-wrapper">
+                <show-summary-component *ngFor="let show of data.items" [show]="show"></show-summary-component>
+            </div>
         </div>
     `,
     styles: [`
+
+        .filter-controls {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .filter-controls input {
+            display: inline-block;
+        }
+
         @media (min-width: 768px) {
 
             .list-wrapper {
@@ -54,27 +80,30 @@ export class ShowsActions {
                 display: inline-block;
                 max-width: 600px;
             }
-        }
 
-        .filter-controls {
-            margin: 0 auto;
-            text-align: center;
-        }
+            .filter-controls input, .filter-controls select {
+                width: 300px;
+            }
 
-        .filter-controls input {
-            display: inline-block;
+            button {
+                width: 120px;
+            }
         }
 
         @media (max-width: 767px) {
 
+            .filter-controls {
+                margin-bottom: 20px;
+            }
+
             .filter-controls input, .filter-controls select {
                 display: block;
                 margin: 5px auto;
-                width: 85%;
+                width: 90%;
             }
 
             .filter-controls button {
-                width: 85%;
+                width: 90%;
             }
         }
 
@@ -82,7 +111,7 @@ export class ShowsActions {
 })
 export class ShowsComponent implements OnInit {
 
-    data: any;
+    state: Observable<any> = reduxStore.select(state => state.shows);
 
     query: any = {};
 
@@ -95,14 +124,13 @@ export class ShowsComponent implements OnInit {
             .map(parseParams)
             .subscribe((query) => {
                 this.showsActions.shows(query);
-                this.query = query;
+                this.query = {...query, genreId: query.genreId || ''};
             });
 
-        reduxStore.select(state => state.shows)
-            .distinctUntilChanged()
-            .subscribe(data => {
-                this.data = data;
-            });
+    }
+
+    get cleanQuery() {
+        return removeFalsyProperties(this.query);
     }
 }
 

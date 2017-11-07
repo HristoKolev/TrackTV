@@ -8,24 +8,14 @@ import { apiClient } from '../shared/api-client';
 import { SharedModule } from '../shared/shared.module';
 import { Subscription } from 'rxjs/Subscription';
 
-export interface UserLogin {
-    username: string;
-    password: string;
-}
-
-export interface UserRegister {
-    username: string;
-    password: string;
-}
-
 @Injectable()
 export class AccountActions {
 
-    login(user: UserLogin) {
+    login(user: any) {
         reduxStore.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
     }
 
-    register(user: UserRegister) {
+    register(user: any) {
         reduxStore.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
     }
 
@@ -40,7 +30,6 @@ export class AccountActions {
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.Default,
     template: `
         <div class="form-container tt-card">
 
@@ -61,7 +50,29 @@ export class AccountActions {
             <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
         </div>
     `,
-    styleUrls: ['./login.component.scss'],
+    styles: [`
+        .form-container {
+
+            text-align: center;
+
+            margin: 0 auto;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .form-container input, .form-container button {
+
+            display: block;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+
+            .form-container {
+                margin-top: 10%;
+            }
+        }
+    `],
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
@@ -78,8 +89,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        this.subscription = reduxStore.select((store: { login: ILoginState }) => store.login)
-            .distinctUntilChanged()
+        this.subscription = reduxStore.select<ILoginState>(store => store.login)
             .subscribe((x: any) => this.state = x);
 
         this.accountActions.clearLoginErrorMessages();
@@ -104,7 +114,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-
         <div class="form-container tt-card">
             <television-component>
                 <div>
@@ -125,7 +134,30 @@ export class LoginComponent implements OnInit, OnDestroy {
             <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
         </div>
     `,
-    styleUrls: ['register.component.scss'],
+    styles: [`
+        .form-container {
+
+            text-align: center;
+
+            margin: 0 auto;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .form-container input, .form-container button {
+
+            display: block;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+
+            .form-container {
+                margin-top: 10%;
+            }
+        }
+
+    `],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
@@ -143,8 +175,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.subscription = reduxStore
-            .select((store: { register: IRegisterState }) => store.register)
-            .distinctUntilChanged()
+            .select<IRegisterState>(store => store.register)
             .subscribe((x: any) => this.state = x);
 
         this.accountActions.clearRegisterErrorMessages();

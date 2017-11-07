@@ -113,7 +113,7 @@ class StoreWrapper {
         this.store.dispatch(...args);
     }
 
-    select<T = any>(fn: (state: any) => any = f => f): Observable<T> {
+    select<T = any>(selector: (state: any) => any = f => f): Observable<T> {
 
         return Observable.create((observer: any) => {
 
@@ -121,7 +121,7 @@ class StoreWrapper {
 
             this.store.subscribe(() => observer.next(this.store.getState()));
         })
-            .map(fn)
+            .map(selector)
             .distinctUntilChanged();
     }
 

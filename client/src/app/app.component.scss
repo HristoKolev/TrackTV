@@ -1,15 +1,10 @@
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
   background-color: #fff;
   margin-top: 80px;
 }
 
 .tt-button {
-  padding: 15px;
+  padding: 13px 13px 12px;
   background-color: #f44336;
   color: white;
   border: 1px solid transparent;
@@ -25,12 +20,19 @@ body {
 .tt-input {
 
   margin: 5px 0;
-  padding: 15px 0 15px 15px;
+  padding: 10px 0 10px 10px;
   box-sizing: border-box;
-  border: none;
-  background-color: #eee;
   font-size: 14px;
   font-family: 'Roboto', sans-serif;
+
+  box-shadow: 2px 2px 2px #dcdcdc;
+  border: 1px solid #eaeaea;
+
+}
+
+select.tt-input {
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 
 .tt-card {
