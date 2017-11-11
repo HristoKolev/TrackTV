@@ -33,8 +33,7 @@ export const calendarSagas = (apiClient: ApiClient) => ({
         saga: function* () {
             const response = yield apiClient.calendar();
 
-            const triggerAction2 = triggerAction(calendarActions.FETCH_CALENDAR_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response);
-            yield put(triggerAction2);
+            yield put(triggerAction(calendarActions.FETCH_CALENDAR_REQUEST_SUCCESS, globalActions.GLOBAL_ERROR, response));
         },
     },
 });

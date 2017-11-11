@@ -1,27 +1,12 @@
 import { Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { reduxStore } from '../../infrastructure/redux-store';
 import { showsActions, showsReducer, showsSagas } from './shows-state';
 import { apiClient } from '../shared/api-client';
 import { Observable } from 'rxjs/Observable';
-
-const parseParams = (paramMap: ParamMap) => paramMap.keys
-    .reduce((result: any, key: string) => ({...result, [key]: paramMap.get(key)}), {});
-
-const removeFalsyProperties = (obj: any): any => {
-    const result = {} as any;
-
-    for (let [key, value] of Object.entries(obj)) {
-        if (value) {
-
-            result[key] = value;
-        }
-    }
-
-    return result;
-};
+import { parseParams, removeFalsyProperties } from '../../infrastructure/routing-helpers';
 
 @Injectable()
 export class ShowsActions {

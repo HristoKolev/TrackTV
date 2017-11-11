@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { reduxStore } from '../../infrastructure/redux-store';
@@ -21,35 +21,30 @@ export class CalendarService {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <pre>{{ data | json}}</pre>
+        <pre *ngIf="state | async as data">
+            {{ data | json}}
+        </pre>
     `,
 })
 export class CalendarComponent implements OnInit {
 
-    data: any;
+    state: any = reduxStore.select(state => state.calendar);
 
     constructor(private calendarService: CalendarService) {
     }
 
     ngOnInit(): void {
 
-        reduxStore.select(state => state.calendar)
-            .subscribe((calendar) => {
-                this.data = calendar;
-            });
-
         this.calendarService.fetchCalendar();
     }
 }
 
-const routes: Routes = [
-    {path: '', component: CalendarComponent},
-];
-
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild([
+            {path: '', component: CalendarComponent},
+        ]),
         FormsModule,
         SharedModule,
     ],

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
 import { reduxStore } from '../../infrastructure/redux-store';
 import { showActions, showReducer, showSagas } from './show.state';
 import { apiClient } from '../shared/api-client';
+import { parseParams } from '../../infrastructure/routing-helpers';
 
 @Injectable()
 export class ShowActions {
@@ -33,20 +34,24 @@ export class ShowActions {
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.Default,
     template: `
-        <pre>{{this.show | json}}</pre>
+        <ng-container *ngIf="showState | async as show">
+            <ng-container *ngIf="sessionState | async as session">
 
-        <div *ngIf="this.session?.isLoggedIn">
-            <button *ngIf="!this.show?.isUserSubscribed" (click)="subscribe()">Subscribe</button>
-            <button *ngIf="this.show?.isUserSubscribed" (click)="unsubscribe()">Unsubscribe</button>
-        </div>
+                <pre>{{show | json}}</pre>
+
+                <ng-container *ngIf="session.isLoggedIn">
+                    <button *ngIf="!show.isUserSubscribed" (click)="subscribe(show.showId)">Subscribe</button>
+                    <button *ngIf="show.isUserSubscribed" (click)="unsubscribe(show.showId)">Unsubscribe</button>
+                </ng-container>
+            </ng-container>
+        </ng-container>
     `,
 })
 export class ShowComponent implements OnInit {
 
-    show: any;
-    session: any;
+    showState: any = reduxStore.select(state => state.show);
+    sessionState: any = reduxStore.select(state => state.session);
 
     constructor(private showActions: ShowActions,
                 private route: ActivatedRoute) {
@@ -55,39 +60,26 @@ export class ShowComponent implements OnInit {
     ngOnInit(): void {
 
         this.route.paramMap
-            .map(x => x.get('showId') as string)
-            .map(x => Number.parseInt(x, 10))
-            .subscribe(showId => {
-
-                this.showActions.show(showId);
-            });
-
-        reduxStore.select(state => state)
-            .distinctUntilChanged()
-            .subscribe(state => {
-
-                this.show = state.show;
-                this.session = state.session;
-            });
+            .map(parseParams)
+            .map(params => params.showId)
+            .subscribe(this.showActions.show);
     }
 
-    subscribe() {
-        this.showActions.subscribe(this.show.showId);
+    subscribe(showId: number) {
+        this.showActions.subscribe(showId);
     }
 
-    unsubscribe() {
-        this.showActions.unsubscribe(this.show.showId);
+    unsubscribe(showId: number) {
+        this.showActions.unsubscribe(showId);
     }
 }
-
-const routes: Routes = [
-    {path: ':showId', component: ShowComponent},
-];
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild([
+            {path: ':showId', component: ShowComponent},
+        ]),
         FormsModule,
     ],
     declarations: [ShowComponent],

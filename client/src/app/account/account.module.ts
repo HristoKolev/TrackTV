@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Injectable, NgModule, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Injectable, NgModule, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { accountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer } from './account.state';
 import { reduxStore } from '../../infrastructure/redux-store';
@@ -112,7 +112,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.Default,
     template: `
         <div class="form-container tt-card">
             <television-component>
@@ -195,15 +194,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 }
 
-const routes: Routes = [
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-];
-
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild([
+            {path: 'login', component: LoginComponent},
+            {path: 'register', component: RegisterComponent},
+        ]),
         FormsModule,
         SharedModule,
     ],

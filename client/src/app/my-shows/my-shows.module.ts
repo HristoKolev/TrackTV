@@ -1,5 +1,5 @@
 import { Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { reduxStore } from '../../infrastructure/redux-store';
@@ -85,13 +85,13 @@ export class MyShowsComponent implements OnInit {
                     <img src="./left-arrow.png">
                     <div class="episode-summary">
                         <div class="episode-time">November 7</div>
-                        <div class="episode-title">{{show.lastEpisode.episodeTitle}}</div>
+                        <div class="episode-title">{{getEpisodeNumber(show.lastEpisode)}}</div>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="show.nextEpisode">
                     <div class="episode-summary">
                         <div class="episode-time">November 7</div>
-                        <div class="episode-title">{{show.nextEpisode.episodeTitle}}</div>
+                        <div class="episode-title">{{getEpisodeNumber(show.nextEpisode)}}</div>
                     </div>
                     <img src="./right-arrow.png" class="right-arrow">
                 </ng-container>
@@ -195,14 +195,12 @@ export class MyShowComponent {
     }
 }
 
-const routes: Routes = [
-    {path: '', component: MyShowsComponent},
-];
-
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild([
+            {path: '', component: MyShowsComponent},
+        ]),
         FormsModule,
     ],
     declarations: [MyShowsComponent, MyShowComponent],

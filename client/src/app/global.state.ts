@@ -91,7 +91,7 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
                 user: action.responses.profileResponse.payload,
             };
         }
-        case  globalActions.LOGOUT_USER: {
+        case globalActions.LOGOUT_USER: {
             return {
                 ...state,
                 access_token: undefined,
@@ -105,4 +105,4 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
     }
 };
 
-export const go = (...args: any[]) => reduxStore.dispatch({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload: args});
+export const go = (...payload: any[]) => reduxStore.dispatch({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload});

@@ -1,33 +1,22 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.Default,
     selector: 'app-component',
     template: `
         <header-component></header-component>
 
-        <router-outlet
-                (activate)="activateEvent($event)"
-                (deactivate)="deactivateEvent($event)">
-        </router-outlet>
+        <router-outlet></router-outlet>
 
         <loading-component></loading-component>
     `,
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
-    activateEvent(event: any) {
-    }
-
-    deactivateEvent(event: any) {
-    }
 }
 
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.Default,
     template: '<h3>Error 404: Not found</h3>',
 })
 export class NotFound404Component {

@@ -20,8 +20,7 @@ import { HeaderComponent } from './layout/header.component';
 import { LoadingComponent } from './layout/loading.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: '/lazy', pathMatch: 'full'},
-    {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
+    {path: '', redirectTo: '/shows', pathMatch: 'full'},
     {path: 'account', loadChildren: './account/account.module#AccountModule'},
     {path: 'shows', loadChildren: './shows/shows.module#ShowsModule'},
     {path: 'show', loadChildren: './show/show.module#ShowModule'},
