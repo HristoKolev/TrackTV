@@ -34,10 +34,28 @@ export class MyShowsActions {
 @Component({
     encapsulation: ViewEncapsulation.Emulated,
     template: `
-        <div *ngIf="state | async as data">
+        <div *ngIf="state | async as data" class="list-wrapper">
             <my-show-component *ngFor="let show of data.shows" [show]="show"></my-show-component>
         </div>
     `,
+    styles: [`
+
+        @media (min-width: 768px) {
+
+            .list-wrapper {
+
+                margin: 0 auto;
+                text-align: center;
+                max-width: 1200px;
+            }
+
+            .list-wrapper my-show-component {
+                display: inline-block;
+                width: 370px;
+            }
+
+        }
+    `],
 })
 export class MyShowsComponent implements OnInit {
 
@@ -63,26 +81,20 @@ export class MyShowsComponent implements OnInit {
             </div>
 
             <div class="episodes">
-                <div class="last-episode-plane">
-                    <ng-container *ngIf="show.lastEpisode">
-                        <img src="./left-arrow.png">
-                        <span class="episode-summary">
-                            <span class="episode-time">November 7</span>
-                            <span class="episode-title">{{show.lastEpisode.episodeTitle}}</span>
-                        </span>
-
-                    </ng-container>
-                </div>
-                <div class="next-episode-plane">
-                    <ng-container *ngIf="show.nextEpisode">
-                        <span class="episode-summary">
-                            <span class="episode-time">November 7</span>
-                            <span class="episode-title">{{show.nextEpisode.episodeTitle}}</span>
-                        </span>
-                        <img src="./right-arrow.png">
-                    </ng-container>
-
-                </div>
+                <ng-container *ngIf="show.lastEpisode">
+                    <img src="./left-arrow.png">
+                    <div class="episode-summary">
+                        <div class="episode-time">November 7</div>
+                        <div class="episode-title">{{show.lastEpisode.episodeTitle}}</div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="show.nextEpisode">
+                    <div class="episode-summary">
+                        <div class="episode-time">November 7</div>
+                        <div class="episode-title">{{show.nextEpisode.episodeTitle}}</div>
+                    </div>
+                    <img src="./right-arrow.png" class="right-arrow">
+                </ng-container>
             </div>
 
             <div class="button-wrapper">
@@ -105,7 +117,7 @@ export class MyShowsComponent implements OnInit {
             font-weight: bold;
 
             color: white;
-            background-color: #f44336;
+            background-color: #ff6b07;
 
             width: 100%;
             margin: 0 auto;
@@ -113,43 +125,53 @@ export class MyShowsComponent implements OnInit {
             font-family: monospace;
         }
 
-        .last-episode-plane {
-            display: inline-block;
-            width: 49%;
-            border-right: 1px solid black;
-            margin: 10px 0;
-            position: relative;
+        .button-wrapper {
+            text-align: center;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
 
-        .next-episode-plane {
-            display: inline-block;
-            width: 49%;
-            margin: 10px 0;
+        .subscription-button {
+            width: 100%;
+            text-transform: capitalize;
+            margin-top: 10px;
+        }
+
+        img, .episode-summary {
+            float: left;
+        }
+
+        img.right-arrow {
+            float: right;
+        }
+
+        .episode-summary {
+            width: 40%;
+            text-align: center;
+            height: 70px;
+            margin-top: 4px;
+        }
+
+        .episodes {
+            padding: 5px 10px;
+        }
+
+        .episode-summary:first-of-type {
+            border-right: 1px solid black;
+        }
+
+        img {
+            opacity: .4;
         }
 
         .episode-title {
             margin-top: 10px;
         }
 
-        .last-episode-plane img {
-            float: left;
+        .episode-time {
+            margin-top: 10px;
         }
-
-        .next-episode-plane img {
-            float: right;
-        }
-
-        .button-wrapper {
-            text-align: center;
-        }
-
-        .subscription-button {
-            width: 93%;
-            text-transform: capitalize;
-            height: 35px;
-            margin: 0 10px 10px;
-        }
-
     `],
 })
 export class MyShowComponent {
