@@ -67,6 +67,10 @@ import { reduxStore } from '../../infrastructure/redux-store';
             user-select: none;
         }
 
+        i {
+            cursor: pointer;
+        }
+
         @media (min-width: 768px) {
             nav li {
                 display: inline-block;

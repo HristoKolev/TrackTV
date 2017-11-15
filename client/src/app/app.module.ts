@@ -54,9 +54,15 @@ export class AppModule {
 
     constructor(reduxRouter: ReduxRouterService, reduxPersist: ReduxPersistService, appRef: ApplicationRef) {
 
-        const devToolsExtension = wrapDevToolsExtension((window as any).devToolsExtension, appRef);
+        let devTools = (window as any).devToolsExtension;
 
-        reduxStore.initStore([devToolsExtension()]);
+        const enhancers: any[] = [];
+
+        if (devTools) {
+            enhancers.push(wrapDevToolsExtension(devTools, appRef)());
+        }
+
+        reduxStore.initStore(enhancers);
 
         reduxRouter.init(state => state.router);
 

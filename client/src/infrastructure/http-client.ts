@@ -114,10 +114,6 @@ class HttpClient {
 
 export const httpClient = new HttpClient();
 
-export const urlEncodeBody = (obj: any) => Object.entries(obj).map(p => p.join('=')).join('&');
-
-export const urlEncodedHeader = {'Content-Type': 'application/x-www-form-urlencoded'};
-
 const randomString = (length: number) => {
 
     let text = '';
@@ -131,6 +127,10 @@ const randomString = (length: number) => {
 
     return text;
 };
+
+export const urlEncodeBody = (obj: any) => Object.entries(obj).map(p => p.join('=')).join('&');
+
+export const urlEncodedHeader = {'Content-Type': 'application/x-www-form-urlencoded'};
 
 export const multipartForm = (jsonBody: any) => {
 
@@ -154,4 +154,3 @@ export const multipartForm = (jsonBody: any) => {
         headers,
     };
 };
-

@@ -43,7 +43,6 @@ export class ShowsActions {
         </div>
     `,
     styles: [`
-
         .filter-controls {
             margin: 0 auto;
             text-align: center;
@@ -53,7 +52,20 @@ export class ShowsActions {
             display: inline-block;
         }
 
+        .list-wrapper * {
+            user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
         @media (min-width: 768px) {
+
+            .filter-controls input, .filter-controls select {
+                width: 300px;
+            }
 
             .list-wrapper {
 
@@ -64,10 +76,6 @@ export class ShowsActions {
             .list-wrapper show-summary-component {
                 display: inline-block;
                 max-width: 600px;
-            }
-
-            .filter-controls input, .filter-controls select {
-                width: 300px;
             }
 
             button {
@@ -126,7 +134,7 @@ export class ShowsComponent implements OnInit {
         <div class="tt-card show-card" [routerLink]="['/show', this.show.showId]">
             <div class="show-title">{{show.showName}}</div>
             <div class="show-details">Subscriber count: {{show.subscriberCount}} | Status: {{getStatusText(show.showStatus)}}</div>
-            <div><img src="http://localhost:5000/banners/{{show.showBanner}}" class="poster"></div>
+            <div><img src="http://192.168.1.104:7001/banners/{{show.showBanner}}" class="poster"></div>
         </div>
     `,
     styles: [`
@@ -140,6 +148,7 @@ export class ShowsComponent implements OnInit {
             width: 94%;
             margin: 0 10px;
             margin-bottom: 10px;
+            pointer-events: none;
         }
 
         .show-details {
