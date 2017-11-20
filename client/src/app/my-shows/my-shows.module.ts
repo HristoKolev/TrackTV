@@ -81,20 +81,30 @@ export class MyShowsComponent implements OnInit {
             </div>
 
             <div class="episodes">
-                <ng-container *ngIf="show.lastEpisode">
-                    <img src="./left-arrow.png">
-                    <div class="episode-summary">
-                        <div class="episode-time">November 7</div>
-                        <div class="episode-title">{{getEpisodeNumber(show.lastEpisode)}}</div>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="show.nextEpisode">
-                    <div class="episode-summary">
-                        <div class="episode-time">November 7</div>
-                        <div class="episode-title">{{getEpisodeNumber(show.nextEpisode)}}</div>
-                    </div>
-                    <img src="./right-arrow.png" class="right-arrow">
-                </ng-container>
+                <div class="last-episode">
+                    <ng-container *ngIf="show.lastEpisode">
+                        <img src="./left-arrow.png">
+                        <div class="episode-summary">
+                            <div class="episode-time">November 7</div>
+                            <div class="episode-title">{{getEpisodeNumber(show.lastEpisode)}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="next-episode">
+
+                    <ng-container *ngIf="show.nextEpisode">
+                        <div class="episode-summary">
+                            <div class="episode-time">November 7</div>
+                            <div class="episode-title">{{getEpisodeNumber(show.nextEpisode)}}</div>
+                        </div>
+                        <img src="./right-arrow.png" class="right-arrow">
+                    </ng-container>
+
+
+                </div>
             </div>
 
             <div class="button-wrapper">
@@ -138,26 +148,33 @@ export class MyShowsComponent implements OnInit {
             margin-top: 10px;
         }
 
-        img, .episode-summary {
-            float: left;
+        .episodes {
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        img.right-arrow {
-            float: right;
+        .last-episode, .next-episode {
+            display: flex;
+            flex-basis: 49%;
+        }
+
+        img {
+            flex-basis: 20%;
         }
 
         .episode-summary {
-            width: 40%;
+            flex-basis: 80%;
+        }
+
+        .episode-summary {
+
             text-align: center;
             height: 70px;
             margin-top: 4px;
         }
 
-        .episodes {
-            padding: 5px 10px;
-        }
-
-        .episode-summary:first-of-type {
+        .separator {
             border-right: 1px solid black;
         }
 
@@ -165,11 +182,7 @@ export class MyShowsComponent implements OnInit {
             opacity: .4;
         }
 
-        .episode-title {
-            margin-top: 10px;
-        }
-
-        .episode-time {
+        .episode-time, .episode-title {
             margin-top: 10px;
         }
     `],
