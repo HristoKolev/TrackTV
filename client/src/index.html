@@ -140,19 +140,13 @@
         </style>
     </head>
     <body>
-
         <div id="initial-loader">
             <div id="loader-wrapper">
                 <div id="loader"></div>
                 <div class="loader-section"></div>
             </div>
         </div>
-
-        <app-component></app-component>
-        <% if (htmlWebpackPlugin.options.metadata.isDevServer) { %>
-        <!-- DLL files -->
-        <script src="/polyfill.dll.js"></script>
-        <script src="/vendor.dll.js"></script>
-        <% } %>
+		
+        <app-component></app-component>        
     </body>
 </html>

@@ -1,0 +1,42 @@
+body {
+  background-color: #fff;
+  margin-top: 80px;
+}
+
+.tt-button {
+  padding: 13px 13px 12px;
+  background-color: #f44336;
+  color: white;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tt-button:hover {
+
+  background-color: #d94236;
+}
+
+.tt-input {
+
+  margin: 5px 0;
+  padding: 10px 0 10px 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+
+  box-shadow: 2px 2px 2px #dcdcdc;
+  border: 1px solid #eaeaea;
+
+}
+
+select.tt-input {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.tt-card {
+  border: 1px solid #eee;
+  box-shadow: 5px 5px 5px #eee;
+  padding: 15px;
+}
