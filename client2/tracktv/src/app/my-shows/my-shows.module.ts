@@ -1,44 +1,44 @@
-import { Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { reduxStore } from '../../infrastructure/redux-store';
-import { myShowsActions, myShowsReducer, myShowsSagas } from './my-shows.state';
-import { apiClient } from '../shared/api-client';
-import { Observable } from 'rxjs/Observable';
+import {Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {reduxStore} from '../../infrastructure/redux-store';
+import {myShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
+import {apiClient} from '../shared/api-client';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class MyShowsActions {
 
-    myShows() {
-        reduxStore.dispatch({
-            type: myShowsActions.FETCH_REQUEST_START,
-        });
-    }
+  myShows() {
+    reduxStore.dispatch({
+      type: myShowsActions.FETCH_REQUEST_START,
+    });
+  }
 
-    subscribe(showId: number) {
-        reduxStore.dispatch({
-            type: myShowsActions.SUBSCRIBE_REQUEST_START,
-            showId,
-        });
-    }
+  subscribe(showId: number) {
+    reduxStore.dispatch({
+      type: myShowsActions.SUBSCRIBE_REQUEST_START,
+      showId,
+    });
+  }
 
-    unsubscribe(showId: number) {
-        reduxStore.dispatch({
-            type: myShowsActions.UNSUBSCRIBE_REQUEST_START,
-            showId,
-        });
-    }
+  unsubscribe(showId: number) {
+    reduxStore.dispatch({
+      type: myShowsActions.UNSUBSCRIBE_REQUEST_START,
+      showId,
+    });
+  }
 }
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    template: `
+  encapsulation: ViewEncapsulation.Emulated,
+  template: `
         <div *ngIf="state | async as data" class="list-wrapper">
             <my-show-component *ngFor="let show of data.shows" [show]="show"></my-show-component>
         </div>
     `,
-    styles: [`
+  styles: [`
 
         @media (min-width: 768px) {
 
@@ -59,21 +59,21 @@ export class MyShowsActions {
 })
 export class MyShowsComponent implements OnInit {
 
-    state: Observable<any> = reduxStore.select(state => state.myShows);
+  state: Observable<any> = reduxStore.select(state => state.myShows);
 
-    constructor(private myShowsActions: MyShowsActions) {
-    }
+  constructor(private myShowsActions: MyShowsActions) {
+  }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-        this.myShowsActions.myShows();
-    }
+    this.myShowsActions.myShows();
+  }
 }
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    selector: 'my-show-component',
-    template: `
+  encapsulation: ViewEncapsulation.Emulated,
+  selector: 'my-show-component',
+  template: `
         <div class="tt-card my-show-card">
 
             <div class="show-title">
@@ -83,7 +83,7 @@ export class MyShowsComponent implements OnInit {
             <div class="episodes">
                 <div class="last-episode">
                     <ng-container *ngIf="show.lastEpisode">
-                        <img src="./left-arrow.png">
+                        <img src="assets/left-arrow.png">
                         <div class="episode-summary">
                             <div class="episode-time">November 7</div>
                             <div class="episode-title">{{getEpisodeNumber(show.lastEpisode)}}</div>
@@ -100,7 +100,7 @@ export class MyShowsComponent implements OnInit {
                             <div class="episode-time">November 7</div>
                             <div class="episode-title">{{getEpisodeNumber(show.nextEpisode)}}</div>
                         </div>
-                        <img src="./right-arrow.png" class="right-arrow">
+                        <img src="assets/right-arrow.png" class="right-arrow">
                     </ng-container>
 
 
@@ -114,7 +114,7 @@ export class MyShowsComponent implements OnInit {
             </div>
         </div>
     `,
-    styles: [`
+  styles: [`
         .my-show-card {
             margin: 10px;
             cursor: pointer;
@@ -189,43 +189,43 @@ export class MyShowsComponent implements OnInit {
 })
 export class MyShowComponent {
 
-    @Input()
-    show: any;
+  @Input()
+  show: any;
 
-    constructor(private myShowsActions: MyShowsActions) {
-    }
+  constructor(private myShowsActions: MyShowsActions) {
+  }
 
-    subscribe(showId: number) {
-        this.myShowsActions.subscribe(showId);
-    }
+  subscribe(showId: number) {
+    this.myShowsActions.subscribe(showId);
+  }
 
-    unsubscribe(showId: number) {
-        this.myShowsActions.unsubscribe(showId);
-    }
+  unsubscribe(showId: number) {
+    this.myShowsActions.unsubscribe(showId);
+  }
 
-    getEpisodeNumber(episode: any) {
-        return `S${episode.seasonNumber.toString().padStart(2, '0')}E${episode.episodeNumber.toString().padStart(2, '0')}`;
-    }
+  getEpisodeNumber(episode: any) {
+    return `S${episode.seasonNumber.toString().padStart(2, '0')}E${episode.episodeNumber.toString().padStart(2, '0')}`;
+  }
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild([
-            {path: '', component: MyShowsComponent},
-        ]),
-        FormsModule,
-    ],
-    declarations: [MyShowsComponent, MyShowComponent],
-    providers: [MyShowsActions],
+  imports: [
+    CommonModule,
+    RouterModule.forChild([
+      {path: '', component: MyShowsComponent},
+    ]),
+    FormsModule,
+  ],
+  declarations: [MyShowsComponent, MyShowComponent],
+  providers: [MyShowsActions],
 })
 export class MyShowsModule {
-    constructor() {
+  constructor() {
 
-        reduxStore.addReducers({
-            myShows: myShowsReducer,
-        });
+    reduxStore.addReducers({
+      myShows: myShowsReducer,
+    });
 
-        reduxStore.addSagas(myShowsSagas(apiClient));
-    }
+    reduxStore.addSagas(myShowsSagas(apiClient));
+  }
 }

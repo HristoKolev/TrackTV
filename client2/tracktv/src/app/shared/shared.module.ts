@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
         <div *ngIf="this.errorMessages && this.errorMessages.length" class="message-container">
             <div *ngFor="let message of this.errorMessages" class="error-message">{{message}}</div>
         </div>
     `,
-    styles: [`
+  styles: [`
         .error-message {
 
             padding: 8px;
@@ -28,27 +28,27 @@ import { CommonModule } from '@angular/common';
             margin-top: 15px;
         }
     `],
-    selector: 'error-container-component',
+  selector: 'error-container-component',
 })
 export class ErrorContainerComponent {
 
-    @Input()
-    errorMessages: string[];
+  @Input()
+  errorMessages: string[];
 }
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: 'television-component',
-    template: `
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'television-component',
+  template: `
         <div class="television-container">
-            <img src="television-big.png">
+            <img src="assets/television-big.png">
             <div class="overlay">
                 <ng-content></ng-content>
             </div>
         </div>
     `,
-    styles: [`
+  styles: [`
         .television-container {
             position: relative;
         }
@@ -91,21 +91,18 @@ export class ErrorContainerComponent {
                 font-size: 20px;
             }
         }
-
-
-
     `],
 })
 export class TelevisionComponent {
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-    ],
-    declarations: [ErrorContainerComponent, TelevisionComponent],
-    providers: [],
-    exports: [ErrorContainerComponent, TelevisionComponent],
+  imports: [
+    CommonModule,
+  ],
+  declarations: [ErrorContainerComponent, TelevisionComponent],
+  providers: [],
+  exports: [ErrorContainerComponent, TelevisionComponent],
 })
 export class SharedModule {
 }
