@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    constructor(private accountActions: AccountActions) {
+    constructor(private actions: AccountActions) {
 
     }
 
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.subscription = reduxStore.select<ILoginState>(store => store.login)
             .subscribe((x: any) => this.state = x);
 
-        this.accountActions.clearLoginErrorMessages();
+        this.actions.clearLoginErrorMessages();
     }
 
     ngOnDestroy(): void {
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     submit(): void {
 
-        this.accountActions.login({
+        this.actions.login({
             username: this.username,
             password: this.password,
 
@@ -168,7 +168,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    constructor(private accountActions: AccountActions) {
+    constructor(private actions: AccountActions) {
     }
 
     ngOnInit(): void {
@@ -177,7 +177,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             .select<IRegisterState>(store => store.register)
             .subscribe((x: any) => this.state = x);
 
-        this.accountActions.clearRegisterErrorMessages();
+        this.actions.clearRegisterErrorMessages();
     }
 
     ngOnDestroy(): void {
@@ -187,7 +187,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     submit(): void {
 
-        this.accountActions.register({
+        this.actions.register({
             username: this.username,
             password: this.password,
         });

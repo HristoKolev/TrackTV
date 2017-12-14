@@ -53,7 +53,7 @@ export class ShowComponent implements OnInit {
     showState: any = reduxStore.select(state => state.show);
     sessionState: any = reduxStore.select(state => state.session);
 
-    constructor(private showActions: ShowActions,
+    constructor(private actions: ShowActions,
                 private route: ActivatedRoute) {
     }
 
@@ -62,15 +62,15 @@ export class ShowComponent implements OnInit {
         this.route.paramMap
             .map(parseParams)
             .map(params => params.showId)
-            .subscribe(this.showActions.show);
+            .subscribe(this.actions.show);
     }
 
     subscribe(showId: number) {
-        this.showActions.subscribe(showId);
+        this.actions.subscribe(showId);
     }
 
     unsubscribe(showId: number) {
-        this.showActions.unsubscribe(showId);
+        this.actions.unsubscribe(showId);
     }
 }
 

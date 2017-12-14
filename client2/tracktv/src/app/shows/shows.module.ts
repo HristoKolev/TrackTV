@@ -108,7 +108,7 @@ export class ShowsComponent implements OnInit {
 
     query: any = {};
 
-    constructor(private showsActions: ShowsActions, private route: ActivatedRoute) {
+    constructor(private actions: ShowsActions, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
@@ -116,7 +116,7 @@ export class ShowsComponent implements OnInit {
         this.route.queryParamMap
             .map(parseParams)
             .subscribe((query) => {
-                this.showsActions.shows(query);
+                this.actions.shows(query);
                 this.query = {...query, genreId: query.genreId || ''};
             });
 
