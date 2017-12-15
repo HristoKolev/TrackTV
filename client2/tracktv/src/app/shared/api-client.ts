@@ -1,11 +1,12 @@
-import { FetchResponse, httpClient } from '../../infrastructure/http-client';
-import { reduxStore } from '../../infrastructure/redux-store';
-import { globalActions, go } from '../global.state';
+import {FetchResponse, httpClient} from '../../infrastructure/http-client';
+import {reduxStore} from '../../infrastructure/redux-store';
+import {globalActions} from '../global.state';
+import {go} from '../../infrastructure/redux/router';
 
 export interface ApiResponse {
-    errorMessages: string[];
-    payload?: any;
-    success: boolean;
+  errorMessages: string[];
+  payload?: any;
+  success: boolean;
 }
 
 const networkIsDownMessage = 'Network error. Please, try again later.';
@@ -17,90 +18,90 @@ const successResponse = (payload: any) => ({payload, errorMessages: [], success:
 
 export class ApiClient {
 
-    public profile(token: string): Promise<ApiResponse> {
+  public profile(token: string): Promise<ApiResponse> {
 
-        return httpClient.get('/api/user/profile', {'Authorization': `Bearer ${token}`})
-            .then(this.parseResponse);
+    return httpClient.get('/api/user/profile', {'Authorization': `Bearer ${token}`})
+      .then(this.parseResponse);
+  }
+
+  public login(userLogin: any): Promise<ApiResponse> {
+
+    return httpClient.post('/api/public/auth/login', JSON.stringify(userLogin))
+      .then(this.parseResponse);
+  }
+
+  public register(user: any): Promise<ApiResponse> {
+
+    return httpClient.post('/api/public/auth/register', JSON.stringify(user))
+      .then(this.parseResponse);
+  }
+
+  public shows(query: any): Promise<ApiResponse> {
+
+    const requestBody = {
+      ...query,
+      pageSize: this.showsPageSize,
+      page: query.page || 1,
+    };
+
+    return httpClient.post(`/api/public/shows`, JSON.stringify(requestBody))
+      .then(this.parseResponse);
+  }
+
+  public getGenres(): Promise<ApiResponse> {
+
+    return httpClient.get(`/api/public/genres`)
+      .then(this.parseResponse);
+  }
+
+  public show(showId: number): Promise<ApiResponse> {
+    return httpClient.get(`/api/public/show/${showId}`)
+      .then(this.parseResponse);
+  }
+
+  public subscribe(showId: number): Promise<ApiResponse> {
+    return httpClient.put(`/api/user/subscription/${showId}`, {})
+      .then(this.parseResponse);
+  }
+
+  public myShows(): Promise<ApiResponse> {
+    return httpClient.get(`/api/user/myshows`)
+      .then(this.parseResponse);
+  }
+
+  public unsubscribe(showId: number): Promise<ApiResponse> {
+    return httpClient.del(`/api/user/subscription/${showId}`, {})
+      .then(this.parseResponse);
+  }
+
+  public calendar(): Promise<ApiResponse> {
+    return httpClient.get(`/api/user/calendar`)
+      .then(this.parseResponse);
+  }
+
+  private get showsPageSize() {
+    return reduxStore.getState().settings.showsPageSize;
+  }
+
+  private parseResponse(response: FetchResponse): ApiResponse {
+
+    if (response.networkError) {
+      return errorResponse([networkIsDownMessage]);
     }
 
-    public login(userLogin: any): Promise<ApiResponse> {
+    if (response.status === 401) {
 
-        return httpClient.post('/api/public/auth/login', JSON.stringify(userLogin))
-            .then(this.parseResponse);
+      reduxStore.dispatch({type: globalActions.LOGOUT_USER});
+      go(['/shows']);
+      return errorResponse([loggedOutMessage]);
     }
 
-    public register(user: any): Promise<ApiResponse> {
-
-        return httpClient.post('/api/public/auth/register', JSON.stringify(user))
-            .then(this.parseResponse);
+    if (!response.body) {
+      return errorResponse([serverErrorMessage]);
     }
 
-    public shows(query: any): Promise<ApiResponse> {
-
-        const requestBody = {
-            ...query,
-            pageSize: this.showsPageSize,
-            page: query.page || 1,
-        };
-
-        return httpClient.post(`/api/public/shows`, JSON.stringify(requestBody))
-            .then(this.parseResponse);
-    }
-
-    public getGenres(): Promise<ApiResponse> {
-
-        return httpClient.get(`/api/public/genres`)
-            .then(this.parseResponse);
-    }
-
-    public show(showId: number): Promise<ApiResponse> {
-        return httpClient.get(`/api/public/show/${showId}`)
-            .then(this.parseResponse);
-    }
-
-    public subscribe(showId: number): Promise<ApiResponse> {
-        return httpClient.put(`/api/user/subscription/${showId}`, {})
-            .then(this.parseResponse);
-    }
-
-    public myShows(): Promise<ApiResponse> {
-        return httpClient.get(`/api/user/myshows`)
-            .then(this.parseResponse);
-    }
-
-    public unsubscribe(showId: number): Promise<ApiResponse> {
-        return httpClient.del(`/api/user/subscription/${showId}`, {})
-            .then(this.parseResponse);
-    }
-
-    public calendar(): Promise<ApiResponse> {
-        return httpClient.get(`/api/user/calendar`)
-            .then(this.parseResponse);
-    }
-
-    private get showsPageSize() {
-        return reduxStore.getState().settings.showsPageSize;
-    }
-
-    private parseResponse(response: FetchResponse): ApiResponse {
-
-        if (response.networkError) {
-            return errorResponse([networkIsDownMessage]);
-        }
-
-        if (response.status === 401) {
-
-            reduxStore.dispatch({type: globalActions.LOGOUT_USER});
-            go(['/shows']);
-            return errorResponse([loggedOutMessage]);
-        }
-
-        if (!response.body) {
-            return errorResponse([serverErrorMessage]);
-        }
-
-        return response.body;
-    }
+    return response.body;
+  }
 
 }
 
@@ -108,10 +109,10 @@ export const apiClient = new ApiClient();
 
 export const triggerAction = (successActionType: string, failureActionType: string, response: ApiResponse, rest: any = {}): any => {
 
-    if (response.success) {
+  if (response.success) {
 
-        return {type: successActionType, payload: response.payload, ...rest};
-    }
+    return {type: successActionType, payload: response.payload, ...rest};
+  }
 
-    return {type: failureActionType, errorMessages: response.errorMessages};
+  return {type: failureActionType, errorMessages: response.errorMessages};
 };

@@ -1,49 +1,49 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { reduxStore } from '../../infrastructure/redux-store';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {reduxStore} from '../../infrastructure/redux-store';
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.Default,
-    selector: 'loading-component',
-    template: `
-        <div [ngClass]="{'loaded': !this.loading}">
-            <div id="loader-wrapper">
-                <div id="loader"></div>
-                <div class="loader-section"></div>
-            </div>
-        </div>
-    `,
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.Default,
+  selector: 'loading-component',
+  template: `
+    <div [ngClass]="{'loaded': !this.loading}">
+      <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section"></div>
+      </div>
+    </div>
+  `,
 })
 export class LoadingComponent implements OnInit {
 
-    loading: boolean;
+  loading: boolean;
 
-    firstLoad = true;
+  firstLoad = true;
 
-    public ngOnInit(): void {
+  public ngOnInit(): void {
 
-        reduxStore.select(state => state.global)
-            .distinctUntilChanged()
-            .switchMap(global => Observable.of(global).delay((global.loading > 0 || this.firstLoad) ? 100 : 0))
-            .subscribe(global => {
-                this.loading = !!Math.max(global.loading, 0);
+    reduxStore.select(state => state.global)
+      .distinctUntilChanged()
+      .switchMap(global => Observable.of(global).delay((global.loading > 0 || this.firstLoad) ? 100 : 0))
+      .subscribe(global => {
+        this.loading = !!Math.max(global.loading, 0);
 
-                if (this.firstLoad) {
+        if (this.firstLoad) {
 
-                    this.firstLoad = false;
+          this.firstLoad = false;
 
-                    this.removeInitialLoader();
-                }
-            });
-    }
+          this.removeInitialLoader();
+        }
+      });
+  }
 
-    private removeInitialLoader() {
-        setTimeout(() => {
+  private removeInitialLoader() {
+    setTimeout(() => {
 
-            (window as any).document
-                .getElementById('initial-loader')
-                .remove();
-        }, 0);
-    }
+      (window as any).document
+        .getElementById('initial-loader')
+        .remove();
+    }, 0);
+  }
 }

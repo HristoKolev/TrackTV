@@ -1,16 +1,15 @@
 import {ApplicationRef, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule, Routes} from '@angular/router';
-
+import {Router, RouterModule, Routes} from '@angular/router';
 import {AppComponent, NotFound404Component} from './app.component';
-
 import {globalErrorReducer, settingsReducer, userSessionReducer} from './global.state';
-import {
-  explicitRouterSaga, ReduxHelperModule, ReduxPersistService, ReduxRouterService, reduxStore,
-  wrapDevToolsExtension,
-} from '../infrastructure/redux-store';
+import {reduxStore} from '../infrastructure/redux-store';
 import {HeaderComponent} from './layout/header.component';
 import {LoadingComponent} from './layout/loading.component';
+import {wrapDevToolsExtension} from '../infrastructure/redux/dev-tools';
+import {explicitRouterSaga, ReduxRouterService, routerReducer} from '../infrastructure/redux/router';
+import {ReduxPersistService} from '../infrastructure/redux/persist';
+import {ReduxHelperModule} from '../infrastructure/redux/redux-helper.module';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},
@@ -42,17 +41,24 @@ export const routes: Routes = [
 })
 export class AppModule {
 
-  constructor(reduxRouter: ReduxRouterService, reduxPersist: ReduxPersistService, appRef: ApplicationRef) {
+  constructor(reduxRouter: ReduxRouterService,
+              reduxPersist: ReduxPersistService,
+              appRef: ApplicationRef,
+              router: Router) {
 
     const devTools = (window as any).devToolsExtension;
 
     const enhancers: any[] = [];
 
     if (devTools) {
-      enhancers.push(wrapDevToolsExtension(devTools, appRef)());
+      enhancers.push(wrapDevToolsExtension(devTools, appRef, reduxStore)());
     }
 
-    reduxStore.initStore(enhancers);
+    const initialReducers = {
+      router: routerReducer
+    };
+
+    reduxStore.initStore(enhancers, initialReducers);
 
     reduxRouter.init(state => state.router);
 
@@ -67,7 +73,7 @@ export class AppModule {
     });
 
     reduxStore.addSagas({
-      explicitRouterSaga,
+      explicitRouterSaga: explicitRouterSaga(router),
       logSaga: {
         type: '*',
         saga: function* (action: any): any {
