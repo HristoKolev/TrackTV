@@ -6,7 +6,6 @@ import {globalActions} from '../app/global.state';
 import {Observable} from 'rxjs/Observable';
 import {ReduxReducerMap} from './redux/meta';
 
-
 class StoreWrapper {
 
   private sagaMiddleware: any;
@@ -34,7 +33,7 @@ class StoreWrapper {
 
     const enhancer = compose(
       applyMiddleware(...middleware),
-      ...enhancers
+      ...enhancers,
     );
 
     const reducer = this.createReducer();
@@ -116,3 +115,4 @@ class StoreWrapper {
 }
 
 export const reduxStore = new StoreWrapper();
+

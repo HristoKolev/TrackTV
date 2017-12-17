@@ -1,32 +1,12 @@
-import {Component, Injectable, NgModule, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, NgModule, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {accountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer} from './account.state';
+import {AccountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer} from './account.state';
 import {reduxStore} from '../../infrastructure/redux-store';
 import {apiClient} from '../shared/api-client';
 import {SharedModule} from '../shared/shared.module';
 import {Subscription} from 'rxjs/Subscription';
-
-@Injectable()
-export class AccountActions {
-
-  login(user: any) {
-    reduxStore.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
-  }
-
-  register(user: any) {
-    reduxStore.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
-  }
-
-  clearLoginErrorMessages() {
-    reduxStore.dispatch({type: accountActions.LOGIN_CLEAR_ERROR_MESSAGES});
-  }
-
-  clearRegisterErrorMessages() {
-    reduxStore.dispatch({type: accountActions.REGISTER_CLEAR_ERROR_MESSAGES});
-  }
-}
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -84,7 +64,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(private actions: AccountActions) {
-
   }
 
   ngOnInit(): void {
@@ -207,9 +186,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   declarations: [
     LoginComponent,
     RegisterComponent,
-  ],
-  providers: [
-    AccountActions,
   ],
 })
 export class AccountModule {

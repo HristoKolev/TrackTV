@@ -11,7 +11,6 @@ export const routerActions = actionTypes('router').ofType<{
   ROUTER_ERROR: string;
 }>();
 
-
 export interface RouterState {
   location?: string;
 }
@@ -70,12 +69,11 @@ export class ReduxRouterService {
         reduxStore.dispatch({type: routerActions.ROUTER_CANCEL, location});
       } else if (event instanceof NavigationError) {
 
-        reduxStore.dispatch({type: routerActions.ROUTER_ERROR, location});
+        console.error(event.error);
       }
     });
   }
 }
-
 
 export const routerReducer: ReduxReducer<RouterState> = (state = {}, action: RouterAction) => {
   switch (action.type) {
@@ -92,7 +90,6 @@ export const routerReducer: ReduxReducer<RouterState> = (state = {}, action: Rou
   }
 };
 
-
 export const explicitRouterSaga = (router: Router) => ({
   type: routerActions.ROUTER_NAVIGATION_EXPLICIT,
   saga: function* (action: any) {
@@ -105,7 +102,6 @@ export const explicitRouterSaga = (router: Router) => ({
     yield put(newAction);
   },
 });
-
 
 export const go = (...payload: any[]) => reduxStore.dispatch({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload});
 
