@@ -12,15 +12,26 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   handleError(error) {
 
-    mishapClient.log({
-      recordTitle: error.rejection.message,
-      recordDescription: error.rejection.stack,
-      recordExtendedDescription: error.stack,
-      recordContext: JSON.stringify({
-        reduxState: this.store.getState(),
-      }),
-      recordType: 'Error',
-    });
+    if (error.rejection) {
+      mishapClient.log({
+        recordTitle: error.rejection.message,
+        recordDescription: error.rejection.stack,
+        recordExtendedDescription: error.stack,
+        recordContext: JSON.stringify({
+          reduxState: this.store.getState(),
+        }),
+        recordType: 'Error',
+      });
+    } else {
+      mishapClient.log({
+        recordTitle: error.message,
+        recordDescription: error.stack,
+        recordContext: JSON.stringify({
+          reduxState: this.store.getState(),
+        }),
+        recordType: 'Error',
+      });
+    }
 
     throw error;
   }

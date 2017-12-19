@@ -2,18 +2,47 @@ import {ApiClient, triggerAction} from '../shared/api-client';
 
 import {globalActions} from '../global.state';
 import {put} from 'redux-saga/effects';
-import {actionTypes} from '../../infrastructure/redux/meta';
+import {Injectable} from '@angular/core';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
-export const showActions = actionTypes('SHOW').ofType<{
-  FETCH_REQUEST_START: string,
-  FETCH_REQUEST_SUCCESS: string;
+export const showActions = {
+  FETCH_REQUEST_START: 'SHOW/FETCH_REQUEST_START',
+  FETCH_REQUEST_SUCCESS: 'SHOW/FETCH_REQUEST_SUCCESS',
 
-  SUBSCRIBE_REQUEST_START: string,
-  SUBSCRIBE_REQUEST_SUCCESS: string,
+  SUBSCRIBE_REQUEST_START: 'SHOW/SUBSCRIBE_REQUEST_START',
+  SUBSCRIBE_REQUEST_SUCCESS: 'SHOW/SUBSCRIBE_REQUEST_SUCCESS',
 
-  UNSUBSCRIBE_REQUEST_START: string,
-  UNSUBSCRIBE_REQUEST_SUCCESS: string,
-}>();
+  UNSUBSCRIBE_REQUEST_START: 'SHOW/UNSUBSCRIBE_REQUEST_START',
+  UNSUBSCRIBE_REQUEST_SUCCESS: 'SHOW/UNSUBSCRIBE_REQUEST_SUCCESS',
+};
+
+@Injectable()
+export class ShowActions {
+
+  constructor(private store: ReduxStoreService) {
+  }
+
+  show(showId: number) {
+    this.store.dispatch({
+      type: showActions.FETCH_REQUEST_START,
+      showId,
+    });
+  }
+
+  subscribe(showId: number) {
+    this.store.dispatch({
+      type: showActions.SUBSCRIBE_REQUEST_START,
+      showId,
+    });
+  }
+
+  unsubscribe(showId: number) {
+    this.store.dispatch({
+      type: showActions.UNSUBSCRIBE_REQUEST_START,
+      showId,
+    });
+  }
+}
 
 const initialState = {};
 

@@ -1,23 +1,12 @@
-import {Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {reduxStore} from '../../infrastructure/redux-store';
-import {showsActions, showsReducer, showsSagas} from './shows-state';
+import {ShowsActions, showsReducer, showsSagas} from './shows-state';
 import {apiClient} from '../shared/api-client';
-import {Observable} from 'rxjs/Observable';
 import {parseParams, removeFalsyProperties} from '../../infrastructure/routing-helpers';
-
-@Injectable()
-export class ShowsActions {
-
-  shows(query: any) {
-    reduxStore.dispatch({
-      type: showsActions.FETCH_SHOWS_REQUEST_START,
-      query,
-    });
-  }
-}
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -99,16 +88,19 @@ export class ShowsActions {
         width: 90%;
       }
     }
-
   `],
 })
 export class ShowsComponent implements OnInit {
 
-  state: Observable<any> = reduxStore.select(state => state.shows);
+  get state() {
+    return this.store.select(state => state.shows);
+  }
 
   query: any = {};
 
-  constructor(private actions: ShowsActions, private route: ActivatedRoute) {
+  constructor(private actions: ShowsActions,
+              private route: ActivatedRoute,
+              private store: ReduxStoreService) {
   }
 
   ngOnInit(): void {
@@ -119,7 +111,6 @@ export class ShowsComponent implements OnInit {
         this.actions.shows(query);
         this.query = {...query, genreId: query.genreId || ''};
       });
-
   }
 
   get cleanQuery() {

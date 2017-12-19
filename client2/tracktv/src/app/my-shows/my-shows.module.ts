@@ -1,35 +1,11 @@
-import {Component, Injectable, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {reduxStore} from '../../infrastructure/redux-store';
-import {myShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
+import {MyShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
 import {apiClient} from '../shared/api-client';
-import {Observable} from 'rxjs/Observable';
-
-@Injectable()
-export class MyShowsActions {
-
-  myShows() {
-    reduxStore.dispatch({
-      type: myShowsActions.FETCH_REQUEST_START,
-    });
-  }
-
-  subscribe(showId: number) {
-    reduxStore.dispatch({
-      type: myShowsActions.SUBSCRIBE_REQUEST_START,
-      showId,
-    });
-  }
-
-  unsubscribe(showId: number) {
-    reduxStore.dispatch({
-      type: myShowsActions.UNSUBSCRIBE_REQUEST_START,
-      showId,
-    });
-  }
-}
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -59,9 +35,12 @@ export class MyShowsActions {
 })
 export class MyShowsComponent implements OnInit {
 
-  state: Observable<any> = reduxStore.select(state => state.myShows);
+  get state() {
+    return this.store.select(state => state.myShows);
+  }
 
-  constructor(private actions: MyShowsActions) {
+  constructor(private actions: MyShowsActions,
+              private store: ReduxStoreService) {
   }
 
   ngOnInit(): void {

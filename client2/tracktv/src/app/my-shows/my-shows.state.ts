@@ -1,16 +1,44 @@
 import {ApiClient, triggerAction} from '../shared/api-client';
 import {globalActions} from '../global.state';
 import {put} from 'redux-saga/effects';
-import {actionTypes} from '../../infrastructure/redux/meta';
+import {Injectable} from '@angular/core';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
-export const myShowsActions = actionTypes('MY_SHOWS').ofType<{
-  FETCH_REQUEST_START: string;
-  FETCH_REQUEST_SUCCESS: string;
-  SUBSCRIBE_REQUEST_START: string;
-  SUBSCRIBE_REQUEST_SUCCESS: string;
-  UNSUBSCRIBE_REQUEST_START: string;
-  UNSUBSCRIBE_REQUEST_SUCCESS: string;
-}>();
+export const myShowsActions = {
+  FETCH_REQUEST_START: 'MY_SHOWS/FETCH_REQUEST_START',
+  FETCH_REQUEST_SUCCESS: 'MY_SHOWS/FETCH_REQUEST_SUCCESS',
+  SUBSCRIBE_REQUEST_START: 'MY_SHOWS/SUBSCRIBE_REQUEST_START',
+  SUBSCRIBE_REQUEST_SUCCESS: 'MY_SHOWS/SUBSCRIBE_REQUEST_SUCCESS',
+  UNSUBSCRIBE_REQUEST_START: 'MY_SHOWS/UNSUBSCRIBE_REQUEST_START',
+  UNSUBSCRIBE_REQUEST_SUCCESS: 'MY_SHOWS/UNSUBSCRIBE_REQUEST_SUCCESS',
+};
+
+@Injectable()
+export class MyShowsActions {
+
+  constructor(private store: ReduxStoreService) {
+  }
+
+  myShows() {
+    this.store.dispatch({
+      type: myShowsActions.FETCH_REQUEST_START,
+    });
+  }
+
+  subscribe(showId: number) {
+    this.store.dispatch({
+      type: myShowsActions.SUBSCRIBE_REQUEST_START,
+      showId,
+    });
+  }
+
+  unsubscribe(showId: number) {
+    this.store.dispatch({
+      type: myShowsActions.UNSUBSCRIBE_REQUEST_START,
+      showId,
+    });
+  }
+}
 
 const initialState = {
   shows: [],

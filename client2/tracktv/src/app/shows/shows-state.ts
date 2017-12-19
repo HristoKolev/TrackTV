@@ -1,15 +1,31 @@
 import {ApiClient, triggerAction} from '../shared/api-client';
 import {put} from 'redux-saga/effects';
 import {globalActions} from '../global.state';
-import {actionTypes, ReduxReducer} from '../../infrastructure/redux/meta';
+import {ReduxReducer} from '../../infrastructure/redux/meta';
+import {Injectable} from '@angular/core';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
-export const showsActions = actionTypes('SHOWS').ofType<{
-  FETCH_SHOWS_REQUEST_START: string;
-  FETCH_SHOWS_REQUEST_SUCCESS: string;
+export const showsActions = {
+  FETCH_SHOWS_REQUEST_START: 'SHOWS/FETCH_SHOWS_REQUEST_START',
+  FETCH_SHOWS_REQUEST_SUCCESS: 'SHOWS/FETCH_SHOWS_REQUEST_SUCCESS',
 
-  FETCH_GENRES_REQUEST_START: string;
-  FETCH_GENRES_REQUEST_SUCCESS: string;
-}>();
+  FETCH_GENRES_REQUEST_START: 'SHOWS/FETCH_GENRES_REQUEST_START',
+  FETCH_GENRES_REQUEST_SUCCESS: 'SHOWS/FETCH_GENRES_REQUEST_SUCCESS',
+};
+
+@Injectable()
+export class ShowsActions {
+
+  constructor(private store: ReduxStoreService) {
+  }
+
+  shows(query: any) {
+    this.store.dispatch({
+      type: showsActions.FETCH_SHOWS_REQUEST_START,
+      query,
+    });
+  }
+}
 
 const initialState = {
   totalCount: 0,
