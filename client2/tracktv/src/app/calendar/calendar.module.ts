@@ -1,22 +1,13 @@
-import {ChangeDetectionStrategy, Component, Injectable, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {reduxStore} from '../../infrastructure/redux-store';
-import {calendarActions, calendarReducer, calendarSagas} from './calendar.state';
+import {CalendarActions, calendarReducer, calendarSagas} from './calendar.state';
 import {apiClient} from '../shared/api-client';
 import {format} from 'date-fns';
-
-@Injectable()
-export class CalendarService {
-
-  fetchCalendar() {
-    reduxStore.dispatch({
-      type: calendarActions.FETCH_CALENDAR_REQUEST_START,
-    });
-  }
-}
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -37,7 +28,7 @@ export class CalendarService {
     </div>
   `,
   styles: [`
-    @media (min-width: 768px) {
+    @media (min-width: 1000px) {
       .wrapper {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
@@ -71,7 +62,7 @@ export class CalendarService {
       }
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 999px) {
 
       .header {
         display: none;
@@ -102,14 +93,17 @@ export class CalendarService {
 })
 export class CalendarComponent implements OnInit {
 
-  state: any = reduxStore.select(state => state.calendar);
+  get state() {
+    return this.store.select(state => state.calendar);
+  }
 
-  constructor(private calendarService: CalendarService) {
+  constructor(private actions: CalendarActions,
+              private store: ReduxStoreService) {
   }
 
   ngOnInit(): void {
 
-    this.calendarService.fetchCalendar();
+    this.actions.fetchCalendar();
   }
 
   formatDate(day: Date): string {
@@ -145,7 +139,7 @@ export class CalendarComponent implements OnInit {
   declarations: [
     CalendarComponent,
   ],
-  providers: [CalendarService],
+  providers: [CalendarActions],
 })
 export class CalendarModule {
 

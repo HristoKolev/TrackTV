@@ -1,4 +1,4 @@
-import {ApplicationRef, NgModule} from '@angular/core';
+import {ApplicationRef, ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {Router, RouterModule, Routes} from '@angular/router';
 import {AppComponent, NotFound404Component} from './app.component';
@@ -10,6 +10,7 @@ import {wrapDevToolsExtension} from '../infrastructure/redux/dev-tools';
 import {explicitRouterSaga, ReduxRouterService, routerReducer} from '../infrastructure/redux/router';
 import {ReduxPersistService} from '../infrastructure/redux/persist';
 import {ReduxHelperModule} from '../infrastructure/redux/redux-helper.module';
+import {GlobalErrorHandler} from '../infrastructure/GlobalErrorHandler';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},
@@ -37,7 +38,12 @@ export const routes: Routes = [
   ],
   bootstrap: [AppComponent],
   exports: [AppComponent],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
+  ],
 })
 export class AppModule {
 
@@ -55,7 +61,7 @@ export class AppModule {
     }
 
     const initialReducers = {
-      router: routerReducer
+      router: routerReducer,
     };
 
     reduxStore.initStore(enhancers, initialReducers);

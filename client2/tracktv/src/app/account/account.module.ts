@@ -183,6 +183,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     FormsModule,
     SharedModule,
   ],
+  providers: [AccountActions]
+  ,
   declarations: [
     LoginComponent,
     RegisterComponent,

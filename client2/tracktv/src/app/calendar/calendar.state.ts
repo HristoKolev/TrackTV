@@ -2,11 +2,26 @@ import {ApiClient, triggerAction} from '../shared/api-client';
 import {put} from 'redux-saga/effects';
 import {globalActions} from '../global.state';
 import {actionTypes, ReduxReducer} from '../../infrastructure/redux/meta';
+import {Injectable} from '@angular/core';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 export const calendarActions = actionTypes('CALENDAR').ofType<{
   FETCH_CALENDAR_REQUEST_START: string;
   FETCH_CALENDAR_REQUEST_SUCCESS: string;
 }>();
+
+@Injectable()
+export class CalendarActions {
+
+  constructor(private store: ReduxStoreService) {
+  }
+
+  fetchCalendar() {
+    this.store.dispatch({
+      type: calendarActions.FETCH_CALENDAR_REQUEST_START,
+    });
+  }
+}
 
 const initialState = {};
 
