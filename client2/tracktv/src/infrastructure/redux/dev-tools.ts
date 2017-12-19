@@ -1,6 +1,7 @@
 import {ApplicationRef, NgZone} from '@angular/core';
+import {ReduxStoreService} from './redux-store-service';
 
-export const wrapDevToolsExtension = (devToolsExtension: any, appRef: ApplicationRef, store: any) => {
+export const wrapDevToolsExtension = (devToolsExtension: any, appRef: ApplicationRef, store: ReduxStoreService) => {
 
   return (options?: Object) => {
     let subscription: any;

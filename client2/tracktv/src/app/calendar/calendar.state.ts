@@ -1,9 +1,9 @@
 import {ApiClient, triggerAction} from '../shared/api-client';
 import {put} from 'redux-saga/effects';
-import {globalActions} from '../global.state';
 import {ReduxReducer} from '../../infrastructure/redux/meta';
 import {Injectable} from '@angular/core';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {globalActions} from '../../infrastructure/redux/redux-global-actions';
 
 export const calendarActions = {
   FETCH_CALENDAR_REQUEST_START: 'CALENDAR/FETCH_CALENDAR_REQUEST_START',

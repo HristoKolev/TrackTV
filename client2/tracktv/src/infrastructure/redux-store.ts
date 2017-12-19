@@ -2,9 +2,9 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {freezeMiddleware} from './freeze-middleware';
 import createSagaMiddleware from 'redux-saga';
 import {put, takeEvery} from 'redux-saga/effects';
-import {globalActions} from '../app/global.state';
 import {Observable} from 'rxjs/Observable';
 import {ReduxReducerMap} from './redux/meta';
+import {globalActions} from './redux/redux-global-actions';
 
 class StoreWrapper {
 
@@ -19,7 +19,7 @@ class StoreWrapper {
     this.sagaMiddleware = createSagaMiddleware();
   }
 
-  initStore(enhancers: any[] = [], initialReducers?: ReduxReducerMap) {
+  initStore(enhancers: any[] = [], initialReducers?: ReduxReducerMap): void {
 
     if (initialReducers) {
 
@@ -43,7 +43,7 @@ class StoreWrapper {
     return this.store;
   }
 
-  addSagas(sagas: any = {}) {
+  addSagas(sagas: any = {}): void {
 
     const _this = this;
 
@@ -90,8 +90,8 @@ class StoreWrapper {
     return this.store.getState();
   }
 
-  dispatch(...args: any[]) {
-    this.store.dispatch(...args);
+  dispatch(action): void {
+    this.store.dispatch(action);
   }
 
   select<T = any>(selector: (state: any) => any = f => f): Observable<T> {

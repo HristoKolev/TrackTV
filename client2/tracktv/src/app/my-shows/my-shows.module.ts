@@ -2,7 +2,6 @@ import {Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/co
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {reduxStore} from '../../infrastructure/redux-store';
 import {MyShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
 import {apiClient} from '../shared/api-client';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
@@ -199,12 +198,12 @@ export class MyShowComponent {
   providers: [MyShowsActions],
 })
 export class MyShowsModule {
-  constructor() {
+  constructor(store: ReduxStoreService) {
 
-    reduxStore.addReducers({
+    store.addReducers({
       myShows: myShowsReducer,
     });
 
-    reduxStore.addSagas(myShowsSagas(apiClient));
+    store.addSagas(myShowsSagas(apiClient));
   }
 }

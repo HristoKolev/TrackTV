@@ -7,93 +7,6 @@ export interface FetchResponse {
   networkError: boolean;
 }
 
-export const createHttpClient = (getBaseUrl: () => string, getDefaultHeaders: () => any) => {
-
-  const parseResponse = (res: any): any => {
-
-    return res.json()
-      .then((body: any) => ({
-        status: res.status,
-        body,
-        headers: Array.from(res.headers.entries())
-          .reduce((acc: any, x: any) => {
-            acc[x[0]] = x[1];
-            return acc;
-          }, {}),
-        networkError: false,
-      }), (err: any) => ({
-        status: res.status,
-        headers: Array.from(res.headers.entries())
-          .reduce((acc: any, x: any) => {
-            acc[x[0]] = x[1];
-            return acc;
-          }, {}),
-        networkError: false,
-      }));
-  };
-
-  const handleError = (error: any) => ({networkError: true});
-
-  return {
-    get(url: string, headers: any = {}): Promise<FetchResponse> {
-
-      const options = {
-        method: 'get',
-        headers: {
-          ...getDefaultHeaders(),
-          ...(headers || {})
-        },
-      };
-
-      return fetch(getBaseUrl() + url, options)
-        .then(parseResponse, handleError);
-    },
-    post(url: string, body: any, headers?: any): Promise<FetchResponse> {
-
-      const options = {
-        method: 'post',
-        headers: {
-          ...getDefaultHeaders(),
-          ...(headers || {}),
-          'Content-Type': 'application/json'
-        },
-        body,
-      };
-
-      return fetch(getBaseUrl() + url, options)
-        .then(parseResponse, handleError);
-    },
-    put(url: string, body: any, headers?: any): Promise<FetchResponse> {
-
-      const options = {
-        method: 'put',
-        headers: {
-          ...getDefaultHeaders(),
-          ...(headers || {})
-        },
-        body,
-      };
-
-      return fetch(getBaseUrl() + url, options)
-        .then(parseResponse, handleError);
-    },
-    del(url: string, body: any, headers?: any): Promise<FetchResponse> {
-
-      const options = {
-        method: 'delete',
-        headers: {
-          ...getDefaultHeaders(),
-          ...(headers || {})
-        },
-        body,
-      };
-
-      return fetch(getBaseUrl() + url, options)
-        .then(parseResponse, handleError);
-    }
-  };
-};
-
 class HttpClient {
 
   public get baseUrl(): string {
@@ -107,7 +20,7 @@ class HttpClient {
       method: 'get',
       headers: {
         ...this.defaultHeaders,
-        ...(headers || {})
+        ...(headers || {}),
       },
     };
 
@@ -122,7 +35,7 @@ class HttpClient {
       headers: {
         ...this.defaultHeaders,
         ...(headers || {}),
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body,
     };
@@ -137,7 +50,7 @@ class HttpClient {
       method: 'put',
       headers: {
         ...this.defaultHeaders,
-        ...(headers || {})
+        ...(headers || {}),
       },
       body,
     };
@@ -151,7 +64,7 @@ class HttpClient {
     const options = {
       method: 'delete',
       headers: {
-        ...this.defaultHeaders, ...(headers || {})
+        ...this.defaultHeaders, ...(headers || {}),
       },
       body,
     };

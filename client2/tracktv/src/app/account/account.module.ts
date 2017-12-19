@@ -3,10 +3,10 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {AccountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer} from './account.state';
-import {reduxStore} from '../../infrastructure/redux-store';
 import {apiClient} from '../shared/api-client';
 import {SharedModule} from '../shared/shared.module';
 import {Subscription} from 'rxjs/Subscription';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -63,12 +63,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private actions: AccountActions) {
+  constructor(private actions: AccountActions,
+              private store: ReduxStoreService) {
   }
 
   ngOnInit(): void {
 
-    this.subscription = reduxStore.select<ILoginState>(store => store.login)
+    this.subscription = this.store.select<ILoginState>(store => store.login)
       .subscribe((x: any) => this.state = x);
 
     this.actions.clearLoginErrorMessages();
@@ -147,12 +148,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private actions: AccountActions) {
+  constructor(private actions: AccountActions,
+              private store: ReduxStoreService) {
   }
 
   ngOnInit(): void {
 
-    this.subscription = reduxStore
+    this.subscription = this.store
       .select<IRegisterState>(store => store.register)
       .subscribe((x: any) => this.state = x);
 
@@ -192,13 +194,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
 })
 export class AccountModule {
 
-  constructor() {
+  constructor(store: ReduxStoreService) {
 
-    reduxStore.addReducers({
+    store.addReducers({
       login: loginReducer,
       register: registerReducer,
     });
 
-    reduxStore.addSagas(accountSagas(apiClient));
+    store.addSagas(accountSagas(apiClient));
   }
 }

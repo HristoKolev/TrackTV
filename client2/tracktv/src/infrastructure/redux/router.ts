@@ -2,14 +2,15 @@ import {Injectable} from '@angular/core';
 import {NavigationCancel, Router, RoutesRecognized} from '@angular/router';
 import {reduxStore} from '../redux-store';
 import {put} from 'redux-saga/effects';
-import {actionTypes, ReduxReducer} from './meta';
+import {ReduxReducer} from './meta';
+import {ReduxStoreService} from './redux-store-service';
 
-export const routerActions = actionTypes('router').ofType<{
-  ROUTER_NAVIGATION: string;
-  ROUTER_NAVIGATION_EXPLICIT: string;
-  ROUTER_CANCEL: string;
-  ROUTER_ERROR: string;
-}>();
+export const routerActions = {
+  ROUTER_NAVIGATION: 'ROUTER/ROUTER_NAVIGATION',
+  ROUTER_NAVIGATION_EXPLICIT: 'ROUTER/ROUTER_NAVIGATION_EXPLICIT',
+  ROUTER_CANCEL: 'ROUTER/ROUTER_CANCEL',
+  ROUTER_ERROR: 'ROUTER/ROUTER_ERROR',
+};
 
 export interface RouterState {
   location?: string;
@@ -22,7 +23,8 @@ export interface RouterAction {
 
 @Injectable()
 export class ReduxRouterService {
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private store: ReduxStoreService) {
   }
 
   init(routerStateSelector: (state: any) => RouterState) {
@@ -34,7 +36,7 @@ export class ReduxRouterService {
     let dispatchTriggeredByNavigation = false;
     let navigationTriggeredByDispatch = false;
 
-    reduxStore.select(routerStateSelector).subscribe(state => {
+    this.store.select(routerStateSelector).subscribe(state => {
 
       if (state.location && this.router.url !== state.location) {
 
@@ -63,10 +65,10 @@ export class ReduxRouterService {
 
         dispatchTriggeredByNavigation = true;
 
-        reduxStore.dispatch({type: routerActions.ROUTER_NAVIGATION, location});
+        this.store.dispatch({type: routerActions.ROUTER_NAVIGATION, location});
       } else if (event instanceof NavigationCancel) {
 
-        reduxStore.dispatch({type: routerActions.ROUTER_CANCEL, location});
+        this.store.dispatch({type: routerActions.ROUTER_CANCEL, location});
       }
     });
   }

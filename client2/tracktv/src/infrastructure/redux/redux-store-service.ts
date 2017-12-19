@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {reduxStore} from '../redux-store';
+import {ReduxReducerMap} from './meta';
 
 @Injectable()
 export class ReduxStoreService {
@@ -9,11 +10,23 @@ export class ReduxStoreService {
     return reduxStore.select(selector);
   }
 
-  dispatch(...args: any[]): void {
-    reduxStore.dispatch(...args);
+  dispatch(action): void {
+    reduxStore.dispatch(action);
   }
 
   getState(): any {
     return reduxStore.getState();
+  }
+
+  initStore(enhancers: any[] = [], initialReducers?: ReduxReducerMap): void {
+    return reduxStore.initStore(enhancers, initialReducers);
+  }
+
+  addSagas(sagas: any = {}): void {
+    return reduxStore.addSagas(sagas);
+  }
+
+  addReducers(reducers: ReduxReducerMap = {}): void {
+    return reduxStore.addReducers(reducers);
   }
 }

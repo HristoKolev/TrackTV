@@ -3,14 +3,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {Router, RouterModule, Routes} from '@angular/router';
 import {AppComponent, NotFound404Component} from './app.component';
 import {globalErrorReducer, settingsReducer, userSessionReducer} from './global.state';
-import {reduxStore} from '../infrastructure/redux-store';
 import {HeaderComponent} from './layout/header.component';
 import {LoadingComponent} from './layout/loading.component';
 import {wrapDevToolsExtension} from '../infrastructure/redux/dev-tools';
 import {explicitRouterSaga, ReduxRouterService, routerReducer} from '../infrastructure/redux/router';
-import {ReduxPersistService} from '../infrastructure/redux/persist';
 import {ReduxHelperModule} from '../infrastructure/redux/redux-helper.module';
 import {GlobalErrorHandler} from '../infrastructure/GlobalErrorHandler';
+import {ReduxPersistService} from '../infrastructure/redux/redux-persist-service';
+import {ReduxStoreService} from '../infrastructure/redux/redux-store-service';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},
@@ -50,21 +50,22 @@ export class AppModule {
   constructor(reduxRouter: ReduxRouterService,
               reduxPersist: ReduxPersistService,
               appRef: ApplicationRef,
-              router: Router) {
+              router: Router,
+              store: ReduxStoreService) {
 
     const devTools = (window as any).devToolsExtension;
 
     const enhancers: any[] = [];
 
     if (devTools) {
-      enhancers.push(wrapDevToolsExtension(devTools, appRef, reduxStore)());
+      enhancers.push(wrapDevToolsExtension(devTools, appRef, store)());
     }
 
     const initialReducers = {
       router: routerReducer,
     };
 
-    reduxStore.initStore(enhancers, initialReducers);
+    store.initStore(enhancers, initialReducers);
 
     reduxRouter.init(state => state.router);
 
@@ -72,13 +73,13 @@ export class AppModule {
       session: 'localStorage',
     });
 
-    reduxStore.addReducers({
+    store.addReducers({
       settings: settingsReducer,
       global: globalErrorReducer,
       session: userSessionReducer,
     });
 
-    reduxStore.addSagas({
+    store.addSagas({
       explicitRouterSaga: explicitRouterSaga(router),
       logSaga: {
         type: '*',

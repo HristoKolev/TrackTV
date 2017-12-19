@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {reduxStore} from '../../infrastructure/redux-store';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -21,9 +21,12 @@ export class LoadingComponent implements OnInit {
 
   firstLoad = true;
 
+  constructor(private store: ReduxStoreService) {
+  }
+
   public ngOnInit(): void {
 
-    reduxStore.select(state => state.global)
+    this.store.select(state => state.global)
       .distinctUntilChanged()
       .switchMap(global => Observable.of(global).delay((global.loading > 0 || this.firstLoad) ? 100 : 0))
       .subscribe(global => {

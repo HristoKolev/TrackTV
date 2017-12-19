@@ -1,8 +1,8 @@
 import {ApiClient, triggerAction} from '../shared/api-client';
-import {globalActions} from '../global.state';
 import {put} from 'redux-saga/effects';
 import {Injectable} from '@angular/core';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {globalActions} from '../../infrastructure/redux/redux-global-actions';
 
 export const myShowsActions = {
   FETCH_REQUEST_START: 'MY_SHOWS/FETCH_REQUEST_START',

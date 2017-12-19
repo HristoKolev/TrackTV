@@ -1,5 +1,6 @@
-import {getPersistedState} from '../infrastructure/redux/persist';
-import {actionTypes, ReduxReducer} from '../infrastructure/redux/meta';
+import {ReduxReducer} from '../infrastructure/redux/meta';
+import {getPersistedState} from '../infrastructure/redux/redux-persist-service';
+import {globalActions} from '../infrastructure/redux/redux-global-actions';
 
 export interface ISettingsState {
   baseUrl: string;
@@ -28,16 +29,6 @@ const initialGlobalErrorState: IGlobalErrorState = {
   errorMessages: [],
   loading: 0,
 };
-
-export const globalActions = actionTypes('global').ofType<{
-  GLOBAL_ERROR: string;
-
-  LOGIN_USER: string;
-  LOGOUT_USER: string;
-
-  START_TRANSITION: string;
-  END_TRANSITION: string;
-}>();
 
 export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = initialGlobalErrorState, action) => {
   switch (action.type) {

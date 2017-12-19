@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {reduxStore} from '../redux-store';
+import {ReduxStoreService} from './redux-store-service';
 
 type PersistStrategy = 'localStorage' | 'sessionStorage';
 
@@ -23,18 +23,21 @@ export const getPersistedState = (): any => {
 
   return {
     ...sessionStorageItems,
-    ...localStorageItems
+    ...localStorageItems,
   };
 };
 
 @Injectable()
 export class ReduxPersistService {
 
+  constructor(private store: ReduxStoreService) {
+  }
+
   initialize(persistConfig: { [key: string]: PersistStrategy }): void {
 
     for (const [propertyName, persistStrategy] of Object.entries(persistConfig)) {
 
-      reduxStore.select(state => state[propertyName])
+      this.store.select(state => state[propertyName])
         .distinctUntilChanged()
         .subscribe(propertyValue => {
           this.persist(propertyName, propertyValue, persistStrategy as PersistStrategy);

@@ -1,7 +1,7 @@
 import {FetchResponse, httpClient} from '../../infrastructure/http-client';
 import {reduxStore} from '../../infrastructure/redux-store';
-import {globalActions} from '../global.state';
 import {go} from '../../infrastructure/redux/router';
+import {globalActions} from '../../infrastructure/redux/redux-global-actions';
 
 export interface ApiResponse {
   errorMessages: string[];

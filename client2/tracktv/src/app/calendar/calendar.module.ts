@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
-import {reduxStore} from '../../infrastructure/redux-store';
 import {CalendarActions, calendarReducer, calendarSagas} from './calendar.state';
 import {apiClient} from '../shared/api-client';
 import {format} from 'date-fns';
@@ -143,11 +142,11 @@ export class CalendarComponent implements OnInit {
 })
 export class CalendarModule {
 
-  constructor() {
-    reduxStore.addReducers({
+  constructor(store: ReduxStoreService) {
+    store.addReducers({
       calendar: calendarReducer,
     });
 
-    reduxStore.addSagas(calendarSagas(apiClient));
+    store.addSagas(calendarSagas(apiClient));
   }
 }

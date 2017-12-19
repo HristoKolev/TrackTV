@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {globalActions} from '../global.state';
-import {reduxStore} from '../../infrastructure/redux-store';
 import {go} from '../../infrastructure/redux/router';
+import {globalActions} from '../../infrastructure/redux/redux-global-actions';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -130,6 +130,9 @@ export class HeaderComponent implements OnInit {
 
   navigationClosed = true;
 
+  constructor(private store: ReduxStoreService) {
+  }
+
   ngOnInit(): void {
 
     const allLinks = [
@@ -141,7 +144,7 @@ export class HeaderComponent implements OnInit {
       {name: 'Register', link: ['/account/register'], role: 'unregistered'},
     ];
 
-    reduxStore.select(state => state.session)
+    this.store.select(state => state.session)
       .subscribe(sessionState => {
 
         this.links = allLinks.filter(link => {
@@ -163,7 +166,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    reduxStore.dispatch({
+    this.store.dispatch({
       type: globalActions.LOGOUT_USER,
     });
 
