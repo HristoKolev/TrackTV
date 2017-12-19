@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {NavigationCancel, NavigationError, Router, RoutesRecognized} from '@angular/router';
+import {NavigationCancel, Router, RoutesRecognized} from '@angular/router';
 import {reduxStore} from '../redux-store';
 import {put} from 'redux-saga/effects';
 import {actionTypes, ReduxReducer} from './meta';
@@ -67,9 +67,6 @@ export class ReduxRouterService {
       } else if (event instanceof NavigationCancel) {
 
         reduxStore.dispatch({type: routerActions.ROUTER_CANCEL, location});
-      } else if (event instanceof NavigationError) {
-
-        console.error(event.error);
       }
     });
   }
