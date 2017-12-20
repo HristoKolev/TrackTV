@@ -44,9 +44,14 @@ export class LoadingComponent implements OnInit {
   private removeInitialLoader() {
     setTimeout(() => {
 
-      (window as any).document
-        .getElementById('initial-loader')
-        .remove();
+      const loadingElement = (window as any).document
+        .getElementById('initial-loader');
+
+      if (loadingElement) {
+
+        loadingElement
+          .remove();
+      }
     }, 0);
   }
 }
