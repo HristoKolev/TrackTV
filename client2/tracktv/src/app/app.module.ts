@@ -6,11 +6,12 @@ import {globalErrorReducer, settingsReducer, userSessionReducer} from './global.
 import {HeaderComponent} from './layout/header.component';
 import {LoadingComponent} from './layout/loading.component';
 import {wrapDevToolsExtension} from '../infrastructure/redux/dev-tools';
-import {explicitRouterSaga, ReduxRouterService, routerReducer} from '../infrastructure/redux/router';
 import {ReduxHelperModule} from '../infrastructure/redux/redux-helper.module';
 import {GlobalErrorHandler} from '../infrastructure/GlobalErrorHandler';
 import {ReduxPersistService} from '../infrastructure/redux/redux-persist-service';
 import {ReduxStoreService} from '../infrastructure/redux/redux-store-service';
+import {SharedModule} from './shared/shared.module';
+import {explicitRouterSaga, ReduxRouterService, routerReducer} from '../infrastructure/redux/redux-router-service';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},
@@ -34,7 +35,7 @@ export const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes, {useHash: false}),
     ReduxHelperModule,
-
+    SharedModule,
   ],
   bootstrap: [AppComponent],
   exports: [AppComponent],

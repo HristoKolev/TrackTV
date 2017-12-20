@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {ShowsActions, showsReducer, showsSagas} from './shows-state';
-import {apiClient} from '../shared/api-client';
 import {parseParams, removeFalsyProperties} from '../../infrastructure/routing-helpers';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -186,7 +186,7 @@ export class ShowSummaryComponent {
   providers: [ShowsActions],
 })
 export class ShowsModule {
-  constructor(private store: ReduxStoreService) {
+  constructor(private store: ReduxStoreService, apiClient: ApiClient) {
 
     this.store.addReducers({
       shows: showsReducer,

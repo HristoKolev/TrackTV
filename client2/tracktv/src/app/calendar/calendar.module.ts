@@ -2,11 +2,10 @@ import {ChangeDetectionStrategy, Component, NgModule, OnInit, ViewEncapsulation}
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {SharedModule} from '../shared/shared.module';
 import {CalendarActions, calendarReducer, calendarSagas} from './calendar.state';
-import {apiClient} from '../shared/api-client';
 import {format} from 'date-fns';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -133,7 +132,6 @@ export class CalendarComponent implements OnInit {
       {path: '', component: CalendarComponent},
     ]),
     FormsModule,
-    SharedModule,
   ],
   declarations: [
     CalendarComponent,
@@ -142,7 +140,7 @@ export class CalendarComponent implements OnInit {
 })
 export class CalendarModule {
 
-  constructor(store: ReduxStoreService) {
+  constructor(store: ReduxStoreService, apiClient: ApiClient) {
     store.addReducers({
       calendar: calendarReducer,
     });

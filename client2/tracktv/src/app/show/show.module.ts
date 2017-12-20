@@ -3,9 +3,9 @@ import {ActivatedRoute, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {Component, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
 import {ShowActions, showReducer, showSagas} from './show.state';
-import {apiClient} from '../shared/api-client';
 import {parseParams} from '../../infrastructure/routing-helpers';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -67,7 +67,7 @@ export class ShowComponent implements OnInit {
   providers: [ShowActions],
 })
 export class ShowModule {
-  constructor(private store: ReduxStoreService) {
+  constructor(private store: ReduxStoreService, apiClient: ApiClient) {
 
     this.store.addReducers({
       show: showReducer,

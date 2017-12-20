@@ -1,4 +1,5 @@
-import {reduxStore} from './redux-store';
+import {ReduxStoreService} from './redux/redux-store-service';
+import {Injectable} from '@angular/core';
 
 export interface FetchResponse {
   status: number;
@@ -7,11 +8,15 @@ export interface FetchResponse {
   networkError: boolean;
 }
 
-class HttpClient {
+@Injectable()
+export class HttpClient {
+
+  constructor(private store: ReduxStoreService) {
+  }
 
   public get baseUrl(): string {
 
-    return reduxStore.getState().settings.baseUrl;
+    return this.store.getState().settings.baseUrl;
   }
 
   get(url: string, headers: any = {}): Promise<FetchResponse> {
@@ -104,7 +109,7 @@ class HttpClient {
 
     const headers: any = {};
 
-    const state = reduxStore.getState();
+    const state = this.store.getState();
 
     let token;
 
@@ -121,5 +126,3 @@ class HttpClient {
   }
 
 }
-
-export const httpClient = new HttpClient();

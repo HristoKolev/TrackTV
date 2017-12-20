@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {ReduxRouterService} from './router';
 import {ReduxStoreService} from './redux-store-service';
 import {ReduxPersistService} from './redux-persist-service';
+import {ReduxRouterService} from './redux-router-service';
 
 @NgModule({
   providers: [ReduxRouterService, ReduxPersistService, ReduxStoreService],

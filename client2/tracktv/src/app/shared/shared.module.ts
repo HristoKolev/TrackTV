@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ApiClient} from './api-client';
+import {HttpClient} from '../../infrastructure/http-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -101,7 +103,7 @@ export class TelevisionComponent {
     CommonModule,
   ],
   declarations: [ErrorContainerComponent, TelevisionComponent],
-  providers: [],
+  providers: [ApiClient, HttpClient],
   exports: [ErrorContainerComponent, TelevisionComponent],
 })
 export class SharedModule {

@@ -3,10 +3,10 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {AccountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer} from './account.state';
-import {apiClient} from '../shared/api-client';
 import {SharedModule} from '../shared/shared.module';
 import {Subscription} from 'rxjs/Subscription';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -194,7 +194,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 })
 export class AccountModule {
 
-  constructor(store: ReduxStoreService) {
+  constructor(store: ReduxStoreService, apiClient: ApiClient) {
 
     store.addReducers({
       login: loginReducer,

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {go} from '../../infrastructure/redux/router';
 import {globalActions} from '../../infrastructure/redux/redux-global-actions';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {go} from '../../infrastructure/redux/redux-router-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -66,6 +66,7 @@ import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service'
       font-family: 'Roboto', sans-serif;
       font-size: 13px;
       user-select: none;
+      cursor: pointer;
     }
 
     i {
@@ -170,7 +171,7 @@ export class HeaderComponent implements OnInit {
       type: globalActions.LOGOUT_USER,
     });
 
-    go(['/shows']);
+    this.store.dispatch(go(['/shows']));
   }
 
   toggleNavigationBars() {

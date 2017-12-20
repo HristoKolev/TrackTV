@@ -1,10 +1,10 @@
 import {ApiClient} from '../shared/api-client';
 import {put} from 'redux-saga/effects';
-import {routerActions} from '../../infrastructure/redux/router';
 import {ReduxReducer, ReduxSagaMap} from '../../infrastructure/redux/meta';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {Injectable} from '@angular/core';
 import {globalActions} from '../../infrastructure/redux/redux-global-actions';
+import {routerActions} from '../../infrastructure/redux/redux-router-service';
 
 export interface ILoginState {
 

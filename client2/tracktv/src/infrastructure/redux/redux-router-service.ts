@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {NavigationCancel, Router, RoutesRecognized} from '@angular/router';
-import {reduxStore} from '../redux-store';
 import {put} from 'redux-saga/effects';
 import {ReduxReducer} from './meta';
 import {ReduxStoreService} from './redux-store-service';
@@ -102,6 +101,6 @@ export const explicitRouterSaga = (router: Router) => ({
   },
 });
 
-export const go = (...payload: any[]) => reduxStore.dispatch({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload});
+export const go = (...payload: any[]) => ({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload});
 
 

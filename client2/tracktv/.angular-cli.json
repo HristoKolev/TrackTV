@@ -55,9 +55,13 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {},
+    "component": {
+    },
     "build": {
       "preserveSymlinks": true
     }
+  },
+  "warnings": {
+    "typescriptMismatch": false
   }
 }

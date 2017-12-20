@@ -3,8 +3,8 @@ import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {MyShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
-import {apiClient} from '../shared/api-client';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -198,7 +198,7 @@ export class MyShowComponent {
   providers: [MyShowsActions],
 })
 export class MyShowsModule {
-  constructor(store: ReduxStoreService) {
+  constructor(store: ReduxStoreService, apiClient: ApiClient) {
 
     store.addReducers({
       myShows: myShowsReducer,
