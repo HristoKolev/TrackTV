@@ -1,8 +1,8 @@
-import {FetchResponse, HttpClient} from '../../infrastructure/http-client';
 import {globalActions} from '../../infrastructure/redux/redux-global-actions';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {Injectable} from '@angular/core';
 import {go} from '../../infrastructure/redux/redux-router-service';
+import {FetchResponse, HttpClient} from './http-client';
 
 export interface ApiResponse {
   errorMessages: string[];

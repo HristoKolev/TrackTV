@@ -1,5 +1,5 @@
-import {ReduxStoreService} from './redux/redux-store-service';
 import {Injectable} from '@angular/core';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 
 export interface FetchResponse {
   status: number;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {reduxStore} from '../redux-store';
 import {ReduxReducerMap} from './meta';
+import {reduxStore} from './redux-store';
 
 @Injectable()
 export class ReduxStoreService {

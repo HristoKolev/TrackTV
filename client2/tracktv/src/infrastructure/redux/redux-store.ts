@@ -3,8 +3,8 @@ import {freezeMiddleware} from './freeze-middleware';
 import createSagaMiddleware from 'redux-saga';
 import {put, takeEvery} from 'redux-saga/effects';
 import {Observable} from 'rxjs/Observable';
-import {ReduxReducerMap} from './redux/meta';
-import {globalActions} from './redux/redux-global-actions';
+import {ReduxReducerMap} from './meta';
+import {globalActions} from './redux-global-actions';
 
 class StoreWrapper {
 
