@@ -1,6 +1,9 @@
 namespace TrackTv.WebServices.Infrastructure
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
 
     using log4net;
     using log4net.Util;
@@ -18,46 +21,57 @@ namespace TrackTv.WebServices.Infrastructure
     /// </summary>
     public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        public HandleExceptionFilterAttribute(IHostingEnvironment hostingEnvironment, ILog log)
+        public HandleExceptionFilterAttribute(IHostingEnvironment hostingEnvironment, ILog log, MishapService mishapService)
         {
             this.HostingEnvironment = hostingEnvironment;
             this.Log = log;
+            this.MishapService = mishapService;
         }
 
         private IHostingEnvironment HostingEnvironment { get; }
 
         private ILog Log { get; }
 
-        public override void OnException(ExceptionContext context)
+        private MishapService MishapService { get; }
+
+        public override async Task OnExceptionAsync(ExceptionContext context)
         {
             try
             {
-                this.HandleException(context);
+                await this.HandleExceptionAsync(context);
             }
             catch (Exception ex)
             {
-                this.Log.ErrorExt(() => "\r\n\r\n" + "Exception occured while handling an exception.\r\n\r\n"
-                                        + $"Original exception: {context.Exception}\r\n\r\n" + $"Error handler exception: {ex}");
+                this.Log.ErrorExt(() =>
+                    "\r\n\r\n" + "Exception occured while handling an exception.\r\n\r\n"
+                               + $"Original exception: {context.Exception}\r\n\r\n" + $"Error handler exception: {ex}");
 
                 throw;
             }
+
+            await base.OnExceptionAsync(context);
         }
 
-        private void HandleException(ExceptionContext context)
+        private async Task HandleExceptionAsync(ExceptionContext context)
         {
+            Task mishapTask = this.MishapService.HandleErrorAsync(context.Exception);
+
             var descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
 
-            var exposeAttribute = descriptor.MethodInfo.FirstAttribute<ExposeErrorAttribute>();
+            var exposeAttributes = descriptor.MethodInfo.GetCustomAttributes<ExposeErrorAttribute>();
 
-            if (exposeAttribute != null && exposeAttribute.ExceptionType.IsInstanceOfType(context.Exception))
+            var exposeAttribute = exposeAttributes.FirstOrDefault(a => a.ExceptionType == context.Exception.GetType());
+
+            if (exposeAttribute != null)
             {
                 context.Result = new ObjectResult(ApiResult.FromErrorMessages(exposeAttribute.Message))
                 {
                     StatusCode = 200
                 };
 
-                this.Log.ErrorExt(() => $"Exception was handled. " + $"(ExceptionMessage: {context.Exception.Message}, "
-                                        + $"ExceptionName: {context.Exception.GetType().Name})");
+                this.Log.ErrorExt(() =>
+                    "Exception was handled. " + $"(ExceptionMessage: {context.Exception.Message}, "
+                                              + $"ExceptionName: {context.Exception.GetType().Name})");
 
                 context.ExceptionHandled = true;
             }
@@ -68,6 +82,8 @@ namespace TrackTv.WebServices.Infrastructure
                 context.Result = new StatusCodeResult(500);
                 context.ExceptionHandled = true;
             }
+
+            await mishapTask;
         }
     }
 

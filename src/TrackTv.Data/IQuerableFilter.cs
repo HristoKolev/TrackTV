@@ -320,6 +320,7 @@
                                 $"Property with QueryType: {queryType} should not have a type that is a collection.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
+
                         break;
                     }
 
@@ -367,6 +368,7 @@
                                 $"Property with QueryType: {queryType} should not be used with any type other than string.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
+
                         break;
                     }
 
@@ -380,6 +382,7 @@
                                 $"Property with QueryType: {queryType} should not be used with any type other than boolean.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
+
                         break;
                     }
 
@@ -393,8 +396,10 @@
                                 $"Property with QueryType: {queryType} should only be used with collections.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
+
                         break;
                     }
+
                     default :
                         throw new ArgumentOutOfRangeException(nameof(queryType), queryType, null);
                 }

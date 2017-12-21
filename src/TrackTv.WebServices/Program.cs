@@ -10,14 +10,6 @@
     {
         private const string ConfigFile = "appsettings.json";
 
-        private static IConfigurationRoot BuildConfig(IConfigurationBuilder builder)
-        {
-            return builder.SetBasePath(Global.ConfigDirectory)
-                .AddJsonFile(ConfigFile, optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables()
-                .Build();
-        }
-
         public static void Main()
         {
             var config = BuildConfig(new ConfigurationBuilder());
@@ -27,13 +19,21 @@
             var builder = new WebHostBuilder();
 
             builder.UseKestrel(options => ConfigureKestrel(options, config))
-                .UseContentRoot(Global.RootDirectory)
-                .UseUrls(config["Server:Urls"])
-                .UseIISIntegration()
-                .UseConfiguration(config)
-                .UseStartup<Startup>()
-                .Build()
-                .Run();
+                   .UseContentRoot(Global.RootDirectory)
+                   .UseUrls(config["Server:Urls"])
+                   .UseIISIntegration()
+                   .UseConfiguration(config)
+                   .UseStartup<Startup>()
+                   .Build()
+                   .Run();
+        }
+
+        private static IConfigurationRoot BuildConfig(IConfigurationBuilder builder)
+        {
+            return builder.SetBasePath(Global.ConfigDirectory)
+                          .AddJsonFile(ConfigFile, optional: true, reloadOnChange: true)
+                          .AddEnvironmentVariables()
+                          .Build();
         }
 
         private static void ConfigureKestrel(KestrelServerOptions options, IConfiguration config)

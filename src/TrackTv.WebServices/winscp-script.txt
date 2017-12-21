@@ -1,8 +1,10 @@
 option batch abort
 option confirm off
 
-open ssh://root:123456Mm$@192.168.1.104
+open ssh://root@192.168.1.104
 
 synchronize remote ./bin/publish /var/www/tracktv/public_html
+
+call systemctl restart tracktv.service
 
 exit
