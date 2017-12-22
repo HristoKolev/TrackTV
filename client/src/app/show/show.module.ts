@@ -1,97 +1,85 @@
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { Component, Injectable, NgModule, OnInit, ViewEncapsulation } from '@angular/core';
-import { reduxStore } from '../../infrastructure/redux-store';
-import { showActions, showReducer, showSagas } from './show.state';
-import { apiClient } from '../shared/api-client';
-import { parseParams } from '../../infrastructure/routing-helpers';
-
-@Injectable()
-export class ShowActions {
-
-    show(showId: number) {
-        reduxStore.dispatch({
-            type: showActions.FETCH_REQUEST_START,
-            showId,
-        });
-    }
-
-    subscribe(showId: number) {
-        reduxStore.dispatch({
-            type: showActions.SUBSCRIBE_REQUEST_START,
-            showId,
-        });
-    }
-
-    unsubscribe(showId: number) {
-        reduxStore.dispatch({
-            type: showActions.UNSUBSCRIBE_REQUEST_START,
-            showId,
-        });
-    }
-}
+import {CommonModule} from '@angular/common';
+import {ActivatedRoute, RouterModule} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {Component, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {ShowActions, showReducer, showSagas} from './show.state';
+import {parseParams} from '../../infrastructure/routing-helpers';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    template: `
-        <ng-container *ngIf="showState | async as show">
-            <ng-container *ngIf="sessionState | async as session">
+  encapsulation: ViewEncapsulation.Emulated,
+  template: `
+    <ng-container *ngIf="showState | async as show">
+      <ng-container *ngIf="sessionState | async as session">
 
-                <pre>{{show | json}}</pre>
+        <pre>{{show | json}}</pre>
 
-                <ng-container *ngIf="session.isLoggedIn">
-                    <button *ngIf="!show.isUserSubscribed" (click)="subscribe(show.showId)">Subscribe</button>
-                    <button *ngIf="show.isUserSubscribed" (click)="unsubscribe(show.showId)">Unsubscribe</button>
-                </ng-container>
-            </ng-container>
+        <ng-container *ngIf="session.isLoggedIn">
+          <button *ngIf="!show.isUserSubscribed" (click)="subscribe(show.showId)">Subscribe</button>
+          <button *ngIf="show.isUserSubscribed" (click)="unsubscribe(show.showId)">Unsubscribe</button>
         </ng-container>
-    `,
+      </ng-container>
+    </ng-container>
+  `,
 })
 export class ShowComponent implements OnInit {
 
-    showState: any = reduxStore.select(state => state.show);
-    sessionState: any = reduxStore.select(state => state.session);
+  get showState() {
+    return this.store.select(state => state.show);
+  }
 
-    constructor(private showActions: ShowActions,
-                private route: ActivatedRoute) {
-    }
+  get sessionState() {
+    return this.store.select(state => state.session);
+  }
 
-    ngOnInit(): void {
+  constructor(private actions: ShowActions,
+              private route: ActivatedRoute,
+              private store: ReduxStoreService) {
+  }
 
-        this.route.paramMap
-            .map(parseParams)
-            .map(params => params.showId)
-            .subscribe(this.showActions.show);
-    }
+  ngOnInit(): void {
 
-    subscribe(showId: number) {
-        this.showActions.subscribe(showId);
-    }
+    this.route.paramMap
+      .map(parseParams)
+      .map(params => params.showId)
+      .subscribe(this.actions.show.bind(this.actions));
+  }
 
-    unsubscribe(showId: number) {
-        this.showActions.unsubscribe(showId);
-    }
+  subscribe(showId: number) {
+    this.actions.subscribe(showId);
+  }
+
+  unsubscribe(showId: number) {
+    this.actions.unsubscribe(showId);
+  }
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild([
-            {path: ':showId', component: ShowComponent},
-        ]),
-        FormsModule,
-    ],
-    declarations: [ShowComponent],
-    providers: [ShowActions],
+  imports: [
+    CommonModule,
+    RouterModule.forChild([
+      {path: ':showId', component: ShowComponent},
+    ]),
+    FormsModule,
+  ],
+  declarations: [ShowComponent],
+  providers: [ShowActions],
 })
 export class ShowModule {
-    constructor() {
+  constructor(private store: ReduxStoreService, apiClient: ApiClient) {
 
-        reduxStore.addReducers({
-            show: showReducer,
-        });
+    this.store.addReducers({
+      show: showReducer,
+    });
 
-        reduxStore.addSagas(showSagas(apiClient));
-    }
+    this.store.addSagas(showSagas(apiClient));
+  }
+}
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    show: any;
+  }
 }

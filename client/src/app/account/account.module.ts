@@ -1,226 +1,216 @@
-import { Component, Injectable, NgModule, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { accountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer } from './account.state';
-import { reduxStore } from '../../infrastructure/redux-store';
-import { apiClient } from '../shared/api-client';
-import { SharedModule } from '../shared/shared.module';
-import { Subscription } from 'rxjs/Subscription';
-
-@Injectable()
-export class AccountActions {
-
-    login(user: any) {
-        reduxStore.dispatch({type: accountActions.LOGIN_REQUEST_START, user});
-    }
-
-    register(user: any) {
-        reduxStore.dispatch({type: accountActions.REGISTER_REQUEST_START, user});
-    }
-
-    clearLoginErrorMessages() {
-        reduxStore.dispatch({type: accountActions.LOGIN_CLEAR_ERROR_MESSAGES});
-    }
-
-    clearRegisterErrorMessages() {
-        reduxStore.dispatch({type: accountActions.REGISTER_CLEAR_ERROR_MESSAGES});
-    }
-}
+import {Component, NgModule, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {AccountActions, accountSagas, ILoginState, IRegisterState, loginReducer, registerReducer} from './account.state';
+import {SharedModule} from '../shared/shared.module';
+import {Subscription} from 'rxjs/Subscription';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {ApiClient} from '../shared/api-client';
+import {IGlobalState, ISessionState, ISettingsState} from '../global.state';
+import {RouterState} from '../../infrastructure/redux/redux-router-service';
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    template: `
-        <div class="form-container tt-card">
+  encapsulation: ViewEncapsulation.Emulated,
+  template: `
+    <div class="form-container tt-card">
 
-            <television-component>
-                <div>
-                    Welcome to TrackTv.
-                    <br/>
-                    <br/>
-                    Please, login.
-                </div>
-            </television-component>
-
-            <input [(ngModel)]="this.username" id="username" placeholder="Username" class="tt-input"/>
-            <input [(ngModel)]="this.password" id="password" placeholder="Password" type="password" class="tt-input"/>
-
-            <button (click)="this.submit()" class="tt-button">Login</button>
-
-            <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+      <television-component>
+        <div>
+          Welcome to TrackTv.
+          <br/>
+          <br/>
+          Please, login.
         </div>
-    `,
-    styles: [`
-        .form-container {
+      </television-component>
 
-            text-align: center;
+      <input [(ngModel)]="this.username" id="username" placeholder="Username" class="tt-input"/>
+      <input [(ngModel)]="this.password" id="password" placeholder="Password" type="password" class="tt-input"/>
 
-            margin: 0 auto;
-            width: 80%;
-            max-width: 400px;
-        }
+      <button (click)="this.submit()" class="tt-button">Login</button>
 
-        .form-container input, .form-container button {
+      <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+    </div>
+  `,
+  styles: [`
+    .form-container {
 
-            display: block;
-            width: 100%;
-        }
+      text-align: center;
 
-        @media (min-width: 768px) {
+      margin: 0 auto;
+      width: 80%;
+      max-width: 400px;
+    }
 
-            .form-container {
-                margin-top: 10%;
-            }
-        }
-    `],
+    .form-container input, .form-container button {
+
+      display: block;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+
+      .form-container {
+        margin-top: 10%;
+      }
+    }
+  `],
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 
-    state?: ILoginState;
+  state?: ILoginState;
 
-    subscription: Subscription;
+  subscription: Subscription;
 
-    constructor(private accountActions: AccountActions) {
+  constructor(private actions: AccountActions,
+              private store: ReduxStoreService) {
+  }
 
-    }
+  ngOnInit(): void {
 
-    ngOnInit(): void {
+    this.subscription = this.store.select(store => store.login)
+      .subscribe((x: any) => this.state = x);
 
-        this.subscription = reduxStore.select<ILoginState>(store => store.login)
-            .subscribe((x: any) => this.state = x);
+    this.actions.clearLoginErrorMessages();
+  }
 
-        this.accountActions.clearLoginErrorMessages();
-    }
+  ngOnDestroy(): void {
 
-    ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-        this.subscription.unsubscribe();
-    }
+  submit(): void {
 
-    submit(): void {
+    this.actions.login({
+      username: this.username,
+      password: this.password,
 
-        this.accountActions.login({
-            username: this.username,
-            password: this.password,
-
-        });
-    }
+    });
+  }
 }
 
 @Component({
-    encapsulation: ViewEncapsulation.Emulated,
-    template: `
-        <div class="form-container tt-card">
-            <television-component>
-                <div>
-                    Welcome to TrackTv.
-                    <br/>
-                    <br/>
-                    Please, Register.
-                </div>
-            </television-component>
-
-            <input [(ngModel)]="this.username" id="username" placeholder="Username" class="tt-input"/>
-            <input [(ngModel)]="this.password" id="password" type="password" placeholder="Password" class="tt-input"/>
-            <input [(ngModel)]="this.confirmPassword" id="confirm-password" type="password" placeholder="Confirm password"
-                   class="tt-input"/>
-
-            <button (click)="this.submit()" class="tt-button">Register</button>
-
-            <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+  encapsulation: ViewEncapsulation.Emulated,
+  template: `
+    <div class="form-container tt-card">
+      <television-component>
+        <div>
+          Welcome to TrackTv.
+          <br/>
+          <br/>
+          Please, Register.
         </div>
-    `,
-    styles: [`
-        .form-container {
+      </television-component>
 
-            text-align: center;
+      <input [(ngModel)]="this.username" id="username" placeholder="Username" class="tt-input"/>
+      <input [(ngModel)]="this.password" id="password" type="password" placeholder="Password" class="tt-input"/>
+      <input [(ngModel)]="this.confirmPassword" id="confirm-password" type="password" placeholder="Confirm password"
+             class="tt-input"/>
 
-            margin: 0 auto;
-            width: 80%;
-            max-width: 400px;
-        }
+      <button (click)="this.submit()" class="tt-button">Register</button>
 
-        .form-container input, .form-container button {
+      <error-container-component [errorMessages]="this.state?.errorMessages"></error-container-component>
+    </div>
+  `,
+  styles: [`
+    .form-container {
 
-            display: block;
-            width: 100%;
-        }
+      text-align: center;
 
-        @media (min-width: 768px) {
+      margin: 0 auto;
+      width: 80%;
+      max-width: 400px;
+    }
 
-            .form-container {
-                margin-top: 10%;
-            }
-        }
+    .form-container input, .form-container button {
 
-    `],
+      display: block;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+
+      .form-container {
+        margin-top: 10%;
+      }
+    }
+
+  `],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-    username: string;
-    password: string;
-    confirmPassword: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
 
-    state?: IRegisterState;
+  state?: IRegisterState;
 
-    subscription: Subscription;
+  subscription: Subscription;
 
-    constructor(private accountActions: AccountActions) {
-    }
+  constructor(private actions: AccountActions,
+              private store: ReduxStoreService) {
+  }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-        this.subscription = reduxStore
-            .select<IRegisterState>(store => store.register)
-            .subscribe((x: any) => this.state = x);
+    this.subscription = this.store
+      .select(store => store.register)
+      .subscribe((x: any) => this.state = x);
 
-        this.accountActions.clearRegisterErrorMessages();
-    }
+    this.actions.clearRegisterErrorMessages();
+  }
 
-    ngOnDestroy(): void {
+  ngOnDestroy(): void {
 
-        this.subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
+  }
 
-    submit(): void {
+  submit(): void {
 
-        this.accountActions.register({
-            username: this.username,
-            password: this.password,
-        });
-    }
+    this.actions.register({
+      username: this.username,
+      password: this.password,
+    });
+  }
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild([
-            {path: 'login', component: LoginComponent},
-            {path: 'register', component: RegisterComponent},
-        ]),
-        FormsModule,
-        SharedModule,
-    ],
-    declarations: [
-        LoginComponent,
-        RegisterComponent,
-    ],
-    providers: [
-        AccountActions,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild([
+      {path: 'login', component: LoginComponent},
+      {path: 'register', component: RegisterComponent},
+    ]),
+    FormsModule,
+    SharedModule,
+  ],
+  providers: [AccountActions]
+  ,
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+  ],
 })
 export class AccountModule {
 
-    constructor() {
+  constructor(store: ReduxStoreService, apiClient: ApiClient) {
 
-        reduxStore.addReducers({
-            login: loginReducer,
-            register: registerReducer,
-        });
+    store.addReducers({
+      login: loginReducer,
+      register: registerReducer,
+    });
 
-        reduxStore.addSagas(accountSagas(apiClient));
-    }
+    store.addSagas(accountSagas(apiClient));
+  }
+}
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    login: ILoginState;
+    register: IRegisterState;
+  }
 }
