@@ -20,17 +20,17 @@ export const settingsReducer: ReduxReducer<ISettingsState> = (state = initialSet
   }
 };
 
-export interface IGlobalErrorState {
+export interface IGlobalState {
   errorMessages: string[];
   loading: number;
 }
 
-const initialGlobalErrorState: IGlobalErrorState = {
+const initialGlobalErrorState: IGlobalState = {
   errorMessages: [],
   loading: 0,
 };
 
-export const globalErrorReducer: ReduxReducer<IGlobalErrorState> = (state = initialGlobalErrorState, action) => {
+export const globalErrorReducer: ReduxReducer<IGlobalState> = (state = initialGlobalErrorState, action) => {
   switch (action.type) {
     case globalActions.GLOBAL_ERROR: {
       return {

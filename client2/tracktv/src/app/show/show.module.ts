@@ -76,3 +76,10 @@ export class ShowModule {
     this.store.addSagas(showSagas(apiClient));
   }
 }
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    show: any;
+  }
+}

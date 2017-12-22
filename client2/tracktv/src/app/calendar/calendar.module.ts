@@ -148,3 +148,10 @@ export class CalendarModule {
     store.addSagas(calendarSagas(apiClient));
   }
 }
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    calendar: any;
+  }
+}

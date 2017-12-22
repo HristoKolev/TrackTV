@@ -7,6 +7,8 @@ import {SharedModule} from '../shared/shared.module';
 import {Subscription} from 'rxjs/Subscription';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
+import {IGlobalState, ISessionState, ISettingsState} from '../global.state';
+import {RouterState} from '../../infrastructure/redux/redux-router-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -69,7 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.subscription = this.store.select<ILoginState>(store => store.login)
+    this.subscription = this.store.select(store => store.login)
       .subscribe((x: any) => this.state = x);
 
     this.actions.clearLoginErrorMessages();
@@ -155,7 +157,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.subscription = this.store
-      .select<IRegisterState>(store => store.register)
+      .select(store => store.register)
       .subscribe((x: any) => this.state = x);
 
     this.actions.clearRegisterErrorMessages();
@@ -202,5 +204,13 @@ export class AccountModule {
     });
 
     store.addSagas(accountSagas(apiClient));
+  }
+}
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    login: ILoginState;
+    register: IRegisterState;
   }
 }

@@ -26,18 +26,14 @@ export class ReduxRouterService {
               private store: ReduxStoreService) {
   }
 
-  init(routerStateSelector: (state: any) => RouterState) {
-
-    if (!routerStateSelector) {
-      throw new Error('The router state selector is falsy.');
-    }
+  init() {
 
     let dispatchTriggeredByNavigation = false;
     let navigationTriggeredByDispatch = false;
 
-    this.store.select(routerStateSelector).subscribe(state => {
+    this.store.select(state => state.router).subscribe(routerState => {
 
-      if (state.location && this.router.url !== state.location) {
+      if (routerState.location && this.router.url !== routerState.location) {
 
         if (dispatchTriggeredByNavigation) {
           dispatchTriggeredByNavigation = false;
@@ -45,7 +41,7 @@ export class ReduxRouterService {
         }
 
         navigationTriggeredByDispatch = true;
-        this.router.navigateByUrl(state.location);
+        this.router.navigateByUrl(routerState.location);
       }
     });
 
@@ -102,5 +98,3 @@ export const explicitRouterSaga = (router: Router) => ({
 });
 
 export const go = (...payload: any[]) => ({type: routerActions.ROUTER_NAVIGATION_EXPLICIT, payload});
-
-

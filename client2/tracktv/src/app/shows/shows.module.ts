@@ -10,25 +10,27 @@ import {ApiClient} from '../shared/api-client';
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
   template: `
-    <div *ngIf="state | async as data">
-      <div class="filter-controls">
-        <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
-        <select class="tt-input" [(ngModel)]="this.query.genreId">
-          <option value="">All Genres</option>
-          <option *ngFor="let genre of data.genres"
-                  [ngValue]="genre.genreId" [attr.value]="genre.genreId">
-            {{genre.genreName}}
-          </option>
-        </select>
-        <button class="tt-button" [routerLink]="['./']"
-                [queryParams]="this.cleanQuery">Search
-        </button>
-      </div>
+    <ng-container *ngIf="showsState | async as data">
+      <ng-container *ngIf="settingsState | async as settings">
+        <div class="filter-controls">
+          <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
+          <select class="tt-input" [(ngModel)]="this.query.genreId">
+            <option value="">All Genres</option>
+            <option *ngFor="let genre of data.genres"
+                    [ngValue]="genre.genreId" [attr.value]="genre.genreId">
+              {{genre.genreName}}
+            </option>
+          </select>
+          <button class="tt-button" [routerLink]="['./']"
+                  [queryParams]="this.cleanQuery">Search
+          </button>
+        </div>
 
-      <div class="list-wrapper">
-        <show-summary-component *ngFor="let show of data.items" [show]="show"></show-summary-component>
-      </div>
-    </div>
+        <div class="list-wrapper">
+          <show-summary-component *ngFor="let show of data.items" [show]="show"></show-summary-component>
+        </div>
+      </ng-container>
+    </ng-container>
   `,
   styles: [`
     .filter-controls {
@@ -91,8 +93,12 @@ import {ApiClient} from '../shared/api-client';
 })
 export class ShowsComponent implements OnInit {
 
-  get state() {
+  get showsState() {
     return this.store.select(state => state.shows);
+  }
+
+  get settingsState() {
+    return this.store.select(state => state.settings);
   }
 
   query: any = {};
@@ -193,5 +199,12 @@ export class ShowsModule {
     });
 
     this.store.addSagas(showsSagas(apiClient));
+  }
+}
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    shows: any;
   }
 }

@@ -2,7 +2,7 @@ import {ApplicationRef, ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {Router, RouterModule, Routes} from '@angular/router';
 import {AppComponent, NotFound404Component} from './app.component';
-import {globalErrorReducer, settingsReducer, userSessionReducer} from './global.state';
+import {globalErrorReducer, IGlobalState, ISessionState, ISettingsState, settingsReducer, userSessionReducer} from './global.state';
 import {HeaderComponent} from './layout/header.component';
 import {LoadingComponent} from './layout/loading.component';
 import {wrapDevToolsExtension} from '../infrastructure/redux/dev-tools';
@@ -11,7 +11,7 @@ import {GlobalErrorHandler} from '../infrastructure/GlobalErrorHandler';
 import {ReduxPersistService} from '../infrastructure/redux/redux-persist-service';
 import {ReduxStoreService} from '../infrastructure/redux/redux-store-service';
 import {SharedModule} from './shared/shared.module';
-import {explicitRouterSaga, ReduxRouterService, routerReducer} from '../infrastructure/redux/redux-router-service';
+import {explicitRouterSaga, ReduxRouterService, routerReducer, RouterState} from '../infrastructure/redux/redux-router-service';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},
@@ -68,7 +68,7 @@ export class AppModule {
 
     store.initStore(enhancers, initialReducers);
 
-    reduxRouter.init(state => state.router);
+    reduxRouter.init();
 
     reduxPersist.initialize({
       session: 'localStorage',
@@ -89,5 +89,15 @@ export class AppModule {
         },
       },
     });
+  }
+}
+
+declare module '../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    router: RouterState;
+    settings: ISettingsState;
+    session: ISessionState;
+    global: IGlobalState;
   }
 }

@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ReduxReducerMap} from './meta';
 import {reduxStore} from './redux-store';
+import {IReduxState} from './redux-state';
 
 @Injectable()
 export class ReduxStoreService {
 
-  select<T = any>(selector: (state: any) => any = f => f): Observable<T> {
+  select<T>(selector: (state: IReduxState) => T): Observable<T> {
     return reduxStore.select(selector);
   }
 
@@ -14,7 +15,7 @@ export class ReduxStoreService {
     reduxStore.dispatch(action);
   }
 
-  getState(): any {
+  getState(): IReduxState {
     return reduxStore.getState();
   }
 
@@ -30,3 +31,6 @@ export class ReduxStoreService {
     return reduxStore.addReducers(reducers);
   }
 }
+
+
+

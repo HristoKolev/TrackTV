@@ -207,3 +207,10 @@ export class MyShowsModule {
     store.addSagas(myShowsSagas(apiClient));
   }
 }
+
+declare module '../../infrastructure/redux/redux-state' {
+
+  interface IReduxState {
+    myShows: any;
+  }
+}
