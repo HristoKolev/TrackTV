@@ -6,30 +6,29 @@ import {ShowsActions, showsReducer, showsSagas} from './shows-state';
 import {parseParams, removeFalsyProperties} from '../../infrastructure/routing-helpers';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
   template: `
     <ng-container *ngIf="showsState | async as data">
-      <ng-container *ngIf="settingsState | async as settings">
-        <div class="filter-controls">
-          <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
-          <select class="tt-input" [(ngModel)]="this.query.genreId">
-            <option value="">All Genres</option>
-            <option *ngFor="let genre of data.genres"
-                    [ngValue]="genre.genreId" [attr.value]="genre.genreId">
-              {{genre.genreName}}
-            </option>
-          </select>
-          <button class="tt-button" [routerLink]="['./']"
-                  [queryParams]="this.cleanQuery">Search
-          </button>
-        </div>
+      <div class="filter-controls">
+        <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
+        <select class="tt-input" [(ngModel)]="this.query.genreId">
+          <option value="">All Genres</option>
+          <option *ngFor="let genre of data.genres"
+                  [ngValue]="genre.genreId" [attr.value]="genre.genreId">
+            {{genre.genreName}}
+          </option>
+        </select>
+        <button class="tt-button" [routerLink]="['./']"
+                [queryParams]="this.cleanQuery">Search
+        </button>
+      </div>
 
-        <div class="list-wrapper">
-          <show-summary-component *ngFor="let show of data.items" [show]="show"></show-summary-component>
-        </div>
-      </ng-container>
+      <div class="list-wrapper">
+        <show-summary-component *ngFor="let show of data.items" [show]="this.formatBanner(show)"></show-summary-component>
+      </div>
     </ng-container>
   `,
   styles: [`
@@ -93,13 +92,13 @@ import {ApiClient} from '../shared/api-client';
 })
 export class ShowsComponent implements OnInit {
 
+  settings: any;
+
   get showsState() {
     return this.store.select(state => state.shows);
   }
 
-  get settingsState() {
-    return this.store.select(state => state.settings);
-  }
+  settingsSubscription: Subscription;
 
   query: any = {};
 
@@ -116,10 +115,23 @@ export class ShowsComponent implements OnInit {
         this.actions.shows(query);
         this.query = {...query, genreId: query.genreId || ''};
       });
+
+    this.settingsSubscription = this.store.select(state => state.settings)
+      .subscribe(settings => {
+
+        this.settings = settings;
+      });
   }
 
   get cleanQuery() {
     return removeFalsyProperties(this.query);
+  }
+
+  formatBanner(show: any) {
+    return {
+      ...show,
+      formattedBanner: this.settings.baseUrl + '/banners/' + show.showBanner
+    };
   }
 }
 
@@ -130,7 +142,7 @@ export class ShowsComponent implements OnInit {
     <div class="tt-card show-card" [routerLink]="['/show', this.show.showId]">
       <div class="show-title">{{show.showName}}</div>
       <div class="show-details">Subscriber count: {{show.subscriberCount}} | Status: {{getStatusText(show.showStatus)}}</div>
-      <div><img src="http://192.168.1.104:7001/banners/{{show.showBanner}}" class="poster"></div>
+      <div><img [src]="show.formattedBanner" class="poster"></div>
     </div>
   `,
   styles: [`
