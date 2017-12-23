@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {globalActions} from '../../infrastructure/redux/redux-global-actions';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {go} from '../../infrastructure/redux/redux-router-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'header-component',
   template: `
     <header>

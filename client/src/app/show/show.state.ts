@@ -22,7 +22,7 @@ export class ShowActions {
   constructor(private store: ReduxStoreService) {
   }
 
-  show(showId: number) {
+  fetchShow(showId: number) {
     this.store.dispatch({
       type: showActions.FETCH_REQUEST_START,
       showId,

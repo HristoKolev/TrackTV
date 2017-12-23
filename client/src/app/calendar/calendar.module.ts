@@ -9,7 +9,7 @@ import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="state | async as data" class="wrapper">
       <div *ngFor="let name of dayNames()" class="header">{{name}}</div>

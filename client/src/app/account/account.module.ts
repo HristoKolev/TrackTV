@@ -1,4 +1,4 @@
-import {Component, NgModule, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgModule, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
@@ -7,11 +7,10 @@ import {SharedModule} from '../shared/shared.module';
 import {Subscription} from 'rxjs/Subscription';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
-import {IGlobalState, ISessionState, ISettingsState} from '../global.state';
-import {RouterState} from '../../infrastructure/redux/redux-router-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.Default,
   template: `
     <div class="form-container tt-card">
 
@@ -94,6 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.Default,
   template: `
     <div class="form-container tt-card">
       <television-component>

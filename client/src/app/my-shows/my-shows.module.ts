@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -8,6 +8,7 @@ import {ApiClient} from '../shared/api-client';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="state | async as data" class="list-wrapper">
       <my-show-component *ngFor="let show of data.shows" [show]="show"></my-show-component>

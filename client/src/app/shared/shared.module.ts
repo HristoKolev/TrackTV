@@ -1,7 +1,12 @@
-import {ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, Directive, ElementRef, Input, NgModule, OnDestroy, OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ApiClient} from './api-client';
 import {HttpClient} from './http-client';
+import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -98,13 +103,97 @@ export class ErrorContainerComponent {
 export class TelevisionComponent {
 }
 
+@Component({
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'logged-in-component',
+  template: `
+    <ng-container *ngIf="state | async as session">
+      <ng-container *ngIf="session.isLoggedIn">
+        <ng-content></ng-content>
+      </ng-container>
+    </ng-container>
+  `,
+})
+export class LoggedInComponent {
+
+  get state() {
+    return this.store.select(s => s.session);
+  }
+
+  constructor(private store: ReduxStoreService) {
+  }
+}
+
+@Component({
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'logged-out-component',
+  template: `
+    <ng-container *ngIf="state | async as session">
+      <ng-container *ngIf="!session.isLoggedIn">
+        <ng-content></ng-content>
+      </ng-container>
+    </ng-container>
+  `,
+})
+export class LoggedOutComponent {
+
+  get state() {
+    return this.store.select(s => s.session);
+  }
+
+  constructor(private store: ReduxStoreService) {
+  }
+}
+
+@Directive({
+  selector: '[bannerUrl]'
+})
+export class BannerUrlDirective implements OnInit, OnDestroy {
+
+  @Input()
+  bannerUrl: string;
+
+  subscription: Subscription;
+
+  constructor(private elementRef: ElementRef, private store: ReduxStoreService) {
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.store.select(state => state.settings)
+      .subscribe(settings => {
+
+        if (this.bannerUrl) {
+
+          this.elementRef.nativeElement.setAttribute('src', `${settings.baseUrl}/banners/${this.bannerUrl}`);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+}
+
+const components = [
+  ErrorContainerComponent,
+  TelevisionComponent,
+  LoggedInComponent,
+  LoggedOutComponent,
+  BannerUrlDirective
+];
+
 @NgModule({
   imports: [
     CommonModule,
   ],
-  declarations: [ErrorContainerComponent, TelevisionComponent],
-  providers: [ApiClient, HttpClient],
-  exports: [ErrorContainerComponent, TelevisionComponent],
+  declarations: components,
+  exports: components,
+  providers: [
+    ApiClient,
+    HttpClient
+  ],
 })
 export class SharedModule {
 }

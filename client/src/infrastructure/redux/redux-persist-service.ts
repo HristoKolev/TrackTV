@@ -69,7 +69,12 @@ export class ReduxPersistService {
 
       const json = JSON.stringify(propertyValue);
 
-      sessionStorage.setItem(prefix + propertyName, json);
+      const currentJson = sessionStorage.getItem(prefix + propertyName);
+
+      if (json !== currentJson) {
+
+        sessionStorage.setItem(prefix + propertyName, json);
+      }
 
     } catch (err) {
       throw new Error(
@@ -82,7 +87,12 @@ export class ReduxPersistService {
 
       const json = JSON.stringify(propertyValue);
 
-      localStorage.setItem(prefix + propertyName, json);
+      const currentJson = localStorage.getItem(prefix + propertyName);
+
+      if (json !== currentJson) {
+
+        localStorage.setItem(prefix + propertyName, json);
+      }
 
     } catch (err) {
       throw new Error(

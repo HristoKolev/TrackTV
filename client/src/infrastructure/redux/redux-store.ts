@@ -103,6 +103,7 @@ class StoreWrapper {
       this.store.subscribe(() => observer.next(this.store.getState()));
     })
       .map(selector)
+      .filter(value => value && !!Object.keys(value).length)
       .distinctUntilChanged();
   }
 

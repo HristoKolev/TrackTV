@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
@@ -6,12 +6,13 @@ import {ShowsActions, showsReducer, showsSagas} from './shows-state';
 import {parseParams, removeFalsyProperties} from '../../infrastructure/routing-helpers';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
-import {Subscription} from 'rxjs/Subscription';
+import {SharedModule} from '../shared/shared.module';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *ngIf="showsState | async as data">
+    <ng-container *ngIf="state | async as data">
       <div class="filter-controls">
         <input type="text" class="tt-input" placeholder="Show name" [(ngModel)]="this.query.showName"/>
         <select class="tt-input" [(ngModel)]="this.query.genreId">
@@ -27,7 +28,7 @@ import {Subscription} from 'rxjs/Subscription';
       </div>
 
       <div class="list-wrapper">
-        <show-summary-component *ngFor="let show of data.items" [show]="this.formatBanner(show)"></show-summary-component>
+        <show-summary-component *ngFor="let show of data.items" [show]="show"></show-summary-component>
       </div>
     </ng-container>
   `,
@@ -92,13 +93,9 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class ShowsComponent implements OnInit {
 
-  settings: any;
-
-  get showsState() {
+  get state() {
     return this.store.select(state => state.shows);
   }
-
-  settingsSubscription: Subscription;
 
   query: any = {};
 
@@ -115,23 +112,10 @@ export class ShowsComponent implements OnInit {
         this.actions.shows(query);
         this.query = {...query, genreId: query.genreId || ''};
       });
-
-    this.settingsSubscription = this.store.select(state => state.settings)
-      .subscribe(settings => {
-
-        this.settings = settings;
-      });
   }
 
   get cleanQuery() {
     return removeFalsyProperties(this.query);
-  }
-
-  formatBanner(show: any) {
-    return {
-      ...show,
-      formattedBanner: this.settings.baseUrl + '/banners/' + show.showBanner
-    };
   }
 }
 
@@ -142,7 +126,7 @@ export class ShowsComponent implements OnInit {
     <div class="tt-card show-card" [routerLink]="['/show', this.show.showId]">
       <div class="show-title">{{show.showName}}</div>
       <div class="show-details">Subscriber count: {{show.subscriberCount}} | Status: {{getStatusText(show.showStatus)}}</div>
-      <div><img [src]="show.formattedBanner" class="poster"></div>
+      <div><img [bannerUrl]="show.showBanner" class="poster" src=""></div>
     </div>
   `,
   styles: [`
@@ -196,6 +180,7 @@ export class ShowSummaryComponent {
       {path: '', component: ShowsComponent},
     ]),
     FormsModule,
+    SharedModule
   ],
   declarations: [
     ShowsComponent,

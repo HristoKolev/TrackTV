@@ -4,7 +4,7 @@ import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service'
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'loading-component',
   template: `
     <div [ngClass]="{'loaded': !this.loading}">
