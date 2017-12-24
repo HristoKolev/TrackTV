@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   selector: 'loading-component',
   template: `
     <div [ngClass]="{'loaded': !this.loading}">
@@ -15,20 +16,22 @@ import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service'
     </div>
   `,
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements OnInit, OnDestroy {
+
 
   loading: boolean;
 
   firstLoad = true;
+
+  subscription: Subscription;
 
   constructor(private store: ReduxStoreService) {
   }
 
   public ngOnInit(): void {
 
-    this.store.select(state => state.global)
-      .distinctUntilChanged()
-      .switchMap(global => Observable.of(global).delay((global.loading > 0 || this.firstLoad) ? 100 : 0))
+    this.subscription = this.store.select(state => state.global)
+      .switchMap(global => Observable.of(global).debounceTime((global.loading > 0 || this.firstLoad) ? 100 : 0))
       .subscribe(global => {
         this.loading = !!Math.max(global.loading, 0);
 
@@ -41,9 +44,12 @@ export class LoadingComponent implements OnInit {
       });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   private removeInitialLoader() {
     setTimeout(() => {
-
       const loadingElement = (window as any).document
         .getElementById('initial-loader');
 

@@ -3,7 +3,7 @@ import {freezeMiddleware} from './freeze-middleware';
 import createSagaMiddleware from 'redux-saga';
 import {put, takeEvery} from 'redux-saga/effects';
 import {Observable} from 'rxjs/Observable';
-import {ReduxReducerMap} from './meta';
+import {ReduxReducerMap, SubscriptionStrategy} from './meta';
 import {globalActions} from './redux-global-actions';
 
 class StoreWrapper {
@@ -94,17 +94,22 @@ class StoreWrapper {
     this.store.dispatch(action);
   }
 
-  select<T = any>(selector: (state: any) => any = f => f): Observable<T> {
+  select<T = any>(selector: (state: any) => any = f => f, subscriptionStrategy: SubscriptionStrategy = 'NotEmpty'): Observable<T> {
 
-    return Observable.create((observer: any) => {
+    let obs = Observable.create((observer: any) => {
 
       observer.next(this.store.getState());
 
       this.store.subscribe(() => observer.next(this.store.getState()));
     })
-      .map(selector)
-      .filter(value => value && !!Object.keys(value).length)
-      .distinctUntilChanged();
+      .map(selector);
+
+    if (subscriptionStrategy === 'NotEmpty') {
+
+      obs = obs.filter(value => value && !!Object.keys(value).length);
+    }
+
+    return obs.distinctUntilChanged();
   }
 
   private createReducer(reducers: ReduxReducerMap = {}): any {

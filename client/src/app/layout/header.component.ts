@@ -5,7 +5,7 @@ import {go} from '../../infrastructure/redux/redux-router-service';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   selector: 'header-component',
   template: `
     <header>

@@ -12,7 +12,7 @@ import {ReduxPersistService} from '../infrastructure/redux/redux-persist-service
 import {ReduxStoreService} from '../infrastructure/redux/redux-store-service';
 import {SharedModule} from './shared/shared.module';
 import {explicitRouterSaga, ReduxRouterService, routerReducer, RouterState} from '../infrastructure/redux/redux-router-service';
-import {IdlePreload, IdlePreloadModule} from "angular-idle-preload";
+import {IdlePreload, IdlePreloadModule} from 'angular-idle-preload';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},

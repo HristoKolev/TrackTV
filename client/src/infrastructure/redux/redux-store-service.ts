@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {ReduxReducerMap} from './meta';
+import {ReduxReducerMap, SubscriptionStrategy} from './meta';
 import {reduxStore} from './redux-store';
 import {IReduxState} from './redux-state';
 
 @Injectable()
 export class ReduxStoreService {
 
-  select<T>(selector: (state: IReduxState) => T): Observable<T> {
-    return reduxStore.select(selector);
+  select<T>(selector: (state: IReduxState) => T, subscriptionStrategy: SubscriptionStrategy = 'NotEmpty'): Observable<T> {
+    return reduxStore.select(selector, subscriptionStrategy);
   }
 
   dispatch(action): void {

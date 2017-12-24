@@ -12,13 +12,15 @@ import {ApiClient} from '../shared/api-client';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="state | async as data" class="wrapper">
-      <div *ngFor="let name of dayNames()" class="header">{{name}}</div>
+      <div *ngFor="let name of dayNames()" class="header no-interact">{{name}}</div>
       <ng-container *ngFor="let week of data.weeks">
         <div *ngFor="let day of week" class="day" [ngClass]="{'empty': !day.episodes.length}">
-          <div class="day-header">{{formatDate(day.date)}}</div>
+          <div class="day-header no-interact">{{formatDate(day.date)}}</div>
           <div class="episode-list">
             <div *ngFor="let episode of day.episodes">
-              {{ episode.showName }} - {{ getEpisodeNumber(episode) }}
+              <span [routerLink]="['/show', episode.showId]" class="episode no-interact">
+                {{ episode.showName }} - {{ getEpisodeNumber(episode) }}
+              </span>
             </div>
           </div>
         </div>
@@ -26,13 +28,20 @@ import {ApiClient} from '../shared/api-client';
     </div>
   `,
   styles: [`
+    .episode {
+      color: #e20f00;
+      cursor: pointer;
+    }
+
+    .wrapper {
+      padding: 10px;
+    }
+
     @media (min-width: 1000px) {
       .wrapper {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         grid-template-rows: auto repeat(6, minmax(100px, auto));
-
-        padding: 10px;
       }
 
       .header {

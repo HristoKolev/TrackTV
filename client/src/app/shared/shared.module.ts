@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, Component, Directive, ElementRef, Input, NgModule, OnDestroy, OnInit,
+  ChangeDetectionStrategy, Component, Directive, ElementRef, Input, NgModule, OnChanges, OnDestroy, OnInit, SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -7,6 +7,7 @@ import {ApiClient} from './api-client';
 import {HttpClient} from './http-client';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {Subscription} from 'rxjs/Subscription';
+import {ISettingsState} from '../global.state';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -150,12 +151,14 @@ export class LoggedOutComponent {
 @Directive({
   selector: '[bannerUrl]'
 })
-export class BannerUrlDirective implements OnInit, OnDestroy {
+export class BannerUrlDirective implements OnInit, OnDestroy, OnChanges {
 
   @Input()
   bannerUrl: string;
 
   subscription: Subscription;
+
+  settings: ISettingsState;
 
   constructor(private elementRef: ElementRef, private store: ReduxStoreService) {
   }
@@ -163,12 +166,21 @@ export class BannerUrlDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.store.select(state => state.settings)
       .subscribe(settings => {
+        this.settings = settings;
 
-        if (this.bannerUrl) {
-
-          this.elementRef.nativeElement.setAttribute('src', `${settings.baseUrl}/banners/${this.bannerUrl}`);
-        }
+        this.updateBannerUrl();
       });
+  }
+
+  private updateBannerUrl() {
+    if (this.bannerUrl && this.settings) {
+
+      this.elementRef.nativeElement.setAttribute('src', `${this.settings.baseUrl}/banners/${this.bannerUrl}`);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateBannerUrl();
   }
 
   ngOnDestroy(): void {

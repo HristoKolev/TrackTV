@@ -12,3 +12,5 @@ export interface ReduxReducerMap {
 export interface ReduxSagaMap {
   [key: string]: ReduxSaga;
 }
+
+export type SubscriptionStrategy = 'NotEmpty' | 'Normal';

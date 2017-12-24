@@ -25,6 +25,7 @@
     "angular-idle-preload": "^2.0.4",
     "core-js": "^2.4.1",
     "date-fns": "^1.29.0",
+    "normalize.css": "^7.0.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "rxjs": "^5.5.2",

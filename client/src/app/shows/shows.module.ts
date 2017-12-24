@@ -27,7 +27,7 @@ import {SharedModule} from '../shared/shared.module';
         </button>
       </div>
 
-      <div class="list-wrapper">
+      <div class="list-wrapper no-interact">
         <show-summary-component *ngFor="let show of data.items" [show]="show"></show-summary-component>
       </div>
     </ng-container>
@@ -40,15 +40,6 @@ import {SharedModule} from '../shared/shared.module';
 
     .filter-controls input {
       display: inline-block;
-    }
-
-    .list-wrapper * {
-      user-drag: none;
-      user-select: none;
-      -moz-user-select: none;
-      -webkit-user-drag: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
     }
 
     @media (min-width: 768px) {
@@ -140,7 +131,6 @@ export class ShowsComponent implements OnInit {
       width: 94%;
       margin: 0 10px;
       margin-bottom: 10px;
-      pointer-events: none;
     }
 
     .show-details {

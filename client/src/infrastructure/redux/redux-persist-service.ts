@@ -7,14 +7,14 @@ const prefix = 'redux_';
 
 export const getPersistedState = (): any => {
 
-  const localStorageItems = Object.keys(localStorage)
+  const localStorageItems = Object.keys(localStorage || {})
     .filter(x => x.startsWith(prefix))
     .reduce((items, key) => ({
       ...items,
       [key.substr(prefix.length)]: JSON.parse(localStorage.getItem(key) || '{}'),
     }), {});
 
-  const sessionStorageItems = Object.keys(sessionStorage)
+  const sessionStorageItems = Object.keys(sessionStorage || {})
     .filter(x => x.startsWith(prefix))
     .reduce((items, key) => ({
       ...items,
@@ -65,6 +65,12 @@ export class ReduxPersistService {
   }
 
   private saveToSessionStorage(propertyValue: any, propertyName: string, persistStrategy: PersistStrategy) {
+
+    if (sessionStorage === null) {
+
+      return;
+    }
+
     try {
 
       const json = JSON.stringify(propertyValue);
@@ -78,11 +84,19 @@ export class ReduxPersistService {
 
     } catch (err) {
       throw new Error(
-        `Failed to persist property '${propertyName}' with strategy ${persistStrategy}. Error: ` + err.getStacktrace());
+        `Failed to persist property '${propertyName}' with strategy ${persistStrategy}. Error: ${err.toString()}`);
     }
   }
 
   private saveToLocalStorage(propertyValue: any, propertyName: string, persistStrategy: PersistStrategy) {
+
+
+    if (localStorage === null) {
+
+      return;
+    }
+
+
     try {
 
       const json = JSON.stringify(propertyValue);
@@ -96,7 +110,7 @@ export class ReduxPersistService {
 
     } catch (err) {
       throw new Error(
-        `Failed to persist property '${propertyName}' with strategy ${persistStrategy}. Error: ` + err.getStacktrace());
+        `Failed to persist property '${propertyName}' with strategy ${persistStrategy}. Error: ${err.toString()}`);
     }
   }
 }

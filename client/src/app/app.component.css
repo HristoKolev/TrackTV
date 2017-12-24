@@ -8,8 +8,14 @@ body {
   background-color: #f44336;
   color: white;
   border: 1px solid transparent;
-  text-transform: uppercase;
   cursor: pointer;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  user-select: none;
+}
+
+a.tt-button {
+  text-decoration: none;
 }
 
 .tt-button:hover {
@@ -27,7 +33,6 @@ body {
 
   box-shadow: 2px 2px 2px #dcdcdc;
   border: 1px solid #eaeaea;
-
 }
 
 select.tt-input {
@@ -39,4 +44,17 @@ select.tt-input {
   border: 1px solid #eee;
   box-shadow: 5px 5px 5px #eee;
   padding: 15px;
+}
+
+.no-interact {
+  user-select: none;
+  user-drag: none;
+}
+
+.no-interact * {
+  user-select: none;
+}
+
+img.no-interact, .no-interact img {
+  pointer-events: none;
 }

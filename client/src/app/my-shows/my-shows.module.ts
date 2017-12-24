@@ -55,11 +55,11 @@ export class MyShowsComponent implements OnInit {
   template: `
     <div class="tt-card my-show-card">
 
-      <div class="show-title">
+      <div class="show-title no-interact" [routerLink]="['/show', this.show.showId]">
         {{show.showName}}
       </div>
 
-      <div class="episodes">
+      <div class="episodes no-interact">
         <div class="last-episode">
           <ng-container *ngIf="show.lastEpisode">
             <img src="assets/left-arrow.png">
@@ -96,7 +96,6 @@ export class MyShowsComponent implements OnInit {
   styles: [`
     .my-show-card {
       margin: 10px;
-      cursor: pointer;
       padding: 0;
     }
 
