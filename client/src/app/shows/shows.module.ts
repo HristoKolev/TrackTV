@@ -117,7 +117,7 @@ export class ShowsComponent implements OnInit {
     <div class="tt-card show-card" [routerLink]="['/show', this.show.showId]">
       <div class="show-title">{{show.showName}}</div>
       <div class="show-details">Subscriber count: {{show.subscriberCount}} | Status: {{getStatusText(show.showStatus)}}</div>
-      <div><img [bannerUrl]="show.showBanner" class="poster" src=""></div>
+      <div class="poster-wrapper"><img [bannerUrl]="show.showBanner" class="poster" src=""></div>
     </div>
   `,
   styles: [`
@@ -128,9 +128,10 @@ export class ShowsComponent implements OnInit {
     }
 
     .poster {
-      width: 94%;
+      width: 544px;
       margin: 0 10px;
       margin-bottom: 10px;
+      height: 100px;
     }
 
     .show-details {
@@ -150,6 +151,19 @@ export class ShowsComponent implements OnInit {
       margin: 0 auto;
       padding: 5px 0;
       font-family: monospace;
+    }
+
+    @media (max-width: 767px) {
+      .poster {
+        width: 96%;
+        height: 100%;
+        margin: 0;
+      }
+
+      .poster-wrapper {
+        text-align: center;
+      }
+
     }
   `],
 })

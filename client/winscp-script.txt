@@ -1,0 +1,10 @@
+option batch abort
+option confirm off
+
+open ssh://root@192.168.1.104
+
+call rm -rf /var/www/tracktv-client/public_html/**
+
+synchronize remote ./dist /var/www/tracktv-client/public_html
+
+exit
