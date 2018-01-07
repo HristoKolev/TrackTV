@@ -20,7 +20,7 @@
     public class AuthController : Controller
     {
         public AuthController(
-            IProfileService profilesService,
+            ProfileService profilesService,
             ApplicationDbContext context,
             OAuth2Config auth2Config,
             IConfiguration configuration,
@@ -38,7 +38,7 @@
 
         private ApplicationDbContext DbContext { get; }
 
-        private IProfileService ProfilesService { get; }
+        private ProfileService ProfilesService { get; }
 
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)

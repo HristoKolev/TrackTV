@@ -10,9 +10,9 @@
     using TvDbSharper;
     using TvDbSharper.Dto;
 
-    public class ShowFetcher : IShowFetcher
+    public class ShowFetcher 
     {
-        public ShowFetcher(INetworkRepository networkRepository)
+        public ShowFetcher(NetworkRepository networkRepository)
         {
             this.NetworkRepository = networkRepository;
 
@@ -21,7 +21,7 @@
 
         private DateParser DateParser { get; }
 
-        private INetworkRepository NetworkRepository { get; }
+        private NetworkRepository NetworkRepository { get; }
 
         public Task PopulateShowAsync(Show show, Series data)
         {

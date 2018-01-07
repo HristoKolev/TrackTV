@@ -10,28 +10,18 @@
     using TvDbSharper;
     using TvDbSharper.Dto;
 
-    public class EpisodeFetcher : IEpisodeFetcher
+    public class EpisodeFetcher
     {
-        public EpisodeFetcher(
-            IEpisodesClient episodesClient,
-            IAdvancedEpisodeClient advancedEpisodeClient,
-            IAdvancedSeriesClient advancedSeriesClient)
+        public EpisodeFetcher(ITvDbClient tvDbClient)
         {
-            this.EpisodesClient = episodesClient;
-
-            this.AdvancedEpisodeClient = advancedEpisodeClient;
-            this.AdvancedSeriesClient = advancedSeriesClient;
+            this.TvDbClient = tvDbClient;
 
             this.DateParser = new DateParser();
         }
 
-        private IAdvancedEpisodeClient AdvancedEpisodeClient { get; }
-
-        private IAdvancedSeriesClient AdvancedSeriesClient { get; }
-
         private DateParser DateParser { get; }
 
-        private IEpisodesClient EpisodesClient { get; }
+        private ITvDbClient TvDbClient { get; }
 
         public async Task AddAllEpisodesAsync(Show show)
         {
@@ -53,14 +43,14 @@
 
         public async Task PopulateEpisodeAsync(Episode episode)
         {
-            var response = await this.EpisodesClient.GetAsync(episode.TheTvDbId).ConfigureAwait(false);
+            var response = await this.TvDbClient.Episodes.GetAsync(episode.TheTvDbId).ConfigureAwait(false);
 
             this.MapToEpisode(episode, response.Data);
         }
 
         private async Task AddEpisodesAsync(Show show, IEnumerable<int> ids)
         {
-            var records = await this.AdvancedEpisodeClient.GetFullEpisodesAsync(ids).ConfigureAwait(false);
+            var records = await this.TvDbClient.Episodes.GetFullEpisodesAsync(ids).ConfigureAwait(false);
 
             foreach (var record in records)
             {
@@ -79,7 +69,7 @@
 
         private async Task<int[]> GetAllEpisodeIdsAsync(int seriesId)
         {
-            var basicEpisodes = await this.AdvancedSeriesClient.GetBasicEpisodesAsync(seriesId).ConfigureAwait(false);
+            var basicEpisodes = await this.TvDbClient.Series.GetBasicEpisodesAsync(seriesId).ConfigureAwait(false);
 
             return basicEpisodes.Select(x => x.Id).ToArray();
         }

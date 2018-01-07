@@ -168,7 +168,7 @@
 
             ConstantExpression memberValue;
 
-            // When these query types are used, the member type must be a cillection.
+            // When these query types are used, the member type must be a collection.
             if (queryType == QueryType.IsIn || queryType == QueryType.IsNotIn)
             {
                 memberValue = Expression.Constant(value, typeof(List<>).MakeGenericType(member.Type));

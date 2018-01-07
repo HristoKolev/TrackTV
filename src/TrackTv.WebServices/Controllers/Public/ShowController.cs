@@ -11,12 +11,12 @@
     [Route("api/public/[controller]")]
     public class ShowController : Controller
     {
-        public ShowController(IShowService showService)
+        public ShowController(ShowService showService)
         {
             this.ShowService = showService;
         }
 
-        private IShowService ShowService { get; }
+        private ShowService ShowService { get; }
 
         [HttpGet("{showId:int}")]
         [ExposeError(typeof(ShowNotFoundException), "Show not found.")]

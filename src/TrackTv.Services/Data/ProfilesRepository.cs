@@ -7,7 +7,7 @@
     using TrackTv.Data;
     using TrackTv.Data.Models;
 
-    public class ProfilesRepository : IProfilesRepository
+    public class ProfilesRepository
     {
         public ProfilesRepository(TrackTvDbContext dbContext)
         {

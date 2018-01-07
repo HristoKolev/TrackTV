@@ -6,23 +6,23 @@ namespace TrackTv.Services.Show
     using TrackTv.Services.Exceptions;
     using TrackTv.Services.Show.Models;
 
-    public class ShowService : IShowService
+    public class ShowService 
     {
         public ShowService(
-            IShowsRepository showsRepository,
-            ISubscriptionRepository subscriptionRepository,
-            IProfilesRepository profilesRepository)
+            ShowsRepository showsRepository,
+            SubscriptionRepository subscriptionRepository,
+            ProfilesRepository profilesRepository)
         {
             this.ShowsRepository = showsRepository;
             this.SubscriptionRepository = subscriptionRepository;
             this.ProfilesRepository = profilesRepository;
         }
 
-        private IProfilesRepository ProfilesRepository { get; }
+        private ProfilesRepository ProfilesRepository { get; }
 
-        private IShowsRepository ShowsRepository { get; }
+        private ShowsRepository ShowsRepository { get; }
 
-        private ISubscriptionRepository SubscriptionRepository { get; }
+        private SubscriptionRepository SubscriptionRepository { get; }
 
         public async Task<FullShow> GetFullShowAsync(int showId, int profileId)
         {

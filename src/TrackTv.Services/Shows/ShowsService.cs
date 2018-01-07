@@ -9,16 +9,16 @@
     using TrackTv.Services.Data.Models;
     using TrackTv.Services.Shows.Models;
 
-    public class ShowsService : IShowsService
+    public class ShowsService 
     {
         private const int DefaultPageSize = 50;
 
-        public ShowsService(IShowsRepository showsRepository)
+        public ShowsService(ShowsRepository showsRepository)
         {
             this.ShowsRepository = showsRepository;
         }
 
-        private IShowsRepository ShowsRepository { get; }
+        private ShowsRepository ShowsRepository { get; }
 
         public async Task<PagedResponse<ShowSummary[]>> GetShowsAsync(string showName, int? genreId, int page = 1, int pageSize = DefaultPageSize)
         {

@@ -13,12 +13,12 @@
     [Route("api/user/[controller]")]
     public class SubscriptionController : Controller
     {
-        public SubscriptionController(ISubscriptionService subscriptionService)
+        public SubscriptionController(SubscriptionService subscriptionService)
         {
             this.SubscriptionService = subscriptionService;
         }
 
-        private ISubscriptionService SubscriptionService { get; }
+        private SubscriptionService SubscriptionService { get; }
 
         [HttpDelete("{showId:int}")]
         [ExposeError(typeof(SubscriptionException), "You are not subscribed to that show.")]

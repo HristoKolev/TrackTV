@@ -12,15 +12,15 @@
 
     using ActorData = TvDbSharper.Dto.Actor;
 
-    public class ActorFetcher : IActorFetcher
+    public class ActorFetcher  
     {
-        public ActorFetcher(IActorsRepository actorsRepository, ISeriesClient client)
+        public ActorFetcher(ActorsRepository actorsRepository, ISeriesClient client)
         {
             this.ActorsRepository = actorsRepository;
             this.Client = client;
         }
 
-        private IActorsRepository ActorsRepository { get; }
+        private ActorsRepository ActorsRepository { get; }
 
         private ISeriesClient Client { get; }
 

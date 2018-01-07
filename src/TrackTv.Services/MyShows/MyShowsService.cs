@@ -11,23 +11,23 @@
     using TrackTv.Services.Exceptions;
     using TrackTv.Services.MyShows.Models;
 
-    public class MyShowsService : IMyShowsService
+    public class MyShowsService 
     {
         public MyShowsService(
-            IEpisodeRepository episodeRepository,
-            ISubscriptionRepository subscriptionRepository,
-            IProfilesRepository profilesRepository)
+            EpisodeRepository episodeRepository,
+            SubscriptionRepository subscriptionRepository,
+            ProfilesRepository profilesRepository)
         {
             this.EpisodeRepository = episodeRepository;
             this.SubscriptionRepository = subscriptionRepository;
             this.ProfilesRepository = profilesRepository;
         }
 
-        private IEpisodeRepository EpisodeRepository { get; }
+        private EpisodeRepository EpisodeRepository { get; }
 
-        private IProfilesRepository ProfilesRepository { get; }
+        private ProfilesRepository ProfilesRepository { get; }
 
-        private ISubscriptionRepository SubscriptionRepository { get; }
+        private SubscriptionRepository SubscriptionRepository { get; }
 
         public async Task<MyShow[]> GetAllAsync(int profileId, DateTime time)
         {

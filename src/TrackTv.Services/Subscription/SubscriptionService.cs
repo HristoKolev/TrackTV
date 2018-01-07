@@ -5,14 +5,14 @@
     using TrackTv.Services.Data;
     using TrackTv.Services.Subscription.Models;
 
-    public class SubscriptionService : ISubscriptionService
+    public class SubscriptionService
     {
-        public SubscriptionService(ISubscriptionRepository subscriptionRepository)
+        public SubscriptionService(SubscriptionRepository subscriptionRepository)
         {
             this.SubscriptionRepository = subscriptionRepository;
         }
 
-        private ISubscriptionRepository SubscriptionRepository { get; }
+        private SubscriptionRepository SubscriptionRepository { get; }
 
         public async Task Subscribe(int profileId, int showId)
         {

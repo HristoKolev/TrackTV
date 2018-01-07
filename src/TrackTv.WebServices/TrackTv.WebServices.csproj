@@ -7,8 +7,9 @@
     <PackageId>TrackTv.WebServices</PackageId>
     <RuntimeIdentifiers>win10-x64;ubuntu.16.10-x64;</RuntimeIdentifiers>
     <SuppressDockerTargets>True</SuppressDockerTargets>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Compile Remove="Data\**" />
     <Content Remove="Data\**" />
@@ -28,11 +29,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.4.0" />
-    <PackageReference Include="IdentityServer4" Version="2.0.1" />
-    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.0.2" />
+    <PackageReference Include="IdentityServer4" Version="2.1.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.3.0" />
   </ItemGroup>
  
   <Target Name="Mytarget" AfterTargets="AfterPublish">

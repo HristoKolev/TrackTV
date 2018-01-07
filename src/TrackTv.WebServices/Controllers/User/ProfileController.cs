@@ -12,12 +12,12 @@
     [Route("api/user/[controller]")]
     public class ProfileController : Controller
     {
-        public ProfileController(IProfileService profileService)
+        public ProfileController(ProfileService profileService)
         {
             this.ProfileService = profileService;
         }
 
-        private IProfileService ProfileService { get; }
+        private ProfileService ProfileService { get; }
 
         public async Task<IActionResult> Get()
         {

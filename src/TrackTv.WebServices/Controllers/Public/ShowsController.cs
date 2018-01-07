@@ -11,12 +11,12 @@
     [Route("api/public/[controller]")]
     public class ShowsController : Controller
     {
-        public ShowsController(IShowsService showsService)
+        public ShowsController(ShowsService showsService)
         {
             this.ShowsService = showsService;
         }
 
-        private IShowsService ShowsService { get; }
+        private ShowsService ShowsService { get; }
 
         [ExposeError(typeof(GenreNotFoundException), "Can't find the genre you are looking for.")]
         public async Task<IActionResult> Post([FromBody] ShowsViewModel model)

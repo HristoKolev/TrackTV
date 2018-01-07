@@ -13,12 +13,12 @@
     [Route("api/user/[controller]")]
     public class CalendarController : Controller
     {
-        public CalendarController(ICalendarService calendarService)
+        public CalendarController(CalendarService calendarService)
         {
             this.CalendarService = calendarService;
         }
 
-        private ICalendarService CalendarService { get; }
+        private CalendarService CalendarService { get; }
 
         public async Task<IActionResult> Get()
         {

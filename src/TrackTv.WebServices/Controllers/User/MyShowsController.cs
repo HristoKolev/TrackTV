@@ -13,12 +13,12 @@
     [Route("api/user/[controller]")]
     public class MyShowsController : Controller
     {
-        public MyShowsController(IMyShowsService myShowsService)
+        public MyShowsController(MyShowsService myShowsService)
         {
             this.MyShowsService = myShowsService;
         }
 
-        private IMyShowsService MyShowsService { get; }
+        private MyShowsService MyShowsService { get; }
 
         public async Task<IActionResult> Get()
         {

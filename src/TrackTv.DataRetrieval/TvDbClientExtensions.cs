@@ -75,4 +75,35 @@ namespace TrackTv.DataRetrieval.ClientExtensions
             return Task.WhenAll(ranges.Select(range => client.GetAsync(range.Key, range.Value)));
         }
     }
+
+    public static class EpisodeClientExtensions
+    {
+        public static async Task<IEnumerable<EpisodeRecord>> GetFullEpisodesAsync(this IEpisodesClient episodesClient, IEnumerable<int> ids)
+        {
+            var episodes = await Task.WhenAll(ids.Select(episodesClient.GetAsync)).ConfigureAwait(false);
+
+            return episodes.Select(x => x.Data);
+        }
+    }
+
+    public static class SeriesClientExtensions
+    {
+        public static async Task<IEnumerable<BasicEpisode>> GetBasicEpisodesAsync(this ISeriesClient client, int seriesId)
+        {
+            var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
+
+            var firstResponse = await client.GetEpisodesAsync(seriesId, 1).ConfigureAwait(false);
+
+            for (int i = 2; i <= firstResponse.Links.Last; i++)
+            {
+                tasks.Add(client.GetEpisodesAsync(seriesId, i));
+            }
+
+            var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            var episodes = firstResponse.Data.Concat(results.SelectMany(x => x.Data));
+
+            return episodes;
+        }
+    }
 }

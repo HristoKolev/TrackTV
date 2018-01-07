@@ -10,12 +10,12 @@
     [Route("api/public/[controller]")]
     public class GenresController : Controller
     {
-        public GenresController(IGenresService genreService)
+        public GenresController(GenresService genreService)
         {
             this.GenresService = genreService;
         }
 
-        private IGenresService GenresService { get; }
+        private GenresService GenresService { get; }
 
         public async Task<IActionResult> Get()
         {

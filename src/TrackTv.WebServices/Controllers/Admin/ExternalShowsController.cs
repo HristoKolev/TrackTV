@@ -13,15 +13,15 @@
     [Route("api/admin/[controller]")]
     public class ExternalShowsController : Controller
     {
-        public ExternalShowsController(IExternalShowsService externalShowsService, IFetcher fetcher)
+        public ExternalShowsController(ExternalShowsService externalShowsService, Fetcher fetcher)
         {
             this.ExternalShowsService = externalShowsService;
             this.Fetcher = fetcher;
         }
 
-        private IExternalShowsService ExternalShowsService { get; }
+        private ExternalShowsService ExternalShowsService { get; }
 
-        private IFetcher Fetcher { get; }
+        private Fetcher Fetcher { get; }
 
         [ServiceFilter(typeof(InTransactionFilter))]
         [HttpPut("[action]/{seriesId}")]

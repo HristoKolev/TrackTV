@@ -12,7 +12,7 @@
     using TrackTv.Data.Models;
     using TrackTv.Services.MyShows.Models;
 
-    public class EpisodeRepository : IEpisodeRepository
+    public class EpisodeRepository
     {
         public EpisodeRepository(TrackTvDbContext context)
         {
@@ -49,7 +49,7 @@
 
             var shows = await this.Context.Database.GetDbConnection()
                                   .QueryAsync<MyShow, MyEpisode, MyEpisode, MyShow>(Query, Map, parameters,
-                                      splitOn: "ShowId,EpisodeId,EpisodeId");
+                                      splitOn: "ShowId,EpisodeId,EpisodeId").ConfigureAwait(false);
 
             return shows.ToArray();
         }

@@ -7,7 +7,7 @@
     using TrackTv.Data;
     using TrackTv.Data.Models;
 
-    public class NetworkRepository : INetworkRepository
+    public class NetworkRepository  
     {
         public NetworkRepository(TrackTvDbContext dbContext)
         {

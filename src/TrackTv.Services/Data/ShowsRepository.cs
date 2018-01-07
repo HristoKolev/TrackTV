@@ -9,7 +9,7 @@
     using TrackTv.Data.Models;
     using TrackTv.Services.Data.Models;
 
-    public class ShowsRepository : IShowsRepository
+    public class ShowsRepository 
     {
         public ShowsRepository(TrackTvDbContext dbContext)
         {

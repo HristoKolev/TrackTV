@@ -60,9 +60,9 @@ namespace TrackTv.WebServices.Infrastructure
         }
     }
 
-    public class ProfileService : IProfileService
+    public class IdentityServerProfileService : IProfileService
     {
-        public ProfileService(ApplicationDbContext context)
+        public IdentityServerProfileService(ApplicationDbContext context)
         {
             this.DbContext = context;
         }
@@ -194,7 +194,7 @@ namespace TrackTv.WebServices.Infrastructure
                 .AddInMemoryApiResources(new List<ApiResource> { resource })
                 .AddInMemoryClients(new List<Client> { client })
                 .AddInMemoryPersistedGrants()
-                .AddProfileService<ProfileService>()
+                .AddProfileService<IdentityServerProfileService>()
                 .AddSigningCredential(new X509Certificate2(Path.Combine(Global.ConfigDirectory, "certificate.pfx"), string.Empty));
 
             services.AddAuthentication("Bearer").AddIdentityServerAuthentication(options =>
@@ -206,7 +206,7 @@ namespace TrackTv.WebServices.Infrastructure
             });
 
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IProfileService, IdentityServerProfileService>();
             services.AddTransient<IPersistedGrantStore, PersistentGrantStore>();
         }
 

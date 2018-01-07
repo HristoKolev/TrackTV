@@ -14,12 +14,12 @@
     [ServiceFilter(typeof(InTransactionFilter))]
     public class UpdatesController : Controller
     {
-        public UpdatesController(IFetcher fetcher)
+        public UpdatesController(Fetcher fetcher)
         {
             this.Fetcher = fetcher;
         }
 
-        private IFetcher Fetcher { get; }
+        private Fetcher Fetcher { get; }
 
         [HttpPut("[action]/{date}")]
         public async Task<IActionResult> AllRecords(DateTime date)

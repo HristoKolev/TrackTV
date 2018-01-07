@@ -12,22 +12,19 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     {
         public DataRetrievalRegistry()
         {
-            this.For<IActorsRepository>().Use<ActorsRepository>().ContainerScoped();
-            this.For<IGenresRepository>().Use<GenresRepository>().ContainerScoped();
-            this.For<INetworkRepository>().Use<NetworkRepository>().ContainerScoped();
-            this.For<IShowsRepository>().Use<ShowsRepository>().ContainerScoped();
-            this.For<IEpisodeRepository>().Use<EpisodeRepository>().ContainerScoped();
+            this.For<ActorsRepository>().ContainerScoped();
+            this.For<GenresRepository>().ContainerScoped();
+            this.For<NetworkRepository>().ContainerScoped();
+            this.For<ShowsRepository>().ContainerScoped();
+            this.For<EpisodeRepository>().ContainerScoped();
 
-            this.For<IFetcher>().Use<Fetcher>().ContainerScoped();
-            this.For<IEpisodeFetcher>().Use<EpisodeFetcher>().ContainerScoped();
-            this.For<IGenreFetcher>().Use<GenreFetcher>().ContainerScoped();
-            this.For<IActorFetcher>().Use<ActorFetcher>().ContainerScoped();
-            this.For<IShowFetcher>().Use<ShowFetcher>().ContainerScoped();
-
-            this.For<IAdvancedEpisodeClient>().Use<AdvancedEpisodeClient>().ContainerScoped();
-            this.For<IAdvancedSeriesClient>().Use<AdvancedSeriesClient>().ContainerScoped();
-
-            this.For<IExternalShowsService>().Use<ExternalShowsService>().ContainerScoped();
+            this.For<Fetcher>().ContainerScoped();
+            this.For<EpisodeFetcher>().ContainerScoped();
+            this.For<GenreFetcher>().ContainerScoped();
+            this.For<ActorFetcher>().ContainerScoped();
+            this.For<ShowFetcher>().ContainerScoped();
+ 
+            this.For<ExternalShowsService>().ContainerScoped();
         }
     }
 }

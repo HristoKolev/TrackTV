@@ -7,17 +7,17 @@
     using TrackTv.Services.Data;
     using TrackTv.Services.Exceptions;
 
-    public class CalendarService : ICalendarService
+    public class CalendarService 
     {
-        public CalendarService(IEpisodeCalendar episodeCalendar, IProfilesRepository profilesRepository)
+        public CalendarService(EpisodeCalendar episodeCalendar, ProfilesRepository profilesRepository)
         {
             this.EpisodeCalendar = episodeCalendar;
             this.ProfilesRepository = profilesRepository;
         }
 
-        private IEpisodeCalendar EpisodeCalendar { get; }
+        private EpisodeCalendar EpisodeCalendar { get; }
 
-        private IProfilesRepository ProfilesRepository { get; }
+        private ProfilesRepository ProfilesRepository { get; }
 
         public async Task<CalendarDay[][]> GetCalendarAsync(int profileId, DateTime time)
         {

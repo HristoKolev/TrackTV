@@ -6,14 +6,14 @@
     using TrackTv.Services.Data;
     using TrackTv.Services.Genres.Models;
 
-    public class GenresService : IGenresService
+    public class GenresService
     {
-        public GenresService(IGenresRepository genresRepository)
+        public GenresService(GenresRepository genresRepository)
         {
             this.GenresRepository = genresRepository;
         }
 
-        private IGenresRepository GenresRepository { get; }
+        private GenresRepository GenresRepository { get; }
 
         public async Task<FullGenre[]> GetGenresAsync()
         {

@@ -6,14 +6,14 @@
     using TrackTv.Services.Exceptions;
     using TrackTv.Services.Profile.Model;
 
-    public class ProfileService : IProfileService
+    public class ProfileService 
     {
-        public ProfileService(IProfilesRepository profilesRepository)
+        public ProfileService(ProfilesRepository profilesRepository)
         {
             this.ProfilesRepository = profilesRepository;
         }
 
-        private IProfilesRepository ProfilesRepository { get; }
+        private ProfilesRepository ProfilesRepository { get; }
 
         public Task<int> CreateProfileAsync(string username)
         {

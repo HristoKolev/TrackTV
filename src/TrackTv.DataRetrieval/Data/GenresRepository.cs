@@ -8,7 +8,7 @@
     using TrackTv.Data;
     using TrackTv.Data.Models;
 
-    public class GenresRepository : IGenresRepository
+    public class GenresRepository  
     {
         public GenresRepository(TrackTvDbContext dbContext)
         {

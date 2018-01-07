@@ -15,17 +15,17 @@
     using TvDbSharper;
     using TvDbSharper.Dto;
 
-    public class Fetcher : IFetcher
+    public class Fetcher  
     {
         public Fetcher(
             DbContext context,
             ITvDbClient client,
-            IEpisodeFetcher episodeFetcher,
-            IActorFetcher actorFetcher,
-            IGenreFetcher genreFetcher,
-            IShowFetcher showFetcher,
-            IShowsRepository showsRepository,
-            IEpisodeRepository episodeRepository)
+            EpisodeFetcher episodeFetcher,
+            ActorFetcher actorFetcher,
+            GenreFetcher genreFetcher,
+            ShowFetcher showFetcher,
+            ShowsRepository showsRepository,
+            EpisodeRepository episodeRepository)
         {
             this.Context = context;
             this.Client = client;
@@ -37,21 +37,21 @@
             this.EpisodeRepository = episodeRepository;
         }
 
-        private IActorFetcher ActorFetcher { get; }
+        private ActorFetcher ActorFetcher { get; }
 
         private ITvDbClient Client { get; }
 
         private DbContext Context { get; }
 
-        private IEpisodeFetcher EpisodeFetcher { get; }
+        private EpisodeFetcher EpisodeFetcher { get; }
 
-        private IEpisodeRepository EpisodeRepository { get; }
+        private EpisodeRepository EpisodeRepository { get; }
 
-        private IGenreFetcher GenreFetcher { get; }
+        private GenreFetcher GenreFetcher { get; }
 
-        private IShowFetcher ShowFetcher { get; }
+        private ShowFetcher ShowFetcher { get; }
 
-        private IShowsRepository ShowsRepository { get; }
+        private ShowsRepository ShowsRepository { get; }
 
         public async Task AddShowAsync(int theTvDbId)
         {

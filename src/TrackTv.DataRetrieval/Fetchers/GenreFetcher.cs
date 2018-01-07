@@ -8,14 +8,14 @@
     using TrackTv.Data.Models;
     using TrackTv.DataRetrieval.Data;
 
-    public class GenreFetcher : IGenreFetcher
+    public class GenreFetcher
     {
-        public GenreFetcher(IGenresRepository genresRepository)
+        public GenreFetcher(GenresRepository genresRepository)
         {
             this.GenresRepository = genresRepository;
         }
 
-        private IGenresRepository GenresRepository { get; }
+        private GenresRepository GenresRepository { get; }
 
         public async Task PopulateGenresAsync(Show show, string[] genreNames)
         {
