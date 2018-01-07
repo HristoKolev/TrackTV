@@ -79,6 +79,8 @@
                 config.AddRegistry<InfrastructureRegistry>();
             });
 
+            Global.ErrorHandler = container.GetInstance<ErrorHandler>();
+
             return container.GetInstance<IServiceProvider>();
         }
     }

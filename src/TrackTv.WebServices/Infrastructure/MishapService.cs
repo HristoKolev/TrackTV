@@ -13,12 +13,27 @@
 
         public MishapService(string apiKey)
         {
+            if (!Guid.TryParse(apiKey, out Guid _))
+            {
+                throw new ArgumentException($"The ApiKey is invalid. ApiKey: '{apiKey ?? "null"}'");
+            }
+
             this.ApiKey = apiKey;
             this.Url = DefaultUrl;
         }
 
         public MishapService(string apiKey, string url)
         {
+            if (!Guid.TryParse(apiKey, out Guid _))
+            {
+                throw new ArgumentException($"The ApiKey is invalid. ApiKey: '{apiKey ?? "null"}'");
+            }
+
+            if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri _))
+            {
+                throw new ArgumentException($"The url is invalid. Url: '{url ?? "null"}'");
+            }
+
             this.ApiKey = apiKey;
             this.Url = url;
         }
@@ -37,7 +52,7 @@
             using (var requestStream = await request.GetRequestStreamAsync().ConfigureAwait(false))
             using (var streamWriter = new StreamWriter(requestStream))
             {
-                var record = new Record
+                var record = new MishapRecord
                 {
                     RecordType = "Error",
                     RecordTitle = exception.Message,
@@ -58,7 +73,7 @@
             }
         }
 
-        private class Record
+        private class MishapRecord
         {
             public string RecordContext { get; set; }
 
