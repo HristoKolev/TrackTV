@@ -26,13 +26,24 @@
             where TPoco : IPoco =>
             this.DataConnection.DeleteAsync(poco);
 
-        public Task InsertAsync<TPoco>(TPoco poco)
+        public Task<int> InsertAsync<TPoco>(TPoco poco)
             where TPoco : IPoco =>
-            this.DataConnection.InsertAsync(poco);
+            this.DataConnection.InsertWithInt32IdentityAsync(poco);
 
-        public Task SaveAsync<TPoco>(TPoco poco)
-            where TPoco : IPoco =>
-            ReflectionHelpers.GetPrimaryKey(poco) == default ? this.InsertAsync(poco) : this.UpdateAsync(poco);
+        public async Task<int> SaveAsync<TPoco>(TPoco poco)
+            where TPoco : IPoco
+        {
+            int pkValue = ReflectionHelpers.GetPrimaryKey(poco);
+
+            if (pkValue == default)
+            {
+                return await this.InsertAsync(poco).ConfigureAwait(false);
+            }
+
+            await this.UpdateAsync(poco).ConfigureAwait(false);
+
+            return pkValue;
+        }
 
         public Task UpdateAsync<TPoco>(TPoco poco)
             where TPoco : IPoco =>

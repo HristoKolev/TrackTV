@@ -59,7 +59,7 @@ namespace TrackTv.DataRetrieval.ClientExtensions
         {
             var results = new Dictionary<int, Update>();
 
-            foreach (var update in responses.SelectMany(x => x.Data))
+            foreach (var update in responses.Where(r => r.Data != null).SelectMany(x => x.Data))
             {
                 if (!results.ContainsKey(update.Id) || update.LastUpdated > results[update.Id].LastUpdated)
                 {

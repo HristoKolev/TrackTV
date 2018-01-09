@@ -1,6 +1,5 @@
 ﻿namespace TrackTv.WebServices.BackgroundTasks
 {
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@
     {
         protected override Task ExecuteTaskAsync(CancellationToken stoppingToken)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
 
             return Task.CompletedTask;
         }

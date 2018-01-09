@@ -7,7 +7,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Actors'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Actors")]
     public class ActorPoco : IPoco
@@ -32,7 +32,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Episodes'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Episodes")]
     public class EpisodePoco : IPoco
@@ -72,7 +72,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Genres'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Genres")]
     public class GenrePoco : IPoco
@@ -88,7 +88,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Networks'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Networks")]
     public class NetworkPoco : IPoco
@@ -104,7 +104,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Profiles'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Profiles")]
     public class ProfilePoco : IPoco
@@ -120,7 +120,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Roles'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Roles")]
     public class RolePoco : IPoco
@@ -142,7 +142,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Shows'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Shows")]
     public class ShowPoco : IPoco
@@ -188,23 +188,26 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'ShowsGenres'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "ShowsGenres")]
     public class ShowsgenrePoco : IPoco
     {
-        [PrimaryKey, Identity] 
+        [Column(Name = "ShowId")][NotNull] 
         public int ShowId { get; set; }
         
-        [PrimaryKey, Identity] 
+        [Column(Name = "GenreId")][NotNull] 
         public int GenreId { get; set; }
+        
+        [PrimaryKey, Identity] 
+        public int ShowsGenresId { get; set; }
         
     }
     
     /// <summary>
     /// <para>Database table 'Subscriptions'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Subscriptions")]
     public class SubscriptionPoco : IPoco
@@ -223,7 +226,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'Users'</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-08T20:50:59.5285429+02:00</para>
+    /// <para>2018-01-09T13:46:15.6470867+02:00</para>
     /// </summary>
     [Table(Name = "Users")]
     public class UserPoco : IPoco

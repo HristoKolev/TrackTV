@@ -37,22 +37,31 @@
 
         public async Task UpdateAllAsync(Func<Exception, Task> errorHandler)
         {
-            var context = new UpdateContext
-            {
-                ExistingShowIds =
-                    new HashSet<int>(await this.DbService.Shows.Select(poco => poco.TheTvDbId).ToListAsync().ConfigureAwait(false)),
-                ExistingEpisodeIds =
-                    new HashSet<int>(await this.DbService.Episodes.Select(poco => poco.TheTvDbId).ToListAsync().ConfigureAwait(false)),
-            };
-
             var updates = await this.GetUpdates(DateTime.UtcNow.Subtract(TimeSpan.FromDays(7))).ConfigureAwait(false);
 
             foreach (var update in updates)
             {
-                using (var transaction = this.DbConnection.BeginTransaction(IsolationLevel.Snapshot))
+                if (this.DbConnection.State != ConnectionState.Open)
+                {
+                    this.DbConnection.Open();
+                }
+
+                using (var transaction = this.DbConnection.BeginTransaction())
                 {
                     try
                     {
+                        var context = new UpdateContext
+                        {
+                            ExistingShowIds =
+                                new HashSet<int>(await this.DbService.Shows.Select(poco => poco.TheTvDbId)
+                                                           .ToListAsync()
+                                                           .ConfigureAwait(false)),
+                            ExistingEpisodeIds =
+                                new HashSet<int>(await this.DbService.Episodes.Select(poco => poco.TheTvDbId)
+                                                           .ToListAsync()
+                                                           .ConfigureAwait(false)),
+                        };
+
                         bool updateOccurred = await this.ProcessUpdateAsync(update.Id, context).ConfigureAwait(false);
 
                         if (updateOccurred)
@@ -100,7 +109,7 @@
                     GenreName = genreName
                 };
 
-                await this.DbService.InsertAsync(genre).ConfigureAwait(false);
+                return await this.DbService.InsertAsync(genre).ConfigureAwait(false);
             }
 
             return genre.GenreId;
@@ -119,7 +128,7 @@
                     NetworkName = networkName
                 };
 
-                await this.DbService.InsertAsync(network).ConfigureAwait(false);
+                return await this.DbService.InsertAsync(network).ConfigureAwait(false);
             }
 
             return network.NetworkId;
@@ -127,7 +136,7 @@
 
         private async Task<Update[]> GetUpdates(DateTime time)
         {
-            var response = await this.Client.Updates.GetAsync(time).ConfigureAwait(false);
+            var response = await this.Client.Updates.GetAccumulatedAsync(time, DateTime.UtcNow).ConfigureAwait(false);
 
             return response.Data;
         }
@@ -188,6 +197,13 @@
 
             if (context.ExistingShowIds.Contains(updateId))
             {
+                var series = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
+
+                if (string.IsNullOrWhiteSpace(series.SeriesName))
+                {
+                    return false;
+                }
+
                 await this.UpdateShow(updateId, context).ConfigureAwait(false);
                 return true;
             }
@@ -195,6 +211,13 @@
             var externalShow = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
             if (externalShow != null)
             {
+                var series = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
+
+                if (string.IsNullOrWhiteSpace(series.SeriesName))
+                {
+                    return false;
+                }
+
                 await this.UpdateShow(updateId, context).ConfigureAwait(false);
                 return true;
             }
@@ -202,6 +225,13 @@
             var externalEpisode = await this.GetExternalEpisodeAsync(updateId).ConfigureAwait(false);
             if (externalEpisode != null && int.TryParse(externalEpisode.SeriesId, out var seriesId))
             {
+                var series = await this.GetExternalShowAsync(seriesId).ConfigureAwait(false);
+
+                if (string.IsNullOrWhiteSpace(series.SeriesName))
+                {
+                    return false;
+                }
+
                 await this.UpdateShow(seriesId, context).ConfigureAwait(false);
                 return true;
             }
@@ -215,9 +245,14 @@
 
             var actors = response.Data;
 
-            var myActors = await this.DbService.Actors.Where(poco => actors.Select(actor => actor.Id).Contains(poco.TheTvDbId))
-                                     .ToListAsync()
-                                     .ConfigureAwait(false);
+            if (actors == null)
+            {
+                return;
+            }
+
+            var actorIds = actors.Select(actor => actor.Id).ToArray();
+
+            var myActors = await this.DbService.Actors.Where(poco => actorIds.Contains(poco.TheTvDbId)).ToListAsync().ConfigureAwait(false);
 
             foreach (var actor in actors)
             {
@@ -228,7 +263,7 @@
                 myActor.ActorName = actor.Name;
                 myActor.LastUpdated = DateTime.Parse(actor.LastUpdated);
 
-                await this.DbService.SaveAsync(myActor).ConfigureAwait(false);
+                myActor.ActorId = await this.DbService.SaveAsync(myActor).ConfigureAwait(false);
 
                 var role = await this.DbService.Roles.FirstOrDefaultAsync(poco => poco.ShowId == showId && poco.ActorId == myActor.ActorId)
                                      .ConfigureAwait(false) ?? new RolePoco();
@@ -237,7 +272,7 @@
                 role.ActorId = myActor.ActorId;
                 role.RoleName = actor.Role;
 
-                await this.DbService.SaveAsync(role).ConfigureAwait(false);
+                role.RoleId = await this.DbService.SaveAsync(role).ConfigureAwait(false);
             }
         }
 
@@ -258,7 +293,8 @@
 
             // Delete episodes
             var deletedEpisodeIds = context.ExistingEpisodeIds.Except(basicEpisodes.Select(e => e.Id)).ToArray();
-            var deletedEpisodes = await this.DbService.Episodes.Where(poco => deletedEpisodeIds.Contains(poco.TheTvDbId))
+            var deletedEpisodes = await this.DbService.Episodes
+                                            .Where(poco => deletedEpisodeIds.Contains(poco.TheTvDbId) && poco.ShowId == showId)
                                             .ToListAsync()
                                             .ConfigureAwait(false);
 
@@ -345,9 +381,10 @@
             var externalShow = await this.GetExternalShowAsync(myShow.TheTvDbId).ConfigureAwait(false);
 
             this.MapToShow(myShow, externalShow);
+
             myShow.NetworkId = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
 
-            await this.DbService.SaveAsync(myShow).ConfigureAwait(false);
+            myShow.ShowId = await this.DbService.SaveAsync(myShow).ConfigureAwait(false);
 
             await this.UpdateGenres(externalShow.Genre, myShow.ShowId).ConfigureAwait(false);
             await this.UpdateActors(myShow.TheTvDbId, myShow.ShowId).ConfigureAwait(false);

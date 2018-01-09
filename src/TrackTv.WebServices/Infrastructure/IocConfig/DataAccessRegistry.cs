@@ -24,12 +24,12 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             this.Forward<ApplicationDbContext, DbContext>();
 
             this.For<ITransactionScopeFactory>().Use<TransactionScopeFactory>().ContainerScoped();
-
+            
             this.For<MySqlConnection>()
                 .Use("MySql connection.", ctx => new MySqlConnection(Global.AppConfig.GetConnectionString("DefaultConnection")))
                 .ContainerScoped();
 
-            this.Forward<IDbConnection, MySqlConnection>();
+            this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
 
             this.For<IDataProvider>().Use<MySqlDataProvider>();
             this.For<DbService>();
