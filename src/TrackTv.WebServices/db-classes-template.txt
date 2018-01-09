@@ -1,0 +1,37 @@
+namespace TrackTv.Data
+{
+    using System;
+    using System.Linq;
+    using LinqToDB.Mapping;
+
+    {{#each model.tables}}
+    /// <summary>
+    /// <para>Database table '{{TABLE_NAME}}'</para>
+    /// <para>This class is automatically generated.</para>
+    /// <para>{{../model.date}}</para>
+    /// </summary>
+    [Table(Name = "{{TABLE_NAME}}")]
+    public class {{CLASS_NAME}}Poco : IPoco
+    {
+        {{#each columns}}
+        {{#if COLUMN_COMMENT}}
+        /// <summary>
+        {{#each comments}}/// <para>{{this}}</para>{{/each}}
+        /// </summary>
+        {{/if}}
+        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}[Column(Name = "{{COLUMN_NAME}}")]{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}} 
+        public {{CLR_TYPE}} {{COLUMN_NAME}} { get; set; }
+        
+        {{/each}}
+    }
+    
+    {{/each}}
+
+    public partial class DbService
+    {
+        {{#each model.tables}}
+        public IQueryable<{{CLASS_NAME}}Poco> {{PLURAl_CLASS_NAME}} => this.DataConnection.GetTable<{{CLASS_NAME}}Poco>();
+
+        {{/each}}
+    }
+}

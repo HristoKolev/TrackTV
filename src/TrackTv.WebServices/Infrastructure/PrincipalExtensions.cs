@@ -11,7 +11,7 @@
         {
             if (!user.Identity.IsAuthenticated)
             {
-                return default(int);
+                return default;
             }
 
             string value = user.FindFirst("ProfileId").Value;

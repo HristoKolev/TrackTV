@@ -44,7 +44,7 @@
 
                 int showId = (int)entity.GetType().GetProperty(nameof(show.ShowId)).GetValue(entity);
 
-                node.Entry.State = showId == default(int) ? EntityState.Added : EntityState.Modified;
+                node.Entry.State = showId == default ? EntityState.Added : EntityState.Modified;
             });
 
             return this.DbContext.SaveChangesAsync();

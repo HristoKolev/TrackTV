@@ -9,13 +9,13 @@
 
     public class CalendarService 
     {
-        public CalendarService(EpisodeCalendar episodeCalendar, ProfilesRepository profilesRepository)
+        public CalendarService(EpisodeCalendarCalculator episodeCalendarCalculator, ProfilesRepository profilesRepository)
         {
-            this.EpisodeCalendar = episodeCalendar;
+            this.EpisodeCalendarCalculator = episodeCalendarCalculator;
             this.ProfilesRepository = profilesRepository;
         }
 
-        private EpisodeCalendar EpisodeCalendar { get; }
+        private EpisodeCalendarCalculator EpisodeCalendarCalculator { get; }
 
         private ProfilesRepository ProfilesRepository { get; }
 
@@ -26,7 +26,7 @@
                 throw new ProfileNotFoundException(profileId);
             }
 
-            return await this.EpisodeCalendar.CreateAsync(profileId, time).ConfigureAwait(false);
+            return await this.EpisodeCalendarCalculator.CreateAsync(profileId, time).ConfigureAwait(false);
         }
     }
 }

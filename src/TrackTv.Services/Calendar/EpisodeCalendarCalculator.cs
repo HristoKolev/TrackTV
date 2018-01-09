@@ -10,13 +10,13 @@
     using TrackTv.Services.Calendar.Models;
     using TrackTv.Services.Data;
 
-    public class EpisodeCalendar
+    public class EpisodeCalendarCalculator
     {
         private const int CalendarLength = 7 * NumberOfWeeks;
 
         private const int NumberOfWeeks = 6;
 
-        public EpisodeCalendar(EpisodeRepository episodeRepository, Calendar calendar)
+        public EpisodeCalendarCalculator(EpisodeRepository episodeRepository, Calendar calendar)
         {
             this.EpisodeRepository = episodeRepository;
 

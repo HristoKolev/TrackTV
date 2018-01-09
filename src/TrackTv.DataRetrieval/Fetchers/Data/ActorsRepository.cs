@@ -8,7 +8,7 @@
     using TrackTv.Data;
     using TrackTv.Data.Models;
 
-    public class ActorsRepository 
+    public class ActorsRepository
     {
         public ActorsRepository(TrackTvDbContext dbContext)
         {

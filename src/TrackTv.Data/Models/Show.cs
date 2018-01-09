@@ -45,17 +45,17 @@
 
         public bool HasActor(Actor actor)
         {
-            return this.Roles.Any(x => x.Actor == actor || x.ActorId != default(int) && x.ActorId == actor.ActorId);
+            return this.Roles.Any(x => x.Actor == actor || x.ActorId != default && x.ActorId == actor.ActorId);
         }
 
         public bool HasGenre(Genre genre)
         {
-            return this.ShowsGenres.Any(x => x.Genre == genre || x.GenreId != default(int) && x.GenreId == genre.GenreId);
+            return this.ShowsGenres.Any(x => x.Genre == genre || x.GenreId != default && x.GenreId == genre.GenreId);
         }
 
         public bool HasNetwork()
         {
-            return this.NetworkId != default(int) || this.Network != null;
+            return this.NetworkId != default || this.Network != null;
         }
     }
 }

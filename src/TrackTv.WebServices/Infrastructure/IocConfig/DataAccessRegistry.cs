@@ -1,6 +1,14 @@
 namespace TrackTv.WebServices.Infrastructure.IocConfig
 {
+    using System.Data;
+
+    using LinqToDB.DataProvider;
+    using LinqToDB.DataProvider.MySql;
+
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+
+    using MySql.Data.MySqlClient;
 
     using StructureMap;
 
@@ -16,6 +24,15 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             this.Forward<ApplicationDbContext, DbContext>();
 
             this.For<ITransactionScopeFactory>().Use<TransactionScopeFactory>().ContainerScoped();
+
+            this.For<MySqlConnection>()
+                .Use("MySql connection.", ctx => new MySqlConnection(Global.AppConfig.GetConnectionString("DefaultConnection")))
+                .ContainerScoped();
+
+            this.Forward<IDbConnection, MySqlConnection>();
+
+            this.For<IDataProvider>().Use<MySqlDataProvider>();
+            this.For<DbService>();
         }
     }
 }
