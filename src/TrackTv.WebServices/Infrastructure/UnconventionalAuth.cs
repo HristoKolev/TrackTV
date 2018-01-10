@@ -1,5 +1,6 @@
 namespace TrackTv.WebServices.Infrastructure
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -181,6 +182,7 @@ namespace TrackTv.WebServices.Infrastructure
             {
                 ClientId = oAuth2Config.ClientId,
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                AccessTokenLifetime = (int)TimeSpan.FromDays(30).TotalSeconds,
 
                 ClientSecrets =
                 {
