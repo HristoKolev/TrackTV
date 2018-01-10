@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Shows.Models
+﻿namespace TrackTv.Services.Shows
 {
     public class PagedResponse<T>
         where T : class

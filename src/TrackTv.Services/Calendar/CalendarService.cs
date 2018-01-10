@@ -3,11 +3,10 @@
     using System;
     using System.Threading.Tasks;
 
-    using TrackTv.Services.Calendar.Models;
     using TrackTv.Services.Data;
     using TrackTv.Services.Exceptions;
 
-    public class CalendarService 
+    public class CalendarService
     {
         public CalendarService(EpisodeCalendarCalculator episodeCalendarCalculator, ProfilesRepository profilesRepository)
         {

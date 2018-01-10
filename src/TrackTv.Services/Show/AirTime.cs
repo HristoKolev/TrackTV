@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Show.Models
+﻿namespace TrackTv.Services.Show
 {
     public class AirTime
     {

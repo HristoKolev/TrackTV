@@ -1,12 +1,10 @@
-﻿namespace TrackTv.Services.Show.Models
+﻿namespace TrackTv.Services.Show
 {
     using System;
 
-    using TrackTv.Data.Models.Enums;
-
     public class FullShow
     {
-        public AirDay? AirDay { get; set; }
+        public int? AirDay { get; set; }
 
         public AirTime AirTime { get; set; }
 
@@ -26,8 +24,10 @@
 
         public string NetworkName { get; set; }
 
-        public ShowStatus ShowStatus { get; set; }
+        public int ShowStatus { get; set; }
 
         public int TheTvDbId { get; set; }
+
+        public DateTime? AirTimeDate { get; set; }
     }
 }

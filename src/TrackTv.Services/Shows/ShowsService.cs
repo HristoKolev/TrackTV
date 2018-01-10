@@ -4,12 +4,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Data.Models;
+    using TrackTv.Data;
+    using TrackTv.Data.Enums;
     using TrackTv.Services.Data;
-    using TrackTv.Services.Data.Models;
-    using TrackTv.Services.Shows.Models;
 
-    public class ShowsService 
+    public class ShowsService
     {
         private const int DefaultPageSize = 50;
 
@@ -20,7 +19,11 @@
 
         private ShowsRepository ShowsRepository { get; }
 
-        public async Task<PagedResponse<ShowSummary[]>> GetShowsAsync(string showName, int? genreId, int page = 1, int pageSize = DefaultPageSize)
+        public async Task<PagedResponse<ShowSummary[]>> GetShowsAsync(
+            string showName,
+            int? genreId,
+            int page = 1,
+            int pageSize = DefaultPageSize)
         {
             var shows = await this.ShowsRepository.GetShowsAsync(showName, genreId, page, pageSize).ConfigureAwait(false);
 
@@ -33,7 +36,7 @@
         }
 
         private static PagedResponse<ShowSummary[]> ConstructResponse(
-            IEnumerable<Show> shows,
+            IEnumerable<ShowPoco> shows,
             IEnumerable<SubscriberSummary> subscriberCounts,
             int totalCount)
         {
@@ -42,14 +45,14 @@
             return new PagedResponse<ShowSummary[]>(summaries, totalCount);
         }
 
-        private static ShowSummary MapToSummary(Show show, IEnumerable<SubscriberSummary> subscriberCounts)
+        private static ShowSummary MapToSummary(ShowPoco show, IEnumerable<SubscriberSummary> subscriberCounts)
         {
             return new ShowSummary
             {
                 ShowName = show.ShowName,
                 ShowBanner = show.ShowBanner,
                 ImdbId = show.ImdbId,
-                ShowStatus = show.ShowStatus,
+                ShowStatus = (ShowStatus)show.ShowStatus,
                 SubscriberCount = subscriberCounts.First(x => x.ShowId == show.ShowId).SubscriberCount,
                 ShowId = show.ShowId
             };

@@ -1,6 +1,6 @@
-﻿namespace TrackTv.Services.Shows.Models
+﻿namespace TrackTv.Services.Shows
 {
-    using TrackTv.Data.Models.Enums;
+    using TrackTv.Data.Enums;
 
     public class ShowSummary
     {

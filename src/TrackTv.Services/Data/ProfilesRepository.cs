@@ -2,39 +2,35 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
+    using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.Data.Models;
 
     public class ProfilesRepository
     {
-        public ProfilesRepository(TrackTvDbContext dbContext)
+        public ProfilesRepository(DbService dbService)
         {
-            this.DbContext = dbContext;
+            this.DbService = dbService;
         }
 
-        private TrackTvDbContext DbContext { get; }
+        private DbService DbService { get; }
 
-        public async Task<int> CreateProfileAsync(string username)
+        public Task<int> CreateProfileAsync(string username)
         {
-            var profile = new Profile(username);
-
-            this.DbContext.Profiles.Add(profile);
-
-            await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
-
-            return profile.ProfileId;
+            return this.DbService.InsertAsync(new ProfilePoco
+            {
+                Username = username
+            });
         }
 
-        public Task<Profile> GetProfileByIdAsync(int profileId)
+        public Task<ProfilePoco> GetProfileByIdAsync(int profileId)
         {
-            return this.DbContext.Profiles.AsNoTracking().FirstOrDefaultAsync(x => x.ProfileId == profileId);
+            return this.DbService.Profiles.FirstOrDefaultAsync(poco => poco.ProfileId == profileId);
         }
 
         public Task<bool> ProfileExistsAsync(int profileId)
         {
-            return this.DbContext.Profiles.AnyAsync(x => x.ProfileId == profileId);
+            return this.DbService.Profiles.AnyAsync(x => x.ProfileId == profileId);
         }
     }
 }

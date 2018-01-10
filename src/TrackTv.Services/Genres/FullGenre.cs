@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Genres.Models
+﻿namespace TrackTv.Services.Genres
 {
     public class FullGenre
     {

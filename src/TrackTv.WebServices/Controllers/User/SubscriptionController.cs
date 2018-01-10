@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.Services.Subscription;
-    using TrackTv.Services.Subscription.Models;
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]

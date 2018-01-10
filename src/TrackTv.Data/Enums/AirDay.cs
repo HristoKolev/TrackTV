@@ -1,4 +1,4 @@
-namespace TrackTv.Data.Models.Enums
+namespace TrackTv.Data.Enums
 {
     public enum AirDay
     {

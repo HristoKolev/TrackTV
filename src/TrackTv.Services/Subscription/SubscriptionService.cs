@@ -3,7 +3,6 @@
     using System.Threading.Tasks;
 
     using TrackTv.Services.Data;
-    using TrackTv.Services.Subscription.Models;
 
     public class SubscriptionService
     {

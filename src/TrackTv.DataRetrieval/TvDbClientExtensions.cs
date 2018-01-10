@@ -1,4 +1,4 @@
-namespace TrackTv.DataRetrieval.ClientExtensions
+namespace TrackTv.DataRetrieval
 {
     using System;
     using System.Collections.Generic;

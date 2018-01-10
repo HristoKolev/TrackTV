@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Calendar.Models
+﻿namespace TrackTv.Services.Calendar
 {
     using System;
 

@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
 
     using TrackTv.Services.Data;
-    using TrackTv.Services.Genres.Models;
 
     public class GenresService
     {

@@ -6,26 +6,22 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Data.Models;
-    using TrackTv.Services.Calendar.Models;
-    using TrackTv.Services.Data;
-
     public class EpisodeCalendarCalculator
     {
         private const int CalendarLength = 7 * NumberOfWeeks;
 
         private const int NumberOfWeeks = 6;
 
-        public EpisodeCalendarCalculator(EpisodeRepository episodeRepository, Calendar calendar)
+        public EpisodeCalendarCalculator(CalendarRepository calendarRepository, Calendar calendar)
         {
-            this.EpisodeRepository = episodeRepository;
+            this.CalendarRepository = calendarRepository;
 
             this.Calendar = calendar;
         }
 
         private Calendar Calendar { get; }
 
-        private EpisodeRepository EpisodeRepository { get; }
+        private CalendarRepository CalendarRepository { get; }
 
         public async Task<CalendarDay[][]> CreateAsync(int profileId, DateTime currentDate)
         {
@@ -33,8 +29,8 @@
 
             var endDate = startDate.AddDays(CalendarLength);
 
-            var monthlyEpisodes = await this.GetMonthlyEpisodesAsync(profileId, startDate, endDate)
-                                            .ConfigureAwait(false);
+            var monthlyEpisodes =
+                await this.CalendarRepository.GetMonthlyEpisodesAsync(profileId, startDate, endDate).ConfigureAwait(false);
 
             var month = ConstructMonth();
 
@@ -55,8 +51,8 @@
 
         private static void AddEpisodes(ICollection<CalendarDay> week, IEnumerable<CalendarEpisode> allEpisodes, DateTime currentDay)
         {
-            var dailyEpisodes = allEpisodes
-                .Where(e => e.FirstAired != null && e.FirstAired.Value >= currentDay && e.FirstAired < currentDay.AddDays(1));
+            var dailyEpisodes = allEpisodes.Where(e =>
+                e.FirstAired != null && e.FirstAired.Value >= currentDay && e.FirstAired < currentDay.AddDays(1));
 
             week.Add(new CalendarDay
             {
@@ -75,28 +71,6 @@
             }
 
             return model;
-        }
-
-        private static CalendarEpisode MapToModel(Episode episode)
-        {
-            return new CalendarEpisode
-            {
-                FirstAired = episode.FirstAired,
-                EpisodeTitle = episode.EpisodeTitle,
-                EpisodeNumber = episode.EpisodeNumber,
-                SeasonNumber = episode.SeasonNumber,
-                ShowId = episode.ShowId,
-                ShowName = episode.Show.ShowName
-            };
-        }
-
-        private async Task<CalendarEpisode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay)
-        {
-            var episodes = await this.EpisodeRepository
-                                     .GetMonthlyEpisodesAsync(profileId, startDay, endDay)
-                                     .ConfigureAwait(false);
-
-            return episodes.Select(MapToModel).ToArray();
         }
 
         private DateTime GetStartDate(DateTime currentDate)

@@ -1,4 +1,4 @@
-﻿namespace TrackTv.DataRetrieval.Services
+﻿namespace TrackTv.DataRetrieval
 {
     using System;
     using System.Linq;

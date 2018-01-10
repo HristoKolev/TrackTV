@@ -1,6 +1,5 @@
 namespace TrackTv.WebServices.Infrastructure
 {
-    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -17,9 +16,12 @@ namespace TrackTv.WebServices.Infrastructure
     using IdentityServer4.Stores;
     using IdentityServer4.Validation;
 
+    using LinqToDB;
+
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+
+    using TrackTv.Data;
 
     public static class AppRoles
     {
@@ -30,17 +32,17 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        public ResourceOwnerPasswordValidator(ApplicationDbContext appContext)
+        public ResourceOwnerPasswordValidator(DbService dbService)
         {
-            this.AppContext = appContext;
+            this.DbService = dbService;
         }
 
-        private ApplicationDbContext AppContext { get; }
+        private DbService DbService { get; }
 
         // ReSharper disable once StyleCop.SA1202
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            var user = await this.AppContext.Users.FirstOrDefaultAsync(u => u.Username == context.UserName);
+            var user = await this.DbService.Users.FirstOrDefaultAsync(u => u.Username == context.UserName).ConfigureAwait(false);
 
             if (user != null)
             {
@@ -62,12 +64,12 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class IdentityServerProfileService : IProfileService
     {
-        public IdentityServerProfileService(ApplicationDbContext context)
+        public IdentityServerProfileService(DbService dbService)
         {
-            this.DbContext = context;
+            this.DbService = dbService;
         }
 
-        private ApplicationDbContext DbContext { get; }
+        private DbService DbService { get; }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
@@ -76,7 +78,7 @@ namespace TrackTv.WebServices.Infrastructure
             if (int.TryParse(claim.Value, out int userId))
             {
                 // get user from db (find user by user id)
-                var user = await this.DbContext.Users.FindAsync(userId);
+                var user = await this.DbService.Users.FirstOrDefaultAsync(poco => poco.UserId == userId).ConfigureAwait(false);
 
                 // issue the claims for the user
                 if (user != null)
@@ -91,7 +93,7 @@ namespace TrackTv.WebServices.Infrastructure
         }
 
         // build claims array from user data
-        private static IEnumerable<Claim> GetUserClaims(User user)
+        private static IEnumerable<Claim> GetUserClaims(UserPoco user)
         {
             return new[]
             {
@@ -107,7 +109,8 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class PersistentGrantStore : IPersistedGrantStore
     {
-        private static ConcurrentDictionary<string, PersistedGrant> PersistedGrants = new ConcurrentDictionary<string, PersistedGrant>();
+        private static readonly ConcurrentDictionary<string, PersistedGrant> PersistedGrants =
+            new ConcurrentDictionary<string, PersistedGrant>();
 
         public async Task<IEnumerable<PersistedGrant>> GetAllAsync(string subjectId)
         {
@@ -121,7 +124,8 @@ namespace TrackTv.WebServices.Infrastructure
 
         public async Task RemoveAllAsync(string subjectId, string clientId)
         {
-            foreach (var persistedGrant in PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId && grant.ClientId == clientId))
+            foreach (var persistedGrant in PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId && grant.ClientId == clientId)
+            )
             {
                 PersistedGrants.TryRemove(persistedGrant.Key, out var p);
             }
@@ -129,7 +133,9 @@ namespace TrackTv.WebServices.Infrastructure
 
         public async Task RemoveAllAsync(string subjectId, string clientId, string type)
         {
-            foreach (var persistedGrant in PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId && grant.ClientId == clientId && grant.Type == type))
+            foreach (var persistedGrant in PersistedGrants.Values.Where(grant =>
+                grant.SubjectId == subjectId && grant.ClientId == clientId
+                                             && grant.Type == type))
             {
                 PersistedGrants.TryRemove(persistedGrant.Key, out var p);
             }
@@ -191,19 +197,26 @@ namespace TrackTv.WebServices.Infrastructure
             services.AddMvcCore().AddAuthorization().AddJsonFormatters();
 
             services.AddIdentityServer()
-                .AddInMemoryApiResources(new List<ApiResource> { resource })
-                .AddInMemoryClients(new List<Client> { client })
-                .AddInMemoryPersistedGrants()
-                .AddProfileService<IdentityServerProfileService>()
-                .AddSigningCredential(new X509Certificate2(Path.Combine(Global.ConfigDirectory, "certificate.pfx"), string.Empty));
+                    .AddInMemoryApiResources(new List<ApiResource>
+                    {
+                        resource
+                    })
+                    .AddInMemoryClients(new List<Client>
+                    {
+                        client
+                    })
+                    .AddInMemoryPersistedGrants()
+                    .AddProfileService<IdentityServerProfileService>()
+                    .AddSigningCredential(new X509Certificate2(Path.Combine(Global.ConfigDirectory, "certificate.pfx"), string.Empty));
 
-            services.AddAuthentication("Bearer").AddIdentityServerAuthentication(options =>
-            {
-                options.Authority = authorityUrl;
-                options.RequireHttpsMetadata = false;
+            services.AddAuthentication("Bearer")
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = authorityUrl;
+                        options.RequireHttpsMetadata = false;
 
-                options.ApiName = oAuth2Config.ApiName;
-            });
+                        options.ApiName = oAuth2Config.ApiName;
+                    });
 
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddTransient<IProfileService, IdentityServerProfileService>();

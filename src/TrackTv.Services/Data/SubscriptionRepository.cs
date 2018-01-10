@@ -3,49 +3,49 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
+    using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.Data.Models;
 
-    public class SubscriptionRepository 
+    public class SubscriptionRepository
     {
-        public SubscriptionRepository(TrackTvDbContext dbContext)
+        public SubscriptionRepository(DbService dbService)
         {
-            this.DbContext = dbContext;
+            this.DbService = dbService;
         }
 
-        private TrackTvDbContext DbContext { get; }
+        private DbService DbService { get; }
 
         public Task AddSubscriptionAsync(int profileId, int showId)
         {
-            this.DbContext.Subscriptions.Add(new Subscription(profileId, showId));
-
-            return this.DbContext.SaveChangesAsync();
+            return this.DbService.InsertAsync(new SubscriptionPoco
+            {
+                ProfileId = profileId,
+                ShowId = showId
+            });
         }
 
-        public Task<Subscription> GetSubscriptionAsync(int profileId, int showId)
+        public Task<SubscriptionPoco> GetSubscriptionAsync(int profileId, int showId)
         {
-            return this.DbContext.Subscriptions.AsNoTracking().SingleOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId);
+            return this.DbService.Subscriptions.FirstOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId);
         }
 
-        public Task<int[]> GetSubscriptionsByProfileIdAsync(int profileId)
+        public Task<int[]> GetSubscriptionIdsByProfileIdAsync(int profileId)
         {
-            return this.DbContext.Subscriptions.AsNoTracking().Where(x => x.ProfileId == profileId).Select(x => x.ShowId).ToArrayAsync();
+            return this.DbService.Subscriptions.Where(x => x.ProfileId == profileId).Select(x => x.ShowId).ToArrayAsync();
         }
 
         public Task<bool> IsProfileSubscribedAsync(int profileId, int showId)
         {
-            return this.DbContext.Subscriptions.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
+            return this.DbService.Subscriptions.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
         }
 
         public async Task RemoveSubscriptionAsync(int subscriptionId)
         {
-            var subscription = await this.DbContext.Subscriptions.SingleAsync(x => x.SubscriptionId == subscriptionId).ConfigureAwait(false);
+            var subscription = await this.DbService.Subscriptions.FirstOrDefaultAsync(x => x.SubscriptionId == subscriptionId)
+                                         .ConfigureAwait(false);
 
-            this.DbContext.Subscriptions.Remove(subscription);
-
-            await this.DbContext.SaveChangesAsync().ConfigureAwait(false);
+            await this.DbService.DeleteAsync(subscription).ConfigureAwait(false);
         }
     }
 }

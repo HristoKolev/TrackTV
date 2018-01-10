@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.Subscription.Models
+﻿namespace TrackTv.Services.Subscription
 {
     using System;
 

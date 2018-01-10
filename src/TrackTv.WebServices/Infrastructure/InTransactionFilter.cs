@@ -1,43 +1,57 @@
 ﻿namespace TrackTv.WebServices.Infrastructure
 {
+    using System.Data;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    using TrackTv.Data;
+    using MySql.Data.MySqlClient;
 
     /// <summary>
     /// Opens a transaction at the start of the request and if no exception is thrown, commits it at the end.
     /// </summary>
     public class InTransactionFilter : IAsyncActionFilter
     {
-        public InTransactionFilter(ITransactionScopeFactory transactionScopeFactory)
+        public InTransactionFilter(MySqlConnection connection)
         {
-            this.TransactionScopeFactory = transactionScopeFactory;
+            this.Connection = connection;
         }
 
-        private ITransactionScopeFactory TransactionScopeFactory { get; }
+        private MySqlConnection Connection { get; }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            using (var scope = await this.TransactionScopeFactory.CreateScopeAsync().ConfigureAwait(false))
+            if (this.Connection.State != ConnectionState.Open)
             {
-                var executedContext = await next().ConfigureAwait(false);
+                await this.Connection.OpenAsync().ConfigureAwait(false);
+            }
 
-                if (executedContext.Result is OkObjectResult jsResult && jsResult.Value is ApiResult apiResult)
+            using (var transaction = await this.Connection.BeginTransactionAsync().ConfigureAwait(false))
+            {
+                var ctx = await next().ConfigureAwait(false);
+
+                if (ctx.Result != null && ctx.Result is OkObjectResult jsResult && jsResult.Value is ApiResult apiResult)
                 {
                     if (apiResult.Success)
                     {
-                        scope.Complete();
+                        transaction.Commit();
                     }
-
-                    return;
+                    else
+                    {
+                        transaction.Rollback();
+                    }
                 }
-
-                if (executedContext.Exception == null)
+                else
                 {
-                    scope.Complete();
+                    if (ctx.Exception != null)
+                    {
+                        transaction.Rollback();
+                    }
+                    else
+                    {
+                        transaction.Commit();
+                    }
                 }
             }
         }

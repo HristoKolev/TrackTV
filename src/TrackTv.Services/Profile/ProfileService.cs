@@ -4,7 +4,6 @@
 
     using TrackTv.Services.Data;
     using TrackTv.Services.Exceptions;
-    using TrackTv.Services.Profile.Model;
 
     public class ProfileService 
     {

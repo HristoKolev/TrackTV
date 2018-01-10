@@ -19,8 +19,4 @@
     <ProjectReference Include="..\TrackTv.Data\TrackTv.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Fetchers\Services\" />
-  </ItemGroup>
-
 </Project>

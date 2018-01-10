@@ -1,25 +1,20 @@
-﻿namespace TrackTv.Services.Data
+﻿namespace TrackTv.Services.MyShows
 {
     using System;
+    using System.Data;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Dapper;
 
-    using Microsoft.EntityFrameworkCore;
-
-    using TrackTv.Data;
-    using TrackTv.Data.Models;
-    using TrackTv.Services.MyShows.Models;
-
     public class EpisodeRepository
     {
-        public EpisodeRepository(TrackTvDbContext context)
+        public EpisodeRepository(IDbConnection dbConnection)
         {
-            this.Context = context;
+            this.DbConnection = dbConnection;
         }
 
-        private TrackTvDbContext Context { get; }
+        private IDbConnection DbConnection { get; }
 
         public async Task<MyShow[]> GetEpisodesSummariesAsync(int[] showIds, DateTime time)
         {
@@ -47,18 +42,11 @@
                 time
             };
 
-            var shows = await this.Context.Database.GetDbConnection()
-                                  .QueryAsync<MyShow, MyEpisode, MyEpisode, MyShow>(Query, Map, parameters,
-                                      splitOn: "ShowId,EpisodeId,EpisodeId").ConfigureAwait(false);
+            var shows = await this.DbConnection.QueryAsync<MyShow, MyEpisode, MyEpisode, MyShow>(Query, Map, parameters,
+                                      splitOn: "ShowId,EpisodeId,EpisodeId")
+                                  .ConfigureAwait(false);
 
             return shows.ToArray();
-        }
-
-        public Task<Episode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay)
-        {
-            return this.Context.Episodes.AsNoTracking().Include(e => e.Show)
-                       .Where(e => e.Show.Subscriptions.Any(x => x.ProfileId == profileId))
-                       .Where(episode => episode.FirstAired > startDay && episode.FirstAired < endDay).ToArrayAsync();
         }
 
         private static MyShow Map(MyShow show, MyEpisode lastEpisode, MyEpisode nextEpisode)

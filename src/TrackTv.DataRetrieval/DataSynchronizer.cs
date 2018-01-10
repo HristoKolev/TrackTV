@@ -9,16 +9,14 @@
     using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.Data.Models.Enums;
-    using TrackTv.DataRetrieval.ClientExtensions;
-    using TrackTv.DataRetrieval.Fetchers;
+    using TrackTv.Data.Enums;
 
     using TvDbSharper;
     using TvDbSharper.Dto;
 
-    public class NewFetcher
+    public class DataSynchronizer
     {
-        public NewFetcher(DbService dbService, ITvDbClient client, IDbConnection dbConnection)
+        public DataSynchronizer(DbService dbService, ITvDbClient client, IDbConnection dbConnection)
         {
             this.DbService = dbService;
             this.Client = client;
@@ -35,9 +33,17 @@
 
         private DbService DbService { get; }
 
-        public async Task UpdateAllAsync(Func<Exception, Task> errorHandler)
+        public async Task<DateTime> UpdateAllAsync(
+            DateTime fromUtcDate,
+            Func<Exception, Task> errorHandler,
+            Func<DateTime, Task> onSuccessfulUpdate)
         {
-            var updates = await this.GetUpdates(DateTime.UtcNow.Subtract(TimeSpan.FromDays(7))).ConfigureAwait(false);
+            var updates = await this.GetUpdates(fromUtcDate).ConfigureAwait(false);
+
+            if (!updates.Any())
+            {
+                return fromUtcDate;
+            }
 
             foreach (var update in updates)
             {
@@ -67,6 +73,8 @@
                         if (updateOccurred)
                         {
                             transaction.Commit();
+
+                            await onSuccessfulUpdate(update.LastUpdated.ToDateTime()).ConfigureAwait(false);
                         }
                         else
                         {
@@ -80,6 +88,8 @@
                     }
                 }
             }
+
+            return updates.Select(update => update.LastUpdated).Max().ToDateTime();
         }
 
         private async Task<EpisodeRecord> GetExternalEpisodeAsync(int updateId)
@@ -138,7 +148,12 @@
         {
             var response = await this.Client.Updates.GetAccumulatedAsync(time, DateTime.UtcNow).ConfigureAwait(false);
 
-            return response.Data;
+            if (response.Data == null)
+            {
+                return Array.Empty<Update>();
+            }
+
+            return response.Data.OrderBy(update => update.LastUpdated).ToArray();
         }
 
         private void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
@@ -354,14 +369,14 @@
                 genreIds.Add(genreId);
             }
 
-            var existingGenreIds = await this.DbService.Showsgenres.Where(poco => poco.ShowId == showId)
+            var existingGenreIds = await this.DbService.ShowsGenres.Where(poco => poco.ShowId == showId)
                                              .Select(poco => poco.GenreId)
                                              .ToListAsync()
                                              .ConfigureAwait(false);
 
             foreach (int genreId in genreIds.Except(existingGenreIds))
             {
-                await this.DbService.InsertAsync(new ShowsgenrePoco
+                await this.DbService.InsertAsync(new ShowGenrePoco
                           {
                               GenreId = genreId,
                               ShowId = showId

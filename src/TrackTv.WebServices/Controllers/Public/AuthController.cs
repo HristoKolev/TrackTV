@@ -10,9 +10,12 @@
 
     using log4net;
 
+    using LinqToDB;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
 
+    using TrackTv.Data;
     using TrackTv.Services.Profile;
     using TrackTv.WebServices.Infrastructure;
 
@@ -21,22 +24,22 @@
     {
         public AuthController(
             ProfileService profilesService,
-            ApplicationDbContext context,
             OAuth2Config auth2Config,
             IConfiguration configuration,
-            ILog logger)
+            ILog logger,
+            DbService dbService)
         {
             this.ProfilesService = profilesService;
-            this.DbContext = context;
             this.Auth2Config = auth2Config;
             this.Configuration = configuration;
+            this.DbService = dbService;
         }
 
         private OAuth2Config Auth2Config { get; }
 
         private IConfiguration Configuration { get; }
 
-        private ApplicationDbContext DbContext { get; }
+        private DbService DbService { get; }
 
         private ProfileService ProfilesService { get; }
 
@@ -45,12 +48,13 @@
         {
             string authority = this.Configuration["Server:Urls"].Split(",").First();
 
-            var discoveryResponse = await DiscoveryClient.GetAsync(authority);
+            var discoveryResponse = await DiscoveryClient.GetAsync(authority).ConfigureAwait(false);
 
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, this.Auth2Config.ClientId, this.Auth2Config.ClientSecret);
 
-            var tokenResponse =
-                await tokenClient.RequestResourceOwnerPasswordAsync(model.Username, model.Password, this.Auth2Config.ApiName);
+            var tokenResponse = await tokenClient
+                                      .RequestResourceOwnerPasswordAsync(model.Username, model.Password, this.Auth2Config.ApiName)
+                                      .ConfigureAwait(false);
 
             if (tokenResponse.IsError)
             {
@@ -69,23 +73,21 @@
                 return this.Failure(this.ModelState);
             }
 
-            if (this.DbContext.Users.Any(u => u.Username == model.Username))
+            if (await this.DbService.Users.AnyAsync(u => u.Username == model.Username).ConfigureAwait(false))
             {
                 return this.Failure($"A user with an username '{model.Username}' already exists.");
             }
 
-            var user = new User
-            {
-                Username = model.Username,
-                ProfileId = await this.ProfilesService.CreateProfileAsync(model.Username),
-                Password = model.Password.Sha512(),
-                IsAdmin = false
-            };
-
             // Check the user for validity
-            this.DbContext.Users.Add(user);
 
-            await this.DbContext.SaveChangesAsync();
+            await this.DbService.InsertAsync(new UserPoco
+                      {
+                          Username = model.Username,
+                          ProfileId = await this.ProfilesService.CreateProfileAsync(model.Username).ConfigureAwait(false),
+                          Password = model.Password.Sha512(),
+                          IsAdmin = false
+                      })
+                      .ConfigureAwait(false);
 
             return this.Success();
         }

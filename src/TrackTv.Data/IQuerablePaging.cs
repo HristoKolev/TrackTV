@@ -1,9 +1,9 @@
-﻿namespace TrackTv.Services.Data
+﻿namespace TrackTv.Data
 {
     using System;
     using System.Linq;
 
-    public static class QuerableExtensions
+    public static class IQuerablePaging
     {
         private const int MaxPageSize = 50;
 

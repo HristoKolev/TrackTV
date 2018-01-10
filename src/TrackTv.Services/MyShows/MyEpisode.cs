@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Services.MyShows.Models
+﻿namespace TrackTv.Services.MyShows
 {
     using System;
 

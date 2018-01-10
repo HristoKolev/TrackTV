@@ -1,4 +1,4 @@
-namespace TrackTv.Services.Profile.Model
+namespace TrackTv.Services.Profile
 {
     public class FullProfile
     {

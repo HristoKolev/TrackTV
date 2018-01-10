@@ -5,7 +5,6 @@
     using Microsoft.AspNetCore.Mvc;
 
     using TrackTv.Services.Show;
-    using TrackTv.Services.Show.Models;
     using TrackTv.WebServices.Infrastructure;
 
     [Route("api/public/[controller]")]

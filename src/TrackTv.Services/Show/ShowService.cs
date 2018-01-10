@@ -4,23 +4,22 @@ namespace TrackTv.Services.Show
 
     using TrackTv.Services.Data;
     using TrackTv.Services.Exceptions;
-    using TrackTv.Services.Show.Models;
 
-    public class ShowService 
+    public class ShowService
     {
         public ShowService(
-            ShowsRepository showsRepository,
+            ShowRepository showRepository,
             SubscriptionRepository subscriptionRepository,
             ProfilesRepository profilesRepository)
         {
-            this.ShowsRepository = showsRepository;
+            this.ShowRepository = showRepository;
             this.SubscriptionRepository = subscriptionRepository;
             this.ProfilesRepository = profilesRepository;
         }
 
         private ProfilesRepository ProfilesRepository { get; }
 
-        private ShowsRepository ShowsRepository { get; }
+        private ShowRepository ShowRepository { get; }
 
         private SubscriptionRepository SubscriptionRepository { get; }
 
@@ -40,33 +39,19 @@ namespace TrackTv.Services.Show
 
         public async Task<FullShow> GetFullShowAsync(int showId)
         {
-            var show = await this.ShowsRepository.GetShowWithNetworkByIdAsync(showId).ConfigureAwait(false);
+            var show = await this.ShowRepository.GetShowWithNetworkByIdAsync(showId).ConfigureAwait(false);
 
             if (show == null)
             {
                 throw new ShowNotFoundException(showId);
             }
 
-            var model = new FullShow
+            if (show.AirTimeDate.HasValue)
             {
-                ShowId = show.ShowId,
-                TheTvDbId = show.TheTvDbId,
-                ShowName = show.ShowName,
-                FirstAired = show.FirstAired,
-                AirDay = show.AirDay,
-                ImdbId = show.ImdbId,
-                ShowBanner = show.ShowBanner,
-                ShowStatus = show.ShowStatus,
-                ShowDescription = show.ShowDescription,
-                NetworkName = show.Network.NetworkName
-            };
-
-            if (show.AirTime.HasValue)
-            {
-                model.AirTime = new AirTime(show.AirTime.Value.Hour, show.AirTime.Value.Minute);
+                show.AirTime = new AirTime(show.AirTimeDate.Value.Hour, show.AirTimeDate.Value.Minute);
             }
 
-            return model;
+            return show;
         }
     }
 }

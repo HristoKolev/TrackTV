@@ -5,6 +5,8 @@ open ssh://root@192.168.1.104
 
 synchronize remote ./bin/publish /var/www/tracktv/public_html
 
+call chmod -R 777 /var/www/tracktv/public_html
+
 call systemctl restart tracktv.service
 
 exit
