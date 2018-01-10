@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {MyShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
+import {format} from 'date-fns';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -64,7 +65,7 @@ export class MyShowsComponent implements OnInit {
           <ng-container *ngIf="show.lastEpisode">
             <img src="assets/left-arrow.png">
             <div class="episode-summary">
-              <div class="episode-time">November 7</div>
+              <div class="episode-time">{{format(show.lastEpisode.firstAired)}}</div>
               <div class="episode-title">{{getEpisodeNumber(show.lastEpisode)}}</div>
             </div>
           </ng-container>
@@ -76,7 +77,7 @@ export class MyShowsComponent implements OnInit {
 
           <ng-container *ngIf="show.nextEpisode">
             <div class="episode-summary">
-              <div class="episode-time">November 7</div>
+              <div class="episode-time">{{format(show.nextEpisode.firstAired)}}</div>
               <div class="episode-title">{{getEpisodeNumber(show.nextEpisode)}}</div>
             </div>
             <img src="assets/right-arrow.png" class="right-arrow">
@@ -183,6 +184,10 @@ export class MyShowComponent {
 
   getEpisodeNumber(episode: any) {
     return `S${episode.seasonNumber.toString().padStart(2, '0')}E${episode.episodeNumber.toString().padStart(2, '0')}`;
+  }
+
+  format(dateString) {
+    return format(dateString, 'MMMM DD');
   }
 }
 
