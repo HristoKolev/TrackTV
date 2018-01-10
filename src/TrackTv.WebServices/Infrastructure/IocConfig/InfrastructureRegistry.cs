@@ -1,6 +1,5 @@
 namespace TrackTv.WebServices.Infrastructure.IocConfig
 {
-    using System;
     using System.IO;
     using System.Linq;
     using System.Reflection;

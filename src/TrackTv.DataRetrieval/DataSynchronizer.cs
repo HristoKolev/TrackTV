@@ -192,7 +192,7 @@
             {
                 show.ImdbId = data.ImdbId;
             }
-            
+
             show.ShowDescription = data.Overview;
 
             show.LastUpdated = data.LastUpdated.ToDateTime();
@@ -286,7 +286,7 @@
             foreach (var actor in actors)
             {
                 var myActor = myActors.FirstOrDefault(poco => poco.TheTvDbId == actor.Id) ?? new ActorPoco();
-                
+
                 if (!string.IsNullOrWhiteSpace(actor.Image))
                 {
                     myActor.ActorImage = actor.Image;
@@ -410,8 +410,8 @@
 
         private async Task UpdateShow(int updateId, UpdateContext context)
         {
-            var myShow = await this.DbService.Shows
-                                   .FirstOrDefaultAsync(poco => poco.TheTvDbId == updateId).ConfigureAwait(false) ?? new ShowPoco
+            var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.TheTvDbId == updateId).ConfigureAwait(false)
+                         ?? new ShowPoco
                          {
                              TheTvDbId = updateId
                          };

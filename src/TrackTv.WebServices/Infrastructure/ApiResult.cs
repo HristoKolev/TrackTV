@@ -36,7 +36,9 @@ namespace TrackTv.WebServices.Infrastructure
         public static ApiResult FromModelState(ModelStateDictionary modelState)
         {
             var messages = modelState.Values.Where(entry => entry.ValidationState == ModelValidationState.Invalid)
-                                     .SelectMany(entry => entry.Errors).Select(error => error.ErrorMessage).ToArray();
+                                     .SelectMany(entry => entry.Errors)
+                                     .Select(error => error.ErrorMessage)
+                                     .ToArray();
             return new ApiResult
             {
                 ErrorMessages = messages

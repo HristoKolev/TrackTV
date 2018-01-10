@@ -13,12 +13,12 @@
     [RetryTaskError(3 * 1000)]
     public class UpdateShowsTask : BackgroundTask
     {
-        private IHostingEnvironment HostingEnvironment { get; }
-
         public UpdateShowsTask(IHostingEnvironment hostingEnvironment)
         {
             this.HostingEnvironment = hostingEnvironment;
         }
+
+        private IHostingEnvironment HostingEnvironment { get; }
 
         protected override async Task ExecuteTaskAsync(CancellationToken stoppingToken)
         {

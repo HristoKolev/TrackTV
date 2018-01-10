@@ -6,7 +6,6 @@
 
     using TrackTv.Data;
     using TrackTv.Data.Enums;
-    using TrackTv.Services.Data;
 
     public class ShowsService
     {

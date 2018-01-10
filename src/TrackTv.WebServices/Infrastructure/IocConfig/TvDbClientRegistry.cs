@@ -13,9 +13,8 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     {
         public TvDbClientRegistry()
         {
-            Expression<Action<IContext, TvDbClient>> authenticateClient = (context, client) => client
-                .Authentication.AuthenticateAsync(context.GetInstance<IConfigurationRoot>()["ApiKeys:TheTvDbApi"])
-                .Wait();
+            Expression<Action<IContext, TvDbClient>> authenticateClient = (context, client) =>
+                client.Authentication.AuthenticateAsync(context.GetInstance<IConfigurationRoot>()["ApiKeys:TheTvDbApi"]).Wait();
 
             this.For<ITvDbClient>().Use<TvDbClient>().OnCreation(authenticateClient).TimeScoped();
 

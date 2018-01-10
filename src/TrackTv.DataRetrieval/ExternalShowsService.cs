@@ -7,7 +7,7 @@
     using TvDbSharper;
     using TvDbSharper.Dto;
 
-    public class ExternalShowsService 
+    public class ExternalShowsService
     {
         public ExternalShowsService(ISearchClient client)
         {

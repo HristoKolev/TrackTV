@@ -3,8 +3,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using TrackTv.Services.Data;
-
     public class GenresService
     {
         public GenresService(GenresRepository genresRepository)
