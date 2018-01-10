@@ -84,7 +84,19 @@
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        await errorHandler(ex).ConfigureAwait(false);
+
+                        await errorHandler(new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex)).ConfigureAwait(false);
+
+                        // Don't ask... just don't ask.
+                        try
+                        {
+                            throw new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex);
+                        }
+                        catch (Exception e)
+                        {
+                            await errorHandler(e).ConfigureAwait(false);
+                            
+                        }
                     }
                 }
             }
@@ -432,6 +444,19 @@
             public HashSet<int> ExistingEpisodeIds { get; set; } = new HashSet<int>();
 
             public HashSet<int> ExistingShowIds { get; set; } = new HashSet<int>();
+        }
+    }
+
+    public class DataSyncException : Exception
+    {
+        public DataSyncException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+        public DataSyncException(string message)
+            : base(message)
+        {
         }
     }
 }
