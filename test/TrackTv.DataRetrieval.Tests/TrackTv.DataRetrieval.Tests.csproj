@@ -9,6 +9,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <OutputType>Library</OutputType>
+
     <LangVersion>latest</LangVersion>
  
   </PropertyGroup>

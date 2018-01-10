@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>TrackTv.Services</AssemblyName>
-    <PackageId>TrackTv.Services</PackageId>
+    <TargetFramework>netstandard2.0</TargetFramework>
+ 
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
+     
     <LangVersion>latest</LangVersion>
  
   </PropertyGroup>

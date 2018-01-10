@@ -1,16 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>TrackTv.Data</AssemblyName>
-    
-    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <PackageId>TrackTv.Data</PackageId> 
-  
-    <OutputTypeEx>library</OutputTypeEx> 
 
     <LangVersion>latest</LangVersion>
  
