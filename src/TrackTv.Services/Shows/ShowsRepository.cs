@@ -32,6 +32,7 @@
 
             return (from show in showsQuery
                     join showGenre in this.DbService.ShowsGenres on show.ShowId equals showGenre.ShowId
+                    where showGenre.GenreId == genreId
                     select show).CountAsync();
         }
 
@@ -65,8 +66,9 @@
 
             var shows = await (from show in showQuery
                                join showGenre in showGenres on show.ShowId equals showGenre.ShowId
-                               orderby this.DbService.Subscriptions.Count(poco => poco.ShowId == show.ShowId) descending
-                               select show).Page(page, pageSize)
+                               select show).Distinct()
+                                           .OrderByDescending(poco => this.DbService.Subscriptions.Count(s => s.ShowId == poco.ShowId))
+                                           .Page(page, pageSize)
                                            .ToArrayAsync()
                                            .ConfigureAwait(false);
 

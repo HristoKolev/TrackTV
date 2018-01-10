@@ -1,10 +1,13 @@
 namespace TrackTv.WebServices.Infrastructure.IocConfig
 {
+    using System.Collections.Generic;
     using System.Data;
 
+    using LinqToDB.Data;
     using LinqToDB.DataProvider;
     using LinqToDB.DataProvider.MySql;
 
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
 
     using MySql.Data.MySqlClient;
@@ -23,8 +26,32 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
 
-            this.For<IDataProvider>().Use<MySqlDataProvider>();
+            this.For<IDataProvider>().Use<ProfilerDbProvider>();
             this.For<DbService>();
+        }
+    }
+
+    public class ProfilerDbProvider : MySqlDataProvider
+    {
+        public ProfilerDbProvider(IHostingEnvironment environment)
+        {
+            this.Environment = environment;
+        }
+
+        private IHostingEnvironment Environment { get; }
+
+        public override void InitCommand(
+            DataConnection dataConnection,
+            CommandType commandType,
+            string commandText,
+            DataParameter[] parameters)
+        {
+            if (this.Environment.IsDevelopment())
+            {
+                Global.SqlLog.Push(new KeyValuePair<string, object>(commandText, parameters));
+            }
+
+            base.InitCommand(dataConnection, commandType, commandText, parameters);
         }
     }
 }

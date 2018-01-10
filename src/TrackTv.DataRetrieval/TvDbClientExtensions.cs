@@ -90,20 +90,27 @@ namespace TrackTv.DataRetrieval
     {
         public static async Task<List<BasicEpisode>> GetBasicEpisodesAsync(this ISeriesClient client, int seriesId)
         {
-            var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
-
-            var firstResponse = await client.GetEpisodesAsync(seriesId, 1).ConfigureAwait(false);
-
-            for (int i = 2; i <= firstResponse.Links.Last; i++)
+            try
             {
-                tasks.Add(client.GetEpisodesAsync(seriesId, i));
+                var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
+
+                var firstResponse = await client.GetEpisodesAsync(seriesId, 1).ConfigureAwait(false);
+
+                for (int i = 2; i <= firstResponse.Links.Last; i++)
+                {
+                    tasks.Add(client.GetEpisodesAsync(seriesId, i));
+                }
+
+                var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+
+                var episodes = firstResponse.Data.Concat(results.SelectMany(x => x.Data)).ToList();
+
+                return episodes;
             }
-
-            var results = await Task.WhenAll(tasks).ConfigureAwait(false);
-
-            var episodes = firstResponse.Data.Concat(results.SelectMany(x => x.Data)).ToList();
-
-            return episodes;
+            catch (TvDbServerException ex) when (ex.StatusCode == 404)
+            {
+                return new List<BasicEpisode>();
+            }
         }
     }
 }

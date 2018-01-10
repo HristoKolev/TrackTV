@@ -173,9 +173,19 @@ export class BannerUrlDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   private updateBannerUrl() {
-    if (this.bannerUrl && this.settings) {
+    if (this.settings) {
 
-      this.elementRef.nativeElement.setAttribute('src', `${this.settings.baseUrl}/banners/${this.bannerUrl}`);
+      let url;
+
+      if (this.bannerUrl) {
+        url = `${this.settings.baseUrl}/banners/${this.bannerUrl}`;
+
+      } else {
+
+        url = 'assets/no-poster.png';
+      }
+
+      this.elementRef.nativeElement.setAttribute('src', url);
     }
   }
 

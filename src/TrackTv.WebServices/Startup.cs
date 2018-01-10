@@ -80,7 +80,6 @@
             });
 
             Global.Container = container;
-
             Global.ErrorHandler = container.GetInstance<ErrorHandler>();
 
             return container.GetInstance<IServiceProvider>();

@@ -160,7 +160,12 @@
         {
             episode.EpisodeTitle = data.EpisodeName;
             episode.EpisodeDescription = data.Overview;
-            episode.ImdbId = data.ImdbId;
+
+            if (!string.IsNullOrWhiteSpace(data.ImdbId))
+            {
+                episode.ImdbId = data.ImdbId;
+            }
+
             episode.EpisodeNumber = data.AiredEpisodeNumber.Value;
             episode.SeasonNumber = data.AiredSeason.Value;
             episode.TheTvDbId = data.Id;
@@ -177,8 +182,17 @@
         {
             show.TheTvDbId = data.Id;
             show.ShowName = data.SeriesName;
-            show.ShowBanner = data.Banner;
-            show.ImdbId = data.ImdbId;
+
+            if (!string.IsNullOrWhiteSpace(data.Banner))
+            {
+                show.ShowBanner = data.Banner;
+            }
+
+            if (!string.IsNullOrWhiteSpace(data.ImdbId))
+            {
+                show.ImdbId = data.ImdbId;
+            }
+            
             show.ShowDescription = data.Overview;
 
             show.LastUpdated = data.LastUpdated.ToDateTime();
@@ -272,8 +286,12 @@
             foreach (var actor in actors)
             {
                 var myActor = myActors.FirstOrDefault(poco => poco.TheTvDbId == actor.Id) ?? new ActorPoco();
+                
+                if (!string.IsNullOrWhiteSpace(actor.Image))
+                {
+                    myActor.ActorImage = actor.Image;
+                }
 
-                myActor.ActorImage = actor.Image;
                 myActor.TheTvDbId = actor.Id;
                 myActor.ActorName = actor.Name;
                 myActor.LastUpdated = DateTime.Parse(actor.LastUpdated);
@@ -305,6 +323,11 @@
         private async Task UpdateEpisodes(int theTvDbId, UpdateContext context, int showId)
         {
             var basicEpisodes = await this.Client.Series.GetBasicEpisodesAsync(theTvDbId).ConfigureAwait(false);
+
+            if (!basicEpisodes.Any())
+            {
+                return;
+            }
 
             // Delete episodes
             var deletedEpisodeIds = context.ExistingEpisodeIds.Except(basicEpisodes.Select(e => e.Id)).ToArray();
@@ -387,18 +410,16 @@
 
         private async Task UpdateShow(int updateId, UpdateContext context)
         {
-            var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.TheTvDbId == updateId).ConfigureAwait(false)
-                         ?? new ShowPoco
+            var myShow = await this.DbService.Shows
+                                   .FirstOrDefaultAsync(poco => poco.TheTvDbId == updateId).ConfigureAwait(false) ?? new ShowPoco
                          {
                              TheTvDbId = updateId
                          };
 
             var externalShow = await this.GetExternalShowAsync(myShow.TheTvDbId).ConfigureAwait(false);
-
             this.MapToShow(myShow, externalShow);
 
             myShow.NetworkId = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
-
             myShow.ShowId = await this.DbService.SaveAsync(myShow).ConfigureAwait(false);
 
             await this.UpdateGenres(externalShow.Genre, myShow.ShowId).ConfigureAwait(false);
