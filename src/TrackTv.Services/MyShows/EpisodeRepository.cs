@@ -19,20 +19,20 @@
         public async Task<MyShow[]> GetEpisodesSummariesAsync(int[] showIds, DateTime time)
         {
             const string Query = @"
-                SELECT s1.*, lastEpisode.* , nextEpisode.* from Shows s1 JOIN
+                SELECT s1.*, lastEpisode.* , nextEpisode.* from shows s1 JOIN
                   (SELECT s.ShowId as ShowId,
-                      (SELECT e1.EpisodeId from Episodes e1
+                      (SELECT e1.EpisodeId from episodes e1
                         WHERE e1.ShowId = s.ShowId and e1.SeasonNumber != 0 and e1.FirstAired is not NULL
                         AND e1.FirstAired <= @time
                         ORDER BY e1.FirstAired DESC LIMIT 1) as LastEpisodeId,
 
-                      (SELECT e2.EpisodeId from Episodes e2
+                      (SELECT e2.EpisodeId from episodes e2
                         WHERE e2.ShowId = s.ShowId and e2.SeasonNumber != 0 and  e2.FirstAired is not NULL
                         AND e2.FirstAired > @time
                         ORDER BY e2.FirstAired LIMIT 1) as NextEpisodeId
-                   from Shows s) sub on s1.ShowId = sub.ShowId
-                LEFT JOIN Episodes nextEpisode on nextEpisode.EpisodeId = sub.NextEpisodeId
-                LEFT JOIN Episodes lastEpisode on lastEpisode.EpisodeId = sub.LastEpisodeId
+                   from shows s) sub on s1.ShowId = sub.ShowId
+                LEFT JOIN episodes nextEpisode on nextEpisode.EpisodeId = sub.NextEpisodeId
+                LEFT JOIN episodes lastEpisode on lastEpisode.EpisodeId = sub.LastEpisodeId
 
                 WHERE s1.ShowId in @showIds";
 
