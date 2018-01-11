@@ -54,4 +54,17 @@ namespace TrackTv.Data
 
         {{/each}}
     }
+
+	public partial interface IDbService
+    {
+        {{#each model.tables}}
+		/// <summary>
+		/// <para>Database table '{{TABLE_NAME}}'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: {{../model.date}}</para>
+		/// </summary>
+        IQueryable<{{CLASS_NAME}}Poco> {{PLURAl_CLASS_NAME}} { get; }
+
+        {{/each}}
+    }
 }

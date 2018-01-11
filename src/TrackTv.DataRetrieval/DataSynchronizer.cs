@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -16,11 +15,10 @@
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(DbService dbService, ITvDbClient client, IDbConnection dbConnection)
+        public DataSynchronizer(DbService dbService, ITvDbClient client)
         {
             this.DbService = dbService;
             this.Client = client;
-            this.DbConnection = dbConnection;
 
             this.DateParser = new DateParser();
         }
@@ -28,8 +26,6 @@
         private ITvDbClient Client { get; }
 
         private DateParser DateParser { get; }
-
-        private IDbConnection DbConnection { get; }
 
         private DbService DbService { get; }
 
@@ -47,58 +43,42 @@
 
             foreach (var update in updates)
             {
-                if (this.DbConnection.State != ConnectionState.Open)
-                {
-                    this.DbConnection.Open();
-                }
+                await this.DbService.ExecuteInTransaction(async transaction =>
+                          {
+                              try
+                              {
+                                  var context = new UpdateContext
+                                  {
+                                      ExistingShowIds =
+                                          new HashSet<int>(await this.DbService.Shows.Select(poco => poco.TheTvDbId)
+                                                                     .ToListAsync()
+                                                                     .ConfigureAwait(false)),
+                                      ExistingEpisodeIds =
+                                          new HashSet<int>(await this.DbService.Episodes.Select(poco => poco.TheTvDbId)
+                                                                     .ToListAsync()
+                                                                     .ConfigureAwait(false)),
+                                  };
 
-                using (var transaction = this.DbConnection.BeginTransaction())
-                {
-                    try
-                    {
-                        var context = new UpdateContext
-                        {
-                            ExistingShowIds =
-                                new HashSet<int>(await this.DbService.Shows.Select(poco => poco.TheTvDbId)
-                                                           .ToListAsync()
-                                                           .ConfigureAwait(false)),
-                            ExistingEpisodeIds =
-                                new HashSet<int>(await this.DbService.Episodes.Select(poco => poco.TheTvDbId)
-                                                           .ToListAsync()
-                                                           .ConfigureAwait(false)),
-                        };
+                                  bool updateOccurred = await this.ProcessUpdateAsync(update.Id, context).ConfigureAwait(false);
 
-                        bool updateOccurred = await this.ProcessUpdateAsync(update.Id, context).ConfigureAwait(false);
+                                  if (updateOccurred)
+                                  {
+                                      await onSuccessfulUpdate(update.LastUpdated.ToDateTime()).ConfigureAwait(false);
+                                  }
+                                  else
+                                  {
+                                      transaction.Rollback();
+                                  }
+                              }
+                              catch (Exception ex)
+                              {
+                                  await errorHandler(new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex))
+                                      .ConfigureAwait(false);
 
-                        if (updateOccurred)
-                        {
-                            transaction.Commit();
-
-                            await onSuccessfulUpdate(update.LastUpdated.ToDateTime()).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            transaction.Rollback();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-
-                        await errorHandler(new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex)).ConfigureAwait(false);
-
-                        //// Don't ask... just don't ask.
-                        //try
-                        //{
-                        //    throw new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex);
-                        //}
-                        //catch (Exception e)
-                        //{
-                        //    await errorHandler(e).ConfigureAwait(false);
-                            
-                        //}
-                    }
-                }
+                                  throw;
+                              }
+                          })
+                          .ConfigureAwait(false);
             }
 
             return updates.Select(update => update.LastUpdated).Max().ToDateTime();

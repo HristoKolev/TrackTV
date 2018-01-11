@@ -6,6 +6,8 @@
 
         DatabaseUpdateInterval = 2,
 
-        DisableDatabaseUpdate = 3
+        DisableDatabaseUpdate = 3,
+
+        EnableTransactionLog = 4
     }
 }

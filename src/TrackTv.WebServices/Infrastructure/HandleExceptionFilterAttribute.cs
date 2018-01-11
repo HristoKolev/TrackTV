@@ -38,7 +38,7 @@ namespace TrackTv.WebServices.Infrastructure
         {
             try
             {
-                await this.HandleExceptionAsync(context);
+                await this.HandleExceptionAsync(context).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace TrackTv.WebServices.Infrastructure
                 throw;
             }
 
-            await base.OnExceptionAsync(context);
+            await base.OnExceptionAsync(context).ConfigureAwait(false);
         }
 
         private async Task HandleExceptionAsync(ExceptionContext context)
@@ -83,7 +83,7 @@ namespace TrackTv.WebServices.Infrastructure
                 context.ExceptionHandled = true;
             }
 
-            await mishapTask;
+            await mishapTask.ConfigureAwait(false);
         }
     }
 
@@ -95,7 +95,10 @@ namespace TrackTv.WebServices.Infrastructure
             this.ExceptionType = exceptionType;
             this.Message = message;
 
-            exceptionType.AssertIs<Exception>();
+            if (!typeof(Exception).IsAssignableFrom(exceptionType))
+            {
+                throw new NotSupportedException($"The type {exceptionType} is not an Exception type.");
+            }
         }
 
         public Type ExceptionType { get; }
