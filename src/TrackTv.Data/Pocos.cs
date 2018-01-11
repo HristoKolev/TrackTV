@@ -5,15 +5,29 @@ namespace TrackTv.Data
     using LinqToDB.Mapping;
 
     /// <summary>
-    /// <para>Database table 'actors'</para>
+    /// <para>Database table 'actors'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "actors")]
     public class ActorPoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int ActorId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.ActorId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.ActorId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.ActorId == default;
+		}
         
         [Column(Name = "ActorImage")][Nullable] 
         public string ActorImage { get; set; }
@@ -30,15 +44,29 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'episodes'</para>
+    /// <para>Database table 'episodes'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "episodes")]
     public class EpisodePoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int EpisodeId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.EpisodeId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.EpisodeId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.EpisodeId == default;
+		}
         
         [Column(Name = "EpisodeDescription")][Nullable] 
         public string EpisodeDescription { get; set; }
@@ -70,15 +98,29 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'genres'</para>
+    /// <para>Database table 'genres'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "genres")]
     public class GenrePoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int GenreId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.GenreId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.GenreId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.GenreId == default;
+		}
         
         [Column(Name = "GenreName")][NotNull] 
         public string GenreName { get; set; }
@@ -86,15 +128,29 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'networks'</para>
+    /// <para>Database table 'networks'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "networks")]
     public class NetworkPoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int NetworkId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.NetworkId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.NetworkId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.NetworkId == default;
+		}
         
         [Column(Name = "NetworkName")][NotNull] 
         public string NetworkName { get; set; }
@@ -102,15 +158,29 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'profiles'</para>
+    /// <para>Database table 'profiles'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "profiles")]
     public class ProfilePoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int ProfileId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.ProfileId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.ProfileId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.ProfileId == default;
+		}
         
         [Column(Name = "Username")][NotNull] 
         public string Username { get; set; }
@@ -118,15 +188,29 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'roles'</para>
+    /// <para>Database table 'roles'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "roles")]
     public class RolePoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int RoleId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.RoleId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.RoleId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.RoleId == default;
+		}
         
         [Column(Name = "ActorId")][NotNull] 
         public int ActorId { get; set; }
@@ -140,9 +224,9 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'settings'</para>
+    /// <para>Database table 'settings'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "settings")]
     public class SettingPoco : IPoco
@@ -155,19 +239,47 @@ namespace TrackTv.Data
         
         [PrimaryKey, Identity] 
         public int SettingId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.SettingId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.SettingId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.SettingId == default;
+		}
         
     }
     
     /// <summary>
-    /// <para>Database table 'shows'</para>
+    /// <para>Database table 'shows'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "shows")]
     public class ShowPoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int ShowId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.ShowId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.ShowId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.ShowId == default;
+		}
         
         [Column(Name = "AirDay")][Nullable] 
         public int? AirDay { get; set; }
@@ -205,9 +317,9 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'shows_genres'</para>
+    /// <para>Database table 'shows_genres'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "shows_genres")]
     public class ShowGenrePoco : IPoco
@@ -220,19 +332,47 @@ namespace TrackTv.Data
         
         [PrimaryKey, Identity] 
         public int ShowsGenresId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.ShowsGenresId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.ShowsGenresId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.ShowsGenresId == default;
+		}
         
     }
     
     /// <summary>
-    /// <para>Database table 'subscriptions'</para>
+    /// <para>Database table 'subscriptions'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "subscriptions")]
     public class SubscriptionPoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int SubscriptionId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.SubscriptionId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.SubscriptionId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.SubscriptionId == default;
+		}
         
         [Column(Name = "ProfileId")][NotNull] 
         public int ProfileId { get; set; }
@@ -243,15 +383,29 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'users'</para>
+    /// <para>Database table 'users'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>2018-01-10T12:19:35.3811496+02:00</para>
+    /// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
     /// </summary>
     [Table(Name = "users")]
     public class UserPoco : IPoco
     {
         [PrimaryKey, Identity] 
         public int UserId { get; set; }
+		int IPoco.GetPrimaryKey()
+		{
+			return this.UserId;
+		}
+
+		void IPoco.SetPrimaryKey(int value)
+		{
+			this.UserId = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.UserId == default;
+		}
         
         [Column(Name = "IsAdmin")][NotNull] 
         public bool IsAdmin { get; set; }
@@ -267,29 +421,83 @@ namespace TrackTv.Data
         
     }
     
-
     public partial class DbService
     {
+		/// <summary>
+		/// <para>Database table 'actors'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<ActorPoco> Actors => this.DataConnection.GetTable<ActorPoco>();
 
+		/// <summary>
+		/// <para>Database table 'episodes'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<EpisodePoco> Episodes => this.DataConnection.GetTable<EpisodePoco>();
 
+		/// <summary>
+		/// <para>Database table 'genres'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<GenrePoco> Genres => this.DataConnection.GetTable<GenrePoco>();
 
+		/// <summary>
+		/// <para>Database table 'networks'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<NetworkPoco> Networks => this.DataConnection.GetTable<NetworkPoco>();
 
+		/// <summary>
+		/// <para>Database table 'profiles'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<ProfilePoco> Profiles => this.DataConnection.GetTable<ProfilePoco>();
 
+		/// <summary>
+		/// <para>Database table 'roles'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<RolePoco> Roles => this.DataConnection.GetTable<RolePoco>();
 
+		/// <summary>
+		/// <para>Database table 'settings'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<SettingPoco> Settings => this.DataConnection.GetTable<SettingPoco>();
 
+		/// <summary>
+		/// <para>Database table 'shows'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<ShowPoco> Shows => this.DataConnection.GetTable<ShowPoco>();
 
+		/// <summary>
+		/// <para>Database table 'shows_genres'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<ShowGenrePoco> ShowsGenres => this.DataConnection.GetTable<ShowGenrePoco>();
 
+		/// <summary>
+		/// <para>Database table 'subscriptions'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<SubscriptionPoco> Subscriptions => this.DataConnection.GetTable<SubscriptionPoco>();
 
+		/// <summary>
+		/// <para>Database table 'users'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: 2018-01-11T19:26:22.8286591+02:00</para>
+		/// </summary>
         public IQueryable<UserPoco> Users => this.DataConnection.GetTable<UserPoco>();
 
     }

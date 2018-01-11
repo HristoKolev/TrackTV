@@ -6,9 +6,9 @@ namespace TrackTv.Data
 
     {{#each model.tables}}
     /// <summary>
-    /// <para>Database table '{{TABLE_NAME}}'</para>
+    /// <para>Database table '{{TABLE_NAME}}'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>{{../model.date}}</para>
+    /// <para>Last updated: {{../model.date}}</para>
     /// </summary>
     [Table(Name = "{{TABLE_NAME}}")]
     public class {{CLASS_NAME}}Poco : IPoco
@@ -21,15 +21,35 @@ namespace TrackTv.Data
         {{/if}}
         {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}[Column(Name = "{{COLUMN_NAME}}")]{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}} 
         public {{CLR_TYPE}} {{COLUMN_NAME}} { get; set; }
+		{{#if IsPrimaryKey}}
+		{{CLR_TYPE}} IPoco.GetPrimaryKey()
+		{
+			return this.{{COLUMN_NAME}};
+		}
+
+		void IPoco.SetPrimaryKey({{CLR_TYPE}} value)
+		{
+			this.{{COLUMN_NAME}} = value;
+		}
+
+		bool IPoco.IsNew()
+		{
+			return this.{{COLUMN_NAME}} == default;
+		}
+		{{/if}}
         
         {{/each}}
     }
     
     {{/each}}
-
     public partial class DbService
     {
         {{#each model.tables}}
+		/// <summary>
+		/// <para>Database table '{{TABLE_NAME}}'.</para>
+		/// <para>This class is automatically generated.</para>
+		/// <para>Last updated: {{../model.date}}</para>
+		/// </summary>
         public IQueryable<{{CLASS_NAME}}Poco> {{PLURAl_CLASS_NAME}} => this.DataConnection.GetTable<{{CLASS_NAME}}Poco>();
 
         {{/each}}

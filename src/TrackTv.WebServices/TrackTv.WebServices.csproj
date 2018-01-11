@@ -36,11 +36,7 @@
     <PackageReference Include="IdentityServer4" Version="2.1.0" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.3.0" />
   </ItemGroup>
- 
-  <Target Name="Mytarget" AfterTargets="AfterPublish">
-    <Exec Command="winscp /script=.\winscp-script.txt" />
-  </Target>
-  
+   
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>

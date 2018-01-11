@@ -87,16 +87,16 @@
 
                         await errorHandler(new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex)).ConfigureAwait(false);
 
-                        // Don't ask... just don't ask.
-                        try
-                        {
-                            throw new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex);
-                        }
-                        catch (Exception e)
-                        {
-                            await errorHandler(e).ConfigureAwait(false);
+                        //// Don't ask... just don't ask.
+                        //try
+                        //{
+                        //    throw new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex);
+                        //}
+                        //catch (Exception e)
+                        //{
+                        //    await errorHandler(e).ConfigureAwait(false);
                             
-                        }
+                        //}
                     }
                 }
             }
