@@ -23,7 +23,7 @@
 
         private CalendarRepository CalendarRepository { get; }
 
-        public async Task<CalendarDay[][]> CreateAsync(int profileId, DateTime currentDate)
+        public async Task<CalendarDay[][]> CreateAsync(int profileId, DateTime currentDate, DateTime today)
         {
             var startDate = this.GetStartDate(currentDate);
 
@@ -38,7 +38,7 @@
 
             for (var day = startDate; day < endDate; day = day.AddDays(1))
             {
-                AddEpisodes(month[weekIndex], monthlyEpisodes, day);
+                AddEpisodes(month[weekIndex], monthlyEpisodes, day, today);
 
                 if (this.Calendar.GetDayOfWeek(day) == DayOfWeek.Sunday)
                 {
@@ -49,15 +49,20 @@
             return month.Select(x => x.ToArray()).ToArray();
         }
 
-        private static void AddEpisodes(ICollection<CalendarDay> week, IEnumerable<CalendarEpisode> allEpisodes, DateTime currentDay)
+        private static void AddEpisodes(
+            ICollection<CalendarDay> week,
+            IEnumerable<CalendarEpisode> allEpisodes,
+            DateTime day,
+            DateTime today)
         {
             var dailyEpisodes = allEpisodes.Where(e =>
-                e.FirstAired != null && e.FirstAired.Value >= currentDay && e.FirstAired < currentDay.AddDays(1));
+                e.FirstAired != null && e.FirstAired.Value >= day && e.FirstAired < day.AddDays(1));
 
             week.Add(new CalendarDay
             {
-                Date = currentDay,
-                Episodes = dailyEpisodes.ToArray()
+                Date = day,
+                Episodes = dailyEpisodes.ToArray(),
+                IsToday = day.Date == today.Date
             });
         }
 

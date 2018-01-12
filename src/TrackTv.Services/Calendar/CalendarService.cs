@@ -18,14 +18,14 @@
 
         private ProfilesRepository ProfilesRepository { get; }
 
-        public async Task<CalendarDay[][]> GetCalendarAsync(int profileId, DateTime time)
+        public async Task<CalendarDay[][]> GetCalendarAsync(int profileId, DateTime time, DateTime today)
         {
             if (!await this.ProfilesRepository.ProfileExistsAsync(profileId).ConfigureAwait(false))
             {
                 throw new ProfileNotFoundException(profileId);
             }
 
-            return await this.EpisodeCalendarCalculator.CreateAsync(profileId, time).ConfigureAwait(false);
+            return await this.EpisodeCalendarCalculator.CreateAsync(profileId, time, today).ConfigureAwait(false);
         }
     }
 }

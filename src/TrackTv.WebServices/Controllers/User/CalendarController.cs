@@ -22,8 +22,9 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Success(
-                await this.CalendarService.GetCalendarAsync(this.User.GetProfileId(), DateTime.UtcNow).ConfigureAwait(false));
+            var now = DateTime.UtcNow;
+
+            return this.Success(await this.CalendarService.GetCalendarAsync(this.User.GetProfileId(), now, now.Date).ConfigureAwait(false));
         }
     }
 }

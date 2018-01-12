@@ -6,6 +6,7 @@ import {CalendarActions, calendarReducer, calendarSagas} from './calendar.state'
 import {format} from 'date-fns';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
+import {ScrollToModule, ScrollToService} from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -14,8 +15,9 @@ import {ApiClient} from '../shared/api-client';
     <div *ngIf="state | async as data" class="wrapper">
       <div *ngFor="let name of dayNames()" class="header no-interact">{{name}}</div>
       <ng-container *ngFor="let week of data.weeks">
-        <div *ngFor="let day of week" class="day" [ngClass]="{'empty': !day.episodes.length}">
-          <div class="day-header no-interact">{{formatDate(day.date)}}</div>
+        <div *ngFor="let day of week" class="day" [ngClass]="{'empty': !day.episodes.length, 'today': day.isToday}"
+             [attr.id]="day.isToday ? 'today' : null">
+          <div class="day-header no-interact">{{formatDate(day)}}</div>
           <div class="episode-list">
             <div *ngFor="let episode of day.episodes">
               <span [routerLink]="['/show', episode.showId]" class="episode no-interact">
@@ -31,6 +33,11 @@ import {ApiClient} from '../shared/api-client';
     .episode {
       color: #e20f00;
       cursor: pointer;
+      display: block;
+    }
+
+    .episode-list div:not(:first-of-type) {
+      margin-top: 8px;
     }
 
     .wrapper {
@@ -92,8 +99,12 @@ import {ApiClient} from '../shared/api-client';
         padding: 10px;
       }
 
-      .empty {
-        display: none;
+      .episode-list div:not(:first-of-type) {
+        margin-top: 20px;
+      }          
+      
+      .today {
+        background-color: #dbffdc;
       }
     }
   `],
@@ -105,16 +116,33 @@ export class CalendarComponent implements OnInit {
   }
 
   constructor(private actions: CalendarActions,
-              private store: ReduxStoreService) {
+              private store: ReduxStoreService,
+              private scroll: ScrollToService) {
   }
 
   ngOnInit(): void {
 
     this.actions.fetchCalendar();
+
+    setTimeout(() => {
+      this.scroll.scrollTo(
+        {
+          offset: -150,
+          easing: "easeInOutCubic",
+          target: 'today'
+        });
+    }, 500);
   }
 
-  formatDate(day: Date): string {
-    return format(day, 'MMMM Do');
+  formatDate(day: any): string {
+    const formattedDate = format(day.date, 'MMMM Do');
+
+    if (day.isToday) {
+
+      return 'Today - ' + formattedDate;
+    }
+
+    return formattedDate;
   }
 
   dayNames() {
@@ -140,6 +168,7 @@ export class CalendarComponent implements OnInit {
     RouterModule.forChild([
       {path: '', component: CalendarComponent},
     ]),
+    ScrollToModule.forRoot(),
     FormsModule,
   ],
   declarations: [

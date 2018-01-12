@@ -15,7 +15,9 @@ import {go} from '../../infrastructure/redux/redux-router-service';
 
           <ul [ngClass]="{'closed': this.navigationClosed}">
 
+
             <li class="brand">
+
               <i class="fa fa-television" aria-hidden="true"></i>
               TrackTv
             </li>
