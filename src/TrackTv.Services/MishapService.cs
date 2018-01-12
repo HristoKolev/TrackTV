@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Infrastructure
+﻿namespace TrackTv.Services
 {
     using System;
     using System.IO;

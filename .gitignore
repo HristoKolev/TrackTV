@@ -222,4 +222,7 @@ dll/
 
 banners/
 
+*.log.txt
+*.log.txt.*
+
 

@@ -1,4 +1,4 @@
-namespace TrackTv.WebServices.Infrastructure
+namespace TrackTv.WebServices.Infrastructure.IocConfig
 {
     using System;
 

@@ -72,11 +72,7 @@
                 // Populate the container using the service collection
                 config.Populate(services);
 
-                config.AddRegistry<ServiceLayerRegistry>();
-                config.AddRegistry<DataAccessRegistry>();
-                config.AddRegistry<TvDbClientRegistry>();
-                config.AddRegistry<DataRetrievalRegistry>();
-                config.AddRegistry<InfrastructureRegistry>();
+                config.AddRegistry<MainRegistry>();
             });
 
             Global.Container = container;

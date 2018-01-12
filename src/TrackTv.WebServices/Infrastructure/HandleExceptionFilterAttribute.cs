@@ -13,6 +13,8 @@ namespace TrackTv.WebServices.Infrastructure
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Filters;
 
+    using TrackTv.Services;
+
     /// <summary>
     /// <para>Global Exception handler.</para>
     /// <para>If the  controller defines an error message for the exception type,

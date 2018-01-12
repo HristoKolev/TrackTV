@@ -1,24 +1,28 @@
-﻿namespace TrackTv.DataRetrieval
+﻿namespace TrackTv.Updater
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using log4net;
+
     using LinqToDB;
 
     using TrackTv.Data;
     using TrackTv.Data.Enums;
+    using TrackTv.DataRetrieval;
 
     using TvDbSharper;
     using TvDbSharper.Dto;
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(DbService dbService, ITvDbClient client)
+        public DataSynchronizer(DbService dbService, ITvDbClient client, ILog log)
         {
             this.DbService = dbService;
             this.Client = client;
+            this.Log = log;
 
             this.DateParser = new DateParser();
         }
@@ -29,6 +33,8 @@
 
         private DbService DbService { get; }
 
+        private ILog Log { get; }
+
         public async Task<DateTime> UpdateAllAsync(
             DateTime fromUtcDate,
             Func<Exception, Task> errorHandler,
@@ -36,13 +42,20 @@
         {
             var updates = await this.GetUpdates(fromUtcDate).ConfigureAwait(false);
 
+            this.Log.Debug($"{updates.Length} updates available.");
+
             if (!updates.Any())
             {
                 return fromUtcDate;
             }
 
+            int i = 0;
+
             foreach (var update in updates)
             {
+                this.Log.Debug($"Performing update {i + 1} of {updates.Length}, updateId = {update.Id}");
+                i++;
+
                 await this.DbService.ExecuteInTransaction(async transaction =>
                           {
                               try
@@ -79,6 +92,8 @@
                               }
                           })
                           .ConfigureAwait(false);
+
+                GC.Collect();
             }
 
             return updates.Select(update => update.LastUpdated).Max().ToDateTime();

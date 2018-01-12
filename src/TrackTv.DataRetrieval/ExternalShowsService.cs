@@ -9,12 +9,12 @@
 
     public class ExternalShowsService
     {
-        public ExternalShowsService(ISearchClient client)
+        private ITvDbClient Client { get; }
+
+        public ExternalShowsService(ITvDbClient client)
         {
             this.Client = client;
         }
-
-        private ISearchClient Client { get; }
 
         public Task<CatalogShow[]> GetShowsByImdbIdAsync(string imdbId)
         {
@@ -30,7 +30,7 @@
         {
             try
             {
-                var response = await this.Client.SearchSeriesAsync(parameter, parameterType).ConfigureAwait(false);
+                var response = await this.Client.Search.SearchSeriesAsync(parameter, parameterType).ConfigureAwait(false);
 
                 return response.Data.Select(result => new CatalogShow
                                {

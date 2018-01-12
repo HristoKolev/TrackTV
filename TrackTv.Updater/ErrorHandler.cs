@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Infrastructure
+﻿namespace TrackTv.Updater
 {
     using System;
     using System.Threading.Tasks;

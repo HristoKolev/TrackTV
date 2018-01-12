@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <RuntimeIdentifiers>win10-x64;ubuntu.16.10-x64;</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\TrackTv.DataRetrieval\TrackTv.DataRetrieval.csproj" />
+    <ProjectReference Include="..\src\TrackTv.Data\TrackTv.Data.csproj" />
+    <ProjectReference Include="..\src\TrackTv.Services\TrackTv.Services.csproj" />
+  </ItemGroup>
+
+</Project>

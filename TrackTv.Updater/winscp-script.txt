@@ -1,0 +1,10 @@
+option batch abort
+option confirm off
+
+open ssh://root@192.168.1.104
+
+synchronize remote ./bin/publish /var/www/tracktv-updater/bin
+
+call chmod -R 777 /var/www/tracktv-updater/bin
+
+exit

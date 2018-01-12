@@ -10,8 +10,6 @@
     using LinqToDB.Data;
     using LinqToDB.DataProvider;
 
-    using TrackTv.Data.Enums;
-
     public partial class DbService : IDbService
     {
         private readonly ConcurrentStack<KeyValuePair<string, DataParameter[]>> sqlLog =
@@ -44,6 +42,8 @@
 
         public void Dispose()
         {
+            this.sqlLog.Clear();
+
             if (this.DataProvider != null)
             {
                 this.DataProvider.OnInitCommand -= this.OnInitCommand;
@@ -57,49 +57,21 @@
 
         public async Task ExecuteInTransaction(Func<IDbTransaction, Task> body)
         {
-            var transactionLog = new List<string>();
-
-            void LogQueries(object sender, InitSqlCommandEventArgs args)
+            if (this.DbConnection.State != ConnectionState.Open)
             {
-                transactionLog.Add(args.CommandText);
+                this.DbConnection.Open();
             }
 
-            try
+            this.sqlLog.Clear();
+
+            using (var transaction = new DbTransactionWrapper(this.DbConnection.BeginTransaction()))
             {
-                this.DataProvider.OnInitCommand += LogQueries;
+                await body(transaction).ConfigureAwait(false);
 
-                if (this.DbConnection.State != ConnectionState.Open)
+                if (!transaction.RolledBack)
                 {
-                    this.DbConnection.Open();
+                    transaction.ActualCommit();
                 }
-
-                using (var transaction = new DbTransactionWrapper(this.DbConnection.BeginTransaction()))
-                {
-                    await body(transaction).ConfigureAwait(false);
-
-                    if (!transaction.RolledBack)
-                    {
-                        bool enableTransactionLog =
-                            bool.Parse((await this.Settings.FirstOrDefaultAsync(poco =>
-                                                      poco.SettingName == Setting.EnableTransactionLog.ToString())
-                                                  .ConfigureAwait(false)).SettingValue);
-
-                        if (enableTransactionLog)
-                        {
-                            await this.InsertAsync(new TransactionLogPoco
-                                      {
-                                          TransactionLogSql = string.Join("\r\n\r\n===========\r\n\r\n", transactionLog)
-                                      })
-                                      .ConfigureAwait(false);
-                        }
-
-                        transaction.ActualCommit();
-                    }
-                }
-            }
-            finally
-            {
-                this.DataProvider.OnInitCommand -= LogQueries;
             }
         }
 
