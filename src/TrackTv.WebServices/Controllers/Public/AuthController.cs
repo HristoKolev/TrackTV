@@ -27,7 +27,7 @@
             OAuth2Config auth2Config,
             IConfiguration configuration,
             ILog logger,
-            DbService dbService)
+            IDbService dbService)
         {
             this.ProfilesService = profilesService;
             this.Auth2Config = auth2Config;
@@ -39,7 +39,7 @@
 
         private IConfiguration Configuration { get; }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         private ProfileService ProfilesService { get; }
 

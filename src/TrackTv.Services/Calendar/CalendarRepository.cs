@@ -10,12 +10,12 @@
 
     public class CalendarRepository
     {
-        public CalendarRepository(DbService dbService)
+        public CalendarRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public async Task<CalendarEpisode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay)
         {

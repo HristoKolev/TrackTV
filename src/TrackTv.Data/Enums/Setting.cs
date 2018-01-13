@@ -4,10 +4,6 @@
     {
         LastDatabaseUpdate = 1,
 
-        DatabaseUpdateInterval = 2,
-
-        DisableDatabaseUpdate = 3,
-
-        EnableTransactionLog = 4
+        DisableDatabaseUpdate = 3
     }
 }

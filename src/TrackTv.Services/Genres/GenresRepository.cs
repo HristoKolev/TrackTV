@@ -8,12 +8,12 @@
 
     public class GenresRepository
     {
-        public GenresRepository(DbService dbService)
+        public GenresRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public Task<GenrePoco[]> GetGenresAsync()
         {

@@ -1,6 +1,7 @@
 ﻿namespace TrackTv.Data
 {
     using System;
+    using System.Data;
     using System.Threading.Tasks;
 
     public partial interface IDbService : IDisposable
@@ -9,6 +10,8 @@
             where TPoco : IPoco;
 
         Task ExecuteInTransaction(Func<Task> body);
+
+        Task ExecuteInTransaction(Func<IDbTransaction, Task> body);
 
         Task<int> InsertAsync<TPoco>(TPoco poco)
             where TPoco : IPoco;

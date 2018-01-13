@@ -9,12 +9,12 @@
 
     public class ShowRepository
     {
-        public ShowRepository(DbService dbService)
+        public ShowRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public Task<FullShow> GetShowWithNetworkByIdAsync(int showId)
         {

@@ -9,12 +9,12 @@
 
     public class ShowsRepository
     {
-        public ShowsRepository(DbService dbService)
+        public ShowsRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public Task<int> CountAllAsync(string showName, int? genreId)
         {

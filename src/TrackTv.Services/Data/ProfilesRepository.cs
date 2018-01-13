@@ -8,12 +8,12 @@
 
     public class ProfilesRepository
     {
-        public ProfilesRepository(DbService dbService)
+        public ProfilesRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public Task<int> CreateProfileAsync(string username)
         {

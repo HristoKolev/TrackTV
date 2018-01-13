@@ -9,12 +9,12 @@
 
     public class SettingsService
     {
-        public SettingsService(DbService dbService)
+        public SettingsService(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public async Task<string> GetSettingAsync(Setting setting)
         {

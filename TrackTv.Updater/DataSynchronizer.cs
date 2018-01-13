@@ -18,7 +18,7 @@
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(DbService dbService, ITvDbClient client, ILog log)
+        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log)
         {
             this.DbService = dbService;
             this.Client = client;
@@ -31,7 +31,7 @@
 
         private DateParser DateParser { get; }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         private ILog Log { get; }
 
@@ -249,7 +249,7 @@
             {
                 var series = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
 
-                if (string.IsNullOrWhiteSpace(series.SeriesName))
+                if (string.IsNullOrWhiteSpace(series.SeriesName) || series.SeriesName.StartsWith("***Duplicate"))
                 {
                     return false;
                 }

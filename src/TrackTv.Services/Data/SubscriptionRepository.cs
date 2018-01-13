@@ -9,12 +9,12 @@
 
     public class SubscriptionRepository
     {
-        public SubscriptionRepository(DbService dbService)
+        public SubscriptionRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public Task AddSubscriptionAsync(int profileId, int showId)
         {

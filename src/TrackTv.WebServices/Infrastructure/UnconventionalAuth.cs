@@ -33,12 +33,12 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        public ResourceOwnerPasswordValidator(DbService dbService)
+        public ResourceOwnerPasswordValidator(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         // ReSharper disable once StyleCop.SA1202
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
@@ -65,12 +65,12 @@ namespace TrackTv.WebServices.Infrastructure
 
     public class IdentityServerProfileService : IProfileService
     {
-        public IdentityServerProfileService(DbService dbService)
+        public IdentityServerProfileService(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {

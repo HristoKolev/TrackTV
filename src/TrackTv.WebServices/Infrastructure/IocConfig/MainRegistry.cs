@@ -50,7 +50,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
 
             this.For<IDataProvider>().Use<DataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
-            this.For<DbService>();
+            this.For<IDbService>().Use<DbService>();
         }
 
         private void Infrastructure()

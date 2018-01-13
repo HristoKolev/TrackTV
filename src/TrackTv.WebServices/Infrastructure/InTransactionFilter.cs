@@ -12,12 +12,12 @@
     /// </summary>
     public class InTransactionFilter : IAsyncActionFilter
     {
-        public InTransactionFilter(DbService dbService)
+        public InTransactionFilter(IDbService dbService)
         {
             this.DbService = dbService;
         }
 
-        private DbService DbService { get; }
+        private IDbService DbService { get; }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
