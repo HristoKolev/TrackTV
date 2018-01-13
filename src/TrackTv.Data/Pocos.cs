@@ -7,7 +7,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'actors'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "actors")]
     public class ActorPoco : IPoco
@@ -46,7 +46,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'episodes'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "episodes")]
     public class EpisodePoco : IPoco
@@ -100,7 +100,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'genres'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "genres")]
     public class GenrePoco : IPoco
@@ -130,7 +130,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'networks'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "networks")]
     public class NetworkPoco : IPoco
@@ -160,7 +160,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'profiles'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "profiles")]
     public class ProfilePoco : IPoco
@@ -190,7 +190,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'roles'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "roles")]
     public class RolePoco : IPoco
@@ -226,7 +226,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'settings'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "settings")]
     public class SettingPoco : IPoco
@@ -259,7 +259,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'shows'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "shows")]
     public class ShowPoco : IPoco
@@ -319,7 +319,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'shows_genres'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "shows_genres")]
     public class ShowGenrePoco : IPoco
@@ -352,7 +352,7 @@ namespace TrackTv.Data
     /// <summary>
     /// <para>Database table 'subscriptions'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "subscriptions")]
     public class SubscriptionPoco : IPoco
@@ -383,42 +383,9 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Database table 'transaction_logs'.</para>
-    /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
-    /// </summary>
-    [Table(Name = "transaction_logs")]
-    public class TransactionLogPoco : IPoco
-    {
-        [PrimaryKey, Identity] 
-        public int TransactionLogId { get; set; }
-		int IPoco.GetPrimaryKey()
-		{
-			return this.TransactionLogId;
-		}
-
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.TransactionLogId = value;
-		}
-
-		bool IPoco.IsNew()
-		{
-			return this.TransactionLogId == default;
-		}
-        
-        [Column(Name = "TransactionLogSql")][NotNull] 
-        public string TransactionLogSql { get; set; }
-        
-        [Column(Name = "TransactionLogDate")][NotNull] 
-        public DateTime TransactionLogDate { get; set; }
-        
-    }
-    
-    /// <summary>
     /// <para>Database table 'users'.</para>
     /// <para>This class is automatically generated.</para>
-    /// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+    /// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
     /// </summary>
     [Table(Name = "users")]
     public class UserPoco : IPoco
@@ -459,84 +426,77 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'actors'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<ActorPoco> Actors => this.DataConnection.GetTable<ActorPoco>();
 
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<EpisodePoco> Episodes => this.DataConnection.GetTable<EpisodePoco>();
 
 		/// <summary>
 		/// <para>Database table 'genres'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<GenrePoco> Genres => this.DataConnection.GetTable<GenrePoco>();
 
 		/// <summary>
 		/// <para>Database table 'networks'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<NetworkPoco> Networks => this.DataConnection.GetTable<NetworkPoco>();
 
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<ProfilePoco> Profiles => this.DataConnection.GetTable<ProfilePoco>();
 
 		/// <summary>
 		/// <para>Database table 'roles'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<RolePoco> Roles => this.DataConnection.GetTable<RolePoco>();
 
 		/// <summary>
 		/// <para>Database table 'settings'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<SettingPoco> Settings => this.DataConnection.GetTable<SettingPoco>();
 
 		/// <summary>
 		/// <para>Database table 'shows'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<ShowPoco> Shows => this.DataConnection.GetTable<ShowPoco>();
 
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<ShowGenrePoco> ShowsGenres => this.DataConnection.GetTable<ShowGenrePoco>();
 
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<SubscriptionPoco> Subscriptions => this.DataConnection.GetTable<SubscriptionPoco>();
 
 		/// <summary>
-		/// <para>Database table 'transaction_logs'.</para>
-		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
-		/// </summary>
-        public IQueryable<TransactionLogPoco> TransactionLogs => this.DataConnection.GetTable<TransactionLogPoco>();
-
-		/// <summary>
 		/// <para>Database table 'users'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         public IQueryable<UserPoco> Users => this.DataConnection.GetTable<UserPoco>();
 
@@ -547,84 +507,77 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'actors'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<ActorPoco> Actors { get; }
 
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<EpisodePoco> Episodes { get; }
 
 		/// <summary>
 		/// <para>Database table 'genres'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<GenrePoco> Genres { get; }
 
 		/// <summary>
 		/// <para>Database table 'networks'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<NetworkPoco> Networks { get; }
 
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<ProfilePoco> Profiles { get; }
 
 		/// <summary>
 		/// <para>Database table 'roles'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<RolePoco> Roles { get; }
 
 		/// <summary>
 		/// <para>Database table 'settings'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<SettingPoco> Settings { get; }
 
 		/// <summary>
 		/// <para>Database table 'shows'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<ShowPoco> Shows { get; }
 
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<ShowGenrePoco> ShowsGenres { get; }
 
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<SubscriptionPoco> Subscriptions { get; }
 
 		/// <summary>
-		/// <para>Database table 'transaction_logs'.</para>
-		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
-		/// </summary>
-        IQueryable<TransactionLogPoco> TransactionLogs { get; }
-
-		/// <summary>
 		/// <para>Database table 'users'.</para>
 		/// <para>This class is automatically generated.</para>
-		/// <para>Last updated: 2018-01-11T23:51:54.4651077+02:00</para>
+		/// <para>Last updated: 2018-01-13T22:10:15.8962036+02:00</para>
 		/// </summary>
         IQueryable<UserPoco> Users { get; }
 
