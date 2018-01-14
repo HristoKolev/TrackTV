@@ -6,6 +6,7 @@ import {MyShowsActions, myShowsReducer, myShowsSagas} from './my-shows.state';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {ApiClient} from '../shared/api-client';
 import {format} from 'date-fns';
+import {SharedModule} from '../shared/shared.module';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -60,6 +61,10 @@ export class MyShowsComponent implements OnInit {
         {{show.showName}}
       </div>
 
+      <div class="banner-container">
+        <img [bannerUrl]="show.showBanner" src="" class="banner"/>
+      </div>
+
       <div class="episodes no-interact">
         <div class="last-episode">
           <ng-container *ngIf="show.lastEpisode">
@@ -86,6 +91,7 @@ export class MyShowsComponent implements OnInit {
 
         </div>
       </div>
+
 
       <div class="button-wrapper">
         <button *ngIf="show.isSubscribed" (click)="unsubscribe(show.showId)" class="tt-button subscription-button">Unubscribe
@@ -157,11 +163,20 @@ export class MyShowsComponent implements OnInit {
       border-right: 1px solid black;
     }
 
-    img {
+    img:not(.banner) {
       opacity: .4;
     }
 
     .episode-time, .episode-title {
+      margin-top: 10px;
+    }
+
+    .banner {
+      width: 94%;
+    }
+
+    .banner-container {
+      text-align: center;
       margin-top: 10px;
     }
   `],
@@ -198,6 +213,7 @@ export class MyShowComponent {
       {path: '', component: MyShowsComponent},
     ]),
     FormsModule,
+    SharedModule
   ],
   declarations: [MyShowsComponent, MyShowComponent],
   providers: [MyShowsActions],
