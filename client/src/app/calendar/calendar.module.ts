@@ -155,7 +155,7 @@ export class CalendarComponent implements OnInit {
 
     if (day.isToday) {
 
-      return 'Today - ' + header;
+      return 'Today (' + header + ')';
     }
 
     return header;
