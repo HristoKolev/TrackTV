@@ -17,12 +17,16 @@ import {ScrollToModule, ScrollToService} from '@nicky-lenaers/ngx-scroll-to';
       <ng-container *ngFor="let week of data.weeks">
         <div *ngFor="let day of week" class="day" [ngClass]="{'empty': !day.episodes.length, 'today': day.isToday}"
              [attr.id]="day.isToday ? 'today' : null">
-          <div class="day-header no-interact">{{formatDate(day)}}</div>
+          <div class="day-header no-interact">{{formatHeader(day)}}</div>
           <div class="episode-list">
             <div *ngFor="let episode of day.episodes">
               <span [routerLink]="['/show', episode.showId]" class="episode no-interact">
                 {{ episode.showName }} - {{ getEpisodeNumber(episode) }}
               </span>
+            </div>
+
+            <div *ngIf="!day.episodes.length && day.isToday" class="no-episodes">
+              No episodes today
             </div>
           </div>
         </div>
@@ -42,6 +46,14 @@ import {ScrollToModule, ScrollToService} from '@nicky-lenaers/ngx-scroll-to';
 
     .wrapper {
       padding: 10px;
+    }
+
+    .today {
+      background-color: #dbffdc;
+    }
+
+    .no-episodes {
+      text-align: center;
     }
 
     @media (min-width: 1000px) {
@@ -74,6 +86,10 @@ import {ScrollToModule, ScrollToService} from '@nicky-lenaers/ngx-scroll-to';
         font-size: 13px;
         padding: 5px;
       }
+
+      .no-episodes * {
+        display: none;
+      }
     }
 
     @media (max-width: 999px) {
@@ -101,11 +117,8 @@ import {ScrollToModule, ScrollToService} from '@nicky-lenaers/ngx-scroll-to';
 
       .episode-list div:not(:first-of-type) {
         margin-top: 20px;
-      }          
-      
-      .today {
-        background-color: #dbffdc;
       }
+
     }
   `],
 })
@@ -128,21 +141,24 @@ export class CalendarComponent implements OnInit {
       this.scroll.scrollTo(
         {
           offset: -150,
-          easing: "easeInOutCubic",
+          easing: 'easeInOutCubic',
           target: 'today'
         });
     }, 500);
   }
 
-  formatDate(day: any): string {
-    const formattedDate = format(day.date, 'MMMM Do');
+  formatHeader(day: any): string {
+
+    let header = format(day.date, 'MMMM Do');
+
+    header = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(day.date).getDay()] + ', ' + header;
 
     if (day.isToday) {
 
-      return 'Today - ' + formattedDate;
+      return 'Today - ' + header;
     }
 
-    return formattedDate;
+    return header;
   }
 
   dayNames() {
