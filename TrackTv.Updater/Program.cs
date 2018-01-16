@@ -47,11 +47,19 @@
 
                     var synchronizer = container.GetInstance<DataSynchronizer>();
 
+                    async Task OnSuccessfulUpdate(DateTime time)
+                    {
+                        if (time > lastUpdated)
+                        {
+                            lastUpdated = time;
+                        }
+
+                        await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, lastUpdated.ToString("O")).ConfigureAwait(false);
+                    }
+
                     await synchronizer.UpdateAllAsync(lastUpdated,
                                           async ex => await Global.ErrorHandler.HandleErrorAsync(ex).ConfigureAwait(false),
-                                          async time => await settingsService
-                                                              .SetSettingAsync(Setting.LastDatabaseUpdate, time.ToString("O"))
-                                                              .ConfigureAwait(false))
+                                          OnSuccessfulUpdate)
                                       .ConfigureAwait(false);
 
                     Global.Log.Debug("Updater finished successfully.");

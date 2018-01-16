@@ -33,8 +33,11 @@
 
         public void Rollback()
         {
-            this.Transaction.Rollback();
-            this.RolledBack = true;
+            if (!this.RolledBack)
+            {
+                this.Transaction.Rollback();
+                this.RolledBack = true;
+            }
         }
     }
 }

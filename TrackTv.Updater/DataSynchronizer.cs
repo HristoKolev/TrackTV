@@ -18,11 +18,12 @@
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log)
+        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log, FailedUpdateRepository failedUpdateRepository)
         {
             this.DbService = dbService;
             this.Client = client;
             this.Log = log;
+            this.FailedUpdateRepository = failedUpdateRepository;
 
             this.DateParser = new DateParser();
         }
@@ -33,6 +34,8 @@
 
         private IDbService DbService { get; }
 
+        private FailedUpdateRepository FailedUpdateRepository { get; }
+
         private ILog Log { get; }
 
         public async Task<DateTime> UpdateAllAsync(
@@ -42,7 +45,18 @@
         {
             var updates = await this.GetUpdates(fromUtcDate).ConfigureAwait(false);
 
+            var failedUpdates = await this.FailedUpdateRepository.GetFailedUpdates().ConfigureAwait(false);
+
+            updates = updates.Concat(failedUpdates.Select(poco => new Update
+                             {
+                                 Id = poco.TheTvDbUpdateId,
+                                 LastUpdated = poco.TheTvDbLastUpdated.ToUnixEpochTime()
+                             }))
+                             .ToArray();
+
             this.Log.Debug($"{updates.Length} updates available.");
+
+            this.Log.Debug($"{failedUpdates.Count} failed from last time.");
 
             if (!updates.Any())
             {
@@ -72,23 +86,31 @@
                                                                      .ConfigureAwait(false)),
                                   };
 
-                                  bool updateOccurred = await this.ProcessUpdateAsync(update.Id, context).ConfigureAwait(false);
+                                  await this.ProcessUpdateAsync(update.Id, context).ConfigureAwait(false);
 
-                                  if (updateOccurred)
+                                  await onSuccessfulUpdate(update.LastUpdated.ToDateTime()).ConfigureAwait(false);
+
+                                  var failedUpdate = failedUpdates.FirstOrDefault(poco => poco.TheTvDbUpdateId == update.Id);
+
+                                  if (failedUpdate != null)
                                   {
-                                      await onSuccessfulUpdate(update.LastUpdated.ToDateTime()).ConfigureAwait(false);
-                                  }
-                                  else
-                                  {
-                                      transaction.Rollback();
+                                      await this.FailedUpdateRepository.RemoveFailedUpdate(failedUpdate).ConfigureAwait(false);
                                   }
                               }
                               catch (Exception ex)
                               {
+                                  transaction.Rollback();
+
+                                  await this.FailedUpdateRepository.AddFailedUpdate(new FailedUpdatePoco
+                                            {
+                                                TheTvDbUpdateId = update.Id,
+                                                TheTvDbLastUpdated = update.LastUpdated.ToDateTime(),
+                                                FailedTime = DateTime.UtcNow
+                                            })
+                                            .ConfigureAwait(false);
+
                                   await errorHandler(new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex))
                                       .ConfigureAwait(false);
-
-                                  throw;
                               }
                           })
                           .ConfigureAwait(false);
