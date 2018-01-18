@@ -48,7 +48,11 @@ namespace TrackTv.Services.Show
 
             if (show.AirTimeDate.HasValue)
             {
-                show.AirTime = new AirTime(show.AirTimeDate.Value.Hour, show.AirTimeDate.Value.Minute);
+                show.AirTime = new AirTime
+                {
+                    Hour = show.AirTimeDate.Value.Hour,
+                    Minute = show.AirTimeDate.Value.Minute
+                };
             }
 
             return show;

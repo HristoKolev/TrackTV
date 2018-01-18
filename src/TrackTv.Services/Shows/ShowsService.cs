@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
 
     using TrackTv.Data;
-    using TrackTv.Data.Enums;
+    using TrackTv.Services.Data;
 
     public class ShowsService
     {
@@ -41,7 +41,11 @@
         {
             var summaries = shows.Select(show => MapToSummary(show, subscriberCounts)).ToArray();
 
-            return new PagedResponse<ShowSummary[]>(summaries, totalCount);
+            return new PagedResponse<ShowSummary[]>
+            {
+                Data = summaries,
+                TotalCount = totalCount
+            };
         }
 
         private static ShowSummary MapToSummary(ShowPoco show, IEnumerable<SubscriberSummary> subscriberCounts)

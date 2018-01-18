@@ -4,10 +4,6 @@
 
     public class ShowNotFoundException : Exception
     {
-        public ShowNotFoundException()
-        {
-        }
-
         public ShowNotFoundException(int showId)
             : this($"There is no show with id {showId}")
         {

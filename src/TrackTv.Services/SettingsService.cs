@@ -5,7 +5,6 @@
     using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.Data.Enums;
 
     public class SettingsService
     {
@@ -33,5 +32,12 @@
 
             await this.DbService.SaveAsync(poco).ConfigureAwait(false);
         }
+    }
+
+    public enum Setting
+    {
+        LastDatabaseUpdate = 1,
+
+        DisableDatabaseUpdate = 3
     }
 }

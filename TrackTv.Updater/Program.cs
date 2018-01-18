@@ -12,7 +12,6 @@
 
     using StructureMap;
 
-    using TrackTv.Data.Enums;
     using TrackTv.Services;
 
     public class Program

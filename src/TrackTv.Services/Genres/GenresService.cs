@@ -16,7 +16,12 @@
         {
             var genres = await this.GenresRepository.GetGenresAsync().ConfigureAwait(false);
 
-            return genres.Select(genre => new FullGenre(genre.GenreId, genre.GenreName)).ToArray();
+            return genres.Select(genre => new FullGenre
+                         {
+                             GenreName = genre.GenreName,
+                             GenreId = genre.GenreId
+                         })
+                         .ToArray();
         }
     }
 }

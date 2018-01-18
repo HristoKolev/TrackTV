@@ -10,8 +10,8 @@
     using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.Data.Enums;
     using TrackTv.DataRetrieval;
+    using TrackTv.Services.Data;
 
     using TvDbSharper;
     using TvDbSharper.Dto;
@@ -475,5 +475,26 @@
             : base(message)
         {
         }
+    }
+
+    public enum AirDay
+    {
+        Unknown = 0,
+
+        Monday = 1,
+
+        Tuesday = 2,
+
+        Wednesday = 3,
+
+        Thursday = 4,
+
+        Friday = 5,
+
+        Saturday = 6,
+
+        Sunday = 7,
+
+        Daily = 8
     }
 }

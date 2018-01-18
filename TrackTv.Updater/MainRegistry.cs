@@ -15,7 +15,6 @@ namespace TrackTv.Updater
     using StructureMap;
 
     using TrackTv.Data;
-    using TrackTv.DataRetrieval;
     using TrackTv.Services.Show;
 
     using TvDbSharper;

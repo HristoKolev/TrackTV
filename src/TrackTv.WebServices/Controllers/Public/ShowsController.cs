@@ -17,7 +17,6 @@
 
         private ShowsService ShowsService { get; }
 
-        [ExposeError(typeof(GenreNotFoundException), "Can't find the genre you are looking for.")]
         public async Task<IActionResult> Post([FromBody] ShowsViewModel model)
         {
             return this.Success(await this.ShowsService.GetShowsAsync(model.ShowName, model.GenreId, model.Page, model.PageSize)
