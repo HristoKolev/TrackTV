@@ -1,11 +1,9 @@
 namespace TrackTv.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using LinqToDB.Mapping;
-	using LinqToDB.Data;
-	using System.Threading.Tasks;
-	using System.Runtime.CompilerServices;
 
     {{#each model.tables}}
     /// <summary>
@@ -39,13 +37,6 @@ namespace TrackTv.Data
 		{
 			return this.{{COLUMN_NAME}} == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "{{COLUMN_NAME}}";
-		}
-
 		{{/if}}
         
         {{/each}}
@@ -54,6 +45,20 @@ namespace TrackTv.Data
     {{/each}}
     public partial class DbService
     {
+		private readonly IReadOnlyDictionary<Type, string> primaryKeyMap = new Dictionary<Type, string>
+		{
+		{{#each model.tables}}
+			{typeof({{CLASS_NAME}}Poco), "{{PRIMARY_KEY_COLUMN_NAME}}"},
+        {{/each}}
+		};
+
+		private readonly IReadOnlyDictionary<Type, string> tableNameMap = new Dictionary<Type, string>
+		{
+		{{#each model.tables}}
+			{typeof({{CLASS_NAME}}Poco), "{{TABLE_NAME}}"},
+        {{/each}}
+		};
+
         {{#each model.tables}}
 		/// <summary>
 		/// <para>Database table '{{TABLE_NAME}}'.</para>		
@@ -61,18 +66,6 @@ namespace TrackTv.Data
         public IQueryable<{{CLASS_NAME}}Poco> {{PLURAl_CLASS_NAME}} => this.DataConnection.GetTable<{{CLASS_NAME}}Poco>();
 		
         {{/each}}
-
-		/// <summary>
-		/// <para>Deletes a record from a table mapped to <see cref="TPoco"/> by ID.</para>
-		/// </summary>
-		public Task Delete<TPoco>(int id) where TPoco : IPoco
-		{
-		{{#each model.tables}}
-			if(typeof(TPoco) == typeof({{CLASS_NAME}}Poco)) return this.DataConnection.ExecuteAsync("DELETE FROM {{TABLE_NAME}} WHERE " + {{CLASS_NAME}}Poco.GetPrimaryKeyColumnName() + " = " + id + ";");
-        {{/each}}
-
-			throw new ArgumentOutOfRangeException("TPoco");
-		}
     }
 
 	public partial interface IDbService

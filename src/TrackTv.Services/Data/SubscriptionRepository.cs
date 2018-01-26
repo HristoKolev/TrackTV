@@ -18,7 +18,7 @@
 
         public Task AddSubscriptionAsync(int profileId, int showId)
         {
-            return this.DbService.InsertAsync(new SubscriptionPoco
+            return this.DbService.Insert(new SubscriptionPoco
             {
                 ProfileId = profileId,
                 ShowId = showId
@@ -45,7 +45,7 @@
             var subscription = await this.DbService.Subscriptions.FirstOrDefaultAsync(x => x.SubscriptionId == subscriptionId)
                                          .ConfigureAwait(false);
 
-            await this.DbService.DeleteAsync(subscription).ConfigureAwait(false);
+            await this.DbService.Delete(subscription).ConfigureAwait(false);
         }
     }
 }

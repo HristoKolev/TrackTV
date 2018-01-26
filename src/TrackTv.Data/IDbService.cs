@@ -6,20 +6,20 @@
 
     public partial interface IDbService : IDisposable
     {
-        Task DeleteAsync<TPoco>(TPoco poco)
+        Task Delete<TPoco>(TPoco poco)
             where TPoco : IPoco;
 
         Task ExecuteInTransaction(Func<Task> body);
 
         Task ExecuteInTransaction(Func<IDbTransaction, Task> body);
 
-        Task<int> InsertAsync<TPoco>(TPoco poco)
+        Task<int> Insert<TPoco>(TPoco poco)
             where TPoco : IPoco;
 
-        Task<int> SaveAsync<TPoco>(TPoco poco)
+        Task<int> Save<TPoco>(TPoco poco)
             where TPoco : IPoco;
 
-        Task UpdateAsync<TPoco>(TPoco poco)
+        Task Update<TPoco>(TPoco poco)
             where TPoco : IPoco;
     }
 }

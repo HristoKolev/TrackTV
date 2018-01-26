@@ -1,11 +1,9 @@
 namespace TrackTv.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using LinqToDB.Mapping;
-	using LinqToDB.Data;
-	using System.Threading.Tasks;
-	using System.Runtime.CompilerServices;
 
     /// <summary>
     /// <para>Database table 'actors'.</para>
@@ -31,13 +29,6 @@ namespace TrackTv.Data
 		{
 			return this.ActorId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "ActorId";
-		}
-
         
         [Column(Name = "ActorImage")][Nullable] 
         public string ActorImage { get; set; }
@@ -77,13 +68,6 @@ namespace TrackTv.Data
 		{
 			return this.EpisodeId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "EpisodeId";
-		}
-
         
         [Column(Name = "EpisodeDescription")][Nullable] 
         public string EpisodeDescription { get; set; }
@@ -147,13 +131,6 @@ namespace TrackTv.Data
 		{
 			return this.FailedUpdateId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "FailedUpdateId";
-		}
-
         
         [Column(Name = "NumberOfFails")][NotNull] 
         public int NumberOfFails { get; set; }
@@ -184,13 +161,6 @@ namespace TrackTv.Data
 		{
 			return this.GenreId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "GenreId";
-		}
-
         
         [Column(Name = "GenreName")][NotNull] 
         public string GenreName { get; set; }
@@ -221,13 +191,6 @@ namespace TrackTv.Data
 		{
 			return this.NetworkId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "NetworkId";
-		}
-
         
         [Column(Name = "NetworkName")][NotNull] 
         public string NetworkName { get; set; }
@@ -258,13 +221,6 @@ namespace TrackTv.Data
 		{
 			return this.ProfileId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "ProfileId";
-		}
-
         
         [Column(Name = "Username")][NotNull] 
         public string Username { get; set; }
@@ -295,13 +251,6 @@ namespace TrackTv.Data
 		{
 			return this.RoleId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "RoleId";
-		}
-
         
         [Column(Name = "ActorId")][NotNull] 
         public int ActorId { get; set; }
@@ -344,13 +293,6 @@ namespace TrackTv.Data
 		{
 			return this.SettingId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "SettingId";
-		}
-
         
     }
     
@@ -378,13 +320,6 @@ namespace TrackTv.Data
 		{
 			return this.ShowId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "ShowId";
-		}
-
         
         [Column(Name = "AirDay")][Nullable] 
         public int? AirDay { get; set; }
@@ -451,13 +386,6 @@ namespace TrackTv.Data
 		{
 			return this.ShowsGenresId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "ShowsGenresId";
-		}
-
         
     }
     
@@ -485,13 +413,6 @@ namespace TrackTv.Data
 		{
 			return this.SubscriptionId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "SubscriptionId";
-		}
-
         
         [Column(Name = "ProfileId")][NotNull] 
         public int ProfileId { get; set; }
@@ -525,13 +446,6 @@ namespace TrackTv.Data
 		{
 			return this.UserId == default;
 		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static string GetPrimaryKeyColumnName()
-		{
-			return "UserId";
-		}
-
         
         [Column(Name = "IsAdmin")][NotNull] 
         public bool IsAdmin { get; set; }
@@ -549,6 +463,38 @@ namespace TrackTv.Data
     
     public partial class DbService
     {
+		private readonly IReadOnlyDictionary<Type, string> primaryKeyMap = new Dictionary<Type, string>
+		{
+			{typeof(ActorPoco), "ActorId"},
+			{typeof(EpisodePoco), "EpisodeId"},
+			{typeof(FailedUpdatePoco), "FailedUpdateId"},
+			{typeof(GenrePoco), "GenreId"},
+			{typeof(NetworkPoco), "NetworkId"},
+			{typeof(ProfilePoco), "ProfileId"},
+			{typeof(RolePoco), "RoleId"},
+			{typeof(SettingPoco), "SettingId"},
+			{typeof(ShowPoco), "ShowId"},
+			{typeof(ShowGenrePoco), "ShowsGenresId"},
+			{typeof(SubscriptionPoco), "SubscriptionId"},
+			{typeof(UserPoco), "UserId"},
+		};
+
+		private readonly IReadOnlyDictionary<Type, string> tableNameMap = new Dictionary<Type, string>
+		{
+			{typeof(ActorPoco), "actors"},
+			{typeof(EpisodePoco), "episodes"},
+			{typeof(FailedUpdatePoco), "failed_updates"},
+			{typeof(GenrePoco), "genres"},
+			{typeof(NetworkPoco), "networks"},
+			{typeof(ProfilePoco), "profiles"},
+			{typeof(RolePoco), "roles"},
+			{typeof(SettingPoco), "settings"},
+			{typeof(ShowPoco), "shows"},
+			{typeof(ShowGenrePoco), "shows_genres"},
+			{typeof(SubscriptionPoco), "subscriptions"},
+			{typeof(UserPoco), "users"},
+		};
+
 		/// <summary>
 		/// <para>Database table 'actors'.</para>		
 		/// </summary>
@@ -564,6 +510,7 @@ namespace TrackTv.Data
 		/// </summary>
         public IQueryable<FailedUpdatePoco> FailedUpdates => this.DataConnection.GetTable<FailedUpdatePoco>();
 		
+		/// <inheritdoc />
 		/// <summary>
 		/// <para>Database table 'genres'.</para>		
 		/// </summary>
@@ -609,27 +556,6 @@ namespace TrackTv.Data
 		/// </summary>
         public IQueryable<UserPoco> Users => this.DataConnection.GetTable<UserPoco>();
 		
-
-		/// <summary>
-		/// <para>Deletes a record from a table mapped to <see cref="TPoco"/> by ID.</para>
-		/// </summary>
-		public Task Delete<TPoco>(int id) where TPoco : IPoco
-		{
-			if(typeof(TPoco) == typeof(ActorPoco)) return this.DataConnection.ExecuteAsync("DELETE FROM actors WHERE " + ActorPoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(EpisodePoco)) return this.DataConnection.ExecuteAsync("DELETE FROM episodes WHERE " + EpisodePoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(FailedUpdatePoco)) return this.DataConnection.ExecuteAsync("DELETE FROM failed_updates WHERE " + FailedUpdatePoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(GenrePoco)) return this.DataConnection.ExecuteAsync("DELETE FROM genres WHERE " + GenrePoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(NetworkPoco)) return this.DataConnection.ExecuteAsync("DELETE FROM networks WHERE " + NetworkPoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(ProfilePoco)) return this.DataConnection.ExecuteAsync("DELETE FROM profiles WHERE " + ProfilePoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(RolePoco)) return this.DataConnection.ExecuteAsync("DELETE FROM roles WHERE " + RolePoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(SettingPoco)) return this.DataConnection.ExecuteAsync("DELETE FROM settings WHERE " + SettingPoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(ShowPoco)) return this.DataConnection.ExecuteAsync("DELETE FROM shows WHERE " + ShowPoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(ShowGenrePoco)) return this.DataConnection.ExecuteAsync("DELETE FROM shows_genres WHERE " + ShowGenrePoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(SubscriptionPoco)) return this.DataConnection.ExecuteAsync("DELETE FROM subscriptions WHERE " + SubscriptionPoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-			if(typeof(TPoco) == typeof(UserPoco)) return this.DataConnection.ExecuteAsync("DELETE FROM users WHERE " + UserPoco.GetPrimaryKeyColumnName() + " = " + id + ";");
-
-			throw new ArgumentOutOfRangeException("TPoco");
-		}
     }
 
 	public partial interface IDbService

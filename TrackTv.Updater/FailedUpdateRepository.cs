@@ -24,7 +24,7 @@
             update.FailedTime = poco.FailedTime;
             update.NumberOfFails++;
 
-            await this.DbService.SaveAsync(update).ConfigureAwait(false);
+            await this.DbService.Save(update).ConfigureAwait(false);
         }
 
         public Task<List<FailedUpdatePoco>> GetFailedUpdates()
@@ -34,7 +34,7 @@
 
         public Task RemoveFailedUpdate(FailedUpdatePoco poco)
         {
-            return this.DbService.DeleteAsync(poco);
+            return this.DbService.Delete(poco);
         }
     }
 }

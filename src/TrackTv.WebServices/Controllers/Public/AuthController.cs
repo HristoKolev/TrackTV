@@ -80,7 +80,7 @@
 
             // Check the user for validity
 
-            await this.DbService.InsertAsync(new UserPoco
+            await this.DbService.Insert(new UserPoco
                       {
                           Username = model.Username,
                           ProfileId = await this.ProfilesService.CreateProfileAsync(model.Username).ConfigureAwait(false),

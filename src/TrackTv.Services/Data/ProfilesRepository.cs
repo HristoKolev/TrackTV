@@ -17,7 +17,7 @@
 
         public Task<int> CreateProfileAsync(string username)
         {
-            return this.DbService.InsertAsync(new ProfilePoco
+            return this.DbService.Insert(new ProfilePoco
             {
                 Username = username
             });

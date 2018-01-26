@@ -30,7 +30,7 @@
             poco.SettingName = setting.ToString();
             poco.SettingValue = value;
 
-            await this.DbService.SaveAsync(poco).ConfigureAwait(false);
+            await this.DbService.Save(poco).ConfigureAwait(false);
         }
     }
 

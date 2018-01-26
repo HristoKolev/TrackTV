@@ -34,10 +34,22 @@
 
         private IDbConnection DbConnection { get; set; }
 
-        public Task DeleteAsync<TPoco>(TPoco poco)
+        public Task Delete<TPoco>(TPoco poco)
             where TPoco : IPoco
         {
             return this.DataConnection.DeleteAsync(poco);
+        }
+
+        /// <summary>
+        /// <para>Deletes a record from a table mapped to <see cref="TPoco"/> by ID.</para>
+        /// </summary>
+        public Task Delete<TPoco>(int id)
+            where TPoco : IPoco
+        {
+            string tableName = this.tableNameMap[typeof(TPoco)];
+            string primaryKeyName = this.primaryKeyMap[typeof(TPoco)];
+
+            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE {primaryKeyName} = {id}");
         }
 
         public void Dispose()
@@ -75,26 +87,26 @@
             }
         }
 
-        public Task<int> InsertAsync<TPoco>(TPoco poco)
+        public Task<int> Insert<TPoco>(TPoco poco)
             where TPoco : IPoco
         {
             return this.DataConnection.InsertWithInt32IdentityAsync(poco);
         }
 
-        public async Task<int> SaveAsync<TPoco>(TPoco poco)
+        public async Task<int> Save<TPoco>(TPoco poco)
             where TPoco : IPoco
         {
             if (poco.IsNew())
             {
-                return await this.InsertAsync(poco).ConfigureAwait(false);
+                return await this.Insert(poco).ConfigureAwait(false);
             }
 
-            await this.UpdateAsync(poco).ConfigureAwait(false);
+            await this.Update(poco).ConfigureAwait(false);
 
             return poco.GetPrimaryKey();
         }
 
-        public Task UpdateAsync<TPoco>(TPoco poco)
+        public Task Update<TPoco>(TPoco poco)
             where TPoco : IPoco
         {
             return this.DataConnection.UpdateAsync(poco);

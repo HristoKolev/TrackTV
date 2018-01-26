@@ -148,7 +148,7 @@
                     GenreName = genreName
                 };
 
-                return await this.DbService.InsertAsync(genre).ConfigureAwait(false);
+                return await this.DbService.Insert(genre).ConfigureAwait(false);
             }
 
             return genre.GenreId;
@@ -167,7 +167,7 @@
                     NetworkName = networkName
                 };
 
-                return await this.DbService.InsertAsync(network).ConfigureAwait(false);
+                return await this.DbService.Insert(network).ConfigureAwait(false);
             }
 
             return network.NetworkId;
@@ -325,7 +325,7 @@
                 myActor.ActorName = actor.Name;
                 myActor.LastUpdated = DateTime.Parse(actor.LastUpdated);
 
-                myActor.ActorId = await this.DbService.SaveAsync(myActor).ConfigureAwait(false);
+                myActor.ActorId = await this.DbService.Save(myActor).ConfigureAwait(false);
 
                 var role = await this.DbService.Roles.FirstOrDefaultAsync(poco => poco.ShowId == showId && poco.ActorId == myActor.ActorId)
                                      .ConfigureAwait(false) ?? new RolePoco();
@@ -334,7 +334,7 @@
                 role.ActorId = myActor.ActorId;
                 role.RoleName = actor.Role;
 
-                role.RoleId = await this.DbService.SaveAsync(role).ConfigureAwait(false);
+                role.RoleId = await this.DbService.Save(role).ConfigureAwait(false);
             }
         }
 
@@ -346,7 +346,7 @@
 
             this.MapToEpisode(myEpisode, externalEpisode);
 
-            await this.DbService.UpdateAsync(myEpisode).ConfigureAwait(false);
+            await this.DbService.Update(myEpisode).ConfigureAwait(false);
         }
 
         private async Task UpdateEpisodes(int theTvDbId, UpdateContext context, int showId)
@@ -367,7 +367,7 @@
 
             foreach (var episode in deletedEpisodes)
             {
-                await this.DbService.DeleteAsync(episode).ConfigureAwait(false);
+                await this.DbService.Delete(episode).ConfigureAwait(false);
             }
 
             // Insert episodes
@@ -383,7 +383,7 @@
 
                 this.MapToEpisode(myEpisode, episode);
 
-                await this.DbService.InsertAsync(myEpisode).ConfigureAwait(false);
+                await this.DbService.Insert(myEpisode).ConfigureAwait(false);
             }
 
             // Update episodes
@@ -406,7 +406,7 @@
 
                 this.MapToEpisode(myEpisode, episode);
 
-                await this.DbService.UpdateAsync(myEpisode).ConfigureAwait(false);
+                await this.DbService.Update(myEpisode).ConfigureAwait(false);
             }
         }
 
@@ -428,7 +428,7 @@
 
             foreach (int genreId in genreIds.Except(existingGenreIds))
             {
-                await this.DbService.InsertAsync(new ShowGenrePoco
+                await this.DbService.Insert(new ShowGenrePoco
                           {
                               GenreId = genreId,
                               ShowId = showId
@@ -449,7 +449,7 @@
             this.MapToShow(myShow, externalShow);
 
             myShow.NetworkId = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
-            myShow.ShowId = await this.DbService.SaveAsync(myShow).ConfigureAwait(false);
+            myShow.ShowId = await this.DbService.Save(myShow).ConfigureAwait(false);
 
             await this.UpdateGenres(externalShow.Genre, myShow.ShowId).ConfigureAwait(false);
             await this.UpdateActors(myShow.TheTvDbId, myShow.ShowId).ConfigureAwait(false);
