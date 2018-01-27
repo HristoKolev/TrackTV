@@ -49,7 +49,7 @@
             string tableName = this.tableNameMap[typeof(TPoco)];
             string primaryKeyName = this.primaryKeyMap[typeof(TPoco)];
 
-            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE {primaryKeyName} = {id}");
+            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE {primaryKeyName} = {id};");
         }
 
         public void Dispose()

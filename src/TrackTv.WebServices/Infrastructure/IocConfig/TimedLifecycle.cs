@@ -28,11 +28,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
         public string Description => "Holds instances for a specified period of time.";
 
-        public void EjectAll(ILifecycleContext context)
-        {
-            // ReSharper disable once InconsistentlySynchronizedField
-            this.cache.DisposeAndClear();
-        }
+        public void EjectAll(ILifecycleContext context) => this.cache.DisposeAndClear();
 
         public IObjectCache FindCache(ILifecycleContext context)
         {

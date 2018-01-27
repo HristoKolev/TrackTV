@@ -265,6 +265,7 @@
             return Expression.Lambda<Func<T, bool>>(expression, parameter);
         }
 
+        // ReSharper disable once CyclomaticComplexity
         private static void ValidateFilter(Type filterType)
         {
             var propertyInfos = filterType.GetProperties();
