@@ -66,7 +66,7 @@ namespace TrackTv.WebServices.Infrastructure
 
             if (exposeAttribute != null)
             {
-                context.Result = new ObjectResult(ApiResult.FromErrorMessages(exposeAttribute.Message))
+                context.Result = new ObjectResult(ApiResult.Fail(exposeAttribute.Message))
                 {
                     StatusCode = 200
                 };
