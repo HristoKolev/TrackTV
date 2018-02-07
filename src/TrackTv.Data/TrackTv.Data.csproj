@@ -12,8 +12,8 @@
   </PropertyGroup> 
 
   <ItemGroup>
-    <PackageReference Include="linq2db.Core" Version="1.10.1" />
-    <PackageReference Include="MySql.Data" Version="6.10.5" />
+    <PackageReference Include="linq2db.Core" Version="1.10.2" />
+    <PackageReference Include="MySql.Data" Version="6.10.6" />
   </ItemGroup>
 
 </Project>
