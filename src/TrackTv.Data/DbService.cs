@@ -37,7 +37,7 @@
         public Task Delete<TPoco>(TPoco poco)
             where TPoco : IPoco
         {
-            return this.DataConnection.DeleteAsync(poco);
+            return this.Delete<TPoco>(poco.GetPrimaryKey());
         }
 
         /// <summary>
