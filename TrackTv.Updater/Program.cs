@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using log4net;
@@ -32,46 +33,57 @@
 
             Global.ErrorHandler = new ErrorHandler(Global.Log, new MishapService(Global.AppConfig.MishapApiKey));
 
-            var container = new Container(config => config.AddRegistry<MainRegistry>());
-
-            try
+            using (var mutex = new Mutex(false, "TrackTv.Updater"))
             {
-                var settingsService = container.GetInstance<SettingsService>();
-
-                if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
+                if (!mutex.WaitOne(0, true))
                 {
-                    var lastUpdated = DateTime
-                                      .Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
-                                      .ToUniversalTime();
+                    Global.Log.Debug("There is already a running instance of TrackTv.Updater. Exiting...");
+                    Environment.Exit(0);
+                }
 
-                    var synchronizer = container.GetInstance<DataSynchronizer>();
-
-                    async Task OnSuccessfulUpdate(DateTime time)
+                using (var container = new Container(config => config.AddRegistry<MainRegistry>()))
+                {
+                    try
                     {
-                        if (time > lastUpdated)
+                        var settingsService = container.GetInstance<SettingsService>();
+
+                        if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
                         {
-                            lastUpdated = time;
+                            var lastUpdated = DateTime
+                                              .Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+                                              .ToUniversalTime();
+
+                            var synchronizer = container.GetInstance<DataSynchronizer>();
+
+                            async Task OnSuccessfulUpdate(DateTime time)
+                            {
+                                if (time > lastUpdated)
+                                {
+                                    lastUpdated = time;
+                                }
+
+                                await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, lastUpdated.ToString("O"))
+                                                     .ConfigureAwait(false);
+                            }
+
+                            await synchronizer.UpdateAllAsync(lastUpdated,
+                                                  async ex => await Global.ErrorHandler.HandleErrorAsync(ex).ConfigureAwait(false),
+                                                  OnSuccessfulUpdate)
+                                              .ConfigureAwait(false);
+
+                            Global.Log.Debug("Updater finished successfully.");
                         }
-
-                        await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, lastUpdated.ToString("O")).ConfigureAwait(false);
+                        else
+                        {
+                            Global.Log.Debug("Updates disabled. Exiting...");
+                        }
                     }
-
-                    await synchronizer.UpdateAllAsync(lastUpdated,
-                                          async ex => await Global.ErrorHandler.HandleErrorAsync(ex).ConfigureAwait(false),
-                                          OnSuccessfulUpdate)
-                                      .ConfigureAwait(false);
-
-                    Global.Log.Debug("Updater finished successfully.");
+                    catch (Exception e)
+                    {
+                        await Global.ErrorHandler.HandleErrorAsync(e).ConfigureAwait(false);
+                        Global.Log.Error("Updater exited with an error.", e);
+                    }
                 }
-                else
-                {
-                    Global.Log.Debug("Updates disabled. Exiting...");
-                }
-            }
-            catch (Exception e)
-            {
-                await Global.ErrorHandler.HandleErrorAsync(e).ConfigureAwait(false);
-                Global.Log.Error("Updater exited with an error.", e);
             }
         }
     }

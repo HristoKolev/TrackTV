@@ -19,4 +19,8 @@
     <ProjectReference Include="..\src\TrackTv.Services\TrackTv.Services.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.log.txt;**\*.log.txt.*;</DefaultItemExcludes>
+  </PropertyGroup>
+
 </Project>
