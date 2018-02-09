@@ -42,7 +42,7 @@ namespace TrackTv.Updater
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
 
-            this.For<IDataProvider>().Use<DataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
+            this.For<IDataProvider>().Use<LoggigDataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
             this.For<IDbService>().Use<DbService>();
         }
 
