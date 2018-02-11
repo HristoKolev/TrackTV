@@ -115,7 +115,7 @@
                           })
                           .ConfigureAwait(false);
 
-                GC.Collect();
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
             }
 
             return updates.Select(update => update.LastUpdated).Max().ToDateTime();
