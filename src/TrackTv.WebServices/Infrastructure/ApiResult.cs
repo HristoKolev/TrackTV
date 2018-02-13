@@ -79,27 +79,16 @@ namespace TrackTv.WebServices.Infrastructure
                                      .SelectMany(entry => entry.Errors)
                                      .Select(error => error.ErrorMessage)
                                      .ToArray();
+
             return controller.Ok(ApiResult.Fail(messages));
         }
 
-        public static ActionResult Failure(this ControllerBase controller, params string[] messages)
-        {
-            return controller.Ok(ApiResult.Fail(messages));
-        }
+        public static ActionResult Failure(this ControllerBase controller, params string[] messages) => controller.Ok(ApiResult.Fail(messages));
 
-        public static ActionResult Failure(this ControllerBase controller, Exception exception)
-        {
-            return controller.Ok(ApiResult.Fail(exception));
-        }
+        public static ActionResult Failure(this ControllerBase controller, Exception exception) => controller.Ok(ApiResult.Fail(exception));
 
-        public static ActionResult Success<T>(this ControllerBase controller, T payload)
-        {
-            return controller.Ok(ApiResult.Ok(payload));
-        }
+        public static ActionResult Success<T>(this ControllerBase controller, T payload) => controller.Ok(ApiResult.Ok(payload));
 
-        public static ActionResult Success(this ControllerBase controller)
-        {
-            return controller.Ok(ApiResult.Ok());
-        }
+        public static ActionResult Success(this ControllerBase controller) => controller.Ok(ApiResult.Ok());
     }
 }
