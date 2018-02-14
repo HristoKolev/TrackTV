@@ -10,7 +10,6 @@
     using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.DataRetrieval;
     using TrackTv.Services.Data;
 
     using TvDbSharper;

@@ -1,4 +1,4 @@
-namespace TrackTv.DataRetrieval
+namespace TrackTv.Updater
 {
     using System;
     using System.Collections.Generic;

@@ -3,6 +3,8 @@
     using System;
     using System.Globalization;
 
+    using TrackTv.Updater;
+
     using Xunit;
 
     public class DateParserTest

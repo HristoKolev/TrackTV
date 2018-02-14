@@ -5,7 +5,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Reflection;
 
     using log4net;
@@ -26,8 +25,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using TrackTv.Services.Calendar;
     using TrackTv.Services.Show;
 
-    using TvDbSharper;
-
     public class MainRegistry : Registry
     {
         public MainRegistry()
@@ -37,8 +34,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             this.Infrastructure();
 
             this.ServiceLayer();
-
-            this.TvDbClient();
         }
 
         private void DataAccess()
@@ -49,11 +44,11 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
 
-#if DEBUG
+            #if DEBUG
             this.For<IDataProvider>().Use<LoggigDataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
-#else
+            #else
             this.For<IDataProvider>().Use<MySqlDataProvider>();
-#endif
+            #endif
             this.For<IDbService>().Use<DbService>();
         }
 
@@ -73,18 +68,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
             this.For<MishapService>().Use("Creating Mishap service.", CreateMishapService).Singleton();
 
-            // Background tasks
-            var baseClass = typeof(BackgroundTask);
-            var backgroundServices = Assembly.GetEntryAssembly()
-                                             .DefinedTypes.Select(info => info.AsType())
-                                             .Where(type => type.IsClass && type != baseClass && baseClass.IsAssignableFrom(type))
-                                             .ToList();
-
-            foreach (var backgroundService in backgroundServices)
-            {
-                this.For(typeof(IHostedService)).Use(backgroundService).Singleton();
-            }
-
             // ErrorHandler
             this.For<ErrorHandler>().Singleton();
         }
@@ -103,14 +86,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
             this.For<Calendar>().Use<GregorianCalendar>().AlwaysUnique();
             this.For<EpisodeCalendarCalculator>().ContainerScoped();
-        }
-
-        private void TvDbClient()
-        {
-            Expression<Action<IContext, TvDbClient>> authenticateClient = (context, client) =>
-                client.Authentication.AuthenticateAsync(context.GetInstance<IConfigurationRoot>()["ApiKeys:TheTvDbApi"]).Wait();
-
-            this.For<ITvDbClient>().Use<TvDbClient>().OnCreation(authenticateClient).TimeScoped();
         }
     }
 }
