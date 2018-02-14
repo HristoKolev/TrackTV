@@ -14,7 +14,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using LinqToDB.DataProvider.MySql;
 
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Hosting;
 
     using MySql.Data.MySqlClient;
 

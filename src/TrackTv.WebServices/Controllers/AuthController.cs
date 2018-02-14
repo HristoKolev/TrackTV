@@ -1,4 +1,4 @@
-﻿namespace TrackTv.WebServices.Controllers.Public
+﻿namespace TrackTv.WebServices.Controllers
 {
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
