@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTv.Services", "src\Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTv.WebServices", "src\TrackTv.WebServices\TrackTv.WebServices.csproj", "{64BD3BFA-CEC0-4034-88E7-465BB690F1C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTv.Updater", "TrackTv.Updater\TrackTv.Updater.csproj", "{B1882723-FF2B-4F91-BB74-BEBFA31BC88F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTv.Updater", "src\TrackTv.Updater\TrackTv.Updater.csproj", "{B1882723-FF2B-4F91-BB74-BEBFA31BC88F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

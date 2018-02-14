@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\TrackTv.DataRetrieval\TrackTv.DataRetrieval.csproj" />
-    <ProjectReference Include="..\src\TrackTv.Data\TrackTv.Data.csproj" />
-    <ProjectReference Include="..\src\TrackTv.Services\TrackTv.Services.csproj" />
+    <ProjectReference Include="..\TrackTv.DataRetrieval\TrackTv.DataRetrieval.csproj" />
+    <ProjectReference Include="..\TrackTv.Data\TrackTv.Data.csproj" />
+    <ProjectReference Include="..\TrackTv.Services\TrackTv.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
