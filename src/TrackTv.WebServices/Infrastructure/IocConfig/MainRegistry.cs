@@ -44,7 +44,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
 
             #if DEBUG
-            this.For<IDataProvider>().Use<LoggigDataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
+            this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
             #else
             this.For<IDataProvider>().Use<MySqlDataProvider>();
             #endif

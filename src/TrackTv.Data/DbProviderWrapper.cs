@@ -13,9 +13,9 @@
     using LinqToDB.Mapping;
     using LinqToDB.SqlProvider;
 
-    public class LoggigDataProviderWrapper : IDataProvider, IProfiledDataProvider
+    public class LoggingDataProviderWrapper : IDataProvider, IProfiledDataProvider
     {
-        public LoggigDataProviderWrapper(IDataProvider dataProvider)
+        public LoggingDataProviderWrapper(IDataProvider dataProvider)
         {
             this.DataProvider = dataProvider;
         }
