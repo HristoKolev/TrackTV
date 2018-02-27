@@ -64,7 +64,7 @@
 
         public void InitCommand(DataConnection dataConnection, CommandType commandType, string commandText, DataParameter[] parameters)
         {
-            this.TriggerOnInitCommand(commandText, parameters);
+            this.OnInitCommand?.Invoke(this, new InitSqlCommandEventArgs(commandText, parameters));
 
             this.DataProvider.InitCommand(dataConnection, commandType, commandText, parameters);
         }
@@ -117,11 +117,6 @@
 
         public void SetParameter(IDbDataParameter parameter, string name, DataType dataType, object value) =>
             this.DataProvider.SetParameter(parameter, name, dataType, value);
-
-        private void TriggerOnInitCommand(string commandText, DataParameter[] parameters)
-        {
-            this.OnInitCommand?.Invoke(this, new InitSqlCommandEventArgs(commandText, parameters));
-        }
     }
 
     public interface IProfiledDataProvider
