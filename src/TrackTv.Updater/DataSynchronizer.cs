@@ -129,9 +129,21 @@
 
         private async Task<Series> GetExternalShowAsync(int updateId)
         {
-            var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);
+            try
+            {
+                var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);
+                return response.Data;
+            }
+            catch (TvDbServerException ex)
+            {
+                if (ex.StatusCode == 404)
+                {
+                    return null;
+                }
 
-            return response.Data;
+                throw;
+
+            }
         }
 
         private async Task<int> GetOrCreateGenre(string genreName)
@@ -246,25 +258,32 @@
 
         private async Task<bool> ProcessUpdateAsync(int updateId, UpdateContext context)
         {
+            // In our database as an episode
             if (context.ExistingEpisodeIds.Contains(updateId))
             {
                 await this.UpdateEpisodeAsync(updateId).ConfigureAwait(false);
                 return true;
             }
 
+            // In our database as series
             if (context.ExistingShowIds.Contains(updateId))
             {
                 var series = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
 
-                if (string.IsNullOrWhiteSpace(series.SeriesName))
+                // if it's not deleted in their database
+                if (series != null)
                 {
-                    return false;
-                }
+                    if (string.IsNullOrWhiteSpace(series.SeriesName))
+                    {
+                        return false;
+                    }
 
-                await this.UpdateShow(updateId, context).ConfigureAwait(false);
-                return true;
+                    await this.UpdateShow(updateId, context).ConfigureAwait(false);
+                    return true;
+                }
             }
 
+            // new show
             var externalShow = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
             if (externalShow != null)
             {
@@ -279,6 +298,7 @@
                 return true;
             }
 
+            // episode of a show that we don't have
             var externalEpisode = await this.GetExternalEpisodeAsync(updateId).ConfigureAwait(false);
             if (externalEpisode != null && int.TryParse(externalEpisode.SeriesId, out var seriesId))
             {

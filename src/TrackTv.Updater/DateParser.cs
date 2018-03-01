@@ -85,9 +85,16 @@ namespace TrackTv.Updater
             return Create(hour, minute);
         }
 
-        public DateTime ParseFirstAired(string value)
+        public DateTime? ParseFirstAired(string value)
         {
-            return DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            try
+            {
+                return DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                return null;
+            }
         }
 
         private static DateTime Create(int hour, int minute)
