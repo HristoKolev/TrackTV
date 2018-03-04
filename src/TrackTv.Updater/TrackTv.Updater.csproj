@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RuntimeIdentifiers>win10-x64;ubuntu.16.10-x64;</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x64;ubuntu.16.10-x64;centos.7-x64;</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
