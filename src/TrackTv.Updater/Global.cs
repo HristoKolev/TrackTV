@@ -1,6 +1,7 @@
 ﻿namespace TrackTv.Updater
 {
     using System.IO;
+    using System.Reflection;
     using System.Runtime.InteropServices;
 
     using log4net;
@@ -12,7 +13,7 @@
 
         public static ErrorHandler ErrorHandler { get; set; }
 
-        public static string RootDirectory => Directory.GetCurrentDirectory();
+        public static string RootDirectory => Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         public static AppConfigModel AppConfig { get; set; }
 
