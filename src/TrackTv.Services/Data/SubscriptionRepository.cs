@@ -16,33 +16,33 @@
 
         private IDbService DbService { get; }
 
-        public Task AddSubscriptionAsync(int profileId, int showId)
+        public Task AddSubscriptionAsync(int profileID, int showID)
         {
             return this.DbService.Insert(new SubscriptionPoco
             {
-                ProfileId = profileId,
-                ShowId = showId
+                ProfileID = profileID,
+                ShowID = showID
             });
         }
 
-        public Task<SubscriptionPoco> GetSubscriptionAsync(int profileId, int showId)
+        public Task<SubscriptionPoco> GetSubscriptionAsync(int profileID, int showID)
         {
-            return this.DbService.Subscriptions.FirstOrDefaultAsync(r => r.ProfileId == profileId && r.ShowId == showId);
+            return this.DbService.Subscriptions.FirstOrDefaultAsync(r => r.ProfileID == profileID && r.ShowID == showID);
         }
 
         public Task<int[]> GetSubscriptionIdsByProfileIdAsync(int profileId)
         {
-            return this.DbService.Subscriptions.Where(x => x.ProfileId == profileId).Select(x => x.ShowId).ToArrayAsync();
+            return this.DbService.Subscriptions.Where(x => x.ProfileID == profileId).Select(x => x.ShowID).ToArrayAsync();
         }
 
         public Task<bool> IsProfileSubscribedAsync(int profileId, int showId)
         {
-            return this.DbService.Subscriptions.AnyAsync(x => x.ProfileId == profileId && x.ShowId == showId);
+            return this.DbService.Subscriptions.AnyAsync(x => x.ProfileID == profileId && x.ShowID == showId);
         }
 
         public async Task RemoveSubscriptionAsync(int subscriptionId)
         {
-            var subscription = await this.DbService.Subscriptions.FirstOrDefaultAsync(x => x.SubscriptionId == subscriptionId)
+            var subscription = await this.DbService.Subscriptions.FirstOrDefaultAsync(x => x.SubscriptionID == subscriptionId)
                                          .ConfigureAwait(false);
 
             await this.DbService.Delete(subscription).ConfigureAwait(false);

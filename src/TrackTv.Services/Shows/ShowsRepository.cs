@@ -31,19 +31,19 @@
             }
 
             return (from show in showsQuery
-                    join showGenre in this.DbService.ShowsGenres on show.ShowId equals showGenre.ShowId
-                    where showGenre.GenreId == genreId
+                    join showGenre in this.DbService.ShowsGenres on show.ShowID equals showGenre.ShowID
+                    where showGenre.GenreID == genreId
                     select show).CountAsync();
         }
 
         public async Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
         {
             return await (from show in this.DbService.Shows
-                          where showIds.Contains(show.ShowId)
+                          where showIds.Contains(show.ShowID)
                           select new SubscriberSummary
                           {
-                              ShowId = show.ShowId,
-                              SubscriberCount = this.DbService.Subscriptions.Count(poco => poco.ShowId == show.ShowId)
+                              ShowId = show.ShowID,
+                              SubscriberCount = this.DbService.Subscriptions.Count(poco => poco.ShowID == show.ShowID)
                           }).ToArrayAsync()
                             .ConfigureAwait(false);
         }
@@ -61,13 +61,13 @@
 
             if (genreId.HasValue)
             {
-                showGenres = showGenres.Where(g => g.GenreId == genreId);
+                showGenres = showGenres.Where(g => g.GenreID == genreId);
             }
 
             var shows = await (from show in showQuery
-                               join showGenre in showGenres on show.ShowId equals showGenre.ShowId
+                               join showGenre in showGenres on show.ShowID equals showGenre.ShowID
                                select show).Distinct()
-                                           .OrderByDescending(poco => this.DbService.Subscriptions.Count(s => s.ShowId == poco.ShowId))
+                                           .OrderByDescending(poco => this.DbService.Subscriptions.Count(s => s.ShowID == poco.ShowID))
                                            .Page(page, pageSize)
                                            .ToArrayAsync()
                                            .ConfigureAwait(false);

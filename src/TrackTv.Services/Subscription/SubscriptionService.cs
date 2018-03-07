@@ -33,7 +33,7 @@
                     $"The user is not subscribed to the specified show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.SubscriptionId).ConfigureAwait(false);
+            await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.SubscriptionID).ConfigureAwait(false);
         }
     }
 }

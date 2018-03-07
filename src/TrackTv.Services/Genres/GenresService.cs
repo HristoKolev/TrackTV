@@ -19,7 +19,7 @@
             return genres.Select(genre => new FullGenre
                          {
                              GenreName = genre.GenreName,
-                             GenreId = genre.GenreId
+                             GenreId = genre.GenreID
                          })
                          .ToArray();
         }

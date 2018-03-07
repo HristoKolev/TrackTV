@@ -16,23 +16,23 @@
 
         private IDbService DbService { get; }
 
-        public async Task AddFailedUpdate(FailedUpdatePoco poco)
+        public async Task AddFailedUpdate(UpdateQueuePoco poco)
         {
-            var update = await this.DbService.FailedUpdates.FirstOrDefaultAsync(p => p.TheTvDbUpdateId == poco.TheTvDbUpdateId)
+            var update = await this.DbService.UpdateQueue.FirstOrDefaultAsync(p => p.ThetvdbUpdateID == poco.ThetvdbUpdateID)
                                    .ConfigureAwait(false) ?? poco;
 
-            update.FailedTime = poco.FailedTime;
-            update.NumberOfFails++;
+            update.LastFailedTime = poco.LastFailedTime;
+            update.FailCount++;
 
             await this.DbService.Save(update).ConfigureAwait(false);
         }
 
-        public Task<List<FailedUpdatePoco>> GetFailedUpdates()
+        public Task<List<UpdateQueuePoco>> GetFailedUpdates()
         {
-            return this.DbService.FailedUpdates.ToListAsync();
+            return this.DbService.UpdateQueue.ToListAsync();
         }
 
-        public Task RemoveFailedUpdate(FailedUpdatePoco poco)
+        public Task RemoveFailedUpdate(UpdateQueuePoco poco)
         {
             return this.DbService.Delete(poco);
         }

@@ -27,7 +27,7 @@
             var shows = await this.ShowsRepository.GetShowsAsync(showName, genreId, page, pageSize).ConfigureAwait(false);
 
             var subscriberCounts =
-                await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowId).ToArray()).ConfigureAwait(false);
+                await this.ShowsRepository.CountSubscribersAsync(shows.Select(x => x.ShowID).ToArray()).ConfigureAwait(false);
 
             int totalCount = await this.ShowsRepository.CountAllAsync(showName, genreId).ConfigureAwait(false);
 
@@ -54,10 +54,10 @@
             {
                 ShowName = show.ShowName,
                 ShowBanner = show.ShowBanner,
-                ImdbId = show.ImdbId,
+                ImdbId = show.Imdbid,
                 ShowStatus = (ShowStatus)show.ShowStatus,
-                SubscriberCount = subscriberCounts.First(x => x.ShowId == show.ShowId).SubscriberCount,
-                ShowId = show.ShowId
+                SubscriberCount = subscriberCounts.First(x => x.ShowId == show.ShowID).SubscriberCount,
+                ShowId = show.ShowID
             };
         }
     }

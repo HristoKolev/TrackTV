@@ -1,1 +1,1 @@
-ClassGenerator.MySQL -c  "Server=192.168.1.104;port=3306;Database=TrackTv;Uid=root;Pwd=123456Mm$;" -t "./db-classes-template.txt" -o "../TrackTv.Data/Pocos.cs"
+ClassGenerator.PostgreSQL -c  "Server=vm4;Port=5432;Database=tracktv;Uid=postgres;Pwd=test123;" -t "./db-classes-template.txt" -o "../TrackTv.Data/Pocos.cs"

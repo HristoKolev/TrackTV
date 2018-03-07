@@ -49,7 +49,7 @@ namespace TrackTv.WebServices.Infrastructure
             {
                 if (user.Password == context.Password.Sha512())
                 {
-                    context.Result = new GrantValidationResult(user.UserId.ToString(), "custom");
+                    context.Result = new GrantValidationResult(user.UserID.ToString(), "custom");
                 }
                 else
                 {
@@ -79,7 +79,7 @@ namespace TrackTv.WebServices.Infrastructure
             if (int.TryParse(claim.Value, out int userId))
             {
                 // get user from db (find user by user id)
-                var user = await this.DbService.Users.FirstOrDefaultAsync(poco => poco.UserId == userId).ConfigureAwait(false);
+                var user = await this.DbService.Users.FirstOrDefaultAsync(poco => poco.UserID == userId).ConfigureAwait(false);
 
                 // issue the claims for the user
                 if (user != null)
@@ -102,7 +102,7 @@ namespace TrackTv.WebServices.Infrastructure
                 new Claim(JwtClaimTypes.GivenName, user.Username),
                 new Claim(JwtClaimTypes.FamilyName, user.Username),
                 new Claim(JwtClaimTypes.Email, user.Username),
-                new Claim("ProfileId", user.ProfileId.ToString()),
+                new Claim("ProfileID", user.ProfileID.ToString()),
                 new Claim(JwtClaimTypes.Role, user.IsAdmin ? AppRoles.Admin : AppRoles.User)
             };
         }

@@ -19,17 +19,17 @@
         public Task<FullShow> GetShowWithNetworkByIdAsync(int showId)
         {
             var result = (from show in this.DbService.Shows
-                          join network in this.DbService.Networks on show.NetworkId equals network.NetworkId
-                          where show.ShowId == showId
+                          join network in this.DbService.Networks on show.NetworkID equals network.NetworkID
+                          where show.ShowID == showId
                           select new FullShow
                           {
-                              ShowId = show.ShowId,
-                              TheTvDbId = show.TheTvDbId,
+                              ShowId = show.ShowID,
+                              TheTvDbId = show.Thetvdbid,
                               ShowName = show.ShowName,
                               FirstAired = show.FirstAired,
                               AirDay = show.AirDay,
                               AirTimeDate = show.AirTime,
-                              ImdbId = show.ImdbId,
+                              ImdbId = show.Imdbid,
                               ShowBanner = show.ShowBanner,
                               ShowStatus = show.ShowStatus,
                               ShowDescription = show.ShowDescription,

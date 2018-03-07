@@ -20,17 +20,17 @@
         public async Task<CalendarEpisode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay)
         {
             var episodes = await (from profile in this.DbService.Profiles
-                                  join subscription in this.DbService.Subscriptions on profile.ProfileId equals subscription.ProfileId
-                                  join show in this.DbService.Shows on subscription.ShowId equals show.ShowId
-                                  join episode in this.DbService.Episodes on show.ShowId equals episode.ShowId
-                                  where profile.ProfileId == profileId && episode.FirstAired > startDay && episode.FirstAired < endDay
+                                  join subscription in this.DbService.Subscriptions on profile.ProfileID equals subscription.ProfileID
+                                  join show in this.DbService.Shows on subscription.ShowID equals show.ShowID
+                                  join episode in this.DbService.Episodes on show.ShowID equals episode.ShowID
+                                  where profile.ProfileID == profileId && episode.FirstAired > startDay && episode.FirstAired < endDay
                                   select new CalendarEpisode
                                   {
                                       FirstAired = episode.FirstAired,
                                       EpisodeTitle = episode.EpisodeTitle,
                                       EpisodeNumber = episode.EpisodeNumber,
                                       SeasonNumber = episode.SeasonNumber,
-                                      ShowId = episode.ShowId,
+                                      ShowId = episode.ShowID,
                                       ShowName = show.ShowName
                                   }).ToArrayAsync()
                                     .ConfigureAwait(false);

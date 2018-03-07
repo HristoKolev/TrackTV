@@ -30,7 +30,7 @@
 
             return new FullProfile
             {
-                Username = profile.Username
+                Username = profile.ProfileName
             };
         }
     }

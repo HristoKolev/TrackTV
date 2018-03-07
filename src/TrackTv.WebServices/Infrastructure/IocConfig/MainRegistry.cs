@@ -11,11 +11,11 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using log4net.Config;
 
     using LinqToDB.DataProvider;
-    using LinqToDB.DataProvider.MySql;
+    using LinqToDB.DataProvider.PostgreSQL;
 
     using Microsoft.Extensions.Configuration;
 
-    using MySql.Data.MySqlClient;
+    using Npgsql;
 
     using StructureMap;
 
@@ -37,16 +37,16 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
         private void DataAccess()
         {
-            this.For<MySqlConnection>()
-                .Use("MySql connection.", ctx => new MySqlConnection(Global.AppConfig.GetConnectionString("DefaultConnection")))
+            this.For<NpgsqlConnection>()
+                .Use("Postgres connection.", ctx => new NpgsqlConnection(Global.AppConfig.GetConnectionString("DefaultConnection")))
                 .ContainerScoped();
 
-            this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
+            this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
 
             #if DEBUG
-            this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
+            this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<PostgreSQLDataProvider>();
             #else
-            this.For<IDataProvider>().Use<MySqlDataProvider>();
+            this.For<IDataProvider>().Use<PostgreSQLDataProvider>();
             #endif
             this.For<IDbService>().Use<DbService>();
         }

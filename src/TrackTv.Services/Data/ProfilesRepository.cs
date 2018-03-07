@@ -19,18 +19,18 @@
         {
             return this.DbService.Insert(new ProfilePoco
             {
-                Username = username
+                ProfileName = username
             });
         }
 
         public Task<ProfilePoco> GetProfileByIdAsync(int profileId)
         {
-            return this.DbService.Profiles.FirstOrDefaultAsync(poco => poco.ProfileId == profileId);
+            return this.DbService.Profiles.FirstOrDefaultAsync(poco => poco.ProfileID == profileId);
         }
 
         public Task<bool> ProfileExistsAsync(int profileId)
         {
-            return this.DbService.Profiles.AnyAsync(x => x.ProfileId == profileId);
+            return this.DbService.Profiles.AnyAsync(x => x.ProfileID == profileId);
         }
     }
 }

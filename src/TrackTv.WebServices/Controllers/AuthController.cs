@@ -83,7 +83,7 @@
             await this.DbService.Insert(new UserPoco
                       {
                           Username = model.Username,
-                          ProfileId = await this.ProfilesService.CreateProfileAsync(model.Username).ConfigureAwait(false),
+                          ProfileID = await this.ProfilesService.CreateProfileAsync(model.Username).ConfigureAwait(false),
                           Password = model.Password.Sha512(),
                           IsAdmin = false
                       })

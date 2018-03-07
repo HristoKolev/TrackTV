@@ -14,7 +14,7 @@
                 return default;
             }
 
-            string value = user.FindFirst("ProfileId").Value;
+            string value = user.FindFirst("ProfileID").Value;
 
             return int.Parse(value);
         }

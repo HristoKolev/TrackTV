@@ -7,35 +7,35 @@ namespace TrackTv.Data
 
     {{#each model.tables}}
     /// <summary>
-    /// <para>Database table '{{TABLE_NAME}}'.</para>
+    /// <para>Database table '{{TableName}}'.</para>
     /// <para>This class is automatically generated.</para>
     /// </summary>
-    [Table(Name = "{{TABLE_NAME}}")]
-    public class {{CLASS_NAME}}Poco : IPoco
+    [Table(Schema="public", Name = "{{TableName}}")]
+    public class {{ClassName}}Poco : IPoco
     {
         {{#each columns}}
-        {{#if COLUMN_COMMENT}}
+        {{#if ColumnComment}}
         /// <summary>
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
         /// </summary>
         {{/if}}
-        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}[Column(Name = "{{COLUMN_NAME}}")]{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}} 
-        public {{CLR_TYPE}} {{COLUMN_NAME}} { get; set; }
+        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}[Column(Name = "{{ColumnName}}")]{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}} 
+        public {{ClrType}} {{PropertyName}} { get; set; }
 		{{#if IsPrimaryKey}}
 
-		{{CLR_TYPE}} IPoco.GetPrimaryKey()
+		{{ClrType}} IPoco.GetPrimaryKey()
 		{
-			return this.{{COLUMN_NAME}};
+			return this.{{PropertyName}};
 		}
 
-		void IPoco.SetPrimaryKey({{CLR_TYPE}} value)
+		void IPoco.SetPrimaryKey({{ClrType}} value)
 		{
-			this.{{COLUMN_NAME}} = value;
+			this.{{PropertyName}} = value;
 		}
 
 		bool IPoco.IsNew()
 		{
-			return this.{{COLUMN_NAME}} == default;
+			return this.{{PropertyName}} == default;
 		}
 		{{/if}}
         
@@ -48,22 +48,22 @@ namespace TrackTv.Data
 		private readonly IReadOnlyDictionary<Type, string> primaryKeyMap = new Dictionary<Type, string>
 		{
 		{{#each model.tables}}
-			{typeof({{CLASS_NAME}}Poco), "{{PRIMARY_KEY_COLUMN_NAME}}"},
+			{typeof({{ClassName}}Poco), "{{PrimaryKeyColumnName}}"},
         {{/each}}
 		};
 
 		private readonly IReadOnlyDictionary<Type, string> tableNameMap = new Dictionary<Type, string>
 		{
 		{{#each model.tables}}
-			{typeof({{CLASS_NAME}}Poco), "{{TABLE_NAME}}"},
+			{typeof({{ClassName}}Poco), "{{TableName}}"},
         {{/each}}
 		};
 
         {{#each model.tables}}
 		/// <summary>
-		/// <para>Database table '{{TABLE_NAME}}'.</para>		
+		/// <para>Database table '{{TableName}}'.</para>		
 		/// </summary>
-        public IQueryable<{{CLASS_NAME}}Poco> {{PLURAl_CLASS_NAME}} => this.DataConnection.GetTable<{{CLASS_NAME}}Poco>();
+        public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.DataConnection.GetTable<{{ClassName}}Poco>();
 		
         {{/each}}
     }
@@ -72,9 +72,9 @@ namespace TrackTv.Data
     {
         {{#each model.tables}}
 		/// <summary>
-		/// <para>Database table '{{TABLE_NAME}}'.</para>		
+		/// <para>Database table '{{TableName}}'.</para>		
 		/// </summary>
-        IQueryable<{{CLASS_NAME}}Poco> {{PLURAl_CLASS_NAME}} { get; }
+        IQueryable<{{ClassName}}Poco> {{PluralClassName}} { get; }
 
         {{/each}}
     }

@@ -8,9 +8,9 @@ namespace TrackTv.Updater
     using log4net;
 
     using LinqToDB.DataProvider;
-    using LinqToDB.DataProvider.MySql;
+    using LinqToDB.DataProvider.PostgreSQL;
 
-    using MySql.Data.MySqlClient;
+    using Npgsql;
 
     using StructureMap;
 
@@ -36,13 +36,13 @@ namespace TrackTv.Updater
 
         private void DataAccess()
         {
-            this.For<MySqlConnection>()
-                .Use("MySql connection.", ctx => new MySqlConnection(Global.AppConfig.ConnectionString))
+            this.For<NpgsqlConnection>()
+                .Use("Postgres connection.", ctx => new NpgsqlConnection(Global.AppConfig.ConnectionString))
                 .ContainerScoped();
 
-            this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<MySqlConnection>());
+            this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
 
-            this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<MySqlDataProvider>();
+            this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<PostgreSQLDataProvider>();
             this.For<IDbService>().Use<DbService>();
         }
 
