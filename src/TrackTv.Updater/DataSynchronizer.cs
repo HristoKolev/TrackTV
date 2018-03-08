@@ -100,7 +100,7 @@
                               {
                                   transaction.Rollback();
 
-                                  await this.FailedUpdateRepository.AddFailedUpdate(new UpdateQueuePoco()
+                                  await this.FailedUpdateRepository.AddFailedUpdate(new UpdateQueuePoco
                                             {
                                                 ThetvdbUpdateID = update.Id,
                                                 ThetvdbLastUpdated = update.LastUpdated.ToDateTime(),

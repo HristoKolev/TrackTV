@@ -19,7 +19,7 @@ namespace TrackTv.Data
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
         /// </summary>
         {{/if}}
-        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}[Column(Name = "{{ColumnName}}")]{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}} 
+        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}}[Column(Name = "{{ColumnName}}")]
         public {{ClrType}} {{PropertyName}} { get; set; }
 		{{#if IsPrimaryKey}}
 
