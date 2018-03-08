@@ -17,12 +17,12 @@
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log, FailedUpdateRepository failedUpdateRepository, ApiResultRepository apiResultRepository)
+        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log, UpdateQueueRepository updateQueueRepository, ApiResultRepository apiResultRepository)
         {
             this.DbService = dbService;
             this.Client = client;
             this.Log = log;
-            this.FailedUpdateRepository = failedUpdateRepository;
+            this.UpdateQueueRepository = updateQueueRepository;
             this.ApiResultRepository = apiResultRepository;
 
             this.DateParser = new DateParser();
@@ -34,7 +34,7 @@
 
         private IDbService DbService { get; }
 
-        private FailedUpdateRepository FailedUpdateRepository { get; }
+        private UpdateQueueRepository UpdateQueueRepository { get; }
 
         private ApiResultRepository ApiResultRepository { get; }
 
@@ -47,7 +47,7 @@
         {
             var updates = await this.GetUpdates(fromUtcDate).ConfigureAwait(false);
 
-            var failedUpdates = await this.FailedUpdateRepository.GetFailedUpdates().ConfigureAwait(false);
+            var failedUpdates = await this.UpdateQueueRepository.GetFailedUpdates().ConfigureAwait(false);
 
             updates = updates.Concat(failedUpdates.Select(poco => new Update
                              {
@@ -96,14 +96,14 @@
 
                                   if (failedUpdate != null)
                                   {
-                                      await this.FailedUpdateRepository.RemoveFailedUpdate(failedUpdate).ConfigureAwait(false);
+                                      await this.UpdateQueueRepository.RemoveFailedUpdate(failedUpdate).ConfigureAwait(false);
                                   }
                               }
                               catch (Exception ex)
                               {
                                   transaction.Rollback();
 
-                                  await this.FailedUpdateRepository.AddFailedUpdate(new UpdateQueuePoco
+                                  await this.UpdateQueueRepository.AddFailedUpdate(new UpdateQueuePoco
                                             {
                                                 ThetvdbUpdateID = update.Id,
                                                 ThetvdbLastUpdated = update.LastUpdated.ToDateTime(),

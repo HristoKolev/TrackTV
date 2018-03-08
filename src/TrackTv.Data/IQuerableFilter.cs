@@ -188,35 +188,30 @@
                 case QueryType.NotEqual :
                     expression = Expression.NotEqual(member, memberValue);
                     break;
-
                 case QueryType.LessThan :
                     expression = Expression.LessThan(member, memberValue);
                     break;
                 case QueryType.LessThanOrEqual :
                     expression = Expression.LessThanOrEqual(member, memberValue);
                     break;
-
                 case QueryType.GreaterThan :
                     expression = Expression.GreaterThan(member, memberValue);
                     break;
                 case QueryType.GreaterThanOrEqual :
                     expression = Expression.GreaterThanOrEqual(member, memberValue);
                     break;
-
                 case QueryType.StartsWith :
                     expression = Expression.Call(member, StringStartsWithMethod, memberValue);
                     break;
                 case QueryType.DoesNotStartWith :
                     expression = Expression.Not(Expression.Call(member, StringStartsWithMethod, memberValue));
                     break;
-
                 case QueryType.EndsWith :
                     expression = Expression.Call(member, StringEndsWithMethod, memberValue);
                     break;
                 case QueryType.DoesNotEndWith :
                     expression = Expression.Not(Expression.Call(member, StringEndsWithMethod, memberValue));
                     break;
-
                 case QueryType.IsIn :
                 {
                     Type type = member.Type;
@@ -229,7 +224,6 @@
                     expression = Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", types), member);
                     break;
                 }
-
                 case QueryType.IsNotIn :
                 {
                     Type type = member.Type;
@@ -244,14 +238,12 @@
 
                     break;
                 }
-
                 case QueryType.Contains :
                     expression = Expression.Call(member, StringContainsMethod, memberValue);
                     break;
                 case QueryType.DoesNotContain :
                     expression = Expression.Not(Expression.Call(member, StringContainsMethod, memberValue));
                     break;
-
                 case QueryType.IsNull :
                     expression = Expression.Equal(member, Expression.Constant(null, member.Type));
                     break;
@@ -311,7 +303,7 @@
                                                         + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                     }
 
-                    // These can'n be used with collection types.
+                    // These can't be used with collection types.
                     case QueryType.Equal :
                     case QueryType.NotEqual :
                     {

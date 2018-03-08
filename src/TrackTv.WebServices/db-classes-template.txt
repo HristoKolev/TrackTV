@@ -23,6 +23,9 @@ namespace TrackTv.Data
 		/// <para>Primary key column.</para>
 		{{/if}}
 		/// <para>Column name: '{{ColumnName}}'.</para>
+		{{#if ForeignKey}}
+		/// <para>Foreign key column [{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		{{/if}}		
 		/// <para>PostgreSQL data type: '{{DataType}}'.</para>
 		/// <para>linq2db data type: '{{Linq2dbDataType}}'.</para>
         /// </summary>        

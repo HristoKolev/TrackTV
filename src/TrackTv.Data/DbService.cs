@@ -120,10 +120,19 @@
 
     public interface IPoco
     {
+        /// <summary>		
+        /// <para>Returns the primary key for the table.</para>
+        /// </summary>   
         int GetPrimaryKey();
 
+        /// <summary>		
+        /// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
         bool IsNew();
-
+        
+        /// <summary>		
+        /// <para>Sets the primary key for the table.</para>
+        /// </summary> 
         void SetPrimaryKey(int value);
     }
 

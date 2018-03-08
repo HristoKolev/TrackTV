@@ -7,9 +7,9 @@
 
     using TrackTv.Data;
 
-    public class FailedUpdateRepository
+    public class UpdateQueueRepository
     {
-        public FailedUpdateRepository(IDbService dbService)
+        public UpdateQueueRepository(IDbService dbService)
         {
             this.DbService = dbService;
         }

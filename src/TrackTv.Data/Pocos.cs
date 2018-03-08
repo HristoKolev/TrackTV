@@ -85,6 +85,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
+		/// <para>Foreign key column [api_responses.api_response_episode_thetvdbid -> episodes.thetvdbid].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -94,6 +95,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
+		/// <para>Foreign key column [api_responses.api_response_show_thetvdbid -> shows.thetvdbid].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -243,6 +245,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
+		/// <para>Foreign key column [episodes.show_id -> shows.show_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -424,6 +427,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
+		/// <para>Foreign key column [roles.actor_id -> actors.actor_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -442,6 +446,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
+		/// <para>Foreign key column [roles.show_id -> shows.show_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -582,6 +587,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'network_id'.</para>
+		/// <para>Foreign key column [shows.network_id -> networks.network_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -670,6 +676,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
+		/// <para>Foreign key column [shows_genres.show_id -> shows.show_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -679,6 +686,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Foreign key column [shows_genres.genre_id -> genres.genre_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -722,6 +730,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Foreign key column [subscriptions.profile_id -> profiles.profile_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
@@ -731,6 +740,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
+		/// <para>Foreign key column [subscriptions.show_id -> shows.show_id].</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
