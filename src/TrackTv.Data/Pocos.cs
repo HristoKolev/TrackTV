@@ -23,20 +23,20 @@ namespace TrackTv.Data
 		[Column(Name = "actor_id", DataType = DataType.Int32)]
         public int ActorID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.ActorID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (ActorID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.ActorID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.ActorID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (ActorID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.ActorID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.ActorID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.ActorID == default;
         
         /// <summary>
 		/// <para>Column name: 'actor_image'.</para>
@@ -120,20 +120,20 @@ namespace TrackTv.Data
 		[Column(Name = "api_response_id", DataType = DataType.Int32)]
         public int ApiResponseID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.ApiResponseID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (ApiResponseID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.ApiResponseID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.ApiResponseID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (ApiResponseID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.ApiResponseID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.ApiResponseID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.ApiResponseID == default;
         
         /// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
@@ -163,20 +163,20 @@ namespace TrackTv.Data
 		[Column(Name = "episode_id", DataType = DataType.Int32)]
         public int EpisodeID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.EpisodeID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (EpisodeID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.EpisodeID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.EpisodeID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (EpisodeID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.EpisodeID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.EpisodeID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.EpisodeID == default;
         
         /// <summary>
 		/// <para>Column name: 'episode_description'.</para>
@@ -278,20 +278,20 @@ namespace TrackTv.Data
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.GenreID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (GenreID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.GenreID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.GenreID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (GenreID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.GenreID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.GenreID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.GenreID == default;
         
         /// <summary>
 		/// <para>Column name: 'genre_name'.</para>
@@ -321,20 +321,20 @@ namespace TrackTv.Data
 		[Column(Name = "network_id", DataType = DataType.Int32)]
         public int NetworkID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.NetworkID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (NetworkID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.NetworkID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.NetworkID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (NetworkID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.NetworkID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.NetworkID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.NetworkID == default;
         
         /// <summary>
 		/// <para>Column name: 'network_name'.</para>
@@ -364,20 +364,20 @@ namespace TrackTv.Data
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.ProfileID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (ProfileID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.ProfileID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.ProfileID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (ProfileID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.ProfileID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.ProfileID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.ProfileID == default;
         
         /// <summary>
 		/// <para>Column name: 'profile_name'.</para>
@@ -407,20 +407,20 @@ namespace TrackTv.Data
 		[Column(Name = "role_id", DataType = DataType.Int32)]
         public int RoleID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.RoleID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (RoleID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.RoleID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.RoleID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (RoleID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.RoleID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.RoleID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.RoleID == default;
         
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
@@ -468,20 +468,20 @@ namespace TrackTv.Data
 		[Column(Name = "setting_id", DataType = DataType.Int32)]
         public int SettingID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.SettingID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (SettingID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.SettingID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.SettingID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (SettingID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.SettingID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.SettingID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.SettingID == default;
         
         /// <summary>
 		/// <para>Column name: 'setting_value'.</para>
@@ -520,20 +520,20 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.ShowID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (ShowID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.ShowID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.ShowID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (ShowID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.ShowID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.ShowID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.ShowID == default;
         
         /// <summary>
 		/// <para>Column name: 'air_day'.</para>
@@ -653,20 +653,20 @@ namespace TrackTv.Data
 		[Column(Name = "shows_genres_id", DataType = DataType.Int32)]
         public int ShowsGenresID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.ShowsGenresID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (ShowsGenresID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.ShowsGenresID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.ShowsGenresID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (ShowsGenresID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.ShowsGenresID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.ShowsGenresID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.ShowsGenresID == default;
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -705,20 +705,20 @@ namespace TrackTv.Data
 		[Column(Name = "subscription_id", DataType = DataType.Int32)]
         public int SubscriptionID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.SubscriptionID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (SubscriptionID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.SubscriptionID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.SubscriptionID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (SubscriptionID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.SubscriptionID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.SubscriptionID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.SubscriptionID == default;
         
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -757,20 +757,20 @@ namespace TrackTv.Data
 		[Column(Name = "update_queue_id", DataType = DataType.Int32)]
         public int UpdateQueueID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.UpdateQueueID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (UpdateQueueID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.UpdateQueueID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.UpdateQueueID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (UpdateQueueID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.UpdateQueueID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.UpdateQueueID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.UpdateQueueID == default;
         
         /// <summary>
 		/// <para>Column name: 'last_failed_time'.</para>
@@ -827,20 +827,20 @@ namespace TrackTv.Data
 		[Column(Name = "user_id", DataType = DataType.Int32)]
         public int UserID { get; set; }
 
-		int IPoco.GetPrimaryKey()
-		{
-			return this.UserID;
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table (UserID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.UserID;
 
-		void IPoco.SetPrimaryKey(int value)
-		{
-			this.UserID = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table (UserID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.UserID = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.UserID == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.UserID == default;
         
         /// <summary>
 		/// <para>Column name: 'is_admin'.</para>

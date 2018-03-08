@@ -31,20 +31,20 @@ namespace TrackTv.Data
         public {{ClrType}} {{PropertyName}} { get; set; }
 		{{#if IsPrimaryKey}}
 
-		{{ClrType}} IPoco.GetPrimaryKey()
-		{
-			return this.{{PropertyName}};
-		}
+		/// <summary>		
+		/// <para>Returns the primary key for the table ({{PropertyName}}).</para>
+        /// </summary>   
+		{{ClrType}} IPoco.GetPrimaryKey() => this.{{PropertyName}};
 
-		void IPoco.SetPrimaryKey({{ClrType}} value)
-		{
-			this.{{PropertyName}} = value;
-		}
+		/// <summary>		
+		/// <para>Sets the primary key for the table ({{PropertyName}}).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey({{ClrType}} value) => this.{{PropertyName}} = value;
 
-		bool IPoco.IsNew()
-		{
-			return this.{{PropertyName}} == default;
-		}
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.{{PropertyName}} == default;
 		{{/if}}
         
         {{/each}}
