@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TrackTv.Updater": {
+      "commandName": "Project",
+      "workingDirectory": "P:\\projects\\SourceControl\\TrackTV\\src\\TrackTv.Updater"
+    }
+  }
+}

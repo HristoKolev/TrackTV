@@ -17,12 +17,13 @@
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log, FailedUpdateRepository failedUpdateRepository)
+        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log, FailedUpdateRepository failedUpdateRepository, ApiResultRepository apiResultRepository)
         {
             this.DbService = dbService;
             this.Client = client;
             this.Log = log;
             this.FailedUpdateRepository = failedUpdateRepository;
+            this.ApiResultRepository = apiResultRepository;
 
             this.DateParser = new DateParser();
         }
@@ -34,6 +35,8 @@
         private IDbService DbService { get; }
 
         private FailedUpdateRepository FailedUpdateRepository { get; }
+
+        private ApiResultRepository ApiResultRepository { get; }
 
         private ILog Log { get; }
 
@@ -366,6 +369,8 @@
             this.MapToEpisode(myEpisode, externalEpisode);
 
             await this.DbService.Update(myEpisode).ConfigureAwait(false);
+
+            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, updateId).ConfigureAwait(false);
         }
 
         private async Task UpdateEpisodes(int theTvDbId, UpdateContext context, int showId)
@@ -403,6 +408,8 @@
                 this.MapToEpisode(myEpisode, episode);
 
                 await this.DbService.Insert(myEpisode).ConfigureAwait(false);
+
+                await this.ApiResultRepository.SaveApiResult(episode, ApiResultType.Episode, episode.Id).ConfigureAwait(false);
             }
 
             // Update episodes
@@ -424,8 +431,10 @@
                 var episode = externalUpdatedEpisodes.First(record => record.Id == myEpisode.Thetvdbid);
 
                 this.MapToEpisode(myEpisode, episode);
-
+                
                 await this.DbService.Update(myEpisode).ConfigureAwait(false);
+
+                await this.ApiResultRepository.SaveApiResult(episode, ApiResultType.Episode, episode.Id).ConfigureAwait(false);
             }
         }
 
@@ -473,6 +482,8 @@
             await this.UpdateGenres(externalShow.Genre, myShow.ShowID).ConfigureAwait(false);
             await this.UpdateActors(myShow.Thetvdbid, myShow.ShowID).ConfigureAwait(false);
             await this.UpdateEpisodes(myShow.Thetvdbid, context, myShow.ShowID).ConfigureAwait(false);
+
+            await this.ApiResultRepository.SaveApiResult(externalShow, ApiResultType.Show, updateId).ConfigureAwait(false);
         }
 
         private class UpdateContext

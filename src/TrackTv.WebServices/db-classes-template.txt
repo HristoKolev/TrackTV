@@ -3,6 +3,7 @@ namespace TrackTv.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
+	using LinqToDB;
     using LinqToDB.Mapping;
 
     {{#each model.tables}}
@@ -13,13 +14,20 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "{{TableName}}")]
     public class {{ClassName}}Poco : IPoco
     {
-        {{#each columns}}
-        {{#if ColumnComment}}
+        {{#each columns}}        
         /// <summary>
+		{{#if ColumnComment}}
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
-        /// </summary>
-        {{/if}}
-        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}}[Column(Name = "{{ColumnName}}")]
+		{{/if}}
+		{{#if IsPrimaryKey}}
+		/// <para>Primary key column.</para>
+		{{/if}}
+		/// <para>Column name: '{{ColumnName}}'.</para>
+		/// <para>PostgreSQL data type: '{{DataType}}'.</para>
+		/// <para>linq2db data type: '{{Linq2dbDataType}}'.</para>
+        /// </summary>        
+        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}}
+		[Column(Name = "{{ColumnName}}", DataType = {{Linq2dbDataType}})]
         public {{ClrType}} {{PropertyName}} { get; set; }
 		{{#if IsPrimaryKey}}
 

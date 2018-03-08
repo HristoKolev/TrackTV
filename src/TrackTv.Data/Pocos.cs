@@ -3,6 +3,7 @@ namespace TrackTv.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
+	using LinqToDB;
     using LinqToDB.Mapping;
 
     /// <summary>
@@ -12,7 +13,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "actors")]
     public class ActorPoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "actor_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'actor_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "actor_id", DataType = DataType.Int32)]
         public int ActorID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -30,16 +38,40 @@ namespace TrackTv.Data
 			return this.ActorID == default;
 		}
         
-        [Nullable][Column(Name = "actor_image")]
+        /// <summary>
+		/// <para>Column name: 'actor_image'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "actor_image", DataType = DataType.NVarChar)]
         public string ActorImage { get; set; }
         
-        [NotNull][Column(Name = "actor_name")]
+        /// <summary>
+		/// <para>Column name: 'actor_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "actor_name", DataType = DataType.NVarChar)]
         public string ActorName { get; set; }
         
-        [NotNull][Column(Name = "last_updated")]
+        /// <summary>
+		/// <para>Column name: 'last_updated'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
         public DateTime LastUpdated { get; set; }
         
-        [NotNull][Column(Name = "thetvdbid")]
+        /// <summary>
+		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
     }
@@ -51,16 +83,41 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "api_responses")]
     public class ApiResponsePoco : IPoco
     {
-        [Nullable][Column(Name = "api_response_episode_thetvdbid")]
+        /// <summary>
+		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "api_response_episode_thetvdbid", DataType = DataType.Int32)]
         public int? ApiResponseEpisodeThetvdbid { get; set; }
         
-        [Nullable][Column(Name = "api_response_show_thetvdbid")]
+        /// <summary>
+		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "api_response_show_thetvdbid", DataType = DataType.Int32)]
         public int? ApiResponseShowThetvdbid { get; set; }
         
-        [NotNull][Column(Name = "api_response_body")]
+        /// <summary>
+		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "api_response_body", DataType = DataType.BinaryJson)]
         public string ApiResponseBody { get; set; }
         
-        [PrimaryKey, Identity][Column(Name = "api_response_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'api_response_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "api_response_id", DataType = DataType.Int32)]
         public int ApiResponseID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -78,6 +135,15 @@ namespace TrackTv.Data
 			return this.ApiResponseID == default;
 		}
         
+        /// <summary>
+		/// <para>Column name: 'api_response_last_updated'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
+        public DateTime ApiResponseLastUpdated { get; set; }
+        
     }
     
     /// <summary>
@@ -87,7 +153,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "episodes")]
     public class EpisodePoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "episode_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'episode_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "episode_id", DataType = DataType.Int32)]
         public int EpisodeID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -105,31 +178,85 @@ namespace TrackTv.Data
 			return this.EpisodeID == default;
 		}
         
-        [Nullable][Column(Name = "episode_description")]
+        /// <summary>
+		/// <para>Column name: 'episode_description'.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "episode_description", DataType = DataType.Text)]
         public string EpisodeDescription { get; set; }
         
-        [NotNull][Column(Name = "episode_number")]
+        /// <summary>
+		/// <para>Column name: 'episode_number'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "episode_number", DataType = DataType.Int32)]
         public int EpisodeNumber { get; set; }
         
-        [Nullable][Column(Name = "episode_title")]
+        /// <summary>
+		/// <para>Column name: 'episode_title'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "episode_title", DataType = DataType.NVarChar)]
         public string EpisodeTitle { get; set; }
         
-        [Nullable][Column(Name = "first_aired")]
+        /// <summary>
+		/// <para>Column name: 'first_aired'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "first_aired", DataType = DataType.DateTime2)]
         public DateTime? FirstAired { get; set; }
         
-        [Nullable][Column(Name = "imdbid")]
+        /// <summary>
+		/// <para>Column name: 'imdbid'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "imdbid", DataType = DataType.NVarChar)]
         public string Imdbid { get; set; }
         
-        [NotNull][Column(Name = "last_updated")]
+        /// <summary>
+		/// <para>Column name: 'last_updated'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
         public DateTime LastUpdated { get; set; }
         
-        [NotNull][Column(Name = "season_number")]
+        /// <summary>
+		/// <para>Column name: 'season_number'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "season_number", DataType = DataType.Int32)]
         public int SeasonNumber { get; set; }
         
-        [NotNull][Column(Name = "show_id")]
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
-        [NotNull][Column(Name = "thetvdbid")]
+        /// <summary>
+		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
     }
@@ -141,7 +268,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "genres")]
     public class GenrePoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "genre_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'genre_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -159,7 +293,13 @@ namespace TrackTv.Data
 			return this.GenreID == default;
 		}
         
-        [NotNull][Column(Name = "genre_name")]
+        /// <summary>
+		/// <para>Column name: 'genre_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "genre_name", DataType = DataType.NVarChar)]
         public string GenreName { get; set; }
         
     }
@@ -171,7 +311,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "networks")]
     public class NetworkPoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "network_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'network_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "network_id", DataType = DataType.Int32)]
         public int NetworkID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -189,7 +336,13 @@ namespace TrackTv.Data
 			return this.NetworkID == default;
 		}
         
-        [NotNull][Column(Name = "network_name")]
+        /// <summary>
+		/// <para>Column name: 'network_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "network_name", DataType = DataType.NVarChar)]
         public string NetworkName { get; set; }
         
     }
@@ -201,7 +354,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "profiles")]
     public class ProfilePoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "profile_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'profile_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -219,7 +379,13 @@ namespace TrackTv.Data
 			return this.ProfileID == default;
 		}
         
-        [NotNull][Column(Name = "profile_name")]
+        /// <summary>
+		/// <para>Column name: 'profile_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "profile_name", DataType = DataType.NVarChar)]
         public string ProfileName { get; set; }
         
     }
@@ -231,7 +397,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "roles")]
     public class RolePoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "role_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'role_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "role_id", DataType = DataType.Int32)]
         public int RoleID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -249,13 +422,31 @@ namespace TrackTv.Data
 			return this.RoleID == default;
 		}
         
-        [NotNull][Column(Name = "actor_id")]
+        /// <summary>
+		/// <para>Column name: 'actor_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "actor_id", DataType = DataType.Int32)]
         public int ActorID { get; set; }
         
-        [Nullable][Column(Name = "role_name")]
+        /// <summary>
+		/// <para>Column name: 'role_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "role_name", DataType = DataType.NVarChar)]
         public string RoleName { get; set; }
         
-        [NotNull][Column(Name = "show_id")]
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
     }
@@ -267,7 +458,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "settings")]
     public class SettingPoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "setting_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'setting_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "setting_id", DataType = DataType.Int32)]
         public int SettingID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -285,10 +483,22 @@ namespace TrackTv.Data
 			return this.SettingID == default;
 		}
         
-        [NotNull][Column(Name = "setting_value")]
+        /// <summary>
+		/// <para>Column name: 'setting_value'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "setting_value", DataType = DataType.NVarChar)]
         public string SettingValue { get; set; }
         
-        [NotNull][Column(Name = "setting_name")]
+        /// <summary>
+		/// <para>Column name: 'setting_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
         public string SettingName { get; set; }
         
     }
@@ -300,7 +510,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "shows")]
     public class ShowPoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "show_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -318,37 +535,103 @@ namespace TrackTv.Data
 			return this.ShowID == default;
 		}
         
-        [Nullable][Column(Name = "air_day")]
+        /// <summary>
+		/// <para>Column name: 'air_day'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "air_day", DataType = DataType.Int32)]
         public int? AirDay { get; set; }
         
-        [Nullable][Column(Name = "air_time")]
+        /// <summary>
+		/// <para>Column name: 'air_time'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "air_time", DataType = DataType.DateTime2)]
         public DateTime? AirTime { get; set; }
         
-        [Nullable][Column(Name = "first_aired")]
+        /// <summary>
+		/// <para>Column name: 'first_aired'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "first_aired", DataType = DataType.DateTime2)]
         public DateTime? FirstAired { get; set; }
         
-        [Nullable][Column(Name = "imdbid")]
+        /// <summary>
+		/// <para>Column name: 'imdbid'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "imdbid", DataType = DataType.NVarChar)]
         public string Imdbid { get; set; }
         
-        [NotNull][Column(Name = "last_updated")]
+        /// <summary>
+		/// <para>Column name: 'last_updated'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
         public DateTime LastUpdated { get; set; }
         
-        [NotNull][Column(Name = "network_id")]
+        /// <summary>
+		/// <para>Column name: 'network_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "network_id", DataType = DataType.Int32)]
         public int NetworkID { get; set; }
         
-        [Nullable][Column(Name = "show_banner")]
+        /// <summary>
+		/// <para>Column name: 'show_banner'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "show_banner", DataType = DataType.NVarChar)]
         public string ShowBanner { get; set; }
         
-        [Nullable][Column(Name = "show_description")]
+        /// <summary>
+		/// <para>Column name: 'show_description'.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>        
+        [Nullable]
+		[Column(Name = "show_description", DataType = DataType.Text)]
         public string ShowDescription { get; set; }
         
-        [NotNull][Column(Name = "show_name")]
+        /// <summary>
+		/// <para>Column name: 'show_name'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "show_name", DataType = DataType.NVarChar)]
         public string ShowName { get; set; }
         
-        [NotNull][Column(Name = "show_status")]
+        /// <summary>
+		/// <para>Column name: 'show_status'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "show_status", DataType = DataType.Int32)]
         public int ShowStatus { get; set; }
         
-        [NotNull][Column(Name = "thetvdbid")]
+        /// <summary>
+		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
     }
@@ -360,7 +643,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "shows_genres")]
     public class ShowGenrePoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "shows_genres_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "shows_genres_id", DataType = DataType.Int32)]
         public int ShowsGenresID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -378,10 +668,22 @@ namespace TrackTv.Data
 			return this.ShowsGenresID == default;
 		}
         
-        [NotNull][Column(Name = "show_id")]
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
-        [NotNull][Column(Name = "genre_id")]
+        /// <summary>
+		/// <para>Column name: 'genre_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
         
     }
@@ -393,7 +695,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "subscriptions")]
     public class SubscriptionPoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "subscription_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "subscription_id", DataType = DataType.Int32)]
         public int SubscriptionID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -411,10 +720,22 @@ namespace TrackTv.Data
 			return this.SubscriptionID == default;
 		}
         
-        [NotNull][Column(Name = "profile_id")]
+        /// <summary>
+		/// <para>Column name: 'profile_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
         
-        [NotNull][Column(Name = "show_id")]
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
     }
@@ -426,7 +747,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "update_queue")]
     public class UpdateQueuePoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "update_queue_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'update_queue_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "update_queue_id", DataType = DataType.Int32)]
         public int UpdateQueueID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -444,16 +772,40 @@ namespace TrackTv.Data
 			return this.UpdateQueueID == default;
 		}
         
-        [NotNull][Column(Name = "last_failed_time")]
+        /// <summary>
+		/// <para>Column name: 'last_failed_time'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "last_failed_time", DataType = DataType.DateTime2)]
         public DateTime LastFailedTime { get; set; }
         
-        [NotNull][Column(Name = "thetvdb_last_updated")]
+        /// <summary>
+		/// <para>Column name: 'thetvdb_last_updated'.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "thetvdb_last_updated", DataType = DataType.DateTime2)]
         public DateTime ThetvdbLastUpdated { get; set; }
         
-        [NotNull][Column(Name = "thetvdb_update_id")]
+        /// <summary>
+		/// <para>Column name: 'thetvdb_update_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "thetvdb_update_id", DataType = DataType.Int32)]
         public int ThetvdbUpdateID { get; set; }
         
-        [NotNull][Column(Name = "fail_count")]
+        /// <summary>
+		/// <para>Column name: 'fail_count'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "fail_count", DataType = DataType.Int32)]
         public int FailCount { get; set; }
         
     }
@@ -465,7 +817,14 @@ namespace TrackTv.Data
     [Table(Schema="public", Name = "users")]
     public class UserPoco : IPoco
     {
-        [PrimaryKey, Identity][Column(Name = "user_id")]
+        /// <summary>
+		/// <para>Primary key column.</para>
+		/// <para>Column name: 'user_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [PrimaryKey, Identity]
+		[Column(Name = "user_id", DataType = DataType.Int32)]
         public int UserID { get; set; }
 
 		int IPoco.GetPrimaryKey()
@@ -483,16 +842,40 @@ namespace TrackTv.Data
 			return this.UserID == default;
 		}
         
-        [NotNull][Column(Name = "is_admin")]
+        /// <summary>
+		/// <para>Column name: 'is_admin'.</para>
+		/// <para>PostgreSQL data type: 'boolean'.</para>
+		/// <para>linq2db data type: 'DataType.Boolean'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "is_admin", DataType = DataType.Boolean)]
         public bool IsAdmin { get; set; }
         
-        [NotNull][Column(Name = "username")]
+        /// <summary>
+		/// <para>Column name: 'username'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "username", DataType = DataType.NVarChar)]
         public string Username { get; set; }
         
-        [NotNull][Column(Name = "password")]
+        /// <summary>
+		/// <para>Column name: 'password'.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "password", DataType = DataType.NVarChar)]
         public string Password { get; set; }
         
-        [NotNull][Column(Name = "profile_id")]
+        /// <summary>
+		/// <para>Column name: 'profile_id'.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+        [NotNull]
+		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
         
     }
