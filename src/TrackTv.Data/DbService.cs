@@ -46,10 +46,13 @@
         public Task Delete<TPoco>(int id)
             where TPoco : IPoco
         {
-            string tableName = this.tableNameMap[typeof(TPoco)];
-            string primaryKeyName = this.primaryKeyMap[typeof(TPoco)];
+            var type = typeof(TPoco);
 
-            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableName} WHERE {primaryKeyName} = {id};");
+            string tableName = this.tableNameMap[type];
+            string primaryKeyName = this.primaryKeyMap[type];
+            string tableSchema = this.tableSchemaMap[type];
+
+            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};");
         }
 
         public void Dispose()

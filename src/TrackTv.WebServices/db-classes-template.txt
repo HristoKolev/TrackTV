@@ -8,10 +8,10 @@ namespace TrackTv.Data
 
     {{#each model.tables}}
     /// <summary>
-    /// <para>Database table '{{TableName}}'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: '{{TableName}}'.</para>
+	/// <para>Table schema: '{{TableSchema}}'.</para>
     /// </summary>
-    [Table(Schema="public", Name = "{{TableName}}")]
+    [Table(Schema="{{TableSchema}}", Name = "{{TableName}}")]
     public class {{ClassName}}Poco : IPoco
     {
         {{#each columns}}        
@@ -19,17 +19,24 @@ namespace TrackTv.Data
 		{{#if ColumnComment}}
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
 		{{/if}}
-		{{#if IsPrimaryKey}}
-		/// <para>Primary key column.</para>
-		{{/if}}
 		/// <para>Column name: '{{ColumnName}}'.</para>
-		{{#if ForeignKey}}
-		/// <para>Foreign key column [{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		{{#if IsPrimaryKey}}
+		/// <para>Primary key of table: '{{TableName}}'.</para>
 		{{/if}}		
+		{{#if ForeignKey}}		
+		/// <para>Foreign key column [{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		{{/if}}
+		/// <para>This column {{#if IsNullable}}is nullable{{/if}}{{#unless IsNullable}}is not nullable{{/unless}}.</para>
 		/// <para>PostgreSQL data type: '{{DataType}}'.</para>
+		/// <para>CLR type: '{{ClrType}}'.</para>
 		/// <para>linq2db data type: '{{Linq2dbDataType}}'.</para>
         /// </summary>        
-        {{#if IsPrimaryKey}}[PrimaryKey, Identity]{{/if}}{{#unless IsPrimaryKey}}{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}{{/unless}}
+        {{#if IsPrimaryKey}}
+		[PrimaryKey, Identity]
+		{{/if}}
+		{{#unless IsPrimaryKey}}
+		{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}
+		{{/unless}}
 		[Column(Name = "{{ColumnName}}", DataType = {{Linq2dbDataType}})]
         public {{ClrType}} {{PropertyName}} { get; set; }
 		{{#if IsPrimaryKey}}
@@ -70,6 +77,13 @@ namespace TrackTv.Data
         {{/each}}
 		};
 
+		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
+		{
+		{{#each model.tables}}
+			{typeof({{ClassName}}Poco), "{{TableSchema}}"},
+        {{/each}}
+		};
+
         {{#each model.tables}}
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>		
@@ -83,7 +97,8 @@ namespace TrackTv.Data
     {
         {{#each model.tables}}
 		/// <summary>
-		/// <para>Database table '{{TableName}}'.</para>		
+		/// <para>Database table '{{TableName}}'.</para>
+		/// <para>Table schema: '{{TableSchema}}'.</para>
 		/// </summary>
         IQueryable<{{ClassName}}Poco> {{PluralClassName}} { get; }
 

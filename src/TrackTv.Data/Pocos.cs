@@ -7,19 +7,21 @@ namespace TrackTv.Data
     using LinqToDB.Mapping;
 
     /// <summary>
-    /// <para>Database table 'actors'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'actors'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "actors")]
     public class ActorPoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'actor_id'.</para>
+		/// <para>Primary key of table: 'actors'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "actor_id", DataType = DataType.Int32)]
         public int ActorID { get; set; }
 
@@ -40,45 +42,53 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'actor_image'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "actor_image", DataType = DataType.NVarChar)]
         public string ActorImage { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'actor_name'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "actor_name", DataType = DataType.NVarChar)]
         public string ActorName { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
         public DateTime LastUpdated { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'api_responses'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'api_responses'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "api_responses")]
     public class ApiResponsePoco : IPoco
@@ -86,39 +96,47 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Foreign key column [api_responses.api_response_episode_thetvdbid -> episodes.thetvdbid].</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "api_response_episode_thetvdbid", DataType = DataType.Int32)]
         public int? ApiResponseEpisodeThetvdbid { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
 		/// <para>Foreign key column [api_responses.api_response_show_thetvdbid -> shows.thetvdbid].</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "api_response_show_thetvdbid", DataType = DataType.Int32)]
         public int? ApiResponseShowThetvdbid { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "api_response_body", DataType = DataType.BinaryJson)]
         public string ApiResponseBody { get; set; }
         
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'api_response_id'.</para>
+		/// <para>Primary key of table: 'api_responses'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "api_response_id", DataType = DataType.Int32)]
         public int ApiResponseID { get; set; }
 
@@ -139,29 +157,33 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
         public DateTime ApiResponseLastUpdated { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'episodes'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'episodes'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "episodes")]
     public class EpisodePoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'episode_id'.</para>
+		/// <para>Primary key of table: 'episodes'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "episode_id", DataType = DataType.Int32)]
         public int EpisodeID { get; set; }
 
@@ -182,102 +204,122 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'episode_description'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "episode_description", DataType = DataType.Text)]
         public string EpisodeDescription { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'episode_number'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "episode_number", DataType = DataType.Int32)]
         public int EpisodeNumber { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'episode_title'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "episode_title", DataType = DataType.NVarChar)]
         public string EpisodeTitle { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'first_aired'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "first_aired", DataType = DataType.DateTime2)]
         public DateTime? FirstAired { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'imdbid'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "imdbid", DataType = DataType.NVarChar)]
         public string Imdbid { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
         public DateTime LastUpdated { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'season_number'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "season_number", DataType = DataType.Int32)]
         public int SeasonNumber { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Foreign key column [episodes.show_id -> shows.show_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'genres'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'genres'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "genres")]
     public class GenrePoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Primary key of table: 'genres'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
 
@@ -298,29 +340,33 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'genre_name'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "genre_name", DataType = DataType.NVarChar)]
         public string GenreName { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'networks'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'networks'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "networks")]
     public class NetworkPoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'network_id'.</para>
+		/// <para>Primary key of table: 'networks'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "network_id", DataType = DataType.Int32)]
         public int NetworkID { get; set; }
 
@@ -341,29 +387,33 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'network_name'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "network_name", DataType = DataType.NVarChar)]
         public string NetworkName { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'profiles'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'profiles'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "profiles")]
     public class ProfilePoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Primary key of table: 'profiles'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
 
@@ -384,29 +434,33 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'profile_name'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "profile_name", DataType = DataType.NVarChar)]
         public string ProfileName { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'roles'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'roles'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "roles")]
     public class RolePoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'role_id'.</para>
+		/// <para>Primary key of table: 'roles'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "role_id", DataType = DataType.Int32)]
         public int RoleID { get; set; }
 
@@ -428,48 +482,56 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Foreign key column [roles.actor_id -> actors.actor_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "actor_id", DataType = DataType.Int32)]
         public int ActorID { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'role_name'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "role_name", DataType = DataType.NVarChar)]
         public string RoleName { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Foreign key column [roles.show_id -> shows.show_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'settings'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'settings'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "settings")]
     public class SettingPoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'setting_id'.</para>
+		/// <para>Primary key of table: 'settings'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "setting_id", DataType = DataType.Int32)]
         public int SettingID { get; set; }
 
@@ -490,38 +552,44 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'setting_value'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "setting_value", DataType = DataType.NVarChar)]
         public string SettingValue { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'setting_name'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
         public string SettingName { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'shows'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'shows'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "shows")]
     public class ShowPoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'show_id'.</para>
+		/// <para>Primary key of table: 'shows'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
@@ -542,120 +610,144 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'air_day'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "air_day", DataType = DataType.Int32)]
         public int? AirDay { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'air_time'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "air_time", DataType = DataType.DateTime2)]
         public DateTime? AirTime { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'first_aired'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "first_aired", DataType = DataType.DateTime2)]
         public DateTime? FirstAired { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'imdbid'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "imdbid", DataType = DataType.NVarChar)]
         public string Imdbid { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
         public DateTime LastUpdated { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'network_id'.</para>
 		/// <para>Foreign key column [shows.network_id -> networks.network_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "network_id", DataType = DataType.Int32)]
         public int NetworkID { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_banner'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "show_banner", DataType = DataType.NVarChar)]
         public string ShowBanner { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_description'.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
         /// </summary>        
-        [Nullable]
+		[Nullable]
 		[Column(Name = "show_description", DataType = DataType.Text)]
         public string ShowDescription { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_name'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "show_name", DataType = DataType.NVarChar)]
         public string ShowName { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_status'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "show_status", DataType = DataType.Int32)]
         public int ShowStatus { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'shows_genres'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'shows_genres'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "shows_genres")]
     public class ShowGenrePoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>Primary key of table: 'shows_genres'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "shows_genres_id", DataType = DataType.Int32)]
         public int ShowsGenresID { get; set; }
 
@@ -677,39 +769,45 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Foreign key column [shows_genres.show_id -> shows.show_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Foreign key column [shows_genres.genre_id -> genres.genre_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'subscriptions'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'subscriptions'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "subscriptions")]
     public class SubscriptionPoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>Primary key of table: 'subscriptions'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "subscription_id", DataType = DataType.Int32)]
         public int SubscriptionID { get; set; }
 
@@ -731,39 +829,45 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Foreign key column [subscriptions.profile_id -> profiles.profile_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Foreign key column [subscriptions.show_id -> shows.show_id].</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'update_queue'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'update_queue'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "update_queue")]
     public class UpdateQueuePoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'update_queue_id'.</para>
+		/// <para>Primary key of table: 'update_queue'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "update_queue_id", DataType = DataType.Int32)]
         public int UpdateQueueID { get; set; }
 
@@ -784,56 +888,66 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'last_failed_time'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "last_failed_time", DataType = DataType.DateTime2)]
         public DateTime LastFailedTime { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'thetvdb_last_updated'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "thetvdb_last_updated", DataType = DataType.DateTime2)]
         public DateTime ThetvdbLastUpdated { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'thetvdb_update_id'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "thetvdb_update_id", DataType = DataType.Int32)]
         public int ThetvdbUpdateID { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'fail_count'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "fail_count", DataType = DataType.Int32)]
         public int FailCount { get; set; }
         
     }
     
     /// <summary>
-    /// <para>Database table 'users'.</para>
-    /// <para>This class is automatically generated.</para>
+    /// <para>Table name: 'users'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "users")]
     public class UserPoco : IPoco
     {
         /// <summary>
-		/// <para>Primary key column.</para>
 		/// <para>Column name: 'user_id'.</para>
+		/// <para>Primary key of table: 'users'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [PrimaryKey, Identity]
+		[PrimaryKey, Identity]
 		[Column(Name = "user_id", DataType = DataType.Int32)]
         public int UserID { get; set; }
 
@@ -854,37 +968,45 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'is_admin'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'boolean'.</para>
+		/// <para>CLR type: 'bool'.</para>
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "is_admin", DataType = DataType.Boolean)]
         public bool IsAdmin { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'username'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "username", DataType = DataType.NVarChar)]
         public string Username { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'password'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "password", DataType = DataType.NVarChar)]
         public string Password { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>        
-        [NotNull]
+		[NotNull]
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
         
@@ -924,6 +1046,23 @@ namespace TrackTv.Data
 			{typeof(SubscriptionPoco), "subscriptions"},
 			{typeof(UpdateQueuePoco), "update_queue"},
 			{typeof(UserPoco), "users"},
+		};
+
+		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
+		{
+			{typeof(ActorPoco), "public"},
+			{typeof(ApiResponsePoco), "public"},
+			{typeof(EpisodePoco), "public"},
+			{typeof(GenrePoco), "public"},
+			{typeof(NetworkPoco), "public"},
+			{typeof(ProfilePoco), "public"},
+			{typeof(RolePoco), "public"},
+			{typeof(SettingPoco), "public"},
+			{typeof(ShowPoco), "public"},
+			{typeof(ShowGenrePoco), "public"},
+			{typeof(SubscriptionPoco), "public"},
+			{typeof(UpdateQueuePoco), "public"},
+			{typeof(UserPoco), "public"},
 		};
 
 		/// <summary>
@@ -996,67 +1135,80 @@ namespace TrackTv.Data
 	public partial interface IDbService
     {
 		/// <summary>
-		/// <para>Database table 'actors'.</para>		
+		/// <para>Database table 'actors'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ActorPoco> Actors { get; }
 
 		/// <summary>
-		/// <para>Database table 'api_responses'.</para>		
+		/// <para>Database table 'api_responses'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ApiResponsePoco> ApiResponses { get; }
 
 		/// <summary>
-		/// <para>Database table 'episodes'.</para>		
+		/// <para>Database table 'episodes'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<EpisodePoco> Episodes { get; }
 
 		/// <summary>
-		/// <para>Database table 'genres'.</para>		
+		/// <para>Database table 'genres'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<GenrePoco> Genres { get; }
 
 		/// <summary>
-		/// <para>Database table 'networks'.</para>		
+		/// <para>Database table 'networks'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<NetworkPoco> Networks { get; }
 
 		/// <summary>
-		/// <para>Database table 'profiles'.</para>		
+		/// <para>Database table 'profiles'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ProfilePoco> Profiles { get; }
 
 		/// <summary>
-		/// <para>Database table 'roles'.</para>		
+		/// <para>Database table 'roles'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<RolePoco> Roles { get; }
 
 		/// <summary>
-		/// <para>Database table 'settings'.</para>		
+		/// <para>Database table 'settings'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<SettingPoco> Settings { get; }
 
 		/// <summary>
-		/// <para>Database table 'shows'.</para>		
+		/// <para>Database table 'shows'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ShowPoco> Shows { get; }
 
 		/// <summary>
-		/// <para>Database table 'shows_genres'.</para>		
+		/// <para>Database table 'shows_genres'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ShowGenrePoco> ShowsGenres { get; }
 
 		/// <summary>
-		/// <para>Database table 'subscriptions'.</para>		
+		/// <para>Database table 'subscriptions'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<SubscriptionPoco> Subscriptions { get; }
 
 		/// <summary>
-		/// <para>Database table 'update_queue'.</para>		
+		/// <para>Database table 'update_queue'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<UpdateQueuePoco> UpdateQueue { get; }
 
 		/// <summary>
-		/// <para>Database table 'users'.</para>		
+		/// <para>Database table 'users'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<UserPoco> Users { get; }
 
