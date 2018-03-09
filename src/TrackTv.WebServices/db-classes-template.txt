@@ -20,11 +20,12 @@ namespace TrackTv.Data
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
 		{{/if}}
 		/// <para>Column name: '{{ColumnName}}'.</para>
+		/// <para>Table name: '{{TableName}}'.</para>
 		{{#if IsPrimaryKey}}
 		/// <para>Primary key of table: '{{TableName}}'.</para>
 		{{/if}}		
 		{{#if ForeignKey}}		
-		/// <para>Foreign key column [{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
 		{{/if}}
 		/// <para>This column {{#if IsNullable}}is nullable{{/if}}{{#unless IsNullable}}is not nullable{{/unless}}.</para>
 		/// <para>PostgreSQL data type: '{{DataType}}'.</para>

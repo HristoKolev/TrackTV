@@ -15,6 +15,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
+		/// <para>Table name: 'actors'.</para>
 		/// <para>Primary key of table: 'actors'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -42,6 +43,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'actor_image'.</para>
+		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -53,6 +55,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'actor_name'.</para>
+		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -64,6 +67,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
+		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
@@ -75,6 +79,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -88,14 +93,15 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
-	/// <para>Table schema: 'public'.</para>
+	/// <para>Table schema: 'archive'.</para>
     /// </summary>
-    [Table(Schema="public", Name = "api_responses")]
+    [Table(Schema="archive", Name = "api_responses")]
     public class ApiResponsePoco : IPoco
     {
         /// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
-		/// <para>Foreign key column [api_responses.api_response_episode_thetvdbid -> episodes.thetvdbid].</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [archive.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
@@ -107,7 +113,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
-		/// <para>Foreign key column [api_responses.api_response_show_thetvdbid -> shows.thetvdbid].</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [archive.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
@@ -119,6 +126,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>Table name: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'jsonb'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -130,6 +138,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
+		/// <para>Table name: 'api_responses'.</para>
 		/// <para>Primary key of table: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -157,6 +166,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
+		/// <para>Table name: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
@@ -177,6 +187,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'episode_id'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>Primary key of table: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -204,6 +215,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'episode_description'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'text'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -215,6 +227,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'episode_number'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -226,6 +239,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'episode_title'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -237,6 +251,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'first_aired'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
@@ -248,6 +263,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'imdbid'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -259,6 +275,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
@@ -270,6 +287,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'season_number'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -281,7 +299,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
-		/// <para>Foreign key column [episodes.show_id -> shows.show_id].</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>Foreign key column [public.episodes.show_id -> public.shows.show_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -293,6 +312,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -313,6 +333,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Table name: 'genres'.</para>
 		/// <para>Primary key of table: 'genres'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -340,6 +361,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'genre_name'.</para>
+		/// <para>Table name: 'genres'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -360,6 +382,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'network_id'.</para>
+		/// <para>Table name: 'networks'.</para>
 		/// <para>Primary key of table: 'networks'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -387,6 +410,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'network_name'.</para>
+		/// <para>Table name: 'networks'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -407,6 +431,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Table name: 'profiles'.</para>
 		/// <para>Primary key of table: 'profiles'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -434,6 +459,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'profile_name'.</para>
+		/// <para>Table name: 'profiles'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -454,6 +480,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'role_id'.</para>
+		/// <para>Table name: 'roles'.</para>
 		/// <para>Primary key of table: 'roles'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -481,7 +508,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
-		/// <para>Foreign key column [roles.actor_id -> actors.actor_id].</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Foreign key column [public.roles.actor_id -> public.actors.actor_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -493,6 +521,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'role_name'.</para>
+		/// <para>Table name: 'roles'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -504,7 +533,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
-		/// <para>Foreign key column [roles.show_id -> shows.show_id].</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Foreign key column [public.roles.show_id -> public.shows.show_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -525,6 +555,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'setting_id'.</para>
+		/// <para>Table name: 'settings'.</para>
 		/// <para>Primary key of table: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -552,6 +583,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'setting_value'.</para>
+		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -563,6 +595,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'setting_name'.</para>
+		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -583,6 +616,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>Primary key of table: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -610,6 +644,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'air_day'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
@@ -621,6 +656,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'air_time'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
@@ -632,6 +668,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'first_aired'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
@@ -643,6 +680,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'imdbid'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -654,6 +692,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
@@ -665,7 +704,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'network_id'.</para>
-		/// <para>Foreign key column [shows.network_id -> networks.network_id].</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>Foreign key column [public.shows.network_id -> public.networks.network_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -677,6 +717,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_banner'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -688,6 +729,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_description'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'text'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -699,6 +741,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_name'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -710,6 +753,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_status'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -721,6 +765,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -741,6 +786,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>Table name: 'shows_genres'.</para>
 		/// <para>Primary key of table: 'shows_genres'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -768,7 +814,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
-		/// <para>Foreign key column [shows_genres.show_id -> shows.show_id].</para>
+		/// <para>Table name: 'shows_genres'.</para>
+		/// <para>Foreign key column [public.shows_genres.show_id -> public.shows.show_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -780,7 +827,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'genre_id'.</para>
-		/// <para>Foreign key column [shows_genres.genre_id -> genres.genre_id].</para>
+		/// <para>Table name: 'shows_genres'.</para>
+		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -801,6 +849,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
 		/// <para>Primary key of table: 'subscriptions'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -828,7 +877,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
-		/// <para>Foreign key column [subscriptions.profile_id -> profiles.profile_id].</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Foreign key column [public.subscriptions.profile_id -> public.profiles.profile_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -840,7 +890,8 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
-		/// <para>Foreign key column [subscriptions.show_id -> shows.show_id].</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Foreign key column [public.subscriptions.show_id -> public.shows.show_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -861,6 +912,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'update_queue_id'.</para>
+		/// <para>Table name: 'update_queue'.</para>
 		/// <para>Primary key of table: 'update_queue'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -888,6 +940,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'last_failed_time'.</para>
+		/// <para>Table name: 'update_queue'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
@@ -899,6 +952,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'thetvdb_last_updated'.</para>
+		/// <para>Table name: 'update_queue'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
@@ -910,6 +964,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'thetvdb_update_id'.</para>
+		/// <para>Table name: 'update_queue'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -921,6 +976,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'fail_count'.</para>
+		/// <para>Table name: 'update_queue'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -941,6 +997,7 @@ namespace TrackTv.Data
     {
         /// <summary>
 		/// <para>Column name: 'user_id'.</para>
+		/// <para>Table name: 'users'.</para>
 		/// <para>Primary key of table: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
@@ -968,6 +1025,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'is_admin'.</para>
+		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'boolean'.</para>
 		/// <para>CLR type: 'bool'.</para>
@@ -979,6 +1037,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'username'.</para>
+		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -990,6 +1049,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'password'.</para>
+		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
@@ -1001,6 +1061,7 @@ namespace TrackTv.Data
         
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -1051,7 +1112,7 @@ namespace TrackTv.Data
 		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "public"},
-			{typeof(ApiResponsePoco), "public"},
+			{typeof(ApiResponsePoco), "archive"},
 			{typeof(EpisodePoco), "public"},
 			{typeof(GenrePoco), "public"},
 			{typeof(NetworkPoco), "public"},
@@ -1142,7 +1203,7 @@ namespace TrackTv.Data
 
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>
-		/// <para>Table schema: 'public'.</para>
+		/// <para>Table schema: 'archive'.</para>
 		/// </summary>
         IQueryable<ApiResponsePoco> ApiResponses { get; }
 
