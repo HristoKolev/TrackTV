@@ -39,12 +39,13 @@
                     month[weekIndex] = new List<CalendarDay>();
                 }
 
-                month[weekIndex].Add(new CalendarDay
-                {
-                    Date = day,
-                    Episodes = monthlyEpisodes.Where(e => e.FirstAired?.Date == day).ToArray(),
-                    IsToday = day.Date == today.Date
-                });
+                month[weekIndex]
+                    .Add(new CalendarDay
+                    {
+                        Date = day,
+                        Episodes = monthlyEpisodes.Where(e => e.FirstAired?.Date == day).ToArray(),
+                        IsToday = day.Date == today.Date
+                    });
 
                 if (GetDayOfWeek(day) == DayOfWeek.Sunday)
                 {
