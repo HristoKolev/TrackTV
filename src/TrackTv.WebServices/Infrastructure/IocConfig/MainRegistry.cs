@@ -83,7 +83,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
                 this.For(type).ContainerScoped();
             }
 
-            this.For<Calendar>().Use<GregorianCalendar>().AlwaysUnique();
             this.For<EpisodeCalendarCalculator>().ContainerScoped();
         }
     }

@@ -12,35 +12,41 @@
 
         private const int NumberOfWeeks = 6;
 
-        public EpisodeCalendarCalculator(CalendarRepository calendarRepository, Calendar calendar)
+        public EpisodeCalendarCalculator(CalendarRepository calendarRepository)
         {
             this.CalendarRepository = calendarRepository;
-
-            this.Calendar = calendar;
         }
-
-        private Calendar Calendar { get; }
 
         private CalendarRepository CalendarRepository { get; }
 
         public async Task<CalendarDay[][]> CreateAsync(int profileId, DateTime currentDate, DateTime today)
         {
-            var startDate = this.GetStartDate(currentDate);
+            var startDate = GetStartDate(currentDate.Date);
 
             var endDate = startDate.AddDays(CalendarLength);
 
             var monthlyEpisodes =
                 await this.CalendarRepository.GetMonthlyEpisodesAsync(profileId, startDate, endDate).ConfigureAwait(false);
 
-            var month = ConstructMonth();
+            var month = new ICollection<CalendarDay>[NumberOfWeeks];
 
             int weekIndex = 0;
 
             for (var day = startDate; day < endDate; day = day.AddDays(1))
             {
-                AddEpisodes(month[weekIndex], monthlyEpisodes, day, today);
+                if (month[weekIndex] == null)
+                {
+                    month[weekIndex] = new List<CalendarDay>();
+                }
 
-                if (this.Calendar.GetDayOfWeek(day) == DayOfWeek.Sunday)
+                month[weekIndex].Add(new CalendarDay
+                {
+                    Date = day,
+                    Episodes = monthlyEpisodes.Where(e => e.FirstAired?.Date == day).ToArray(),
+                    IsToday = day.Date == today.Date
+                });
+
+                if (GetDayOfWeek(day) == DayOfWeek.Sunday)
                 {
                     weekIndex++;
                 }
@@ -49,44 +55,18 @@
             return month.Select(x => x.ToArray()).ToArray();
         }
 
-        private static void AddEpisodes(
-            ICollection<CalendarDay> week,
-            IEnumerable<CalendarEpisode> allEpisodes,
-            DateTime day,
-            DateTime today)
+        private static DayOfWeek GetDayOfWeek(DateTime day) => new GregorianCalendar().GetDayOfWeek(day);
+
+        private static DateTime GetStartDate(DateTime currentDate)
         {
-            var dailyEpisodes = allEpisodes.Where(e =>
-                e.FirstAired != null && e.FirstAired.Value >= day && e.FirstAired < day.AddDays(1));
+            var startOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
 
-            week.Add(new CalendarDay
-            {
-                Date = day,
-                Episodes = dailyEpisodes.ToArray(),
-                IsToday = day.Date == today.Date
-            });
-        }
+            // days to subtract to get to the start of the week
+            int weekDays = (int)GetDayOfWeek(startOfMonth) - (int)DayOfWeek.Monday;
 
-        private static ICollection<CalendarDay>[] ConstructMonth()
-        {
-            var model = new ICollection<CalendarDay>[NumberOfWeeks];
+            var startOfWeek = startOfMonth.Subtract(new TimeSpan(weekDays, 0, 0, 0));
 
-            for (int i = 0; i < NumberOfWeeks; i++)
-            {
-                model[i] = new List<CalendarDay>();
-            }
-
-            return model;
-        }
-
-        private DateTime GetStartDate(DateTime currentDate)
-        {
-            var startDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-
-            int offsetDays = (int)this.Calendar.GetDayOfWeek(startDate) - (int)DayOfWeek.Monday;
-
-            startDate = startDate.Subtract(new TimeSpan(offsetDays, 0, 0, 0));
-
-            return startDate;
+            return startOfWeek;
         }
     }
 }
