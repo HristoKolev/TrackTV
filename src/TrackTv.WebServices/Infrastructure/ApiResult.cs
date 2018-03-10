@@ -68,7 +68,7 @@ namespace TrackTv.WebServices.Infrastructure
         /// <summary>
         /// Creates a successful result without a payload.
         /// </summary>
-        public static ApiResult Ok() => Fail(Array.Empty<string>());
+        public static ApiResult Ok() => Ok<object>(null);
     }
 
     public static class ControllerExtensions

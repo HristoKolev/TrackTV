@@ -8,6 +8,7 @@
     <RuntimeIdentifiers>win10-x64;ubuntu.16.10-x64;centos.7-x64;</RuntimeIdentifiers>
     <SuppressDockerTargets>True</SuppressDockerTargets>
     <LangVersion>latest</LangVersion>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.log.txt;**\*.log.txt.*;</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,5 +52,5 @@
     <None Update="log4net-config.xml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
+  </ItemGroup> 
 </Project>

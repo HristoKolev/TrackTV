@@ -25,27 +25,16 @@
                       {
                           ActionExecutedContext ctx = await next().ConfigureAwait(false);
 
-                          if (ctx.Result != null && ctx.Result is OkObjectResult jsResult && jsResult.Value is ApiResult apiResult)
+                          if (ctx.Exception != null)
                           {
-                              if (apiResult.Success)
-                              {
-                                  transaction.Commit();
-                              }
-                              else
-                              {
-                                  transaction.Rollback();
-                              }
+                              transaction.Rollback();
+                              return;
                           }
-                          else
+
+                          if (ctx.Result != null && ctx.Result is OkObjectResult jsResult && jsResult.Value is ApiResult apiResult
+                              && !apiResult.Success)
                           {
-                              if (ctx.Exception != null)
-                              {
-                                  transaction.Rollback();
-                              }
-                              else
-                              {
-                                  transaction.Commit();
-                              }
+                              transaction.Rollback();
                           }
                       })
                       .ConfigureAwait(false);
