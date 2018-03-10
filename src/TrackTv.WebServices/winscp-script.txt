@@ -1,7 +1,7 @@
 option batch abort
 option confirm off
 
-open ssh://root@vm2
+open ssh://root@vm4
 
 synchronize remote ./bin/publish /var/www/tracktv/public_html
 
