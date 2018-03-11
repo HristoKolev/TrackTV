@@ -290,9 +290,7 @@
             var externalShow = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
             if (externalShow != null)
             {
-                var series = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(series.SeriesName) || series.SeriesName.StartsWith("***Duplicate"))
+                if (string.IsNullOrWhiteSpace(externalShow.SeriesName) || externalShow.SeriesName.StartsWith("***Duplicate"))
                 {
                     return false;
                 }
@@ -307,7 +305,7 @@
             {
                 var series = await this.GetExternalShowAsync(seriesId).ConfigureAwait(false);
 
-                if (string.IsNullOrWhiteSpace(series.SeriesName))
+                if (string.IsNullOrWhiteSpace(series?.SeriesName))
                 {
                     return false;
                 }
