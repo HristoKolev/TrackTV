@@ -50,7 +50,9 @@
                         if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
                         {
                             var lastUpdated = DateTime
-                                              .Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+                                              .Parse(await settingsService
+                                                           .GetSettingAsync(Setting.LastDatabaseUpdate)
+                                                           .ConfigureAwait(false))
                                               .ToUniversalTime();
 
                             var synchronizer = container.GetInstance<DataSynchronizer>();
@@ -66,10 +68,11 @@
                                                      .ConfigureAwait(false);
                             }
 
-                            await synchronizer.UpdateAllAsync(lastUpdated,
-                                                  async ex => await Global.ErrorHandler.HandleErrorAsync(ex).ConfigureAwait(false),
-                                                  OnSuccessfulUpdate)
-                                              .ConfigureAwait(false);
+                            await synchronizer
+                                  .UpdateAllAsync(
+                                      lastUpdated, async ex => await Global.ErrorHandler.HandleErrorAsync(ex).ConfigureAwait(false),
+                                      OnSuccessfulUpdate)
+                                  .ConfigureAwait(false);
 
                             Global.Log.Debug("Updater finished successfully.");
                         }
