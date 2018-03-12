@@ -43,7 +43,7 @@
         /// <summary>
         /// <para>Deletes a record from a table mapped to <see cref="TPoco"/> by ID.</para>
         /// </summary>
-        public Task Delete<TPoco>(int id)
+        public Task Delete<TPoco>(params int[] ids)
             where TPoco : IPoco
         {
             var type = typeof(TPoco);
@@ -52,7 +52,7 @@
             string primaryKeyName = this.primaryKeyMap[type];
             string tableSchema = this.tableSchemaMap[type];
 
-            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};");
+            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});");
         }
 
         public void Dispose()
@@ -142,6 +142,9 @@
     public partial interface IDbService : IDisposable
     {
         Task Delete<TPoco>(TPoco poco)
+            where TPoco : IPoco;
+
+        Task Delete<TPoco>(params int[] ids)
             where TPoco : IPoco;
 
         Task ExecuteInTransaction(Func<Task> body);

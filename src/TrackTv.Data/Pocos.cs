@@ -904,6 +904,67 @@ namespace TrackTv.Data
     }
     
     /// <summary>
+    /// <para>Table name: 'update_lists'.</para>
+	/// <para>Table schema: 'archive'.</para>
+    /// </summary>
+    [Table(Schema="archive", Name = "update_lists")]
+    public class UpdateListPoco : IPoco
+    {
+        /// <summary>
+		/// <para>Column name: 'update_list_date'.</para>
+		/// <para>Table name: 'update_lists'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>        
+		[NotNull]
+		[Column(Name = "update_list_date", DataType = DataType.DateTime2)]
+        public DateTime UpdateListDate { get; set; }
+        
+        /// <summary>
+		/// <para>Column name: 'update_list_body'.</para>
+		/// <para>Table name: 'update_lists'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
+        /// </summary>        
+		[NotNull]
+		[Column(Name = "update_list_body", DataType = DataType.BinaryJson)]
+        public string UpdateListBody { get; set; }
+        
+        /// <summary>
+		/// <para>Column name: 'update_list_id'.</para>
+		/// <para>Table name: 'update_lists'.</para>
+		/// <para>Primary key of table: 'update_lists'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+		[PrimaryKey, Identity]
+		[Column(Name = "update_list_id", DataType = DataType.Int32)]
+        public int UpdateListID { get; set; }
+
+		/// <summary>		
+		/// <para>Returns the primary key for the table (UpdateListID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.UpdateListID;
+
+		/// <summary>		
+		/// <para>Sets the primary key for the table (UpdateListID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.UpdateListID = value;
+
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.UpdateListID == default;
+        
+    }
+    
+    /// <summary>
     /// <para>Table name: 'update_queue'.</para>
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
@@ -1088,6 +1149,7 @@ namespace TrackTv.Data
 			{typeof(ShowPoco), "show_id"},
 			{typeof(ShowGenrePoco), "shows_genres_id"},
 			{typeof(SubscriptionPoco), "subscription_id"},
+			{typeof(UpdateListPoco), "update_list_id"},
 			{typeof(UpdateQueuePoco), "update_queue_id"},
 			{typeof(UserPoco), "user_id"},
 		};
@@ -1105,6 +1167,7 @@ namespace TrackTv.Data
 			{typeof(ShowPoco), "shows"},
 			{typeof(ShowGenrePoco), "shows_genres"},
 			{typeof(SubscriptionPoco), "subscriptions"},
+			{typeof(UpdateListPoco), "update_lists"},
 			{typeof(UpdateQueuePoco), "update_queue"},
 			{typeof(UserPoco), "users"},
 		};
@@ -1122,6 +1185,7 @@ namespace TrackTv.Data
 			{typeof(ShowPoco), "public"},
 			{typeof(ShowGenrePoco), "public"},
 			{typeof(SubscriptionPoco), "public"},
+			{typeof(UpdateListPoco), "archive"},
 			{typeof(UpdateQueuePoco), "public"},
 			{typeof(UserPoco), "public"},
 		};
@@ -1180,6 +1244,11 @@ namespace TrackTv.Data
 		/// <para>Database table 'subscriptions'.</para>		
 		/// </summary>
         public IQueryable<SubscriptionPoco> Subscriptions => this.DataConnection.GetTable<SubscriptionPoco>();
+		
+		/// <summary>
+		/// <para>Database table 'update_lists'.</para>		
+		/// </summary>
+        public IQueryable<UpdateListPoco> UpdateLists => this.DataConnection.GetTable<UpdateListPoco>();
 		
 		/// <summary>
 		/// <para>Database table 'update_queue'.</para>		
@@ -1260,6 +1329,12 @@ namespace TrackTv.Data
 		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<SubscriptionPoco> Subscriptions { get; }
+
+		/// <summary>
+		/// <para>Database table 'update_lists'.</para>
+		/// <para>Table schema: 'archive'.</para>
+		/// </summary>
+        IQueryable<UpdateListPoco> UpdateLists { get; }
 
 		/// <summary>
 		/// <para>Database table 'update_queue'.</para>
