@@ -83,7 +83,7 @@
             {
                 await body(transaction).ConfigureAwait(false);
 
-                if (!transaction.RolledBack)
+                if (!transaction.IsRolledBack)
                 {
                     transaction.ActualCommit();
                 }

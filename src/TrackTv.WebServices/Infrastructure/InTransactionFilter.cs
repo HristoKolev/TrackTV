@@ -22,22 +22,24 @@
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             await this.DbService.ExecuteInTransaction(async transaction =>
-                      {
-                          ActionExecutedContext ctx = await next().ConfigureAwait(false);
+            {
+                var ctx = await next().ConfigureAwait(false);
 
-                          if (ctx.Exception != null)
-                          {
-                              transaction.Rollback();
-                              return;
-                          }
+                if (ctx.Exception != null)
+                {
+                    transaction.Rollback();
+                    return;
+                }
 
-                          if (ctx.Result != null && ctx.Result is OkObjectResult jsResult && jsResult.Value is ApiResult apiResult
-                              && !apiResult.Success)
-                          {
-                              transaction.Rollback();
-                          }
-                      })
-                      .ConfigureAwait(false);
+                if (ctx.Result != null 
+                    && ctx.Result is OkObjectResult jsResult
+                    && jsResult.Value is ApiResult apiResult
+                    && !apiResult.Success)
+                {
+                    transaction.Rollback();
+                }
+            })
+            .ConfigureAwait(false);
         }
     }
 }

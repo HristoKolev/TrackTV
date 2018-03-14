@@ -14,8 +14,6 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_calculate_12_hour_clock_correctly()
         {
-            var parser = new DateParser();
-
             for (int hour = 0; hour < 23; hour++)
             {
                 for (int minute = 0; minute < 59; minute++)
@@ -25,7 +23,7 @@
                     string value = time.ToString("hh:mm tt", CultureInfo.InvariantCulture);
 
                     // ReSharper disable once PossibleInvalidOperationException
-                    var parsed = parser.ParseAirTime(value).Value;
+                    var parsed = DateParser.ParseAirTime(value).Value;
 
                     Assert.Equal(time.ToString("HH:mm"), parsed.ToString("HH:mm"));
                 }
@@ -37,9 +35,7 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_return_null_if_hour_is_not_an_integer()
         {
-            var parser = new DateParser();
-
-            Assert.Null(parser.ParseAirTime("A:00"));
+            Assert.Null(DateParser.ParseAirTime("A:00"));
         }
 
         [Theory]
@@ -51,9 +47,7 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_return_null_if_hour_is_out_of_range(string value)
         {
-            var parser = new DateParser();
-
-            Assert.Null(parser.ParseAirTime(value));
+            Assert.Null(DateParser.ParseAirTime(value));
         }
 
         [Fact]
@@ -61,9 +55,7 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_return_null_if_minute_is_not_an_integer()
         {
-            var parser = new DateParser();
-
-            Assert.Null(parser.ParseAirTime("00:A"));
+            Assert.Null(DateParser.ParseAirTime("00:A"));
         }
 
         [Theory]
@@ -73,9 +65,7 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_return_null_if_minute_is_out_of_range(string value)
         {
-            var parser = new DateParser();
-
-            Assert.Null(parser.ParseAirTime(value));
+            Assert.Null(DateParser.ParseAirTime(value));
         }
 
         [Theory]
@@ -90,9 +80,7 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_throw_if_passed_null_or_white_space(string value)
         {
-            var parser = new DateParser();
-
-            Assert.Throws<InvalidOperationException>(() => parser.ParseAirTime(value));
+            Assert.Throws<InvalidOperationException>(() => DateParser.ParseAirTime(value));
         }
 
         [Fact]
@@ -100,9 +88,7 @@
         // ReSharper disable once InconsistentNaming
         public void ParseAirTime_should_throw_should_return_null_if_colon_is_missing()
         {
-            var parser = new DateParser();
-
-            Assert.Null(parser.ParseAirTime("9000"));
+            Assert.Null(DateParser.ParseAirTime("9000"));
         }
     }
 }

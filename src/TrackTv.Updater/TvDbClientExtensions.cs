@@ -67,7 +67,7 @@ namespace TrackTv.Updater
                 }
             }
 
-            return results.Select(x => x.Value).ToArray();
+            return results.Select(x => x.Value).OrderBy(x => x.LastUpdated).ToArray();
         }
 
         private static Task<TvDbResponse<Update[]>[]> GetResponsesAsync(IUpdatesClient client, IDictionary<DateTime, DateTime> ranges)

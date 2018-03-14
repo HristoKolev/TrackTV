@@ -75,7 +75,7 @@ namespace TrackTv.Updater
             Expression<Action<IContext, TvDbClient>> authenticateClient = (context, client) =>
                 client.Authentication.AuthenticateAsync(Global.AppConfig.TheTvDbApiKey).Wait();
 
-            this.For<ITvDbClient>().Use<TvDbClient>().OnCreation(authenticateClient).ContainerScoped();
+            this.For<ITvDbClient>().Use<TvDbClient>().OnCreation(authenticateClient).Singleton();
         }
     }
 }

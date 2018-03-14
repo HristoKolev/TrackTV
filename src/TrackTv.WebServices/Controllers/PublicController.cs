@@ -26,17 +26,6 @@
         }
     }
 
-    public class ShowsViewModel
-    {
-        public int? GenreId { get; set; }
-
-        public int Page { get; set; }
-
-        public int PageSize { get; set; }
-
-        public string ShowName { get; set; }
-    }
-
     [Route("api/public/[controller]")]
     public class ShowController : Controller
     {
@@ -74,5 +63,16 @@
         {
             return this.Success(await this.GenresService.GetGenresAsync().ConfigureAwait(false));
         }
+    }
+
+    public class ShowsViewModel
+    {
+        public int? GenreId { get; set; }
+
+        public int Page { get; set; }
+
+        public int PageSize { get; set; }
+
+        public string ShowName { get; set; }
     }
 }

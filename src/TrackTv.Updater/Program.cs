@@ -45,41 +45,9 @@
                 {
                     try
                     {
-                        var settingsService = container.GetInstance<SettingsService>();
+                        var dataSynchronizer = container.GetInstance<DataSynchronizer2>();
 
-                        if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
-                        {
-                            var lastUpdated = DateTime
-                                              .Parse(await settingsService
-                                                           .GetSettingAsync(Setting.LastDatabaseUpdate)
-                                                           .ConfigureAwait(false))
-                                              .ToUniversalTime();
-
-                            var synchronizer = container.GetInstance<DataSynchronizer>();
-
-                            async Task OnSuccessfulUpdate(DateTime time)
-                            {
-                                if (time > lastUpdated)
-                                {
-                                    lastUpdated = time;
-                                }
-
-                                await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, lastUpdated.ToString("O"))
-                                                     .ConfigureAwait(false);
-                            }
-
-                            await synchronizer
-                                  .UpdateAllAsync(
-                                      lastUpdated, async ex => await Global.ErrorHandler.HandleErrorAsync(ex).ConfigureAwait(false),
-                                      OnSuccessfulUpdate)
-                                  .ConfigureAwait(false);
-
-                            Global.Log.Debug("Updater finished successfully.");
-                        }
-                        else
-                        {
-                            Global.Log.Debug("Updates disabled. Exiting...");
-                        }
+                        await dataSynchronizer.PerformUpdate(container).ConfigureAwait(false);
                     }
                     catch (Exception e)
                     {

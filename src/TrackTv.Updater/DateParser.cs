@@ -3,7 +3,7 @@ namespace TrackTv.Updater
     using System;
     using System.Globalization;
 
-    public class DateParser
+    public static class DateParser
     {
         private const int AbbreviationLength = 2;
 
@@ -11,7 +11,7 @@ namespace TrackTv.Updater
 
         private const string Pm = "pm";
 
-        public DateTime? ParseAirTime(string value)
+        public static DateTime? ParseAirTime(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -85,7 +85,7 @@ namespace TrackTv.Updater
             return Create(hour, minute);
         }
 
-        public DateTime? ParseFirstAired(string value)
+        public static DateTime? ParseFirstAired(string value)
         {
             try
             {

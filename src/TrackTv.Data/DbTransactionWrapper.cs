@@ -14,7 +14,7 @@
 
         public IsolationLevel IsolationLevel => this.Transaction.IsolationLevel;
 
-        public bool RolledBack { get; set; }
+        public bool IsRolledBack { get; set; }
 
         private IDbTransaction Transaction { get; }
 
@@ -33,10 +33,10 @@
 
         public void Rollback()
         {
-            if (!this.RolledBack)
+            if (!this.IsRolledBack)
             {
                 this.Transaction.Rollback();
-                this.RolledBack = true;
+                this.IsRolledBack = true;
             }
         }
     }

@@ -10,6 +10,8 @@
 
     using LinqToDB;
 
+    using Newtonsoft.Json;
+
     using StructureMap;
 
     using TrackTv.Data;
@@ -153,15 +155,12 @@
             this.DbService = dbService;
             this.Client = client;
             this.ApiResultRepository = apiResultRepository;
-
-            this.DateParser = new DateParser();
         }
 
         private ApiResultRepository ApiResultRepository { get; }
 
         private ITvDbClient Client { get; }
-
-        private DateParser DateParser { get; }
+ 
 
         private IDbService DbService { get; }
 
@@ -193,7 +192,7 @@
 
             var externalEpisode = await this.GetExternalEpisodeAsync(change.TheTvDbID).ConfigureAwait(false);
 
-            this.MapToEpisode(myEpisode, externalEpisode);
+            MapToEpisode(myEpisode, externalEpisode);
 
             await this.DbService.Update(myEpisode).ConfigureAwait(false);
 
@@ -209,7 +208,7 @@
                          };
 
             var externalShow = await this.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
-            this.MapToShow(myShow, externalShow);
+            MapToShow(myShow, externalShow);
 
             myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
             myShow.ShowID = await this.DbService.Save(myShow).ConfigureAwait(false);
@@ -297,7 +296,7 @@
             return network.NetworkID;
         }
 
-        private void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
+        private static void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
         {
             episode.EpisodeTitle = data.EpisodeName;
             episode.EpisodeDescription = data.Overview;
@@ -313,13 +312,13 @@
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {
-                episode.FirstAired = this.DateParser.ParseFirstAired(data.FirstAired);
+                episode.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
             }
 
             episode.LastUpdated = data.LastUpdated.ToDateTime();
         }
 
-        private void MapToShow(ShowPoco show, Series data)
+        private static void MapToShow(ShowPoco show, Series data)
         {
             show.Thetvdbid = data.Id;
             show.ShowName = data.SeriesName;
@@ -348,12 +347,12 @@
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {
-                show.FirstAired = this.DateParser.ParseFirstAired(data.FirstAired);
+                show.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
             }
 
             if (!string.IsNullOrWhiteSpace(data.AirsTime))
             {
-                show.AirTime = this.DateParser.ParseAirTime(data.AirsTime);
+                show.AirTime = DateParser.ParseAirTime(data.AirsTime);
             }
         }
 
@@ -423,7 +422,7 @@
 
                 var externalEpisode = externalEpisodes.First(record => record.Id == theTvDbID);
 
-                this.MapToEpisode(episode, externalEpisode);
+                MapToEpisode(episode, externalEpisode);
 
                 await this.DbService.Save(episode).ConfigureAwait(false);
 
@@ -482,45 +481,47 @@
     {
         public DataSynchronizer2(
             ILog log,
-            Container container,
             SettingsService settingsService,
             ErrorHandler errorHandler,
-            TvDbClient client)
+            ITvDbClient client)
         {
             this.Log = log;
-            this.Container = container;
             this.SettingsService = settingsService;
             this.ErrorHandler = errorHandler;
             this.Client = client;
         }
 
-        private TvDbClient Client { get; }
-
-        private Container Container { get; }
-
+        private ITvDbClient Client { get; }
+ 
         private ErrorHandler ErrorHandler { get; }
 
         private ILog Log { get; }
 
         private SettingsService SettingsService { get; }
 
-        public async Task PerformUpdate()
+        public async Task PerformUpdate(IContainer container)
         {
-            var settingsService = this.Container.GetInstance<SettingsService>();
-
-            if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
+            if (!bool.Parse(await this.SettingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
             {
-                var lastUpdated = DateTime.Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+                var lastUpdated = DateTime.Parse(await this.SettingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
                                           .ToUniversalTime();
 
-                var updates = await this.GetUpdates(lastUpdated).ConfigureAwait(false);
-                var changeList = await this.GetChangeList(updates).ConfigureAwait(false);
+                var changeListCompiler = container.GetInstance<ChangeListCompiler>();
+                var failedChangeRepository = container.GetInstance<ApiChangeRepository>();
 
-                int index = 0;
+                var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
+                var changeList = await this.GetChangeList(updates, changeListCompiler).ConfigureAwait(false);
 
-                foreach (var change in changeList)
+                var failedChangeList = await failedChangeRepository.GetFailedUpdates().ConfigureAwait(false);
+
+                var fullChangeList = changeList.Concat(failedChangeList);
+
+                int index = 1;
+
+                foreach (var change in fullChangeList)
                 {
-                    await this.ApplyChange(change, lastUpdated, index, changeList.Count).ConfigureAwait(false);
+                    await this.ApplyChange(change, lastUpdated, index, changeList.Count, container)
+                              .ContinueWith(task => index++).ConfigureAwait(false);
                 }
 
                 Global.Log.Debug("Updater finished successfully.");
@@ -530,31 +531,38 @@
                 Global.Log.Debug("Updates disabled. Exiting...");
             }
         }
-
  
-        private async Task ApplyChange(ChangeListItem change, DateTime lastUpdated, int index, int maxCount)
+        private async Task ApplyChange(ChangeListItem change, DateTime lastUpdated, int index, int maxCount, IContainer masterContainer)
         {
-            using (var container = this.Container.CreateChildContainer())
+            using (var container = masterContainer.CreateChildContainer())
             {
                 try
                 {
                     var dbService = container.GetInstance<IDbService>();
                     var settingsService = container.GetInstance<SettingsService>();
                     var applier = container.GetInstance<ChangeListApplier>();
+                    var failedChangeRepository = container.GetInstance<ApiChangeRepository>();
 
-                    await dbService.ExecuteInTransaction(async () =>
+                    await dbService.ExecuteInTransaction(async (transaction) =>
                     {
                         try
                         {
                             await applier.ApplyChange(change).ConfigureAwait(false);
+
+                            await failedChangeRepository.RemoveFailedUpdate(change.TheTvDbID).ConfigureAwait(false);
                         }
                         catch (Exception e)
                         {
+                            transaction.Rollback();
+
+                            await failedChangeRepository.AddFailedApiChange(change).ConfigureAwait(false);
+
                             throw new DataSyncException(
-                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.TheTvDbID}, Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length})", e);
+                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.TheTvDbID},"
+                                + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length})", e);
                         }
 
-                        var newLastUpdated = new[]
+                        DateTime newLastUpdated = new[]
                         {
                             lastUpdated,
                             change.LastUpdated
@@ -564,7 +572,8 @@
                                             .ConfigureAwait(false);
                     }).ConfigureAwait(false);
 
-                    this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.TheTvDbID}, Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length})");
+                    this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.TheTvDbID},"
+                                   + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length})");
                 }
                 catch (Exception e)
                 {
@@ -573,14 +582,13 @@
             }
         }
 
-        private async Task<List<ChangeListItem>> GetChangeList(Update[] updates)
+        private async Task<List<ChangeListItem>> GetChangeList(Update[] updates, ChangeListCompiler changeListCompiler)
         {
             List<ChangeListItem> changeList;
             var changeListWatch = Stopwatch.StartNew();
 
             try
             {
-                var changeListCompiler = this.Container.GetInstance<ChangeListCompiler>();
                 changeList = await changeListCompiler.GetChangeList(updates).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -592,31 +600,28 @@
 
             int episodeCount = changeList.Count(item => item.Type == UpdateRecordType.Episode);
             int showCount = changeList.Count(item => item.Type    == UpdateRecordType.Show);
-            this.Log.Debug($"{episodeCount} episodes. {showCount} show.");
+            this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
 
             return changeList;
         }
 
         private async Task<Update[]> GetUpdates(DateTime fromTime, DateTime toTime)
         {
-            var response = await this.Client.Updates.GetAccumulatedAsync(fromTime, toTime).ConfigureAwait(false);
-
-            if (response.Data == null)
-            {
-                return Array.Empty<Update>();
-            }
-
-            return response.Data.OrderBy(update => update.LastUpdated).ToArray();
-        }
-
-        private async Task<Update[]> GetUpdates(DateTime lastUpdated)
-        {
             Update[] updates;
             var updatesWatch = Stopwatch.StartNew();
 
             try
             {
-                updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
+                var response = await this.Client.Updates.GetAccumulatedAsync(fromTime, toTime).ConfigureAwait(false);
+
+                if (response.Data == null)
+                {
+                    updates = Array.Empty<Update>();
+                }
+                else
+                {
+                    updates = response.Data.OrderBy(update => update.LastUpdated).ToArray();
+                }
             }
             catch (Exception e)
             {
@@ -626,6 +631,58 @@
             this.Log.Debug($"{updates.Length} updates were detected in {updatesWatch.Elapsed:hh\\:mm\\:ss}.");
             updatesWatch.Stop();
             return updates;
+        }
+    }
+
+    public class ApiChangeRepository
+    {
+        public ApiChangeRepository(IDbService dbService)
+        {
+            this.DbService = dbService;
+        }
+
+        private IDbService DbService { get; }
+
+        public async Task AddFailedApiChange(ChangeListItem change)
+        {
+            var apiChange = await this.DbService.ApiChanges.FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == change.TheTvDbID)
+                                      .ConfigureAwait(false) ?? new ApiChangePoco();
+
+            var utcNow = DateTime.UtcNow;
+
+            apiChange.ApiChangeLastFailedTime = utcNow;
+            apiChange.ApiChangeBody = JsonConvert.SerializeObject(change);
+
+            apiChange.ApiChangeFailCount++;
+
+            if (((IPoco)apiChange).IsNew())
+            {
+                apiChange.ApiChangeDate = utcNow;
+                apiChange.ApiChangeThetvdbid = change.TheTvDbID;
+                apiChange.ApiChangeThetvdbLastUpdated = change.LastUpdated;
+            }
+
+            await this.DbService.Save(apiChange).ConfigureAwait(false);
+        }
+
+        public async Task<List<ChangeListItem>> GetFailedUpdates()
+        {
+            var failedUpdates = await this.DbService.ApiChanges.ToListAsync().ConfigureAwait(false);
+
+            return failedUpdates
+                   .Select(p => p.ApiChangeBody)
+                   .Select(JsonConvert.DeserializeObject<ChangeListItem>)
+                   .ToList();
+        }
+
+        public async Task RemoveFailedUpdate(int thetvdbid)
+        {
+            var poco = await this.DbService.ApiChanges.FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == thetvdbid).ConfigureAwait(false);
+
+            if (poco != null)
+            {
+                await this.DbService.Delete(poco).ConfigureAwait(false);
+            }
         }
     }
 }

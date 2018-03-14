@@ -24,13 +24,9 @@
             this.Log = log;
             this.UpdateQueueRepository = updateQueueRepository;
             this.ApiResultRepository = apiResultRepository;
-
-            this.DateParser = new DateParser();
         }
 
         private ITvDbClient Client { get; }
-
-        private DateParser DateParser { get; }
 
         private IDbService DbService { get; }
 
@@ -199,7 +195,7 @@
             return response.Data.OrderBy(update => update.LastUpdated).ToArray();
         }
 
-        private void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
+        private static void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
         {
             episode.EpisodeTitle = data.EpisodeName;
             episode.EpisodeDescription = data.Overview;
@@ -215,13 +211,13 @@
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {
-                episode.FirstAired = this.DateParser.ParseFirstAired(data.FirstAired);
+                episode.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
             }
 
             episode.LastUpdated = data.LastUpdated.ToDateTime();
         }
 
-        private void MapToShow(ShowPoco show, Series data)
+        private static void MapToShow(ShowPoco show, Series data)
         {
             show.Thetvdbid = data.Id;
             show.ShowName = data.SeriesName;
@@ -250,12 +246,12 @@
 
             if (!string.IsNullOrWhiteSpace(data.FirstAired))
             {
-                show.FirstAired = this.DateParser.ParseFirstAired(data.FirstAired);
+                show.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
             }
 
             if (!string.IsNullOrWhiteSpace(data.AirsTime))
             {
-                show.AirTime = this.DateParser.ParseAirTime(data.AirsTime);
+                show.AirTime = DateParser.ParseAirTime(data.AirsTime);
             }
         }
 
@@ -364,7 +360,7 @@
 
             var externalEpisode = await this.GetExternalEpisodeAsync(updateId).ConfigureAwait(false);
 
-            this.MapToEpisode(myEpisode, externalEpisode);
+            MapToEpisode(myEpisode, externalEpisode);
 
             await this.DbService.Update(myEpisode).ConfigureAwait(false);
 
@@ -403,7 +399,7 @@
                     ShowID = showId,
                 };
 
-                this.MapToEpisode(myEpisode, episode);
+                MapToEpisode(myEpisode, episode);
 
                 await this.DbService.Insert(myEpisode).ConfigureAwait(false);
 
@@ -428,7 +424,7 @@
             {
                 var episode = externalUpdatedEpisodes.First(record => record.Id == myEpisode.Thetvdbid);
 
-                this.MapToEpisode(myEpisode, episode);
+                MapToEpisode(myEpisode, episode);
                 
                 await this.DbService.Update(myEpisode).ConfigureAwait(false);
 
@@ -472,7 +468,7 @@
                          };
 
             var externalShow = await this.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
-            this.MapToShow(myShow, externalShow);
+            MapToShow(myShow, externalShow);
 
             myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
             myShow.ShowID = await this.DbService.Save(myShow).ConfigureAwait(false);
@@ -524,5 +520,36 @@
         Sunday = 7,
 
         Daily = 8
+    }
+
+    public class UpdateQueueRepository
+    {
+        public UpdateQueueRepository(IDbService dbService)
+        {
+            this.DbService = dbService;
+        }
+
+        private IDbService DbService { get; }
+
+        public async Task AddFailedUpdate(UpdateQueuePoco poco)
+        {
+            var update = await this.DbService.UpdateQueue.FirstOrDefaultAsync(p => p.ThetvdbUpdateID == poco.ThetvdbUpdateID)
+                                   .ConfigureAwait(false) ?? poco;
+
+            update.LastFailedTime = poco.LastFailedTime;
+            update.FailCount++;
+
+            await this.DbService.Save(update).ConfigureAwait(false);
+        }
+
+        public Task<List<UpdateQueuePoco>> GetFailedUpdates()
+        {
+            return this.DbService.UpdateQueue.ToListAsync();
+        }
+
+        public Task RemoveFailedUpdate(UpdateQueuePoco poco)
+        {
+            return this.DbService.Delete(poco);
+        }
     }
 }
