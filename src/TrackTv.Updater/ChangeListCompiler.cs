@@ -657,7 +657,7 @@
 
             if (((IPoco)apiChange).IsNew())
             {
-                apiChange.ApiChangeDate = utcNow;
+                apiChange.ApiChangeCreatedDate = utcNow;
                 apiChange.ApiChangeThetvdbid = change.TheTvDbID;
                 apiChange.ApiChangeThetvdbLastUpdated = change.LastUpdated;
             }

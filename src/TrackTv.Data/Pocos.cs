@@ -123,7 +123,7 @@ namespace TrackTv.Data
         public int ApiChangeFailCount { get; set; }
         
         /// <summary>
-		/// <para>Column name: 'api_change_date'.</para>
+		/// <para>Column name: 'api_change_created_date'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
@@ -131,8 +131,8 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
 		[NotNull]
-		[Column(Name = "api_change_date", DataType = DataType.DateTime2)]
-        public DateTime ApiChangeDate { get; set; }
+		[Column(Name = "api_change_created_date", DataType = DataType.DateTime2)]
+        public DateTime ApiChangeCreatedDate { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'api_change_body'.</para>

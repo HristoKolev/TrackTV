@@ -41,9 +41,29 @@
         }
 
         /// <summary>
+        /// <para>Deletes a number of records from a table mapped to <see cref="TPoco"/> by ID.</para>
+        /// </summary>
+        public Task Delete<TPoco>(int[] ids)
+            where TPoco : IPoco
+        {
+            if (ids.Length == 0)
+            {
+                return Task.CompletedTask;
+            }
+
+            var type = typeof(TPoco);
+
+            string tableName = this.tableNameMap[type];
+            string primaryKeyName = this.primaryKeyMap[type];
+            string tableSchema = this.tableSchemaMap[type];
+
+            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});");
+        }
+
+        /// <summary>
         /// <para>Deletes a record from a table mapped to <see cref="TPoco"/> by ID.</para>
         /// </summary>
-        public Task Delete<TPoco>(params int[] ids)
+        public Task Delete<TPoco>(int id)
             where TPoco : IPoco
         {
             var type = typeof(TPoco);
@@ -52,7 +72,7 @@
             string primaryKeyName = this.primaryKeyMap[type];
             string tableSchema = this.tableSchemaMap[type];
 
-            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});");
+            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};");
         }
 
         public void Dispose()
@@ -144,7 +164,10 @@
         Task Delete<TPoco>(TPoco poco)
             where TPoco : IPoco;
 
-        Task Delete<TPoco>(params int[] ids)
+        Task Delete<TPoco>(int[] ids)
+            where TPoco : IPoco;
+
+        Task Delete<TPoco>(int id)
             where TPoco : IPoco;
 
         Task ExecuteInTransaction(Func<Task> body);
