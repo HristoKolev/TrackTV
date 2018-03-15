@@ -45,7 +45,7 @@
                 {
                     try
                     {
-                        var dataSynchronizer = container.GetInstance<DataSynchronizer2>();
+                        var dataSynchronizer = container.GetInstance<DataSynchronizer>();
 
                         await dataSynchronizer.PerformUpdate(container).ConfigureAwait(false);
                     }

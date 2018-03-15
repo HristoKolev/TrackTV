@@ -25,8 +25,6 @@ namespace TrackTv.Updater
         {
             this.DataAccess();
 
-            this.DataRetrieval();
-
             this.Infrastructure();
 
             this.ServiceLayer();
@@ -45,12 +43,7 @@ namespace TrackTv.Updater
             this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<PostgreSQLDataProvider>();
             this.For<IDbService>().Use<DbService>();
         }
-
-        private void DataRetrieval()
-        {
-            this.For<DataSynchronizer>();
-        }
-
+ 
         private void Infrastructure()
         {
             this.For<ILog>().Use("Building log4net logger.", context => Global.Log);

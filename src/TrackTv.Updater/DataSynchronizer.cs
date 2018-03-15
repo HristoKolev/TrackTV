@@ -2,489 +2,188 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
     using log4net;
 
-    using LinqToDB;
+    using StructureMap;
 
     using TrackTv.Data;
-    using TrackTv.Services.Data;
+    using TrackTv.Services;
 
     using TvDbSharper;
     using TvDbSharper.Dto;
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(IDbService dbService, ITvDbClient client, ILog log, UpdateQueueRepository updateQueueRepository, ApiResultRepository apiResultRepository)
+        public DataSynchronizer(
+            ILog log,
+            SettingsService settingsService,
+            ErrorHandler errorHandler,
+            ITvDbClient client)
         {
-            this.DbService = dbService;
-            this.Client = client;
             this.Log = log;
-            this.UpdateQueueRepository = updateQueueRepository;
-            this.ApiResultRepository = apiResultRepository;
+            this.SettingsService = settingsService;
+            this.ErrorHandler = errorHandler;
+            this.Client = client;
         }
 
         private ITvDbClient Client { get; }
-
-        private IDbService DbService { get; }
-
-        private UpdateQueueRepository UpdateQueueRepository { get; }
-
-        private ApiResultRepository ApiResultRepository { get; }
+ 
+        private ErrorHandler ErrorHandler { get; }
 
         private ILog Log { get; }
 
-        public async Task<DateTime> UpdateAllAsync(
-            DateTime fromUtcDate,
-            Func<Exception, Task> errorHandler,
-            Func<DateTime, Task> onSuccessfulUpdate)
+        private SettingsService SettingsService { get; }
+
+        public async Task PerformUpdate(IContainer container)
         {
-            var updates = await this.GetUpdates(fromUtcDate).ConfigureAwait(false);
-
-            var failedUpdates = await this.UpdateQueueRepository.GetFailedUpdates().ConfigureAwait(false);
-
-            updates = updates.Concat(failedUpdates.Select(poco => new Update
-                             {
-                                 Id = poco.ThetvdbUpdateID,
-                                 LastUpdated = poco.ThetvdbLastUpdated.ToUnixEpochTime()
-                             }))
-                             .ToArray();
-
-            this.Log.Debug($"{updates.Length} updates available.");
-
-            this.Log.Debug($"{failedUpdates.Count} failed from last time.");
-
-            if (!updates.Any())
+            if (!bool.Parse(await this.SettingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
             {
-                return fromUtcDate;
+                var lastUpdated = DateTime.Parse(await this.SettingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+                                          .ToUniversalTime();
+
+                var changeListCompiler = container.GetInstance<ChangeListCompiler>();
+                var failedChangeRepository = container.GetInstance<ApiChangeRepository>();
+
+                var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
+
+                var changeList = await this.GetChangeList(updates, changeListCompiler).ConfigureAwait(false);
+
+                var failedChangeList = await failedChangeRepository.GetFailedUpdates().ConfigureAwait(false);
+
+                int episodeCount = failedChangeList.Count(item => item.Type == UpdateRecordType.Episode);
+                int showCount = failedChangeList.Count(item => item.Type    == UpdateRecordType.Show);
+                this.Log.Debug($"Failed changes from previous runs: {episodeCount} episodes. {showCount} shows.");
+
+                var fullChangeList = changeList.Concat(failedChangeList);
+
+                int index = 1;
+
+                foreach (var change in fullChangeList)
+                {
+                    await this.ApplyChange(change, lastUpdated, index, changeList.Count, container)
+                              .ContinueWith(task => index++).ConfigureAwait(false);
+                }
+
+                Global.Log.Debug("Updater finished successfully.");
             }
-
-            int i = 0;
-
-            foreach (var update in updates)
+            else
             {
-                this.Log.Debug($"Performing update {i + 1} of {updates.Length}, updateId = {update.Id}");
-                i++;
-
-                await this.DbService.ExecuteInTransaction(async transaction =>
-                          {
-                              try
-                              {
-                                  var context = new UpdateContext
-                                  {
-                                      ExistingShowIds =
-                                          new HashSet<int>(await this.DbService.Shows.Select(poco => poco.Thetvdbid)
-                                                                     .ToListAsync()
-                                                                     .ConfigureAwait(false)),
-                                      ExistingEpisodeIds =
-                                          new HashSet<int>(await this.DbService.Episodes.Select(poco => poco.Thetvdbid)
-                                                                     .ToListAsync()
-                                                                     .ConfigureAwait(false)),
-                                  };
-
-                                  await this.ProcessUpdateAsync(update.Id, context).ConfigureAwait(false);
-
-                                  await onSuccessfulUpdate(update.LastUpdated.ToDateTime()).ConfigureAwait(false);
-
-                                  var failedUpdate = failedUpdates.FirstOrDefault(poco => poco.ThetvdbUpdateID == update.Id);
-
-                                  if (failedUpdate != null)
-                                  {
-                                      await this.UpdateQueueRepository.RemoveFailedUpdate(failedUpdate).ConfigureAwait(false);
-                                  }
-                              }
-                              catch (Exception ex)
-                              {
-                                  transaction.Rollback();
-
-                                  await this.UpdateQueueRepository.AddFailedUpdate(new UpdateQueuePoco
-                                            {
-                                                ThetvdbUpdateID = update.Id,
-                                                ThetvdbLastUpdated = update.LastUpdated.ToDateTime(),
-                                                LastFailedTime = DateTime.UtcNow
-                                            })
-                                            .ConfigureAwait(false);
-
-                                  await errorHandler(new DataSyncException($"DataSynchronizer error. UpdateId: {update.Id}.", ex))
-                                      .ConfigureAwait(false);
-                              }
-                          })
-                          .ConfigureAwait(false);
-
-                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+                Global.Log.Debug("Updates disabled. Exiting...");
             }
+        }
+ 
+        private async Task ApplyChange(ChangeListItem change, DateTime lastUpdated, int index, int maxCount, IContainer masterContainer)
+        {
+            using (var container = masterContainer.CreateChildContainer())
+            {
+                try
+                {
+                    var dbService = container.GetInstance<IDbService>();
+                    var settingsService = container.GetInstance<SettingsService>();
+                    var applier = container.GetInstance<ChangeListApplier>();
+                    var failedChangeRepository = container.GetInstance<ApiChangeRepository>();
 
-            return updates.Select(update => update.LastUpdated).Max().ToDateTime();
+                    var changeWatch = Stopwatch.StartNew();
+
+                    await dbService.ExecuteInTransaction(async transaction =>
+                    {
+                        try
+                        {
+                            this.Log.Debug($"[{index}/{maxCount}] Starting to apply change (ID={change.TheTvDbID},"
+                                           + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length})");
+
+                            await applier.ApplyChange(change).ConfigureAwait(false);
+
+                            await failedChangeRepository.RemoveFailedUpdate(change.TheTvDbID).ConfigureAwait(false);
+                        }
+                        catch (Exception e)
+                        {
+                            transaction.Rollback();
+
+                            await failedChangeRepository.AddFailedApiChange(change).ConfigureAwait(false);
+
+                            changeWatch.Stop();
+
+                            throw new DataSyncException(
+                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.TheTvDbID},"
+                                + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}", e);
+                        }
+
+                        DateTime newLastUpdated = new[]
+                        {
+                            lastUpdated,
+                            change.LastUpdated
+                        }.Max();
+
+                        await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O"))
+                                             .ConfigureAwait(false);
+                    }).ConfigureAwait(false);
+
+                    changeWatch.Stop();
+
+                    this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.TheTvDbID},"
+                                   + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}");
+                }
+                catch (Exception e)
+                {
+                    await this.ErrorHandler.HandleErrorAsync(e).ConfigureAwait(false);
+                }
+            }
         }
 
-        private async Task<EpisodeRecord> GetExternalEpisodeAsync(int updateId)
+        private async Task<List<ChangeListItem>> GetChangeList(Update[] updates, ChangeListCompiler changeListCompiler)
         {
-            var response = await this.Client.Episodes.GetAsync(updateId).ConfigureAwait(false);
+            List<ChangeListItem> changeList;
+            var changeListWatch = Stopwatch.StartNew();
 
-            return response.Data;
-        }
-
-        private async Task<Series> GetExternalShowAsync(int updateId)
-        {
             try
             {
-                var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);
-                return response.Data;
+                changeList = await changeListCompiler.GetChangeList(updates).ConfigureAwait(false);
             }
-            catch (TvDbServerException ex)
+            catch (Exception e)
             {
-                if (ex.StatusCode == 404)
+                throw new DataSyncException("An error occured while compiling the change list.", e);
+            }
+
+            this.Log.Debug($"Change list was compiled successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
+
+            int episodeCount = changeList.Count(item => item.Type == UpdateRecordType.Episode);
+            int showCount = changeList.Count(item => item.Type    == UpdateRecordType.Show);
+            this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
+
+            return changeList;
+        }
+
+        private async Task<Update[]> GetUpdates(DateTime fromTime, DateTime toTime)
+        {
+            Update[] updates;
+            var updatesWatch = Stopwatch.StartNew();
+
+            try
+            {
+                var response = await this.Client.Updates.GetAccumulatedAsync(fromTime, toTime).ConfigureAwait(false);
+
+                if (response.Data == null)
                 {
-                    return null;
+                    updates = Array.Empty<Update>();
                 }
-
-                throw;
-
-            }
-        }
-
-        private async Task<int> GetOrCreateGenre(string genreName)
-        {
-            var genre = await this.DbService.Genres
-                                  .FirstOrDefaultAsync(poco => poco.GenreName.Trim().ToLower() == genreName.Trim().ToLower())
-                                  .ConfigureAwait(false);
-
-            if (genre == null)
-            {
-                genre = new GenrePoco
+                else
                 {
-                    GenreName = genreName
-                };
-
-                return await this.DbService.Insert(genre).ConfigureAwait(false);
-            }
-
-            return genre.GenreID;
-        }
-
-        private async Task<int> GetOrCreateNetwork(string networkName)
-        {
-            var network = await this.DbService.Networks
-                                    .FirstOrDefaultAsync(poco => poco.NetworkName.Trim().ToLower() == networkName.Trim().ToLower())
-                                    .ConfigureAwait(false);
-
-            if (network == null)
-            {
-                network = new NetworkPoco
-                {
-                    NetworkName = networkName
-                };
-
-                return await this.DbService.Insert(network).ConfigureAwait(false);
-            }
-
-            return network.NetworkID;
-        }
-
-        private async Task<Update[]> GetUpdates(DateTime time)
-        {
-            var response = await this.Client.Updates.GetAccumulatedAsync(time, DateTime.UtcNow).ConfigureAwait(false);
-
-            if (response.Data == null)
-            {
-                return Array.Empty<Update>();
-            }
-
-            return response.Data.OrderBy(update => update.LastUpdated).ToArray();
-        }
-
-        private static void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
-        {
-            episode.EpisodeTitle = data.EpisodeName;
-            episode.EpisodeDescription = data.Overview;
-
-            if (!string.IsNullOrWhiteSpace(data.ImdbId))
-            {
-                episode.Imdbid = data.ImdbId;
-            }
-
-            episode.EpisodeNumber = data.AiredEpisodeNumber.Value;
-            episode.SeasonNumber = data.AiredSeason.Value;
-            episode.Thetvdbid = data.Id;
-
-            if (!string.IsNullOrWhiteSpace(data.FirstAired))
-            {
-                episode.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
-            }
-
-            episode.LastUpdated = data.LastUpdated.ToDateTime();
-        }
-
-        private static void MapToShow(ShowPoco show, Series data)
-        {
-            show.Thetvdbid = data.Id;
-            show.ShowName = data.SeriesName;
-
-            if (!string.IsNullOrWhiteSpace(data.Banner))
-            {
-                show.ShowBanner = data.Banner;
-            }
-
-            if (!string.IsNullOrWhiteSpace(data.ImdbId))
-            {
-                show.Imdbid = data.ImdbId;
-            }
-
-            show.ShowDescription = data.Overview;
-
-            show.LastUpdated = data.LastUpdated.ToDateTime();
-
-            AirDay airDay;
-            Enum.TryParse(data.AirsDayOfWeek, out airDay);
-            show.AirDay = (int?)airDay;
-
-            ShowStatus status;
-            Enum.TryParse(data.Status, out status);
-            show.ShowStatus = (int)status;
-
-            if (!string.IsNullOrWhiteSpace(data.FirstAired))
-            {
-                show.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
-            }
-
-            if (!string.IsNullOrWhiteSpace(data.AirsTime))
-            {
-                show.AirTime = DateParser.ParseAirTime(data.AirsTime);
-            }
-        }
-
-        private async Task<bool> ProcessUpdateAsync(int updateId, UpdateContext context)
-        {
-            // In our database as an episode
-            if (context.ExistingEpisodeIds.Contains(updateId))
-            {
-                await this.UpdateEpisodeAsync(updateId).ConfigureAwait(false);
-                return true;
-            }
-
-            // In our database as series
-            if (context.ExistingShowIds.Contains(updateId))
-            {
-                var series = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
-
-                // if it's not deleted in their database
-                if (series != null)
-                {
-                    if (string.IsNullOrWhiteSpace(series.SeriesName))
-                    {
-                        return false;
-                    }
-
-                    await this.UpdateShow(updateId, context).ConfigureAwait(false);
-                    return true;
+                    updates = response.Data.OrderBy(update => update.LastUpdated).ToArray();
                 }
             }
-
-            // new show
-            var externalShow = await this.GetExternalShowAsync(updateId).ConfigureAwait(false);
-            if (externalShow != null)
+            catch (Exception e)
             {
-                if (string.IsNullOrWhiteSpace(externalShow.SeriesName) || externalShow.SeriesName.StartsWith("***Duplicate"))
-                {
-                    return false;
-                }
-
-                await this.UpdateShow(updateId, context).ConfigureAwait(false);
-                return true;
+                throw new DataSyncException("An error occured while getting the updates from the server.", e);
             }
 
-            // episode of a show that we don't have
-            var externalEpisode = await this.GetExternalEpisodeAsync(updateId).ConfigureAwait(false);
-            if (externalEpisode != null && int.TryParse(externalEpisode.SeriesId, out var seriesId))
-            {
-                var series = await this.GetExternalShowAsync(seriesId).ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(series?.SeriesName))
-                {
-                    return false;
-                }
-
-                await this.UpdateShow(seriesId, context).ConfigureAwait(false);
-                return true;
-            }
-
-            return false;
-        }
-
-        private async Task UpdateActors(int theTvDbId, int showId)
-        {
-            var response = await this.Client.Series.GetActorsAsync(theTvDbId).ConfigureAwait(false);
-
-            var actors = response.Data;
-
-            if (actors == null)
-            {
-                return;
-            }
-
-            var actorIds = actors.Select(actor => actor.Id).ToArray();
-
-            var myActors = await this.DbService.Actors.Where(poco => actorIds.Contains(poco.Thetvdbid)).ToListAsync().ConfigureAwait(false);
-
-            foreach (var actor in actors)
-            {
-                var myActor = myActors.FirstOrDefault(poco => poco.Thetvdbid == actor.Id) ?? new ActorPoco();
-
-                if (!string.IsNullOrWhiteSpace(actor.Image))
-                {
-                    myActor.ActorImage = actor.Image;
-                }
-
-                myActor.Thetvdbid = actor.Id;
-                myActor.ActorName = actor.Name;
-                myActor.LastUpdated = DateTime.Parse(actor.LastUpdated);
-
-                myActor.ActorID = await this.DbService.Save(myActor).ConfigureAwait(false);
-
-                var role = await this.DbService.Roles.FirstOrDefaultAsync(poco => poco.ShowID == showId && poco.ActorID == myActor.ActorID)
-                                     .ConfigureAwait(false) ?? new RolePoco();
-
-                role.ShowID = showId;
-                role.ActorID = myActor.ActorID;
-                role.RoleName = actor.Role;
-
-                role.RoleID = await this.DbService.Save(role).ConfigureAwait(false);
-            }
-        }
-
-        private async Task UpdateEpisodeAsync(int updateId)
-        {
-            var myEpisode = await this.DbService.Episodes.FirstAsync(poco => poco.Thetvdbid == updateId).ConfigureAwait(false);
-
-            var externalEpisode = await this.GetExternalEpisodeAsync(updateId).ConfigureAwait(false);
-
-            MapToEpisode(myEpisode, externalEpisode);
-
-            await this.DbService.Update(myEpisode).ConfigureAwait(false);
-
-            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, updateId).ConfigureAwait(false);
-        }
-
-        private async Task UpdateEpisodes(int theTvDbId, UpdateContext context, int showId)
-        {
-            var basicEpisodes = await this.Client.Series.GetBasicEpisodesAsync(theTvDbId).ConfigureAwait(false);
-
-            if (!basicEpisodes.Any())
-            {
-                return;
-            }
-
-            // Delete episodes
-            var deletedEpisodeIds = context.ExistingEpisodeIds.Except(basicEpisodes.Select(e => e.Id)).ToArray();
-            var deletedEpisodes = await this.DbService.Episodes
-                                            .Where(poco => deletedEpisodeIds.Contains(poco.Thetvdbid) && poco.ShowID == showId)
-                                            .ToListAsync()
-                                            .ConfigureAwait(false);
-
-            foreach (var episode in deletedEpisodes)
-            {
-                await this.DbService.Delete(episode).ConfigureAwait(false);
-            }
-
-            // Insert episodes
-            var addedEpisodeIds = basicEpisodes.Select(e => e.Id).Except(context.ExistingEpisodeIds).ToArray();
-            var addedEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(addedEpisodeIds).ConfigureAwait(false);
-
-            foreach (var episode in addedEpisodes)
-            {
-                var myEpisode = new EpisodePoco
-                {
-                    ShowID = showId,
-                };
-
-                MapToEpisode(myEpisode, episode);
-
-                await this.DbService.Insert(myEpisode).ConfigureAwait(false);
-
-                await this.ApiResultRepository.SaveApiResult(episode, ApiResultType.Episode, episode.Id).ConfigureAwait(false);
-            }
-
-            // Update episodes
-            var existingEpisodeIds = basicEpisodes.Select(episode => episode.Id).Intersect(context.ExistingEpisodeIds).ToArray();
-            var myExistingEpisodes = await this.DbService.Episodes.Where(poco => existingEpisodeIds.Contains(poco.Thetvdbid))
-                                               .ToListAsync()
-                                               .ConfigureAwait(false);
-
-            var updatedEpisodes = myExistingEpisodes
-                                  .Where(poco =>
-                                      basicEpisodes.First(e => e.Id == poco.Thetvdbid).LastUpdated > poco.LastUpdated.ToUnixEpochTime())
-                                  .ToList();
-
-            var externalUpdatedEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(updatedEpisodes.Select(poco => poco.Thetvdbid))
-                                                    .ConfigureAwait(false);
-
-            foreach (var myEpisode in updatedEpisodes)
-            {
-                var episode = externalUpdatedEpisodes.First(record => record.Id == myEpisode.Thetvdbid);
-
-                MapToEpisode(myEpisode, episode);
-                
-                await this.DbService.Update(myEpisode).ConfigureAwait(false);
-
-                await this.ApiResultRepository.SaveApiResult(episode, ApiResultType.Episode, episode.Id).ConfigureAwait(false);
-            }
-        }
-
-        private async Task UpdateGenres(IEnumerable<string> genreNames, int showId)
-        {
-            var genreIds = new List<int>();
-
-            foreach (string genreName in genreNames)
-            {
-                int genreId = await this.GetOrCreateGenre(genreName).ConfigureAwait(false);
-
-                genreIds.Add(genreId);
-            }
-
-            var existingGenreIds = await this.DbService.ShowsGenres.Where(poco => poco.ShowID == showId)
-                                             .Select(poco => poco.GenreID)
-                                             .ToListAsync()
-                                             .ConfigureAwait(false);
-
-            foreach (int genreId in genreIds.Except(existingGenreIds))
-            {
-                await this.DbService.Insert(new ShowGenrePoco
-                          {
-                              GenreID = genreId,
-                              ShowID = showId
-                          })
-                          .ConfigureAwait(false);
-            }
-        }
-
-        private async Task UpdateShow(int updateId, UpdateContext context)
-        {
-            var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.Thetvdbid == updateId).ConfigureAwait(false)
-                         ?? new ShowPoco
-                         {
-                             Thetvdbid = updateId
-                         };
-
-            var externalShow = await this.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
-            MapToShow(myShow, externalShow);
-
-            myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
-            myShow.ShowID = await this.DbService.Save(myShow).ConfigureAwait(false);
-
-            await this.UpdateGenres(externalShow.Genre, myShow.ShowID).ConfigureAwait(false);
-            await this.UpdateActors(myShow.Thetvdbid, myShow.ShowID).ConfigureAwait(false);
-            await this.UpdateEpisodes(myShow.Thetvdbid, context, myShow.ShowID).ConfigureAwait(false);
-
-            await this.ApiResultRepository.SaveApiResult(externalShow, ApiResultType.Show, updateId).ConfigureAwait(false);
-        }
-
-        private class UpdateContext
-        {
-            public HashSet<int> ExistingEpisodeIds { get; set; } = new HashSet<int>();
-
-            public HashSet<int> ExistingShowIds { get; set; } = new HashSet<int>();
+            this.Log.Debug($"{updates.Length} updates were detected in {updatesWatch.Elapsed:hh\\:mm\\:ss}.");
+            updatesWatch.Stop();
+            return updates;
         }
     }
 
@@ -498,58 +197,6 @@
         public DataSyncException(string message)
             : base(message)
         {
-        }
-    }
-
-    public enum AirDay
-    {
-        Unknown = 0,
-
-        Monday = 1,
-
-        Tuesday = 2,
-
-        Wednesday = 3,
-
-        Thursday = 4,
-
-        Friday = 5,
-
-        Saturday = 6,
-
-        Sunday = 7,
-
-        Daily = 8
-    }
-
-    public class UpdateQueueRepository
-    {
-        public UpdateQueueRepository(IDbService dbService)
-        {
-            this.DbService = dbService;
-        }
-
-        private IDbService DbService { get; }
-
-        public async Task AddFailedUpdate(UpdateQueuePoco poco)
-        {
-            var update = await this.DbService.UpdateQueue.FirstOrDefaultAsync(p => p.ThetvdbUpdateID == poco.ThetvdbUpdateID)
-                                   .ConfigureAwait(false) ?? poco;
-
-            update.LastFailedTime = poco.LastFailedTime;
-            update.FailCount++;
-
-            await this.DbService.Save(update).ConfigureAwait(false);
-        }
-
-        public Task<List<UpdateQueuePoco>> GetFailedUpdates()
-        {
-            return this.DbService.UpdateQueue.ToListAsync();
-        }
-
-        public Task RemoveFailedUpdate(UpdateQueuePoco poco)
-        {
-            return this.DbService.Delete(poco);
         }
     }
 }

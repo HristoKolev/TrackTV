@@ -84,6 +84,21 @@ namespace TrackTv.Updater
 
             return episodes.Select(x => x.Data).ToList();
         }
+
+        public static IEnumerable<Task<List<EpisodeRecord>>> GetFullEpisodeIterator(
+            this IEpisodesClient episodesClient,
+            int[] ids,
+            int size)
+        {
+            int maxPages = (ids.Length / size) + 1;
+
+            for (int currentPage = 0; currentPage < maxPages; currentPage++)
+            {
+                int[] part = ids.Skip(size * currentPage).Take(size).ToArray();
+
+                yield return episodesClient.GetFullEpisodesAsync(part);
+            }
+        }
     }
 
     public static class SeriesClientExtensions
