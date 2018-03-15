@@ -92,6 +92,55 @@ namespace TrackTv.Data
     }
     
     /// <summary>
+    /// <para>Table name: 'api_change_types'.</para>
+	/// <para>Table schema: 'archive'.</para>
+    /// </summary>
+    [Table(Schema="archive", Name = "api_change_types")]
+    public class ApiChangeTypePoco : IPoco
+    {
+        /// <summary>
+		/// <para>Column name: 'api_change_type_name'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>        
+		[NotNull]
+		[Column(Name = "api_change_type_name", DataType = DataType.NVarChar)]
+        public string ApiChangeTypeName { get; set; }
+        
+        /// <summary>
+		/// <para>Column name: 'api_change_type_id'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>Primary key of table: 'api_change_types'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+		[PrimaryKey, Identity]
+		[Column(Name = "api_change_type_id", DataType = DataType.Int32)]
+        public int ApiChangeTypeID { get; set; }
+
+		/// <summary>		
+		/// <para>Returns the primary key for the table (ApiChangeTypeID).</para>
+        /// </summary>   
+		int IPoco.GetPrimaryKey() => this.ApiChangeTypeID;
+
+		/// <summary>		
+		/// <para>Sets the primary key for the table (ApiChangeTypeID).</para>
+        /// </summary> 
+		void IPoco.SetPrimaryKey(int value) => this.ApiChangeTypeID = value;
+
+		/// <summary>		
+		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
+        /// </summary> 
+		bool IPoco.IsNew() => this.ApiChangeTypeID == default;
+        
+    }
+    
+    /// <summary>
     /// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'archive'.</para>
     /// </summary>
@@ -133,18 +182,6 @@ namespace TrackTv.Data
 		[NotNull]
 		[Column(Name = "api_change_created_date", DataType = DataType.DateTime2)]
         public DateTime ApiChangeCreatedDate { get; set; }
-        
-        /// <summary>
-		/// <para>Column name: 'api_change_body'.</para>
-		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'jsonb'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-        /// </summary>        
-		[NotNull]
-		[Column(Name = "api_change_body", DataType = DataType.BinaryJson)]
-        public string ApiChangeBody { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
@@ -197,6 +234,31 @@ namespace TrackTv.Data
 		[NotNull]
 		[Column(Name = "api_change_thetvdb_last_updated", DataType = DataType.DateTime2)]
         public DateTime ApiChangeThetvdbLastUpdated { get; set; }
+        
+        /// <summary>
+		/// <para>Column name: 'api_change_attached_series_id'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+		[Nullable]
+		[Column(Name = "api_change_attached_series_id", DataType = DataType.Int32)]
+        public int? ApiChangeAttachedSeriesID { get; set; }
+        
+        /// <summary>
+		/// <para>Column name: 'api_change_type'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>Foreign key column [archive.api_changes.api_change_type -> archive.api_change_types.api_change_type_id].</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>        
+		[NotNull]
+		[Column(Name = "api_change_type", DataType = DataType.Int32)]
+        public int ApiChangeType { get; set; }
         
     }
     
@@ -1187,6 +1249,7 @@ namespace TrackTv.Data
 		private readonly IReadOnlyDictionary<Type, string> primaryKeyMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "actor_id"},
+			{typeof(ApiChangeTypePoco), "api_change_type_id"},
 			{typeof(ApiChangePoco), "api_change_id"},
 			{typeof(ApiResponsePoco), "api_response_id"},
 			{typeof(EpisodePoco), "episode_id"},
@@ -1205,6 +1268,7 @@ namespace TrackTv.Data
 		private readonly IReadOnlyDictionary<Type, string> tableNameMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "actors"},
+			{typeof(ApiChangeTypePoco), "api_change_types"},
 			{typeof(ApiChangePoco), "api_changes"},
 			{typeof(ApiResponsePoco), "api_responses"},
 			{typeof(EpisodePoco), "episodes"},
@@ -1223,6 +1287,7 @@ namespace TrackTv.Data
 		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "public"},
+			{typeof(ApiChangeTypePoco), "archive"},
 			{typeof(ApiChangePoco), "archive"},
 			{typeof(ApiResponsePoco), "archive"},
 			{typeof(EpisodePoco), "public"},
@@ -1242,6 +1307,11 @@ namespace TrackTv.Data
 		/// <para>Database table 'actors'.</para>		
 		/// </summary>
         public IQueryable<ActorPoco> Actors => this.DataConnection.GetTable<ActorPoco>();
+		
+		/// <summary>
+		/// <para>Database table 'api_change_types'.</para>		
+		/// </summary>
+        public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.DataConnection.GetTable<ApiChangeTypePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>		
@@ -1317,6 +1387,12 @@ namespace TrackTv.Data
 		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ActorPoco> Actors { get; }
+
+		/// <summary>
+		/// <para>Database table 'api_change_types'.</para>
+		/// <para>Table schema: 'archive'.</para>
+		/// </summary>
+        IQueryable<ApiChangeTypePoco> ApiChangeTypes { get; }
 
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>

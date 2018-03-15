@@ -1,7 +1,6 @@
 ﻿namespace TrackTv.Updater
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
@@ -46,27 +45,44 @@
                                           .ToUniversalTime();
 
                 var changeListCompiler = container.GetInstance<ChangeListCompiler>();
-                var failedChangeRepository = container.GetInstance<ApiChangeRepository>();
+                var apiChangeRepository = container.GetInstance<ApiChangeRepository>();
+                var settingsService = container.GetInstance<SettingsService>();
+                var dbService = container.GetInstance<IDbService>();
 
                 var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
 
-                var changeList = await this.GetChangeList(updates, changeListCompiler).ConfigureAwait(false);
-
-                var failedChangeList = await failedChangeRepository.GetFailedUpdates().ConfigureAwait(false);
-
-                int episodeCount = failedChangeList.Count(item => item.Type == UpdateRecordType.Episode);
-                int showCount = failedChangeList.Count(item => item.Type    == UpdateRecordType.Show);
-                this.Log.Debug($"Failed changes from previous runs: {episodeCount} episodes. {showCount} shows.");
-
-                var fullChangeList = changeList.Concat(failedChangeList);
-
-                int index = 1;
-
-                foreach (var change in fullChangeList)
+                if (updates.Any())
                 {
-                    await this.ApplyChange(change, lastUpdated, index, changeList.Count, container)
-                              .ContinueWith(task => index++).ConfigureAwait(false);
+                    await dbService.ExecuteInTransaction(async () =>
+                    {
+                        await this.MergeChangeList(updates, changeListCompiler).ConfigureAwait(false);
+                    })
+                    .ConfigureAwait(false);
+
+                    var newLastUpdated = new[]
+                    {
+                        lastUpdated,
+                        updates.Select(u => u.LastUpdated).Max().ToDateTime()
+
+                    }.Max();
+
+                    await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O"))
+                                         .ConfigureAwait(false);
                 }
+
+                var fullChangeList = await apiChangeRepository.GetCurrentChangeList().ConfigureAwait(false);
+
+                int episodeCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Episode);
+                int showCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Show);
+                this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
+
+                // int index = 1;
+
+                //foreach (var change in fullChangeList)
+                //{
+                //    await this.ApplyChange(change, index, fullChangeList.Length, container)
+                //              .ContinueWith(task => index++).ConfigureAwait(false);
+                //}
 
                 Global.Log.Debug("Updater finished successfully.");
             }
@@ -76,20 +92,19 @@
             }
         }
  
-        private async Task ApplyChange(ChangeListItem change, DateTime lastUpdated, int index, int maxCount, IContainer masterContainer)
+        private async Task ApplyChange(ChangeListItem change, int index, int maxCount, IContainer masterContainer)
         {
             using (var container = masterContainer.CreateChildContainer())
             {
                 try
                 {
                     var dbService = container.GetInstance<IDbService>();
-                    var settingsService = container.GetInstance<SettingsService>();
                     var applier = container.GetInstance<ChangeListApplier>();
                     var failedChangeRepository = container.GetInstance<ApiChangeRepository>();
 
                     var changeWatch = Stopwatch.StartNew();
 
-                    await dbService.ExecuteInTransaction(async transaction =>
+                    await dbService.ExecuteInTransaction(async tr =>
                     {
                         try
                         {
@@ -98,13 +113,18 @@
 
                             await applier.ApplyChange(change).ConfigureAwait(false);
 
-                            await failedChangeRepository.RemoveFailedUpdate(change.TheTvDbID).ConfigureAwait(false);
+                            await failedChangeRepository.RemoveApiChange(change.TheTvDbID).ConfigureAwait(false);
+
+                            changeWatch.Stop();
+
+                            this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.TheTvDbID},"
+                                           + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}");
                         }
                         catch (Exception e)
                         {
-                            transaction.Rollback();
+                            tr.Rollback();
 
-                            await failedChangeRepository.AddFailedApiChange(change).ConfigureAwait(false);
+                            await failedChangeRepository.IncrementFailedCount(change.TheTvDbID).ConfigureAwait(false);
 
                             changeWatch.Stop();
 
@@ -112,21 +132,7 @@
                                 $"[{index}/{maxCount}] Failed to apply a change. (ID={change.TheTvDbID},"
                                 + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}", e);
                         }
-
-                        DateTime newLastUpdated = new[]
-                        {
-                            lastUpdated,
-                            change.LastUpdated
-                        }.Max();
-
-                        await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O"))
-                                             .ConfigureAwait(false);
                     }).ConfigureAwait(false);
-
-                    changeWatch.Stop();
-
-                    this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.TheTvDbID},"
-                                   + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}");
                 }
                 catch (Exception e)
                 {
@@ -135,27 +141,21 @@
             }
         }
 
-        private async Task<List<ChangeListItem>> GetChangeList(Update[] updates, ChangeListCompiler changeListCompiler)
+        private async Task MergeChangeList(Update[] updates, ChangeListCompiler changeListCompiler)
         {
-            List<ChangeListItem> changeList;
             var changeListWatch = Stopwatch.StartNew();
 
             try
             {
-                changeList = await changeListCompiler.GetChangeList(updates).ConfigureAwait(false);
+                await changeListCompiler.MergeChangeList(updates).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                throw new DataSyncException("An error occured while compiling the change list.", e);
+                throw new DataSyncException("An error occured while merging the change list.", e);
             }
 
-            this.Log.Debug($"Change list was compiled successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
-
-            int episodeCount = changeList.Count(item => item.Type == UpdateRecordType.Episode);
-            int showCount = changeList.Count(item => item.Type    == UpdateRecordType.Show);
-            this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
-
-            return changeList;
+            changeListWatch.Stop();
+            this.Log.Debug($"Change list was merged successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
         }
 
         private async Task<Update[]> GetUpdates(DateTime fromTime, DateTime toTime)

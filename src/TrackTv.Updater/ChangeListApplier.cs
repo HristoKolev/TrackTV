@@ -37,11 +37,11 @@
         {
             switch (change.Type)
             {
-                case UpdateRecordType.Episode :
+                case ApiChangeType.Episode :
                 {
                     return this.ApplyEpisodeChange(change);
                 }
-                case UpdateRecordType.Show :
+                case ApiChangeType.Show :
                 {
                     return this.ApplyShowChange(change);
                 }
