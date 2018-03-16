@@ -76,13 +76,13 @@
                 int showCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Show);
                 this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
 
-                // int index = 1;
+                int index = 1;
 
-                //foreach (var change in fullChangeList)
-                //{
-                //    await this.ApplyChange(change, index, fullChangeList.Length, container)
-                //              .ContinueWith(task => index++).ConfigureAwait(false);
-                //}
+                foreach (var change in fullChangeList)
+                {
+                    await this.ApplyChange(change, index, fullChangeList.Length, container)
+                              .ContinueWith(task => index++).ConfigureAwait(false);
+                }
 
                 Global.Log.Debug("Updater finished successfully.");
             }
@@ -92,7 +92,7 @@
             }
         }
  
-        private async Task ApplyChange(ChangeListItem change, int index, int maxCount, IContainer masterContainer)
+        private async Task ApplyChange(ApiChangePoco change, int index, int maxCount, IContainer masterContainer)
         {
             using (var container = masterContainer.CreateChildContainer())
             {
@@ -106,31 +106,30 @@
 
                     await dbService.ExecuteInTransaction(async tr =>
                     {
+                        string typeName = ((ApiChangeType)change.ApiChangeType).ToString();
+
                         try
                         {
-                            this.Log.Debug($"[{index}/{maxCount}] Starting to apply change (ID={change.TheTvDbID},"
-                                           + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length})");
+                            this.Log.Debug($"[{index}/{maxCount}] Starting to apply change (ID={change.ApiChangeThetvdbid}, Type={typeName}");
 
                             await applier.ApplyChange(change).ConfigureAwait(false);
 
-                            await failedChangeRepository.RemoveApiChange(change.TheTvDbID).ConfigureAwait(false);
+                            await failedChangeRepository.RemoveApiChange(change.ApiChangeThetvdbid).ConfigureAwait(false);
 
                             changeWatch.Stop();
 
-                            this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.TheTvDbID},"
-                                           + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}");
+                            this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.ApiChangeThetvdbid}, Type={typeName} {changeWatch.Elapsed:mm\\:ss}");
                         }
                         catch (Exception e)
                         {
                             tr.Rollback();
 
-                            await failedChangeRepository.IncrementFailedCount(change.TheTvDbID).ConfigureAwait(false);
+                            await failedChangeRepository.IncrementFailedCount(change.ApiChangeThetvdbid).ConfigureAwait(false);
 
                             changeWatch.Stop();
 
                             throw new DataSyncException(
-                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.TheTvDbID},"
-                                + $" Type={change.Type.ToString()}, EpisodeCount={change.EpisodeIDs.Length}) {changeWatch.Elapsed:mm\\:ss}", e);
+                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss}", e);
                         }
                     }).ConfigureAwait(false);
                 }

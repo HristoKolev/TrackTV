@@ -135,6 +135,12 @@
             return this.DataConnection.UpdateAsync(poco);
         }
 
+        public void BulkInsert<TPoco>(IEnumerable<TPoco> list)
+            where TPoco : IPoco
+        {
+            this.DataConnection.BulkCopy(list);
+        }
+
         private void OnInitCommand(object sender, InitSqlCommandEventArgs args)
         {
             this.sqlLog.Push(new KeyValuePair<string, DataParameter[]>(args.CommandText, args.Parameters));
@@ -181,6 +187,9 @@
             where TPoco : IPoco;
 
         Task Update<TPoco>(TPoco poco)
+            where TPoco : IPoco;
+
+        void BulkInsert<TPoco>(IEnumerable<TPoco> list)
             where TPoco : IPoco;
     }
 }

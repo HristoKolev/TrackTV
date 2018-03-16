@@ -1,9 +1,12 @@
 ﻿namespace TrackTv.Updater
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using log4net;
 
     using LinqToDB;
 
@@ -14,64 +17,70 @@
 
     public class ChangeListCompiler
     {
-        public ChangeListCompiler(ITvDbClient client, IDbService dbService)
+        private const int ChangeChunkSize = 1000;
+
+        public ChangeListCompiler(ITvDbClient client, IDbService dbService, ILog log)
         {
             this.Client = client;
             this.DbService = dbService;
+            this.Log = log;
         }
 
         private ITvDbClient Client { get; }
 
         private IDbService DbService { get; }
 
+        private ILog Log { get; }
+
         public async Task MergeChangeList(Update[] updates)
         {
             var updateIDs = updates.Select(u => u.Id).ToArray();
 
+            var changeList = await this.GetChangeList().ConfigureAwait(false);
+
             var registeredEpisodeIDs =
                 this.DbService.Episodes.Where(p => updateIDs.Contains(p.Thetvdbid)).Select(p => p.Thetvdbid).ToArray();
 
-            foreach (var update in updates)
+            var registeredEpisodeIDsHashSet = new HashSet<int>(registeredEpisodeIDs);
+    
+            int chunkCount = 1;
+
+            foreach (var chunk in updates.Split(ChangeChunkSize))
             {
-                await this.MergeEpisode(update, registeredEpisodeIDs).ConfigureAwait(false);
+                var tasks = chunk.Select(update => this.MergeUpdates(update, registeredEpisodeIDsHashSet, changeList)).ToArray();
 
-                await this.MergeShow(update).ConfigureAwait(false);
-            }
-        }
+                await Task.WhenAll(tasks).ConfigureAwait(false);
 
-        private async Task MergeShow(Update update)
-        {
-            var series = await this.GetExternalShowAsync(update.Id).ConfigureAwait(false);
-
-            if (series != null)
-            {
-                await this.UpdateShow(series).ConfigureAwait(false);
-            }
-        }
-
-        private async Task UpdateShow(Series series)
-        {
-            if (IsValidSeries(series))
-            {
-                var apiChange =
-                    await this.DbService.ApiChanges
-                              .FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == series.Id && p.ApiChangeType == (int)ApiChangeType.Show)
-                              .ConfigureAwait(false) ?? new ApiChangePoco();
-
-                apiChange.ApiChangeType = (int)ApiChangeType.Show;
-                apiChange.ApiChangeThetvdbLastUpdated = series.LastUpdated.ToDateTime();
-                apiChange.ApiChangeThetvdbid = series.Id;
-
-                if (((IPoco)apiChange).IsNew())
+                if (updates.Length > ChangeChunkSize)
                 {
-                    apiChange.ApiChangeCreatedDate = DateTime.UtcNow;
+                    this.Log.Debug($"Chunk {chunkCount++} of ~{updates.Length / ChangeChunkSize}");
                 }
-
-                await this.DbService.Save(apiChange).ConfigureAwait(false);
             }
+
+            this.Log.Debug($"{changeList.Count} changes compiled.");
+
+            var list = changeList.Values.Where(poco => poco != null).ToList();
+
+            this.DbService.BulkInsert(list);
+
+            this.Log.Debug($"{changeList.Count} changes inserted.");
         }
 
-        private async Task MergeEpisode(Update update, int[] registeredEpisodeIDs)
+        private async Task<ConcurrentDictionary<string, ApiChangePoco>> GetChangeList()
+        {
+            var list = await this.DbService.ApiChanges.Select(poco => new { ID = poco.ApiChangeThetvdbid, Type= poco.ApiChangeType }).ToListAsync().ConfigureAwait(false);
+
+            var dict = new ConcurrentDictionary<string, ApiChangePoco>();
+
+            foreach (var item in list)
+            {
+                dict.TryAdd(item.ID + "_" + item.Type, null);
+            }
+
+            return dict;
+        }
+
+        private async Task MergeUpdates(Update update, ICollection<int> registeredEpisodeIDs, ConcurrentDictionary<string, ApiChangePoco> changeList)
         {
             var episode = await this.GetExternalEpisodeAsync(update.Id).ConfigureAwait(false);
 
@@ -79,39 +88,58 @@
             {
                 if (registeredEpisodeIDs.Contains(update.Id))
                 {
-                    await this.UpdateEpisode(episode).ConfigureAwait(false);
+                     AddEpisode(episode, changeList) ;
                 }
                 else
                 {
                     int seriesID = int.Parse(episode.SeriesId);
 
-                    var series = await this.GetExternalShowAsync(seriesID).ConfigureAwait(false);
+                    var attachedSeries = await this.GetExternalShowAsync(seriesID).ConfigureAwait(false);
 
-                    if (series != null)
+                    if (attachedSeries != null)
                     {
-                        await this.UpdateShow(series).ConfigureAwait(false);
+                         AddShow(attachedSeries, changeList) ;
                     }
                 }
             }
-        }
 
-        private async Task UpdateEpisode(EpisodeRecord episode)
-        {
-            var apiChange = await this.DbService.ApiChanges
-                          .FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == episode.Id && p.ApiChangeType == (int)ApiChangeType.Episode)
-                          .ConfigureAwait(false) ?? new ApiChangePoco();
+            var series = await this.GetExternalShowAsync(update.Id).ConfigureAwait(false);
 
-            apiChange.ApiChangeType = (int)ApiChangeType.Episode;
-            apiChange.ApiChangeThetvdbLastUpdated = episode.LastUpdated.ToDateTime();
-            apiChange.ApiChangeThetvdbid = episode.Id;
-            apiChange.ApiChangeAttachedSeriesID = int.Parse(episode.SeriesId);
-
-            if (((IPoco)apiChange).IsNew())
+            if (series != null)
             {
-                apiChange.ApiChangeCreatedDate = DateTime.UtcNow;
+                 AddShow(series, changeList) ;
             }
+        }
+ 
+        private static void AddShow(Series series, ConcurrentDictionary<string, ApiChangePoco> changeList)
+        {
+            string key = series.Id + "_" + (int)ApiChangeType.Show;
 
-            await this.DbService.Save(apiChange).ConfigureAwait(false);
+            if (IsValidSeries(series) && !changeList.TryGetValue(key, out var _))
+            {
+                changeList.TryAdd(key, new ApiChangePoco
+                {
+                    ApiChangeCreatedDate = DateTime.UtcNow,
+                    ApiChangeType = (int)ApiChangeType.Show,
+                    ApiChangeThetvdbid = series.Id
+                });
+            }
+        }
+ 
+        private static void AddEpisode(EpisodeRecord episode, ConcurrentDictionary<string, ApiChangePoco> changeList)
+        {
+            string key = episode.Id + "_" + (int)ApiChangeType.Episode;
+
+            if (!changeList.TryGetValue(key, out var _))
+            {
+                changeList.TryAdd(key, new ApiChangePoco
+                {
+                    ApiChangeCreatedDate = DateTime.UtcNow,
+                    ApiChangeType = (int)ApiChangeType.Episode,
+                    ApiChangeThetvdbid = episode.Id,
+                    ApiChangeAttachedSeriesID = int.Parse(episode.SeriesId)
+                });
+            }
         }
 
         private static bool IsValidSeries(Series series)
@@ -136,6 +164,10 @@
 
                 throw;
             }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         private async Task<Series> GetExternalShowAsync(int updateId)
@@ -155,17 +187,10 @@
 
                 throw;
             }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
-    }
-
-    public class ChangeListItem
-    {
-        public int[] EpisodeIDs { get; set; }
-
-        public DateTime LastUpdated { get; set; }
-
-        public int TheTvDbID { get; set; }
-
-        public ApiChangeType Type { get; set; }
     }
 }
