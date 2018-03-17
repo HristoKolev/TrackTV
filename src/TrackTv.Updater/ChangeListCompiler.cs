@@ -149,6 +149,11 @@
 
         private async Task<EpisodeRecord> GetExternalEpisodeAsync(int updateId)
         {
+            if (updateId == 0)
+            {
+                return null;
+            }
+
             try
             {
                 var response = await this.Client.Episodes.GetAsync(updateId).ConfigureAwait(false);
@@ -172,6 +177,11 @@
 
         private async Task<Series> GetExternalShowAsync(int updateId)
         {
+            if (updateId == 0)
+            {
+                return null;
+            }
+
             try
             {
                 var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);

@@ -18,7 +18,7 @@
     public class ChangeListApplier
     {
         private const int ChunkSize = 200;
-
+        
         public ChangeListApplier(IDbService dbService, ITvDbClient client, ApiResultRepository apiResultRepository, ILog log)
         {
             this.DbService = dbService;
@@ -69,7 +69,7 @@
 
             await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, change.ApiChangeThetvdbid).ConfigureAwait(false);
         }
-
+        
         private async Task ApplyShowChange(ApiChangePoco change)
         {
             var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid).ConfigureAwait(false)
@@ -94,6 +94,11 @@
 
         private async Task<EpisodeRecord> GetExternalEpisodeAsync(int updateId)
         {
+            if (updateId == 0)
+            {
+                return null;
+            }
+
             try
             {
                 var response = await this.Client.Episodes.GetAsync(updateId).ConfigureAwait(false);
@@ -113,6 +118,11 @@
 
         private async Task<Series> GetExternalShowAsync(int updateId)
         {
+            if (updateId == 0)
+            {
+                return null;
+            }
+
             try
             {
                 var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);
@@ -227,7 +237,7 @@
                 show.AirTime = DateParser.ParseAirTime(data.AirsTime);
             }
         }
-
+        
         private async Task UpdateActors(int theTvDbId, int showId)
         {
             var response = await this.Client.Series.GetActorsAsync(theTvDbId).ConfigureAwait(false);
