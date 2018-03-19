@@ -110,7 +110,7 @@
 
                         try
                         {
-                            this.Log.Debug($"[{index}/{maxCount}] Starting to apply change (ID={change.ApiChangeThetvdbid}, Type={typeName}");
+                            this.Log.Debug($"[{index}/{maxCount}] Starting to apply change (ID={change.ApiChangeThetvdbid}, Type={typeName})");
 
                             await applier.ApplyChange(change).ConfigureAwait(false);
 
@@ -118,7 +118,7 @@
 
                             changeWatch.Stop();
 
-                            this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.ApiChangeThetvdbid}, Type={typeName} {changeWatch.Elapsed:mm\\:ss}");
+                            this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.ApiChangeThetvdbid}, Type={typeName} {changeWatch.Elapsed:mm\\:ss})");
                         }
                         catch (Exception e)
                         {
@@ -129,7 +129,7 @@
                             changeWatch.Stop();
 
                             throw new DataSyncException(
-                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss}", e);
+                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss})", e);
                         }
                     }).ConfigureAwait(false);
                 }

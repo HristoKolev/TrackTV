@@ -53,7 +53,7 @@
 
                 if (updates.Length > ChangeChunkSize)
                 {
-                    this.Log.Debug($"Chunk {chunkCount++} of ~{updates.Length / ChangeChunkSize}");
+                    this.Log.Debug($"Chunk {chunkCount++} of {Math.Ceiling(updates.Length / (decimal)ChangeChunkSize)}");
                 }
             }
 

@@ -18,7 +18,7 @@
     public class ChangeListApplier
     {
         private const int ChunkSize = 200;
-        
+
         public ChangeListApplier(IDbService dbService, ITvDbClient client, ApiResultRepository apiResultRepository, ILog log)
         {
             this.DbService = dbService;
@@ -29,11 +29,11 @@
 
         private ApiResultRepository ApiResultRepository { get; }
 
-        private ILog Log { get; }
-
         private ITvDbClient Client { get; }
- 
+
         private IDbService DbService { get; }
+
+        private ILog Log { get; }
 
         public Task ApplyChange(ApiChangePoco change)
         {
@@ -54,12 +54,73 @@
             }
         }
 
+        private static void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
+        {
+            episode.EpisodeTitle = data.EpisodeName;
+            episode.EpisodeDescription = data.Overview;
+
+            if (!string.IsNullOrWhiteSpace(data.ImdbId))
+            {
+                episode.Imdbid = data.ImdbId;
+            }
+
+            episode.EpisodeNumber = data.AiredEpisodeNumber.Value;
+            episode.SeasonNumber = data.AiredSeason.Value;
+            episode.Thetvdbid = data.Id;
+
+            if (!string.IsNullOrWhiteSpace(data.FirstAired))
+            {
+                episode.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
+            }
+
+            episode.LastUpdated = data.LastUpdated.ToDateTime();
+        }
+
+        private static void MapToShow(ShowPoco show, Series data)
+        {
+            show.Thetvdbid = data.Id;
+            show.ShowName = data.SeriesName;
+
+            if (!string.IsNullOrWhiteSpace(data.Banner))
+            {
+                show.ShowBanner = data.Banner;
+            }
+
+            if (!string.IsNullOrWhiteSpace(data.ImdbId))
+            {
+                show.Imdbid = data.ImdbId;
+            }
+
+            show.ShowDescription = data.Overview;
+
+            show.LastUpdated = data.LastUpdated.ToDateTime();
+
+            AirDay airDay;
+            Enum.TryParse(data.AirsDayOfWeek, out airDay);
+            show.AirDay = (int?)airDay;
+
+            ShowStatus status;
+            Enum.TryParse(data.Status, out status);
+            show.ShowStatus = (int)status;
+
+            if (!string.IsNullOrWhiteSpace(data.FirstAired))
+            {
+                show.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
+            }
+
+            if (!string.IsNullOrWhiteSpace(data.AirsTime))
+            {
+                show.AirTime = DateParser.ParseAirTime(data.AirsTime);
+            }
+        }
+
         /// <summary>
         /// Applies an episode update. This method is for updates only.
         /// </summary>
         private async Task ApplyEpisodeChange(ApiChangePoco change)
         {
-            var myEpisode = await this.DbService.Episodes.FirstAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid).ConfigureAwait(false);
+            var myEpisode = await this.DbService.Episodes.FirstAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid)
+                                      .ConfigureAwait(false);
 
             var externalEpisode = await this.GetExternalEpisodeAsync(change.ApiChangeThetvdbid).ConfigureAwait(false);
 
@@ -67,16 +128,17 @@
 
             await this.DbService.Update(myEpisode).ConfigureAwait(false);
 
-            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, change.ApiChangeThetvdbid).ConfigureAwait(false);
+            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, change.ApiChangeThetvdbid)
+                      .ConfigureAwait(false);
         }
-        
+
         private async Task ApplyShowChange(ApiChangePoco change)
         {
-            var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid).ConfigureAwait(false)
-                         ?? new ShowPoco
-                         {
-                             Thetvdbid = change.ApiChangeThetvdbid
-                         };
+            var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid)
+                                   .ConfigureAwait(false) ?? new ShowPoco
+            {
+                Thetvdbid = change.ApiChangeThetvdbid
+            };
 
             var externalShow = await this.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
             MapToShow(myShow, externalShow);
@@ -178,66 +240,6 @@
             return network.NetworkID;
         }
 
-        private static void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
-        {
-            episode.EpisodeTitle = data.EpisodeName;
-            episode.EpisodeDescription = data.Overview;
-
-            if (!string.IsNullOrWhiteSpace(data.ImdbId))
-            {
-                episode.Imdbid = data.ImdbId;
-            }
-
-            episode.EpisodeNumber = data.AiredEpisodeNumber.Value;
-            episode.SeasonNumber = data.AiredSeason.Value;
-            episode.Thetvdbid = data.Id;
-
-            if (!string.IsNullOrWhiteSpace(data.FirstAired))
-            {
-                episode.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
-            }
-
-            episode.LastUpdated = data.LastUpdated.ToDateTime();
-        }
-
-        private static void MapToShow(ShowPoco show, Series data)
-        {
-            show.Thetvdbid = data.Id;
-            show.ShowName = data.SeriesName;
-
-            if (!string.IsNullOrWhiteSpace(data.Banner))
-            {
-                show.ShowBanner = data.Banner;
-            }
-
-            if (!string.IsNullOrWhiteSpace(data.ImdbId))
-            {
-                show.Imdbid = data.ImdbId;
-            }
-
-            show.ShowDescription = data.Overview;
-
-            show.LastUpdated = data.LastUpdated.ToDateTime();
-
-            AirDay airDay;
-            Enum.TryParse(data.AirsDayOfWeek, out airDay);
-            show.AirDay = (int?)airDay;
-
-            ShowStatus status;
-            Enum.TryParse(data.Status, out status);
-            show.ShowStatus = (int)status;
-
-            if (!string.IsNullOrWhiteSpace(data.FirstAired))
-            {
-                show.FirstAired = DateParser.ParseFirstAired(data.FirstAired);
-            }
-
-            if (!string.IsNullOrWhiteSpace(data.AirsTime))
-            {
-                show.AirTime = DateParser.ParseAirTime(data.AirsTime);
-            }
-        }
-        
         private async Task UpdateActors(int theTvDbId, int showId)
         {
             var response = await this.Client.Series.GetActorsAsync(theTvDbId).ConfigureAwait(false);
@@ -281,30 +283,62 @@
 
         private async Task UpdateEpisodes(int showID, int thetvdbid)
         {
-            int[] episodeIDs = (await this.Client.Series.GetBasicEpisodesAsync(thetvdbid).ConfigureAwait(false)).Select(e => e.Id).ToArray();
+            // External episodes
+            var externalEpisodes = (await this.Client.Series.GetBasicEpisodesAsync(thetvdbid).ConfigureAwait(false))
+                                        .Select(e => new
+                                        {
+                                            TheTvDbID = e.Id,
+                                            LastUpdated = e.LastUpdated.ToDateTime()
+                                        }).ToArray();
+            
+            // My episodes 
+            var myEpisodes = await this.DbService.Episodes.Where(poco => poco.ShowID == showID)
+                                       .Select(poco => new
+                                       {
+                                           TheTvDbID = poco.Thetvdbid,
+                                           LastUpdated = poco.LastUpdated,
+                                           EpisodeID = poco.EpisodeID
+                                       })
+                                       .ToArrayAsync()
+                                       .ConfigureAwait(false);
 
-            var deletedEpisodeIDs = await this.DbService.Episodes
-                                              .Where(poco => poco.ShowID == showID && !episodeIDs.Contains(poco.Thetvdbid))
-                                              .Select(poco => poco.EpisodeID)
-                                              .ToArrayAsync()
-                                              .ConfigureAwait(false);
+            // Delete
+            if (myEpisodes.Any())
+            {
+                var externalEpisodeIDs = externalEpisodes.Select(x => x.TheTvDbID).ToArray();
 
-            await this.DbService.Delete<EpisodePoco>(deletedEpisodeIDs).ConfigureAwait(false);
+                var myDeletedEpisodeIDs = myEpisodes.Where(x => !externalEpisodeIDs.Contains(x.TheTvDbID)).Select(a => a.EpisodeID).ToArray();
 
-            var nonDeletedEpisodeIDs = episodeIDs.Except(deletedEpisodeIDs).ToArray();
+                await this.DbService.Delete<EpisodePoco>(myDeletedEpisodeIDs).ConfigureAwait(false);
+            }
+
+            // Add/Update
+            var idsForUpdate = externalEpisodes.Where(externalEpisode =>
+            {
+                var myEpisode = myEpisodes.FirstOrDefault(x => x.TheTvDbID == externalEpisode.TheTvDbID);
+
+                if (myEpisode == null)
+                {
+                    return true;
+                }
+
+                return myEpisode.LastUpdated < externalEpisode.LastUpdated;
+            }).Select(a => a.TheTvDbID).ToArray();
+
+            this.Log.Debug($"{idsForUpdate.Length} episodes for update. Total: {externalEpisodes.Length}");
 
             int chunk = 1;
 
-            foreach (var task in this.Client.Episodes.GetFullEpisodeIterator(nonDeletedEpisodeIDs, ChunkSize))
+            foreach (var episodeIDsChunk in idsForUpdate.Split(ChunkSize))
             {
-                var externalEpisodes = await task.ConfigureAwait(false);
-
-                if (nonDeletedEpisodeIDs.Length > ChunkSize)
+                if (idsForUpdate.Length > ChunkSize)
                 {
-                    this.Log.Debug($"Episode chunk {chunk++} of ~({nonDeletedEpisodeIDs.Length / ChunkSize})");
+                    this.Log.Debug($"Episode chunk {chunk++} of ({Math.Ceiling(idsForUpdate.Length / (decimal)ChunkSize)})");
                 }
- 
-                foreach (var externalEpisode in externalEpisodes)
+
+                var fullExternalEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(episodeIDsChunk).ConfigureAwait(false);
+
+                foreach (var externalEpisode in fullExternalEpisodes)
                 {
                     var episode = await this.DbService.Episodes.Where(poco => poco.Thetvdbid == externalEpisode.Id)
                                             .FirstOrDefaultAsync()
