@@ -29,7 +29,7 @@
         private ITvDbClient Client { get; }
 
         private IDbService DbService { get; }
-
+        
         private ILog Log { get; }
 
         public async Task MergeChangeList(Update[] updates)
@@ -49,12 +49,12 @@
             {
                 var tasks = chunk.Select(update => this.MergeUpdates(update, registeredEpisodeIDsHashSet, changeList)).ToArray();
 
-                await Task.WhenAll(tasks).ConfigureAwait(false);
-
                 if (updates.Length > ChangeChunkSize)
                 {
                     this.Log.Debug($"Chunk {chunkCount++} of {Math.Ceiling(updates.Length / (decimal)ChangeChunkSize)}");
                 }
+
+                await Task.WhenAll(tasks).ConfigureAwait(false);
             }
 
             this.Log.Debug($"{changeList.Count} changes compiled.");
@@ -82,7 +82,7 @@
 
         private async Task MergeUpdates(Update update, ICollection<int> registeredEpisodeIDs, ConcurrentDictionary<string, ApiChangePoco> changeList)
         {
-            var episode = await this.GetExternalEpisodeAsync(update.Id).ConfigureAwait(false);
+            var episode = await this.Client.Episodes.GetExternalEpisodeAsync(update.Id).ConfigureAwait(false);
 
             if (episode != null)
             {
@@ -94,7 +94,7 @@
                 {
                     int seriesID = int.Parse(episode.SeriesId);
 
-                    var attachedSeries = await this.GetExternalShowAsync(seriesID).ConfigureAwait(false);
+                    var attachedSeries = await this.Client.Series.GetExternalShowAsync(seriesID).ConfigureAwait(false);
 
                     if (attachedSeries != null)
                     {
@@ -103,7 +103,7 @@
                 }
             }
 
-            var series = await this.GetExternalShowAsync(update.Id).ConfigureAwait(false);
+            var series = await this.Client.Series.GetExternalShowAsync(update.Id).ConfigureAwait(false);
 
             if (series != null)
             {
@@ -121,7 +121,8 @@
                 {
                     ApiChangeCreatedDate = DateTime.UtcNow,
                     ApiChangeType = (int)ApiChangeType.Show,
-                    ApiChangeThetvdbid = series.Id
+                    ApiChangeThetvdbid = series.Id,
+                    ApiChangeThetvdbLastUpdated = series.LastUpdated.ToDateTime(),
                 });
             }
         }
@@ -137,7 +138,8 @@
                     ApiChangeCreatedDate = DateTime.UtcNow,
                     ApiChangeType = (int)ApiChangeType.Episode,
                     ApiChangeThetvdbid = episode.Id,
-                    ApiChangeAttachedSeriesID = int.Parse(episode.SeriesId)
+                    ApiChangeAttachedSeriesID = int.Parse(episode.SeriesId),
+                    ApiChangeThetvdbLastUpdated = episode.LastUpdated.ToDateTime(),
                 });
             }
         }
@@ -145,62 +147,6 @@
         private static bool IsValidSeries(Series series)
         {
             return !string.IsNullOrWhiteSpace(series.SeriesName) && !series.SeriesName.StartsWith("***Duplicate");
-        }
-
-        private async Task<EpisodeRecord> GetExternalEpisodeAsync(int updateId)
-        {
-            if (updateId == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                var response = await this.Client.Episodes.GetAsync(updateId).ConfigureAwait(false);
-
-                return response?.Data;
-            }
-            catch (TvDbServerException ex)
-            {
-                if (ex.StatusCode == 404)
-                {
-                    return null;
-                }
-
-                throw;
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
-        }
-
-        private async Task<Series> GetExternalShowAsync(int updateId)
-        {
-            if (updateId == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);
-
-                return response?.Data;
-            }
-            catch (TvDbServerException ex)
-            {
-                if (ex.StatusCode == 404)
-                {
-                    return null;
-                }
-
-                throw;
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
         }
     }
 }

@@ -214,14 +214,14 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'api_change_last_failed_time'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
-		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-		[NotNull]
+		[Nullable]
 		[Column(Name = "api_change_last_failed_time", DataType = DataType.DateTime2)]
-        public DateTime ApiChangeLastFailedTime { get; set; }
+        public DateTime? ApiChangeLastFailedTime { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'api_change_thetvdb_last_updated'.</para>

@@ -17,7 +17,7 @@
 
     public class ChangeListApplier
     {
-        private const int ChunkSize = 200;
+        private const int EpisodeChunkSize = 200;
 
         public ChangeListApplier(IDbService dbService, ITvDbClient client, ApiResultRepository apiResultRepository, ILog log)
         {
@@ -122,13 +122,13 @@
             var myEpisode = await this.DbService.Episodes.FirstAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid)
                                       .ConfigureAwait(false);
 
-            var externalEpisode = await this.GetExternalEpisodeAsync(change.ApiChangeThetvdbid).ConfigureAwait(false);
+            var externalEpisode = await this.Client.Episodes.GetExternalEpisodeAsync(change.ApiChangeThetvdbid).ConfigureAwait(false);
 
             MapToEpisode(myEpisode, externalEpisode);
 
             await this.DbService.Update(myEpisode).ConfigureAwait(false);
 
-            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, change.ApiChangeThetvdbid)
+            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiChangeType.Episode, change.ApiChangeThetvdbid)
                       .ConfigureAwait(false);
         }
 
@@ -140,7 +140,7 @@
                 Thetvdbid = change.ApiChangeThetvdbid
             };
 
-            var externalShow = await this.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
+            var externalShow = await this.Client.Series.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
             MapToShow(myShow, externalShow);
 
             myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
@@ -151,55 +151,7 @@
 
             await this.UpdateEpisodes(myShow.ShowID, myShow.Thetvdbid).ConfigureAwait(false);
 
-            await this.ApiResultRepository.SaveApiResult(externalShow, ApiResultType.Show, change.ApiChangeThetvdbid).ConfigureAwait(false);
-        }
-
-        private async Task<EpisodeRecord> GetExternalEpisodeAsync(int updateId)
-        {
-            if (updateId == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                var response = await this.Client.Episodes.GetAsync(updateId).ConfigureAwait(false);
-
-                return response?.Data;
-            }
-            catch (TvDbServerException ex)
-            {
-                if (ex.StatusCode == 404)
-                {
-                    return null;
-                }
-
-                throw;
-            }
-        }
-
-        private async Task<Series> GetExternalShowAsync(int updateId)
-        {
-            if (updateId == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                var response = await this.Client.Series.GetAsync(updateId).ConfigureAwait(false);
-
-                return response?.Data;
-            }
-            catch (TvDbServerException ex)
-            {
-                if (ex.StatusCode == 404)
-                {
-                    return null;
-                }
-
-                throw;
-            }
+            await this.ApiResultRepository.SaveApiResult(externalShow, ApiChangeType.Show, change.ApiChangeThetvdbid).ConfigureAwait(false);
         }
 
         private async Task<int> GetOrCreateGenre(string genreName)
@@ -329,11 +281,11 @@
 
             int chunk = 1;
 
-            foreach (var episodeIDsChunk in idsForUpdate.Split(ChunkSize))
+            foreach (var episodeIDsChunk in idsForUpdate.Split(EpisodeChunkSize))
             {
-                if (idsForUpdate.Length > ChunkSize)
+                if (idsForUpdate.Length > EpisodeChunkSize)
                 {
-                    this.Log.Debug($"Episode chunk {chunk++} of ({Math.Ceiling(idsForUpdate.Length / (decimal)ChunkSize)})");
+                    this.Log.Debug($"Episode chunk {chunk++} of {Math.Ceiling(idsForUpdate.Length / (decimal)EpisodeChunkSize)}");
                 }
 
                 var fullExternalEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(episodeIDsChunk).ConfigureAwait(false);
@@ -351,7 +303,7 @@
 
                     await this.DbService.Save(episode).ConfigureAwait(false);
 
-                    await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiResultType.Episode, externalEpisode.Id)
+                    await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiChangeType.Episode, externalEpisode.Id)
                               .ConfigureAwait(false);
                 }
             }

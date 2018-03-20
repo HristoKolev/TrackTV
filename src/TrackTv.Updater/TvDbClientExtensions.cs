@@ -10,7 +10,7 @@ namespace TrackTv.Updater
 
     public static class UpdatesClientExtensions
     {
-        private static readonly TimeSpan MaxRangeLength = new TimeSpan(7, 0, 0, 0);
+        private static readonly TimeSpan MaxRangeLength = TimeSpan.FromDays(7);
 
         public static async Task<TvDbResponse<Update[]>> GetAccumulatedAsync(this IUpdatesClient client, DateTime fromTime, DateTime toTime)
         {
@@ -110,6 +110,62 @@ namespace TrackTv.Updater
             catch (TvDbServerException ex) when (ex.StatusCode == 404)
             {
                 return new List<BasicEpisode>();
+            }
+        }
+        
+        public static async Task<EpisodeRecord> GetExternalEpisodeAsync(this IEpisodesClient client, int updateId)
+        {
+            if (updateId == 0)
+            {
+                return null;
+            }
+
+            try
+            {
+                var response = await client.GetAsync(updateId).ConfigureAwait(false);
+
+                return response?.Data;
+            }
+            catch (TvDbServerException ex)
+            {
+                if (ex.StatusCode == 404)
+                {
+                    return null;
+                }
+
+                throw;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+        }
+
+        public static async Task<Series> GetExternalShowAsync(this ISeriesClient client, int updateId)
+        {
+            if (updateId == 0)
+            {
+                return null;
+            }
+
+            try
+            {
+                var response = await client.GetAsync(updateId).ConfigureAwait(false);
+
+                return response?.Data;
+            }
+            catch (TvDbServerException ex)
+            {
+                if (ex.StatusCode == 404)
+                {
+                    return null;
+                }
+
+                throw;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
             }
         }
     }

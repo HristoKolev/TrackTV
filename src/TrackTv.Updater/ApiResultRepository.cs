@@ -17,7 +17,7 @@
 
         private IDbService DbService { get; }
 
-        public Task SaveApiResult(object jsonObj, ApiResultType type, int thetvdbid)
+        public Task SaveApiResult(object jsonObj, ApiChangeType type, int thetvdbid)
         {
             int apiResponseID = this.DbService.ApiResponses
                                   .Where(poco =>
@@ -34,10 +34,10 @@
 
             switch (type)
             {
-                case ApiResultType.Show :
+                case ApiChangeType.Show :
                     result.ApiResponseShowThetvdbid = thetvdbid;
                     break;
-                case ApiResultType.Episode :
+                case ApiChangeType.Episode :
                     result.ApiResponseEpisodeThetvdbid = thetvdbid;
                     break;
                 default :
@@ -46,12 +46,5 @@
 
             return this.DbService.Save(result);
         }
-    }
-
-    public enum ApiResultType
-    {
-        Show,
-
-        Episode
     }
 }
