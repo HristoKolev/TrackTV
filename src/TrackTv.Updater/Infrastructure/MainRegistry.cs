@@ -1,4 +1,4 @@
-namespace TrackTv.Updater
+namespace TrackTv.Updater.Infrastructure
 {
     using System;
     using System.Data;
@@ -15,7 +15,7 @@ namespace TrackTv.Updater
     using StructureMap;
 
     using TrackTv.Data;
-    using TrackTv.Services.Show;
+    using TrackTv.Services;
 
     using TvDbSharper;
 

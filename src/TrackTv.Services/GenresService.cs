@@ -1,20 +1,24 @@
-﻿namespace TrackTv.Services.Genres
+﻿namespace TrackTv.Services
 {
     using System.Linq;
     using System.Threading.Tasks;
 
+    using LinqToDB;
+
+    using TrackTv.Data;
+
     public class GenresService
     {
-        public GenresService(GenresRepository genresRepository)
+        public GenresService(IDbService dbService)
         {
-            this.GenresRepository = genresRepository;
+            this.DbService = dbService;
         }
 
-        private GenresRepository GenresRepository { get; }
+        private IDbService DbService { get; }
 
         public async Task<FullGenre[]> GetGenresAsync()
         {
-            var genres = await this.GenresRepository.GetGenresAsync().ConfigureAwait(false);
+            var genres = await this.DbService.Genres.ToListAsync().ConfigureAwait(false);
 
             return genres.Select(genre => new FullGenre
                          {
@@ -23,5 +27,12 @@
                          })
                          .ToArray();
         }
+    }
+
+    public class FullGenre
+    {
+        public int GenreId { get; set; }
+
+        public string GenreName { get; set; }
     }
 }

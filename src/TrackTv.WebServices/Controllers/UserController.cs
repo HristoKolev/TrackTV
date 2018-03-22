@@ -6,10 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using TrackTv.Services.Calendar;
-    using TrackTv.Services.MyShows;
-    using TrackTv.Services.Profile;
-    using TrackTv.Services.Subscription;
+    using TrackTv.Services;
     using TrackTv.WebServices.Infrastructure;
 
     [Authorize]

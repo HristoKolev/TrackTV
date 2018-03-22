@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Updater
+﻿namespace TrackTv.Updater.Infrastructure
 {
     using System.Collections.Generic;
     using System.Linq;

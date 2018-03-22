@@ -11,6 +11,7 @@
     using LinqToDB;
 
     using TrackTv.Data;
+    using TrackTv.Updater.Infrastructure;
 
     using TvDbSharper;
     using TvDbSharper.Dto;

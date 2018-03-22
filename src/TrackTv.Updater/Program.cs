@@ -14,6 +14,7 @@
     using StructureMap;
 
     using TrackTv.Services;
+    using TrackTv.Updater.Infrastructure;
 
     public class Program
     {

@@ -16,7 +16,7 @@
     using Microsoft.Extensions.Configuration;
 
     using TrackTv.Data;
-    using TrackTv.Services.Profile;
+    using TrackTv.Services;
     using TrackTv.WebServices.Infrastructure;
 
     [Route("api/public/[controller]")]

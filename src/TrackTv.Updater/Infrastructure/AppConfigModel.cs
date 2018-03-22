@@ -1,4 +1,4 @@
-﻿namespace TrackTv.Updater
+﻿namespace TrackTv.Updater.Infrastructure
 {
     public class AppConfigModel
     {

@@ -20,8 +20,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
     using TrackTv.Data;
     using TrackTv.Services;
-    using TrackTv.Services.Calendar;
-    using TrackTv.Services.Show;
 
     public class MainRegistry : Registry
     {
@@ -73,16 +71,14 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
         private void ServiceLayer()
         {
             var types = typeof(ShowService).Assembly.DefinedTypes.Select(info => info.AsType())
-                                           .Where(type =>
-                                               type.IsClass && (type.Name.EndsWith("Repository") || type.Name.EndsWith("Service")))
+                                           .Where(type => type.IsClass && (type.Name.EndsWith("Repository")
+                                                                           || type.Name.EndsWith("Service")))
                                            .ToList();
 
             foreach (Type type in types)
             {
                 this.For(type).ContainerScoped();
             }
-
-            this.For<EpisodeCalendarCalculator>().ContainerScoped();
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿namespace TrackTv.Services.Subscription
+﻿namespace TrackTv.Services
 {
+    using System;
     using System.Threading.Tasks;
 
     using TrackTv.Services.Data;
@@ -34,6 +35,19 @@
             }
 
             await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.SubscriptionID).ConfigureAwait(false);
+        }
+    }
+
+    public class SubscriptionException : Exception
+    {
+        public SubscriptionException(string message)
+            : base(message)
+        {
+        }
+
+        public SubscriptionException(string message, Exception inner)
+            : base(message, inner)
+        {
         }
     }
 }
