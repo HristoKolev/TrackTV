@@ -19,12 +19,10 @@
     {
         public DataSynchronizer(
             ILog log,
-            SettingsService settingsService,
             ErrorHandler errorHandler,
             ITvDbClient client)
         {
             this.Log = log;
-            this.SettingsService = settingsService;
             this.ErrorHandler = errorHandler;
             this.Client = client;
         }
@@ -35,18 +33,18 @@
 
         private ILog Log { get; }
 
-        private SettingsService SettingsService { get; }
-
         public async Task PerformUpdate(IContainer container)
         {
-            if (!bool.Parse(await this.SettingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
+            var settingsService = container.GetInstance<SettingsService>();
+
+            if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
             {
-                var lastUpdated = DateTime.Parse(await this.SettingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+                var lastUpdated = DateTime.Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
                                           .ToUniversalTime();
 
                 var changeListCompiler = container.GetInstance<ChangeListCompiler>();
                 var apiChangeRepository = container.GetInstance<ApiChangeRepository>();
-                var settingsService = container.GetInstance<SettingsService>();
+      
                 var dbService = container.GetInstance<IDbService>();
 
                 var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
@@ -63,7 +61,6 @@
                     {
                         lastUpdated,
                         updates.Select(u => u.LastUpdated).Max().ToDateTime()
-
                     }.Max();
 
                     await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O"))

@@ -45,6 +45,7 @@
         public async Task HandleErrorAsync(Exception exception)
         {
             var request = WebRequest.Create($"{this.Url}/records");
+
             request.Method = "POST";
             request.Headers["ApiKey"] = this.ApiKey;
             request.Headers["Content-Type"] = "application/json";
@@ -64,8 +65,7 @@
                 await streamWriter.WriteAsync(json).ConfigureAwait(false);
             }
 
-            var response = await request.GetResponseAsync().ConfigureAwait(false);
-
+            using (var response = await request.GetResponseAsync().ConfigureAwait(false))
             using (var responseStream = response.GetResponseStream())
             using (var streamReader = new StreamReader(responseStream))
             {
