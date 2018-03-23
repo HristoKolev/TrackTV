@@ -176,6 +176,12 @@
 
         private async Task<int> GetOrCreateNetwork(string networkName)
         {
+            if (string.IsNullOrWhiteSpace(networkName))
+            {
+                // The default 'Unknown' network.
+                return 1;
+            }
+
             var network = await this.DbService.Networks
                                     .FirstOrDefaultAsync(poco => poco.NetworkName.Trim().ToLower() == networkName.Trim().ToLower())
                                     .ConfigureAwait(false);
