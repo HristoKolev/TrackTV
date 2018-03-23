@@ -93,9 +93,9 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_change_types'.</para>
-	/// <para>Table schema: 'archive'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
-    [Table(Schema="archive", Name = "api_change_types")]
+    [Table(Schema="public", Name = "api_change_types")]
     public class ApiChangeTypePoco : IPoco
     {
         /// <summary>
@@ -142,9 +142,9 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_changes'.</para>
-	/// <para>Table schema: 'archive'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
-    [Table(Schema="archive", Name = "api_changes")]
+    [Table(Schema="public", Name = "api_changes")]
     public class ApiChangePoco : IPoco
     {
         /// <summary>
@@ -250,7 +250,7 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>Foreign key column [archive.api_changes.api_change_type -> archive.api_change_types.api_change_type_id].</para>
+		/// <para>Foreign key column [public.api_changes.api_change_type -> public.api_change_types.api_change_type_id].</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int'.</para>
@@ -264,15 +264,15 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
-	/// <para>Table schema: 'archive'.</para>
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
-    [Table(Schema="archive", Name = "api_responses")]
+    [Table(Schema="public", Name = "api_responses")]
     public class ApiResponsePoco : IPoco
     {
         /// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
-		/// <para>Foreign key column [archive.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
+		/// <para>Foreign key column [public.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
@@ -285,7 +285,7 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
-		/// <para>Foreign key column [archive.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
+		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
@@ -1075,91 +1075,6 @@ namespace TrackTv.Data
     }
     
     /// <summary>
-    /// <para>Table name: 'update_queue'.</para>
-	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "update_queue")]
-    public class UpdateQueuePoco : IPoco
-    {
-        /// <summary>
-		/// <para>Column name: 'update_queue_id'.</para>
-		/// <para>Table name: 'update_queue'.</para>
-		/// <para>Primary key of table: 'update_queue'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>        
-		[PrimaryKey, Identity]
-		[Column(Name = "update_queue_id", DataType = DataType.Int32)]
-        public int UpdateQueueID { get; set; }
-
-		/// <summary>		
-		/// <para>Returns the primary key for the table (UpdateQueueID).</para>
-        /// </summary>   
-		int IPoco.GetPrimaryKey() => this.UpdateQueueID;
-
-		/// <summary>		
-		/// <para>Sets the primary key for the table (UpdateQueueID).</para>
-        /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.UpdateQueueID = value;
-
-		/// <summary>		
-		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
-        /// </summary> 
-		bool IPoco.IsNew() => this.UpdateQueueID == default;
-        
-        /// <summary>
-		/// <para>Column name: 'last_failed_time'.</para>
-		/// <para>Table name: 'update_queue'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
-		/// <para>CLR type: 'DateTime'.</para>
-		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>        
-		[NotNull]
-		[Column(Name = "last_failed_time", DataType = DataType.DateTime2)]
-        public DateTime LastFailedTime { get; set; }
-        
-        /// <summary>
-		/// <para>Column name: 'thetvdb_last_updated'.</para>
-		/// <para>Table name: 'update_queue'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
-		/// <para>CLR type: 'DateTime'.</para>
-		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>        
-		[NotNull]
-		[Column(Name = "thetvdb_last_updated", DataType = DataType.DateTime2)]
-        public DateTime ThetvdbLastUpdated { get; set; }
-        
-        /// <summary>
-		/// <para>Column name: 'thetvdb_update_id'.</para>
-		/// <para>Table name: 'update_queue'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>        
-		[NotNull]
-		[Column(Name = "thetvdb_update_id", DataType = DataType.Int32)]
-        public int ThetvdbUpdateID { get; set; }
-        
-        /// <summary>
-		/// <para>Column name: 'fail_count'.</para>
-		/// <para>Table name: 'update_queue'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>        
-		[NotNull]
-		[Column(Name = "fail_count", DataType = DataType.Int32)]
-        public int FailCount { get; set; }
-        
-    }
-    
-    /// <summary>
     /// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
@@ -1261,7 +1176,6 @@ namespace TrackTv.Data
 			{typeof(ShowPoco), "show_id"},
 			{typeof(ShowGenrePoco), "shows_genres_id"},
 			{typeof(SubscriptionPoco), "subscription_id"},
-			{typeof(UpdateQueuePoco), "update_queue_id"},
 			{typeof(UserPoco), "user_id"},
 		};
 
@@ -1280,16 +1194,15 @@ namespace TrackTv.Data
 			{typeof(ShowPoco), "shows"},
 			{typeof(ShowGenrePoco), "shows_genres"},
 			{typeof(SubscriptionPoco), "subscriptions"},
-			{typeof(UpdateQueuePoco), "update_queue"},
 			{typeof(UserPoco), "users"},
 		};
 
 		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "public"},
-			{typeof(ApiChangeTypePoco), "archive"},
-			{typeof(ApiChangePoco), "archive"},
-			{typeof(ApiResponsePoco), "archive"},
+			{typeof(ApiChangeTypePoco), "public"},
+			{typeof(ApiChangePoco), "public"},
+			{typeof(ApiResponsePoco), "public"},
 			{typeof(EpisodePoco), "public"},
 			{typeof(GenrePoco), "public"},
 			{typeof(NetworkPoco), "public"},
@@ -1299,7 +1212,6 @@ namespace TrackTv.Data
 			{typeof(ShowPoco), "public"},
 			{typeof(ShowGenrePoco), "public"},
 			{typeof(SubscriptionPoco), "public"},
-			{typeof(UpdateQueuePoco), "public"},
 			{typeof(UserPoco), "public"},
 		};
 
@@ -1369,11 +1281,6 @@ namespace TrackTv.Data
         public IQueryable<SubscriptionPoco> Subscriptions => this.DataConnection.GetTable<SubscriptionPoco>();
 		
 		/// <summary>
-		/// <para>Database table 'update_queue'.</para>		
-		/// </summary>
-        public IQueryable<UpdateQueuePoco> UpdateQueue => this.DataConnection.GetTable<UpdateQueuePoco>();
-		
-		/// <summary>
 		/// <para>Database table 'users'.</para>		
 		/// </summary>
         public IQueryable<UserPoco> Users => this.DataConnection.GetTable<UserPoco>();
@@ -1390,19 +1297,19 @@ namespace TrackTv.Data
 
 		/// <summary>
 		/// <para>Database table 'api_change_types'.</para>
-		/// <para>Table schema: 'archive'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ApiChangeTypePoco> ApiChangeTypes { get; }
 
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>
-		/// <para>Table schema: 'archive'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ApiChangePoco> ApiChanges { get; }
 
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>
-		/// <para>Table schema: 'archive'.</para>
+		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<ApiResponsePoco> ApiResponses { get; }
 
@@ -1459,12 +1366,6 @@ namespace TrackTv.Data
 		/// <para>Table schema: 'public'.</para>
 		/// </summary>
         IQueryable<SubscriptionPoco> Subscriptions { get; }
-
-		/// <summary>
-		/// <para>Database table 'update_queue'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<UpdateQueuePoco> UpdateQueue { get; }
 
 		/// <summary>
 		/// <para>Database table 'users'.</para>
