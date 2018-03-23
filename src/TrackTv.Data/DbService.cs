@@ -4,6 +4,8 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using LinqToDB;
@@ -53,11 +55,13 @@
 
             var type = typeof(TPoco);
 
-            string tableName = this.tableNameMap[type];
-            string primaryKeyName = this.primaryKeyMap[type];
-            string tableSchema = this.tableSchemaMap[type];
+            string tableName = TableNameMap[type];
+            string primaryKeyName = PrimaryKeyMap[type];
+            string tableSchema = TableSchemaMap[type];
 
-            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});");
+            string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});";
+
+            return this.DataConnection.ExecuteAsync(sql);
         }
 
         /// <summary>
@@ -68,11 +72,13 @@
         {
             var type = typeof(TPoco);
 
-            string tableName = this.tableNameMap[type];
-            string primaryKeyName = this.primaryKeyMap[type];
-            string tableSchema = this.tableSchemaMap[type];
+            string tableName = TableNameMap[type];
+            string primaryKeyName = PrimaryKeyMap[type];
+            string tableSchema = TableSchemaMap[type];
 
-            return this.DataConnection.ExecuteAsync($"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};");
+            string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};";
+
+            return this.DataConnection.ExecuteAsync(sql);
         }
 
         public void Dispose()

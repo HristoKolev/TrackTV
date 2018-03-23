@@ -64,21 +64,21 @@ namespace TrackTv.Data
     {{/each}}
     public partial class DbService
     {
-		private readonly IReadOnlyDictionary<Type, string> primaryKeyMap = new Dictionary<Type, string>
+		private static readonly IReadOnlyDictionary<Type, string> PrimaryKeyMap = new Dictionary<Type, string>
 		{
 		{{#each model.tables}}
 			{typeof({{ClassName}}Poco), "{{PrimaryKeyColumnName}}"},
         {{/each}}
 		};
 
-		private readonly IReadOnlyDictionary<Type, string> tableNameMap = new Dictionary<Type, string>
+		private static readonly IReadOnlyDictionary<Type, string> TableNameMap = new Dictionary<Type, string>
 		{
 		{{#each model.tables}}
 			{typeof({{ClassName}}Poco), "{{TableName}}"},
         {{/each}}
 		};
 
-		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
+		private static readonly IReadOnlyDictionary<Type, string> TableSchemaMap = new Dictionary<Type, string>
 		{
 		{{#each model.tables}}
 			{typeof({{ClassName}}Poco), "{{TableSchema}}"},

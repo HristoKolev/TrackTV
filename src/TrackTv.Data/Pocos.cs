@@ -1161,7 +1161,7 @@ namespace TrackTv.Data
     
     public partial class DbService
     {
-		private readonly IReadOnlyDictionary<Type, string> primaryKeyMap = new Dictionary<Type, string>
+		private static readonly IReadOnlyDictionary<Type, string> PrimaryKeyMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "actor_id"},
 			{typeof(ApiChangeTypePoco), "api_change_type_id"},
@@ -1179,7 +1179,7 @@ namespace TrackTv.Data
 			{typeof(UserPoco), "user_id"},
 		};
 
-		private readonly IReadOnlyDictionary<Type, string> tableNameMap = new Dictionary<Type, string>
+		private static readonly IReadOnlyDictionary<Type, string> TableNameMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "actors"},
 			{typeof(ApiChangeTypePoco), "api_change_types"},
@@ -1197,7 +1197,7 @@ namespace TrackTv.Data
 			{typeof(UserPoco), "users"},
 		};
 
-		private readonly IReadOnlyDictionary<Type, string> tableSchemaMap = new Dictionary<Type, string>
+		private static readonly IReadOnlyDictionary<Type, string> TableSchemaMap = new Dictionary<Type, string>
 		{
 			{typeof(ActorPoco), "public"},
 			{typeof(ApiChangeTypePoco), "public"},
