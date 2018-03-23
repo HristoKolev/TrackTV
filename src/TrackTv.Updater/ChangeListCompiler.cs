@@ -11,6 +11,7 @@
     using LinqToDB;
 
     using TrackTv.Data;
+    using TrackTv.Services;
     using TrackTv.Updater.Infrastructure;
 
     using TvDbSharper;
@@ -18,13 +19,12 @@
 
     public class ChangeListCompiler
     {
-        private const int ChangeChunkSize = 1000;
-
-        public ChangeListCompiler(ITvDbClient client, IDbService dbService, ILog log)
+        public ChangeListCompiler(ITvDbClient client, IDbService dbService, ILog log, SettingsService settingsService)
         {
             this.Client = client;
             this.DbService = dbService;
             this.Log = log;
+            this.SettingsService = settingsService;
         }
 
         private ITvDbClient Client { get; }
@@ -32,6 +32,8 @@
         private IDbService DbService { get; }
         
         private ILog Log { get; }
+
+        private SettingsService SettingsService { get; }
 
         public async Task MergeChangeList(Update[] updates)
         {
@@ -43,16 +45,18 @@
                 this.DbService.Episodes.Where(p => updateIDs.Contains(p.Thetvdbid)).Select(p => p.Thetvdbid).ToArray();
 
             var registeredEpisodeIDsHashSet = new HashSet<int>(registeredEpisodeIDs);
-    
+
+            int changeChunkSize = int.Parse(await this.SettingsService.GetSettingAsync(Setting.UpdateChangeChunkSize).ConfigureAwait(false));
+
             int chunkCount = 1;
 
-            foreach (var chunk in updates.Split(ChangeChunkSize))
+            foreach (var chunk in updates.Split(changeChunkSize))
             {
                 var tasks = chunk.Select(update => this.MergeUpdates(update, registeredEpisodeIDsHashSet, changeList)).ToArray();
 
-                if (updates.Length > ChangeChunkSize)
+                if (updates.Length > changeChunkSize)
                 {
-                    this.Log.Debug($"Chunk {chunkCount++} of {Math.Ceiling(updates.Length / (decimal)ChangeChunkSize)}");
+                    this.Log.Debug($"Chunk {chunkCount++} of {Math.Ceiling(updates.Length / (decimal)changeChunkSize)}");
                 }
 
                 await Task.WhenAll(tasks).ConfigureAwait(false);

@@ -41,5 +41,9 @@
         DisableDatabaseUpdate = 2,
 
         TheTvDbApiKey = 3,
+
+        UpdateEpisodeChunkSize = 4,
+
+        UpdateChangeChunkSize = 5,
     }
 }

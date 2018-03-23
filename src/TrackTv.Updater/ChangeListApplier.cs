@@ -10,6 +10,7 @@
     using LinqToDB;
 
     using TrackTv.Data;
+    using TrackTv.Services;
     using TrackTv.Services.Data;
     using TrackTv.Updater.Infrastructure;
 
@@ -18,14 +19,18 @@
 
     public class ChangeListApplier
     {
-        private const int EpisodeChunkSize = 200;
-
-        public ChangeListApplier(IDbService dbService, ITvDbClient client, ApiResultRepository apiResultRepository, ILog log)
+        public ChangeListApplier(
+            IDbService dbService,
+            ITvDbClient client,
+            ApiResultRepository apiResultRepository,
+            ILog log,
+            SettingsService settingsService)
         {
             this.DbService = dbService;
             this.Client = client;
             this.ApiResultRepository = apiResultRepository;
             this.Log = log;
+            this.SettingsService = settingsService;
         }
 
         private ApiResultRepository ApiResultRepository { get; }
@@ -35,6 +40,8 @@
         private IDbService DbService { get; }
 
         private ILog Log { get; }
+
+        private SettingsService SettingsService { get; }
 
         public Task ApplyChange(ApiChangePoco change)
         {
@@ -286,13 +293,15 @@
 
             this.Log.Debug($"{idsForUpdate.Length} episodes for update. Total: {externalEpisodes.Length}");
 
+            int episodeChunkSize = int.Parse(await this.SettingsService.GetSettingAsync(Setting.UpdateEpisodeChunkSize).ConfigureAwait(false));
+
             int chunk = 1;
 
-            foreach (var episodeIDsChunk in idsForUpdate.Split(EpisodeChunkSize))
+            foreach (var episodeIDsChunk in idsForUpdate.Split(episodeChunkSize))
             {
-                if (idsForUpdate.Length > EpisodeChunkSize)
+                if (idsForUpdate.Length > episodeChunkSize)
                 {
-                    this.Log.Debug($"Episode chunk {chunk++} of {Math.Ceiling(idsForUpdate.Length / (decimal)EpisodeChunkSize)}");
+                    this.Log.Debug($"Episode chunk {chunk++} of {Math.Ceiling(idsForUpdate.Length / (decimal)episodeChunkSize)}");
                 }
 
                 var fullExternalEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(episodeIDsChunk).ConfigureAwait(false);
