@@ -52,11 +52,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
 
     public static class ExpressedInstanceExtensions
     {
-        public static ExpressedInstance<T> TimeScoped<T>(this ExpressedInstance<T> instance)
-        {
-            return instance.TimeScoped(new TimeSpan(0, 1, 0, 0));
-        }
-
         public static ExpressedInstance<T> TimeScoped<T>(this ExpressedInstance<T> instance, TimeSpan expirationTime)
         {
             instance.SetLifecycleTo(new TimedLifecycle(expirationTime));
