@@ -38,6 +38,8 @@
     {
         LastDatabaseUpdate = 1,
 
-        DisableDatabaseUpdate = 3
+        DisableDatabaseUpdate = 2,
+
+        TheTvDbApiKey = 3,
     }
 }

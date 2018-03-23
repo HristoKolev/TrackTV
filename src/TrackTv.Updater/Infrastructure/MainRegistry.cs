@@ -4,6 +4,7 @@ namespace TrackTv.Updater.Infrastructure
     using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     using log4net;
 
@@ -65,10 +66,19 @@ namespace TrackTv.Updater.Infrastructure
 
         private void TvDbClient()
         {
-            Expression<Action<IContext, TvDbClient>> authenticateClient = (context, client) =>
-                client.Authentication.AuthenticateAsync(Global.AppConfig.TheTvDbApiKey).Wait();
+            async Task AuthenticateTvDbClient(IContext ctx, ITvDbClient tvDbClient)
+            {
+                var settingsService = ctx.GetInstance<SettingsService>();
 
-            this.For<ITvDbClient>().Use<TvDbClient>().OnCreation(authenticateClient).Singleton();
+                string key = await settingsService.GetSettingAsync(Setting.TheTvDbApiKey).ConfigureAwait(false);
+
+                await tvDbClient.Authentication.AuthenticateAsync(key).ConfigureAwait(false);
+            }
+
+            this.For<ITvDbClient>()
+                .Use<TvDbClient>()
+                .OnCreation("TvDbClient", (ctx, obj) => AuthenticateTvDbClient(ctx, obj).Wait())
+                .Singleton();
         }
     }
 }
