@@ -66,7 +66,7 @@
 
             var list = changeList.Values.Where(poco => poco != null).ToList();
 
-            this.DbService.BulkInsert(list);
+            this.DbService.BulkInsertSync(list);
 
             this.Log.Debug($"{changeList.Count} changes inserted.");
         }

@@ -42,7 +42,7 @@
 
         private string Url { get; }
 
-        public async Task HandleErrorAsync(Exception exception)
+        public async Task HandleErrorAsync(Exception exception, string context = null)
         {
             var request = WebRequest.Create($"{this.Url}/records");
 
@@ -57,7 +57,8 @@
                 {
                     RecordType = "Error",
                     RecordTitle = exception.Message,
-                    RecordDescription = exception.ToString()
+                    RecordDescription = exception.ToString(),
+                    RecordContext = context
                 };
 
                 string json = JsonConvert.SerializeObject(record);

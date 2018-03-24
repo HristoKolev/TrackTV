@@ -89,22 +89,24 @@
         public QueryType QueryType { get; }
     }
 
+    public class QueryableFilterException : Exception
+    {
+        public QueryableFilterException(string message) : base(message)
+        {
+        }
+
+        public QueryableFilterException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+    }
+
     public static class ExpressionGenerator
     {
-        private static MethodInfo StringContainsMethod { get; } = typeof(string).GetMethod(nameof(string.Contains), new[]
-        {
-            typeof(string)
-        });
+        private static MethodInfo StringContainsMethod { get; } = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) });
 
-        private static MethodInfo StringEndsWithMethod { get; } = typeof(string).GetMethod(nameof(string.EndsWith), new[]
-        {
-            typeof(string)
-        });
+        private static MethodInfo StringEndsWithMethod { get; } = typeof(string).GetMethod(nameof(string.EndsWith), new[] { typeof(string) });
 
-        private static MethodInfo StringStartsWithMethod { get; } = typeof(string).GetMethod(nameof(string.StartsWith), new[]
-        {
-            typeof(string)
-        });
+        private static MethodInfo StringStartsWithMethod { get; } = typeof(string).GetMethod(nameof(string.StartsWith), new[] { typeof(string) });
 
         public static Expression<Func<T, bool>> CreateFilterExpression<T>(object filter)
             where T : class
@@ -215,27 +217,13 @@
                 case QueryType.IsIn :
                 {
                     Type type = member.Type;
-
-                    var types = new[]
-                    {
-                        type
-                    };
-
-                    expression = Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", types), member);
+                    expression = Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", new[] { type }), member);
                     break;
                 }
                 case QueryType.IsNotIn :
                 {
                     Type type = member.Type;
-
-                    var types = new[]
-                    {
-                        type
-                    };
-
-                    expression = Expression.Not(Expression.Call(memberValue,
-                        typeof(List<>).MakeGenericType(type).GetMethod("Contains", types), member));
-
+                    expression = Expression.Not(Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", new[] { type }), member));
                     break;
                 }
                 case QueryType.Contains :
@@ -274,7 +262,7 @@
                     message += $"PropertyName: {propertyInfo.Name};\r\n";
                     message += $"PropertyType: {propertyInfo.PropertyType.Name}\r\n";
 
-                    throw new NotSupportedException(message);
+                    throw new QueryableFilterException(message);
                 }
 
                 var queryFilterAttribute = propertyInfo.GetCustomAttribute<QueryFilterAttribute>();
@@ -290,7 +278,7 @@
                 // The target property name must exist on the filter type.
                 if (propertyInfos.All(info => info.Name != targetPropertyName))
                 {
-                    throw new NotSupportedException($"Target property {targetPropertyName} does not exists on type {filterType.Name}."
+                    throw new QueryableFilterException($"Target property {targetPropertyName} does not exists on type {filterType.Name}."
                                                     + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                 }
 
@@ -299,7 +287,7 @@
                     // The QueryType.None value is used as a default value so that we don't default to some specific filtering strategy.
                     case QueryType.None :
                     {
-                        throw new NotSupportedException("The filter attribute should not have a QueryType of None.\r\n"
+                        throw new QueryableFilterException("The filter attribute should not have a QueryType of None.\r\n"
                                                         + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                     }
 
@@ -309,7 +297,7 @@
                     {
                         if (propertyInfo.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
                         {
-                            throw new NotSupportedException(
+                            throw new QueryableFilterException(
                                 $"Property with QueryType: {queryType} should not have a type that is a collection.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
@@ -339,7 +327,7 @@
 
                         if (!comparableTypes.Contains(propertyInfo.PropertyType))
                         {
-                            throw new NotSupportedException(
+                            throw new QueryableFilterException(
                                 $"Property with QueryType: {queryType} should not have a type of {propertyInfo.PropertyType} .\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
@@ -357,7 +345,7 @@
                     {
                         if (propertyInfo.PropertyType != typeof(string))
                         {
-                            throw new NotSupportedException(
+                            throw new QueryableFilterException(
                                 $"Property with QueryType: {queryType} should not be used with any type other than string.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
@@ -371,7 +359,7 @@
                     {
                         if (propertyInfo.PropertyType != typeof(bool))
                         {
-                            throw new NotSupportedException(
+                            throw new QueryableFilterException(
                                 $"Property with QueryType: {queryType} should not be used with any type other than boolean.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }
@@ -385,7 +373,7 @@
                     {
                         if (!typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
                         {
-                            throw new NotSupportedException(
+                            throw new QueryableFilterException(
                                 $"Property with QueryType: {queryType} should only be used with collections.\r\n"
                                 + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
                         }

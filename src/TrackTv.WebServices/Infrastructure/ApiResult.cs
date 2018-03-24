@@ -73,22 +73,22 @@ namespace TrackTv.WebServices.Infrastructure
 
     public static class ControllerExtensions
     {
-        public static ActionResult Failure(this ControllerBase controller, ModelStateDictionary modelState)
+        public static ActionResult Failure(this ControllerBase _, ModelStateDictionary modelState)
         {
             var messages = modelState.Values.Where(entry => entry.ValidationState == ModelValidationState.Invalid)
                                      .SelectMany(entry => entry.Errors)
                                      .Select(error => error.ErrorMessage)
                                      .ToArray();
 
-            return controller.Ok(ApiResult.Fail(messages));
+            return new OkObjectResult(ApiResult.Fail(messages));
         }
 
-        public static ActionResult Failure(this ControllerBase controller, params string[] messages) => controller.Ok(ApiResult.Fail(messages));
+        public static ActionResult Failure(this ControllerBase _, params string[] messages) => new OkObjectResult(ApiResult.Fail(messages));
 
-        public static ActionResult Failure(this ControllerBase controller, Exception exception) => controller.Ok(ApiResult.Fail(exception));
+        public static ActionResult Failure(this ControllerBase _, Exception exception) => new OkObjectResult(ApiResult.Fail(exception));
 
-        public static ActionResult Success<T>(this ControllerBase controller, T payload) => controller.Ok(ApiResult.Ok(payload));
+        public static ActionResult Success<T>(this ControllerBase _, T payload) => new OkObjectResult(ApiResult.Ok(payload));
 
-        public static ActionResult Success(this ControllerBase controller) => controller.Ok(ApiResult.Ok());
+        public static ActionResult Success(this ControllerBase _) => new OkObjectResult(ApiResult.Ok());
     }
 }

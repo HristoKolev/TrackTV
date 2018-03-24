@@ -8,8 +8,8 @@ namespace TrackTv.WebServices.Infrastructure
     using log4net;
     using log4net.Util;
 
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -17,20 +17,19 @@ namespace TrackTv.WebServices.Infrastructure
 
     /// <summary>
     /// <para>Global Exception handler.</para>
-    /// <para>If the  controller defines an error message for the exception type,
-    ///  we wrap it in <see cref="ApiResult"/> and return it with status code of 200.</para> 
-    /// <para>If the exception can't be handled, we return an empty response with status code of 500.</para> 
+    /// <para>If the controller does not provide an error message for the exception type via <see cref="ExposeErrorAttribute"/>,
+    ///  we use default error message.
+    /// We wrap it in <see cref="ApiResult"/> and return it with status code of 200.</para> 
     /// </summary>
     public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        public HandleExceptionFilterAttribute(IHostingEnvironment hostingEnvironment, ILog log, MishapService mishapService)
+        private const string DefaultErrorMessage = "Server error. Please try again later.";
+
+        public HandleExceptionFilterAttribute(ILog log, MishapService mishapService)
         {
-            this.HostingEnvironment = hostingEnvironment;
             this.Log = log;
             this.MishapService = mishapService;
         }
-
-        private IHostingEnvironment HostingEnvironment { get; }
 
         private ILog Log { get; }
 
@@ -41,12 +40,14 @@ namespace TrackTv.WebServices.Infrastructure
             try
             {
                 await this.HandleExceptionAsync(context).ConfigureAwait(false);
+
+                context.ExceptionHandled = true;
             }
             catch (Exception ex)
             {
-                this.Log.ErrorExt(() =>
-                    "\r\n\r\n" + "Exception occured while handling an exception.\r\n\r\n"
-                               + $"Original exception: {context.Exception}\r\n\r\n" + $"Error handler exception: {ex}");
+                this.Log.ErrorExt(() => "\r\n\r\n"
+                                        + "Exception occured while handling an exception.\r\n\r\n"
+                                        + $"Original exception: {context.Exception}\r\n\r\n" + $"Error handler exception: {ex}");
 
                 throw;
             }
@@ -56,36 +57,33 @@ namespace TrackTv.WebServices.Infrastructure
 
         private async Task HandleExceptionAsync(ExceptionContext context)
         {
-            Task mishapTask = this.MishapService.HandleErrorAsync(context.Exception);
+            Task mishapTask = this.MishapService.HandleErrorAsync(context.Exception, context.ActionDescriptor.DisplayName);
 
-            var descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
+            var exposeAttribute = GetExposeErrorAttribute(context);
 
-            var exposeAttributes = descriptor.MethodInfo.GetCustomAttributes<ExposeErrorAttribute>();
+            string errorMessage = exposeAttribute?.Message ?? DefaultErrorMessage;
 
-            var exposeAttribute = exposeAttributes.FirstOrDefault(a => a.ExceptionType == context.Exception.GetType());
+            this.Log.ErrorExt(() => ComposeErrorMessage(context.Exception, context.ActionDescriptor));
 
-            if (exposeAttribute != null)
-            {
-                context.Result = new ObjectResult(ApiResult.Fail(exposeAttribute.Message))
-                {
-                    StatusCode = 200
-                };
+            var apiResult = ApiResult.Fail(errorMessage);
 
-                this.Log.ErrorExt(() =>
-                    "Exception was handled. " + $"(ExceptionMessage: {context.Exception.Message}, "
-                                              + $"ExceptionName: {context.Exception.GetType().Name})");
-
-                context.ExceptionHandled = true;
-            }
-
-            if (!context.ExceptionHandled && !this.HostingEnvironment.IsDevelopment())
-            {
-                this.Log.ErrorExt(() => $"Unhandled exception of type {context.Exception.GetType()}.", context.Exception);
-                context.Result = new StatusCodeResult(500);
-                context.ExceptionHandled = true;
-            }
+            context.Result = new OkObjectResult(apiResult);
 
             await mishapTask.ConfigureAwait(false);
+        }
+
+        private static string ComposeErrorMessage(Exception exception, ActionDescriptor actionDescriptor)
+        {
+            return "Exception was handled. (" + $"ActionName: {actionDescriptor.DisplayName}, " + $"ExceptionMessage: {exception.Message}, "
+                   + $"ExceptionName: {exception.GetType().Name})";
+        }
+
+        private static ExposeErrorAttribute GetExposeErrorAttribute(ExceptionContext context)
+        {
+            var descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
+            var exposeAttributes = descriptor.MethodInfo.GetCustomAttributes<ExposeErrorAttribute>();
+            var exposeAttribute = exposeAttributes.FirstOrDefault(a => a.ExceptionType == context.Exception.GetType());
+            return exposeAttribute;
         }
     }
 

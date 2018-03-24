@@ -34,33 +34,60 @@
 
         private IDataProvider DataProvider { get; }
 
-        public BulkCopyRowsCopied BulkCopy<T>(DataConnection dataConnection, BulkCopyOptions options, IEnumerable<T> source) =>
-            this.DataProvider.BulkCopy(dataConnection, options, source);
+        public BulkCopyRowsCopied BulkCopy<T>(DataConnection dataConnection, BulkCopyOptions options, IEnumerable<T> source)
+        {
+            return this.DataProvider.BulkCopy(dataConnection, options, source);
+        }
 
-        public Type ConvertParameterType(Type type, DataType dataType) => this.DataProvider.ConvertParameterType(type, dataType);
+        public Type ConvertParameterType(Type type, DataType dataType)
+        {
+            return this.DataProvider.ConvertParameterType(type, dataType);
+        }
 
-        public IDbConnection CreateConnection(string connectionString) => this.DataProvider.CreateConnection(connectionString);
+        public IDbConnection CreateConnection(string connectionString)
+        {
+            return this.DataProvider.CreateConnection(connectionString);
+        }
 
-        public ISqlBuilder CreateSqlBuilder() => this.DataProvider.CreateSqlBuilder();
+        public ISqlBuilder CreateSqlBuilder()
+        {
+            return this.DataProvider.CreateSqlBuilder();
+        }
 
-        public void DisposeCommand(DataConnection dataConnection) => this.DataProvider.DisposeCommand(dataConnection);
+        public void DisposeCommand(DataConnection dataConnection)
+        {
+            this.DataProvider.DisposeCommand(dataConnection);
+        }
 
-        public IDisposable ExecuteScope() => this.DataProvider.ExecuteScope();
+        public IDisposable ExecuteScope()
+        {
+            return this.DataProvider.ExecuteScope();
+        }
 
-        public CommandBehavior GetCommandBehavior(CommandBehavior commandBehavior) => this.DataProvider.GetCommandBehavior(commandBehavior);
+        public CommandBehavior GetCommandBehavior(CommandBehavior commandBehavior)
+        {
+            return this.DataProvider.GetCommandBehavior(commandBehavior);
+        }
 
-        public object GetConnectionInfo(DataConnection dataConnection, string parameterName) =>
-            this.DataProvider.GetConnectionInfo(dataConnection, parameterName);
+        public object GetConnectionInfo(DataConnection dataConnection, string parameterName)
+        {
+            return this.DataProvider.GetConnectionInfo(dataConnection, parameterName);
+        }
 
         public Expression GetReaderExpression(
             MappingSchema mappingSchema,
             IDataReader reader,
             int idx,
             Expression readerExpression,
-            Type toType) =>
-            this.DataProvider.GetReaderExpression(mappingSchema, reader, idx, readerExpression, toType);
+            Type toType)
+        {
+            return this.DataProvider.GetReaderExpression(mappingSchema, reader, idx, readerExpression, toType);
+        }
 
-        public ISqlOptimizer GetSqlOptimizer() => this.DataProvider.GetSqlOptimizer();
+        public ISqlOptimizer GetSqlOptimizer()
+        {
+            return this.DataProvider.GetSqlOptimizer();
+        }
 
         public void InitCommand(DataConnection dataConnection, CommandType commandType, string commandText, DataParameter[] parameters)
         {
@@ -69,9 +96,15 @@
             this.DataProvider.InitCommand(dataConnection, commandType, commandText, parameters);
         }
 
-        public bool IsCompatibleConnection(IDbConnection connection) => this.DataProvider.IsCompatibleConnection(connection);
+        public bool IsCompatibleConnection(IDbConnection connection)
+        {
+            return this.DataProvider.IsCompatibleConnection(connection);
+        }
 
-        public bool? IsDBNullAllowed(IDataReader reader, int idx) => this.DataProvider.IsDBNullAllowed(reader, idx);
+        public bool? IsDBNullAllowed(IDataReader reader, int idx)
+        {
+            return this.DataProvider.IsDBNullAllowed(reader, idx);
+        }
 
         public int Merge<T>(
             DataConnection dataConnection,
@@ -115,8 +148,10 @@
             return this.DataProvider.MergeAsync(dataConnection, merge, token);
         }
 
-        public void SetParameter(IDbDataParameter parameter, string name, DataType dataType, object value) =>
+        public void SetParameter(IDbDataParameter parameter, string name, DataType dataType, object value)
+        {
             this.DataProvider.SetParameter(parameter, name, dataType, value);
+        }
     }
 
     public interface IProfiledDataProvider

@@ -4,20 +4,20 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using LinqToDB;
     using LinqToDB.Data;
     using LinqToDB.DataProvider;
 
+    using Npgsql;
+
     public partial class DbService : IDbService
     {
         private readonly ConcurrentStack<KeyValuePair<string, DataParameter[]>> sqlLog =
             new ConcurrentStack<KeyValuePair<string, DataParameter[]>>();
 
-        public DbService(IDbConnection dbConnection, IDataProvider dataProvider)
+        public DbService(NpgsqlConnection dbConnection, IDataProvider dataProvider)
         {
             this.DbConnection = dbConnection;
             this.DataProvider = dataProvider as IProfiledDataProvider;
@@ -34,7 +34,7 @@
 
         private IProfiledDataProvider DataProvider { get; }
 
-        private IDbConnection DbConnection { get; set; }
+        private NpgsqlConnection DbConnection { get; set; }
 
         public Task Delete<TPoco>(TPoco poco)
             where TPoco : IPoco
@@ -55,9 +55,9 @@
 
             var type = typeof(TPoco);
 
+            string tableSchema = TableSchemaMap[type];
             string tableName = TableNameMap[type];
             string primaryKeyName = PrimaryKeyMap[type];
-            string tableSchema = TableSchemaMap[type];
 
             string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});";
 
@@ -72,9 +72,9 @@
         {
             var type = typeof(TPoco);
 
+            string tableSchema = TableSchemaMap[type];
             string tableName = TableNameMap[type];
             string primaryKeyName = PrimaryKeyMap[type];
-            string tableSchema = TableSchemaMap[type];
 
             string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};";
 
@@ -100,7 +100,7 @@
         {
             if (this.DbConnection.State != ConnectionState.Open)
             {
-                this.DbConnection.Open();
+                await this.DbConnection.OpenAsync().ConfigureAwait(false);
             }
 
             this.sqlLog.Clear();
@@ -141,7 +141,10 @@
             return this.DataConnection.UpdateAsync(poco);
         }
 
-        public void BulkInsert<TPoco>(IEnumerable<TPoco> list)
+        /// <summary>
+        /// This is sync. I don't like it.
+        /// </summary>
+        public void BulkInsertSync<TPoco>(IEnumerable<TPoco> list)
             where TPoco : IPoco
         {
             this.DataConnection.BulkCopy(list);
@@ -195,7 +198,7 @@
         Task Update<TPoco>(TPoco poco)
             where TPoco : IPoco;
 
-        void BulkInsert<TPoco>(IEnumerable<TPoco> list)
+        void BulkInsertSync<TPoco>(IEnumerable<TPoco> list)
             where TPoco : IPoco;
     }
 }
