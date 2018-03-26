@@ -64,7 +64,7 @@
 
         private static void MapToEpisode(EpisodePoco episode, EpisodeRecord data)
         {
-            episode.EpisodeTitle = data.EpisodeName;
+            episode.EpisodeTitle = string.IsNullOrWhiteSpace(data.EpisodeName) ? null : data.EpisodeName;
             episode.EpisodeDescription = data.Overview;
 
             if (!string.IsNullOrWhiteSpace(data.ImdbId))
@@ -231,7 +231,7 @@
                 }
 
                 myActor.Thetvdbid = actor.Id;
-                myActor.ActorName = actor.Name;
+                myActor.ActorName = string.IsNullOrWhiteSpace(actor.Name) ? null : actor.Name;
                 myActor.LastUpdated = DateTime.Parse(actor.LastUpdated);
 
                 myActor.ActorID = await this.DbService.Save(myActor).ConfigureAwait(false);

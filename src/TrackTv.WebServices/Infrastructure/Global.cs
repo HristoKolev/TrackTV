@@ -9,8 +9,7 @@
     {
         public static IConfigurationRoot AppConfig { get; set; }
 
-        public static string ConfigDirectory =>
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? RootDirectory : Path.Combine(RootDirectory, "../");
+        public static string ConfigDirectory => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? RootDirectory : Path.Combine(RootDirectory, "../");
 
         public static ErrorHandler ErrorHandler { get; set; }
 
