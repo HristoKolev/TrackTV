@@ -96,7 +96,7 @@
 
         public Task ExecuteInTransaction(Func<Task> body) => this.ExecuteInTransaction(tr => body());
 
-        public async Task ExecuteInTransaction(Func<IDbTransaction, Task> body)
+        public async Task ExecuteInTransaction(Func<IDbTransaction, Task> body, TimeSpan? timeout = null)
         {
             if (this.DbConnection.State != ConnectionState.Open)
             {
@@ -107,7 +107,24 @@
 
             using (var transaction = new DbTransactionWrapper(this.DbConnection.BeginTransaction()))
             {
-                await body(transaction).ConfigureAwait(false);
+                if (timeout == null)
+                {
+                    await body(transaction).ConfigureAwait(false);
+                }
+                else
+                {
+                    var timeoutTask = Task.Delay(timeout.Value);
+                    var transactionTask = body(transaction);
+
+                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask).ConfigureAwait(false);
+
+                    if (completedTask == timeoutTask)
+                    {
+                        throw new TimeoutException($"The db transaction timed out (timeout: {timeout})");
+                    }
+
+                    await transactionTask.ConfigureAwait(false);
+                }
 
                 if (!transaction.IsRolledBack)
                 {
@@ -187,7 +204,7 @@
 
         Task ExecuteInTransaction(Func<Task> body);
 
-        Task ExecuteInTransaction(Func<IDbTransaction, Task> body);
+        Task ExecuteInTransaction(Func<IDbTransaction, Task> body, TimeSpan? timeout = null);
 
         Task<int> Insert<TPoco>(TPoco poco)
             where TPoco : IPoco;

@@ -129,7 +129,7 @@
                             throw new DataSyncException(
                                 $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss})", e);
                         }
-                    }).ConfigureAwait(false);
+                    }, TimeSpan.FromMinutes(20)).ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
