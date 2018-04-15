@@ -31,6 +31,8 @@
             Global.Log = LogManager.GetLogger(assembly, "Global logger");
 
             Global.Log.Debug("Updater started.");
+            Global.Log.Debug("AppConfig:");
+            Global.Log.Debug(JsonConvert.SerializeObject(Global.AppConfig, Formatting.Indented));
 
             Global.ErrorHandler = new ErrorHandler(Global.Log, new MishapService(Global.AppConfig.MishapApiKey));
 
