@@ -20,8 +20,7 @@
     {
         private static async Task Main()
         {
-            Global.AppConfig =
-                JsonConvert.DeserializeObject<AppConfigModel>(File.ReadAllText(Path.Combine(Global.ConfigDirectory, "appconfig.json")));
+            Global.AppConfig = JsonConvert.DeserializeObject<AppConfigModel>(File.ReadAllText(Path.Combine(Global.ConfigDirectory, "appconfig.json")));
 
             // Log4Net
             var assembly = Assembly.GetEntryAssembly();
