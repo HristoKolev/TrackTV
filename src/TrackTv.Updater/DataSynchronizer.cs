@@ -70,16 +70,29 @@
 
                 var fullChangeList = await apiChangeRepository.GetCurrentChangeList().ConfigureAwait(false);
 
+                if (Global.CliOptions.SkipFailed)
+                {
+                    fullChangeList = fullChangeList.Where(poco => poco.ApiChangeFailCount == 0).ToArray();
+                }
+
                 int episodeCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Episode);
                 int showCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Show);
                 this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
 
-                int index = 1;
-
-                foreach (var change in fullChangeList)
+                if (!Global.CliOptions.CompileOnly)
                 {
-                    await this.ApplyChange(change, index, fullChangeList.Length, container)
-                              .ContinueWith(task => index++).ConfigureAwait(false);
+                    int index = 1;
+
+                    foreach (var change in fullChangeList)
+                    {
+                        await this.ApplyChange(change, index, fullChangeList.Length, container)
+                                  .ContinueWith(task => index++).ConfigureAwait(false);
+
+                        if (Global.CliOptions.RestartThreshold != 0 && Global.CliOptions.RestartThreshold <= index)
+                        {
+                            Global.Restart();
+                        }
+                    }
                 }
 
                 Global.Log.Debug("Updater finished successfully.");

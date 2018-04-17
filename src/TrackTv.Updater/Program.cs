@@ -18,8 +18,10 @@
 
     public class Program
     {
-        private static async Task Main()
+        private static async Task Main(string[] args)
         {
+            Global.CliOptions = CliOptions.Read(args);
+
             Global.AppConfig = JsonConvert.DeserializeObject<AppConfigModel>(File.ReadAllText(Path.Combine(Global.ConfigDirectory, "appconfig.json")));
 
             // Log4Net
@@ -32,6 +34,8 @@
             Global.Log.Debug("Updater started.");
             Global.Log.Debug("AppConfig:");
             Global.Log.Debug(JsonConvert.SerializeObject(Global.AppConfig, Formatting.Indented));
+            Global.Log.Debug("CliOptions:");
+            Global.Log.Debug(JsonConvert.SerializeObject(Global.CliOptions, Formatting.Indented));
 
             Global.ErrorHandler = new ErrorHandler(Global.Log, new MishapService(Global.AppConfig.MishapApiKey));
 
