@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.4.0" />
     <PackageReference Include="TvDbSharper" Version="1.0.1" />
   </ItemGroup>

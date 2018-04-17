@@ -31,11 +31,11 @@
   
   <ItemGroup>
      
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.4.0" />
-    <PackageReference Include="IdentityServer4" Version="2.1.2" />
-    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.4.0" />
+    <PackageReference Include="IdentityServer4" Version="2.2.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
   </ItemGroup>
    
   <ItemGroup>
