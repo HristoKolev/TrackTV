@@ -5,20 +5,17 @@
     using LinqToDB;
 
     using TrackTv.Data;
-    using TrackTv.Services.Data;
     using TrackTv.Services.Exceptions;
 
     public class ProfileService
     {
-        public ProfileService(ProfilesRepository profilesRepository, IDbService dbService)
+        public ProfileService(IDbService dbService)
         {
-            this.ProfilesRepository = profilesRepository;
             this.DbService = dbService;
         }
 
         private IDbService DbService { get; }
-
-        private ProfilesRepository ProfilesRepository { get; }
+ 
 
         public Task<int> CreateProfileAsync(string username)
         {

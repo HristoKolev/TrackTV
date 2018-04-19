@@ -3,7 +3,6 @@ namespace TrackTv.Updater.Infrastructure
     using System;
     using System.Data;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using log4net;
