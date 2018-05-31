@@ -125,10 +125,9 @@ namespace TrackTv.WebServices.Infrastructure
 
         public async Task RemoveAllAsync(string subjectId, string clientId)
         {
-            foreach (var persistedGrant in PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId && grant.ClientId == clientId)
-            )
+            foreach (var persistedGrant in PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId && grant.ClientId == clientId))
             {
-                PersistedGrants.TryRemove(persistedGrant.Key, out var p);
+                PersistedGrants.TryRemove(persistedGrant.Key, out _);
             }
         }
 
@@ -138,13 +137,13 @@ namespace TrackTv.WebServices.Infrastructure
                 grant.SubjectId == subjectId && grant.ClientId == clientId
                                              && grant.Type == type))
             {
-                PersistedGrants.TryRemove(persistedGrant.Key, out var p);
+                PersistedGrants.TryRemove(persistedGrant.Key, out _);
             }
         }
 
         public async Task RemoveAsync(string key)
         {
-            PersistedGrants.TryRemove(key, out var p);
+            PersistedGrants.TryRemove(key, out _);
         }
 
         public async Task StoreAsync(PersistedGrant grant)

@@ -13,7 +13,7 @@
 
         public MishapService(string apiKey)
         {
-            if (!Guid.TryParse(apiKey, out Guid _))
+            if (!Guid.TryParse(apiKey, out _))
             {
                 throw new ArgumentException($"The ApiKey is invalid. ApiKey: '{apiKey ?? "null"}'");
             }
@@ -24,12 +24,12 @@
 
         public MishapService(string apiKey, string url)
         {
-            if (!Guid.TryParse(apiKey, out Guid _))
+            if (!Guid.TryParse(apiKey, out _))
             {
                 throw new ArgumentException($"The ApiKey is invalid. ApiKey: '{apiKey ?? "null"}'");
             }
 
-            if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri _))
+            if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out _))
             {
                 throw new ArgumentException($"The url is invalid. Url: '{url ?? "null"}'");
             }
