@@ -56,12 +56,12 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'actor_name'.</para>
 		/// <para>Table name: 'actors'.</para>
-		/// <para>This column is not nullable.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>        
-		[NotNull]
+		[Nullable]
 		[Column(Name = "actor_name", DataType = DataType.NVarChar)]
         public string ActorName { get; set; }
         
