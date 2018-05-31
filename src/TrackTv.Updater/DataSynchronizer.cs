@@ -18,10 +18,7 @@
 
     public class DataSynchronizer
     {
-        public DataSynchronizer(
-            ILog log,
-            ErrorHandler errorHandler,
-            ITvDbClient client)
+        public DataSynchronizer(ILog log, ErrorHandler errorHandler, ITvDbClient client)
         {
             this.Log = log;
             this.ErrorHandler = errorHandler;
@@ -29,7 +26,7 @@
         }
 
         private ITvDbClient Client { get; }
- 
+
         private ErrorHandler ErrorHandler { get; }
 
         private ILog Log { get; }
@@ -40,34 +37,12 @@
 
             if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
             {
-                var lastUpdated = DateTime.Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
-                                          .ToUniversalTime();
-
-                var changeListCompiler = container.GetInstance<ChangeListCompiler>();
-                var apiChangeRepository = container.GetInstance<ApiChangeRepository>();
-      
-                var dbService = container.GetInstance<IDbService>();
-
-                var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
-
-                if (updates.Any())
+                if (!Global.CliOptions.ApplyOnly)
                 {
-                    await dbService.ExecuteInTransaction(async () =>
-                    {
-                        await this.MergeChangeList(updates, changeListCompiler).ConfigureAwait(false);
-                    })
-                    .ConfigureAwait(false);
-
-                    var newLastUpdated = new[]
-                    {
-                        lastUpdated,
-                        updates.Select(u => u.LastUpdated).Max().ToDateTime()
-                    }.Max();
-
-                    await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O"))
-                                         .ConfigureAwait(false);
+                    await this.UpdateChangeLists(container);
                 }
 
+                var apiChangeRepository = container.GetInstance<ApiChangeRepository>();
                 var fullChangeList = await apiChangeRepository.GetCurrentChangeList().ConfigureAwait(false);
 
                 if (Global.CliOptions.SkipFailed)
@@ -76,7 +51,7 @@
                 }
 
                 int episodeCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Episode);
-                int showCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Show);
+                int showCount = fullChangeList.Count(item => item.ApiChangeType    == (int)ApiChangeType.Show);
                 this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
 
                 if (!Global.CliOptions.CompileOnly)
@@ -86,7 +61,8 @@
                     foreach (var change in fullChangeList)
                     {
                         await this.ApplyChange(change, index, fullChangeList.Length, container)
-                                  .ContinueWith(task => index++).ConfigureAwait(false);
+                                  .ContinueWith(task => index++)
+                                  .ConfigureAwait(false);
 
                         if (Global.CliOptions.RestartThreshold != 0 && Global.CliOptions.RestartThreshold <= index)
                         {
@@ -102,7 +78,49 @@
                 Global.Log.Debug("Updates disabled. Exiting...");
             }
         }
- 
+
+        private async Task UpdateChangeLists(IContainer container)
+        {
+            var settingsService = container.GetInstance<SettingsService>();
+
+            var changeListCompiler = container.GetInstance<ChangeListCompiler>();
+            var dbService = container.GetInstance<IDbService>();
+
+            var lastUpdated = DateTime.Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+                                      .ToUniversalTime();
+
+            var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
+
+            if (updates.Any())
+            {
+                await dbService.ExecuteInTransaction(async () =>
+                {
+                    var changeListWatch = Stopwatch.StartNew();
+
+                    try
+                    {
+                        await changeListCompiler.MergeChangeList(updates).ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new DataSyncException("An error occured while merging the change list.", e);
+                    }
+
+                    changeListWatch.Stop();
+                    this.Log.Debug($"Change list was merged successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
+                    
+                }).ConfigureAwait(false);
+
+                var newLastUpdated = new[]
+                {
+                    lastUpdated,
+                    updates.Select(u => u.LastUpdated).Max().ToDateTime()
+                }.Max();
+
+                await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O")).ConfigureAwait(false);
+            }
+        }
+
         private async Task ApplyChange(ApiChangePoco change, int index, int maxCount, IContainer masterContainer)
         {
             using (var container = masterContainer.CreateChildContainer())
@@ -121,52 +139,39 @@
 
                         try
                         {
-                            this.Log.Debug($"[{index}/{maxCount}] Starting to apply change (ID={change.ApiChangeThetvdbid}, Type={typeName})");
+                           this.Log.Debug(
+                               $"[{index}/{maxCount}] Starting to apply change (ID={change.ApiChangeThetvdbid}, Type={typeName})");
 
-                            await applier.ApplyChange(change).ConfigureAwait(false);
+                           await applier.ApplyChange(change).ConfigureAwait(false);
 
-                            await failedChangeRepository.RemoveApiChange(change.ApiChangeThetvdbid).ConfigureAwait(false);
+                           await failedChangeRepository.RemoveApiChange(change.ApiChangeThetvdbid).ConfigureAwait(false);
 
-                            changeWatch.Stop();
+                           changeWatch.Stop();
 
-                            this.Log.Debug($"[{index}/{maxCount}] Successfuly applied change (ID={change.ApiChangeThetvdbid}, Type={typeName} {changeWatch.Elapsed:mm\\:ss})");
+                           this.Log.Debug(
+                               $"[{index}/{maxCount}] Successfuly applied change (ID={change.ApiChangeThetvdbid}, Type={typeName} {changeWatch.Elapsed:mm\\:ss})");
                         }
                         catch (Exception e)
                         {
-                            tr.Rollback();
+                           tr.Rollback();
 
-                            await failedChangeRepository.IncrementFailedCount(change.ApiChangeThetvdbid).ConfigureAwait(false);
+                           await failedChangeRepository.IncrementFailedCount(change.ApiChangeThetvdbid)
+                                                       .ConfigureAwait(false);
 
-                            changeWatch.Stop();
+                           changeWatch.Stop();
 
-                            throw new DataSyncException(
-                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss})", e);
+                           throw new DataSyncException(
+                               $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss})",
+                               e);
                         }
-                    }, 
-                    timeout: TimeSpan.FromMinutes(20)).ConfigureAwait(false);
+                    }, timeout: TimeSpan.FromMinutes(20))
+                   .ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
                     await this.ErrorHandler.HandleErrorAsync(e).ConfigureAwait(false);
                 }
             }
-        }
-
-        private async Task MergeChangeList(Update[] updates, ChangeListCompiler changeListCompiler)
-        {
-            var changeListWatch = Stopwatch.StartNew();
-
-            try
-            {
-                await changeListCompiler.MergeChangeList(updates).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                throw new DataSyncException("An error occured while merging the change list.", e);
-            }
-
-            changeListWatch.Stop();
-            this.Log.Debug($"Change list was merged successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
         }
 
         private async Task<Update[]> GetUpdates(DateTime fromTime, DateTime toTime)

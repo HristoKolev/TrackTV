@@ -120,7 +120,7 @@
         {
             string key = series.Id + "_" + (int)ApiChangeType.Show;
 
-            if (IsValidSeries(series) && !changeList.TryGetValue(key, out var _))
+            if (IsValidSeries(series) && !changeList.TryGetValue(key, out _))
             {
                 changeList.TryAdd(key, new ApiChangePoco
                 {
@@ -136,7 +136,7 @@
         {
             string key = episode.Id + "_" + (int)ApiChangeType.Episode;
 
-            if (!changeList.TryGetValue(key, out var _))
+            if (!changeList.TryGetValue(key, out _))
             {
                 changeList.TryAdd(key, new ApiChangePoco
                 {
