@@ -2,6 +2,7 @@
   "profiles": {
     "TrackTv.Updater": {
       "commandName": "Project",
+      "commandLineArgs": "-a ",
       "workingDirectory": "P:\\projects\\SourceControl\\TrackTV\\src\\TrackTv.Updater"
     }
   }
