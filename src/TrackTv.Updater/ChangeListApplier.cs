@@ -137,7 +137,7 @@
                 // if this happens - just ignore it. It will be deleted next time the show gets updated.
                 // this should not happen in normal circumstances, if we have a change with that id - we should have an episode response
                 // a few minutes later when we are here and applying that change. This only happend when I had to force update some 30 0000 episodes
-                // because of api_responses id collision.
+                // because of api_responses id collision. This only happend for 17 episodes.
                 return;
             }
 
