@@ -3,6 +3,8 @@ namespace TrackTv.Updater
     using System;
     using System.Globalization;
 
+    using LinqToDB.DataProvider.DB2;
+
     public static class DateParser
     {
         private const int AbbreviationLength = 2;
@@ -95,6 +97,32 @@ namespace TrackTv.Updater
             {
                 return null;
             }
+        }
+
+        public static DateTime? ParseActorLastUpdated(string date)
+        {
+            if (string.IsNullOrWhiteSpace(date))
+            {
+                return null;
+            }
+
+            if (date == "0000-00-00 00:00:00")
+            {
+                return null;
+            }
+
+            DateTime value;
+            if (!DateTime.TryParse(date, out value))
+            {
+                return null;
+            }
+
+            if (value == DateTime.MinValue)
+            {
+                return null;
+            }
+
+            return value;
         }
 
         private static DateTime Create(int hour, int minute)

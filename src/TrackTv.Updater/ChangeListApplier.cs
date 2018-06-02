@@ -241,7 +241,7 @@
 
                 myActor.Thetvdbid = actor.Id;
                 myActor.ActorName = string.IsNullOrWhiteSpace(actor.Name) ? null : actor.Name;
-                myActor.LastUpdated = DateTime.Parse(actor.LastUpdated);
+                myActor.LastUpdated = DateParser.ParseActorLastUpdated(actor.LastUpdated);
 
                 myActor.ActorID = await this.DbService.Save(myActor).ConfigureAwait(false);
 

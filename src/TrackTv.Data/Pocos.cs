@@ -68,14 +68,14 @@ namespace TrackTv.Data
         /// <summary>
 		/// <para>Column name: 'last_updated'.</para>
 		/// <para>Table name: 'actors'.</para>
-		/// <para>This column is not nullable.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
-		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>        
-		[NotNull]
+		[Nullable]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
-        public DateTime LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
         
         /// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
