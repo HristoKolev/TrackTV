@@ -158,6 +158,15 @@
             };
 
             var externalShow = await this.Client.Series.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
+
+            if (externalShow == null)
+            {
+                // if the show is not available to us anymore... just return and pretend nothing happend.
+                // I will decide what to do with those later.
+                return;
+            }
+
+            
             MapToShow(myShow, externalShow);
 
             myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);

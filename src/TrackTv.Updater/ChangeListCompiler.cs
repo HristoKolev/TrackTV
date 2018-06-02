@@ -99,11 +99,14 @@
                 {
                     int seriesID = int.Parse(episode.SeriesId);
 
-                    var attachedSeries = await this.Client.Series.GetExternalShowAsync(seriesID).ConfigureAwait(false);
-
-                    if (attachedSeries != null)
+                    if (seriesID != 0)
                     {
-                         AddShow(attachedSeries, changeList) ;
+                        var attachedSeries = await this.Client.Series.GetExternalShowAsync(seriesID).ConfigureAwait(false);
+
+                        if (attachedSeries != null)
+                        {
+                            AddShow(attachedSeries, changeList);
+                        }
                     }
                 }
             }

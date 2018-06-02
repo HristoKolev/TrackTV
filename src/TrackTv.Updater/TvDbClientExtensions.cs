@@ -115,11 +115,6 @@ namespace TrackTv.Updater
         
         public static async Task<EpisodeRecord> GetExternalEpisodeAsync(this IEpisodesClient client, int updateId)
         {
-            if (updateId == 0)
-            {
-                return null;
-            }
-
             try
             {
                 var response = await client.GetAsync(updateId).ConfigureAwait(false);
@@ -143,10 +138,7 @@ namespace TrackTv.Updater
 
         public static async Task<Series> GetExternalShowAsync(this ISeriesClient client, int updateId)
         {
-            if (updateId == 0)
-            {
-                return null;
-            }
+            
 
             try
             {
