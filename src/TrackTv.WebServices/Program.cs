@@ -1,7 +1,12 @@
 ﻿namespace TrackTv.WebServices
 {
+    using System.IO;
+    using System.Net;
+
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
+    using Microsoft.AspNetCore.Server.Kestrel.Core;
+
+    using Newtonsoft.Json;
 
     using TrackTv.WebServices.Infrastructure;
 
@@ -11,28 +16,37 @@
 
         public static void Main()
         {
-            var config = BuildConfig(new ConfigurationBuilder());
-
-            Global.AppConfig = config;
+            Global.AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(Path.Join(Global.ConfigDirectory, ConfigFile)));
 
             var builder = new WebHostBuilder();
 
-            builder.UseKestrel(opt => opt.AddServerHeader = false)
+            builder.UseKestrel(ConfigureKestrel)
                    .UseContentRoot(Global.RootDirectory)
-                   .UseUrls(config["Server:Urls"])
                    .UseIISIntegration()
-                   .UseConfiguration(config)
                    .UseStartup<Startup>()
                    .Build()
                    .Run();
         }
 
-        private static IConfigurationRoot BuildConfig(IConfigurationBuilder builder)
+        private static void ConfigureKestrel(KestrelServerOptions opt)
         {
-            return builder.SetBasePath(Global.ConfigDirectory)
-                          .AddJsonFile(ConfigFile, optional: true, reloadOnChange: true)
-                          .AddEnvironmentVariables()
-                          .Build();
+            opt.AddServerHeader = false;
+            opt.Listen(IPAddress.Any, Global.AppConfig.Port);
         }
+    }
+
+    public class AppConfig
+    {
+        public string AuthAuthorityUrl { get; set; }
+
+        public string ConnectionString { get; set; }
+
+        public string[] CorsUrls { get; set; }
+
+        public string MishapApiKey { get; set; }
+
+        public int Port { get; set; }
+
+        public string AspNetLoggingLevel { get; set; }
     }
 }

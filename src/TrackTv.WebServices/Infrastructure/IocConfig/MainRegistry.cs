@@ -12,8 +12,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using LinqToDB.DataProvider;
     using LinqToDB.DataProvider.PostgreSQL;
 
-    using Microsoft.Extensions.Configuration;
-
     using Npgsql;
 
     using StructureMap;
@@ -35,7 +33,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
         private void DataAccess()
         {
             this.For<NpgsqlConnection>()
-                .Use("Postgres connection.", ctx => new NpgsqlConnection(Global.AppConfig.GetConnectionString("DefaultConnection")))
+                .Use("Postgres connection.", ctx => new NpgsqlConnection(Global.AppConfig.ConnectionString))
                 .ContainerScoped();
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
@@ -59,7 +57,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             // Mishap
             MishapService CreateMishapService(IContext ctx)
             {
-                return new MishapService(ctx.GetInstance<IConfiguration>()["MishapApiKey"]);
+                return new MishapService(Global.AppConfig.MishapApiKey);
             }
 
             this.For<MishapService>().Use("Creating Mishap service.", CreateMishapService).Singleton();

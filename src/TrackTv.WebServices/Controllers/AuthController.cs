@@ -1,7 +1,6 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using IdentityModel.Client;
@@ -13,7 +12,6 @@
     using LinqToDB;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
 
     using TrackTv.Data;
     using TrackTv.Services;
@@ -22,22 +20,14 @@
     [Route("api/public/[controller]")]
     public class AuthController : Controller
     {
-        public AuthController(
-            ProfileService profilesService,
-            OAuth2Config auth2Config,
-            IConfiguration configuration,
-            ILog logger,
-            IDbService dbService)
+        public AuthController(ProfileService profilesService, OAuth2Config auth2Config, ILog logger, IDbService dbService)
         {
             this.ProfilesService = profilesService;
             this.Auth2Config = auth2Config;
-            this.Configuration = configuration;
             this.DbService = dbService;
         }
 
         private OAuth2Config Auth2Config { get; }
-
-        private IConfiguration Configuration { get; }
 
         private IDbService DbService { get; }
 
@@ -46,9 +36,7 @@
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            string authority = this.Configuration["Server:Urls"].Split(",").First();
-
-            var discoveryResponse = await DiscoveryClient.GetAsync(authority).ConfigureAwait(false);
+            var discoveryResponse = await DiscoveryClient.GetAsync(Global.AppConfig.AuthAuthorityUrl).ConfigureAwait(false);
 
             var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, this.Auth2Config.ClientId, this.Auth2Config.ClientSecret);
 

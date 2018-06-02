@@ -1,12 +1,10 @@
 ﻿namespace TrackTv.WebServices
 {
     using System;
-    using System.Linq;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -17,17 +15,16 @@
 
     public class Startup
     {
-        public Startup()
-        {
-            this.Configuration = Global.AppConfig;
-        }
-
-        private IConfigurationRoot Configuration { get; }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
+            LogLevel logLevel;
+            if (!Enum.TryParse(Global.AppConfig.AspNetLoggingLevel ?? "Debug", out logLevel))
+            {
+                logLevel = LogLevel.Debug;
+            }
+
+            loggerFactory.AddConsole(logLevel);
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
@@ -41,12 +38,7 @@
             }
 
             // Shows UseCors with CorsPolicyBuilder.
-            app.UseCors(builder =>
-            {
-                var origins = this.Configuration["CorsUrls"].Split(',');
-
-                builder.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod();
-            });
+            app.UseCors(builder => { builder.WithOrigins(Global.AppConfig.CorsUrls).AllowAnyHeader().AllowAnyMethod(); });
 
             app.UseUnconventionalAuth();
 
@@ -63,9 +55,7 @@
 
             services.AddMemoryCache();
 
-            services.AddSingleton(this.Configuration);
-
-            services.AddUnconventionalAuth(this.Configuration["Server:Urls"].Split(",").First());
+            services.AddUnconventionalAuth(Global.AppConfig.AuthAuthorityUrl);
 
             var container = new Container(config =>
             {
@@ -74,8 +64,6 @@
 
                 config.AddRegistry<MainRegistry>();
             });
-
-            Global.ErrorHandler = container.GetInstance<ErrorHandler>();
 
             return container.GetInstance<IServiceProvider>();
         }

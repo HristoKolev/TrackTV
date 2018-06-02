@@ -3,8 +3,6 @@ namespace TrackTv.Updater
     using System;
     using System.Globalization;
 
-    using LinqToDB.DataProvider.DB2;
-
     public static class DateParser
     {
         private const int AbbreviationLength = 2;

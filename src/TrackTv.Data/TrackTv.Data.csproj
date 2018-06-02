@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="linq2db.Core" Version="1.10.2" />
-    <PackageReference Include="Npgsql" Version="3.2.7" />
+    <PackageReference Include="Npgsql" Version="4.0.0" />
   </ItemGroup>
 
 </Project>
