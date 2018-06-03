@@ -11,6 +11,8 @@
 
     using Newtonsoft.Json;
 
+    using SharpRaven;
+
     using StructureMap;
 
     using TrackTv.Services;
@@ -37,7 +39,11 @@
             Global.Log.Debug("CliOptions:");
             Global.Log.Debug(JsonConvert.SerializeObject(Global.CliOptions, Formatting.Indented));
 
-            Global.ErrorHandler = new ErrorHandler(Global.Log, new MishapService(Global.AppConfig.MishapApiKey));
+            Global.ErrorHandler = new ErrorHandler(
+                Global.Log, 
+                new MishapService(Global.AppConfig.MishapApiKey), 
+                new RavenClient(Global.AppConfig.SentryUrl)
+            );
 
             using (var mutex = new Mutex(false, "TrackTv.Updater"))
             {

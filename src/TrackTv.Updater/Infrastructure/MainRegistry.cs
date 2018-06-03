@@ -12,6 +12,8 @@ namespace TrackTv.Updater.Infrastructure
 
     using Npgsql;
 
+    using SharpRaven;
+
     using StructureMap;
 
     using TrackTv.Data;
@@ -46,6 +48,7 @@ namespace TrackTv.Updater.Infrastructure
  
         private void Infrastructure()
         {
+            this.For<IRavenClient>().Use("Building sentry client.", () => new RavenClient(Global.AppConfig.SentryUrl));
             this.For<ILog>().Use("Building log4net logger.", context => Global.Log);
             this.For<ErrorHandler>().Use("Global error handler", () => Global.ErrorHandler);
         }

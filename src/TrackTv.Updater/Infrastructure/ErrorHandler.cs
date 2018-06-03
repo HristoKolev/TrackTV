@@ -5,19 +5,25 @@
 
     using log4net;
 
+    using SharpRaven;
+    using SharpRaven.Data;
+
     using TrackTv.Services;
 
     public class ErrorHandler
     {
-        public ErrorHandler(ILog log, MishapService mishapService)
+        public ErrorHandler(ILog log, MishapService mishapService, IRavenClient ravenClient)
         {
             this.Log = log;
             this.MishapService = mishapService;
+            this.RavenClient = ravenClient;
         }
 
         private ILog Log { get; }
 
         private MishapService MishapService { get; }
+
+        private IRavenClient RavenClient { get; }
 
         public async Task HandleErrorAsync(Exception ex)
         {
@@ -26,6 +32,8 @@
                 this.Log.Error($"Exception was handled. (ExceptionMessage: {ex.Message}, ExceptionName: {ex.GetType().Name})");
 
                 await this.MishapService.HandleErrorAsync(ex).ConfigureAwait(false);
+
+                await this.RavenClient.CaptureAsync(new SentryEvent(ex));
             }
             catch (Exception exception)
             {

@@ -1,4 +1,5 @@
 ﻿{
   "ConnectionString": "Server=vm4;Port=5432;Database=tracktv;Uid=postgres;Pwd=test123;",
-  "MishapApiKey": "4e921b7e-39a9-4699-8a32-d3cf2e2d6f6f"
+  "MishapApiKey": "4e921b7e-39a9-4699-8a32-d3cf2e2d6f6f",
+  "SentryUrl": "http://e5ec49e7850e4edd902493a20bf3996a:1a4d611aa6404d6e8e6fd6c412c81f3a@vm5:9000//2"
 }
