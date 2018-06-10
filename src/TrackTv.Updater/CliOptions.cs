@@ -9,10 +9,7 @@
     {
         [Option('c', "compile-only", HelpText = "Only updates change lists. Does not apply any changes.", Required = false)]
         public bool CompileOnly { get; set; }
-
-        [Option('r', "restart-threshold", HelpText = "The number of changes to apply before restarting.", Required = false)]
-        public int RestartThreshold { get; set; }
-
+ 
         [Option('s', "skip-failed", HelpText = "Skip failed changes.", Required = false)]
         public bool SkipFailed { get; set; }
 

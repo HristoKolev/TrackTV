@@ -63,11 +63,6 @@
                         await this.ApplyChange(change, index, fullChangeList.Length, container)
                                   .ContinueWith(task => index++)
                                   .ConfigureAwait(false);
-
-                        if (Global.CliOptions.RestartThreshold != 0 && Global.CliOptions.RestartThreshold <= index)
-                        {
-                            Global.Restart();
-                        }
                     }
                 }
 
