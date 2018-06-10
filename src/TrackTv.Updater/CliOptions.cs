@@ -16,6 +16,12 @@
         [Option('a', "apply-only", HelpText = "Only applies pending changes. It does not update the change lists.", Required = false)]
         public bool ApplyOnly { get; set; }
 
+        [Option('r', "retry-failed-only", HelpText = "Skips new changes only retries failed changes.", Required = false)]
+        public bool RetryFailedOnly { get; set; }
+
+        [Option('l', "list-changes", HelpText = "Prints information for pending changes. Can be used with -s and -r to filter changes.", Required = false)]
+        public bool ListChanges { get; set; }
+
         public static CliOptions Read(string[] args)
         {
             CliOptions options = null;

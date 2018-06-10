@@ -37,7 +37,7 @@
 
             if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
             {
-                if (!Global.CliOptions.ApplyOnly)
+                if (!Global.CliOptions.ApplyOnly && !Global.CliOptions.ListChanges)
                 {
                     await this.UpdateChangeLists(container);
                 }
@@ -50,11 +50,16 @@
                     fullChangeList = fullChangeList.Where(poco => poco.ApiChangeFailCount == 0).ToArray();
                 }
 
+                if (Global.CliOptions.RetryFailedOnly)
+                {
+                    fullChangeList = fullChangeList.Where(poco => poco.ApiChangeFailCount > 0).ToArray();
+                }
+
                 int episodeCount = fullChangeList.Count(item => item.ApiChangeType == (int)ApiChangeType.Episode);
                 int showCount = fullChangeList.Count(item => item.ApiChangeType    == (int)ApiChangeType.Show);
                 this.Log.Debug($"{episodeCount} episodes. {showCount} shows.");
 
-                if (!Global.CliOptions.CompileOnly)
+                if (!Global.CliOptions.CompileOnly && !Global.CliOptions.ListChanges)
                 {
                     int index = 1;
 
