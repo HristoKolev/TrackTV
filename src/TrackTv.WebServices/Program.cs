@@ -22,7 +22,6 @@
 
             builder.UseKestrel(ConfigureKestrel)
                    .UseContentRoot(Global.RootDirectory)
-                   .UseIISIntegration()
                    .UseStartup<Startup>()
                    .Build()
                    .Run();

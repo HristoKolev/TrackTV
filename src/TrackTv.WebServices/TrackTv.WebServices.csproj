@@ -2,10 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>TrackTv.WebServices</AssemblyName>
+    <AssemblyName>tracktv-web</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>TrackTv.WebServices</PackageId>
-    <RuntimeIdentifiers>centos.7-x64;</RuntimeIdentifiers>
     <SuppressDockerTargets>True</SuppressDockerTargets>
     <LangVersion>latest</LangVersion>
     <DefaultItemExcludes>$(DefaultItemExcludes);**\*.log.txt;**\*.log.txt.*;</DefaultItemExcludes>
@@ -21,6 +20,10 @@
     <None Remove="BackgroundTasks\**" />
     <None Remove="Data\**" />
     <Content Remove="wwwroot\banners\**" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.json" />
   </ItemGroup>
   
  
