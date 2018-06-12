@@ -3,7 +3,7 @@
 
   <appender name="MyAppender" type="log4net.Appender.RollingFileAppender">
 
-    <file value=".\tracktv_updater.log.txt" />
+    <file value="./logs/log4net.txt" />
 
     <appendToFile value="false" />
 
@@ -13,7 +13,7 @@
 
     <maximumFileSize value="10MB" />
 
-    <maxSizeRollBackups value="10" />
+    <maxSizeRollBackups value="100" />
 
     <encoding value="utf-8" />
 
@@ -34,7 +34,6 @@
 
   <root>
     <level value="ALL" />
-
     <appender-ref ref="MyAppender" />
     <appender-ref ref="MyConsoleAppender" />
   </root>
