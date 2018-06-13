@@ -15,7 +15,6 @@
 
     using StructureMap;
 
-    using TrackTv.Services;
     using TrackTv.Updater.Infrastructure;
 
     public class Program
@@ -39,11 +38,7 @@
             Global.Log.Debug("CliOptions:");
             Global.Log.Debug(JsonConvert.SerializeObject(Global.CliOptions, Formatting.Indented));
 
-            Global.ErrorHandler = new ErrorHandler(
-                Global.Log, 
-                new MishapService(Global.AppConfig.MishapApiKey), 
-                new RavenClient(Global.AppConfig.SentryUrl)
-            );
+            Global.ErrorHandler = new ErrorHandler(Global.Log, new RavenClient(Global.AppConfig.SentryUrl));
 
             using (var mutex = new Mutex(false, "TrackTv.Updater"))
             {

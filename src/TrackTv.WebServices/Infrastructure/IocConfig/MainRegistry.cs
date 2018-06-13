@@ -54,14 +54,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
             XmlConfigurator.ConfigureAndWatch(logRepository, new FileInfo(Path.Combine(Global.ConfigDirectory, "log4net-config.xml")));
             this.For<ILog>().Use("Building log4net logger.", context => LogManager.GetLogger(assembly, "Global logger")).Singleton();
 
-            // Mishap
-            MishapService CreateMishapService(IContext ctx)
-            {
-                return new MishapService(Global.AppConfig.MishapApiKey);
-            }
-
-            this.For<MishapService>().Use("Creating Mishap service.", CreateMishapService).Singleton();
-
             // ErrorHandler
             this.For<ErrorHandler>().Singleton();
         }

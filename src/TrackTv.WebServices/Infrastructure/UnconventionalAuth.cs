@@ -89,7 +89,9 @@ namespace TrackTv.WebServices.Infrastructure
             }
         }
 
+        #pragma warning disable 1998
         public async Task IsActiveAsync(IsActiveContext context)
+            #pragma warning restore 1998
         {
         }
 
@@ -113,17 +115,23 @@ namespace TrackTv.WebServices.Infrastructure
         private static readonly ConcurrentDictionary<string, PersistedGrant> PersistedGrants =
             new ConcurrentDictionary<string, PersistedGrant>();
 
+        #pragma warning disable 1998
         public async Task<IEnumerable<PersistedGrant>> GetAllAsync(string subjectId)
+            #pragma warning restore 1998
         {
             return PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId);
         }
 
+        #pragma warning disable 1998
         public async Task<PersistedGrant> GetAsync(string key)
+            #pragma warning restore 1998
         {
             return PersistedGrants.Values.FirstOrDefault(grant => grant.Key == key);
         }
 
+        #pragma warning disable 1998
         public async Task RemoveAllAsync(string subjectId, string clientId)
+            #pragma warning restore 1998
         {
             foreach (var persistedGrant in PersistedGrants.Values.Where(grant => grant.SubjectId == subjectId && grant.ClientId == clientId))
             {
@@ -131,7 +139,9 @@ namespace TrackTv.WebServices.Infrastructure
             }
         }
 
+        #pragma warning disable 1998
         public async Task RemoveAllAsync(string subjectId, string clientId, string type)
+            #pragma warning restore 1998
         {
             foreach (var persistedGrant in PersistedGrants.Values.Where(grant =>
                 grant.SubjectId == subjectId && grant.ClientId == clientId
@@ -141,12 +151,16 @@ namespace TrackTv.WebServices.Infrastructure
             }
         }
 
+        #pragma warning disable 1998
         public async Task RemoveAsync(string key)
+            #pragma warning restore 1998
         {
             PersistedGrants.TryRemove(key, out _);
         }
 
+        #pragma warning disable 1998
         public async Task StoreAsync(PersistedGrant grant)
+            #pragma warning restore 1998
         {
             PersistedGrants.AddOrUpdate(grant.Key, grant, (key, old) => grant);
         }

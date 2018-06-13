@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
 
-    public static class IQuerablePaging
+    public static class QuerablePaging
     {
         private const int MaxPageSize = 50;
 

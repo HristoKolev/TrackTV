@@ -7,7 +7,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
 
-    public static class IQueryableExtensions
+    public static class QueryableExtensions
     {
         public static IQueryable<TModel> Filter<TFilter, TModel>(this IQueryable<TModel> collection, TFilter filter)
             where TFilter : class where TModel : class

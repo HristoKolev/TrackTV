@@ -13,8 +13,6 @@ namespace TrackTv.WebServices.Infrastructure
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    using TrackTv.Services;
-
     /// <summary>
     /// <para>Global Exception handler.</para>
     /// <para>If the controller does not provide an error message for the exception type via <see cref="ExposeErrorAttribute"/>,
@@ -25,15 +23,12 @@ namespace TrackTv.WebServices.Infrastructure
     {
         private const string DefaultErrorMessage = "Server error. Please try again later.";
 
-        public HandleExceptionFilterAttribute(ILog log, MishapService mishapService)
+        public HandleExceptionFilterAttribute(ILog log)
         {
             this.Log = log;
-            this.MishapService = mishapService;
         }
 
         private ILog Log { get; }
-
-        private MishapService MishapService { get; }
 
         public override async Task OnExceptionAsync(ExceptionContext context)
         {
@@ -55,10 +50,10 @@ namespace TrackTv.WebServices.Infrastructure
             await base.OnExceptionAsync(context).ConfigureAwait(false);
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task HandleExceptionAsync(ExceptionContext context)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Task mishapTask = this.MishapService.HandleErrorAsync(context.Exception, context.ActionDescriptor.DisplayName);
-
             var exposeAttribute = GetExposeErrorAttribute(context);
 
             string errorMessage = exposeAttribute?.Message ?? DefaultErrorMessage;
@@ -68,8 +63,6 @@ namespace TrackTv.WebServices.Infrastructure
             var apiResult = ApiResult.Fail(errorMessage);
 
             context.Result = new OkObjectResult(apiResult);
-
-            await mishapTask.ConfigureAwait(false);
         }
 
         private static string ComposeErrorMessage(Exception exception, ActionDescriptor actionDescriptor)

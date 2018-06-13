@@ -42,8 +42,6 @@
 
         public string[] CorsUrls { get; set; }
 
-        public string MishapApiKey { get; set; }
-
         public int Port { get; set; }
 
         public string AspNetLoggingLevel { get; set; }

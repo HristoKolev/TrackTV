@@ -5,27 +5,22 @@
 
     using log4net;
 
-    using TrackTv.Services;
-
     public class ErrorHandler
     {
-        public ErrorHandler(ILog log, MishapService mishapService)
+        public ErrorHandler(ILog log)
         {
             this.Log = log;
-            this.MishapService = mishapService;
         }
 
         private ILog Log { get; }
 
-        private MishapService MishapService { get; }
-
+        #pragma warning disable 1998
         public async Task HandleErrorAsync(Exception ex)
+            #pragma warning restore 1998
         {
             try
             {
                 this.Log.Error($"Exception was handled. (ExceptionMessage: {ex.Message}, ExceptionName: {ex.GetType().Name})");
-
-                await this.MishapService.HandleErrorAsync(ex).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
