@@ -1,0 +1,47 @@
+version: '3.6'
+
+networks:
+  br0:
+
+volumes:
+  backend-src:
+    driver_opts:
+      type: none
+      device: ${backend_src}
+      o: bind
+  frontend-src:
+    driver_opts:
+      type: none
+      device: ${frontend_src}
+      o: bind
+  db-data:
+
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    networks:
+      - br0
+    ports:
+      - "5435:5432"
+    volumes:      
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${db_username}
+      - POSTGRES_PASSWORD=${db_password}
+  backend:
+    image: microsoft/dotnet:2.1-sdk-alpine3.7
+    restart: unless-stopped
+    volumes:
+      - backend-src:/app
+    networks:
+      - br0
+    working_dir: /app/TrackTv.WebServices
+    entrypoint:
+      - "sh"
+      - "-c"
+      - "dotnet watch run"
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
