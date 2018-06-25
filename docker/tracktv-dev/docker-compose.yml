@@ -45,3 +45,18 @@ services:
       - db
     ports:
       - "5000:5000"
+  frontend:
+    image: node:alpine
+    volumes:
+      - frontend-src:/app
+      - "./inject-settings.js:/inject-settings.js"
+    networks:
+      - br0
+    working_dir: /app
+    entrypoint:
+      - npm
+      - start
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"

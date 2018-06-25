@@ -8,7 +8,7 @@ export interface ISettingsState {
 }
 
 const initialSettingsState: ISettingsState = {
-  baseUrl: 'https://api-tracktv.hristo.tech',
+  baseUrl: 'http://vm5:5000',
   showsPageSize: 10,
 };
 
