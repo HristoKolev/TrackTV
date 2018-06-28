@@ -41,14 +41,9 @@ services:
         aliases:
           - backend
     working_dir: /app/TrackTv.WebServices
-    entrypoint:
-      - "sh"
-      - "-c"
-      - "dotnet watch run"
+    entrypoint: "dotnet watch run"
     depends_on:
       - db
-    ports:
-      - "5000:5000"
   frontend:
     build: ./frontend 
     volumes:
