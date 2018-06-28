@@ -17,42 +17,46 @@ volumes:
   db-data:
 
 services:
-  # db:
-  #   image: postgres
-  #   restart: unless-stopped
-  #   networks:
-  #     - br0
-  #   ports:
-  #     - "5435:5432"
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_USER=${db_username}
-  #     - POSTGRES_PASSWORD=${db_password}
-  # backend:
-  #   image: microsoft/dotnet:2.1-sdk-alpine3.7
-  #   restart: unless-stopped
-  #   volumes:
-  #     - backend-src:/app
-  #   networks:
-  #     - br0
-  #   working_dir: /app/TrackTv.WebServices
-  #   entrypoint:
-  #     - "sh"
-  #     - "-c"
-  #     - "dotnet watch run"
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - "5000:5000"
+  db:
+    image: postgres
+    restart: unless-stopped
+    networks:
+      br0:
+        aliases:
+          - db
+    ports:
+      - "5435:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${db_username}
+      - POSTGRES_PASSWORD=${db_password}
+  backend:
+    image: microsoft/dotnet:2.1-sdk-alpine3.7
+    restart: unless-stopped
+    volumes:
+      - backend-src:/app
+    networks:
+      br0:
+        aliases:
+          - backend
+    working_dir: /app/TrackTv.WebServices
+    entrypoint:
+      - "sh"
+      - "-c"
+      - "dotnet watch run"
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
   frontend:
     build: ./frontend 
     volumes:
       - frontend-src:/app
     networks:
-      - br0
+      - br0    
     working_dir: /app
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
     ports:
-      - "4200:4200"
+      - "4200:80"

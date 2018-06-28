@@ -187,7 +187,7 @@ export class BannerUrlDirective implements OnInit, OnDestroy, OnChanges {
       let url;
 
       if (this.bannerUrl) {
-        url = `${this.settings.baseUrl}/banners/${this.bannerUrl}`;
+        url = `/banners/${this.bannerUrl}`;
 
       } else {
 

@@ -1,6 +1,5 @@
 export interface SettingsState {
   // sentryDns: string;
-  baseUrl: string;
   showsPageSize: number;
 }
 

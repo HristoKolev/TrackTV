@@ -14,10 +14,6 @@ export class HttpClient {
   constructor(private store: ReduxStoreService) {
   }
 
-  public get baseUrl(): string {
-
-    return this.store.getState().settings.baseUrl;
-  }
 
   get(url: string, headers: any = {}): Promise<FetchResponse> {
 
@@ -29,7 +25,7 @@ export class HttpClient {
       },
     };
 
-    return fetch(this.baseUrl + url, options)
+    return fetch(url, options)
       .then(this.parseResponse, this.handleError);
   }
 
@@ -45,7 +41,7 @@ export class HttpClient {
       body,
     };
 
-    return fetch(this.baseUrl + url, options)
+    return fetch(url, options)
       .then(this.parseResponse, this.handleError);
   }
 
@@ -60,7 +56,7 @@ export class HttpClient {
       body,
     };
 
-    return fetch(this.baseUrl + url, options)
+    return fetch(url, options)
       .then(this.parseResponse, this.handleError);
   }
 
@@ -74,7 +70,7 @@ export class HttpClient {
       body,
     };
 
-    return fetch(this.baseUrl + url, options)
+    return fetch(url, options)
       .then(this.parseResponse, this.handleError);
   }
 
