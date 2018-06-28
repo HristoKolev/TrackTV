@@ -1,24 +1,9 @@
 import {ReduxReducer} from '../infrastructure/redux/meta';
 import {getPersistedState} from '../infrastructure/redux/redux-persist-service';
 import {globalActions} from '../infrastructure/redux/redux-global-actions';
+import {settings, SettingsState} from '../infrastructure/settings';
 
-export interface ISettingsState {
-  baseUrl: string;
-  showsPageSize: number;
-}
-
-const initialSettingsState: ISettingsState = {
-  baseUrl: 'http://vm5:5000',
-  showsPageSize: 10,
-};
-
-export const settingsReducer: ReduxReducer<ISettingsState> = (state = initialSettingsState, action) => {
-  switch (action.type) {
-    default: {
-      return state;
-    }
-  }
-};
+export const settingsReducer: ReduxReducer<SettingsState> = (state = settings) => state;
 
 export interface IGlobalState {
   errorMessages: string[];

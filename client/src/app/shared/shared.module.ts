@@ -1,5 +1,14 @@
 import {
-  ChangeDetectionStrategy, Component, Directive, ElementRef, Input, NgModule, OnChanges, OnDestroy, OnInit, SimpleChanges,
+  ChangeDetectionStrategy,
+  Component,
+  Directive,
+  ElementRef,
+  Input,
+  NgModule,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -7,7 +16,7 @@ import {ApiClient} from './api-client';
 import {HttpClient} from './http-client';
 import {ReduxStoreService} from '../../infrastructure/redux/redux-store-service';
 import {Subscription} from 'rxjs/Subscription';
-import {ISettingsState} from '../global.state';
+import {SettingsState} from '../../infrastructure/settings';
 
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
@@ -158,7 +167,7 @@ export class BannerUrlDirective implements OnInit, OnDestroy, OnChanges {
 
   subscription: Subscription;
 
-  settings: ISettingsState;
+  settings: SettingsState;
 
   constructor(private elementRef: ElementRef, private store: ReduxStoreService) {
   }

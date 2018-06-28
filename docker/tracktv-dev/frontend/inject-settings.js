@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const dir = '/app/dist';
 const settingsFileName = 'settings.json';
 const htmlFileName = 'index.html';
 
@@ -18,17 +19,24 @@ const processChange = (directory) => {
     }
 };
 
-const dir = '/app/dist';
-
 try {
   processChange(dir);
 } catch (e){
   console.error(e);
 }
 
-fs.watch(dir, {encoding: 'buffer'}, (eventType, filename) => {
+let watcher;
 
-    let name = filename.toString();
+const createWatcher = () => {
+
+  if(watcher) {
+    watcher.close();
+  }
+
+  watcher = fs.watch(dir, {encoding: 'buffer'});
+  watcher.on('change', (eventType, filename) => {
+
+    const name = filename.toString();
 
     if (name === settingsFileName || name === htmlFileName) {
       try {
@@ -37,6 +45,17 @@ fs.watch(dir, {encoding: 'buffer'}, (eventType, filename) => {
         console.error(e);
       }
     }
+  }); 
+};
+
+createWatcher();
+
+fs.watch(path.dirname(dir), {encoding: 'buffer'}, (eventType, filename) => {
+  if(eventType === 'rename' 
+    && filename.toString() === path.basename(dir)
+    && fs.existsSync(dir)) {
+      createWatcher();
+  }
 });
 
 console.log('Inject-Settings is now running.');

@@ -2,7 +2,7 @@ import {ApplicationRef, ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {Router, RouterModule, Routes} from '@angular/router';
 import {AppComponent, NotFound404Component} from './app.component';
-import {globalErrorReducer, IGlobalState, ISessionState, ISettingsState, settingsReducer, userSessionReducer} from './global.state';
+import {globalErrorReducer, IGlobalState, ISessionState, settingsReducer, userSessionReducer} from './global.state';
 import {HeaderComponent} from './layout/header.component';
 import {LoadingComponent} from './layout/loading.component';
 import {wrapDevToolsExtension} from '../infrastructure/redux/dev-tools';
@@ -13,6 +13,7 @@ import {ReduxStoreService} from '../infrastructure/redux/redux-store-service';
 import {SharedModule} from './shared/shared.module';
 import {explicitRouterSaga, ReduxRouterService, routerReducer, RouterState} from '../infrastructure/redux/redux-router-service';
 import {IdlePreload, IdlePreloadModule} from 'angular-idle-preload';
+import {SettingsState} from '../infrastructure/settings';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/shows', pathMatch: 'full'},
@@ -98,7 +99,7 @@ declare module '../infrastructure/redux/redux-state' {
 
   interface IReduxState {
     router: RouterState;
-    settings: ISettingsState;
+    settings: SettingsState;
     session: ISessionState;
     global: IGlobalState;
   }
