@@ -89,6 +89,20 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ActorPoco
+			{
+				ActorID = this.ActorID,
+				ActorImage = this.ActorImage,
+				ActorName = this.ActorName,
+				LastUpdated = this.LastUpdated,
+				Thetvdbid = this.Thetvdbid,
+			};
+		}
     }
     
     /// <summary>
@@ -138,6 +152,17 @@ namespace TrackTv.Data
         /// </summary> 
 		bool IPoco.IsNew() => this.ApiChangeTypeID == default;
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ApiChangeTypePoco
+			{
+				ApiChangeTypeName = this.ApiChangeTypeName,
+				ApiChangeTypeID = this.ApiChangeTypeID,
+			};
+		}
     }
     
     /// <summary>
@@ -260,6 +285,23 @@ namespace TrackTv.Data
 		[Column(Name = "api_change_type", DataType = DataType.Int32)]
         public int ApiChangeType { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ApiChangePoco
+			{
+				ApiChangeThetvdbid = this.ApiChangeThetvdbid,
+				ApiChangeFailCount = this.ApiChangeFailCount,
+				ApiChangeCreatedDate = this.ApiChangeCreatedDate,
+				ApiChangeID = this.ApiChangeID,
+				ApiChangeLastFailedTime = this.ApiChangeLastFailedTime,
+				ApiChangeThetvdbLastUpdated = this.ApiChangeThetvdbLastUpdated,
+				ApiChangeAttachedSeriesID = this.ApiChangeAttachedSeriesID,
+				ApiChangeType = this.ApiChangeType,
+			};
+		}
     }
     
     /// <summary>
@@ -347,6 +389,20 @@ namespace TrackTv.Data
 		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
         public DateTime ApiResponseLastUpdated { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ApiResponsePoco
+			{
+				ApiResponseEpisodeThetvdbid = this.ApiResponseEpisodeThetvdbid,
+				ApiResponseShowThetvdbid = this.ApiResponseShowThetvdbid,
+				ApiResponseBody = this.ApiResponseBody,
+				ApiResponseID = this.ApiResponseID,
+				ApiResponseLastUpdated = this.ApiResponseLastUpdated,
+			};
+		}
     }
     
     /// <summary>
@@ -493,6 +549,25 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new EpisodePoco
+			{
+				EpisodeID = this.EpisodeID,
+				EpisodeDescription = this.EpisodeDescription,
+				EpisodeNumber = this.EpisodeNumber,
+				EpisodeTitle = this.EpisodeTitle,
+				FirstAired = this.FirstAired,
+				Imdbid = this.Imdbid,
+				LastUpdated = this.LastUpdated,
+				SeasonNumber = this.SeasonNumber,
+				ShowID = this.ShowID,
+				Thetvdbid = this.Thetvdbid,
+			};
+		}
     }
     
     /// <summary>
@@ -542,6 +617,17 @@ namespace TrackTv.Data
 		[Column(Name = "genre_name", DataType = DataType.NVarChar)]
         public string GenreName { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new GenrePoco
+			{
+				GenreID = this.GenreID,
+				GenreName = this.GenreName,
+			};
+		}
     }
     
     /// <summary>
@@ -591,6 +677,17 @@ namespace TrackTv.Data
 		[Column(Name = "network_name", DataType = DataType.NVarChar)]
         public string NetworkName { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new NetworkPoco
+			{
+				NetworkID = this.NetworkID,
+				NetworkName = this.NetworkName,
+			};
+		}
     }
     
     /// <summary>
@@ -640,6 +737,17 @@ namespace TrackTv.Data
 		[Column(Name = "profile_name", DataType = DataType.NVarChar)]
         public string ProfileName { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ProfilePoco
+			{
+				ProfileID = this.ProfileID,
+				ProfileName = this.ProfileName,
+			};
+		}
     }
     
     /// <summary>
@@ -715,6 +823,19 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new RolePoco
+			{
+				RoleID = this.RoleID,
+				ActorID = this.ActorID,
+				RoleName = this.RoleName,
+				ShowID = this.ShowID,
+			};
+		}
     }
     
     /// <summary>
@@ -776,6 +897,18 @@ namespace TrackTv.Data
 		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
         public string SettingName { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new SettingPoco
+			{
+				SettingID = this.SettingID,
+				SettingValue = this.SettingValue,
+				SettingName = this.SettingName,
+			};
+		}
     }
     
     /// <summary>
@@ -946,6 +1079,27 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ShowPoco
+			{
+				ShowID = this.ShowID,
+				AirDay = this.AirDay,
+				AirTime = this.AirTime,
+				FirstAired = this.FirstAired,
+				Imdbid = this.Imdbid,
+				LastUpdated = this.LastUpdated,
+				NetworkID = this.NetworkID,
+				ShowBanner = this.ShowBanner,
+				ShowDescription = this.ShowDescription,
+				ShowName = this.ShowName,
+				ShowStatus = this.ShowStatus,
+				Thetvdbid = this.Thetvdbid,
+			};
+		}
     }
     
     /// <summary>
@@ -1009,6 +1163,18 @@ namespace TrackTv.Data
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new ShowGenrePoco
+			{
+				ShowsGenresID = this.ShowsGenresID,
+				ShowID = this.ShowID,
+				GenreID = this.GenreID,
+			};
+		}
     }
     
     /// <summary>
@@ -1072,6 +1238,18 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new SubscriptionPoco
+			{
+				SubscriptionID = this.SubscriptionID,
+				ProfileID = this.ProfileID,
+				ShowID = this.ShowID,
+			};
+		}
     }
     
     /// <summary>
@@ -1157,6 +1335,20 @@ namespace TrackTv.Data
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
         
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new UserPoco
+			{
+				UserID = this.UserID,
+				IsAdmin = this.IsAdmin,
+				Username = this.Username,
+				Password = this.Password,
+				ProfileID = this.ProfileID,
+			};
+		}
     }
     
     public partial class DbService

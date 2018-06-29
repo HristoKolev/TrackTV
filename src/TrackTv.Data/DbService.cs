@@ -189,6 +189,11 @@
         /// <para>Sets the primary key for the table.</para>
         /// </summary> 
         void SetPrimaryKey(int value);
+
+        /// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+        IPoco Clone();
     }
 
     public partial interface IDbService : IDisposable

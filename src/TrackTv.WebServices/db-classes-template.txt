@@ -59,6 +59,18 @@ namespace TrackTv.Data
 		{{/if}}
         
         {{/each}}
+		/// <summary>
+        /// <para>Clones the current object and returns the clone.</para>
+        /// </summary>
+		IPoco IPoco.Clone()
+		{
+			return new {{ClassName}}Poco
+			{
+				{{#each columns}}
+				{{PropertyName}} = this.{{PropertyName}},
+				{{/each}}
+			};
+		}
     }
     
     {{/each}}
