@@ -13,4 +13,7 @@ services:
     volumes:
       - frontend-src:/app
     working_dir: /app    
-    entrypoint: "rm -rf node_modules && npm i"
+    entrypoint:
+      - "sh"
+      - "-c"
+      - "rm -rf node_modules && npm i"

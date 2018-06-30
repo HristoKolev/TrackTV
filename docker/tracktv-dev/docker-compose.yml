@@ -55,3 +55,4 @@ services:
       - backend
     ports:
       - "4200:80"
+      - "4201:8080"
