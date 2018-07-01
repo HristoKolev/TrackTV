@@ -38,6 +38,8 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=0 /build /app/backend
 COPY --from=1 /build /app/frontend
  
+VOLUME [ "/data" ]
+
 EXPOSE 80
 
 ENTRYPOINT ["supervisord"]

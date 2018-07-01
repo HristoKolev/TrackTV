@@ -7,12 +7,14 @@
 
     using Microsoft.AspNetCore.Mvc;
 
+    using TrackTv.WebServices.Infrastructure;
+
     public class BannersController : Controller
     {
         [HttpGet("banners/{type}/{name}")]
         public async Task<IActionResult> Get(string type, string name)
         {
-            string bannerPath = Path.Combine("./banners", type);
+            string bannerPath = Path.Combine(Global.DataDirectory, "banners", type);
 
             string filePath = Path.Combine(bannerPath, name);
 

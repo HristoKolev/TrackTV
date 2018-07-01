@@ -16,7 +16,7 @@
 
         public static void Main()
         {
-            Global.AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(Path.Join(Global.ConfigDirectory, ConfigFile)));
+            Global.AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(Path.Join(Global.DataDirectory, ConfigFile)));
 
             var builder = new WebHostBuilder();
 
