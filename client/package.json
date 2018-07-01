@@ -5,6 +5,7 @@
   "scripts": {
     "build:watch": "ng build --watch --dev --delete-output-path=false",
     "start": "npm run build:watch",
+    "build": "ng build --prod --delete-output-path=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

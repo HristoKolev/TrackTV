@@ -2,5 +2,5 @@ version: '3.6'
 
 services:
   webapp:
-    image: "vm5:80/tracktv-backend"
-    build: ./backend
+    image: "vm5:80/tracktv"
+    build: .

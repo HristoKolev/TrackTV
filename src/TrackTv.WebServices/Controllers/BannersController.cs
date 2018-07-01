@@ -5,22 +5,14 @@
     using System.Net;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     public class BannersController : Controller
     {
-        public BannersController(IHostingEnvironment hostingEnvironment)
-        {
-            this.HostingEnvironment = hostingEnvironment;
-        }
-
-        private IHostingEnvironment HostingEnvironment { get; }
-
         [HttpGet("banners/{type}/{name}")]
         public async Task<IActionResult> Get(string type, string name)
         {
-            string bannerPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "wwwroot", "banners", type);
+            string bannerPath = Path.Combine("./banners", type);
 
             string filePath = Path.Combine(bannerPath, name);
 
@@ -45,7 +37,8 @@
             request.Method = "GET";
             var response = await request.GetResponseAsync().ConfigureAwait(false);
 
-            using (Stream responseStream = response.GetResponseStream(), fileStream = System.IO.File.OpenWrite(filePath))
+            using (var responseStream = response.GetResponseStream())
+            using (var fileStream = System.IO.File.OpenWrite(filePath))
             {
                 await responseStream.CopyToAsync(fileStream).ConfigureAwait(false);
             }
