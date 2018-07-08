@@ -36,6 +36,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=0 /build /app/backend
 COPY --from=1 /build /app/frontend
+COPY ./inject-json /app/inject-json
  
 VOLUME [ "/data" ]
 
