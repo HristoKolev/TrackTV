@@ -25,7 +25,7 @@ services:
         aliases:
           - db
     ports:
-      - "5435:5432"
+      - "4201:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -46,6 +46,7 @@ services:
       - db
   frontend:
     build: ./frontend
+    restart: unless-stopped
     volumes:
       - frontend-src:/app
     networks:
@@ -54,5 +55,4 @@ services:
     depends_on:
       - backend
     ports:
-      - "4200:80"
-      - "4201:8080"
+      - "4200:80"  

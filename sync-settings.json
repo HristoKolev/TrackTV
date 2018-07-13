@@ -2,7 +2,7 @@
   "FileMask": "* | */node_modules/; */.git/; */.idea/; */dist/; */bin/; */obj/; */_ReSharper.Caches/; */.vs/; */banners/; sync-settings.json;",
   "HostName": "vm5",
   "LocalPath": "./",
-  "RemotePath": "/home/tracktv-app",
+  "RemotePath": "/home/projects/tracktv",
   "SshHostKeyFingerprint": "Put your the host key fingerprint here or leave this empty (except any key - unsecure)",
   "UserName": "root"
 }

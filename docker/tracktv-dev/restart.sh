@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
+source ./env.sh
+
 docker-compose down
-
-docker-compose up --build -d && docker-compose logs -f
-
+docker-compose up --build -d

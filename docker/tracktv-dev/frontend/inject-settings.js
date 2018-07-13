@@ -45,10 +45,20 @@ const createWatcher = () => {
         console.error(e);
       }
     }
-  }); 
+  });
+
+  try {
+    processChange(dir);
+  } catch (e){
+    console.error(e);
+  }
 };
 
-createWatcher();
+try {
+  createWatcher();
+} catch (e){
+  console.error(e);
+}
 
 fs.watch(path.dirname(dir), {encoding: 'buffer'}, (eventType, filename) => {
   if(eventType === 'rename' 
