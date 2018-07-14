@@ -3,6 +3,8 @@
 cp ../../src ./backend-src -R
 cp ../../client ./frontend-src -R
 
+chmod 777 ./inject-json
+
 docker-compose build && docker-compose push
 
 rm ./backend-src -R
