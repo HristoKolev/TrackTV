@@ -47,7 +47,9 @@ class StoreWrapper {
 
     const _this = this;
 
-    for (const [sagaName, saga] of Object.entries(sagas)) {
+    for (const pair of Object.entries(sagas)) {
+
+      const [sagaName, saga]: [string, any] = pair;
 
       console.log(`Adding saga: '${sagaName}'`);
 
