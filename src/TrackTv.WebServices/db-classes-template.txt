@@ -5,6 +5,7 @@ namespace TrackTv.Data
     using System.Linq;
 	using LinqToDB;
     using LinqToDB.Mapping;
+	using Newtonsoft.Json;
 
     {{#each model.tables}}
     /// <summary>
@@ -14,7 +15,7 @@ namespace TrackTv.Data
     [Table(Schema="{{TableSchema}}", Name = "{{TableName}}")]
     public class {{ClassName}}Poco : IPoco<{{ClassName}}Poco>
     {
-        {{#each columns}}        
+        {{#each columns}}
         /// <summary>
 		{{#if ColumnComment}}
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
@@ -76,26 +77,20 @@ namespace TrackTv.Data
     {{/each}}
     public partial class DbService
     {
-		private static readonly IReadOnlyDictionary<Type, string> PrimaryKeyMap = new Dictionary<Type, string>
+		private static Dictionary<string, TableMetadataModel> MetadataJson { get; } = JsonConvert.DeserializeObject<Dictionary<string, TableMetadataModel>>("{{{model.metadata}}}");		
+
+		private static readonly IReadOnlyDictionary<Type, TableMetadataModel> MetadataByPocoType = new Dictionary<Type, TableMetadataModel>
 		{
 		{{#each model.tables}}
-			{typeof({{ClassName}}Poco), "{{PrimaryKeyColumnName}}"},
+			{typeof({{ClassName}}Poco), MetadataJson["{{TableSchema}}.{{TableName}}"]},
         {{/each}}
 		};
 
-		private static readonly IReadOnlyDictionary<Type, string> TableNameMap = new Dictionary<Type, string>
-		{
-		{{#each model.tables}}
-			{typeof({{ClassName}}Poco), "{{TableName}}"},
-        {{/each}}
-		};
-
-		private static readonly IReadOnlyDictionary<Type, string> TableSchemaMap = new Dictionary<Type, string>
-		{
-		{{#each model.tables}}
-			{typeof({{ClassName}}Poco), "{{TableSchema}}"},
-        {{/each}}
-		};
+		public TableMetadataModel GetMetadata<T>()
+            where T : IPoco<T>
+        {
+			return MetadataByPocoType[typeof(T)];
+        }
 
         {{#each model.tables}}
 		/// <summary>

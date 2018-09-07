@@ -53,11 +53,11 @@
                 return Task.CompletedTask;
             }
 
-            var type = typeof(TPoco);
+            var metadata = this.GetMetadata<TPoco>();
 
-            string tableSchema = TableSchemaMap[type];
-            string tableName = TableNameMap[type];
-            string primaryKeyName = PrimaryKeyMap[type];
+            string tableSchema = metadata.TableSchema;
+            string tableName = metadata.TableName;
+            string primaryKeyName = metadata.PrimaryKeyColumnName;
 
             string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});";
 
@@ -70,11 +70,11 @@
         public Task Delete<TPoco>(int id)
             where TPoco : IPoco<TPoco>
         {
-            var type = typeof(TPoco);
+            var metadata = this.GetMetadata<TPoco>();
 
-            string tableSchema = TableSchemaMap[type];
-            string tableName = TableNameMap[type];
-            string primaryKeyName = PrimaryKeyMap[type];
+            string tableSchema = metadata.TableSchema;
+            string tableName = metadata.TableName;
+            string primaryKeyName = metadata.PrimaryKeyColumnName;
 
             string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} = {id};";
 
@@ -172,7 +172,4 @@
             this.sqlLog.Push(new KeyValuePair<string, DataParameter[]>(args.CommandText, args.Parameters));
         }
     }
-
-   
-
 }
