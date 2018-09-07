@@ -37,7 +37,7 @@
         private NpgsqlConnection DbConnection { get; set; }
 
         public Task Delete<TPoco>(TPoco poco)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             return this.Delete<TPoco>(poco.GetPrimaryKey());
         }
@@ -46,7 +46,7 @@
         /// <para>Deletes a number of records from a table mapped to <see cref="TPoco"/> by ID.</para>
         /// </summary>
         public Task Delete<TPoco>(int[] ids)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             if (ids.Length == 0)
             {
@@ -68,7 +68,7 @@
         /// <para>Deletes a record from a table mapped to <see cref="TPoco"/> by ID.</para>
         /// </summary>
         public Task Delete<TPoco>(int id)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             var type = typeof(TPoco);
 
@@ -134,13 +134,13 @@
         }
 
         public Task<int> Insert<TPoco>(TPoco poco)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             return this.DataConnection.InsertWithInt32IdentityAsync(poco);
         }
 
         public async Task<int> Save<TPoco>(TPoco poco)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             if (poco.IsNew())
             {
@@ -153,7 +153,7 @@
         }
 
         public Task Update<TPoco>(TPoco poco)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             return this.DataConnection.UpdateAsync(poco);
         }
@@ -162,7 +162,7 @@
         /// This is sync. I don't like it.
         /// </summary>
         public void BulkInsertSync<TPoco>(IEnumerable<TPoco> list)
-            where TPoco : IPoco
+            where TPoco : IPoco<TPoco>
         {
             this.DataConnection.BulkCopy(list);
         }
@@ -173,54 +173,6 @@
         }
     }
 
-    public interface IPoco
-    {
-        /// <summary>		
-        /// <para>Returns the primary key for the table.</para>
-        /// </summary>   
-        int GetPrimaryKey();
+   
 
-        /// <summary>		
-        /// <para>Returns true if the record hasn't been inserted to the database yet.</para>
-        /// </summary> 
-        bool IsNew();
-        
-        /// <summary>		
-        /// <para>Sets the primary key for the table.</para>
-        /// </summary> 
-        void SetPrimaryKey(int value);
-
-        /// <summary>
-        /// <para>Clones the current object and returns the clone.</para>
-        /// </summary>
-        IPoco Clone();
-    }
-
-    public partial interface IDbService : IDisposable
-    {
-        Task Delete<TPoco>(TPoco poco)
-            where TPoco : IPoco;
-
-        Task Delete<TPoco>(int[] ids)
-            where TPoco : IPoco;
-
-        Task Delete<TPoco>(int id)
-            where TPoco : IPoco;
-
-        Task ExecuteInTransaction(Func<Task> body);
-
-        Task ExecuteInTransaction(Func<IDbTransaction, Task> body, TimeSpan? timeout = null);
-
-        Task<int> Insert<TPoco>(TPoco poco)
-            where TPoco : IPoco;
-
-        Task<int> Save<TPoco>(TPoco poco)
-            where TPoco : IPoco;
-
-        Task Update<TPoco>(TPoco poco)
-            where TPoco : IPoco;
-
-        void BulkInsertSync<TPoco>(IEnumerable<TPoco> list)
-            where TPoco : IPoco;
-    }
 }

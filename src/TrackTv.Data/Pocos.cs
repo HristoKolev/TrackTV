@@ -11,7 +11,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "actors")]
-    public class ActorPoco : IPoco
+    public class ActorPoco : IPoco<ActorPoco>
     {
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
@@ -29,17 +29,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ActorID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ActorID;
+		int IPoco<ActorPoco>.GetPrimaryKey() => this.ActorID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ActorID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ActorID = value;
+		void IPoco<ActorPoco>.SetPrimaryKey(int value) => this.ActorID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ActorID == default;
+		bool IPoco<ActorPoco>.IsNew() => this.ActorID == default;
         
         /// <summary>
 		/// <para>Column name: 'actor_image'.</para>
@@ -92,7 +92,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ActorPoco IPoco<ActorPoco>.Clone()
 		{
 			return new ActorPoco
 			{
@@ -110,7 +110,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "api_change_types")]
-    public class ApiChangeTypePoco : IPoco
+    public class ApiChangeTypePoco : IPoco<ApiChangeTypePoco>
     {
         /// <summary>
 		/// <para>Column name: 'api_change_type_name'.</para>
@@ -140,22 +140,22 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ApiChangeTypeID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ApiChangeTypeID;
+		int IPoco<ApiChangeTypePoco>.GetPrimaryKey() => this.ApiChangeTypeID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ApiChangeTypeID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ApiChangeTypeID = value;
+		void IPoco<ApiChangeTypePoco>.SetPrimaryKey(int value) => this.ApiChangeTypeID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ApiChangeTypeID == default;
+		bool IPoco<ApiChangeTypePoco>.IsNew() => this.ApiChangeTypeID == default;
         
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ApiChangeTypePoco IPoco<ApiChangeTypePoco>.Clone()
 		{
 			return new ApiChangeTypePoco
 			{
@@ -170,7 +170,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "api_changes")]
-    public class ApiChangePoco : IPoco
+    public class ApiChangePoco : IPoco<ApiChangePoco>
     {
         /// <summary>
 		/// <para>Column name: 'api_change_thetvdbid'.</para>
@@ -224,17 +224,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ApiChangeID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ApiChangeID;
+		int IPoco<ApiChangePoco>.GetPrimaryKey() => this.ApiChangeID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ApiChangeID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ApiChangeID = value;
+		void IPoco<ApiChangePoco>.SetPrimaryKey(int value) => this.ApiChangeID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ApiChangeID == default;
+		bool IPoco<ApiChangePoco>.IsNew() => this.ApiChangeID == default;
         
         /// <summary>
 		/// <para>Column name: 'api_change_last_failed_time'.</para>
@@ -288,7 +288,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ApiChangePoco IPoco<ApiChangePoco>.Clone()
 		{
 			return new ApiChangePoco
 			{
@@ -309,7 +309,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "api_responses")]
-    public class ApiResponsePoco : IPoco
+    public class ApiResponsePoco : IPoco<ApiResponsePoco>
     {
         /// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
@@ -365,17 +365,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ApiResponseID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ApiResponseID;
+		int IPoco<ApiResponsePoco>.GetPrimaryKey() => this.ApiResponseID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ApiResponseID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ApiResponseID = value;
+		void IPoco<ApiResponsePoco>.SetPrimaryKey(int value) => this.ApiResponseID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ApiResponseID == default;
+		bool IPoco<ApiResponsePoco>.IsNew() => this.ApiResponseID == default;
         
         /// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
@@ -392,7 +392,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ApiResponsePoco IPoco<ApiResponsePoco>.Clone()
 		{
 			return new ApiResponsePoco
 			{
@@ -410,7 +410,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "episodes")]
-    public class EpisodePoco : IPoco
+    public class EpisodePoco : IPoco<EpisodePoco>
     {
         /// <summary>
 		/// <para>Column name: 'episode_id'.</para>
@@ -428,17 +428,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (EpisodeID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.EpisodeID;
+		int IPoco<EpisodePoco>.GetPrimaryKey() => this.EpisodeID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (EpisodeID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.EpisodeID = value;
+		void IPoco<EpisodePoco>.SetPrimaryKey(int value) => this.EpisodeID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.EpisodeID == default;
+		bool IPoco<EpisodePoco>.IsNew() => this.EpisodeID == default;
         
         /// <summary>
 		/// <para>Column name: 'episode_description'.</para>
@@ -552,7 +552,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		EpisodePoco IPoco<EpisodePoco>.Clone()
 		{
 			return new EpisodePoco
 			{
@@ -575,7 +575,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "genres")]
-    public class GenrePoco : IPoco
+    public class GenrePoco : IPoco<GenrePoco>
     {
         /// <summary>
 		/// <para>Column name: 'genre_id'.</para>
@@ -593,17 +593,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (GenreID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.GenreID;
+		int IPoco<GenrePoco>.GetPrimaryKey() => this.GenreID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (GenreID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.GenreID = value;
+		void IPoco<GenrePoco>.SetPrimaryKey(int value) => this.GenreID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.GenreID == default;
+		bool IPoco<GenrePoco>.IsNew() => this.GenreID == default;
         
         /// <summary>
 		/// <para>Column name: 'genre_name'.</para>
@@ -620,7 +620,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		GenrePoco IPoco<GenrePoco>.Clone()
 		{
 			return new GenrePoco
 			{
@@ -635,7 +635,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "networks")]
-    public class NetworkPoco : IPoco
+    public class NetworkPoco : IPoco<NetworkPoco>
     {
         /// <summary>
 		/// <para>Column name: 'network_id'.</para>
@@ -653,17 +653,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (NetworkID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.NetworkID;
+		int IPoco<NetworkPoco>.GetPrimaryKey() => this.NetworkID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (NetworkID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.NetworkID = value;
+		void IPoco<NetworkPoco>.SetPrimaryKey(int value) => this.NetworkID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.NetworkID == default;
+		bool IPoco<NetworkPoco>.IsNew() => this.NetworkID == default;
         
         /// <summary>
 		/// <para>Column name: 'network_name'.</para>
@@ -680,7 +680,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		NetworkPoco IPoco<NetworkPoco>.Clone()
 		{
 			return new NetworkPoco
 			{
@@ -695,7 +695,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "profiles")]
-    public class ProfilePoco : IPoco
+    public class ProfilePoco : IPoco<ProfilePoco>
     {
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -713,17 +713,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ProfileID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ProfileID;
+		int IPoco<ProfilePoco>.GetPrimaryKey() => this.ProfileID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ProfileID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ProfileID = value;
+		void IPoco<ProfilePoco>.SetPrimaryKey(int value) => this.ProfileID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ProfileID == default;
+		bool IPoco<ProfilePoco>.IsNew() => this.ProfileID == default;
         
         /// <summary>
 		/// <para>Column name: 'profile_name'.</para>
@@ -740,7 +740,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ProfilePoco IPoco<ProfilePoco>.Clone()
 		{
 			return new ProfilePoco
 			{
@@ -755,7 +755,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "roles")]
-    public class RolePoco : IPoco
+    public class RolePoco : IPoco<RolePoco>
     {
         /// <summary>
 		/// <para>Column name: 'role_id'.</para>
@@ -773,17 +773,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (RoleID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.RoleID;
+		int IPoco<RolePoco>.GetPrimaryKey() => this.RoleID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (RoleID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.RoleID = value;
+		void IPoco<RolePoco>.SetPrimaryKey(int value) => this.RoleID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.RoleID == default;
+		bool IPoco<RolePoco>.IsNew() => this.RoleID == default;
         
         /// <summary>
 		/// <para>Column name: 'actor_id'.</para>
@@ -826,7 +826,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		RolePoco IPoco<RolePoco>.Clone()
 		{
 			return new RolePoco
 			{
@@ -843,7 +843,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "settings")]
-    public class SettingPoco : IPoco
+    public class SettingPoco : IPoco<SettingPoco>
     {
         /// <summary>
 		/// <para>Column name: 'setting_id'.</para>
@@ -861,17 +861,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (SettingID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.SettingID;
+		int IPoco<SettingPoco>.GetPrimaryKey() => this.SettingID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (SettingID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.SettingID = value;
+		void IPoco<SettingPoco>.SetPrimaryKey(int value) => this.SettingID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.SettingID == default;
+		bool IPoco<SettingPoco>.IsNew() => this.SettingID == default;
         
         /// <summary>
 		/// <para>Column name: 'setting_value'.</para>
@@ -900,7 +900,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		SettingPoco IPoco<SettingPoco>.Clone()
 		{
 			return new SettingPoco
 			{
@@ -916,7 +916,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "shows")]
-    public class ShowPoco : IPoco
+    public class ShowPoco : IPoco<ShowPoco>
     {
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -934,17 +934,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ShowID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ShowID;
+		int IPoco<ShowPoco>.GetPrimaryKey() => this.ShowID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ShowID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ShowID = value;
+		void IPoco<ShowPoco>.SetPrimaryKey(int value) => this.ShowID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ShowID == default;
+		bool IPoco<ShowPoco>.IsNew() => this.ShowID == default;
         
         /// <summary>
 		/// <para>Column name: 'air_day'.</para>
@@ -1082,7 +1082,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ShowPoco IPoco<ShowPoco>.Clone()
 		{
 			return new ShowPoco
 			{
@@ -1107,7 +1107,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "shows_genres")]
-    public class ShowGenrePoco : IPoco
+    public class ShowGenrePoco : IPoco<ShowGenrePoco>
     {
         /// <summary>
 		/// <para>Column name: 'shows_genres_id'.</para>
@@ -1125,17 +1125,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (ShowsGenresID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.ShowsGenresID;
+		int IPoco<ShowGenrePoco>.GetPrimaryKey() => this.ShowsGenresID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (ShowsGenresID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.ShowsGenresID = value;
+		void IPoco<ShowGenrePoco>.SetPrimaryKey(int value) => this.ShowsGenresID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.ShowsGenresID == default;
+		bool IPoco<ShowGenrePoco>.IsNew() => this.ShowsGenresID == default;
         
         /// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -1166,7 +1166,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		ShowGenrePoco IPoco<ShowGenrePoco>.Clone()
 		{
 			return new ShowGenrePoco
 			{
@@ -1182,7 +1182,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "subscriptions")]
-    public class SubscriptionPoco : IPoco
+    public class SubscriptionPoco : IPoco<SubscriptionPoco>
     {
         /// <summary>
 		/// <para>Column name: 'subscription_id'.</para>
@@ -1200,17 +1200,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (SubscriptionID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.SubscriptionID;
+		int IPoco<SubscriptionPoco>.GetPrimaryKey() => this.SubscriptionID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (SubscriptionID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.SubscriptionID = value;
+		void IPoco<SubscriptionPoco>.SetPrimaryKey(int value) => this.SubscriptionID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.SubscriptionID == default;
+		bool IPoco<SubscriptionPoco>.IsNew() => this.SubscriptionID == default;
         
         /// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -1241,7 +1241,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		SubscriptionPoco IPoco<SubscriptionPoco>.Clone()
 		{
 			return new SubscriptionPoco
 			{
@@ -1257,7 +1257,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "users")]
-    public class UserPoco : IPoco
+    public class UserPoco : IPoco<UserPoco>
     {
         /// <summary>
 		/// <para>Column name: 'user_id'.</para>
@@ -1275,17 +1275,17 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table (UserID).</para>
         /// </summary>   
-		int IPoco.GetPrimaryKey() => this.UserID;
+		int IPoco<UserPoco>.GetPrimaryKey() => this.UserID;
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table (UserID).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey(int value) => this.UserID = value;
+		void IPoco<UserPoco>.SetPrimaryKey(int value) => this.UserID = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.UserID == default;
+		bool IPoco<UserPoco>.IsNew() => this.UserID == default;
         
         /// <summary>
 		/// <para>Column name: 'is_admin'.</para>
@@ -1338,7 +1338,7 @@ namespace TrackTv.Data
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		UserPoco IPoco<UserPoco>.Clone()
 		{
 			return new UserPoco
 			{

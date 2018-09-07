@@ -12,7 +12,7 @@ namespace TrackTv.Data
 	/// <para>Table schema: '{{TableSchema}}'.</para>
     /// </summary>
     [Table(Schema="{{TableSchema}}", Name = "{{TableName}}")]
-    public class {{ClassName}}Poco : IPoco
+    public class {{ClassName}}Poco : IPoco<{{ClassName}}Poco>
     {
         {{#each columns}}        
         /// <summary>
@@ -45,24 +45,24 @@ namespace TrackTv.Data
 		/// <summary>		
 		/// <para>Returns the primary key for the table ({{PropertyName}}).</para>
         /// </summary>   
-		{{ClrType}} IPoco.GetPrimaryKey() => this.{{PropertyName}};
+		{{ClrType}} IPoco<{{../ClassName}}Poco>.GetPrimaryKey() => this.{{PropertyName}};
 
 		/// <summary>		
 		/// <para>Sets the primary key for the table ({{PropertyName}}).</para>
         /// </summary> 
-		void IPoco.SetPrimaryKey({{ClrType}} value) => this.{{PropertyName}} = value;
+		void IPoco<{{../ClassName}}Poco>.SetPrimaryKey({{ClrType}} value) => this.{{PropertyName}} = value;
 
 		/// <summary>		
 		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
-		bool IPoco.IsNew() => this.{{PropertyName}} == default;
+		bool IPoco<{{../ClassName}}Poco>.IsNew() => this.{{PropertyName}} == default;
 		{{/if}}
         
         {{/each}}
 		/// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
-		IPoco IPoco.Clone()
+		{{ClassName}}Poco IPoco<{{ClassName}}Poco>.Clone()
 		{
 			return new {{ClassName}}Poco
 			{

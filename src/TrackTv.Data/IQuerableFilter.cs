@@ -185,35 +185,55 @@
             switch (queryType)
             {
                 case QueryType.Equal :
+                {
                     expression = Expression.Equal(member, memberValue);
                     break;
+                }
                 case QueryType.NotEqual :
+                {
                     expression = Expression.NotEqual(member, memberValue);
                     break;
+                }
                 case QueryType.LessThan :
+                {
                     expression = Expression.LessThan(member, memberValue);
                     break;
+                }
                 case QueryType.LessThanOrEqual :
+                {
                     expression = Expression.LessThanOrEqual(member, memberValue);
                     break;
+                }
                 case QueryType.GreaterThan :
+                {
                     expression = Expression.GreaterThan(member, memberValue);
                     break;
+                }
                 case QueryType.GreaterThanOrEqual :
+                {
                     expression = Expression.GreaterThanOrEqual(member, memberValue);
                     break;
+                }
                 case QueryType.StartsWith :
+                {
                     expression = Expression.Call(member, StringStartsWithMethod, memberValue);
                     break;
+                }
                 case QueryType.DoesNotStartWith :
+                {
                     expression = Expression.Not(Expression.Call(member, StringStartsWithMethod, memberValue));
                     break;
+                }
                 case QueryType.EndsWith :
+                {
                     expression = Expression.Call(member, StringEndsWithMethod, memberValue);
                     break;
+                }
                 case QueryType.DoesNotEndWith :
+                {
                     expression = Expression.Not(Expression.Call(member, StringEndsWithMethod, memberValue));
                     break;
+                }
                 case QueryType.IsIn :
                 {
                     Type type = member.Type;
@@ -227,19 +247,29 @@
                     break;
                 }
                 case QueryType.Contains :
+                {
                     expression = Expression.Call(member, StringContainsMethod, memberValue);
                     break;
+                }
                 case QueryType.DoesNotContain :
+                {
                     expression = Expression.Not(Expression.Call(member, StringContainsMethod, memberValue));
                     break;
+                }
                 case QueryType.IsNull :
+                {
                     expression = Expression.Equal(member, Expression.Constant(null, member.Type));
                     break;
+                }
                 case QueryType.IsNotNull :
+                {
                     expression = Expression.NotEqual(member, Expression.Constant(null, member.Type));
                     break;
+                }
                 default :
+                {
                     throw new ArgumentOutOfRangeException(nameof(queryType), queryType, null);
+                }
             }
 
             return Expression.Lambda<Func<T, bool>>(expression, parameter);
