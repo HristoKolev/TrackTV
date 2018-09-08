@@ -7,6 +7,10 @@
 
     using LinqToDB;
 
+    using Npgsql;
+
+    using NpgsqlTypes;
+
     /// <summary>
     /// Interface for all Poco classes.
     /// </summary>
@@ -41,6 +45,13 @@
 
         Task Update<TPoco>(TPoco poco)
             where TPoco : IPoco<TPoco>;
+
+        Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
+            where T : IPoco<T>, new();
+
+        NpgsqlParameter<T> Parameter<T>(string parameterName, T value);
+
+        NpgsqlParameter<T> Parameter<T>(string parameterName, T value, NpgsqlDbType dbType);
     }
 
     /// <summary>
@@ -130,5 +141,13 @@
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
+
+        public NpgsqlDbType NpgsDataType { get; set; }
+
+        public string NpgsDataTypeName { get; set; }
+
+        public Action<T, object> SetValue { get; set; }
+
+        public Func<T, object> GetValue { get; set; }
     }
 }

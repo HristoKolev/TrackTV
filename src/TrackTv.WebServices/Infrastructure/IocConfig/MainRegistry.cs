@@ -37,12 +37,7 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
                 .ContainerScoped();
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
-
-            #if DEBUG
             this.For<IDataProvider>().Use<PostgreSQLDataProvider>();
-            #else
-            this.For<IDataProvider>().Use<PostgreSQLDataProvider>();
-            #endif
             this.For<IDbService>().Use<DbService>();
         }
 

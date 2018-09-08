@@ -6,6 +6,8 @@ namespace TrackTv.Data
 	using LinqToDB;
     using LinqToDB.Mapping;
 
+	using NpgsqlTypes;
+
     /// <summary>
     /// <para>Table name: 'actors'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1045,9 +1047,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ActorID",
 					TableName = "actors",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ActorID = (int)val,
+					GetValue = (instance) => instance.ActorID,
 				},
 				new ColumnMetadataModel<ActorPoco>
 				{						
@@ -1067,9 +1073,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "ActorImage",
 					TableName = "actors",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ActorImage = (string)val,
+					GetValue = (instance) => instance.ActorImage,
 				},
 				new ColumnMetadataModel<ActorPoco>
 				{						
@@ -1089,9 +1099,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "ActorName",
 					TableName = "actors",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ActorName = (string)val,
+					GetValue = (instance) => instance.ActorName,
 				},
 				new ColumnMetadataModel<ActorPoco>
 				{						
@@ -1111,9 +1125,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "LastUpdated",
 					TableName = "actors",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.LastUpdated = (DateTime?)val,
+					GetValue = (instance) => instance.LastUpdated,
 				},
 				new ColumnMetadataModel<ActorPoco>
 				{						
@@ -1133,9 +1151,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "Thetvdbid",
 					TableName = "actors",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Thetvdbid = (int)val,
+					GetValue = (instance) => instance.Thetvdbid,
 				},
 			}
 		};
@@ -1186,9 +1208,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "ApiChangeTypeName",
 					TableName = "api_change_types",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeTypeName = (string)val,
+					GetValue = (instance) => instance.ApiChangeTypeName,
 				},
 				new ColumnMetadataModel<ApiChangeTypePoco>
 				{						
@@ -1208,9 +1234,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiChangeTypeID",
 					TableName = "api_change_types",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeTypeID = (int)val,
+					GetValue = (instance) => instance.ApiChangeTypeID,
 				},
 			}
 		};
@@ -1279,9 +1309,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiChangeThetvdbid",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeThetvdbid = (int)val,
+					GetValue = (instance) => instance.ApiChangeThetvdbid,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1301,9 +1335,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiChangeFailCount",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeFailCount = (int)val,
+					GetValue = (instance) => instance.ApiChangeFailCount,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1323,9 +1361,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "ApiChangeCreatedDate",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeCreatedDate = (DateTime)val,
+					GetValue = (instance) => instance.ApiChangeCreatedDate,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1345,9 +1387,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiChangeID",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeID = (int)val,
+					GetValue = (instance) => instance.ApiChangeID,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1367,9 +1413,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "ApiChangeLastFailedTime",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeLastFailedTime = (DateTime?)val,
+					GetValue = (instance) => instance.ApiChangeLastFailedTime,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1389,9 +1439,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "ApiChangeThetvdbLastUpdated",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeThetvdbLastUpdated = (DateTime)val,
+					GetValue = (instance) => instance.ApiChangeThetvdbLastUpdated,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1411,9 +1465,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiChangeAttachedSeriesID",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeAttachedSeriesID = (int?)val,
+					GetValue = (instance) => instance.ApiChangeAttachedSeriesID,
 				},
 				new ColumnMetadataModel<ApiChangePoco>
 				{						
@@ -1433,9 +1491,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiChangeType",
 					TableName = "api_changes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiChangeType = (int)val,
+					GetValue = (instance) => instance.ApiChangeType,
 				},
 			}
 		};
@@ -1495,9 +1557,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiResponseEpisodeThetvdbid",
 					TableName = "api_responses",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiResponseEpisodeThetvdbid = (int?)val,
+					GetValue = (instance) => instance.ApiResponseEpisodeThetvdbid,
 				},
 				new ColumnMetadataModel<ApiResponsePoco>
 				{						
@@ -1517,9 +1583,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiResponseShowThetvdbid",
 					TableName = "api_responses",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiResponseShowThetvdbid = (int?)val,
+					GetValue = (instance) => instance.ApiResponseShowThetvdbid,
 				},
 				new ColumnMetadataModel<ApiResponsePoco>
 				{						
@@ -1539,9 +1609,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.BinaryJson",
 					Linq2dbDataType = DataType.BinaryJson,
+					NpgsDataTypeName = "NpgsqlDbType.Jsonb",
+					NpgsDataType = NpgsqlDbType.Jsonb,
 					PropertyName = "ApiResponseBody",
 					TableName = "api_responses",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiResponseBody = (string)val,
+					GetValue = (instance) => instance.ApiResponseBody,
 				},
 				new ColumnMetadataModel<ApiResponsePoco>
 				{						
@@ -1561,9 +1635,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ApiResponseID",
 					TableName = "api_responses",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiResponseID = (int)val,
+					GetValue = (instance) => instance.ApiResponseID,
 				},
 				new ColumnMetadataModel<ApiResponsePoco>
 				{						
@@ -1583,9 +1661,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "ApiResponseLastUpdated",
 					TableName = "api_responses",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ApiResponseLastUpdated = (DateTime)val,
+					GetValue = (instance) => instance.ApiResponseLastUpdated,
 				},
 			}
 		};
@@ -1660,9 +1742,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "EpisodeID",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.EpisodeID = (int)val,
+					GetValue = (instance) => instance.EpisodeID,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1682,9 +1768,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Text",
 					Linq2dbDataType = DataType.Text,
+					NpgsDataTypeName = "NpgsqlDbType.Text",
+					NpgsDataType = NpgsqlDbType.Text,
 					PropertyName = "EpisodeDescription",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.EpisodeDescription = (string)val,
+					GetValue = (instance) => instance.EpisodeDescription,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1704,9 +1794,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "EpisodeNumber",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.EpisodeNumber = (int)val,
+					GetValue = (instance) => instance.EpisodeNumber,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1726,9 +1820,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "EpisodeTitle",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.EpisodeTitle = (string)val,
+					GetValue = (instance) => instance.EpisodeTitle,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1748,9 +1846,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "FirstAired",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.FirstAired = (DateTime?)val,
+					GetValue = (instance) => instance.FirstAired,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1770,9 +1872,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "Imdbid",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Imdbid = (string)val,
+					GetValue = (instance) => instance.Imdbid,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1792,9 +1898,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "LastUpdated",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.LastUpdated = (DateTime)val,
+					GetValue = (instance) => instance.LastUpdated,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1814,9 +1924,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "SeasonNumber",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.SeasonNumber = (int)val,
+					GetValue = (instance) => instance.SeasonNumber,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1836,9 +1950,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowID",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowID = (int)val,
+					GetValue = (instance) => instance.ShowID,
 				},
 				new ColumnMetadataModel<EpisodePoco>
 				{						
@@ -1858,9 +1976,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "Thetvdbid",
 					TableName = "episodes",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Thetvdbid = (int)val,
+					GetValue = (instance) => instance.Thetvdbid,
 				},
 			}
 		};
@@ -1911,9 +2033,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "GenreID",
 					TableName = "genres",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.GenreID = (int)val,
+					GetValue = (instance) => instance.GenreID,
 				},
 				new ColumnMetadataModel<GenrePoco>
 				{						
@@ -1933,9 +2059,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "GenreName",
 					TableName = "genres",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.GenreName = (string)val,
+					GetValue = (instance) => instance.GenreName,
 				},
 			}
 		};
@@ -1986,9 +2116,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "NetworkID",
 					TableName = "networks",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.NetworkID = (int)val,
+					GetValue = (instance) => instance.NetworkID,
 				},
 				new ColumnMetadataModel<NetworkPoco>
 				{						
@@ -2008,9 +2142,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "NetworkName",
 					TableName = "networks",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.NetworkName = (string)val,
+					GetValue = (instance) => instance.NetworkName,
 				},
 			}
 		};
@@ -2061,9 +2199,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ProfileID",
 					TableName = "profiles",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ProfileID = (int)val,
+					GetValue = (instance) => instance.ProfileID,
 				},
 				new ColumnMetadataModel<ProfilePoco>
 				{						
@@ -2083,9 +2225,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "ProfileName",
 					TableName = "profiles",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ProfileName = (string)val,
+					GetValue = (instance) => instance.ProfileName,
 				},
 			}
 		};
@@ -2142,9 +2288,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "RoleID",
 					TableName = "roles",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.RoleID = (int)val,
+					GetValue = (instance) => instance.RoleID,
 				},
 				new ColumnMetadataModel<RolePoco>
 				{						
@@ -2164,9 +2314,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ActorID",
 					TableName = "roles",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ActorID = (int)val,
+					GetValue = (instance) => instance.ActorID,
 				},
 				new ColumnMetadataModel<RolePoco>
 				{						
@@ -2186,9 +2340,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "RoleName",
 					TableName = "roles",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.RoleName = (string)val,
+					GetValue = (instance) => instance.RoleName,
 				},
 				new ColumnMetadataModel<RolePoco>
 				{						
@@ -2208,9 +2366,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowID",
 					TableName = "roles",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowID = (int)val,
+					GetValue = (instance) => instance.ShowID,
 				},
 			}
 		};
@@ -2264,9 +2426,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "SettingID",
 					TableName = "settings",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.SettingID = (int)val,
+					GetValue = (instance) => instance.SettingID,
 				},
 				new ColumnMetadataModel<SettingPoco>
 				{						
@@ -2286,9 +2452,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "SettingValue",
 					TableName = "settings",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.SettingValue = (string)val,
+					GetValue = (instance) => instance.SettingValue,
 				},
 				new ColumnMetadataModel<SettingPoco>
 				{						
@@ -2308,9 +2478,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "SettingName",
 					TableName = "settings",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.SettingName = (string)val,
+					GetValue = (instance) => instance.SettingName,
 				},
 			}
 		};
@@ -2391,9 +2565,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowID",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowID = (int)val,
+					GetValue = (instance) => instance.ShowID,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2413,9 +2591,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "AirDay",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.AirDay = (int?)val,
+					GetValue = (instance) => instance.AirDay,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2435,9 +2617,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "AirTime",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.AirTime = (DateTime?)val,
+					GetValue = (instance) => instance.AirTime,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2457,9 +2643,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "FirstAired",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.FirstAired = (DateTime?)val,
+					GetValue = (instance) => instance.FirstAired,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2479,9 +2669,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "Imdbid",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Imdbid = (string)val,
+					GetValue = (instance) => instance.Imdbid,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2501,9 +2695,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
+					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+					NpgsDataType = NpgsqlDbType.Timestamp,
 					PropertyName = "LastUpdated",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.LastUpdated = (DateTime)val,
+					GetValue = (instance) => instance.LastUpdated,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2523,9 +2721,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "NetworkID",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.NetworkID = (int)val,
+					GetValue = (instance) => instance.NetworkID,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2545,9 +2747,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "ShowBanner",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowBanner = (string)val,
+					GetValue = (instance) => instance.ShowBanner,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2567,9 +2773,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Text",
 					Linq2dbDataType = DataType.Text,
+					NpgsDataTypeName = "NpgsqlDbType.Text",
+					NpgsDataType = NpgsqlDbType.Text,
 					PropertyName = "ShowDescription",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowDescription = (string)val,
+					GetValue = (instance) => instance.ShowDescription,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2589,9 +2799,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "ShowName",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowName = (string)val,
+					GetValue = (instance) => instance.ShowName,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2611,9 +2825,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowStatus",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowStatus = (int)val,
+					GetValue = (instance) => instance.ShowStatus,
 				},
 				new ColumnMetadataModel<ShowPoco>
 				{						
@@ -2633,9 +2851,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "Thetvdbid",
 					TableName = "shows",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Thetvdbid = (int)val,
+					GetValue = (instance) => instance.Thetvdbid,
 				},
 			}
 		};
@@ -2689,9 +2911,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowsGenresID",
 					TableName = "shows_genres",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowsGenresID = (int)val,
+					GetValue = (instance) => instance.ShowsGenresID,
 				},
 				new ColumnMetadataModel<ShowGenrePoco>
 				{						
@@ -2711,9 +2937,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowID",
 					TableName = "shows_genres",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowID = (int)val,
+					GetValue = (instance) => instance.ShowID,
 				},
 				new ColumnMetadataModel<ShowGenrePoco>
 				{						
@@ -2733,9 +2963,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "GenreID",
 					TableName = "shows_genres",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.GenreID = (int)val,
+					GetValue = (instance) => instance.GenreID,
 				},
 			}
 		};
@@ -2789,9 +3023,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "SubscriptionID",
 					TableName = "subscriptions",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.SubscriptionID = (int)val,
+					GetValue = (instance) => instance.SubscriptionID,
 				},
 				new ColumnMetadataModel<SubscriptionPoco>
 				{						
@@ -2811,9 +3049,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ProfileID",
 					TableName = "subscriptions",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ProfileID = (int)val,
+					GetValue = (instance) => instance.ProfileID,
 				},
 				new ColumnMetadataModel<SubscriptionPoco>
 				{						
@@ -2833,9 +3075,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ShowID",
 					TableName = "subscriptions",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ShowID = (int)val,
+					GetValue = (instance) => instance.ShowID,
 				},
 			}
 		};
@@ -2895,9 +3141,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "UserID",
 					TableName = "users",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.UserID = (int)val,
+					GetValue = (instance) => instance.UserID,
 				},
 				new ColumnMetadataModel<UserPoco>
 				{						
@@ -2917,9 +3167,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Boolean",
 					Linq2dbDataType = DataType.Boolean,
+					NpgsDataTypeName = "NpgsqlDbType.Boolean",
+					NpgsDataType = NpgsqlDbType.Boolean,
 					PropertyName = "IsAdmin",
 					TableName = "users",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.IsAdmin = (bool)val,
+					GetValue = (instance) => instance.IsAdmin,
 				},
 				new ColumnMetadataModel<UserPoco>
 				{						
@@ -2939,9 +3193,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "Username",
 					TableName = "users",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Username = (string)val,
+					GetValue = (instance) => instance.Username,
 				},
 				new ColumnMetadataModel<UserPoco>
 				{						
@@ -2961,9 +3219,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
+					NpgsDataTypeName = "NpgsqlDbType.Varchar",
+					NpgsDataType = NpgsqlDbType.Varchar,
 					PropertyName = "Password",
 					TableName = "users",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.Password = (string)val,
+					GetValue = (instance) => instance.Password,
 				},
 				new ColumnMetadataModel<UserPoco>
 				{						
@@ -2983,9 +3245,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
+					NpgsDataTypeName = "NpgsqlDbType.Integer",
+					NpgsDataType = NpgsqlDbType.Integer,
 					PropertyName = "ProfileID",
 					TableName = "users",
 					TableSchema = "public",
+					SetValue = (instance, val) => instance.ProfileID = (int)val,
+					GetValue = (instance) => instance.ProfileID,
 				},
 			}
 		};

@@ -6,6 +6,8 @@ namespace TrackTv.Data
 	using LinqToDB;
     using LinqToDB.Mapping;
 
+	using NpgsqlTypes;
+
     {{#each model.tables}}
     /// <summary>
     /// <para>Table name: '{{TableName}}'.</para>
@@ -101,9 +103,13 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("{{IsNullable}}"),
 					Linq2dbDataTypeName = "{{Linq2dbDataTypeName}}",
 					Linq2dbDataType = {{Linq2dbDataTypeName}},
+					NpgsDataTypeName = "NpgsqlDbType.{{NpgsDataTypeName}}",
+					NpgsDataType = NpgsqlDbType.{{NpgsDataTypeName}},
 					PropertyName = "{{PropertyName}}",
 					TableName = "{{TableName}}",
 					TableSchema = "{{TableSchema}}",
+					SetValue = (instance, val) => instance.{{PropertyName}} = ({{ClrTypeName}})val,
+					GetValue = (instance) => instance.{{PropertyName}},
 				},
 				{{/each}}
 			}

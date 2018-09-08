@@ -11,6 +11,8 @@
 
     using Npgsql;
 
+    using NpgsqlTypes;
+
     public partial class DbService : IDbService
     {
         public DbService(NpgsqlConnection dbConnection, IDataProvider dataProvider)
@@ -153,34 +155,105 @@
         public async Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters) 
             where T: IPoco<T>, new()
         {
+            if (this.DbConnection.State == ConnectionState.Closed)
+            {
+                await this.DbConnection.OpenAsync().ConfigureAwait(false);
+            }
+
             // validate connection state
             // validate sql/parameter integrity
 
             var result = new List<T>();
-
-            var metadata = GetMetadata<T>();
 
             using (var command = this.DbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
 
+                await command.PrepareAsync().ConfigureAwait(false);
+
                 using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
                 {
-                    while (await reader.ReadAsync())
+                    // cached field count - I know it pointless, but I feel better by having it cached here.
+                    int fieldCount = reader.FieldCount;
+
+                    // used to flag the first iteration of the ReadAsync loop, so that optimizations can be made.
+                    bool firstRow = true;
+
+                    // cached setters for the result type - they get cached on the first row.
+                    var setters = new Action<T, object>[fieldCount];
+
+                    while (await reader.ReadAsync().ConfigureAwait(false))
                     {
+                        if (firstRow)
+                        {
+                            var metadata = GetMetadata<T>();
+
+                            for (int i = 0; i < fieldCount; i++)
+                            {
+                                setters[i] = metadata.Setters[reader.GetName(i)];
+                            }
+
+                            firstRow = false;
+                        }
+
                         var instance = new T();
 
-                        for (int i = 0; i < reader.FieldCount; i++)
+                        for (int i = 0; i < fieldCount; i++)
                         {
-                            string fieldName = reader.GetName(i);
-                            Type fieldType = reader.GetFieldType(i);
+                            setters[i](instance, reader.GetValue(i));
                         }
+
+                        result.Add(instance);
                     }
                 }
             }
 
             return result;
+        }
+
+        private readonly Dictionary<Type, NpgsqlDbType> npgsqlDbTypeMap = new Dictionary<Type, NpgsqlDbType>
+        {
+            {typeof(int), NpgsqlDbType.Integer },
+            {typeof(long), NpgsqlDbType.Bigint },
+            {typeof(bool), NpgsqlDbType.Boolean },
+            {typeof(float), NpgsqlDbType.Real },
+            {typeof(double), NpgsqlDbType.Double },
+            {typeof(short), NpgsqlDbType.Smallint },
+            {typeof(decimal), NpgsqlDbType.Numeric },
+            {typeof(string), NpgsqlDbType.Text },
+            {typeof(DateTime), NpgsqlDbType.Timestamp },
+            {typeof(byte[]), NpgsqlDbType.Bytea },
+        };
+
+        public NpgsqlParameter<T> Parameter<T>(string parameterName, T value)
+        {
+            NpgsqlDbType dbType;
+
+            var type = typeof(T);
+
+            if (this.npgsqlDbTypeMap.ContainsKey(type))
+            {
+                dbType = this.npgsqlDbTypeMap[type];
+            }
+            else
+            {
+                throw new ApplicationException($"Parameter type '{type.Name}' is not mapped to any 'NpgsqlDbType'. "
+                                               + $"Please specify a 'NpgsqlDbType' explicitly. ParameterName: {parameterName}");
+            }
+            
+            return new NpgsqlParameter<T>(parameterName, dbType)
+            {
+                TypedValue = value
+            };
+        }
+
+        public NpgsqlParameter<T> Parameter<T>(string parameterName, T value, NpgsqlDbType dbType)
+        {
+            return new NpgsqlParameter<T>(parameterName, dbType)
+            {
+                TypedValue = value
+            };
         }
     }
 }

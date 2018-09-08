@@ -8,6 +8,8 @@
 
     using Newtonsoft.Json;
 
+    using Npgsql;
+
     using TrackTv.WebServices.Infrastructure;
 
     public class Program
@@ -17,6 +19,7 @@
         public static void Main()
         {
             Global.AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(Path.Join(Global.DataDirectory, ConfigFile)));
+            Global.AppConfig.ConnectionString = CreateConnectionString(Global.AppConfig.ConnectionString);
 
             var builder = new WebHostBuilder();
 
@@ -31,6 +34,17 @@
         {
             opt.AddServerHeader = false;
             opt.Listen(IPAddress.Any, Global.AppConfig.Port);
+        }
+
+        private static string CreateConnectionString(string connectionString)
+        {
+            var builder = new NpgsqlConnectionStringBuilder(connectionString)
+            {
+                Enlist = false,
+                NoResetOnClose = true,
+            };
+
+            return builder.ToString();
         }
     }
 
