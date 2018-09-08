@@ -42,7 +42,7 @@ namespace TrackTv.Updater.Infrastructure
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
 
-            this.For<IDataProvider>().Use<LoggingDataProviderWrapper>().Ctor<IDataProvider>().Is<PostgreSQLDataProvider>();
+            this.For<IDataProvider>().Use<PostgreSQLDataProvider>();
             this.For<IDbService>().Use<DbService>();
         }
  

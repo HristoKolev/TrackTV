@@ -1,7 +1,6 @@
 ﻿namespace TrackTv.Data
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Data;
     using System.Threading.Tasks;
@@ -14,32 +13,32 @@
 
     public partial class DbService : IDbService
     {
-        private readonly ConcurrentStack<KeyValuePair<string, DataParameter[]>> sqlLog =
-            new ConcurrentStack<KeyValuePair<string, DataParameter[]>>();
-
         public DbService(NpgsqlConnection dbConnection, IDataProvider dataProvider)
         {
             this.DbConnection = dbConnection;
-            this.DataProvider = dataProvider as IProfiledDataProvider;
-
             this.DataConnection = new DataConnection(dataProvider, dbConnection, true);
-
-            if (this.DataProvider != null)
-            {
-                this.DataProvider.OnInitCommand += this.OnInitCommand;
-            }
         }
 
         private DataConnection DataConnection { get; }
 
-        private IProfiledDataProvider DataProvider { get; }
-
         private NpgsqlConnection DbConnection { get; set; }
 
-        public Task Delete<TPoco>(TPoco poco)
+        /// <summary>
+        /// This is sync. I don't like it.
+        /// </summary>
+        public void BulkInsertSync<TPoco>(IEnumerable<TPoco> list)
             where TPoco : IPoco<TPoco>
         {
-            return this.Delete<TPoco>(poco.GetPrimaryKey());
+            this.DataConnection.BulkCopy(list);
+        }
+
+        public Task Delete<TPoco>(TPoco poco) where TPoco : IPoco<TPoco>
+        {
+            var metadata = poco.Metadata;
+
+            int pk = metadata.GetPrimaryKey(poco);
+
+            return this.Delete<TPoco>(pk);
         }
 
         /// <summary>
@@ -53,7 +52,7 @@
                 return Task.CompletedTask;
             }
 
-            var metadata = this.GetMetadata<TPoco>();
+            var metadata = GetMetadata<TPoco>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -61,7 +60,7 @@
 
             string sql = $"DELETE FROM {tableSchema}.{tableName} WHERE {primaryKeyName} IN ({string.Join(", ", ids)});";
 
-            return this.DataConnection.ExecuteAsync(sql);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -70,7 +69,7 @@
         public Task Delete<TPoco>(int id)
             where TPoco : IPoco<TPoco>
         {
-            var metadata = this.GetMetadata<TPoco>();
+            var metadata = GetMetadata<TPoco>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -83,13 +82,6 @@
 
         public void Dispose()
         {
-            this.sqlLog.Clear();
-
-            if (this.DataProvider != null)
-            {
-                this.DataProvider.OnInitCommand -= this.OnInitCommand;
-            }
-
             this.DbConnection = null;
             this.DataConnection?.Dispose();
         }
@@ -102,8 +94,6 @@
             {
                 await this.DbConnection.OpenAsync().ConfigureAwait(false);
             }
-
-            this.sqlLog.Clear();
 
             using (var transaction = new DbTransactionWrapper(this.DbConnection.BeginTransaction()))
             {
@@ -142,14 +132,16 @@
         public async Task<int> Save<TPoco>(TPoco poco)
             where TPoco : IPoco<TPoco>
         {
-            if (poco.IsNew())
+            var metadata = poco.Metadata;
+
+            if (metadata.IsNew(poco))
             {
                 return await this.Insert(poco).ConfigureAwait(false);
             }
 
             await this.Update(poco).ConfigureAwait(false);
 
-            return poco.GetPrimaryKey();
+            return metadata.GetPrimaryKey(poco);
         }
 
         public Task Update<TPoco>(TPoco poco)
@@ -158,18 +150,37 @@
             return this.DataConnection.UpdateAsync(poco);
         }
 
-        /// <summary>
-        /// This is sync. I don't like it.
-        /// </summary>
-        public void BulkInsertSync<TPoco>(IEnumerable<TPoco> list)
-            where TPoco : IPoco<TPoco>
+        public async Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters) 
+            where T: IPoco<T>, new()
         {
-            this.DataConnection.BulkCopy(list);
-        }
+            // validate connection state
+            // validate sql/parameter integrity
 
-        private void OnInitCommand(object sender, InitSqlCommandEventArgs args)
-        {
-            this.sqlLog.Push(new KeyValuePair<string, DataParameter[]>(args.CommandText, args.Parameters));
+            var result = new List<T>();
+
+            var metadata = GetMetadata<T>();
+
+            using (var command = this.DbConnection.CreateCommand())
+            {
+                command.CommandText = sql;
+                command.Parameters.AddRange(parameters);
+
+                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var instance = new T();
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            string fieldName = reader.GetName(i);
+                            Type fieldType = reader.GetFieldType(i);
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

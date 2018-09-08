@@ -5,7 +5,6 @@ namespace TrackTv.Data
     using System.Linq;
 	using LinqToDB;
     using LinqToDB.Mapping;
-	using Newtonsoft.Json;
 
     {{#each model.tables}}
     /// <summary>
@@ -24,72 +23,104 @@ namespace TrackTv.Data
 		/// <para>Table name: '{{TableName}}'.</para>
 		{{#if IsPrimaryKey}}
 		/// <para>Primary key of table: '{{TableName}}'.</para>
+		/// <para>Primary key constraint name: '{{PrimaryKeyConstraintName}}'.</para>
 		{{/if}}		
-		{{#if ForeignKey}}		
+		{{#if IsForeignKey}}		
 		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		/// <para>Foreign key constraint name: '{{ForeignKeyConstraintName}}'.</para>
 		{{/if}}
 		/// <para>This column {{#if IsNullable}}is nullable{{/if}}{{#unless IsNullable}}is not nullable{{/unless}}.</para>
-		/// <para>PostgreSQL data type: '{{DataType}}'.</para>
-		/// <para>CLR type: '{{ClrType}}'.</para>
-		/// <para>linq2db data type: '{{Linq2dbDataType}}'.</para>
-        /// </summary>        
+		/// <para>PostgreSQL data type: '{{DbDataType}}'.</para>
+		/// <para>CLR type: '{{ClrTypeName}}'.</para>
+		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
+        /// </summary>
         {{#if IsPrimaryKey}}
 		[PrimaryKey, Identity]
 		{{/if}}
 		{{#unless IsPrimaryKey}}
 		{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}
 		{{/unless}}
-		[Column(Name = "{{ColumnName}}", DataType = {{Linq2dbDataType}})]
-        public {{ClrType}} {{PropertyName}} { get; set; }
-		{{#if IsPrimaryKey}}
+		[Column(Name = "{{ColumnName}}", DataType = {{Linq2dbDataTypeName}})]
+        public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
-		/// <summary>		
-		/// <para>Returns the primary key for the table ({{PropertyName}}).</para>
-        /// </summary>   
-		{{ClrType}} IPoco<{{../ClassName}}Poco>.GetPrimaryKey() => this.{{PropertyName}};
-
-		/// <summary>		
-		/// <para>Sets the primary key for the table ({{PropertyName}}).</para>
-        /// </summary> 
-		void IPoco<{{../ClassName}}Poco>.SetPrimaryKey({{ClrType}} value) => this.{{PropertyName}} = value;
-
-		/// <summary>		
-		/// <para>Returns true if the record hasn't been inserted to the database yet.</para>
-        /// </summary> 
-		bool IPoco<{{../ClassName}}Poco>.IsNew() => this.{{PropertyName}} == default;
-		{{/if}}
-        
         {{/each}}
-		/// <summary>
-        /// <para>Clones the current object and returns the clone.</para>
-        /// </summary>
-		{{ClassName}}Poco IPoco<{{ClassName}}Poco>.Clone()
-		{
-			return new {{ClassName}}Poco
-			{
-				{{#each columns}}
-				{{PropertyName}} = this.{{PropertyName}},
-				{{/each}}
-			};
-		}
+		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => DbService.{{ClassName}}PocoMetadata;
     }
     
     {{/each}}
     public partial class DbService
     {
-		private static Dictionary<string, TableMetadataModel> MetadataJson { get; } = JsonConvert.DeserializeObject<Dictionary<string, TableMetadataModel>>("{{{model.metadata}}}");		
-
-		private static readonly IReadOnlyDictionary<Type, TableMetadataModel> MetadataByPocoType = new Dictionary<Type, TableMetadataModel>
+		{{#each model.tables}}		
+        internal static readonly TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata = new TableMetadataModel<{{ClassName}}Poco>
 		{
-		{{#each model.tables}}
-			{typeof({{ClassName}}Poco), MetadataJson["{{TableSchema}}.{{TableName}}"]},
-        {{/each}}
+			ClassName = "{{ClassName}}",
+			PluralClassName = "{{PluralClassName}}",
+			PrimaryKeyColumnName = "{{PrimaryKeyColumnName}}",
+			PrimaryKeyPropertyName = "{{PrimaryKeyPropertyName}}",
+			TableName = "{{TableName}}",
+			TableSchema = "{{TableSchema}}",
+			GetPrimaryKey = (instance) => instance.{{PrimaryKeyPropertyName}},
+			SetPrimaryKey = (instance, val) => instance.{{PrimaryKeyPropertyName}} = val,
+			IsNew = (instance) => instance.{{PrimaryKeyPropertyName}} == default,
+			Clone = (instance) => new {{ClassName}}Poco
+			{
+				{{#each columns}}
+				{{PropertyName}} = instance.{{PropertyName}},
+				{{/each}}
+			},
+			Setters = new Dictionary<string, Action<{{ClassName}}Poco, object>>
+			{
+				{{#each columns}}
+				{"{{ColumnName}}", (instance, val) => instance.{{PropertyName}} = ({{ClrTypeName}})val },
+				{{/each}}
+			},
+			Getters = new Dictionary<string, Func<{{ClassName}}Poco, object>>
+			{
+				{{#each columns}}
+				{"{{ColumnName}}", (instance) => instance.{{PropertyName}} },
+				{{/each}}
+			},
+			Columns = new List<ColumnMetadataModel<{{ClassName}}Poco>>
+			{
+				{{#each columns}}
+				new ColumnMetadataModel<{{../ClassName}}Poco>
+				{						
+					ClrTypeName = "{{ClrTypeName}}",
+					ClrType = typeof({{ClrTypeName}}),
+					ColumnComment = "{{ColumnComment}}" == string.Empty ? null : "{{ColumnComment}}",
+					Comments = "{{ColumnComment}}".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+					ColumnName = "{{ColumnName}}",
+					DbDataType = "{{DbDataType}}",
+					IsPrimaryKey = bool.Parse("{{IsPrimaryKey}}"),						
+					PrimaryKeyConstraintName = "{{PrimaryKeyConstraintName}}" == string.Empty ? null : "{{PrimaryKeyConstraintName}}",
+					IsForeignKey = bool.Parse("{{IsForeignKey}}"),
+					ForeignKeyConstraintName = "{{ForeignKeyConstraintName}}" == string.Empty ? null : "{{ForeignKeyConstraintName}}",						
+					ForeignKeyReferenceColumnName = "{{ForeignKeyReferenceColumnName}}" == string.Empty ? null : "{{ForeignKeyReferenceColumnName}}",
+					ForeignKeyReferenceSchemaName = "{{ForeignKeyReferenceSchemaName}}" == string.Empty ? null : "{{ForeignKeyReferenceSchemaName}}",
+					ForeignKeyReferenceTableName = "{{ForeignKeyReferenceTableName}}" == string.Empty ? null : "{{ForeignKeyReferenceTableName}}",												
+					IsNullable = bool.Parse("{{IsNullable}}"),
+					Linq2dbDataTypeName = "{{Linq2dbDataTypeName}}",
+					Linq2dbDataType = {{Linq2dbDataTypeName}},
+					PropertyName = "{{PropertyName}}",
+					TableName = "{{TableName}}",
+					TableSchema = "{{TableSchema}}",
+				},
+				{{/each}}
+			}
 		};
+		
+        {{/each}}				
+		private static readonly IReadOnlyDictionary<Type, object> MetadataByPocoType = new Dictionary<Type, object>
+        {
+			{{#each model.tables}}
+            {typeof({{ClassName}}Poco), {{ClassName}}PocoMetadata},
+			{{/each}}
+        };		
 
-		public TableMetadataModel GetMetadata<T>()
+		public static TableMetadataModel<T> GetMetadata<T>()
             where T : IPoco<T>
         {
-			return MetadataByPocoType[typeof(T)];
+			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
         }
 
         {{#each model.tables}}
