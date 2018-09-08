@@ -33,6 +33,7 @@ namespace TrackTv.Data
 		{{/if}}
 		/// <para>This column {{#if IsNullable}}is nullable{{/if}}{{#unless IsNullable}}is not nullable{{/unless}}.</para>
 		/// <para>PostgreSQL data type: '{{DbDataType}}'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.{{NpgsDataTypeName}}'.</para>
 		/// <para>CLR type: '{{ClrTypeName}}'.</para>
 		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
         /// </summary>

@@ -22,6 +22,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'actors_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -34,6 +35,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -46,6 +48,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -58,6 +61,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -70,6 +74,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -92,6 +97,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_change_types'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -106,6 +112,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'api_change_types_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -128,6 +135,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -140,6 +148,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -152,6 +161,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -166,6 +176,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'api_changes_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -178,6 +189,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -190,6 +202,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -202,6 +215,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -216,6 +230,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_api_changes_api_change_type'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -240,6 +255,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_api_responses_episodes_thetvdbid'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -254,6 +270,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -266,6 +283,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
         /// </summary>
@@ -280,6 +298,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'api_responses_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -292,6 +311,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -316,6 +336,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'episodes_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -328,6 +349,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
         /// </summary>
@@ -340,6 +362,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -352,6 +375,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -364,6 +388,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -376,6 +401,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -388,6 +414,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -400,6 +427,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -414,6 +442,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_episodes_show_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -426,6 +455,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -450,6 +480,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'genres_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -462,6 +493,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'genres'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -486,6 +518,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'networks_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -498,6 +531,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'networks'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -522,6 +556,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'profiles_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -534,6 +569,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'profiles'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -558,6 +594,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'roles_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -572,6 +609,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_roles_actor_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -584,6 +622,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'roles'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -598,6 +637,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_roles_show_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -622,6 +662,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'settings_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -634,6 +675,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -646,6 +688,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -670,6 +713,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'shows_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -682,6 +726,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -694,6 +739,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -706,6 +752,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -718,6 +765,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -730,6 +778,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
         /// </summary>
@@ -744,6 +793,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_shows_network_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -756,6 +806,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -768,6 +819,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
         /// </summary>
@@ -780,6 +832,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -792,6 +845,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -804,6 +858,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -828,6 +883,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -842,6 +898,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_shows_genres_show_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -856,6 +913,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -880,6 +938,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -894,6 +953,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_subscriptions_profile_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -908,6 +968,7 @@ namespace TrackTv.Data
 		/// <para>Foreign key constraint name: 'fk_subscriptions_show_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -932,6 +993,7 @@ namespace TrackTv.Data
 		/// <para>Primary key constraint name: 'users_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>
@@ -944,6 +1006,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'boolean'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Boolean'.</para>
 		/// <para>CLR type: 'bool'.</para>
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
         /// </summary>
@@ -956,6 +1019,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -968,6 +1032,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
         /// </summary>
@@ -980,6 +1045,7 @@ namespace TrackTv.Data
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
         /// </summary>

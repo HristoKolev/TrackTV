@@ -159,9 +159,8 @@
             {
                 await this.DbConnection.OpenAsync().ConfigureAwait(false);
             }
-
-            // validate connection state
-            // validate sql/parameter integrity
+            
+            //TODO: validate sql/parameter integrity
 
             var result = new List<T>();
 
@@ -177,31 +176,30 @@
                     // cached field count - I know it pointless, but I feel better by having it cached here.
                     int fieldCount = reader.FieldCount;
 
-                    // used to flag the first iteration of the ReadAsync loop, so that optimizations can be made.
-                    bool firstRow = true;
-
-                    // cached setters for the result type - they get cached on the first row.
+                    // cached setters for the result type
                     var setters = new Action<T, object>[fieldCount];
+
+                    var metadata = GetMetadata<T>();
+
+                    for (int i = 0; i < fieldCount; i++)
+                    {
+                        setters[i] = metadata.Setters[reader.GetName(i)];
+                    }
 
                     while (await reader.ReadAsync().ConfigureAwait(false))
                     {
-                        if (firstRow)
-                        {
-                            var metadata = GetMetadata<T>();
-
-                            for (int i = 0; i < fieldCount; i++)
-                            {
-                                setters[i] = metadata.Setters[reader.GetName(i)];
-                            }
-
-                            firstRow = false;
-                        }
-
                         var instance = new T();
 
                         for (int i = 0; i < fieldCount; i++)
                         {
-                            setters[i](instance, reader.GetValue(i));
+                            if (reader.IsDBNull(i))
+                            {
+                                setters[i](instance, null);
+                            }
+                            else
+                            {
+                                setters[i](instance, reader.GetValue(i));
+                            }
                         }
 
                         result.Add(instance);
