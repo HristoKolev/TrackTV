@@ -3322,6 +3322,108 @@ namespace TrackTv.Data
 			}
 		};
 		
+		static DbService()
+		{
+			ActorPocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ActorPoco>>();
+
+            foreach (var column in ActorPocoMetadata.Columns)
+            {
+                ActorPocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			ApiChangeTypePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ApiChangeTypePoco>>();
+
+            foreach (var column in ApiChangeTypePocoMetadata.Columns)
+            {
+                ApiChangeTypePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			ApiChangePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ApiChangePoco>>();
+
+            foreach (var column in ApiChangePocoMetadata.Columns)
+            {
+                ApiChangePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			ApiResponsePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ApiResponsePoco>>();
+
+            foreach (var column in ApiResponsePocoMetadata.Columns)
+            {
+                ApiResponsePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			EpisodePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<EpisodePoco>>();
+
+            foreach (var column in EpisodePocoMetadata.Columns)
+            {
+                EpisodePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			GenrePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<GenrePoco>>();
+
+            foreach (var column in GenrePocoMetadata.Columns)
+            {
+                GenrePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			NetworkPocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<NetworkPoco>>();
+
+            foreach (var column in NetworkPocoMetadata.Columns)
+            {
+                NetworkPocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			ProfilePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ProfilePoco>>();
+
+            foreach (var column in ProfilePocoMetadata.Columns)
+            {
+                ProfilePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			RolePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<RolePoco>>();
+
+            foreach (var column in RolePocoMetadata.Columns)
+            {
+                RolePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			SettingPocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<SettingPoco>>();
+
+            foreach (var column in SettingPocoMetadata.Columns)
+            {
+                SettingPocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			ShowPocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ShowPoco>>();
+
+            foreach (var column in ShowPocoMetadata.Columns)
+            {
+                ShowPocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			ShowGenrePocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<ShowGenrePoco>>();
+
+            foreach (var column in ShowGenrePocoMetadata.Columns)
+            {
+                ShowGenrePocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			SubscriptionPocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<SubscriptionPoco>>();
+
+            foreach (var column in SubscriptionPocoMetadata.Columns)
+            {
+                SubscriptionPocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			UserPocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<UserPoco>>();
+
+            foreach (var column in UserPocoMetadata.Columns)
+            {
+                UserPocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+		}
+
 		private static readonly IReadOnlyDictionary<Type, object> MetadataByPocoType = new Dictionary<Type, object>
         {
             {typeof(ActorPoco), ActorPocoMetadata},

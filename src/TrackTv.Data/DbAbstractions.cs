@@ -49,6 +49,13 @@
         Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
             where T : IPoco<T>, new();
 
+        Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
+            where T : class, IPoco<T>, new();
+
+        Task<T> ExecuteScalar<T>(string sql, params NpgsqlParameter[] parameters);
+
+        Task<int> ExecuteNonQuery(string sql, params NpgsqlParameter[] parameters);
+
         NpgsqlParameter<T> Parameter<T>(string parameterName, T value);
 
         NpgsqlParameter<T> Parameter<T>(string parameterName, T value, NpgsqlDbType dbType);
@@ -73,6 +80,8 @@
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
+
+        public Dictionary<string, ColumnMetadataModel<T>> ColumnsByName { get; set; }
 
         /// <summary>		
         /// <para>Returns true if the record hasn't been inserted to the database yet.</para>

@@ -53,7 +53,7 @@ namespace TrackTv.Data
     {{/each}}
     public partial class DbService
     {
-		{{#each model.tables}}		
+		{{#each model.tables}}
         internal static readonly TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata = new TableMetadataModel<{{ClassName}}Poco>
 		{
 			ClassName = "{{ClassName}}",
@@ -116,7 +116,20 @@ namespace TrackTv.Data
 			}
 		};
 		
-        {{/each}}				
+        {{/each}}
+		static DbService()
+		{
+			{{#each model.tables}}
+			{{ClassName}}PocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<{{ClassName}}Poco>>();
+
+            foreach (var column in {{ClassName}}PocoMetadata.Columns)
+            {
+                {{ClassName}}PocoMetadata.ColumnsByName[column.ColumnName] = column;
+            }
+
+			{{/each}}
+		}
+
 		private static readonly IReadOnlyDictionary<Type, object> MetadataByPocoType = new Dictionary<Type, object>
         {
 			{{#each model.tables}}
