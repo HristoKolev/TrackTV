@@ -7,6 +7,7 @@ namespace TrackTv.Data
     using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
+	using Npgsql;
 
     /// <summary>
     /// <para>Table name: 'actors'.</para>
@@ -1093,6 +1094,47 @@ namespace TrackTv.Data
 				{"last_updated", (instance) => instance.LastUpdated },
 				{"thetvdbid", (instance) => instance.Thetvdbid },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.ActorImage },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.ActorName },
+					new NpgsqlParameter<DateTime?>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ActorImage != myInstance.ActorImage)
+				{
+					changedColumnNames.Add("actor_image");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ActorImage });
+				}
+
+				if(dbInstance.ActorName != myInstance.ActorName)
+				{
+					changedColumnNames.Add("actor_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ActorName });
+				}
+
+				if(dbInstance.LastUpdated != myInstance.LastUpdated)
+				{
+					changedColumnNames.Add("last_updated");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated });
+				}
+
+				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
+				{
+					changedColumnNames.Add("thetvdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.Thetvdbid });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<ActorPoco>>
 			{
 				new ColumnMetadataModel<ActorPoco>
@@ -1254,6 +1296,26 @@ namespace TrackTv.Data
 				{"api_change_type_name", (instance) => instance.ApiChangeTypeName },
 				{"api_change_type_id", (instance) => instance.ApiChangeTypeID },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.ApiChangeTypeName },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ApiChangeTypeName != myInstance.ApiChangeTypeName)
+				{
+					changedColumnNames.Add("api_change_type_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ApiChangeTypeName });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<ApiChangeTypePoco>>
 			{
 				new ColumnMetadataModel<ApiChangeTypePoco>
@@ -1354,6 +1416,68 @@ namespace TrackTv.Data
 				{"api_change_thetvdb_last_updated", (instance) => instance.ApiChangeThetvdbLastUpdated },
 				{"api_change_attached_series_id", (instance) => instance.ApiChangeAttachedSeriesID },
 				{"api_change_type", (instance) => instance.ApiChangeType },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeThetvdbid },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeFailCount },
+					new NpgsqlParameter<DateTime>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeCreatedDate },
+					new NpgsqlParameter<DateTime?>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime },
+					new NpgsqlParameter<DateTime>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeThetvdbLastUpdated },
+					new NpgsqlParameter<int?>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeType },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ApiChangeThetvdbid != myInstance.ApiChangeThetvdbid)
+				{
+					changedColumnNames.Add("api_change_thetvdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeThetvdbid });
+				}
+
+				if(dbInstance.ApiChangeFailCount != myInstance.ApiChangeFailCount)
+				{
+					changedColumnNames.Add("api_change_fail_count");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeFailCount });
+				}
+
+				if(dbInstance.ApiChangeCreatedDate != myInstance.ApiChangeCreatedDate)
+				{
+					changedColumnNames.Add("api_change_created_date");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeCreatedDate });
+				}
+
+				if(dbInstance.ApiChangeLastFailedTime != myInstance.ApiChangeLastFailedTime)
+				{
+					changedColumnNames.Add("api_change_last_failed_time");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeLastFailedTime });
+				}
+
+				if(dbInstance.ApiChangeThetvdbLastUpdated != myInstance.ApiChangeThetvdbLastUpdated)
+				{
+					changedColumnNames.Add("api_change_thetvdb_last_updated");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeThetvdbLastUpdated });
+				}
+
+				if(dbInstance.ApiChangeAttachedSeriesID != myInstance.ApiChangeAttachedSeriesID)
+				{
+					changedColumnNames.Add("api_change_attached_series_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeAttachedSeriesID });
+				}
+
+				if(dbInstance.ApiChangeType != myInstance.ApiChangeType)
+				{
+					changedColumnNames.Add("api_change_type");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeType });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<ApiChangePoco>>
 			{
@@ -1603,6 +1727,47 @@ namespace TrackTv.Data
 				{"api_response_id", (instance) => instance.ApiResponseID },
 				{"api_response_last_updated", (instance) => instance.ApiResponseLastUpdated },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<int?>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid },
+					new NpgsqlParameter<int?>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Jsonb) { TypedValue = instance.ApiResponseBody },
+					new NpgsqlParameter<DateTime>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiResponseLastUpdated },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ApiResponseEpisodeThetvdbid != myInstance.ApiResponseEpisodeThetvdbid)
+				{
+					changedColumnNames.Add("api_response_episode_thetvdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseEpisodeThetvdbid });
+				}
+
+				if(dbInstance.ApiResponseShowThetvdbid != myInstance.ApiResponseShowThetvdbid)
+				{
+					changedColumnNames.Add("api_response_show_thetvdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseShowThetvdbid });
+				}
+
+				if(dbInstance.ApiResponseBody != myInstance.ApiResponseBody)
+				{
+					changedColumnNames.Add("api_response_body");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb) { TypedValue = myInstance.ApiResponseBody });
+				}
+
+				if(dbInstance.ApiResponseLastUpdated != myInstance.ApiResponseLastUpdated)
+				{
+					changedColumnNames.Add("api_response_last_updated");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiResponseLastUpdated });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<ApiResponsePoco>>
 			{
 				new ColumnMetadataModel<ApiResponsePoco>
@@ -1787,6 +1952,82 @@ namespace TrackTv.Data
 				{"season_number", (instance) => instance.SeasonNumber },
 				{"show_id", (instance) => instance.ShowID },
 				{"thetvdbid", (instance) => instance.Thetvdbid },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Text) { TypedValue = instance.EpisodeDescription },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.EpisodeNumber },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.EpisodeTitle },
+					new NpgsqlParameter<DateTime?>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid },
+					new NpgsqlParameter<DateTime>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.SeasonNumber },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.EpisodeDescription != myInstance.EpisodeDescription)
+				{
+					changedColumnNames.Add("episode_description");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = myInstance.EpisodeDescription });
+				}
+
+				if(dbInstance.EpisodeNumber != myInstance.EpisodeNumber)
+				{
+					changedColumnNames.Add("episode_number");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.EpisodeNumber });
+				}
+
+				if(dbInstance.EpisodeTitle != myInstance.EpisodeTitle)
+				{
+					changedColumnNames.Add("episode_title");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.EpisodeTitle });
+				}
+
+				if(dbInstance.FirstAired != myInstance.FirstAired)
+				{
+					changedColumnNames.Add("first_aired");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired });
+				}
+
+				if(dbInstance.Imdbid != myInstance.Imdbid)
+				{
+					changedColumnNames.Add("imdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Imdbid });
+				}
+
+				if(dbInstance.LastUpdated != myInstance.LastUpdated)
+				{
+					changedColumnNames.Add("last_updated");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated });
+				}
+
+				if(dbInstance.SeasonNumber != myInstance.SeasonNumber)
+				{
+					changedColumnNames.Add("season_number");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.SeasonNumber });
+				}
+
+				if(dbInstance.ShowID != myInstance.ShowID)
+				{
+					changedColumnNames.Add("show_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+				}
+
+				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
+				{
+					changedColumnNames.Add("thetvdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.Thetvdbid });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<EpisodePoco>>
 			{
@@ -2079,6 +2320,26 @@ namespace TrackTv.Data
 				{"genre_id", (instance) => instance.GenreID },
 				{"genre_name", (instance) => instance.GenreName },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.GenreName },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.GenreName != myInstance.GenreName)
+				{
+					changedColumnNames.Add("genre_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.GenreName });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<GenrePoco>>
 			{
 				new ColumnMetadataModel<GenrePoco>
@@ -2162,6 +2423,26 @@ namespace TrackTv.Data
 				{"network_id", (instance) => instance.NetworkID },
 				{"network_name", (instance) => instance.NetworkName },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.NetworkName },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.NetworkName != myInstance.NetworkName)
+				{
+					changedColumnNames.Add("network_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.NetworkName });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<NetworkPoco>>
 			{
 				new ColumnMetadataModel<NetworkPoco>
@@ -2244,6 +2525,26 @@ namespace TrackTv.Data
 			{
 				{"profile_id", (instance) => instance.ProfileID },
 				{"profile_name", (instance) => instance.ProfileName },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.ProfileName },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ProfileName != myInstance.ProfileName)
+				{
+					changedColumnNames.Add("profile_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ProfileName });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<ProfilePoco>>
 			{
@@ -2333,6 +2634,40 @@ namespace TrackTv.Data
 				{"actor_id", (instance) => instance.ActorID },
 				{"role_name", (instance) => instance.RoleName },
 				{"show_id", (instance) => instance.ShowID },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ActorID },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.RoleName },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ActorID != myInstance.ActorID)
+				{
+					changedColumnNames.Add("actor_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ActorID });
+				}
+
+				if(dbInstance.RoleName != myInstance.RoleName)
+				{
+					changedColumnNames.Add("role_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.RoleName });
+				}
+
+				if(dbInstance.ShowID != myInstance.ShowID)
+				{
+					changedColumnNames.Add("show_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<RolePoco>>
 			{
@@ -2472,6 +2807,33 @@ namespace TrackTv.Data
 				{"setting_value", (instance) => instance.SettingValue },
 				{"setting_name", (instance) => instance.SettingName },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.SettingValue },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.SettingName },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.SettingValue != myInstance.SettingValue)
+				{
+					changedColumnNames.Add("setting_value");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.SettingValue });
+				}
+
+				if(dbInstance.SettingName != myInstance.SettingName)
+				{
+					changedColumnNames.Add("setting_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.SettingName });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<SettingPoco>>
 			{
 				new ColumnMetadataModel<SettingPoco>
@@ -2610,6 +2972,96 @@ namespace TrackTv.Data
 				{"show_name", (instance) => instance.ShowName },
 				{"show_status", (instance) => instance.ShowStatus },
 				{"thetvdbid", (instance) => instance.Thetvdbid },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<int?>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.AirDay },
+					new NpgsqlParameter<DateTime?>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime },
+					new NpgsqlParameter<DateTime?>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid },
+					new NpgsqlParameter<DateTime>("@p" + index++, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.NetworkID },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.ShowBanner },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Text) { TypedValue = instance.ShowDescription },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.ShowName },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ShowStatus },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.AirDay != myInstance.AirDay)
+				{
+					changedColumnNames.Add("air_day");
+					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.AirDay });
+				}
+
+				if(dbInstance.AirTime != myInstance.AirTime)
+				{
+					changedColumnNames.Add("air_time");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.AirTime });
+				}
+
+				if(dbInstance.FirstAired != myInstance.FirstAired)
+				{
+					changedColumnNames.Add("first_aired");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired });
+				}
+
+				if(dbInstance.Imdbid != myInstance.Imdbid)
+				{
+					changedColumnNames.Add("imdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Imdbid });
+				}
+
+				if(dbInstance.LastUpdated != myInstance.LastUpdated)
+				{
+					changedColumnNames.Add("last_updated");
+					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated });
+				}
+
+				if(dbInstance.NetworkID != myInstance.NetworkID)
+				{
+					changedColumnNames.Add("network_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.NetworkID });
+				}
+
+				if(dbInstance.ShowBanner != myInstance.ShowBanner)
+				{
+					changedColumnNames.Add("show_banner");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ShowBanner });
+				}
+
+				if(dbInstance.ShowDescription != myInstance.ShowDescription)
+				{
+					changedColumnNames.Add("show_description");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = myInstance.ShowDescription });
+				}
+
+				if(dbInstance.ShowName != myInstance.ShowName)
+				{
+					changedColumnNames.Add("show_name");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ShowName });
+				}
+
+				if(dbInstance.ShowStatus != myInstance.ShowStatus)
+				{
+					changedColumnNames.Add("show_status");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowStatus });
+				}
+
+				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
+				{
+					changedColumnNames.Add("thetvdbid");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.Thetvdbid });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<ShowPoco>>
 			{
@@ -2957,6 +3409,33 @@ namespace TrackTv.Data
 				{"show_id", (instance) => instance.ShowID },
 				{"genre_id", (instance) => instance.GenreID },
 			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.GenreID },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ShowID != myInstance.ShowID)
+				{
+					changedColumnNames.Add("show_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+				}
+
+				if(dbInstance.GenreID != myInstance.GenreID)
+				{
+					changedColumnNames.Add("genre_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.GenreID });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<ShowGenrePoco>>
 			{
 				new ColumnMetadataModel<ShowGenrePoco>
@@ -3068,6 +3547,33 @@ namespace TrackTv.Data
 				{"subscription_id", (instance) => instance.SubscriptionID },
 				{"profile_id", (instance) => instance.ProfileID },
 				{"show_id", (instance) => instance.ShowID },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.ProfileID != myInstance.ProfileID)
+				{
+					changedColumnNames.Add("profile_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ProfileID });
+				}
+
+				if(dbInstance.ShowID != myInstance.ShowID)
+				{
+					changedColumnNames.Add("show_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<SubscriptionPoco>>
 			{
@@ -3186,6 +3692,47 @@ namespace TrackTv.Data
 				{"username", (instance) => instance.Username },
 				{"password", (instance) => instance.Password },
 				{"profile_id", (instance) => instance.ProfileID },
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter<bool>("@p" + index++, NpgsqlDbType.Boolean) { TypedValue = instance.IsAdmin },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.Username },
+					new NpgsqlParameter<string>("@p" + index++, NpgsqlDbType.Varchar) { TypedValue = instance.Password },
+					new NpgsqlParameter<int>("@p" + index++, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID },
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.IsAdmin != myInstance.IsAdmin)
+				{
+					changedColumnNames.Add("is_admin");
+					changedColumnParameters.Add(new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean) { TypedValue = myInstance.IsAdmin });
+				}
+
+				if(dbInstance.Username != myInstance.Username)
+				{
+					changedColumnNames.Add("username");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Username });
+				}
+
+				if(dbInstance.Password != myInstance.Password)
+				{
+					changedColumnNames.Add("password");
+					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Password });
+				}
+
+				if(dbInstance.ProfileID != myInstance.ProfileID)
+				{
+					changedColumnNames.Add("profile_id");
+					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ProfileID });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<UserPoco>>
 			{

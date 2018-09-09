@@ -34,6 +34,9 @@
             { typeof(short?), NpgsqlDbType.Smallint },
             { typeof(decimal?), NpgsqlDbType.Numeric },
             { typeof(DateTime?), NpgsqlDbType.Timestamp },
+            { typeof(string[]), NpgsqlDbType.Array | NpgsqlDbType.Text },
+            { typeof(int[]), NpgsqlDbType.Array | NpgsqlDbType.Integer },
+            { typeof(DateTime[]), NpgsqlDbType.Array | NpgsqlDbType.Timestamp },
         };
 
         public DbService(NpgsqlConnection dbConnection, IDataProvider dataProvider)

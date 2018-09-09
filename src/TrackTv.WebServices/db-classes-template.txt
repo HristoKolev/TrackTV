@@ -7,6 +7,7 @@ namespace TrackTv.Data
     using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
+	using Npgsql;
 
     {{#each model.tables}}
     /// <summary>
@@ -82,6 +83,34 @@ namespace TrackTv.Data
 				{{#each columns}}
 				{"{{ColumnName}}", (instance) => instance.{{PropertyName}} },
 				{{/each}}
+			},
+			GenerateParameters = (instance, index) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					{{#each columns}}
+					{{#unless IsPrimaryKey}}
+					new NpgsqlParameter<{{ClrTypeName}}>("@p" + index++, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} },
+					{{/unless}}
+					{{/each}}
+				};
+			},
+			GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				{{#each columns}}
+				{{#unless IsPrimaryKey}}
+				if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
+				{
+					changedColumnNames.Add("{{ColumnName}}");
+					changedColumnParameters.Add(new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = myInstance.{{PropertyName}} });
+				}
+
+				{{/unless}}
+				{{/each}}
+				return (changedColumnNames, changedColumnParameters);
 			},
 			Columns = new List<ColumnMetadataModel<{{ClassName}}Poco>>
 			{
