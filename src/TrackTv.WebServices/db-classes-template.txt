@@ -176,7 +176,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>		
 		/// </summary>
-        public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.DataConnection.GetTable<{{ClassName}}Poco>();
+        public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.LinqToDbConnection.GetTable<{{ClassName}}Poco>();
 		
         {{/each}}
     }

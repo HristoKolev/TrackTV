@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     using LinqToDB.Data;
-    using LinqToDB.DataProvider;
+    using LinqToDB.DataProvider.PostgreSQL;
 
     using Npgsql;
 
@@ -14,7 +14,10 @@
 
     public partial class DbService : IDbService
     {
-        private readonly Dictionary<Type, NpgsqlDbType> defaultNpgsqlDbTypeMap = new Dictionary<Type, NpgsqlDbType>
+        /// <summary>
+        /// The default parameter type map that is used when creating parameters without specifying the NpgsqlDbType explicitly.
+        /// </summary>
+        private static readonly Dictionary<Type, NpgsqlDbType> DefaultNpgsqlDbTypeMap = new Dictionary<Type, NpgsqlDbType>
         {
             { typeof(int), NpgsqlDbType.Integer },
             { typeof(long), NpgsqlDbType.Bigint },
@@ -34,25 +37,36 @@
             { typeof(short?), NpgsqlDbType.Smallint },
             { typeof(decimal?), NpgsqlDbType.Numeric },
             { typeof(DateTime?), NpgsqlDbType.Timestamp },
-            { typeof(string[]), NpgsqlDbType.Array | NpgsqlDbType.Text },
-            { typeof(int[]), NpgsqlDbType.Array | NpgsqlDbType.Integer },
+            { typeof(string[]), NpgsqlDbType.Array   | NpgsqlDbType.Text },
+            { typeof(int[]), NpgsqlDbType.Array      | NpgsqlDbType.Integer },
             { typeof(DateTime[]), NpgsqlDbType.Array | NpgsqlDbType.Timestamp },
         };
 
-        public DbService(NpgsqlConnection dbConnection, IDataProvider dataProvider)
+        private readonly NpgsqlConnection dbConnection;
+
+        private DataConnection linqToDbConnection;
+
+        public DbService(NpgsqlConnection dbConnection)
         {
-            this.DbConnection = dbConnection;
-            this.DataConnection = new DataConnection(dataProvider, dbConnection, true);
+            this.dbConnection = dbConnection;
         }
 
-        private DataConnection DataConnection { get; }
+        private DataConnection LinqToDbConnection
+        {
+            get
+            {
+                if (this.linqToDbConnection == null)
+                {
+                    this.linqToDbConnection = new DataConnection(new PostgreSQLDataProvider(), this.dbConnection, false);
+                }
 
-        private NpgsqlConnection DbConnection { get; set; }
+                return this.linqToDbConnection;
+            }
+        }
 
         public void Dispose()
         {
-            this.DbConnection = null;
-            this.DataConnection?.Dispose();
+            this.LinqToDbConnection?.Dispose();
         }
 
         /// <summary>
@@ -60,11 +74,19 @@
         /// </summary>
         public async Task<int> ExecuteNonQuery(string sql, params NpgsqlParameter[] parameters)
         {
-            await this.VerifyConnectionState();
+            if (sql == null)
+            {
+                throw new ArgumentNullException(nameof(sql));
+            }
 
-            ValidateParameters(parameters);
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using (var command = this.DbConnection.CreateCommand())
+            await this.VerifyConnectionState().ConfigureAwait(false);
+
+            using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
@@ -82,11 +104,19 @@
         /// </summary>
         public async Task<T> ExecuteScalar<T>(string sql, params NpgsqlParameter[] parameters)
         {
-            await this.VerifyConnectionState();
+            if (sql == null)
+            {
+                throw new ArgumentNullException(nameof(sql));
+            }
 
-            ValidateParameters(parameters);
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using (var command = this.DbConnection.CreateCommand())
+            await this.VerifyConnectionState().ConfigureAwait(false);
+
+            using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
@@ -147,14 +177,14 @@
 
             var type = typeof(T);
 
-            if (this.defaultNpgsqlDbTypeMap.ContainsKey(type))
+            if (DefaultNpgsqlDbTypeMap.ContainsKey(type))
             {
-                dbType = this.defaultNpgsqlDbTypeMap[type];
+                dbType = DefaultNpgsqlDbTypeMap[type];
             }
             else
             {
-                throw new ApplicationException($"Parameter type '{type.Name}' is not mapped to any 'NpgsqlDbType'. "
-                                               + $"Please specify a 'NpgsqlDbType' explicitly. ParameterName: {parameterName}");
+                throw new ApplicationException(
+                    "Parameter type is not mapped to any \'NpgsqlDbType\'. Please specify a \'NpgsqlDbType\' explicitly.");
             }
 
             return this.Parameter(parameterName, value, dbType);
@@ -177,13 +207,21 @@
         public async Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
             where T : IPoco<T>, new()
         {
-            await this.VerifyConnectionState();
+            if (sql == null)
+            {
+                throw new ArgumentNullException(nameof(sql));
+            }
 
-            ValidateParameters(parameters);
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            await this.VerifyConnectionState().ConfigureAwait(false);
 
             var result = new List<T>();
 
-            using (var command = this.DbConnection.CreateCommand())
+            using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
@@ -211,6 +249,7 @@
 
                         for (int i = 0; i < fieldCount; i++)
                         {
+                            // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                             if (reader.IsDBNull(i))
                             {
                                 setters[i](instance, null);
@@ -237,11 +276,19 @@
         public async Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
             where T : class, IPoco<T>, new()
         {
-            await this.VerifyConnectionState();
+            if (sql == null)
+            {
+                throw new ArgumentNullException(nameof(sql));
+            }
 
-            ValidateParameters(parameters);
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using (var command = this.DbConnection.CreateCommand())
+            await this.VerifyConnectionState().ConfigureAwait(false);
+
+            using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
@@ -263,6 +310,7 @@
                     {
                         var setter = instance.Metadata.Setters[reader.GetName(i)];
 
+                        // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                         if (reader.IsDBNull(i))
                         {
                             setter(instance, null);
@@ -285,19 +333,17 @@
             }
         }
 
-        private static void ValidateParameters(NpgsqlParameter[] parameters)
+        /// <summary>
+        /// Opens the connection if it's closed.
+        /// </summary>
+        private Task VerifyConnectionState()
         {
-            //TODO: validate sql/parameter integrity
-        }
-
-        private async Task VerifyConnectionState()
-        {
-            //TODO: propper edge case handling on connection opening.
-
-            if (this.DbConnection.State == ConnectionState.Closed)
+            if (this.dbConnection.State == ConnectionState.Closed)
             {
-                await this.DbConnection.OpenAsync().ConfigureAwait(false);
+                return this.dbConnection.OpenAsync();
             }
+
+            return Task.CompletedTask;
         }
     }
 }

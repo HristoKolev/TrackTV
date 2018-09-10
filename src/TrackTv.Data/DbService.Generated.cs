@@ -3998,72 +3998,72 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'actors'.</para>		
 		/// </summary>
-        public IQueryable<ActorPoco> Actors => this.DataConnection.GetTable<ActorPoco>();
+        public IQueryable<ActorPoco> Actors => this.LinqToDbConnection.GetTable<ActorPoco>();
 		
 		/// <summary>
 		/// <para>Database table 'api_change_types'.</para>		
 		/// </summary>
-        public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.DataConnection.GetTable<ApiChangeTypePoco>();
+        public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.LinqToDbConnection.GetTable<ApiChangeTypePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>		
 		/// </summary>
-        public IQueryable<ApiChangePoco> ApiChanges => this.DataConnection.GetTable<ApiChangePoco>();
+        public IQueryable<ApiChangePoco> ApiChanges => this.LinqToDbConnection.GetTable<ApiChangePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>		
 		/// </summary>
-        public IQueryable<ApiResponsePoco> ApiResponses => this.DataConnection.GetTable<ApiResponsePoco>();
+        public IQueryable<ApiResponsePoco> ApiResponses => this.LinqToDbConnection.GetTable<ApiResponsePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>		
 		/// </summary>
-        public IQueryable<EpisodePoco> Episodes => this.DataConnection.GetTable<EpisodePoco>();
+        public IQueryable<EpisodePoco> Episodes => this.LinqToDbConnection.GetTable<EpisodePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'genres'.</para>		
 		/// </summary>
-        public IQueryable<GenrePoco> Genres => this.DataConnection.GetTable<GenrePoco>();
+        public IQueryable<GenrePoco> Genres => this.LinqToDbConnection.GetTable<GenrePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'networks'.</para>		
 		/// </summary>
-        public IQueryable<NetworkPoco> Networks => this.DataConnection.GetTable<NetworkPoco>();
+        public IQueryable<NetworkPoco> Networks => this.LinqToDbConnection.GetTable<NetworkPoco>();
 		
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>		
 		/// </summary>
-        public IQueryable<ProfilePoco> Profiles => this.DataConnection.GetTable<ProfilePoco>();
+        public IQueryable<ProfilePoco> Profiles => this.LinqToDbConnection.GetTable<ProfilePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'roles'.</para>		
 		/// </summary>
-        public IQueryable<RolePoco> Roles => this.DataConnection.GetTable<RolePoco>();
+        public IQueryable<RolePoco> Roles => this.LinqToDbConnection.GetTable<RolePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'settings'.</para>		
 		/// </summary>
-        public IQueryable<SettingPoco> Settings => this.DataConnection.GetTable<SettingPoco>();
+        public IQueryable<SettingPoco> Settings => this.LinqToDbConnection.GetTable<SettingPoco>();
 		
 		/// <summary>
 		/// <para>Database table 'shows'.</para>		
 		/// </summary>
-        public IQueryable<ShowPoco> Shows => this.DataConnection.GetTable<ShowPoco>();
+        public IQueryable<ShowPoco> Shows => this.LinqToDbConnection.GetTable<ShowPoco>();
 		
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>		
 		/// </summary>
-        public IQueryable<ShowGenrePoco> ShowsGenres => this.DataConnection.GetTable<ShowGenrePoco>();
+        public IQueryable<ShowGenrePoco> ShowsGenres => this.LinqToDbConnection.GetTable<ShowGenrePoco>();
 		
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>		
 		/// </summary>
-        public IQueryable<SubscriptionPoco> Subscriptions => this.DataConnection.GetTable<SubscriptionPoco>();
+        public IQueryable<SubscriptionPoco> Subscriptions => this.LinqToDbConnection.GetTable<SubscriptionPoco>();
 		
 		/// <summary>
 		/// <para>Database table 'users'.</para>		
 		/// </summary>
-        public IQueryable<UserPoco> Users => this.DataConnection.GetTable<UserPoco>();
+        public IQueryable<UserPoco> Users => this.LinqToDbConnection.GetTable<UserPoco>();
 		
     }
 

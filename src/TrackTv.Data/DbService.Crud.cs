@@ -9,6 +9,9 @@
 
     public partial class DbService
     {
+        /// <summary>
+        /// Inserts several records in single query.
+        /// </summary>
         public Task<int> BulkInsert<T>(IEnumerable<T> pocos)
             where T : IPoco<T>
         {
@@ -24,6 +27,7 @@
 
             bool headerFirstRun = true;
 
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < columns.Count; i++)
             {
                 var column = columns[i];
@@ -47,7 +51,6 @@
             sqlBuilder.Append(") VALUES ");
 
             // PARAMETERS
-
             int paramIndex = 0;
 
             bool recordsFirstRun = true;
@@ -68,6 +71,7 @@
 
                 bool parametersFirstRun = true;
 
+                // ReSharper disable once ForCanBeConvertedToForeach
                 for (int i = 0; i < columns.Count; i++)
                 {
                     var column = columns[i];
@@ -98,6 +102,9 @@
             return this.ExecuteNonQuery(sql, parameters.ToArray());
         }
 
+        /// <summary>
+        /// Deletes a record by its PrimaryKey.
+        /// </summary>
         public Task<int> Delete<T>(T poco)
             where T : IPoco<T>
         {
@@ -109,7 +116,7 @@
         }
 
         /// <summary>
-        /// <para>Deletes a number of records from a table mapped to <see cref="T"/> by ID.</para>
+        /// <para>Deletes records from a table by their IDs.</para>
         /// </summary>
         public Task<int> Delete<T>(int[] ids)
             where T : IPoco<T>
@@ -125,12 +132,12 @@
             string tableName = metadata.TableName;
             string primaryKeyName = metadata.PrimaryKeyColumnName;
 
-            return this.ExecuteNonQuery($"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE {primaryKeyName} = any(@p);",
+            return this.ExecuteNonQuery($"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = any(@p);",
                                         this.Parameter("p", ids));
         }
 
         /// <summary>
-        /// <para>Deletes a record from a table mapped to <see cref="T"/> by ID.</para>
+        /// <para>Deletes a record by ID.</para>
         /// </summary>
         public Task<int> Delete<T>(int id)
             where T : IPoco<T>
@@ -141,10 +148,13 @@
             string tableName = metadata.TableName;
             string primaryKeyName = metadata.PrimaryKeyColumnName;
 
-            return this.ExecuteNonQuery($"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE {primaryKeyName} = @p;",
+            return this.ExecuteNonQuery($"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @p;",
                                         this.Parameter("p", id));
         }
 
+        /// <summary>
+        /// Inserts a record and attaches it's ID to the poco object. 
+        /// </summary>
         public async Task<int> Insert<T>(T poco)
             where T : IPoco<T>
         {
@@ -155,6 +165,9 @@
             return pk;
         }
 
+        /// <summary>
+        /// Inserts a record and returns its ID.
+        /// </summary>
         public Task<int> InsertWithoutMutating<T>(T poco)
             where T : IPoco<T>
         {
@@ -188,7 +201,8 @@
                         sqlBuilder.Append(", \"");
                     }
 
-                    sqlBuilder.Append(column.ColumnName); sqlBuilder.Append('"');
+                    sqlBuilder.Append(column.ColumnName);
+                    sqlBuilder.Append('"');
                 }
             }
 
@@ -231,6 +245,12 @@
             return this.ExecuteScalar<int>(sql, parameters);
         }
 
+        /// <summary>
+        /// Saves a record to the database.
+        /// If the poco object has a positive primary key it updates it.
+        /// If the primary key value is 0 it inserts the record.
+        /// Returns the record's primary key value.
+        /// </summary>
         public async Task<int> Save<T>(T poco)
             where T : class, IPoco<T>, new()
         {
@@ -246,6 +266,10 @@
             return metadata.GetPrimaryKey(poco);
         }
 
+        /// <summary>
+        /// Updates a record by its ID.
+        /// Only updates the changed rows. 
+        /// </summary>
         public async Task<int> Update<T>(T poco)
             where T : class, IPoco<T>, new()
         {
@@ -258,9 +282,11 @@
                 throw new ApplicationException("Cannot update a model with primary key of 0.");
             }
 
-            var currentInstance = await this.QueryOne<T>(
-                $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @p FOR UPDATE;",
-                this.Parameter("p", pk));
+            var currentInstance = await this
+                                        .QueryOne<T>(
+                                            $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @p FOR UPDATE;",
+                                            this.Parameter("p", pk))
+                                        .ConfigureAwait(false);
 
             if (currentInstance == null)
             {
@@ -310,7 +336,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            return await this.ExecuteNonQuery(sql, parameters.ToArray());
+            return await this.ExecuteNonQuery(sql, parameters.ToArray()).ConfigureAwait(false);
         }
     }
 }
