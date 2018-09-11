@@ -20,6 +20,7 @@
 
         public static ILog Log { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public static string RootDirectory => Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
     }
 }

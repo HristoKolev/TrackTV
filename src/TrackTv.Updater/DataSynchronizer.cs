@@ -39,7 +39,7 @@
             {
                 if (!Global.CliOptions.ApplyOnly && !Global.CliOptions.ListChanges)
                 {
-                    await this.UpdateChangeLists(container);
+                    await this.UpdateChangeLists(container).ConfigureAwait(false);
                 }
 
                 var apiChangeRepository = container.GetInstance<ApiChangeRepository>();
@@ -93,7 +93,7 @@
 
             if (updates.Any())
             {
-                await dbService.ExecuteInTransaction(async () =>
+                await dbService.ExecuteInTransactionAndCommit(async () =>
                 {
                     var changeListWatch = Stopwatch.StartNew();
 
@@ -133,7 +133,7 @@
 
                     var changeWatch = Stopwatch.StartNew();
 
-                    await dbService.ExecuteInTransaction(async tr =>
+                    await dbService.ExecuteInTransactionAndCommit(async tr =>
                     {
                         string typeName = ((ApiChangeType)change.ApiChangeType).ToString();
 
@@ -153,7 +153,7 @@
                         }
                         catch (Exception e)
                         {
-                           tr.Rollback();
+                           await tr.RollbackAsync().ConfigureAwait(false);
 
                            await failedChangeRepository.IncrementFailedCount(change.ApiChangeThetvdbid)
                                                        .ConfigureAwait(false);

@@ -90,6 +90,7 @@ namespace TrackTv.Services
         {
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public ShowNotFoundException(string message)
             : base(message)
         {

@@ -18,11 +18,13 @@ namespace TrackTv.WebServices.Infrastructure
         /// <summary>
         /// Error messages. Cannot be null. Use empty array to signify a successful result.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public string[] ErrorMessages { get; private set; }
 
         /// <summary>
         /// The payload of a successful result. Failed results cannot have a payload.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public object Payload { get; private set; }
 
         /// <summary>

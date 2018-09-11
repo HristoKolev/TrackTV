@@ -26,8 +26,10 @@
         public static string RootDirectory => Directory.GetCurrentDirectory();
 
         #if DEBUG
+        // ReSharper disable once MemberCanBePrivate.Global
         public const bool Debug = true;
         #else
+        // ReSharper disable once MemberCanBePrivate.Global
         public const bool Debug = false;
         #endif
     }

@@ -22,6 +22,12 @@
     public partial interface IDbService : IDisposable
     {
         /// <summary>
+        /// Calls `BeginTransaction` on the connection and returns the result.
+        /// </summary>
+        /// <returns></returns>
+        NpgsqlTransaction BeginTransaction();
+
+        /// <summary>
         /// Inserts several records in single query.
         /// </summary>
         Task<int> BulkInsert<T>(IEnumerable<T> pocos)
@@ -45,9 +51,27 @@
         Task<int> Delete<T>(int id)
             where T : IPoco<T>;
 
+        /// <summary>
+        /// Starts a transaction and runs the `body` function
+        /// </summary>
         Task ExecuteInTransaction(Func<Task> body, TimeSpan? timeout = null);
 
-        Task ExecuteInTransaction(Func<ITransactionHandle, Task> body, TimeSpan? timeout = null);
+        /// <summary>
+        /// Starts a transaction and runs the `body` function
+        /// </summary>
+        Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Starts a transaction, runs the `body` function
+        /// and if it does not throw - commits the transaction.
+        /// </summary>
+        Task ExecuteInTransactionAndCommit(Func<Task> body, TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Starts a transaction, runs the `body` function
+        /// and if it does not throw and the transaction is not completed - commits the transaction.
+        /// </summary>
+        Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null);
 
         /// <summary>
         /// Executes a query and returns the rows affected.
@@ -115,19 +139,6 @@
     }
 
     /// <summary>
-    /// An object that gives the user the ability to rollback a transaction inside a transaction-wrapped function.
-    /// If `Rollback` is not called and the function body does not throw an exception,
-    /// the transaction will automatically be committed after the function returns.
-    /// </summary>
-    public interface ITransactionHandle
-    {
-        /// <summary>
-        /// Rollbacks the transaction.
-        /// </summary>
-        Task Rollback();
-    }
-
-    /// <summary>
     /// Represemts a table in PostgreSQL
     /// </summary>
     public class TableMetadataModel<T>
@@ -136,6 +147,7 @@
         /// <summary>
         /// <para>Clones the current object and returns the clone.</para>
         /// </summary>
+        // ReSharper disable once NotAccessedField.Global
         public Func<T, T> Clone;
 
         /// <summary>		
@@ -143,6 +155,7 @@
         /// </summary>   
         public Func<T, int> GetPrimaryKey;
 
+        // ReSharper disable once NotAccessedField.Global
         public IReadOnlyDictionary<string, Func<T, object>> Getters;
 
         /// <summary>		
@@ -161,10 +174,18 @@
 
         public List<ColumnMetadataModel<T>> Columns { get; set; }
 
+        // ReSharper disable once CollectionNeverQueried.Global
         public Dictionary<string, ColumnMetadataModel<T>> ColumnsByName { get; set; }
 
+        /// <summary>
+        /// Generates a parameter for every non Primary Key column in the table.
+        /// </summary>
         public Func<T, int, NpgsqlParameter[]> GenerateParameters { get; set; }
 
+        /// <summary>
+        /// Generates the changes between 2 instances of the poco class.
+        /// Returns the names of the changed columns and parameters for every column value.
+        /// </summary>
         public Func<T, T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetColumnChanges { get; set; }
 
         public string PluralClassName { get; set; }
@@ -211,8 +232,10 @@
 
         public bool IsPrimaryKey { get; set; }
 
+        // ReSharper disable once InconsistentNaming
         public DataType Linq2dbDataType { get; set; }
 
+        // ReSharper disable once InconsistentNaming
         public string Linq2dbDataTypeName { get; set; }
 
         public NpgsqlDbType NpgsDataType { get; set; }

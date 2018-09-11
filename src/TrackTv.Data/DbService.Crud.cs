@@ -185,6 +185,7 @@
 
             bool headerFirstRun = true;
 
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < columns.Count; i++)
             {
                 var column = columns[i];
@@ -213,6 +214,7 @@
 
             int paramIndex = 0;
 
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < columns.Count; i++)
             {
                 var column = columns[i];

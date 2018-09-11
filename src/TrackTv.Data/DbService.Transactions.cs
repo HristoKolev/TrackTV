@@ -7,80 +7,96 @@
 
     public partial class DbService
     {
+        /// <summary>
+        /// Calls `BeginTransaction` on the connection and returns the result.
+        /// </summary>
+        public NpgsqlTransaction BeginTransaction()
+        {
+            return this.dbConnection.BeginTransaction();
+        }
+
+        /// <summary>
+        /// Starts a transaction and runs the `body` function.
+        /// </summary>
+        public async Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null)
+        {
+            await this.VerifyConnectionState().ConfigureAwait(false);
+
+            using (var transaction = this.BeginTransaction())
+            {
+                if (timeout == null)
+                {
+                    await body(transaction).ConfigureAwait(false);
+                }
+                else
+                {
+                    var timeoutTask = Task.Delay(timeout.Value);
+                    var transactionTask = body(transaction);
+
+                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask).ConfigureAwait(false);
+
+                    if (completedTask == timeoutTask)
+                    {
+                        throw new TimeoutException("The db transaction timed out.");
+                    }
+
+                    await transactionTask.ConfigureAwait(false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Starts a transaction, runs the `body` function
+        /// and if it does not throw - commits the transaction.
+        /// </summary>
         public Task ExecuteInTransaction(Func<Task> body, TimeSpan? timeout = null)
         {
             return this.ExecuteInTransaction(tr => body(), timeout);
         }
 
-        public async Task ExecuteInTransaction(Func<ITransactionHandle, Task> body, TimeSpan? timeout = null)
+        /// <summary>
+        /// Starts a transaction, runs the `body` function
+        /// and if it does not throw - commits the transaction.
+        /// </summary>
+        public Task ExecuteInTransactionAndCommit(Func<Task> body, TimeSpan? timeout = null)
+        {
+            return this.ExecuteInTransactionAndCommit(tr => body(), timeout);
+        }
+
+        /// <summary>
+        /// Starts a transaction, runs the `body` function
+        /// and if it does not throw and the transaction is not completed - commits the transaction.
+        /// </summary>
+        public async Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null)
         {
             await this.VerifyConnectionState().ConfigureAwait(false);
 
-            using (var tx = this.dbConnection.BeginTransaction())
+            using (var transaction = this.BeginTransaction())
             {
-                var handle = new TransactionHandle(tx);
-
-                await RunBody(body, timeout, handle).ConfigureAwait(false);
-
-                if (!handle.IsRolledBack)
+                if (timeout == null)
                 {
-                    await tx.CommitAsync().ConfigureAwait(false);
+                    await body(transaction).ConfigureAwait(false);
                 }
-            }
-        }
-
-        private static async Task RunBody(Func<ITransactionHandle, Task> body, TimeSpan? timeout, ITransactionHandle transactionHandle)
-        {
-            if (timeout == null)
-            {
-                await body(transactionHandle).ConfigureAwait(false);
-            }
-            else
-            {
-                var timeoutTask = Task.Delay(timeout.Value);
-                var transactionTask = body(transactionHandle);
-
-                var completedTask = await Task.WhenAny(transactionTask, timeoutTask).ConfigureAwait(false);
-
-                if (completedTask == timeoutTask)
+                else
                 {
-                    throw new TimeoutException("The db transaction timed out.");
+                    var timeoutTask = Task.Delay(timeout.Value);
+                    var transactionTask = body(transaction);
+
+                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask).ConfigureAwait(false);
+
+                    if (completedTask == timeoutTask)
+                    {
+                        throw new TimeoutException("The db transaction timed out.");
+                    }
+
+                    await transactionTask.ConfigureAwait(false);
                 }
 
-                await transactionTask.ConfigureAwait(false);
+                if (!transaction.IsCompleted)
+                {
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
             }
-        }
-    }
-
-    /// <summary>
-    /// An object that gives the user the ability to rollback a transaction inside a transaction-wrapped function.
-    /// If `Rollback` is not called and the function body does not throw an exception,
-    /// the transaction will automatically be committed after the function returns.
-    /// </summary>
-    public class TransactionHandle : ITransactionHandle
-    {
-        private readonly NpgsqlTransaction transaction;
-
-        public TransactionHandle(NpgsqlTransaction transaction)
-        {
-            this.transaction = transaction;
-        }
-
-        public bool IsRolledBack { get; private set; }
-
-        /// <summary>
-        /// Rollbacks the transaction.
-        /// </summary>
-        public async Task Rollback()
-        {
-            if (this.IsRolledBack)
-            {
-                return;
-            }
-
-            await this.transaction.RollbackAsync().ConfigureAwait(false);
-
-            this.IsRolledBack = true;
         }
     }
 }

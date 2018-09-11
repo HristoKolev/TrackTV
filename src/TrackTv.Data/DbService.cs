@@ -37,9 +37,11 @@
             { typeof(short?), NpgsqlDbType.Smallint },
             { typeof(decimal?), NpgsqlDbType.Numeric },
             { typeof(DateTime?), NpgsqlDbType.Timestamp },
+            // ReSharper disable BitwiseOperatorOnEnumWithoutFlags
             { typeof(string[]), NpgsqlDbType.Array   | NpgsqlDbType.Text },
             { typeof(int[]), NpgsqlDbType.Array      | NpgsqlDbType.Integer },
             { typeof(DateTime[]), NpgsqlDbType.Array | NpgsqlDbType.Timestamp },
+            // ReSharper restore BitwiseOperatorOnEnumWithoutFlags
         };
 
         private readonly NpgsqlConnection dbConnection;
@@ -55,6 +57,7 @@
         {
             get
             {
+                // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
                 if (this.linqToDbConnection == null)
                 {
                     this.linqToDbConnection = new DataConnection(new PostgreSQLDataProvider(), this.dbConnection, false);

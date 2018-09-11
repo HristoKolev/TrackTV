@@ -19,15 +19,15 @@
 
         private IDbService DbService { get; }
 
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            await this.DbService.ExecuteInTransaction(async transaction =>
+            return this.DbService.ExecuteInTransactionAndCommit(async transaction =>
             {
                 var ctx = await next().ConfigureAwait(false);
 
                 if (ctx.Exception != null)
                 {
-                    transaction.Rollback();
+                    await transaction.RollbackAsync().ConfigureAwait(false);
                     return;
                 }
 
@@ -36,10 +36,9 @@
                     && jsResult.Value is ApiResult apiResult
                     && !apiResult.Success)
                 {
-                    transaction.Rollback();
+                    await transaction.RollbackAsync().ConfigureAwait(false);
                 }
-            })
-            .ConfigureAwait(false);
+            });
         }
     }
 }

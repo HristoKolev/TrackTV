@@ -4,6 +4,7 @@
 
     public class ProfileNotFoundException : Exception
     {
+        // ReSharper disable once MemberCanBePrivate.Global
         public ProfileNotFoundException(string message)
             : base(message)
         {

@@ -22,6 +22,7 @@
             return methodInfo.CachedAttributes().SingleOrDefault(attributeType.IsInstanceOfType);
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public static List<T> CachedAttributes<T>(this MethodInfo methodInfo)
             where T : Attribute
         {
@@ -31,6 +32,7 @@
                         .ToList();
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public static List<Attribute> CachedAttributes(this MethodInfo methodInfo)
         {
             return Cache.GetOrAdd(methodInfo, info => info.GetCustomAttributes().ToList()).ToList();

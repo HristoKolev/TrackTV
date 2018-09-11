@@ -10,7 +10,8 @@
     public static class QueryableExtensions
     {
         public static IQueryable<TModel> Filter<TFilter, TModel>(this IQueryable<TModel> collection, TFilter filter)
-            where TFilter : class where TModel : class
+            where TFilter : class 
+            where TModel : class
         {
             if (collection == null)
             {
