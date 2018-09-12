@@ -85,7 +85,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ActorPoco> IPoco<ActorPoco>.Metadata => DbService.ActorPocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -123,7 +123,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ApiChangeTypePoco> IPoco<ApiChangeTypePoco>.Metadata => DbService.ApiChangeTypePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -241,7 +241,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ApiChangePoco> IPoco<ApiChangePoco>.Metadata => DbService.ApiChangePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -322,7 +322,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ApiResponsePoco> IPoco<ApiResponsePoco>.Metadata => DbService.ApiResponsePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -466,7 +466,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<EpisodePoco> IPoco<EpisodePoco>.Metadata => DbService.EpisodePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -504,7 +504,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<GenrePoco> IPoco<GenrePoco>.Metadata => DbService.GenrePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -542,7 +542,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<NetworkPoco> IPoco<NetworkPoco>.Metadata => DbService.NetworkPocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -580,7 +580,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ProfilePoco> IPoco<ProfilePoco>.Metadata => DbService.ProfilePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -648,7 +648,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<RolePoco> IPoco<RolePoco>.Metadata => DbService.RolePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -699,7 +699,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<SettingPoco> IPoco<SettingPoco>.Metadata => DbService.SettingPocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -869,7 +869,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ShowPoco> IPoco<ShowPoco>.Metadata => DbService.ShowPocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -924,7 +924,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<ShowGenrePoco> IPoco<ShowGenrePoco>.Metadata => DbService.ShowGenrePocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -979,7 +979,7 @@ namespace TrackTv.Data
 
 		TableMetadataModel<SubscriptionPoco> IPoco<SubscriptionPoco>.Metadata => DbService.SubscriptionPocoMetadata;
     }
-    
+
     /// <summary>
     /// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1056,6 +1056,895 @@ namespace TrackTv.Data
 
 		TableMetadataModel<UserPoco> IPoco<UserPoco>.Metadata => DbService.UserPocoMetadata;
     }
+
+
+    /// <summary>
+    /// <para>Table name: 'actors'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ActorCM : ICatalogModel<ActorPoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'actor_id'.</para>
+		/// <para>Table name: 'actors'.</para>
+		/// <para>Primary key of table: 'actors'.</para>
+		/// <para>Primary key constraint name: 'actors_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ActorID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'actor_image'.</para>
+		/// <para>Table name: 'actors'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string ActorImage { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'actor_name'.</para>
+		/// <para>Table name: 'actors'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string ActorName { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'last_updated'.</para>
+		/// <para>Table name: 'actors'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime? LastUpdated { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>Table name: 'actors'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int Thetvdbid { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'api_change_types'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ApiChangeTypeCM : ICatalogModel<ApiChangeTypePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'api_change_type_name'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string ApiChangeTypeName { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_type_id'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>Primary key of table: 'api_change_types'.</para>
+		/// <para>Primary key constraint name: 'api_change_types_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ApiChangeTypeID { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'api_changes'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ApiChangeCM : ICatalogModel<ApiChangePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'api_change_thetvdbid'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ApiChangeThetvdbid { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_fail_count'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ApiChangeFailCount { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_created_date'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime ApiChangeCreatedDate { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_id'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>Primary key of table: 'api_changes'.</para>
+		/// <para>Primary key constraint name: 'api_changes_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ApiChangeID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_last_failed_time'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime? ApiChangeLastFailedTime { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_thetvdb_last_updated'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime ApiChangeThetvdbLastUpdated { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_attached_series_id'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int? ApiChangeAttachedSeriesID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_change_type'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>Foreign key column [public.api_changes.api_change_type -> public.api_change_types.api_change_type_id].</para>
+		/// <para>Foreign key constraint name: 'fk_api_changes_api_change_type'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ApiChangeType { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'api_responses'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ApiResponseCM : ICatalogModel<ApiResponsePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [public.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
+		/// <para>Foreign key constraint name: 'fk_api_responses_episodes_thetvdbid'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int? ApiResponseEpisodeThetvdbid { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
+		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int? ApiResponseShowThetvdbid { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
+        /// </summary>
+        public string ApiResponseBody { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_response_id'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Primary key of table: 'api_responses'.</para>
+		/// <para>Primary key constraint name: 'api_responses_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ApiResponseID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'api_response_last_updated'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime ApiResponseLastUpdated { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'episodes'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class EpisodeCM : ICatalogModel<EpisodePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'episode_id'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>Primary key of table: 'episodes'.</para>
+		/// <para>Primary key constraint name: 'episodes_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int EpisodeID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'episode_description'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>
+        public string EpisodeDescription { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'episode_number'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int EpisodeNumber { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'episode_title'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string EpisodeTitle { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'first_aired'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime? FirstAired { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'imdbid'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string Imdbid { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'last_updated'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime LastUpdated { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'season_number'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int SeasonNumber { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>Foreign key column [public.episodes.show_id -> public.shows.show_id].</para>
+		/// <para>Foreign key constraint name: 'fk_episodes_show_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int Thetvdbid { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'genres'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class GenreCM : ICatalogModel<GenrePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Table name: 'genres'.</para>
+		/// <para>Primary key of table: 'genres'.</para>
+		/// <para>Primary key constraint name: 'genres_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int GenreID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'genre_name'.</para>
+		/// <para>Table name: 'genres'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string GenreName { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'networks'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class NetworkCM : ICatalogModel<NetworkPoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'network_id'.</para>
+		/// <para>Table name: 'networks'.</para>
+		/// <para>Primary key of table: 'networks'.</para>
+		/// <para>Primary key constraint name: 'networks_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int NetworkID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'network_name'.</para>
+		/// <para>Table name: 'networks'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string NetworkName { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'profiles'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ProfileCM : ICatalogModel<ProfilePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Table name: 'profiles'.</para>
+		/// <para>Primary key of table: 'profiles'.</para>
+		/// <para>Primary key constraint name: 'profiles_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ProfileID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'profile_name'.</para>
+		/// <para>Table name: 'profiles'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string ProfileName { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'roles'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class RoleCM : ICatalogModel<RolePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'role_id'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Primary key of table: 'roles'.</para>
+		/// <para>Primary key constraint name: 'roles_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int RoleID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'actor_id'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Foreign key column [public.roles.actor_id -> public.actors.actor_id].</para>
+		/// <para>Foreign key constraint name: 'fk_roles_actor_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ActorID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'role_name'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string RoleName { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Foreign key column [public.roles.show_id -> public.shows.show_id].</para>
+		/// <para>Foreign key constraint name: 'fk_roles_show_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowID { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'settings'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class SettingCM : ICatalogModel<SettingPoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'setting_id'.</para>
+		/// <para>Table name: 'settings'.</para>
+		/// <para>Primary key of table: 'settings'.</para>
+		/// <para>Primary key constraint name: 'settings_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int SettingID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'setting_value'.</para>
+		/// <para>Table name: 'settings'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string SettingValue { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'setting_name'.</para>
+		/// <para>Table name: 'settings'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string SettingName { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'shows'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ShowCM : ICatalogModel<ShowPoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>Primary key of table: 'shows'.</para>
+		/// <para>Primary key constraint name: 'shows_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'air_day'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int? AirDay { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'air_time'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime? AirTime { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'first_aired'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime?'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime? FirstAired { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'imdbid'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string Imdbid { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'last_updated'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime LastUpdated { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'network_id'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>Foreign key column [public.shows.network_id -> public.networks.network_id].</para>
+		/// <para>Foreign key constraint name: 'fk_shows_network_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int NetworkID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_banner'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string ShowBanner { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_description'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>
+        public string ShowDescription { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_name'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string ShowName { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_status'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowStatus { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'thetvdbid'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int Thetvdbid { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'shows_genres'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class ShowGenreCM : ICatalogModel<ShowGenrePoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>Table name: 'shows_genres'.</para>
+		/// <para>Primary key of table: 'shows_genres'.</para>
+		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowsGenresID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'shows_genres'.</para>
+		/// <para>Foreign key column [public.shows_genres.show_id -> public.shows.show_id].</para>
+		/// <para>Foreign key constraint name: 'fk_shows_genres_show_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Table name: 'shows_genres'.</para>
+		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
+		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int GenreID { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'subscriptions'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class SubscriptionCM : ICatalogModel<SubscriptionPoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Primary key of table: 'subscriptions'.</para>
+		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int SubscriptionID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Foreign key column [public.subscriptions.profile_id -> public.profiles.profile_id].</para>
+		/// <para>Foreign key constraint name: 'fk_subscriptions_profile_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ProfileID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Foreign key column [public.subscriptions.show_id -> public.shows.show_id].</para>
+		/// <para>Foreign key constraint name: 'fk_subscriptions_show_id'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ShowID { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'users'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class UserCM : ICatalogModel<UserPoco>
+    {
+        /// <summary>
+		/// <para>Column name: 'user_id'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>Primary key of table: 'users'.</para>
+		/// <para>Primary key constraint name: 'users_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int UserID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'is_admin'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'boolean'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Boolean'.</para>
+		/// <para>CLR type: 'bool'.</para>
+		/// <para>linq2db data type: 'DataType.Boolean'.</para>
+        /// </summary>
+        public bool IsAdmin { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'username'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'password'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'profile_id'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int ProfileID { get; set; }
+
+    }
     
     public partial class DbService
     {
@@ -1071,6 +1960,14 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.ActorID = val,
 			IsNew = (instance) => instance.ActorID == default,
 			Clone = (instance) => new ActorPoco
+			{
+				ActorID = instance.ActorID,
+				ActorImage = instance.ActorImage,
+				ActorName = instance.ActorName,
+				LastUpdated = instance.LastUpdated,
+				Thetvdbid = instance.Thetvdbid,
+			},
+			MapToCM = (instance) => new ActorCM
 			{
 				ActorID = instance.ActorID,
 				ActorImage = instance.ActorImage,
@@ -1286,6 +2183,11 @@ namespace TrackTv.Data
 				ApiChangeTypeName = instance.ApiChangeTypeName,
 				ApiChangeTypeID = instance.ApiChangeTypeID,
 			},
+			MapToCM = (instance) => new ApiChangeTypeCM
+			{
+				ApiChangeTypeName = instance.ApiChangeTypeName,
+				ApiChangeTypeID = instance.ApiChangeTypeID,
+			},
 			Setters = new Dictionary<string, Action<ApiChangeTypePoco, object>>
 			{
 				{"api_change_type_name", (instance, val) => instance.ApiChangeTypeName = (string)val },
@@ -1385,6 +2287,17 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.ApiChangeID = val,
 			IsNew = (instance) => instance.ApiChangeID == default,
 			Clone = (instance) => new ApiChangePoco
+			{
+				ApiChangeThetvdbid = instance.ApiChangeThetvdbid,
+				ApiChangeFailCount = instance.ApiChangeFailCount,
+				ApiChangeCreatedDate = instance.ApiChangeCreatedDate,
+				ApiChangeID = instance.ApiChangeID,
+				ApiChangeLastFailedTime = instance.ApiChangeLastFailedTime,
+				ApiChangeThetvdbLastUpdated = instance.ApiChangeThetvdbLastUpdated,
+				ApiChangeAttachedSeriesID = instance.ApiChangeAttachedSeriesID,
+				ApiChangeType = instance.ApiChangeType,
+			},
+			MapToCM = (instance) => new ApiChangeCM
 			{
 				ApiChangeThetvdbid = instance.ApiChangeThetvdbid,
 				ApiChangeFailCount = instance.ApiChangeFailCount,
@@ -1711,6 +2624,14 @@ namespace TrackTv.Data
 				ApiResponseID = instance.ApiResponseID,
 				ApiResponseLastUpdated = instance.ApiResponseLastUpdated,
 			},
+			MapToCM = (instance) => new ApiResponseCM
+			{
+				ApiResponseEpisodeThetvdbid = instance.ApiResponseEpisodeThetvdbid,
+				ApiResponseShowThetvdbid = instance.ApiResponseShowThetvdbid,
+				ApiResponseBody = instance.ApiResponseBody,
+				ApiResponseID = instance.ApiResponseID,
+				ApiResponseLastUpdated = instance.ApiResponseLastUpdated,
+			},
 			Setters = new Dictionary<string, Action<ApiResponsePoco, object>>
 			{
 				{"api_response_episode_thetvdbid", (instance, val) => instance.ApiResponseEpisodeThetvdbid = (int?)val },
@@ -1915,6 +2836,19 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.EpisodeID = val,
 			IsNew = (instance) => instance.EpisodeID == default,
 			Clone = (instance) => new EpisodePoco
+			{
+				EpisodeID = instance.EpisodeID,
+				EpisodeDescription = instance.EpisodeDescription,
+				EpisodeNumber = instance.EpisodeNumber,
+				EpisodeTitle = instance.EpisodeTitle,
+				FirstAired = instance.FirstAired,
+				Imdbid = instance.Imdbid,
+				LastUpdated = instance.LastUpdated,
+				SeasonNumber = instance.SeasonNumber,
+				ShowID = instance.ShowID,
+				Thetvdbid = instance.Thetvdbid,
+			},
+			MapToCM = (instance) => new EpisodeCM
 			{
 				EpisodeID = instance.EpisodeID,
 				EpisodeDescription = instance.EpisodeDescription,
@@ -2310,6 +3244,11 @@ namespace TrackTv.Data
 				GenreID = instance.GenreID,
 				GenreName = instance.GenreName,
 			},
+			MapToCM = (instance) => new GenreCM
+			{
+				GenreID = instance.GenreID,
+				GenreName = instance.GenreName,
+			},
 			Setters = new Dictionary<string, Action<GenrePoco, object>>
 			{
 				{"genre_id", (instance, val) => instance.GenreID = (int)val },
@@ -2409,6 +3348,11 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.NetworkID = val,
 			IsNew = (instance) => instance.NetworkID == default,
 			Clone = (instance) => new NetworkPoco
+			{
+				NetworkID = instance.NetworkID,
+				NetworkName = instance.NetworkName,
+			},
+			MapToCM = (instance) => new NetworkCM
 			{
 				NetworkID = instance.NetworkID,
 				NetworkName = instance.NetworkName,
@@ -2516,6 +3460,11 @@ namespace TrackTv.Data
 				ProfileID = instance.ProfileID,
 				ProfileName = instance.ProfileName,
 			},
+			MapToCM = (instance) => new ProfileCM
+			{
+				ProfileID = instance.ProfileID,
+				ProfileName = instance.ProfileName,
+			},
 			Setters = new Dictionary<string, Action<ProfilePoco, object>>
 			{
 				{"profile_id", (instance, val) => instance.ProfileID = (int)val },
@@ -2615,6 +3564,13 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.RoleID = val,
 			IsNew = (instance) => instance.RoleID == default,
 			Clone = (instance) => new RolePoco
+			{
+				RoleID = instance.RoleID,
+				ActorID = instance.ActorID,
+				RoleName = instance.RoleName,
+				ShowID = instance.ShowID,
+			},
+			MapToCM = (instance) => new RoleCM
 			{
 				RoleID = instance.RoleID,
 				ActorID = instance.ActorID,
@@ -2795,6 +3751,12 @@ namespace TrackTv.Data
 				SettingValue = instance.SettingValue,
 				SettingName = instance.SettingName,
 			},
+			MapToCM = (instance) => new SettingCM
+			{
+				SettingID = instance.SettingID,
+				SettingValue = instance.SettingValue,
+				SettingName = instance.SettingName,
+			},
 			Setters = new Dictionary<string, Action<SettingPoco, object>>
 			{
 				{"setting_id", (instance, val) => instance.SettingID = (int)val },
@@ -2929,6 +3891,21 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.ShowID = val,
 			IsNew = (instance) => instance.ShowID == default,
 			Clone = (instance) => new ShowPoco
+			{
+				ShowID = instance.ShowID,
+				AirDay = instance.AirDay,
+				AirTime = instance.AirTime,
+				FirstAired = instance.FirstAired,
+				Imdbid = instance.Imdbid,
+				LastUpdated = instance.LastUpdated,
+				NetworkID = instance.NetworkID,
+				ShowBanner = instance.ShowBanner,
+				ShowDescription = instance.ShowDescription,
+				ShowName = instance.ShowName,
+				ShowStatus = instance.ShowStatus,
+				Thetvdbid = instance.Thetvdbid,
+			},
+			MapToCM = (instance) => new ShowCM
 			{
 				ShowID = instance.ShowID,
 				AirDay = instance.AirDay,
@@ -3397,6 +4374,12 @@ namespace TrackTv.Data
 				ShowID = instance.ShowID,
 				GenreID = instance.GenreID,
 			},
+			MapToCM = (instance) => new ShowGenreCM
+			{
+				ShowsGenresID = instance.ShowsGenresID,
+				ShowID = instance.ShowID,
+				GenreID = instance.GenreID,
+			},
 			Setters = new Dictionary<string, Action<ShowGenrePoco, object>>
 			{
 				{"shows_genres_id", (instance, val) => instance.ShowsGenresID = (int)val },
@@ -3536,6 +4519,12 @@ namespace TrackTv.Data
 				ProfileID = instance.ProfileID,
 				ShowID = instance.ShowID,
 			},
+			MapToCM = (instance) => new SubscriptionCM
+			{
+				SubscriptionID = instance.SubscriptionID,
+				ProfileID = instance.ProfileID,
+				ShowID = instance.ShowID,
+			},
 			Setters = new Dictionary<string, Action<SubscriptionPoco, object>>
 			{
 				{"subscription_id", (instance, val) => instance.SubscriptionID = (int)val },
@@ -3670,6 +4659,14 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.UserID = val,
 			IsNew = (instance) => instance.UserID == default,
 			Clone = (instance) => new UserPoco
+			{
+				UserID = instance.UserID,
+				IsAdmin = instance.IsAdmin,
+				Username = instance.Username,
+				Password = instance.Password,
+				ProfileID = instance.ProfileID,
+			},
+			MapToCM = (instance) => new UserCM
 			{
 				UserID = instance.UserID,
 				IsAdmin = instance.IsAdmin,

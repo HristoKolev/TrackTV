@@ -197,6 +197,9 @@
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public Func<T, ICatalogModel<T>> MapToCM { get; set; }
     }
 
     /// <summary>
@@ -251,5 +254,13 @@
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
+    }
+
+    /// <summary>
+    /// Interface for all Catalog models
+    /// </summary>
+    public interface ICatalogModel<TPoco>
+        where TPoco : IPoco<TPoco>
+    {
     }
 }

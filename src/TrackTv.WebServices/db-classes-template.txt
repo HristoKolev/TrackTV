@@ -50,6 +50,41 @@ namespace TrackTv.Data
         {{/each}}
 		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => DbService.{{ClassName}}PocoMetadata;
     }
+
+	{{/each}}
+
+	{{#each model.tables}}
+    /// <summary>
+    /// <para>Table name: '{{TableName}}'.</para>
+	/// <para>Table schema: '{{TableSchema}}'.</para>
+    /// </summary>
+    public class {{ClassName}}CM : ICatalogModel<{{ClassName}}Poco>
+    {
+        {{#each columns}}
+        /// <summary>
+		{{#if ColumnComment}}
+        {{#each comments}}/// <para>{{this}}</para>{{/each}}
+		{{/if}}
+		/// <para>Column name: '{{ColumnName}}'.</para>
+		/// <para>Table name: '{{TableName}}'.</para>
+		{{#if IsPrimaryKey}}
+		/// <para>Primary key of table: '{{TableName}}'.</para>
+		/// <para>Primary key constraint name: '{{PrimaryKeyConstraintName}}'.</para>
+		{{/if}}		
+		{{#if IsForeignKey}}		
+		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		/// <para>Foreign key constraint name: '{{ForeignKeyConstraintName}}'.</para>
+		{{/if}}
+		/// <para>This column {{#if IsNullable}}is nullable{{/if}}{{#unless IsNullable}}is not nullable{{/unless}}.</para>
+		/// <para>PostgreSQL data type: '{{DbDataType}}'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.{{NpgsDataTypeName}}'.</para>
+		/// <para>CLR type: '{{ClrTypeName}}'.</para>
+		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
+        /// </summary>
+        public {{ClrTypeName}} {{PropertyName}} { get; set; }
+
+        {{/each}}
+    }
     
     {{/each}}
     public partial class DbService
@@ -67,6 +102,12 @@ namespace TrackTv.Data
 			SetPrimaryKey = (instance, val) => instance.{{PrimaryKeyPropertyName}} = val,
 			IsNew = (instance) => instance.{{PrimaryKeyPropertyName}} == default,
 			Clone = (instance) => new {{ClassName}}Poco
+			{
+				{{#each columns}}
+				{{PropertyName}} = instance.{{PropertyName}},
+				{{/each}}
+			},
+			MapToCM = (instance) => new {{ClassName}}CM
 			{
 				{{#each columns}}
 				{{PropertyName}} = instance.{{PropertyName}},
