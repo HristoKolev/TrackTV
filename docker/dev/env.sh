@@ -2,6 +2,8 @@
 
 base_path=$(readlink -f $(pwd)/../../)
 
+export stack_name="tracktv-dev"
+
 export backend_src=$base_path/src
 export frontend_src=$base_path/client
 

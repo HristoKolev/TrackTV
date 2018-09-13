@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-source ./env.sh
+. ./env.sh
 
-docker-compose down
+docker-compose -p $stack_name down
 
 docker-compose -f docker-compose-tools.yml run --rm restore-frontend
