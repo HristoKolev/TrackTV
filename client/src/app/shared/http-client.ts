@@ -14,7 +14,6 @@ export class HttpClient {
   constructor(private store: ReduxStoreService) {
   }
 
-
   get(url: string, headers: any = {}): Promise<FetchResponse> {
 
     const options = {
@@ -111,11 +110,11 @@ export class HttpClient {
 
     if (state.session) {
 
-      token = state.session.access_token;
+      token = state.session.token;
     }
 
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers['Authorization'] = `JWT ${token}`;
     }
 
     return headers;

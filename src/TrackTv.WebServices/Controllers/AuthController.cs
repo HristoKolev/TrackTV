@@ -1,11 +1,8 @@
 ﻿namespace TrackTv.WebServices.Controllers
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Threading.Tasks;
-
-    using IdentityModel.Client;
-
-    using IdentityServer4.Models;
 
     using log4net;
 
@@ -20,36 +17,50 @@
     [Route("api/public/[controller]")]
     public class AuthController : Controller
     {
-        public AuthController(ProfileService profilesService, OAuth2Config auth2Config, ILog logger, IDbService dbService)
+        public AuthController(ProfileService profilesService, ILog logger, IDbService dbService, SessionService sessionService)
         {
             this.ProfilesService = profilesService;
-            this.Auth2Config = auth2Config;
-            this.DbService = dbService;
-        }
 
-        private OAuth2Config Auth2Config { get; }
+            this.DbService = dbService;
+            this.SessionService = sessionService;
+        }
 
         private IDbService DbService { get; }
 
         private ProfileService ProfilesService { get; }
 
+        private SessionService SessionService { get; }
+
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            var discoveryResponse = await DiscoveryClient.GetAsync(Global.AppConfig.AuthAuthorityUrl).ConfigureAwait(false);
-
-            var tokenClient = new TokenClient(discoveryResponse.TokenEndpoint, this.Auth2Config.ClientId, this.Auth2Config.ClientSecret);
-
-            var tokenResponse = await tokenClient
-                                      .RequestResourceOwnerPasswordAsync(model.Username, model.Password, this.Auth2Config.ApiName)
-                                      .ConfigureAwait(false);
-
-            if (tokenResponse.IsError)
+            if (!this.ModelState.IsValid)
             {
-                return this.Failure(tokenResponse.Error, tokenResponse.ErrorDescription);
+                return this.Failure(this.ModelState);
             }
 
-            return this.Success(tokenResponse.Json);
+            string hashedPassword = this.SessionService.HashPassword(model.Password);
+
+            var user = await this.DbService.Users.Where(x => x.Username == model.Username && x.Password == hashedPassword)
+                                 .FirstOrDefaultAsync()
+                                 .ConfigureAwait(false);
+
+            if (user == null)
+            {
+                return this.Failure("Wrong username and/or passowrd.");
+            }
+
+            var publicSession = new PublicSessionModel
+            {
+                ProfileID = user.ProfileID
+            };
+
+            string token = this.SessionService.SignSession(publicSession);
+
+            return this.Success(new
+            {
+                token
+            });
         }
 
         [HttpPost("[action]")]
@@ -66,13 +77,15 @@
                 return this.Failure($"A user with an username '{model.Username}' already exists.");
             }
 
+            string hashedPassword = this.SessionService.HashPassword(model.Password);
+
             // Check the user for validity
 
             await this.DbService.Insert(new UserPoco
                       {
                           Username = model.Username,
                           ProfileID = await this.ProfilesService.CreateProfileAsync(model.Username).ConfigureAwait(false),
-                          Password = model.Password.Sha512(),
+                          Password = hashedPassword,
                           IsAdmin = false
                       })
                       .ConfigureAwait(false);

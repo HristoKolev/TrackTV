@@ -45,7 +45,7 @@ export interface ISessionState {
 
   isLoggedIn: boolean;
   user?: any;
-  access_token?: string;
+  token?: string;
 }
 
 const persistedState = getPersistedState();
@@ -63,7 +63,7 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
 
       return {
         ...state,
-        access_token: action.responses.loginResponse.payload.access_token,
+        token: action.responses.loginResponse.payload.token,
         isLoggedIn: true,
         user: action.responses.profileResponse.payload,
       };
@@ -71,7 +71,7 @@ export const userSessionReducer: ReduxReducer<ISessionState> = (state = initialS
     case globalActions.LOGOUT_USER: {
       return {
         ...state,
-        access_token: undefined,
+        token: undefined,
         user: undefined,
         isLoggedIn: false,
       };

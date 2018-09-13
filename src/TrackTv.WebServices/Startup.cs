@@ -25,21 +25,16 @@
             }
 
             loggerFactory.AddConsole(logLevel);
-            loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+                loggerFactory.AddDebug();
             }
 
             // Shows UseCors with CorsPolicyBuilder.
             app.UseCors(builder => { builder.WithOrigins(Global.AppConfig.CorsUrls).AllowAnyHeader().AllowAnyMethod(); });
 
-            app.UseUnconventionalAuth();
+            app.UseAuthentication();
 
             app.UseStaticFiles();
 
@@ -54,7 +49,7 @@
 
             services.AddMemoryCache();
 
-            services.AddUnconventionalAuth(Global.AppConfig.AuthAuthorityUrl);
+            services.AddCustomTokenAuthentication();
 
             var container = new Container(config =>
             {

@@ -136,7 +136,7 @@ export const accountSagas = (apiClient: ApiClient): ReduxSagaMap => ({
         return;
       }
 
-      const profileResponse = yield apiClient.profile(loginResponse.payload.access_token);
+      const profileResponse = yield apiClient.profile(loginResponse.payload.token);
 
       const responses = {loginResponse, profileResponse};
 

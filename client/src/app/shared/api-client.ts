@@ -26,7 +26,7 @@ export class ApiClient {
 
   public profile(token: string): Promise<ApiResponse> {
 
-    return this.httpClient.get('/api/user/profile', {'Authorization': `Bearer ${token}`})
+    return this.httpClient.get('/api/user/profile', {'Authorization': `JWT ${token}`})
       .then(this.parseResponse.bind(this) as () => ApiResponse);
   }
 
