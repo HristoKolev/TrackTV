@@ -54,11 +54,11 @@
                     {
                         var dataSynchronizer = container.GetInstance<DataSynchronizer>();
 
-                        await dataSynchronizer.PerformUpdate(container).ConfigureAwait(false);
+                        await dataSynchronizer.PerformUpdate(container);
                     }
                     catch (Exception e)
                     {
-                        await Global.ErrorHandler.HandleErrorAsync(e).ConfigureAwait(false);
+                        await Global.ErrorHandler.HandleErrorAsync(e);
                         Global.Log.Error("Updater exited with an error.", e);
                     }
                 }

@@ -35,15 +35,15 @@
         {
             var settingsService = container.GetInstance<SettingsService>();
 
-            if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate).ConfigureAwait(false)))
+            if (!bool.Parse(await settingsService.GetSettingAsync(Setting.DisableDatabaseUpdate)))
             {
                 if (!Global.CliOptions.ApplyOnly && !Global.CliOptions.ListChanges)
                 {
-                    await this.UpdateChangeLists(container).ConfigureAwait(false);
+                    await this.UpdateChangeLists(container);
                 }
 
                 var apiChangeRepository = container.GetInstance<ApiChangeRepository>();
-                var fullChangeList = await apiChangeRepository.GetCurrentChangeList().ConfigureAwait(false);
+                var fullChangeList = await apiChangeRepository.GetCurrentChangeList();
 
                 if (Global.CliOptions.SkipFailed)
                 {
@@ -66,8 +66,7 @@
                     foreach (var change in fullChangeList)
                     {
                         await this.ApplyChange(change, index, fullChangeList.Length, container)
-                                  .ContinueWith(task => index++)
-                                  .ConfigureAwait(false);
+                                  .ContinueWith(task => index++);
                     }
                 }
 
@@ -86,10 +85,10 @@
             var changeListCompiler = container.GetInstance<ChangeListCompiler>();
             var dbService = container.GetInstance<IDbService>();
 
-            var lastUpdated = DateTime.Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate).ConfigureAwait(false))
+            var lastUpdated = DateTime.Parse(await settingsService.GetSettingAsync(Setting.LastDatabaseUpdate))
                                       .ToUniversalTime();
 
-            var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow).ConfigureAwait(false);
+            var updates = await this.GetUpdates(lastUpdated, DateTime.UtcNow);
 
             if (updates.Any())
             {
@@ -99,7 +98,7 @@
 
                     try
                     {
-                        await changeListCompiler.MergeChangeList(updates).ConfigureAwait(false);
+                        await changeListCompiler.MergeChangeList(updates);
                     }
                     catch (Exception e)
                     {
@@ -109,7 +108,7 @@
                     changeListWatch.Stop();
                     this.Log.Debug($"Change list was merged successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
                     
-                }).ConfigureAwait(false);
+                });
 
                 var newLastUpdated = new[]
                 {
@@ -117,7 +116,7 @@
                     updates.Select(u => u.LastUpdated).Max().ToDateTime()
                 }.Max();
 
-                await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O")).ConfigureAwait(false);
+                await settingsService.SetSettingAsync(Setting.LastDatabaseUpdate, newLastUpdated.ToString("O"));
             }
         }
 
@@ -142,9 +141,9 @@
                            this.Log.Debug(
                                $"[{index}/{maxCount}] Starting to apply change (ID={change.ApiChangeThetvdbid}, Type={typeName})");
 
-                           await applier.ApplyChange(change).ConfigureAwait(false);
+                           await applier.ApplyChange(change);
 
-                           await failedChangeRepository.RemoveApiChange(change.ApiChangeThetvdbid).ConfigureAwait(false);
+                           await failedChangeRepository.RemoveApiChange(change.ApiChangeThetvdbid);
 
                            changeWatch.Stop();
 
@@ -153,10 +152,9 @@
                         }
                         catch (Exception e)
                         {
-                           await tr.RollbackAsync().ConfigureAwait(false);
+                           await tr.RollbackAsync();
 
-                           await failedChangeRepository.IncrementFailedCount(change.ApiChangeThetvdbid)
-                                                       .ConfigureAwait(false);
+                           await failedChangeRepository.IncrementFailedCount(change.ApiChangeThetvdbid);
 
                            changeWatch.Stop();
 
@@ -165,11 +163,11 @@
                                e);
                         }
                     }, timeout: TimeSpan.FromMinutes(20))
-                   .ConfigureAwait(false);
+                   ;
                 }
                 catch (Exception e)
                 {
-                    await this.ErrorHandler.HandleErrorAsync(e).ConfigureAwait(false);
+                    await this.ErrorHandler.HandleErrorAsync(e);
                 }
             }
         }
@@ -181,7 +179,7 @@
 
             try
             {
-                var response = await this.Client.Updates.GetAccumulatedAsync(fromTime, toTime).ConfigureAwait(false);
+                var response = await this.Client.Updates.GetAccumulatedAsync(fromTime, toTime);
 
                 if (response.Data == null)
                 {

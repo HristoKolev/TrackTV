@@ -16,17 +16,17 @@
 
         public async Task Subscribe(int profileId, int showId)
         {
-            if (await this.SubscriptionRepository.IsProfileSubscribedAsync(profileId, showId).ConfigureAwait(false))
+            if (await this.SubscriptionRepository.IsProfileSubscribedAsync(profileId, showId))
             {
                 throw new SubscriptionException($"The user is already subscribed to this show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            await this.SubscriptionRepository.AddSubscriptionAsync(profileId, showId).ConfigureAwait(false);
+            await this.SubscriptionRepository.AddSubscriptionAsync(profileId, showId);
         }
 
         public async Task Unsubscribe(int profileId, int showId)
         {
-            var subscription = await this.SubscriptionRepository.GetSubscriptionAsync(profileId, showId).ConfigureAwait(false);
+            var subscription = await this.SubscriptionRepository.GetSubscriptionAsync(profileId, showId);
 
             if (subscription == null)
             {
@@ -34,7 +34,7 @@
                     $"The user is not subscribed to the specified show: (ProfileId={profileId}, ShowId={showId})");
             }
 
-            await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.SubscriptionID).ConfigureAwait(false);
+            await this.SubscriptionRepository.RemoveSubscriptionAsync(subscription.SubscriptionID);
         }
     }
 

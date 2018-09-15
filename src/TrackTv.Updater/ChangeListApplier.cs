@@ -127,10 +127,9 @@
         /// </summary>
         private async Task ApplyEpisodeChange(ApiChangePoco change)
         {
-            var myEpisode = await this.DbService.Episodes.FirstAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid)
-                                      .ConfigureAwait(false);
+            var myEpisode = await this.DbService.Episodes.FirstAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid);
 
-            var externalEpisode = await this.Client.Episodes.GetExternalEpisodeAsync(change.ApiChangeThetvdbid).ConfigureAwait(false);
+            var externalEpisode = await this.Client.Episodes.GetExternalEpisodeAsync(change.ApiChangeThetvdbid);
 
             if (externalEpisode.Id == 0)
             {
@@ -143,21 +142,20 @@
 
             MapToEpisode(myEpisode, externalEpisode);
 
-            await this.DbService.Update(myEpisode).ConfigureAwait(false);
+            await this.DbService.Update(myEpisode);
 
-            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiChangeType.Episode, change.ApiChangeThetvdbid)
-                      .ConfigureAwait(false);
+            await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiChangeType.Episode, change.ApiChangeThetvdbid);
         }
 
         private async Task ApplyShowChange(ApiChangePoco change)
         {
             var myShow = await this.DbService.Shows.FirstOrDefaultAsync(poco => poco.Thetvdbid == change.ApiChangeThetvdbid)
-                                   .ConfigureAwait(false) ?? new ShowPoco
+                                    ?? new ShowPoco
             {
                 Thetvdbid = change.ApiChangeThetvdbid
             };
 
-            var externalShow = await this.Client.Series.GetExternalShowAsync(myShow.Thetvdbid).ConfigureAwait(false);
+            var externalShow = await this.Client.Series.GetExternalShowAsync(myShow.Thetvdbid);
 
             if (externalShow == null)
             {
@@ -169,22 +167,21 @@
             
             MapToShow(myShow, externalShow);
 
-            myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network).ConfigureAwait(false);
-            myShow.ShowID = await this.DbService.Save(myShow).ConfigureAwait(false);
+            myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network);
+            myShow.ShowID = await this.DbService.Save(myShow);
 
-            await this.UpdateGenres(externalShow.Genre, myShow.ShowID).ConfigureAwait(false);
-            await this.UpdateActors(myShow.Thetvdbid, myShow.ShowID).ConfigureAwait(false);
+            await this.UpdateGenres(externalShow.Genre, myShow.ShowID);
+            await this.UpdateActors(myShow.Thetvdbid, myShow.ShowID);
 
-            await this.UpdateEpisodes(myShow.ShowID, myShow.Thetvdbid).ConfigureAwait(false);
+            await this.UpdateEpisodes(myShow.ShowID, myShow.Thetvdbid);
 
-            await this.ApiResultRepository.SaveApiResult(externalShow, ApiChangeType.Show, change.ApiChangeThetvdbid).ConfigureAwait(false);
+            await this.ApiResultRepository.SaveApiResult(externalShow, ApiChangeType.Show, change.ApiChangeThetvdbid);
         }
 
         private async Task<int> GetOrCreateGenre(string genreName)
         {
             var genre = await this.DbService.Genres
-                                  .FirstOrDefaultAsync(poco => poco.GenreName.Trim().ToLower() == genreName.Trim().ToLower())
-                                  .ConfigureAwait(false);
+                                  .FirstOrDefaultAsync(poco => poco.GenreName.Trim().ToLower() == genreName.Trim().ToLower());
 
             if (genre == null)
             {
@@ -193,7 +190,7 @@
                     GenreName = genreName
                 };
 
-                return await this.DbService.Insert(genre).ConfigureAwait(false);
+                return await this.DbService.Insert(genre);
             }
 
             return genre.GenreID;
@@ -208,8 +205,7 @@
             }
 
             var network = await this.DbService.Networks
-                                    .FirstOrDefaultAsync(poco => poco.NetworkName.Trim().ToLower() == networkName.Trim().ToLower())
-                                    .ConfigureAwait(false);
+                                    .FirstOrDefaultAsync(poco => poco.NetworkName.Trim().ToLower() == networkName.Trim().ToLower());
 
             if (network == null)
             {
@@ -218,7 +214,7 @@
                     NetworkName = networkName
                 };
 
-                return await this.DbService.Insert(network).ConfigureAwait(false);
+                return await this.DbService.Insert(network);
             }
 
             return network.NetworkID;
@@ -226,7 +222,7 @@
 
         private async Task UpdateActors(int theTvDbId, int showId)
         {
-            var response = await this.Client.Series.GetActorsAsync(theTvDbId).ConfigureAwait(false);
+            var response = await this.Client.Series.GetActorsAsync(theTvDbId);
 
             var actors = response.Data;
 
@@ -237,7 +233,7 @@
 
             var actorIds = actors.Select(actor => actor.Id).ToArray();
 
-            var myActors = await this.DbService.Actors.Where(poco => actorIds.Contains(poco.Thetvdbid)).ToListAsync().ConfigureAwait(false);
+            var myActors = await this.DbService.Actors.Where(poco => actorIds.Contains(poco.Thetvdbid)).ToListAsync();
 
             foreach (var actor in actors)
             {
@@ -252,23 +248,23 @@
                 myActor.ActorName = string.IsNullOrWhiteSpace(actor.Name) ? null : actor.Name;
                 myActor.LastUpdated = DateParser.ParseActorLastUpdated(actor.LastUpdated);
 
-                myActor.ActorID = await this.DbService.Save(myActor).ConfigureAwait(false);
+                myActor.ActorID = await this.DbService.Save(myActor);
 
                 var role = await this.DbService.Roles.FirstOrDefaultAsync(poco => poco.ShowID == showId && poco.ActorID == myActor.ActorID)
-                                     .ConfigureAwait(false) ?? new RolePoco();
+                                      ?? new RolePoco();
 
                 role.ShowID = showId;
                 role.ActorID = myActor.ActorID;
                 role.RoleName = string.IsNullOrWhiteSpace(actor.Role) ? null : actor.Role;
 
-                role.RoleID = await this.DbService.Save(role).ConfigureAwait(false);
+                role.RoleID = await this.DbService.Save(role);
             }
         }
 
         private async Task UpdateEpisodes(int showID, int thetvdbid)
         {
             // External episodes
-            var externalEpisodes = (await this.Client.Series.GetBasicEpisodesAsync(thetvdbid).ConfigureAwait(false))
+            var externalEpisodes = (await this.Client.Series.GetBasicEpisodesAsync(thetvdbid))
                                         .Select(e => new
                                         {
                                             TheTvDbID = e.Id,
@@ -283,8 +279,7 @@
                                            LastUpdated = poco.LastUpdated,
                                            EpisodeID = poco.EpisodeID
                                        })
-                                       .ToArrayAsync()
-                                       .ConfigureAwait(false);
+                                       .ToArrayAsync();
 
             // Delete
             if (myEpisodes.Any())
@@ -293,7 +288,7 @@
 
                 var myDeletedEpisodeIDs = myEpisodes.Where(x => !externalEpisodeIDs.Contains(x.TheTvDbID)).Select(a => a.EpisodeID).ToArray();
 
-                await this.DbService.Delete<EpisodePoco>(myDeletedEpisodeIDs).ConfigureAwait(false);
+                await this.DbService.Delete<EpisodePoco>(myDeletedEpisodeIDs);
             }
 
             // Add/Update
@@ -311,7 +306,7 @@
 
             this.Log.Debug($"{idsForUpdate.Length} episodes for update. Total: {externalEpisodes.Length}");
 
-            int episodeChunkSize = int.Parse(await this.SettingsService.GetSettingAsync(Setting.UpdateEpisodeChunkSize).ConfigureAwait(false));
+            int episodeChunkSize = int.Parse(await this.SettingsService.GetSettingAsync(Setting.UpdateEpisodeChunkSize));
 
             int chunk = 1;
 
@@ -322,23 +317,22 @@
                     this.Log.Debug($"Episode chunk {chunk++} of {Math.Ceiling(idsForUpdate.Length / (decimal)episodeChunkSize)}");
                 }
 
-                var fullExternalEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(episodeIDsChunk).ConfigureAwait(false);
+                var fullExternalEpisodes = await this.Client.Episodes.GetFullEpisodesAsync(episodeIDsChunk);
 
                 foreach (var externalEpisode in fullExternalEpisodes)
                 {
                     var episode = await this.DbService.Episodes.Where(poco => poco.Thetvdbid == externalEpisode.Id)
                                             .FirstOrDefaultAsync()
-                                            .ConfigureAwait(false) ?? new EpisodePoco
+                                             ?? new EpisodePoco
                     {
                         ShowID = showID
                     };
 
                     MapToEpisode(episode, externalEpisode);
 
-                    await this.DbService.Save(episode).ConfigureAwait(false);
+                    await this.DbService.Save(episode);
 
-                    await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiChangeType.Episode, externalEpisode.Id)
-                              .ConfigureAwait(false);
+                    await this.ApiResultRepository.SaveApiResult(externalEpisode, ApiChangeType.Episode, externalEpisode.Id);
                 }
             }
         }
@@ -349,15 +343,14 @@
 
             foreach (string genreName in genreNames)
             {
-                int genreId = await this.GetOrCreateGenre(genreName).ConfigureAwait(false);
+                int genreId = await this.GetOrCreateGenre(genreName);
 
                 genreIds.Add(genreId);
             }
 
             var existingGenreIds = await this.DbService.ShowsGenres.Where(poco => poco.ShowID == showId)
                                              .Select(poco => poco.GenreID)
-                                             .ToListAsync()
-                                             .ConfigureAwait(false);
+                                             .ToListAsync();
 
             foreach (int genreId in genreIds.Except(existingGenreIds))
             {
@@ -365,8 +358,7 @@
                           {
                               GenreID = genreId,
                               ShowID = showId
-                          })
-                          .ConfigureAwait(false);
+                          });
             }
         }
     }

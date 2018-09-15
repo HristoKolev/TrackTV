@@ -42,10 +42,9 @@
 
         public async Task RemoveSubscriptionAsync(int subscriptionId)
         {
-            var subscription = await this.DbService.Subscriptions.FirstOrDefaultAsync(x => x.SubscriptionID == subscriptionId)
-                                         .ConfigureAwait(false);
+            var subscription = await this.DbService.Subscriptions.FirstOrDefaultAsync(x => x.SubscriptionID == subscriptionId);
 
-            await this.DbService.Delete(subscription).ConfigureAwait(false);
+            await this.DbService.Delete(subscription);
         }
     }
 }

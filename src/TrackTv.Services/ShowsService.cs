@@ -46,11 +46,11 @@
                                            .OrderByDescending(poco => this.DbService.Subscriptions.Count(s => s.ShowID == poco.ShowID))
                                            .Page(page, pageSize)
                                            .ToArrayAsync()
-                                           .ConfigureAwait(false);
+                                           ;
 
-            var subscriberCounts = await this.CountSubscribersAsync(shows.Select(x => x.ShowID).ToArray()).ConfigureAwait(false);
+            var subscriberCounts = await this.CountSubscribersAsync(shows.Select(x => x.ShowID).ToArray());
 
-            int totalCount = await this.CountAllAsync(showName, genreId).ConfigureAwait(false);
+            int totalCount = await this.CountAllAsync(showName, genreId);
 
             return ConstructResponse(shows, subscriberCounts, totalCount);
         }
@@ -111,7 +111,7 @@
                               ShowId = show.ShowID,
                               SubscriberCount = this.DbService.Subscriptions.Count(poco => poco.ShowID == show.ShowID)
                           }).ToArrayAsync()
-                            .ConfigureAwait(false);
+                            ;
         }
     }
 

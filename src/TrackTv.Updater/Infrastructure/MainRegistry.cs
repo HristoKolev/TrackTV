@@ -72,9 +72,9 @@ namespace TrackTv.Updater.Infrastructure
             {
                 var settingsService = ctx.GetInstance<SettingsService>();
 
-                string key = await settingsService.GetSettingAsync(Setting.TheTvDbApiKey).ConfigureAwait(false);
+                string key = await settingsService.GetSettingAsync(Setting.TheTvDbApiKey);
 
-                await tvDbClient.Authentication.AuthenticateAsync(key).ConfigureAwait(false);
+                await tvDbClient.Authentication.AuthenticateAsync(key);
             }
 
             this.For<ITvDbClient>()

@@ -18,13 +18,12 @@
 
         public async Task IncrementFailedCount(int thetvdbid)
         {
-            var apiChange = await this.DbService.ApiChanges.FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == thetvdbid)
-                                      .ConfigureAwait(false) ;
+            var apiChange = await this.DbService.ApiChanges.FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == thetvdbid);
 
             apiChange.ApiChangeLastFailedTime = DateTime.UtcNow;
             apiChange.ApiChangeFailCount++;
 
-            await this.DbService.Save(apiChange).ConfigureAwait(false);
+            await this.DbService.Save(apiChange);
         }
 
         public Task<ApiChangePoco[]> GetCurrentChangeList()
@@ -34,11 +33,11 @@
 
         public async Task RemoveApiChange(int thetvdbid)
         {
-            var poco = await this.DbService.ApiChanges.FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == thetvdbid).ConfigureAwait(false);
+            var poco = await this.DbService.ApiChanges.FirstOrDefaultAsync(p => p.ApiChangeThetvdbid == thetvdbid);
 
             if (poco != null)
             {
-                await this.DbService.Delete(poco).ConfigureAwait(false);
+                await this.DbService.Delete(poco);
             }
         }
     }

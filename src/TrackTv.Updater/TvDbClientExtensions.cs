@@ -21,12 +21,12 @@ namespace TrackTv.Updater
 
             if (toTime - fromTime <= MaxRangeLength)
             {
-                return await client.GetAsync(fromTime, toTime).ConfigureAwait(false);
+                return await client.GetAsync(fromTime, toTime);
             }
 
             var ranges = BreakDownRanges(fromTime, toTime);
 
-            var responses = await GetResponsesAsync(client, ranges).ConfigureAwait(false);
+            var responses = await GetResponsesAsync(client, ranges);
 
             var updates = FilterResults(responses);
 
@@ -80,7 +80,7 @@ namespace TrackTv.Updater
     {
         public static async Task<List<EpisodeRecord>> GetFullEpisodesAsync(this IEpisodesClient episodesClient, IEnumerable<int> ids)
         {
-            var episodes = await Task.WhenAll(ids.Select(episodesClient.GetAsync)).ConfigureAwait(false);
+            var episodes = await Task.WhenAll(ids.Select(episodesClient.GetAsync));
 
             return episodes.Select(x => x.Data).ToList();
         }
@@ -94,14 +94,14 @@ namespace TrackTv.Updater
             {
                 var tasks = new List<Task<TvDbResponse<BasicEpisode[]>>>();
 
-                var firstResponse = await client.GetEpisodesAsync(seriesId, 1).ConfigureAwait(false);
+                var firstResponse = await client.GetEpisodesAsync(seriesId, 1);
 
                 for (int i = 2; i <= firstResponse.Links.Last; i++)
                 {
                     tasks.Add(client.GetEpisodesAsync(seriesId, i));
                 }
 
-                var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+                var results = await Task.WhenAll(tasks);
 
                 var episodes = firstResponse.Data.Concat(results.SelectMany(x => x.Data)).ToList();
 
@@ -117,7 +117,7 @@ namespace TrackTv.Updater
         {
             try
             {
-                var response = await client.GetAsync(updateId).ConfigureAwait(false);
+                var response = await client.GetAsync(updateId);
 
                 return response?.Data;
             }
@@ -142,7 +142,7 @@ namespace TrackTv.Updater
 
             try
             {
-                var response = await client.GetAsync(updateId).ConfigureAwait(false);
+                var response = await client.GetAsync(updateId);
 
                 return response?.Data;
             }

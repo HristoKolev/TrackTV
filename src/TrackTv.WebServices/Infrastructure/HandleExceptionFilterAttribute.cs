@@ -34,7 +34,7 @@ namespace TrackTv.WebServices.Infrastructure
         {
             try
             {
-                await this.HandleExceptionAsync(context).ConfigureAwait(false);
+                await this.HandleExceptionAsync(context);
 
                 context.ExceptionHandled = true;
             }
@@ -47,7 +47,7 @@ namespace TrackTv.WebServices.Infrastructure
                 throw;
             }
 
-            await base.OnExceptionAsync(context).ConfigureAwait(false);
+            await base.OnExceptionAsync(context);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

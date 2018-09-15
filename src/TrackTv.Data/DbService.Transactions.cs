@@ -12,7 +12,7 @@
         /// </summary>
         public async Task<NpgsqlTransaction> BeginTransaction()
         {
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
             return this.dbConnection.BeginTransaction();
         }
@@ -22,27 +22,27 @@
         /// </summary>
         public async Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null)
         {
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
-            using (var transaction = await this.BeginTransaction().ConfigureAwait(false))
+            using (var transaction = await this.BeginTransaction())
             {
                 if (timeout == null)
                 {
-                    await body(transaction).ConfigureAwait(false);
+                    await body(transaction);
                 }
                 else
                 {
                     var timeoutTask = Task.Delay(timeout.Value);
                     var transactionTask = body(transaction);
 
-                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask).ConfigureAwait(false);
+                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask);
 
                     if (completedTask == timeoutTask)
                     {
                         throw new TimeoutException("The db transaction timed out.");
                     }
 
-                    await transactionTask.ConfigureAwait(false);
+                    await transactionTask;
                 }
             }
         }
@@ -71,32 +71,32 @@
         /// </summary>
         public async Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null)
         {
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
-            using (var transaction = await this.BeginTransaction().ConfigureAwait(false))
+            using (var transaction = await this.BeginTransaction())
             {
                 if (timeout == null)
                 {
-                    await body(transaction).ConfigureAwait(false);
+                    await body(transaction);
                 }
                 else
                 {
                     var timeoutTask = Task.Delay(timeout.Value);
                     var transactionTask = body(transaction);
 
-                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask).ConfigureAwait(false);
+                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask);
 
                     if (completedTask == timeoutTask)
                     {
                         throw new TimeoutException("The db transaction timed out.");
                     }
 
-                    await transactionTask.ConfigureAwait(false);
+                    await transactionTask;
                 }
 
                 if (!transaction.IsCompleted)
                 {
-                    await transaction.CommitAsync().ConfigureAwait(false);
+                    await transaction.CommitAsync();
                 }
             }
         }

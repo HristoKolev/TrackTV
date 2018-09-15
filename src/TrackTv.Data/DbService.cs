@@ -87,16 +87,16 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
             using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
 
-                await command.PrepareAsync().ConfigureAwait(false);
+                await command.PrepareAsync();
 
-                return await command.ExecuteNonQueryAsync().ConfigureAwait(false);
+                return await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -117,16 +117,16 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
             using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
 
-                await command.PrepareAsync().ConfigureAwait(false);
+                await command.PrepareAsync();
 
-                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
                     if (reader.FieldCount == 0)
                     {
@@ -138,7 +138,7 @@
                         throw new ApplicationException("More than one column returned for query that expected exactly one column.");
                     }
 
-                    bool hasRow = await reader.ReadAsync().ConfigureAwait(false);
+                    bool hasRow = await reader.ReadAsync();
 
                     if (!hasRow)
                     {
@@ -147,7 +147,7 @@
 
                     var value = reader.GetValue(0);
 
-                    bool hasMoreRows = await reader.ReadAsync().ConfigureAwait(false);
+                    bool hasMoreRows = await reader.ReadAsync();
 
                     if (hasMoreRows)
                     {
@@ -162,7 +162,7 @@
                         }
                         else
                         {
-                            throw new ApplicationException($"Cannot cast DBNull value to a value type parameter.");
+                            throw new ApplicationException("Cannot cast DBNull value to a value type parameter.");
                         }
                     }
 
@@ -220,7 +220,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
             var result = new List<T>();
 
@@ -229,9 +229,9 @@
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
 
-                await command.PrepareAsync().ConfigureAwait(false);
+                await command.PrepareAsync();
 
-                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
                     // cached field count - I know it pointless, but I feel better by having it cached here.
                     int fieldCount = reader.FieldCount;
@@ -246,7 +246,7 @@
                         setters[i] = metadata.Setters[reader.GetName(i)];
                     }
 
-                    while (await reader.ReadAsync().ConfigureAwait(false))
+                    while (await reader.ReadAsync())
                     {
                         var instance = new T();
 
@@ -289,18 +289,18 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState().ConfigureAwait(false);
+            await this.VerifyConnectionState();
 
             using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
                 command.Parameters.AddRange(parameters);
 
-                await command.PrepareAsync().ConfigureAwait(false);
+                await command.PrepareAsync();
 
-                using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    bool hasRow = await reader.ReadAsync().ConfigureAwait(false);
+                    bool hasRow = await reader.ReadAsync();
 
                     if (!hasRow)
                     {
@@ -324,7 +324,7 @@
                         }
                     }
 
-                    bool hasMoreRows = await reader.ReadAsync().ConfigureAwait(false);
+                    bool hasMoreRows = await reader.ReadAsync();
 
                     if (hasMoreRows)
                     {

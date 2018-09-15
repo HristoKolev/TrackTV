@@ -28,7 +28,7 @@
                 Directory.CreateDirectory(bannerPath);
             }
 
-            await DownloadFileAsync(type, name, filePath).ConfigureAwait(false);
+            await DownloadFileAsync(type, name, filePath);
 
             return this.PhysicalFile(filePath, GetContentType(name));
         }
@@ -37,12 +37,12 @@
         {
             var request = WebRequest.Create($"https://thetvdb.com/banners/{type}/{name}");
             request.Method = "GET";
-            var response = await request.GetResponseAsync().ConfigureAwait(false);
+            var response = await request.GetResponseAsync();
 
             using (var responseStream = response.GetResponseStream())
             using (var fileStream = System.IO.File.OpenWrite(filePath))
             {
-                await responseStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                await responseStream.CopyToAsync(fileStream);
             }
         }
 

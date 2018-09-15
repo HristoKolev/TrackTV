@@ -19,8 +19,7 @@
 
         public async Task<IActionResult> Post([FromBody] ShowsViewModel model)
         {
-            return this.Success(await this.ShowsService.GetShowsAsync(model.ShowName, model.GenreId, model.Page, model.PageSize)
-                                          .ConfigureAwait(false));
+            return this.Success(await this.ShowsService.GetShowsAsync(model.ShowName, model.GenreId, model.Page, model.PageSize));
         }
     }
 
@@ -40,10 +39,10 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return this.Success(await this.ShowService.GetFullShowAsync(showId, this.User.GetProfileId()).ConfigureAwait(false));
+                return this.Success(await this.ShowService.GetFullShowAsync(showId, this.User.GetProfileId()));
             }
 
-            return this.Success(await this.ShowService.GetFullShowAsync(showId).ConfigureAwait(false));
+            return this.Success(await this.ShowService.GetFullShowAsync(showId));
         }
     }
 
@@ -59,7 +58,7 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Success(await this.GenresService.GetGenresAsync().ConfigureAwait(false));
+            return this.Success(await this.GenresService.GetGenresAsync());
         }
     }
 

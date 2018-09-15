@@ -24,7 +24,7 @@
         {
             var now = DateTime.UtcNow;
 
-            return this.Success(await this.CalendarService.GetCalendarAsync(this.User.GetProfileId(), now, now.Date).ConfigureAwait(false));
+            return this.Success(await this.CalendarService.GetCalendarAsync(this.User.GetProfileId(), now, now.Date));
         }
     }
 
@@ -41,7 +41,7 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Success(await this.MyShowsService.GetAllAsync(this.User.GetProfileId(), DateTime.UtcNow).ConfigureAwait(false));
+            return this.Success(await this.MyShowsService.GetAllAsync(this.User.GetProfileId(), DateTime.UtcNow));
         }
     }
 
@@ -58,7 +58,7 @@
 
         public async Task<IActionResult> Get()
         {
-            return this.Success(await this.ProfileService.GetProfileAsync(this.User.GetProfileId()).ConfigureAwait(false));
+            return this.Success(await this.ProfileService.GetProfileAsync(this.User.GetProfileId()));
         }
     }
 
@@ -77,7 +77,7 @@
         [ExposeError(typeof(SubscriptionException), "You are not subscribed to that show.")]
         public async Task<IActionResult> Delete(int showId)
         {
-            await this.SubscriptionService.Unsubscribe(this.User.GetProfileId(), showId).ConfigureAwait(false);
+            await this.SubscriptionService.Unsubscribe(this.User.GetProfileId(), showId);
 
             return this.Success();
         }
@@ -86,7 +86,7 @@
         [ExposeError(typeof(SubscriptionException), "You are already subscribed to that show.")]
         public async Task<IActionResult> Put(int showId)
         {
-            await this.SubscriptionService.Subscribe(this.User.GetProfileId(), showId).ConfigureAwait(false);
+            await this.SubscriptionService.Subscribe(this.User.GetProfileId(), showId);
 
             return this.Success();
         }

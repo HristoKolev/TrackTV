@@ -30,14 +30,14 @@
 
         public async Task<MyShow[]> GetAllAsync(int profileId, DateTime time)
         {
-            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId).ConfigureAwait(false))
+            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId))
             {
                 throw new ProfileNotFoundException(profileId);
             }
 
-            var showIds = await this.SubscriptionRepository.GetSubscriptionIdsByProfileIdAsync(profileId).ConfigureAwait(false);
+            var showIds = await this.SubscriptionRepository.GetSubscriptionIdsByProfileIdAsync(profileId);
 
-            var episodesSummaries = await this.GetEpisodesSummariesAsync(showIds, time).ConfigureAwait(false);
+            var episodesSummaries = await this.GetEpisodesSummariesAsync(showIds, time);
 
             return episodesSummaries;
         }
@@ -80,7 +80,7 @@
                               .DbConnection
                               .QueryAsync<MyShow, MyEpisode, MyEpisode, MyShow>(Query, Map, parameters,
                                                                                 splitOn: "ShowId,EpisodeId,EpisodeId")
-                              .ConfigureAwait(false);
+                              ;
 
             return shows.ToArray();
         }

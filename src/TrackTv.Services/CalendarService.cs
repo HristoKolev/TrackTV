@@ -30,12 +30,12 @@
 
         public async Task<CalendarDay[][]> GetCalendarAsync(int profileId, DateTime time, DateTime today)
         {
-            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId).ConfigureAwait(false))
+            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId))
             {
                 throw new ProfileNotFoundException(profileId);
             }
 
-            return await this.CreateAsync(profileId, time, today).ConfigureAwait(false);
+            return await this.CreateAsync(profileId, time, today);
         }
 
         private static DayOfWeek GetDayOfWeek(DateTime day) => new GregorianCalendar().GetDayOfWeek(day);
@@ -58,7 +58,7 @@
 
             var endDate = startDate.AddDays(CalendarLength);
 
-            var monthlyEpisodes = await this.GetMonthlyEpisodesAsync(profileId, startDate, endDate).ConfigureAwait(false);
+            var monthlyEpisodes = await this.GetMonthlyEpisodesAsync(profileId, startDate, endDate);
 
             var month = new ICollection<CalendarDay>[NumberOfWeeks];
 
@@ -104,7 +104,7 @@
                                       ShowId = episode.ShowID,
                                       ShowName = show.ShowName
                                   }).ToArrayAsync()
-                                    .ConfigureAwait(false);
+                                    ;
 
             return episodes;
         }

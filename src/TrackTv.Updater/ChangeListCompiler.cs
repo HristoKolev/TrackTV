@@ -39,14 +39,14 @@
         {
             var updateIDs = updates.Select(u => u.Id).ToArray();
 
-            var changeList = await this.GetChangeList().ConfigureAwait(false);
+            var changeList = await this.GetChangeList();
 
             var registeredEpisodeIDs =
                 this.DbService.Episodes.Where(p => updateIDs.Contains(p.Thetvdbid)).Select(p => p.Thetvdbid).ToArray();
 
             var registeredEpisodeIDsHashSet = new HashSet<int>(registeredEpisodeIDs);
 
-            int changeChunkSize = int.Parse(await this.SettingsService.GetSettingAsync(Setting.UpdateChangeChunkSize).ConfigureAwait(false));
+            int changeChunkSize = int.Parse(await this.SettingsService.GetSettingAsync(Setting.UpdateChangeChunkSize));
 
             int chunkCount = 1;
 
@@ -59,7 +59,7 @@
                     this.Log.Debug($"Chunk {chunkCount++} of {Math.Ceiling(updates.Length / (decimal)changeChunkSize)}");
                 }
 
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                await Task.WhenAll(tasks);
             }
 
             this.Log.Debug($"{changeList.Count} changes compiled.");
@@ -73,7 +73,7 @@
 
         private async Task<ConcurrentDictionary<string, ApiChangePoco>> GetChangeList()
         {
-            var list = await this.DbService.ApiChanges.Select(poco => new { ID = poco.ApiChangeThetvdbid, Type= poco.ApiChangeType }).ToListAsync().ConfigureAwait(false);
+            var list = await this.DbService.ApiChanges.Select(poco => new { ID = poco.ApiChangeThetvdbid, Type= poco.ApiChangeType }).ToListAsync();
 
             var dict = new ConcurrentDictionary<string, ApiChangePoco>();
 
@@ -87,7 +87,7 @@
 
         private async Task MergeUpdates(Update update, ICollection<int> registeredEpisodeIDs, ConcurrentDictionary<string, ApiChangePoco> changeList)
         {
-            var episode = await this.Client.Episodes.GetExternalEpisodeAsync(update.Id).ConfigureAwait(false);
+            var episode = await this.Client.Episodes.GetExternalEpisodeAsync(update.Id);
 
             if (episode != null)
             {
@@ -101,7 +101,7 @@
 
                     if (seriesID != 0)
                     {
-                        var attachedSeries = await this.Client.Series.GetExternalShowAsync(seriesID).ConfigureAwait(false);
+                        var attachedSeries = await this.Client.Series.GetExternalShowAsync(seriesID);
 
                         if (attachedSeries != null)
                         {
@@ -111,7 +111,7 @@
                 }
             }
 
-            var series = await this.Client.Series.GetExternalShowAsync(update.Id).ConfigureAwait(false);
+            var series = await this.Client.Series.GetExternalShowAsync(update.Id);
 
             if (series != null)
             {

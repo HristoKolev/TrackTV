@@ -27,21 +27,21 @@ namespace TrackTv.Services
 
         public async Task<FullShow> GetFullShowAsync(int showId, int profileId)
         {
-            var show = await this.GetFullShowAsync(showId).ConfigureAwait(false);
+            var show = await this.GetFullShowAsync(showId);
 
-            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId).ConfigureAwait(false))
+            if (!await this.ProfilesRepository.ProfileExistsAsync(profileId))
             {
                 throw new ProfileNotFoundException(profileId);
             }
 
-            show.IsUserSubscribed = await this.SubscriptionRepository.IsProfileSubscribedAsync(profileId, showId).ConfigureAwait(false);
+            show.IsUserSubscribed = await this.SubscriptionRepository.IsProfileSubscribedAsync(profileId, showId);
 
             return show;
         }
 
         public async Task<FullShow> GetFullShowAsync(int showId)
         {
-            var show = await this.GetShowWithNetworkByIdAsync(showId).ConfigureAwait(false);
+            var show = await this.GetShowWithNetworkByIdAsync(showId);
 
             if (show == null)
             {

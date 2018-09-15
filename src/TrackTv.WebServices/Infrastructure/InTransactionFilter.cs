@@ -23,11 +23,11 @@
         {
             return this.DbService.ExecuteInTransactionAndCommit(async transaction =>
             {
-                var ctx = await next().ConfigureAwait(false);
+                var ctx = await next();
 
                 if (ctx.Exception != null)
                 {
-                    await transaction.RollbackAsync().ConfigureAwait(false);
+                    await transaction.RollbackAsync();
                     return;
                 }
 
@@ -36,7 +36,7 @@
                     && jsResult.Value is ApiResult apiResult
                     && !apiResult.Success)
                 {
-                    await transaction.RollbackAsync().ConfigureAwait(false);
+                    await transaction.RollbackAsync();
                 }
             });
         }

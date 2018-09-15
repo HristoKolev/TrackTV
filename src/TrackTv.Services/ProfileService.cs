@@ -27,7 +27,7 @@
 
         public async Task<FullProfile> GetProfileAsync(int profileId)
         {
-            var profile = await this.DbService.Profiles.FirstOrDefaultAsync(poco => poco.ProfileID == profileId).ConfigureAwait(false);
+            var profile = await this.DbService.Profiles.FirstOrDefaultAsync(poco => poco.ProfileID == profileId);
 
             if (profile == null)
             {

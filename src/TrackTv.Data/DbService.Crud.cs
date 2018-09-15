@@ -158,7 +158,7 @@
         public async Task<int> Insert<T>(T poco)
             where T : IPoco<T>
         {
-            int pk = await this.InsertWithoutMutating(poco).ConfigureAwait(false);
+            int pk = await this.InsertWithoutMutating(poco);
 
             poco.Metadata.SetPrimaryKey(poco, pk);
 
@@ -260,10 +260,10 @@
 
             if (metadata.IsNew(poco))
             {
-                return await this.Insert(poco).ConfigureAwait(false);
+                return await this.Insert(poco);
             }
 
-            await this.Update(poco).ConfigureAwait(false);
+            await this.Update(poco);
 
             return metadata.GetPrimaryKey(poco);
         }
@@ -326,7 +326,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            return await this.ExecuteNonQuery(sql, parameters.ToArray()).ConfigureAwait(false);
+            return await this.ExecuteNonQuery(sql, parameters.ToArray());
         }
 
         /// <summary>
@@ -348,7 +348,7 @@
             string selectSql =
                 $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @p FOR UPDATE;";
 
-            var currentInstance = await this.QueryOne<T>(selectSql, this.Parameter("p", pk)).ConfigureAwait(false);
+            var currentInstance = await this.QueryOne<T>(selectSql, this.Parameter("p", pk));
 
             if (currentInstance == null)
             {
@@ -398,7 +398,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            return await this.ExecuteNonQuery(sql, parameters.ToArray()).ConfigureAwait(false);
+            return await this.ExecuteNonQuery(sql, parameters.ToArray());
         }
     }
 }

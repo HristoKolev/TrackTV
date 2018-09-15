@@ -42,8 +42,7 @@
             string hashedPassword = this.SessionService.HashPassword(model.Password);
 
             var user = await this.DbService.Users.Where(x => x.Username == model.Username && x.Password == hashedPassword)
-                                 .FirstOrDefaultAsync()
-                                 .ConfigureAwait(false);
+                                 .FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -72,7 +71,7 @@
                 return this.Failure(this.ModelState);
             }
 
-            if (await this.DbService.Users.AnyAsync(u => u.Username == model.Username).ConfigureAwait(false))
+            if (await this.DbService.Users.AnyAsync(u => u.Username == model.Username))
             {
                 return this.Failure($"A user with an username '{model.Username}' already exists.");
             }
@@ -84,11 +83,10 @@
             await this.DbService.Insert(new UserPoco
                       {
                           Username = model.Username,
-                          ProfileID = await this.ProfilesService.CreateProfileAsync(model.Username).ConfigureAwait(false),
+                          ProfileID = await this.ProfilesService.CreateProfileAsync(model.Username),
                           Password = hashedPassword,
                           IsAdmin = false
-                      })
-                      .ConfigureAwait(false);
+                      });
 
             return this.Success();
         }
