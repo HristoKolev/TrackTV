@@ -162,7 +162,7 @@
                         }
                         else
                         {
-                            throw new ApplicationException($"Cannot cast DBNull value to a value type parameter `{typeof(T).Name}`.");
+                            throw new ApplicationException($"Cannot cast DBNull value to a value type parameter.");
                         }
                     }
 

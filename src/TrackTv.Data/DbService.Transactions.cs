@@ -10,8 +10,10 @@
         /// <summary>
         /// Calls `BeginTransaction` on the connection and returns the result.
         /// </summary>
-        public NpgsqlTransaction BeginTransaction()
+        public async Task<NpgsqlTransaction> BeginTransaction()
         {
+            await this.VerifyConnectionState().ConfigureAwait(false);
+
             return this.dbConnection.BeginTransaction();
         }
 
@@ -22,7 +24,7 @@
         {
             await this.VerifyConnectionState().ConfigureAwait(false);
 
-            using (var transaction = this.BeginTransaction())
+            using (var transaction = await this.BeginTransaction().ConfigureAwait(false))
             {
                 if (timeout == null)
                 {
@@ -71,7 +73,7 @@
         {
             await this.VerifyConnectionState().ConfigureAwait(false);
 
-            using (var transaction = this.BeginTransaction())
+            using (var transaction = await this.BeginTransaction().ConfigureAwait(false))
             {
                 if (timeout == null)
                 {

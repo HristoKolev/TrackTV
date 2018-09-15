@@ -153,6 +153,20 @@ namespace TrackTv.Data
 				{{/each}}
 				return (changedColumnNames, changedColumnParameters);
 			},
+			GetAllColumns = (instance) =>
+			{
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+
+				{{#each columns}}
+				{{#unless IsPrimaryKey}}
+				columnNames.Add("{{ColumnName}}");
+				columnParameters.Add(new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} });
+
+				{{/unless}}
+				{{/each}}
+				return (columnNames, columnParameters);
+			},
 			Columns = new List<ColumnMetadataModel<{{ClassName}}Poco>>
 			{
 				{{#each columns}}

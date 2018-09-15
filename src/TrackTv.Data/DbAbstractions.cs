@@ -25,7 +25,7 @@
         /// Calls `BeginTransaction` on the connection and returns the result.
         /// </summary>
         /// <returns></returns>
-        NpgsqlTransaction BeginTransaction();
+        Task<NpgsqlTransaction> BeginTransaction();
 
         /// <summary>
         /// Inserts several records in single query.
@@ -136,6 +136,13 @@
         /// </summary>
         Task<int> Update<T>(T poco)
             where T : class, IPoco<T>, new();
+        
+        /// <summary>
+        /// Updates a record by its ID.
+        /// Only updates the changed rows. 
+        /// </summary>
+        Task<int> UpdateChangesOnly<T>(T poco)
+            where T : class, IPoco<T>, new();
     }
 
     /// <summary>
@@ -200,6 +207,8 @@
 
         // ReSharper disable once InconsistentNaming
         public Func<T, ICatalogModel<T>> MapToCM { get; set; }
+
+        public Func<T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetAllColumns { get; set; }
     }
 
     /// <summary>

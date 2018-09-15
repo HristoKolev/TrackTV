@@ -270,7 +270,6 @@
 
         /// <summary>
         /// Updates a record by its ID.
-        /// Only updates the changed rows. 
         /// </summary>
         public async Task<int> Update<T>(T poco)
             where T : class, IPoco<T>, new()
@@ -283,12 +282,73 @@
             {
                 throw new ApplicationException("Cannot update a model with primary key of 0.");
             }
+            
+            var (names, parameters) = metadata.GetAllColumns(poco);
 
-            var currentInstance = await this
-                                        .QueryOne<T>(
-                                            $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @p FOR UPDATE;",
-                                            this.Parameter("p", pk))
-                                        .ConfigureAwait(false);
+            if (names.Count == 0)
+            {
+                return 0; // nothing to update?
+            }
+
+            var sqlBuilder = new StringBuilder();
+
+            sqlBuilder.Append("UPDATE \"");
+            sqlBuilder.Append(metadata.TableSchema);
+            sqlBuilder.Append("\".\"");
+            sqlBuilder.Append(metadata.TableName);
+            sqlBuilder.Append("\" SET ");
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                string name = names[i];
+                var parameter = parameters[i];
+
+                string paramName = "@p" + i;
+
+                sqlBuilder.Append('\n');
+                sqlBuilder.Append(name);
+                sqlBuilder.Append(" = ");
+                sqlBuilder.Append(paramName);
+
+                if (i != names.Count - 1)
+                {
+                    sqlBuilder.Append(',');
+                }
+
+                parameter.ParameterName = paramName;
+            }
+
+            sqlBuilder.Append("\nWHERE ");
+            sqlBuilder.Append(metadata.PrimaryKeyColumnName);
+            sqlBuilder.Append(" = @pk;");
+
+            parameters.Add(this.Parameter("pk", pk));
+
+            string sql = sqlBuilder.ToString();
+
+            return await this.ExecuteNonQuery(sql, parameters.ToArray()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates a record by its ID.
+        /// Only updates the changed rows. 
+        /// </summary>
+        public async Task<int> UpdateChangesOnly<T>(T poco)
+            where T : class, IPoco<T>, new()
+        {
+            var metadata = poco.Metadata;
+
+            int pk = metadata.GetPrimaryKey(poco);
+
+            if (pk == default)
+            {
+                throw new ApplicationException("Cannot update a model with primary key of 0.");
+            }
+
+            string selectSql =
+                $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @p FOR UPDATE;";
+
+            var currentInstance = await this.QueryOne<T>(selectSql, this.Parameter("p", pk)).ConfigureAwait(false);
 
             if (currentInstance == null)
             {
