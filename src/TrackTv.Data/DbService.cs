@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using LinqToDB.Data;
@@ -75,7 +76,7 @@
         /// <summary>
         /// Executes a query and returns the rows affected.
         /// </summary>
-        public async Task<int> ExecuteNonQuery(string sql, params NpgsqlParameter[] parameters)
+        public Task<int> ExecuteNonQuery(string sql, params NpgsqlParameter[] parameters)
         {
             if (sql == null)
             {
@@ -87,17 +88,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState();
-
-            using (var command = this.dbConnection.CreateCommand())
-            {
-                command.CommandText = sql;
-                command.Parameters.AddRange(parameters);
-
-                await command.PrepareAsync();
-
-                return await command.ExecuteNonQueryAsync();
-            }
+            return this.ExecuteNonQueryInternal(sql, parameters);
         }
 
         /// <summary>
@@ -105,7 +96,7 @@
         /// It throws if the result set does not have exactly one column and one row.
         /// It throws if the return value is 'null' and the type T is a value type.
         /// </summary>
-        public async Task<T> ExecuteScalar<T>(string sql, params NpgsqlParameter[] parameters)
+        public Task<T> ExecuteScalar<T>(string sql, params NpgsqlParameter[] parameters)
         {
             if (sql == null)
             {
@@ -117,58 +108,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState();
-
-            using (var command = this.dbConnection.CreateCommand())
-            {
-                command.CommandText = sql;
-                command.Parameters.AddRange(parameters);
-
-                await command.PrepareAsync();
-
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    if (reader.FieldCount == 0)
-                    {
-                        throw new ApplicationException("No columns returned for query that expected exactly one column.");
-                    }
-
-                    if (reader.FieldCount > 1)
-                    {
-                        throw new ApplicationException("More than one column returned for query that expected exactly one column.");
-                    }
-
-                    bool hasRow = await reader.ReadAsync();
-
-                    if (!hasRow)
-                    {
-                        throw new ApplicationException("No rows returned for query that expected exactly one row.");
-                    }
-
-                    var value = reader.GetValue(0);
-
-                    bool hasMoreRows = await reader.ReadAsync();
-
-                    if (hasMoreRows)
-                    {
-                        throw new ApplicationException("More than one row returned for query that expected exactly one row.");
-                    }
-
-                    if (value is DBNull)
-                    {
-                        if (default(T) == null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            throw new ApplicationException("Cannot cast DBNull value to a value type parameter.");
-                        }
-                    }
-
-                    return (T)value;
-                }
-            }
+            return this.ExecuteScalarInternal<T>(sql, parameters);
         }
 
         /// <summary>
@@ -207,7 +147,7 @@
         /// <summary>
         /// Executes a query and returns objects 
         /// </summary>
-        public async Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
+        public Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
             where T : IPoco<T>, new()
         {
             if (sql == null)
@@ -220,18 +160,137 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            await this.VerifyConnectionState();
+            return this.QueryInternal<T>(sql, parameters);
+        }
+
+        /// <summary>
+        /// Returns one object of type T.
+        /// If there are no rows then returns 'null';
+        /// If there is more that one row then throws.
+        /// </summary>
+        public Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
+            where T : class, IPoco<T>, new()
+        {
+            if (sql == null)
+            {
+                throw new ArgumentNullException(nameof(sql));
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            return this.QueryOneInternal<T>(sql, parameters);
+        }
+
+        private async Task<int> ExecuteNonQueryInternal(
+            string sql,
+            IEnumerable<NpgsqlParameter> parameters,
+            CancellationToken cancellationToken = default)
+        {
+            await this.VerifyConnectionState(cancellationToken);
+
+            using (var command = this.dbConnection.CreateCommand())
+            {
+                command.CommandText = sql;
+
+                foreach (var parameter in parameters)
+                {
+                    command.Parameters.Add(parameter);
+                }
+
+                await command.PrepareAsync(cancellationToken);
+
+                return await command.ExecuteNonQueryAsync(cancellationToken);
+            }
+        }
+
+        private async Task<T> ExecuteScalarInternal<T>(
+            string sql,
+            IEnumerable<NpgsqlParameter> parameters,
+            CancellationToken cancellationToken = default)
+        {
+            await this.VerifyConnectionState(cancellationToken);
+
+            using (var command = this.dbConnection.CreateCommand())
+            {
+                command.CommandText = sql;
+
+                foreach (var parameter in parameters)
+                {
+                    command.Parameters.Add(parameter);
+                }
+
+                await command.PrepareAsync(cancellationToken);
+
+                using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                {
+                    if (reader.FieldCount == 0)
+                    {
+                        throw new ApplicationException("No columns returned for query that expected exactly one column.");
+                    }
+
+                    if (reader.FieldCount > 1)
+                    {
+                        throw new ApplicationException("More than one column returned for query that expected exactly one column.");
+                    }
+
+                    bool hasRow = await reader.ReadAsync(cancellationToken);
+
+                    if (!hasRow)
+                    {
+                        throw new ApplicationException("No rows returned for query that expected exactly one row.");
+                    }
+
+                    var value = reader.GetValue(0);
+
+                    bool hasMoreRows = await reader.ReadAsync(cancellationToken);
+
+                    if (hasMoreRows)
+                    {
+                        throw new ApplicationException("More than one row returned for query that expected exactly one row.");
+                    }
+
+                    if (value is DBNull)
+                    {
+                        if (default(T) == null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            throw new ApplicationException("Cannot cast DBNull value to a value type parameter.");
+                        }
+                    }
+
+                    return (T)value;
+                }
+            }
+        }
+
+        private async Task<List<T>> QueryInternal<T>(
+            string sql,
+            IEnumerable<NpgsqlParameter> parameters,
+            CancellationToken cancellationToken = default)
+            where T : IPoco<T>, new()
+        {
+            await this.VerifyConnectionState(cancellationToken);
 
             var result = new List<T>();
 
             using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
-                command.Parameters.AddRange(parameters);
 
-                await command.PrepareAsync();
+                foreach (var parameter in parameters)
+                {
+                    command.Parameters.Add(parameter);
+                }
 
-                using (var reader = await command.ExecuteReaderAsync())
+                await command.PrepareAsync(cancellationToken);
+
+                using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                 {
                     // cached field count - I know it pointless, but I feel better by having it cached here.
                     int fieldCount = reader.FieldCount;
@@ -246,7 +305,7 @@
                         setters[i] = metadata.Setters[reader.GetName(i)];
                     }
 
-                    while (await reader.ReadAsync())
+                    while (await reader.ReadAsync(cancellationToken))
                     {
                         var instance = new T();
 
@@ -271,36 +330,28 @@
             return result;
         }
 
-        /// <summary>
-        /// Returns one object of type T.
-        /// If there are no rows then returns 'null';
-        /// If there is more that one row then throws.
-        /// </summary>
-        public async Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
+        private async Task<T> QueryOneInternal<T>(
+            string sql,
+            IEnumerable<NpgsqlParameter> parameters,
+            CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            if (sql == null)
-            {
-                throw new ArgumentNullException(nameof(sql));
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            await this.VerifyConnectionState();
+            await this.VerifyConnectionState(cancellationToken);
 
             using (var command = this.dbConnection.CreateCommand())
             {
                 command.CommandText = sql;
-                command.Parameters.AddRange(parameters);
 
-                await command.PrepareAsync();
-
-                using (var reader = await command.ExecuteReaderAsync())
+                foreach (var parameter in parameters)
                 {
-                    bool hasRow = await reader.ReadAsync();
+                    command.Parameters.Add(parameter);
+                }
+
+                await command.PrepareAsync(cancellationToken);
+
+                using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                {
+                    bool hasRow = await reader.ReadAsync(cancellationToken);
 
                     if (!hasRow)
                     {
@@ -324,7 +375,7 @@
                         }
                     }
 
-                    bool hasMoreRows = await reader.ReadAsync();
+                    bool hasMoreRows = await reader.ReadAsync(cancellationToken);
 
                     if (hasMoreRows)
                     {
@@ -339,11 +390,11 @@
         /// <summary>
         /// Opens the connection if it's closed.
         /// </summary>
-        private Task VerifyConnectionState()
+        private Task VerifyConnectionState(CancellationToken cancellationToken = default)
         {
             if (this.dbConnection.State == ConnectionState.Closed)
             {
-                return this.dbConnection.OpenAsync();
+                return this.dbConnection.OpenAsync(cancellationToken);
             }
 
             return Task.CompletedTask;

@@ -2,6 +2,7 @@ namespace TrackTv.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Linq;
 	using LinqToDB;
     using LinqToDB.Mapping;
@@ -49,6 +50,16 @@ namespace TrackTv.Data
 
         {{/each}}
 		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => DbService.{{ClassName}}PocoMetadata;
+
+		public {{ClassName}}BM ToBm()
+		{
+			return new {{ClassName}}BM
+			{
+				{{#each columns}}
+				{{PropertyName}} = this.{{PropertyName}},
+				{{/each}}
+			};
+		}
     }
 
 	{{/each}}
@@ -61,7 +72,7 @@ namespace TrackTv.Data
     public class {{ClassName}}CM : ICatalogModel<{{ClassName}}Poco>
     {
         {{#each columns}}
-        /// <summary>
+		/// <summary>
 		{{#if ColumnComment}}
         {{#each comments}}/// <para>{{this}}</para>{{/each}}
 		{{/if}}
@@ -85,6 +96,83 @@ namespace TrackTv.Data
 
         {{/each}}
     }
+    
+    {{/each}}
+
+	{{#each model.tables}}
+    /// <summary>
+    /// <para>Table name: '{{TableName}}'.</para>
+	/// <para>Table schema: '{{TableSchema}}'.</para>  
+    /// </summary>
+    public class {{ClassName}}FM : IFilterModel<{{ClassName}}Poco>
+    {
+        {{#each columns}}
+		{{#each ValidOperators}}
+		[FilterOperator(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}})]
+        public {{../ClrNullableTypeName}} {{../PropertyName}}{{#if this}}_{{/if}}{{this}} { get; set; }
+
+		{{/each}}
+		{{#if IsNullable}}
+		[FilterOperator(QueryOperatorType.IsNull)]
+		public bool? {{PropertyName}}_IsNull { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotNull)]
+		public bool? {{PropertyName}}_IsNotNull { get; set; }
+
+		{{/if}}
+		[FilterOperator(QueryOperatorType.IsIn)]
+		public {{ClrNonNullableTypeName}}[] {{PropertyName}}_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn)]
+		public {{ClrNonNullableTypeName}}[] {{PropertyName}}_IsNotIn { get; set; }
+
+
+        {{/each}}
+    }
+    
+    {{/each}}
+
+	{{#each model.tables}}
+    /// <summary>
+    /// <para>Table name: '{{TableName}}'.</para>
+	/// <para>Table schema: '{{TableSchema}}'.</para>  
+    /// </summary>
+    public partial class {{ClassName}}BM : IBusinessModel<{{ClassName}}Poco>
+    {
+        {{#each columns}}
+		/// <summary>
+		{{#if ColumnComment}}
+        {{#each comments}}/// <para>{{this}}</para>{{/each}}
+		{{/if}}
+		/// <para>Column name: '{{ColumnName}}'.</para>
+		/// <para>Table name: '{{TableName}}'.</para>
+		{{#if IsPrimaryKey}}
+		/// <para>Primary key of table: '{{TableName}}'.</para>
+		/// <para>Primary key constraint name: '{{PrimaryKeyConstraintName}}'.</para>
+		{{/if}}		
+		{{#if IsForeignKey}}		
+		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
+		/// <para>Foreign key constraint name: '{{ForeignKeyConstraintName}}'.</para>
+		{{/if}}
+		/// <para>This column {{#if IsNullable}}is nullable{{/if}}{{#unless IsNullable}}is not nullable{{/unless}}.</para>
+		/// <para>PostgreSQL data type: '{{DbDataType}}'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.{{NpgsDataTypeName}}'.</para>
+		/// <para>CLR type: '{{ClrTypeName}}'.</para>
+		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
+        /// </summary>
+        public {{ClrTypeName}} {{PropertyName}} { get; set; }
+
+		{{/each}}
+		public {{ClassName}}Poco ToPoco()
+		{
+			return new {{ClassName}}Poco
+			{
+				{{#each columns}}
+				{{PropertyName}} = this.{{PropertyName}},
+				{{/each}}
+			};
+		}
+	}
     
     {{/each}}
     public partial class DbService
@@ -119,19 +207,13 @@ namespace TrackTv.Data
 				{"{{ColumnName}}", (instance, val) => instance.{{PropertyName}} = ({{ClrTypeName}})val },
 				{{/each}}
 			},
-			Getters = new Dictionary<string, Func<{{ClassName}}Poco, object>>
-			{
-				{{#each columns}}
-				{"{{ColumnName}}", (instance) => instance.{{PropertyName}} },
-				{{/each}}
-			},
-			GenerateParameters = (instance, index) => 
+			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
 				{
 					{{#each columns}}
 					{{#unless IsPrimaryKey}}
-					new NpgsqlParameter<{{ClrTypeName}}>("@p" + index++, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} },
+					new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} },
 					{{/unless}}
 					{{/each}}
 				};
@@ -167,13 +249,77 @@ namespace TrackTv.Data
 				{{/each}}
 				return (columnNames, columnParameters);
 			},
+			ParseFM = (instance) => {
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+				var operators = new List<QueryOperatorType>();
+
+				var fm = instance as {{ClassName}}FM;
+
+				{{#each columns}}
+				{{#each ValidOperators}}
+				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
+				{
+					columnNames.Add("{{../ColumnName}}");
+					columnParameters.Add(new NpgsqlParameter<{{../ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{../NpgsDataTypeName}})
+					{
+						TypedValue = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if ../IsClrValueType}}.Value{{/if}}
+					});
+					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
+				}				
+
+				{{/each}}
+				{{#if IsNullable}}
+				if(fm.{{PropertyName}}_IsNull != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.{{PropertyName}}_IsNotNull != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}			
+
+				{{/if}}
+				if(fm.{{PropertyName}}_IsIn != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(new NpgsqlParameter<{{ClrNonNullableTypeName}}[]>(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}})
+					{
+						TypedValue = fm.{{PropertyName}}_IsIn
+					});
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.{{PropertyName}}_IsNotIn != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(new NpgsqlParameter<{{ClrNonNullableTypeName}}[]>(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}})
+					{
+						TypedValue = fm.{{PropertyName}}_IsNotIn
+					});
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				{{/each}}
+
+				return (columnNames, columnParameters, operators);
+			},
 			Columns = new List<ColumnMetadataModel<{{ClassName}}Poco>>
 			{
 				{{#each columns}}
 				new ColumnMetadataModel<{{../ClassName}}Poco>
 				{						
-					ClrTypeName = "{{ClrTypeName}}",
+					ClrTypeName = "{{ClrTypeName}}",					
 					ClrType = typeof({{ClrTypeName}}),
+					ClrNonNullableTypeName = "{{ClrNonNullableTypeName}}",
+					ClrNonNullableType = typeof({{ClrNonNullableTypeName}}),
+					ClrNullableTypeName = "{{ClrNullableTypeName}}",
+					ClrNullableType = typeof({{ClrNullableTypeName}}),
 					ColumnComment = "{{ColumnComment}}" == string.Empty ? null : "{{ColumnComment}}",
 					Comments = "{{ColumnComment}}".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 					ColumnName = "{{ColumnName}}",
@@ -186,6 +332,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceSchemaName = "{{ForeignKeyReferenceSchemaName}}" == string.Empty ? null : "{{ForeignKeyReferenceSchemaName}}",
 					ForeignKeyReferenceTableName = "{{ForeignKeyReferenceTableName}}" == string.Empty ? null : "{{ForeignKeyReferenceTableName}}",												
 					IsNullable = bool.Parse("{{IsNullable}}"),
+					IsClrValueType = bool.Parse("{{IsClrValueType}}"),
 					Linq2dbDataTypeName = "{{Linq2dbDataTypeName}}",
 					Linq2dbDataType = {{Linq2dbDataTypeName}},
 					NpgsDataTypeName = "NpgsqlDbType.{{NpgsDataTypeName}}",
@@ -193,45 +340,43 @@ namespace TrackTv.Data
 					PropertyName = "{{PropertyName}}",
 					TableName = "{{TableName}}",
 					TableSchema = "{{TableSchema}}",
-					SetValue = (instance, val) => instance.{{PropertyName}} = ({{ClrTypeName}})val,
-					GetValue = (instance) => instance.{{PropertyName}},
 				},
 				{{/each}}
 			}
 		};
 		
         {{/each}}
-		static DbService()
-		{
-			{{#each model.tables}}
-			{{ClassName}}PocoMetadata.ColumnsByName = new Dictionary<string, ColumnMetadataModel<{{ClassName}}Poco>>();
-
-            foreach (var column in {{ClassName}}PocoMetadata.Columns)
-            {
-                {{ClassName}}PocoMetadata.ColumnsByName[column.ColumnName] = column;
-            }
-
-			{{/each}}
-		}
-
 		private static readonly IReadOnlyDictionary<Type, object> MetadataByPocoType = new Dictionary<Type, object>
         {
 			{{#each model.tables}}
             {typeof({{ClassName}}Poco), {{ClassName}}PocoMetadata},
 			{{/each}}
-        };		
-
-		public static TableMetadataModel<T> GetMetadata<T>()
-            where T : IPoco<T>
+        };
+		
+		private static readonly IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
         {
-			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
-        }
+			{{#each model.tables}}
+            {"{{TableName}}", new Dictionary<string, string>
+			{
+				{{#each columns}}
+				{"{{ColumnName}}", "{{PropertyName}}"},
+				{{/each}}
+			}},
+			{{/each}}
+        };
 
         {{#each model.tables}}
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>		
 		/// </summary>
         public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.LinqToDbConnection.GetTable<{{ClassName}}Poco>();
+
+		/// <summary>
+		/// <para>Database table '{{TableName}}'.</para>
+		/// <para>Filter model '{{ClassName}}FM'.</para>
+		/// <para>Catalog model '{{ClassName}}CM'.</para>
+		/// </summary>
+		public Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter) => this.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
 		
         {{/each}}
     }
@@ -244,6 +389,13 @@ namespace TrackTv.Data
 		/// <para>Table schema: '{{TableSchema}}'.</para>
 		/// </summary>
         IQueryable<{{ClassName}}Poco> {{PluralClassName}} { get; }
+
+		/// <summary>
+		/// <para>Database table '{{TableName}}'.</para>
+		/// <para>Filter model '{{ClassName}}FM'.</para>
+		/// <para>Catalog model '{{ClassName}}CM'.</para>
+		/// </summary>
+		Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter);
 
         {{/each}}
     }

@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using LinqToDB;
@@ -24,31 +27,30 @@
         /// <summary>
         /// Calls `BeginTransaction` on the connection and returns the result.
         /// </summary>
-        /// <returns></returns>
         Task<NpgsqlTransaction> BeginTransaction();
 
         /// <summary>
         /// Inserts several records in single query.
         /// </summary>
-        Task<int> BulkInsert<T>(IEnumerable<T> pocos)
+        Task<int> BulkInsert<T>(IEnumerable<T> pocos, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
         /// Deletes a record by its PrimaryKey.
         /// </summary>
-        Task<int> Delete<T>(T poco)
+        Task<int> Delete<T>(T poco, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
         /// <para>Deletes records from a table by their IDs.</para>
         /// </summary>
-        Task<int> Delete<T>(int[] ids)
+        Task<int> Delete<T>(int[] ids, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
         /// <para>Deletes a record by ID.</para>
         /// </summary>
-        Task<int> Delete<T>(int id)
+        Task<int> Delete<T>(int id, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
@@ -88,14 +90,17 @@
         /// <summary>
         /// Inserts a record and attaches it's ID to the poco object. 
         /// </summary>
-        Task<int> Insert<T>(T poco)
+        Task<int> Insert<T>(T poco, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
         /// Inserts a record and returns its ID.
         /// </summary>
-        Task<int> InsertWithoutMutating<T>(T poco)
+        Task<int> InsertWithoutMutating<T>(T poco, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
+
+        Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(IFilterModel<TPoco> filter, CancellationToken cancellationToken = default)
+            where TPoco : IPoco<TPoco>, new() where TCatalogModel : ICatalogModel<TPoco>;
 
         /// <summary>
         /// Creates a parameter of type T with NpgsqlDbType from the default type map 'defaultNpgsqlDbTypeMap'.
@@ -127,21 +132,21 @@
         /// If the primary key value is 0 it inserts the record.
         /// Returns the record's primary key value.
         /// </summary>
-        Task<int> Save<T>(T poco)
+        Task<int> Save<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
         /// <summary>
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
-        Task<int> Update<T>(T poco)
+        Task<int> Update<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
-        
+
         /// <summary>
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
-        Task<int> UpdateChangesOnly<T>(T poco)
+        Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
     }
 
@@ -162,9 +167,6 @@
         /// </summary>   
         public Func<T, int> GetPrimaryKey;
 
-        // ReSharper disable once NotAccessedField.Global
-        public IReadOnlyDictionary<string, Func<T, object>> Getters;
-
         /// <summary>		
         /// <para>Returns true if the record hasn't been inserted to the database yet.</para>
         /// </summary> 
@@ -181,19 +183,23 @@
 
         public List<ColumnMetadataModel<T>> Columns { get; set; }
 
-        // ReSharper disable once CollectionNeverQueried.Global
-        public Dictionary<string, ColumnMetadataModel<T>> ColumnsByName { get; set; }
-
         /// <summary>
         /// Generates a parameter for every non Primary Key column in the table.
         /// </summary>
-        public Func<T, int, NpgsqlParameter[]> GenerateParameters { get; set; }
+        public Func<T, NpgsqlParameter[]> GenerateParameters { get; set; }
+
+        public Func<T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetAllColumns { get; set; }
 
         /// <summary>
         /// Generates the changes between 2 instances of the poco class.
         /// Returns the names of the changed columns and parameters for every column value.
         /// </summary>
         public Func<T, T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetColumnChanges { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public Func<T, ICatalogModel<T>> MapToCM { get; set; }
+
+        public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFM { get; set; }
 
         public string PluralClassName { get; set; }
 
@@ -204,11 +210,6 @@
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
-
-        // ReSharper disable once InconsistentNaming
-        public Func<T, ICatalogModel<T>> MapToCM { get; set; }
-
-        public Func<T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetAllColumns { get; set; }
     }
 
     /// <summary>
@@ -216,6 +217,14 @@
     /// </summary>
     public class ColumnMetadataModel<T>
     {
+        public Type ClrNonNullableType { get; set; }
+
+        public string ClrNonNullableTypeName { get; set; }
+
+        public Type ClrNullableType { get; set; }
+
+        public string ClrNullableTypeName { get; set; }
+
         public Type ClrType { get; set; }
 
         public string ClrTypeName { get; set; }
@@ -236,7 +245,7 @@
 
         public string ForeignKeyReferenceTableName { get; set; }
 
-        public Func<T, object> GetValue { get; set; }
+        public bool IsClrValueType { get; set; }
 
         public bool IsForeignKey { get; set; }
 
@@ -258,18 +267,89 @@
 
         public string PropertyName { get; set; }
 
-        public Action<T, object> SetValue { get; set; }
-
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
+
+        public string[] ValidOperators { get; set; }
     }
 
     /// <summary>
     /// Interface for all Catalog models
     /// </summary>
-    public interface ICatalogModel<TPoco>
+    public interface ICatalogModel<in TPoco>
         where TPoco : IPoco<TPoco>
     {
+    }
+
+    /// <summary>
+    /// Interface for all Filter models
+    /// </summary>
+    public interface IFilterModel<TPoco>
+        where TPoco : IPoco<TPoco>
+    {
+    }
+
+    /// <summary>
+    /// Interface for all Business models
+    /// </summary>
+    public interface IBusinessModel<TPoco>
+        where TPoco : IPoco<TPoco>
+    {
+        TPoco ToPoco();
+    }
+
+    public enum QueryOperatorType
+    {
+        Equal,
+
+        NotEqual,
+
+        LessThan,
+
+        LessThanOrEqual,
+
+        GreaterThan,
+
+        GreaterThanOrEqual,
+
+        StartsWith,
+
+        DoesNotStartWith,
+
+        EndsWith,
+
+        DoesNotEndWith,
+
+        Contains,
+
+        DoesNotContain,
+
+        IsNull,
+
+        IsNotNull,
+
+        IsIn,
+
+        IsNotIn
+    }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class FilterOperatorAttribute : Attribute
+    {
+        public FilterOperatorAttribute(QueryOperatorType queryOperatorType)
+        {
+            this.QueryOperatorType = queryOperatorType;
+        }
+
+        public FilterOperatorAttribute(QueryOperatorType queryOperatorType, string propertyName)
+        {
+            this.QueryOperatorType = queryOperatorType;
+            this.PropertyName = propertyName;
+        }
+
+        public string PropertyName { get; }
+
+        public QueryOperatorType QueryOperatorType { get; }
     }
 }

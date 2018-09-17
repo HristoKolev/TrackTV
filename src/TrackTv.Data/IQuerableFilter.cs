@@ -34,62 +34,6 @@
         }
     }
 
-    public enum QueryType
-    {
-        None,
-
-        Equal,
-
-        NotEqual,
-
-        LessThan,
-
-        LessThanOrEqual,
-
-        GreaterThan,
-
-        GreaterThanOrEqual,
-
-        StartsWith,
-
-        DoesNotStartWith,
-
-        EndsWith,
-
-        DoesNotEndWith,
-
-        Contains,
-
-        DoesNotContain,
-
-        IsNull,
-
-        IsNotNull,
-
-        IsIn,
-
-        IsNotIn
-    }
-
-    [AttributeUsage(AttributeTargets.Property)]
-    public class QueryFilterAttribute : Attribute
-    {
-        public QueryFilterAttribute(QueryType queryType)
-        {
-            this.QueryType = queryType;
-        }
-
-        public QueryFilterAttribute(QueryType queryType, string propertyName)
-        {
-            this.QueryType = queryType;
-            this.PropertyName = propertyName;
-        }
-
-        public string PropertyName { get; }
-
-        public QueryType QueryType { get; }
-    }
-
     public class QueryableFilterException : Exception
     {
         public QueryableFilterException(string message) : base(message)
@@ -120,9 +64,9 @@
 
             foreach (var propertyInfo in filter.GetType().GetProperties())
             {
-                var filterAttribute = propertyInfo.GetCustomAttribute<QueryFilterAttribute>();
+                var filterAttribute = propertyInfo.GetCustomAttribute<FilterOperatorAttribute>();
 
-                QueryType queryType = filterAttribute?.QueryType ?? QueryType.Equal;
+                QueryOperatorType queryOperatorType = filterAttribute?.QueryOperatorType ?? QueryOperatorType.Equal;
                 string propertyName = filterAttribute?.PropertyName ?? propertyInfo.Name;
                 object propertyValue = propertyInfo.GetValue(filter);
 
@@ -133,7 +77,7 @@
                 }
 
                 // Create expression for the current property
-                var expression = CreatePropertyExpression<T>(propertyName, queryType, propertyValue);
+                var expression = CreatePropertyExpression<T>(propertyName, queryOperatorType, propertyValue);
 
                 expressions.Add(expression);
             }
@@ -163,7 +107,7 @@
             return result;
         }
 
-        private static Expression<Func<T, bool>> CreatePropertyExpression<T>(string memberName, QueryType queryType, object value)
+        private static Expression<Func<T, bool>> CreatePropertyExpression<T>(string memberName, QueryOperatorType queryOperatorType, object value)
             where T : class
         {
             var parameter = Expression.Parameter(typeof(T), "t");
@@ -172,7 +116,7 @@
             ConstantExpression memberValue;
 
             // When these query types are used, the member type must be a collection.
-            if (queryType == QueryType.IsIn || queryType == QueryType.IsNotIn)
+            if (queryOperatorType == QueryOperatorType.IsIn || queryOperatorType == QueryOperatorType.IsNotIn)
             {
                 memberValue = Expression.Constant(value, typeof(List<>).MakeGenericType(member.Type));
             }
@@ -183,93 +127,93 @@
 
             Expression expression;
 
-            switch (queryType)
+            switch (queryOperatorType)
             {
-                case QueryType.Equal :
+                case QueryOperatorType.Equal :
                 {
                     expression = Expression.Equal(member, memberValue);
                     break;
                 }
-                case QueryType.NotEqual :
+                case QueryOperatorType.NotEqual :
                 {
                     expression = Expression.NotEqual(member, memberValue);
                     break;
                 }
-                case QueryType.LessThan :
+                case QueryOperatorType.LessThan :
                 {
                     expression = Expression.LessThan(member, memberValue);
                     break;
                 }
-                case QueryType.LessThanOrEqual :
+                case QueryOperatorType.LessThanOrEqual :
                 {
                     expression = Expression.LessThanOrEqual(member, memberValue);
                     break;
                 }
-                case QueryType.GreaterThan :
+                case QueryOperatorType.GreaterThan :
                 {
                     expression = Expression.GreaterThan(member, memberValue);
                     break;
                 }
-                case QueryType.GreaterThanOrEqual :
+                case QueryOperatorType.GreaterThanOrEqual :
                 {
                     expression = Expression.GreaterThanOrEqual(member, memberValue);
                     break;
                 }
-                case QueryType.StartsWith :
+                case QueryOperatorType.StartsWith :
                 {
                     expression = Expression.Call(member, StringStartsWithMethod, memberValue);
                     break;
                 }
-                case QueryType.DoesNotStartWith :
+                case QueryOperatorType.DoesNotStartWith :
                 {
                     expression = Expression.Not(Expression.Call(member, StringStartsWithMethod, memberValue));
                     break;
                 }
-                case QueryType.EndsWith :
+                case QueryOperatorType.EndsWith :
                 {
                     expression = Expression.Call(member, StringEndsWithMethod, memberValue);
                     break;
                 }
-                case QueryType.DoesNotEndWith :
+                case QueryOperatorType.DoesNotEndWith :
                 {
                     expression = Expression.Not(Expression.Call(member, StringEndsWithMethod, memberValue));
                     break;
                 }
-                case QueryType.IsIn :
+                case QueryOperatorType.IsIn :
                 {
                     Type type = member.Type;
                     expression = Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", new[] { type }), member);
                     break;
                 }
-                case QueryType.IsNotIn :
+                case QueryOperatorType.IsNotIn :
                 {
                     Type type = member.Type;
                     expression = Expression.Not(Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", new[] { type }), member));
                     break;
                 }
-                case QueryType.Contains :
+                case QueryOperatorType.Contains :
                 {
                     expression = Expression.Call(member, StringContainsMethod, memberValue);
                     break;
                 }
-                case QueryType.DoesNotContain :
+                case QueryOperatorType.DoesNotContain :
                 {
                     expression = Expression.Not(Expression.Call(member, StringContainsMethod, memberValue));
                     break;
                 }
-                case QueryType.IsNull :
+                case QueryOperatorType.IsNull :
                 {
                     expression = Expression.Equal(member, Expression.Constant(null, member.Type));
                     break;
                 }
-                case QueryType.IsNotNull :
+                case QueryOperatorType.IsNotNull :
                 {
                     expression = Expression.NotEqual(member, Expression.Constant(null, member.Type));
                     break;
                 }
                 default :
                 {
-                    throw new ArgumentOutOfRangeException(nameof(queryType), queryType, null);
+                    throw new ArgumentOutOfRangeException(nameof(queryOperatorType), queryOperatorType, null);
                 }
             }
 
@@ -296,11 +240,11 @@
                     throw new QueryableFilterException(message);
                 }
 
-                var queryFilterAttribute = propertyInfo.GetCustomAttribute<QueryFilterAttribute>();
+                var queryFilterAttribute = propertyInfo.GetCustomAttribute<FilterOperatorAttribute>();
 
                 // Get the query type from the QueryFilterAttribute. 
                 // If such attribute is not provided the query type defaults to QueryType.Equal.
-                var queryType = queryFilterAttribute?.QueryType ?? QueryType.Equal;
+                var queryType = queryFilterAttribute?.QueryOperatorType ?? QueryOperatorType.Equal;
 
                 // Get the property name from the QueryFilterAttribute. 
                 // If such attribute is not provided the property name defaults to the declared property name.
@@ -315,16 +259,9 @@
 
                 switch (queryType)
                 {
-                    // The QueryType.None value is used as a default value so that we don't default to some specific filtering strategy.
-                    case QueryType.None :
-                    {
-                        throw new QueryableFilterException("The filter attribute should not have a QueryType of None.\r\n"
-                                                        + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                    }
-
                     // These can't be used with collection types.
-                    case QueryType.Equal :
-                    case QueryType.NotEqual :
+                    case QueryOperatorType.Equal :
+                    case QueryOperatorType.NotEqual :
                     {
                         if (propertyInfo.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
                         {
@@ -337,10 +274,10 @@
                     }
 
                     // These types are only used for numeric or DateTime types.
-                    case QueryType.LessThan :
-                    case QueryType.LessThanOrEqual :
-                    case QueryType.GreaterThan :
-                    case QueryType.GreaterThanOrEqual :
+                    case QueryOperatorType.LessThan :
+                    case QueryOperatorType.LessThanOrEqual :
+                    case QueryOperatorType.GreaterThan :
+                    case QueryOperatorType.GreaterThanOrEqual :
                     {
                         var comparableTypes = new[]
                         {
@@ -367,12 +304,12 @@
                     }
 
                     // These types cn only be used with strings.
-                    case QueryType.StartsWith :
-                    case QueryType.DoesNotStartWith :
-                    case QueryType.EndsWith :
-                    case QueryType.DoesNotEndWith :
-                    case QueryType.Contains :
-                    case QueryType.DoesNotContain :
+                    case QueryOperatorType.StartsWith :
+                    case QueryOperatorType.DoesNotStartWith :
+                    case QueryOperatorType.EndsWith :
+                    case QueryOperatorType.DoesNotEndWith :
+                    case QueryOperatorType.Contains :
+                    case QueryOperatorType.DoesNotContain :
                     {
                         if (propertyInfo.PropertyType != typeof(string))
                         {
@@ -385,8 +322,8 @@
                     }
 
                     // Only boolean values allowed here.
-                    case QueryType.IsNull :
-                    case QueryType.IsNotNull :
+                    case QueryOperatorType.IsNull :
+                    case QueryOperatorType.IsNotNull :
                     {
                         if (propertyInfo.PropertyType != typeof(bool))
                         {
@@ -399,8 +336,8 @@
                     }
 
                     // These types can only be used with collection types.
-                    case QueryType.IsIn :
-                    case QueryType.IsNotIn :
+                    case QueryOperatorType.IsIn :
+                    case QueryOperatorType.IsNotIn :
                     {
                         if (!typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
                         {

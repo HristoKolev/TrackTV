@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Npgsql;
@@ -12,166 +13,10 @@
         /// <summary>
         /// Inserts several records in single query.
         /// </summary>
-        public Task<int> BulkInsert<T>(IEnumerable<T> pocos)
+        public Task<int> BulkInsert<T>(IEnumerable<T> pocos, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
             var metadata = GetMetadata<T>();
-            var columns = metadata.Columns;
-
-            var sqlBuilder = new StringBuilder(128);
-
-            var parameters = new List<NpgsqlParameter>();
-
-            // STATEMENT HEADER
-            sqlBuilder.Append("INSERT INTO \"").Append(metadata.TableSchema).Append("\".\"").Append(metadata.TableName).Append("\" (");
-
-            bool headerFirstRun = true;
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (int i = 0; i < columns.Count; i++)
-            {
-                var column = columns[i];
-
-                if (!column.IsPrimaryKey)
-                {
-                    if (headerFirstRun)
-                    {
-                        sqlBuilder.Append("\"");
-                        headerFirstRun = false;
-                    }
-                    else
-                    {
-                        sqlBuilder.Append(", \"");
-                    }
-
-                    sqlBuilder.Append(column.ColumnName).Append('"');
-                }
-            }
-
-            sqlBuilder.Append(") VALUES ");
-
-            // PARAMETERS
-            int paramIndex = 0;
-
-            bool recordsFirstRun = true;
-
-            foreach (var record in pocos)
-            {
-                parameters.AddRange(metadata.GenerateParameters(record, paramIndex));
-
-                if (recordsFirstRun)
-                {
-                    sqlBuilder.Append("\n(");
-                    recordsFirstRun = false;
-                }
-                else
-                {
-                    sqlBuilder.Append(", \r(");
-                }
-
-                bool parametersFirstRun = true;
-
-                // ReSharper disable once ForCanBeConvertedToForeach
-                for (int i = 0; i < columns.Count; i++)
-                {
-                    var column = columns[i];
-
-                    if (!column.IsPrimaryKey)
-                    {
-                        if (parametersFirstRun)
-                        {
-                            sqlBuilder.Append("@p");
-                            parametersFirstRun = false;
-                        }
-                        else
-                        {
-                            sqlBuilder.Append(", @p");
-                        }
-
-                        sqlBuilder.Append(paramIndex++);
-                    }
-                }
-
-                sqlBuilder.Append(")");
-            }
-
-            sqlBuilder.Append(";");
-
-            string sql = sqlBuilder.ToString();
-
-            return this.ExecuteNonQuery(sql, parameters.ToArray());
-        }
-
-        /// <summary>
-        /// Deletes a record by its PrimaryKey.
-        /// </summary>
-        public Task<int> Delete<T>(T poco)
-            where T : IPoco<T>
-        {
-            var metadata = poco.Metadata;
-
-            int pk = metadata.GetPrimaryKey(poco);
-
-            return this.Delete<T>(pk);
-        }
-
-        /// <summary>
-        /// <para>Deletes records from a table by their IDs.</para>
-        /// </summary>
-        public Task<int> Delete<T>(int[] ids)
-            where T : IPoco<T>
-        {
-            if (ids.Length == 0)
-            {
-                return Task.FromResult(0);
-            }
-
-            var metadata = GetMetadata<T>();
-
-            string tableSchema = metadata.TableSchema;
-            string tableName = metadata.TableName;
-            string primaryKeyName = metadata.PrimaryKeyColumnName;
-
-            return this.ExecuteNonQuery($"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = any(@p);",
-                                        this.Parameter("p", ids));
-        }
-
-        /// <summary>
-        /// <para>Deletes a record by ID.</para>
-        /// </summary>
-        public Task<int> Delete<T>(int id)
-            where T : IPoco<T>
-        {
-            var metadata = GetMetadata<T>();
-
-            string tableSchema = metadata.TableSchema;
-            string tableName = metadata.TableName;
-            string primaryKeyName = metadata.PrimaryKeyColumnName;
-
-            return this.ExecuteNonQuery($"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @p;",
-                                        this.Parameter("p", id));
-        }
-
-        /// <summary>
-        /// Inserts a record and attaches it's ID to the poco object. 
-        /// </summary>
-        public async Task<int> Insert<T>(T poco)
-            where T : IPoco<T>
-        {
-            int pk = await this.InsertWithoutMutating(poco);
-
-            poco.Metadata.SetPrimaryKey(poco, pk);
-
-            return pk;
-        }
-
-        /// <summary>
-        /// Inserts a record and returns its ID.
-        /// </summary>
-        public Task<int> InsertWithoutMutating<T>(T poco)
-            where T : IPoco<T>
-        {
-            var metadata = poco.Metadata;
             var columns = metadata.Columns;
 
             var sqlBuilder = new StringBuilder(128);
@@ -207,44 +52,182 @@
                 }
             }
 
-            // STATEMENT VALUES 
-            sqlBuilder.Append(") VALUES (");
+            sqlBuilder.Append(") VALUES ");
 
-            bool parametersFirstRun = true;
+            var allParameters = new List<NpgsqlParameter>();
 
+            // PARAMETERS
             int paramIndex = 0;
 
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (int i = 0; i < columns.Count; i++)
+            bool recordsFirstRun = true;
+
+            foreach (var record in pocos)
             {
-                var column = columns[i];
-
-                if (!column.IsPrimaryKey)
+                if (!recordsFirstRun)
                 {
-                    if (parametersFirstRun)
-                    {
-                        sqlBuilder.Append("@p");
-                        parametersFirstRun = false;
-                    }
-                    else
-                    {
-                        sqlBuilder.Append(", @p");
-                    }
-
-                    sqlBuilder.Append(paramIndex++);
+                    sqlBuilder.Append(", ");
                 }
+
+                sqlBuilder.Append("\n(");
+                recordsFirstRun = false;
+
+                var parameters = metadata.GenerateParameters(record);
+                allParameters.AddRange(parameters);
+                
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    if (i != 0)
+                    {
+                        sqlBuilder.Append(", ");
+                    }
+                    
+                    int currentIndex = paramIndex++;
+                    var parameter = parameters[i];
+                    parameter.ParameterName = "p" + currentIndex;
+
+                    sqlBuilder.Append("@p");
+                    sqlBuilder.Append(currentIndex);
+                }
+
+                sqlBuilder.Append(")");
             }
 
-            // STATEMENT FOOTER
-            sqlBuilder.Append(") RETURNING ");
-            sqlBuilder.Append(metadata.PrimaryKeyColumnName);
             sqlBuilder.Append(";");
 
             string sql = sqlBuilder.ToString();
 
-            var parameters = metadata.GenerateParameters(poco, 0);
+            return this.ExecuteNonQueryInternal(sql, allParameters, cancellationToken);
+        }
 
-            return this.ExecuteScalar<int>(sql, parameters);
+        /// <summary>
+        /// Deletes a record by its PrimaryKey.
+        /// </summary>
+        public Task<int> Delete<T>(T poco, CancellationToken cancellationToken = default)
+            where T : IPoco<T>
+        {
+            var metadata = poco.Metadata;
+
+            int pk = metadata.GetPrimaryKey(poco);
+
+            return this.Delete<T>(pk, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes records from a table by their IDs.</para>
+        /// </summary>
+        public Task<int> Delete<T>(int[] ids, CancellationToken cancellationToken = default)
+            where T : IPoco<T>
+        {
+            if (ids.Length == 0)
+            {
+                return Task.FromResult(0);
+            }
+
+            var metadata = GetMetadata<T>();
+
+            string tableSchema = metadata.TableSchema;
+            string tableName = metadata.TableName;
+            string primaryKeyName = metadata.PrimaryKeyColumnName;
+
+            var parameters = new[]
+            {
+                this.Parameter("p", ids)
+            };
+
+            string sql = $"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = any(@p);";
+
+            return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Deletes a record by ID.</para>
+        /// </summary>
+        public Task<int> Delete<T>(int id, CancellationToken cancellationToken = default)
+            where T : IPoco<T>
+        {
+            var metadata = GetMetadata<T>();
+
+            string tableSchema = metadata.TableSchema;
+            string tableName = metadata.TableName;
+            string primaryKeyName = metadata.PrimaryKeyColumnName;
+
+            var parameters = new[]
+            {
+                this.Parameter("p", id)
+            };
+
+            string sql = $"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @p;";
+
+            return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Inserts a record and attaches it's ID to the poco object. 
+        /// </summary>
+        public async Task<int> Insert<T>(T poco, CancellationToken cancellationToken = default)
+            where T : IPoco<T>
+        {
+            int pk = await this.InsertWithoutMutating(poco, cancellationToken);
+
+            poco.Metadata.SetPrimaryKey(poco, pk);
+
+            return pk;
+        }
+
+        /// <summary>
+        /// Inserts a record and returns its ID.
+        /// </summary>
+        public Task<int> InsertWithoutMutating<T>(T poco, CancellationToken cancellationToken = default)
+            where T : IPoco<T>
+        {
+            var metadata = poco.Metadata;
+
+            var (columnNames, parameters) = metadata.GetAllColumns(poco);
+
+            var sqlBuilder = new StringBuilder(128);
+
+            // STATEMENT HEADER
+            sqlBuilder.Append("INSERT INTO \"");
+            sqlBuilder.Append(metadata.TableSchema);
+            sqlBuilder.Append("\".\"");
+            sqlBuilder.Append(metadata.TableName);
+            sqlBuilder.Append("\" (");
+
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                if (i != 0)
+                {
+                    sqlBuilder.Append(", ");
+                }
+
+                sqlBuilder.Append('"');
+                sqlBuilder.Append(columnNames[i]);
+                sqlBuilder.Append('"');
+            }
+
+            sqlBuilder.Append(")\n VALUES (");
+
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                if (i != 0)
+                {
+                    sqlBuilder.Append(", ");
+                }
+
+                sqlBuilder.Append("@p");
+                sqlBuilder.Append(i);
+
+                parameters[i].ParameterName = "p" + i;
+            }
+
+            // STATEMENT FOOTER
+            sqlBuilder.Append(") RETURNING \"");
+            sqlBuilder.Append(metadata.PrimaryKeyColumnName);
+            sqlBuilder.Append("\";");
+
+            string sql = sqlBuilder.ToString();
+
+            return this.ExecuteScalarInternal<int>(sql, parameters, cancellationToken);
         }
 
         /// <summary>
@@ -253,17 +236,17 @@
         /// If the primary key value is 0 it inserts the record.
         /// Returns the record's primary key value.
         /// </summary>
-        public async Task<int> Save<T>(T poco)
+        public async Task<int> Save<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
             var metadata = poco.Metadata;
 
             if (metadata.IsNew(poco))
             {
-                return await this.Insert(poco);
+                return await this.Insert(poco, cancellationToken);
             }
 
-            await this.Update(poco);
+            await this.Update(poco, cancellationToken);
 
             return metadata.GetPrimaryKey(poco);
         }
@@ -271,7 +254,7 @@
         /// <summary>
         /// Updates a record by its ID.
         /// </summary>
-        public async Task<int> Update<T>(T poco)
+        public Task<int> Update<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
             var metadata = poco.Metadata;
@@ -282,12 +265,12 @@
             {
                 throw new ApplicationException("Cannot update a model with primary key of 0.");
             }
-            
+
             var (names, parameters) = metadata.GetAllColumns(poco);
 
             if (names.Count == 0)
             {
-                return 0; // nothing to update?
+                return Task.FromResult(0); // nothing to update?
             }
 
             var sqlBuilder = new StringBuilder();
@@ -326,14 +309,14 @@
 
             string sql = sqlBuilder.ToString();
 
-            return await this.ExecuteNonQuery(sql, parameters.ToArray());
+            return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
 
         /// <summary>
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
-        public async Task<int> UpdateChangesOnly<T>(T poco)
+        public async Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
             var metadata = poco.Metadata;
@@ -346,9 +329,14 @@
             }
 
             string selectSql =
-                $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @p FOR UPDATE;";
+                $"select * from \"{metadata.TableSchema}\".\"{metadata.TableName}\" where \"{metadata.PrimaryKeyColumnName}\" = @pk FOR UPDATE;";
 
-            var currentInstance = await this.QueryOne<T>(selectSql, this.Parameter("p", pk));
+            var selectParameters = new[]
+            {
+                this.Parameter("pk", pk)
+            };
+
+            var currentInstance = await this.QueryOneInternal<T>(selectSql, selectParameters, cancellationToken);
 
             if (currentInstance == null)
             {
@@ -398,7 +386,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            return await this.ExecuteNonQuery(sql, parameters.ToArray());
+            return await this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
     }
 }
