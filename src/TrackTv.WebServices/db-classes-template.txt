@@ -102,7 +102,7 @@ namespace TrackTv.Data
 	{{#each model.tables}}
     /// <summary>
     /// <para>Table name: '{{TableName}}'.</para>
-	/// <para>Table schema: '{{TableSchema}}'.</para>  
+	/// <para>Table schema: '{{TableSchema}}'.</para>
     /// </summary>
     public class {{ClassName}}FM : IFilterModel<{{ClassName}}Poco>
     {
@@ -213,7 +213,14 @@ namespace TrackTv.Data
 				{
 					{{#each columns}}
 					{{#unless IsPrimaryKey}}
+					{{#if IsClrNullableType}}
+					(instance.{{PropertyName}}.HasValue ? 
+					new NpgsqlParameter<{{ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}}.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
+					{{/if}}
+					{{#unless IsClrNullableType}}
 					new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} },
+					{{/unless}}
 					{{/unless}}
 					{{/each}}
 				};
@@ -228,7 +235,15 @@ namespace TrackTv.Data
 				if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
 				{
 					changedColumnNames.Add("{{ColumnName}}");
+					{{#if IsClrNullableType}}
+					changedColumnParameters.Add(
+					myInstance.{{PropertyName}}.HasValue ? 
+					new NpgsqlParameter<{{ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = myInstance.{{PropertyName}}.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
+					{{/if}}
+					{{#unless IsClrNullableType}}
 					changedColumnParameters.Add(new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = myInstance.{{PropertyName}} });
+					{{/unless}}					
 				}
 
 				{{/unless}}
@@ -243,8 +258,15 @@ namespace TrackTv.Data
 				{{#each columns}}
 				{{#unless IsPrimaryKey}}
 				columnNames.Add("{{ColumnName}}");
+				{{#if IsClrNullableType}}
+				columnParameters.Add(
+				instance.{{PropertyName}}.HasValue ? 
+				new NpgsqlParameter<{{ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}}.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
+				{{/if}}
+				{{#unless IsClrNullableType}}
 				columnParameters.Add(new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} });
-
+				{{/unless}}
 				{{/unless}}
 				{{/each}}
 				return (columnNames, columnParameters);
@@ -258,6 +280,19 @@ namespace TrackTv.Data
 
 				{{#each columns}}
 				{{#each ValidOperators}}
+				{{#if IsClrNullableType}}
+				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
+				{
+					columnNames.Add("{{../ColumnName}}");
+					columnParameters.Add(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}.HasValue ? new NpgsqlParameter<{{../ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{../NpgsDataTypeName}})
+					{
+						TypedValue = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}.Value
+					} : new NpgsqlParameter(null, DBNull.Value));
+					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
+				}
+
+				{{/if}}
+				{{#unless IsClrNullableType}}
 				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
 				{
 					columnNames.Add("{{../ColumnName}}");
@@ -266,8 +301,9 @@ namespace TrackTv.Data
 						TypedValue = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if ../IsClrValueType}}.Value{{/if}}
 					});
 					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
-				}				
+				}
 
+				{{/unless}}
 				{{/each}}
 				{{#if IsNullable}}
 				if(fm.{{PropertyName}}_IsNull != null)
@@ -333,6 +369,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "{{ForeignKeyReferenceTableName}}" == string.Empty ? null : "{{ForeignKeyReferenceTableName}}",												
 					IsNullable = bool.Parse("{{IsNullable}}"),
 					IsClrValueType = bool.Parse("{{IsClrValueType}}"),
+					IsClrNullableType = bool.Parse("{{IsClrNullableType}}"),
 					Linq2dbDataTypeName = "{{Linq2dbDataTypeName}}",
 					Linq2dbDataType = {{Linq2dbDataTypeName}},
 					NpgsDataTypeName = "NpgsqlDbType.{{NpgsDataTypeName}}",

@@ -2114,7 +2114,7 @@ namespace TrackTv.Data
 
     /// <summary>
     /// <para>Table name: 'actors'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ActorFM : IFilterModel<ActorPoco>
     {
@@ -2265,7 +2265,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_change_types'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ApiChangeTypeFM : IFilterModel<ApiChangeTypePoco>
     {
@@ -2329,7 +2329,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_changes'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ApiChangeFM : IFilterModel<ApiChangePoco>
     {
@@ -2525,7 +2525,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ApiResponseFM : IFilterModel<ApiResponsePoco>
     {
@@ -2652,7 +2652,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'episodes'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class EpisodeFM : IFilterModel<EpisodePoco>
     {
@@ -2940,7 +2940,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'genres'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class GenreFM : IFilterModel<GenrePoco>
     {
@@ -3004,7 +3004,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'networks'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class NetworkFM : IFilterModel<NetworkPoco>
     {
@@ -3068,7 +3068,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'profiles'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ProfileFM : IFilterModel<ProfilePoco>
     {
@@ -3132,7 +3132,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'roles'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class RoleFM : IFilterModel<RolePoco>
     {
@@ -3252,7 +3252,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'settings'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class SettingFM : IFilterModel<SettingPoco>
     {
@@ -3347,7 +3347,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'shows'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ShowFM : IFilterModel<ShowPoco>
     {
@@ -3679,7 +3679,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'shows_genres'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class ShowGenreFM : IFilterModel<ShowGenrePoco>
     {
@@ -3762,7 +3762,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'subscriptions'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class SubscriptionFM : IFilterModel<SubscriptionPoco>
     {
@@ -3845,7 +3845,7 @@ namespace TrackTv.Data
     
     /// <summary>
     /// <para>Table name: 'users'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public class UserFM : IFilterModel<UserPoco>
     {
@@ -5058,7 +5058,9 @@ namespace TrackTv.Data
 				{
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorImage },
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorName },
-					new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
+					(instance.LastUpdated.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
 				};
 			},
@@ -5082,7 +5084,10 @@ namespace TrackTv.Data
 				if(dbInstance.LastUpdated != myInstance.LastUpdated)
 				{
 					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated });
+					changedColumnParameters.Add(
+					myInstance.LastUpdated.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
@@ -5100,16 +5105,15 @@ namespace TrackTv.Data
 
 				columnNames.Add("actor_image");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorImage });
-
 				columnNames.Add("actor_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorName });
-
 				columnNames.Add("last_updated");
-				columnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated });
-
+				columnParameters.Add(
+				instance.LastUpdated.HasValue ? 
+				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("thetvdbid");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -5127,7 +5131,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ActorID_NotEqual != null)
 				{
@@ -5137,7 +5141,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ActorID_LessThan != null)
 				{
@@ -5147,7 +5151,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ActorID_LessThanOrEqual != null)
 				{
@@ -5157,7 +5161,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ActorID_GreaterThan != null)
 				{
@@ -5167,7 +5171,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ActorID_GreaterThanOrEqual != null)
 				{
@@ -5177,7 +5181,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ActorID_IsIn != null)
 				{
@@ -5207,7 +5211,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ActorImage_NotEqual != null)
 				{
@@ -5217,7 +5221,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ActorImage_StartsWith != null)
 				{
@@ -5227,7 +5231,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ActorImage_DoesNotStartWith != null)
 				{
@@ -5237,7 +5241,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ActorImage_EndsWith != null)
 				{
@@ -5247,7 +5251,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ActorImage_DoesNotEndWith != null)
 				{
@@ -5257,7 +5261,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ActorImage_Contains != null)
 				{
@@ -5267,7 +5271,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ActorImage_DoesNotContain != null)
 				{
@@ -5277,7 +5281,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorImage_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ActorImage_IsNull != null)
 				{
@@ -5321,7 +5325,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ActorName_NotEqual != null)
 				{
@@ -5331,7 +5335,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ActorName_StartsWith != null)
 				{
@@ -5341,7 +5345,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ActorName_DoesNotStartWith != null)
 				{
@@ -5351,7 +5355,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ActorName_EndsWith != null)
 				{
@@ -5361,7 +5365,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ActorName_DoesNotEndWith != null)
 				{
@@ -5371,7 +5375,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ActorName_Contains != null)
 				{
@@ -5381,7 +5385,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ActorName_DoesNotContain != null)
 				{
@@ -5391,7 +5395,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ActorName_IsNull != null)
 				{
@@ -5435,7 +5439,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
@@ -5445,7 +5449,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_IsNull != null)
 				{
@@ -5489,7 +5493,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
@@ -5499,7 +5503,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
@@ -5509,7 +5513,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
@@ -5519,7 +5523,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
@@ -5529,7 +5533,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
@@ -5539,7 +5543,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
@@ -5587,6 +5591,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -5616,6 +5621,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -5645,6 +5651,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -5674,6 +5681,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -5703,6 +5711,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -5767,7 +5776,6 @@ namespace TrackTv.Data
 
 				columnNames.Add("api_change_type_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ApiChangeTypeName });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -5785,7 +5793,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_NotEqual != null)
 				{
@@ -5795,7 +5803,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_StartsWith != null)
 				{
@@ -5805,7 +5813,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_DoesNotStartWith != null)
 				{
@@ -5815,7 +5823,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_EndsWith != null)
 				{
@@ -5825,7 +5833,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_DoesNotEndWith != null)
 				{
@@ -5835,7 +5843,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_Contains != null)
 				{
@@ -5845,7 +5853,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_DoesNotContain != null)
 				{
@@ -5855,7 +5863,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ApiChangeTypeName_IsIn != null)
 				{
@@ -5885,7 +5893,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeTypeID_NotEqual != null)
 				{
@@ -5895,7 +5903,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeTypeID_LessThan != null)
 				{
@@ -5905,7 +5913,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeTypeID_LessThanOrEqual != null)
 				{
@@ -5915,7 +5923,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeTypeID_GreaterThan != null)
 				{
@@ -5925,7 +5933,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeTypeID_GreaterThanOrEqual != null)
 				{
@@ -5935,7 +5943,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeTypeID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeTypeID_IsIn != null)
 				{
@@ -5983,6 +5991,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -6012,6 +6021,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6074,9 +6084,13 @@ namespace TrackTv.Data
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeThetvdbid },
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeFailCount },
 					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeCreatedDate },
-					new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime },
+					(instance.ApiChangeLastFailedTime.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
 					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeThetvdbLastUpdated },
-					new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID },
+					(instance.ApiChangeAttachedSeriesID.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeType },
 				};
 			},
@@ -6106,7 +6120,10 @@ namespace TrackTv.Data
 				if(dbInstance.ApiChangeLastFailedTime != myInstance.ApiChangeLastFailedTime)
 				{
 					changedColumnNames.Add("api_change_last_failed_time");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeLastFailedTime });
+					changedColumnParameters.Add(
+					myInstance.ApiChangeLastFailedTime.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeLastFailedTime.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.ApiChangeThetvdbLastUpdated != myInstance.ApiChangeThetvdbLastUpdated)
@@ -6118,7 +6135,10 @@ namespace TrackTv.Data
 				if(dbInstance.ApiChangeAttachedSeriesID != myInstance.ApiChangeAttachedSeriesID)
 				{
 					changedColumnNames.Add("api_change_attached_series_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeAttachedSeriesID });
+					changedColumnParameters.Add(
+					myInstance.ApiChangeAttachedSeriesID.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeAttachedSeriesID.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.ApiChangeType != myInstance.ApiChangeType)
@@ -6136,25 +6156,24 @@ namespace TrackTv.Data
 
 				columnNames.Add("api_change_thetvdbid");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeThetvdbid });
-
 				columnNames.Add("api_change_fail_count");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeFailCount });
-
 				columnNames.Add("api_change_created_date");
 				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeCreatedDate });
-
 				columnNames.Add("api_change_last_failed_time");
-				columnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime });
-
+				columnParameters.Add(
+				instance.ApiChangeLastFailedTime.HasValue ? 
+				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("api_change_thetvdb_last_updated");
 				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeThetvdbLastUpdated });
-
 				columnNames.Add("api_change_attached_series_id");
-				columnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID });
-
+				columnParameters.Add(
+				instance.ApiChangeAttachedSeriesID.HasValue ? 
+				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("api_change_type");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeType });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -6172,7 +6191,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbid.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbid_NotEqual != null)
 				{
@@ -6182,7 +6201,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbid_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbid_LessThan != null)
 				{
@@ -6192,7 +6211,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbid_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbid_LessThanOrEqual != null)
 				{
@@ -6202,7 +6221,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbid_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbid_GreaterThan != null)
 				{
@@ -6212,7 +6231,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbid_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbid_GreaterThanOrEqual != null)
 				{
@@ -6222,7 +6241,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbid_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbid_IsIn != null)
 				{
@@ -6252,7 +6271,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeFailCount.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeFailCount_NotEqual != null)
 				{
@@ -6262,7 +6281,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeFailCount_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeFailCount_LessThan != null)
 				{
@@ -6272,7 +6291,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeFailCount_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeFailCount_LessThanOrEqual != null)
 				{
@@ -6282,7 +6301,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeFailCount_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeFailCount_GreaterThan != null)
 				{
@@ -6292,7 +6311,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeFailCount_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeFailCount_GreaterThanOrEqual != null)
 				{
@@ -6302,7 +6321,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeFailCount_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeFailCount_IsIn != null)
 				{
@@ -6332,7 +6351,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeCreatedDate.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeCreatedDate_NotEqual != null)
 				{
@@ -6342,7 +6361,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeCreatedDate_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeCreatedDate_LessThan != null)
 				{
@@ -6352,7 +6371,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeCreatedDate_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeCreatedDate_LessThanOrEqual != null)
 				{
@@ -6362,7 +6381,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeCreatedDate_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeCreatedDate_GreaterThan != null)
 				{
@@ -6372,7 +6391,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeCreatedDate_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeCreatedDate_GreaterThanOrEqual != null)
 				{
@@ -6382,7 +6401,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeCreatedDate_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeCreatedDate_IsIn != null)
 				{
@@ -6412,7 +6431,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeID_NotEqual != null)
 				{
@@ -6422,7 +6441,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeID_LessThan != null)
 				{
@@ -6432,7 +6451,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeID_LessThanOrEqual != null)
 				{
@@ -6442,7 +6461,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeID_GreaterThan != null)
 				{
@@ -6452,7 +6471,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeID_GreaterThanOrEqual != null)
 				{
@@ -6462,7 +6481,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeID_IsIn != null)
 				{
@@ -6492,7 +6511,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeLastFailedTime.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeLastFailedTime_NotEqual != null)
 				{
@@ -6502,7 +6521,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeLastFailedTime_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeLastFailedTime_IsNull != null)
 				{
@@ -6546,7 +6565,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbLastUpdated.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_NotEqual != null)
 				{
@@ -6556,7 +6575,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbLastUpdated_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_LessThan != null)
 				{
@@ -6566,7 +6585,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbLastUpdated_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual != null)
 				{
@@ -6576,7 +6595,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_GreaterThan != null)
 				{
@@ -6586,7 +6605,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbLastUpdated_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual != null)
 				{
@@ -6596,7 +6615,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_IsIn != null)
 				{
@@ -6626,7 +6645,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeAttachedSeriesID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeAttachedSeriesID_NotEqual != null)
 				{
@@ -6636,7 +6655,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeAttachedSeriesID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeAttachedSeriesID_IsNull != null)
 				{
@@ -6680,7 +6699,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeType.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiChangeType_NotEqual != null)
 				{
@@ -6690,7 +6709,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeType_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiChangeType_LessThan != null)
 				{
@@ -6700,7 +6719,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeType_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiChangeType_LessThanOrEqual != null)
 				{
@@ -6710,7 +6729,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeType_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeType_GreaterThan != null)
 				{
@@ -6720,7 +6739,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeType_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiChangeType_GreaterThanOrEqual != null)
 				{
@@ -6730,7 +6749,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiChangeType_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiChangeType_IsIn != null)
 				{
@@ -6778,6 +6797,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6807,6 +6827,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6836,6 +6857,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -6865,6 +6887,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6894,6 +6917,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -6923,6 +6947,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -6952,6 +6977,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6981,6 +7007,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "api_change_types" == string.Empty ? null : "api_change_types",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7031,8 +7058,12 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid },
-					new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid },
+					(instance.ApiResponseEpisodeThetvdbid.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
+					(instance.ApiResponseShowThetvdbid.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb) { TypedValue = instance.ApiResponseBody },
 					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiResponseLastUpdated },
 				};
@@ -7045,13 +7076,19 @@ namespace TrackTv.Data
 				if(dbInstance.ApiResponseEpisodeThetvdbid != myInstance.ApiResponseEpisodeThetvdbid)
 				{
 					changedColumnNames.Add("api_response_episode_thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseEpisodeThetvdbid });
+					changedColumnParameters.Add(
+					myInstance.ApiResponseEpisodeThetvdbid.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseEpisodeThetvdbid.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.ApiResponseShowThetvdbid != myInstance.ApiResponseShowThetvdbid)
 				{
 					changedColumnNames.Add("api_response_show_thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseShowThetvdbid });
+					changedColumnParameters.Add(
+					myInstance.ApiResponseShowThetvdbid.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseShowThetvdbid.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.ApiResponseBody != myInstance.ApiResponseBody)
@@ -7074,17 +7111,19 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("api_response_episode_thetvdbid");
-				columnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid });
-
+				columnParameters.Add(
+				instance.ApiResponseEpisodeThetvdbid.HasValue ? 
+				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("api_response_show_thetvdbid");
-				columnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid });
-
+				columnParameters.Add(
+				instance.ApiResponseShowThetvdbid.HasValue ? 
+				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("api_response_body");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb) { TypedValue = instance.ApiResponseBody });
-
 				columnNames.Add("api_response_last_updated");
 				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiResponseLastUpdated });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -7102,7 +7141,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseEpisodeThetvdbid.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiResponseEpisodeThetvdbid_NotEqual != null)
 				{
@@ -7112,7 +7151,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseEpisodeThetvdbid_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiResponseEpisodeThetvdbid_IsNull != null)
 				{
@@ -7156,7 +7195,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseShowThetvdbid.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiResponseShowThetvdbid_NotEqual != null)
 				{
@@ -7166,7 +7205,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseShowThetvdbid_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiResponseShowThetvdbid_IsNull != null)
 				{
@@ -7210,7 +7249,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiResponseBody_NotEqual != null)
 				{
@@ -7220,7 +7259,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiResponseBody_StartsWith != null)
 				{
@@ -7230,7 +7269,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ApiResponseBody_DoesNotStartWith != null)
 				{
@@ -7240,7 +7279,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ApiResponseBody_EndsWith != null)
 				{
@@ -7250,7 +7289,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ApiResponseBody_DoesNotEndWith != null)
 				{
@@ -7260,7 +7299,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ApiResponseBody_Contains != null)
 				{
@@ -7270,7 +7309,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ApiResponseBody_DoesNotContain != null)
 				{
@@ -7280,7 +7319,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseBody_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ApiResponseBody_IsIn != null)
 				{
@@ -7310,7 +7349,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiResponseID_NotEqual != null)
 				{
@@ -7320,7 +7359,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiResponseID_LessThan != null)
 				{
@@ -7330,7 +7369,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiResponseID_LessThanOrEqual != null)
 				{
@@ -7340,7 +7379,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiResponseID_GreaterThan != null)
 				{
@@ -7350,7 +7389,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiResponseID_GreaterThanOrEqual != null)
 				{
@@ -7360,7 +7399,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiResponseID_IsIn != null)
 				{
@@ -7390,7 +7429,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseLastUpdated.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ApiResponseLastUpdated_NotEqual != null)
 				{
@@ -7400,7 +7439,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseLastUpdated_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ApiResponseLastUpdated_LessThan != null)
 				{
@@ -7410,7 +7449,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseLastUpdated_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ApiResponseLastUpdated_LessThanOrEqual != null)
 				{
@@ -7420,7 +7459,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseLastUpdated_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiResponseLastUpdated_GreaterThan != null)
 				{
@@ -7430,7 +7469,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseLastUpdated_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ApiResponseLastUpdated_GreaterThanOrEqual != null)
 				{
@@ -7440,7 +7479,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ApiResponseLastUpdated_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ApiResponseLastUpdated_IsIn != null)
 				{
@@ -7488,6 +7527,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "episodes" == string.Empty ? null : "episodes",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7517,6 +7557,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7546,6 +7587,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.BinaryJson",
 					Linq2dbDataType = DataType.BinaryJson,
 					NpgsDataTypeName = "NpgsqlDbType.Jsonb",
@@ -7575,6 +7617,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7604,6 +7647,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -7672,7 +7716,9 @@ namespace TrackTv.Data
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.EpisodeDescription },
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.EpisodeNumber },
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.EpisodeTitle },
-					new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired },
+					(instance.FirstAired.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid },
 					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.SeasonNumber },
@@ -7706,7 +7752,10 @@ namespace TrackTv.Data
 				if(dbInstance.FirstAired != myInstance.FirstAired)
 				{
 					changedColumnNames.Add("first_aired");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired });
+					changedColumnParameters.Add(
+					myInstance.FirstAired.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.Imdbid != myInstance.Imdbid)
@@ -7748,31 +7797,25 @@ namespace TrackTv.Data
 
 				columnNames.Add("episode_description");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.EpisodeDescription });
-
 				columnNames.Add("episode_number");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.EpisodeNumber });
-
 				columnNames.Add("episode_title");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.EpisodeTitle });
-
 				columnNames.Add("first_aired");
-				columnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired });
-
+				columnParameters.Add(
+				instance.FirstAired.HasValue ? 
+				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("imdbid");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid });
-
 				columnNames.Add("last_updated");
 				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated });
-
 				columnNames.Add("season_number");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.SeasonNumber });
-
 				columnNames.Add("show_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
-
 				columnNames.Add("thetvdbid");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -7790,7 +7833,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.EpisodeID_NotEqual != null)
 				{
@@ -7800,7 +7843,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.EpisodeID_LessThan != null)
 				{
@@ -7810,7 +7853,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.EpisodeID_LessThanOrEqual != null)
 				{
@@ -7820,7 +7863,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.EpisodeID_GreaterThan != null)
 				{
@@ -7830,7 +7873,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.EpisodeID_GreaterThanOrEqual != null)
 				{
@@ -7840,7 +7883,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.EpisodeID_IsIn != null)
 				{
@@ -7870,7 +7913,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.EpisodeDescription_NotEqual != null)
 				{
@@ -7880,7 +7923,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.EpisodeDescription_StartsWith != null)
 				{
@@ -7890,7 +7933,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.EpisodeDescription_DoesNotStartWith != null)
 				{
@@ -7900,7 +7943,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.EpisodeDescription_EndsWith != null)
 				{
@@ -7910,7 +7953,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.EpisodeDescription_DoesNotEndWith != null)
 				{
@@ -7920,7 +7963,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.EpisodeDescription_Contains != null)
 				{
@@ -7930,7 +7973,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.EpisodeDescription_DoesNotContain != null)
 				{
@@ -7940,7 +7983,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeDescription_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.EpisodeDescription_IsNull != null)
 				{
@@ -7984,7 +8027,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeNumber.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.EpisodeNumber_NotEqual != null)
 				{
@@ -7994,7 +8037,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeNumber_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.EpisodeNumber_LessThan != null)
 				{
@@ -8004,7 +8047,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeNumber_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.EpisodeNumber_LessThanOrEqual != null)
 				{
@@ -8014,7 +8057,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeNumber_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.EpisodeNumber_GreaterThan != null)
 				{
@@ -8024,7 +8067,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeNumber_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.EpisodeNumber_GreaterThanOrEqual != null)
 				{
@@ -8034,7 +8077,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeNumber_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.EpisodeNumber_IsIn != null)
 				{
@@ -8064,7 +8107,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.EpisodeTitle_NotEqual != null)
 				{
@@ -8074,7 +8117,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.EpisodeTitle_StartsWith != null)
 				{
@@ -8084,7 +8127,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.EpisodeTitle_DoesNotStartWith != null)
 				{
@@ -8094,7 +8137,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.EpisodeTitle_EndsWith != null)
 				{
@@ -8104,7 +8147,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.EpisodeTitle_DoesNotEndWith != null)
 				{
@@ -8114,7 +8157,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.EpisodeTitle_Contains != null)
 				{
@@ -8124,7 +8167,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.EpisodeTitle_DoesNotContain != null)
 				{
@@ -8134,7 +8177,7 @@ namespace TrackTv.Data
 						TypedValue = fm.EpisodeTitle_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.EpisodeTitle_IsNull != null)
 				{
@@ -8178,7 +8221,7 @@ namespace TrackTv.Data
 						TypedValue = fm.FirstAired.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.FirstAired_NotEqual != null)
 				{
@@ -8188,7 +8231,7 @@ namespace TrackTv.Data
 						TypedValue = fm.FirstAired_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.FirstAired_IsNull != null)
 				{
@@ -8232,7 +8275,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Imdbid_NotEqual != null)
 				{
@@ -8242,7 +8285,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Imdbid_StartsWith != null)
 				{
@@ -8252,7 +8295,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.Imdbid_DoesNotStartWith != null)
 				{
@@ -8262,7 +8305,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.Imdbid_EndsWith != null)
 				{
@@ -8272,7 +8315,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.Imdbid_DoesNotEndWith != null)
 				{
@@ -8282,7 +8325,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.Imdbid_Contains != null)
 				{
@@ -8292,7 +8335,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.Imdbid_DoesNotContain != null)
 				{
@@ -8302,7 +8345,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.Imdbid_IsNull != null)
 				{
@@ -8346,7 +8389,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
@@ -8356,7 +8399,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_LessThan != null)
 				{
@@ -8366,7 +8409,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.LastUpdated_LessThanOrEqual != null)
 				{
@@ -8376,7 +8419,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_GreaterThan != null)
 				{
@@ -8386,7 +8429,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.LastUpdated_GreaterThanOrEqual != null)
 				{
@@ -8396,7 +8439,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_IsIn != null)
 				{
@@ -8426,7 +8469,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SeasonNumber.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.SeasonNumber_NotEqual != null)
 				{
@@ -8436,7 +8479,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SeasonNumber_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.SeasonNumber_LessThan != null)
 				{
@@ -8446,7 +8489,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SeasonNumber_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.SeasonNumber_LessThanOrEqual != null)
 				{
@@ -8456,7 +8499,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SeasonNumber_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.SeasonNumber_GreaterThan != null)
 				{
@@ -8466,7 +8509,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SeasonNumber_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.SeasonNumber_GreaterThanOrEqual != null)
 				{
@@ -8476,7 +8519,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SeasonNumber_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.SeasonNumber_IsIn != null)
 				{
@@ -8506,7 +8549,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
@@ -8516,7 +8559,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
@@ -8526,7 +8569,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
@@ -8536,7 +8579,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
@@ -8546,7 +8589,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
@@ -8556,7 +8599,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -8586,7 +8629,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
@@ -8596,7 +8639,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
@@ -8606,7 +8649,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
@@ -8616,7 +8659,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
@@ -8626,7 +8669,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
@@ -8636,7 +8679,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
@@ -8684,6 +8727,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8713,6 +8757,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Text",
 					Linq2dbDataType = DataType.Text,
 					NpgsDataTypeName = "NpgsqlDbType.Text",
@@ -8742,6 +8787,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8771,6 +8817,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -8800,6 +8847,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -8829,6 +8877,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -8858,6 +8907,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -8887,6 +8937,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8916,6 +8967,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8945,6 +8997,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9009,7 +9062,6 @@ namespace TrackTv.Data
 
 				columnNames.Add("genre_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.GenreName });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9027,7 +9079,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.GenreID_NotEqual != null)
 				{
@@ -9037,7 +9089,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.GenreID_LessThan != null)
 				{
@@ -9047,7 +9099,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.GenreID_LessThanOrEqual != null)
 				{
@@ -9057,7 +9109,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.GenreID_GreaterThan != null)
 				{
@@ -9067,7 +9119,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.GenreID_GreaterThanOrEqual != null)
 				{
@@ -9077,7 +9129,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.GenreID_IsIn != null)
 				{
@@ -9107,7 +9159,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.GenreName_NotEqual != null)
 				{
@@ -9117,7 +9169,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.GenreName_StartsWith != null)
 				{
@@ -9127,7 +9179,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.GenreName_DoesNotStartWith != null)
 				{
@@ -9137,7 +9189,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.GenreName_EndsWith != null)
 				{
@@ -9147,7 +9199,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.GenreName_DoesNotEndWith != null)
 				{
@@ -9157,7 +9209,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.GenreName_Contains != null)
 				{
@@ -9167,7 +9219,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.GenreName_DoesNotContain != null)
 				{
@@ -9177,7 +9229,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.GenreName_IsIn != null)
 				{
@@ -9225,6 +9277,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9254,6 +9307,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -9318,7 +9372,6 @@ namespace TrackTv.Data
 
 				columnNames.Add("network_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.NetworkName });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9336,7 +9389,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.NetworkID_NotEqual != null)
 				{
@@ -9346,7 +9399,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.NetworkID_LessThan != null)
 				{
@@ -9356,7 +9409,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.NetworkID_LessThanOrEqual != null)
 				{
@@ -9366,7 +9419,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.NetworkID_GreaterThan != null)
 				{
@@ -9376,7 +9429,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.NetworkID_GreaterThanOrEqual != null)
 				{
@@ -9386,7 +9439,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.NetworkID_IsIn != null)
 				{
@@ -9416,7 +9469,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.NetworkName_NotEqual != null)
 				{
@@ -9426,7 +9479,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.NetworkName_StartsWith != null)
 				{
@@ -9436,7 +9489,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.NetworkName_DoesNotStartWith != null)
 				{
@@ -9446,7 +9499,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.NetworkName_EndsWith != null)
 				{
@@ -9456,7 +9509,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.NetworkName_DoesNotEndWith != null)
 				{
@@ -9466,7 +9519,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.NetworkName_Contains != null)
 				{
@@ -9476,7 +9529,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.NetworkName_DoesNotContain != null)
 				{
@@ -9486,7 +9539,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.NetworkName_IsIn != null)
 				{
@@ -9534,6 +9587,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9563,6 +9617,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -9627,7 +9682,6 @@ namespace TrackTv.Data
 
 				columnNames.Add("profile_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ProfileName });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9645,7 +9699,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ProfileID_NotEqual != null)
 				{
@@ -9655,7 +9709,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ProfileID_LessThan != null)
 				{
@@ -9665,7 +9719,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
@@ -9675,7 +9729,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
@@ -9685,7 +9739,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
@@ -9695,7 +9749,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ProfileID_IsIn != null)
 				{
@@ -9725,7 +9779,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ProfileName_NotEqual != null)
 				{
@@ -9735,7 +9789,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ProfileName_StartsWith != null)
 				{
@@ -9745,7 +9799,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ProfileName_DoesNotStartWith != null)
 				{
@@ -9755,7 +9809,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ProfileName_EndsWith != null)
 				{
@@ -9765,7 +9819,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ProfileName_DoesNotEndWith != null)
 				{
@@ -9775,7 +9829,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ProfileName_Contains != null)
 				{
@@ -9785,7 +9839,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ProfileName_DoesNotContain != null)
 				{
@@ -9795,7 +9849,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ProfileName_IsIn != null)
 				{
@@ -9843,6 +9897,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9872,6 +9927,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -9956,13 +10012,10 @@ namespace TrackTv.Data
 
 				columnNames.Add("actor_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ActorID });
-
 				columnNames.Add("role_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.RoleName });
-
 				columnNames.Add("show_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9980,7 +10033,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.RoleID_NotEqual != null)
 				{
@@ -9990,7 +10043,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.RoleID_LessThan != null)
 				{
@@ -10000,7 +10053,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.RoleID_LessThanOrEqual != null)
 				{
@@ -10010,7 +10063,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.RoleID_GreaterThan != null)
 				{
@@ -10020,7 +10073,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.RoleID_GreaterThanOrEqual != null)
 				{
@@ -10030,7 +10083,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.RoleID_IsIn != null)
 				{
@@ -10060,7 +10113,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ActorID_NotEqual != null)
 				{
@@ -10070,7 +10123,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ActorID_LessThan != null)
 				{
@@ -10080,7 +10133,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ActorID_LessThanOrEqual != null)
 				{
@@ -10090,7 +10143,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ActorID_GreaterThan != null)
 				{
@@ -10100,7 +10153,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ActorID_GreaterThanOrEqual != null)
 				{
@@ -10110,7 +10163,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ActorID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ActorID_IsIn != null)
 				{
@@ -10140,7 +10193,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.RoleName_NotEqual != null)
 				{
@@ -10150,7 +10203,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.RoleName_StartsWith != null)
 				{
@@ -10160,7 +10213,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.RoleName_DoesNotStartWith != null)
 				{
@@ -10170,7 +10223,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.RoleName_EndsWith != null)
 				{
@@ -10180,7 +10233,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.RoleName_DoesNotEndWith != null)
 				{
@@ -10190,7 +10243,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.RoleName_Contains != null)
 				{
@@ -10200,7 +10253,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.RoleName_DoesNotContain != null)
 				{
@@ -10210,7 +10263,7 @@ namespace TrackTv.Data
 						TypedValue = fm.RoleName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.RoleName_IsNull != null)
 				{
@@ -10254,7 +10307,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
@@ -10264,7 +10317,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
@@ -10274,7 +10327,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
@@ -10284,7 +10337,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
@@ -10294,7 +10347,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
@@ -10304,7 +10357,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -10352,6 +10405,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10381,6 +10435,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "actors" == string.Empty ? null : "actors",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10410,6 +10465,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -10439,6 +10495,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10513,10 +10570,8 @@ namespace TrackTv.Data
 
 				columnNames.Add("setting_value");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.SettingValue });
-
 				columnNames.Add("setting_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.SettingName });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -10534,7 +10589,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.SettingID_NotEqual != null)
 				{
@@ -10544,7 +10599,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.SettingID_LessThan != null)
 				{
@@ -10554,7 +10609,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.SettingID_LessThanOrEqual != null)
 				{
@@ -10564,7 +10619,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.SettingID_GreaterThan != null)
 				{
@@ -10574,7 +10629,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.SettingID_GreaterThanOrEqual != null)
 				{
@@ -10584,7 +10639,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.SettingID_IsIn != null)
 				{
@@ -10614,7 +10669,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.SettingValue_NotEqual != null)
 				{
@@ -10624,7 +10679,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.SettingValue_StartsWith != null)
 				{
@@ -10634,7 +10689,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.SettingValue_DoesNotStartWith != null)
 				{
@@ -10644,7 +10699,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.SettingValue_EndsWith != null)
 				{
@@ -10654,7 +10709,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.SettingValue_DoesNotEndWith != null)
 				{
@@ -10664,7 +10719,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.SettingValue_Contains != null)
 				{
@@ -10674,7 +10729,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.SettingValue_DoesNotContain != null)
 				{
@@ -10684,7 +10739,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingValue_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.SettingValue_IsIn != null)
 				{
@@ -10714,7 +10769,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.SettingName_NotEqual != null)
 				{
@@ -10724,7 +10779,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.SettingName_StartsWith != null)
 				{
@@ -10734,7 +10789,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.SettingName_DoesNotStartWith != null)
 				{
@@ -10744,7 +10799,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.SettingName_EndsWith != null)
 				{
@@ -10754,7 +10809,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.SettingName_DoesNotEndWith != null)
 				{
@@ -10764,7 +10819,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.SettingName_Contains != null)
 				{
@@ -10774,7 +10829,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.SettingName_DoesNotContain != null)
 				{
@@ -10784,7 +10839,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SettingName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.SettingName_IsIn != null)
 				{
@@ -10832,6 +10887,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10861,6 +10917,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -10890,6 +10947,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -10961,9 +11019,15 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.AirDay },
-					new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime },
-					new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired },
+					(instance.AirDay.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.AirDay.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
+					(instance.AirTime.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
+					(instance.FirstAired.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } :
+					new NpgsqlParameter(null, DBNull.Value)),
 					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid },
 					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
 					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.NetworkID },
@@ -10982,19 +11046,28 @@ namespace TrackTv.Data
 				if(dbInstance.AirDay != myInstance.AirDay)
 				{
 					changedColumnNames.Add("air_day");
-					changedColumnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.AirDay });
+					changedColumnParameters.Add(
+					myInstance.AirDay.HasValue ? 
+					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.AirDay.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.AirTime != myInstance.AirTime)
 				{
 					changedColumnNames.Add("air_time");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.AirTime });
+					changedColumnParameters.Add(
+					myInstance.AirTime.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.AirTime.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.FirstAired != myInstance.FirstAired)
 				{
 					changedColumnNames.Add("first_aired");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired });
+					changedColumnParameters.Add(
+					myInstance.FirstAired.HasValue ? 
+					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired.Value } : 
+					new NpgsqlParameter(null, DBNull.Value));
 				}
 
 				if(dbInstance.Imdbid != myInstance.Imdbid)
@@ -11053,38 +11126,36 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("air_day");
-				columnParameters.Add(new NpgsqlParameter<int?>(null, NpgsqlDbType.Integer) { TypedValue = instance.AirDay });
-
+				columnParameters.Add(
+				instance.AirDay.HasValue ? 
+				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.AirDay.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("air_time");
-				columnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime });
-
+				columnParameters.Add(
+				instance.AirTime.HasValue ? 
+				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("first_aired");
-				columnParameters.Add(new NpgsqlParameter<DateTime?>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired });
-
+				columnParameters.Add(
+				instance.FirstAired.HasValue ? 
+				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } : 
+				new NpgsqlParameter(null, DBNull.Value));
 				columnNames.Add("imdbid");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid });
-
 				columnNames.Add("last_updated");
 				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated });
-
 				columnNames.Add("network_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.NetworkID });
-
 				columnNames.Add("show_banner");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ShowBanner });
-
 				columnNames.Add("show_description");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.ShowDescription });
-
 				columnNames.Add("show_name");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ShowName });
-
 				columnNames.Add("show_status");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowStatus });
-
 				columnNames.Add("thetvdbid");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -11102,7 +11173,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
@@ -11112,7 +11183,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
@@ -11122,7 +11193,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
@@ -11132,7 +11203,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
@@ -11142,7 +11213,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
@@ -11152,7 +11223,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -11182,7 +11253,7 @@ namespace TrackTv.Data
 						TypedValue = fm.AirDay.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.AirDay_NotEqual != null)
 				{
@@ -11192,7 +11263,7 @@ namespace TrackTv.Data
 						TypedValue = fm.AirDay_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.AirDay_IsNull != null)
 				{
@@ -11236,7 +11307,7 @@ namespace TrackTv.Data
 						TypedValue = fm.AirTime.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.AirTime_NotEqual != null)
 				{
@@ -11246,7 +11317,7 @@ namespace TrackTv.Data
 						TypedValue = fm.AirTime_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.AirTime_IsNull != null)
 				{
@@ -11290,7 +11361,7 @@ namespace TrackTv.Data
 						TypedValue = fm.FirstAired.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.FirstAired_NotEqual != null)
 				{
@@ -11300,7 +11371,7 @@ namespace TrackTv.Data
 						TypedValue = fm.FirstAired_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.FirstAired_IsNull != null)
 				{
@@ -11344,7 +11415,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Imdbid_NotEqual != null)
 				{
@@ -11354,7 +11425,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Imdbid_StartsWith != null)
 				{
@@ -11364,7 +11435,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.Imdbid_DoesNotStartWith != null)
 				{
@@ -11374,7 +11445,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.Imdbid_EndsWith != null)
 				{
@@ -11384,7 +11455,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.Imdbid_DoesNotEndWith != null)
 				{
@@ -11394,7 +11465,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.Imdbid_Contains != null)
 				{
@@ -11404,7 +11475,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.Imdbid_DoesNotContain != null)
 				{
@@ -11414,7 +11485,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Imdbid_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.Imdbid_IsNull != null)
 				{
@@ -11458,7 +11529,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
@@ -11468,7 +11539,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_LessThan != null)
 				{
@@ -11478,7 +11549,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.LastUpdated_LessThanOrEqual != null)
 				{
@@ -11488,7 +11559,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_GreaterThan != null)
 				{
@@ -11498,7 +11569,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.LastUpdated_GreaterThanOrEqual != null)
 				{
@@ -11508,7 +11579,7 @@ namespace TrackTv.Data
 						TypedValue = fm.LastUpdated_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.LastUpdated_IsIn != null)
 				{
@@ -11538,7 +11609,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.NetworkID_NotEqual != null)
 				{
@@ -11548,7 +11619,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.NetworkID_LessThan != null)
 				{
@@ -11558,7 +11629,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.NetworkID_LessThanOrEqual != null)
 				{
@@ -11568,7 +11639,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.NetworkID_GreaterThan != null)
 				{
@@ -11578,7 +11649,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.NetworkID_GreaterThanOrEqual != null)
 				{
@@ -11588,7 +11659,7 @@ namespace TrackTv.Data
 						TypedValue = fm.NetworkID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.NetworkID_IsIn != null)
 				{
@@ -11618,7 +11689,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowBanner_NotEqual != null)
 				{
@@ -11628,7 +11699,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowBanner_StartsWith != null)
 				{
@@ -11638,7 +11709,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ShowBanner_DoesNotStartWith != null)
 				{
@@ -11648,7 +11719,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ShowBanner_EndsWith != null)
 				{
@@ -11658,7 +11729,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ShowBanner_DoesNotEndWith != null)
 				{
@@ -11668,7 +11739,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ShowBanner_Contains != null)
 				{
@@ -11678,7 +11749,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ShowBanner_DoesNotContain != null)
 				{
@@ -11688,7 +11759,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowBanner_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ShowBanner_IsNull != null)
 				{
@@ -11732,7 +11803,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowDescription_NotEqual != null)
 				{
@@ -11742,7 +11813,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowDescription_StartsWith != null)
 				{
@@ -11752,7 +11823,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ShowDescription_DoesNotStartWith != null)
 				{
@@ -11762,7 +11833,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ShowDescription_EndsWith != null)
 				{
@@ -11772,7 +11843,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ShowDescription_DoesNotEndWith != null)
 				{
@@ -11782,7 +11853,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ShowDescription_Contains != null)
 				{
@@ -11792,7 +11863,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ShowDescription_DoesNotContain != null)
 				{
@@ -11802,7 +11873,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowDescription_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ShowDescription_IsNull != null)
 				{
@@ -11846,7 +11917,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowName_NotEqual != null)
 				{
@@ -11856,7 +11927,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowName_StartsWith != null)
 				{
@@ -11866,7 +11937,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.ShowName_DoesNotStartWith != null)
 				{
@@ -11876,7 +11947,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.ShowName_EndsWith != null)
 				{
@@ -11886,7 +11957,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.ShowName_DoesNotEndWith != null)
 				{
@@ -11896,7 +11967,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.ShowName_Contains != null)
 				{
@@ -11906,7 +11977,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.ShowName_DoesNotContain != null)
 				{
@@ -11916,7 +11987,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowName_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.ShowName_IsIn != null)
 				{
@@ -11946,7 +12017,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowStatus.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowStatus_NotEqual != null)
 				{
@@ -11956,7 +12027,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowStatus_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowStatus_LessThan != null)
 				{
@@ -11966,7 +12037,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowStatus_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowStatus_LessThanOrEqual != null)
 				{
@@ -11976,7 +12047,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowStatus_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowStatus_GreaterThan != null)
 				{
@@ -11986,7 +12057,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowStatus_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowStatus_GreaterThanOrEqual != null)
 				{
@@ -11996,7 +12067,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowStatus_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowStatus_IsIn != null)
 				{
@@ -12026,7 +12097,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
@@ -12036,7 +12107,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
@@ -12046,7 +12117,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
@@ -12056,7 +12127,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
@@ -12066,7 +12137,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
@@ -12076,7 +12147,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Thetvdbid_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
@@ -12124,6 +12195,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12153,6 +12225,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12182,6 +12255,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -12211,6 +12285,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -12240,6 +12315,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -12269,6 +12345,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -12298,6 +12375,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "networks" == string.Empty ? null : "networks",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12327,6 +12405,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -12356,6 +12435,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Text",
 					Linq2dbDataType = DataType.Text,
 					NpgsDataTypeName = "NpgsqlDbType.Text",
@@ -12385,6 +12465,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -12414,6 +12495,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12443,6 +12525,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12517,10 +12600,8 @@ namespace TrackTv.Data
 
 				columnNames.Add("show_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
-
 				columnNames.Add("genre_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.GenreID });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -12538,7 +12619,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowsGenresID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowsGenresID_NotEqual != null)
 				{
@@ -12548,7 +12629,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowsGenresID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowsGenresID_LessThan != null)
 				{
@@ -12558,7 +12639,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowsGenresID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowsGenresID_LessThanOrEqual != null)
 				{
@@ -12568,7 +12649,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowsGenresID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowsGenresID_GreaterThan != null)
 				{
@@ -12578,7 +12659,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowsGenresID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowsGenresID_GreaterThanOrEqual != null)
 				{
@@ -12588,7 +12669,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowsGenresID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowsGenresID_IsIn != null)
 				{
@@ -12618,7 +12699,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
@@ -12628,7 +12709,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
@@ -12638,7 +12719,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
@@ -12648,7 +12729,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
@@ -12658,7 +12739,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
@@ -12668,7 +12749,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -12698,7 +12779,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.GenreID_NotEqual != null)
 				{
@@ -12708,7 +12789,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.GenreID_LessThan != null)
 				{
@@ -12718,7 +12799,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.GenreID_LessThanOrEqual != null)
 				{
@@ -12728,7 +12809,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.GenreID_GreaterThan != null)
 				{
@@ -12738,7 +12819,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.GenreID_GreaterThanOrEqual != null)
 				{
@@ -12748,7 +12829,7 @@ namespace TrackTv.Data
 						TypedValue = fm.GenreID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.GenreID_IsIn != null)
 				{
@@ -12796,6 +12877,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12825,6 +12907,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12854,6 +12937,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "genres" == string.Empty ? null : "genres",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12928,10 +13012,8 @@ namespace TrackTv.Data
 
 				columnNames.Add("profile_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID });
-
 				columnNames.Add("show_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -12949,7 +13031,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SubscriptionID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.SubscriptionID_NotEqual != null)
 				{
@@ -12959,7 +13041,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SubscriptionID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.SubscriptionID_LessThan != null)
 				{
@@ -12969,7 +13051,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SubscriptionID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.SubscriptionID_LessThanOrEqual != null)
 				{
@@ -12979,7 +13061,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SubscriptionID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.SubscriptionID_GreaterThan != null)
 				{
@@ -12989,7 +13071,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SubscriptionID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.SubscriptionID_GreaterThanOrEqual != null)
 				{
@@ -12999,7 +13081,7 @@ namespace TrackTv.Data
 						TypedValue = fm.SubscriptionID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.SubscriptionID_IsIn != null)
 				{
@@ -13029,7 +13111,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ProfileID_NotEqual != null)
 				{
@@ -13039,7 +13121,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ProfileID_LessThan != null)
 				{
@@ -13049,7 +13131,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
@@ -13059,7 +13141,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
@@ -13069,7 +13151,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
@@ -13079,7 +13161,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ProfileID_IsIn != null)
 				{
@@ -13109,7 +13191,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
@@ -13119,7 +13201,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
@@ -13129,7 +13211,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
@@ -13139,7 +13221,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
@@ -13149,7 +13231,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
@@ -13159,7 +13241,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -13207,6 +13289,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13236,6 +13319,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "profiles" == string.Empty ? null : "profiles",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13265,6 +13349,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13359,16 +13444,12 @@ namespace TrackTv.Data
 
 				columnNames.Add("is_admin");
 				columnParameters.Add(new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean) { TypedValue = instance.IsAdmin });
-
 				columnNames.Add("username");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Username });
-
 				columnNames.Add("password");
 				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Password });
-
 				columnNames.Add("profile_id");
 				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID });
-
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -13386,7 +13467,7 @@ namespace TrackTv.Data
 						TypedValue = fm.UserID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.UserID_NotEqual != null)
 				{
@@ -13396,7 +13477,7 @@ namespace TrackTv.Data
 						TypedValue = fm.UserID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.UserID_LessThan != null)
 				{
@@ -13406,7 +13487,7 @@ namespace TrackTv.Data
 						TypedValue = fm.UserID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.UserID_LessThanOrEqual != null)
 				{
@@ -13416,7 +13497,7 @@ namespace TrackTv.Data
 						TypedValue = fm.UserID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.UserID_GreaterThan != null)
 				{
@@ -13426,7 +13507,7 @@ namespace TrackTv.Data
 						TypedValue = fm.UserID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.UserID_GreaterThanOrEqual != null)
 				{
@@ -13436,7 +13517,7 @@ namespace TrackTv.Data
 						TypedValue = fm.UserID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.UserID_IsIn != null)
 				{
@@ -13466,7 +13547,7 @@ namespace TrackTv.Data
 						TypedValue = fm.IsAdmin.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.IsAdmin_NotEqual != null)
 				{
@@ -13476,7 +13557,7 @@ namespace TrackTv.Data
 						TypedValue = fm.IsAdmin_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.IsAdmin_IsIn != null)
 				{
@@ -13506,7 +13587,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Username_NotEqual != null)
 				{
@@ -13516,7 +13597,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Username_StartsWith != null)
 				{
@@ -13526,7 +13607,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.Username_DoesNotStartWith != null)
 				{
@@ -13536,7 +13617,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.Username_EndsWith != null)
 				{
@@ -13546,7 +13627,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.Username_DoesNotEndWith != null)
 				{
@@ -13556,7 +13637,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.Username_Contains != null)
 				{
@@ -13566,7 +13647,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.Username_DoesNotContain != null)
 				{
@@ -13576,7 +13657,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Username_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.Username_IsIn != null)
 				{
@@ -13606,7 +13687,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.Password_NotEqual != null)
 				{
@@ -13616,7 +13697,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_NotEqual
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.Password_StartsWith != null)
 				{
@@ -13626,7 +13707,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_StartsWith
 					});
 					operators.Add(QueryOperatorType.StartsWith);
-				}				
+				}
 
 				if(fm.Password_DoesNotStartWith != null)
 				{
@@ -13636,7 +13717,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_DoesNotStartWith
 					});
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}				
+				}
 
 				if(fm.Password_EndsWith != null)
 				{
@@ -13646,7 +13727,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_EndsWith
 					});
 					operators.Add(QueryOperatorType.EndsWith);
-				}				
+				}
 
 				if(fm.Password_DoesNotEndWith != null)
 				{
@@ -13656,7 +13737,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_DoesNotEndWith
 					});
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}				
+				}
 
 				if(fm.Password_Contains != null)
 				{
@@ -13666,7 +13747,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_Contains
 					});
 					operators.Add(QueryOperatorType.Contains);
-				}				
+				}
 
 				if(fm.Password_DoesNotContain != null)
 				{
@@ -13676,7 +13757,7 @@ namespace TrackTv.Data
 						TypedValue = fm.Password_DoesNotContain
 					});
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}				
+				}
 
 				if(fm.Password_IsIn != null)
 				{
@@ -13706,7 +13787,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID.Value
 					});
 					operators.Add(QueryOperatorType.Equal);
-				}				
+				}
 
 				if(fm.ProfileID_NotEqual != null)
 				{
@@ -13716,7 +13797,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_NotEqual.Value
 					});
 					operators.Add(QueryOperatorType.NotEqual);
-				}				
+				}
 
 				if(fm.ProfileID_LessThan != null)
 				{
@@ -13726,7 +13807,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_LessThan.Value
 					});
 					operators.Add(QueryOperatorType.LessThan);
-				}				
+				}
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
@@ -13736,7 +13817,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_LessThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}				
+				}
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
@@ -13746,7 +13827,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_GreaterThan.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThan);
-				}				
+				}
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
@@ -13756,7 +13837,7 @@ namespace TrackTv.Data
 						TypedValue = fm.ProfileID_GreaterThanOrEqual.Value
 					});
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}				
+				}
 
 				if(fm.ProfileID_IsIn != null)
 				{
@@ -13804,6 +13885,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13833,6 +13915,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Boolean",
 					Linq2dbDataType = DataType.Boolean,
 					NpgsDataTypeName = "NpgsqlDbType.Boolean",
@@ -13862,6 +13945,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -13891,6 +13975,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -13920,6 +14005,7 @@ namespace TrackTv.Data
 					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
+					IsClrNullableType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",

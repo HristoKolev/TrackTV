@@ -114,8 +114,13 @@
         /// <summary>
         /// Creates a parameter of type T with NpgsqlDbType from the default type map 'defaultNpgsqlDbTypeMap'.
         /// </summary>
-        public NpgsqlParameter<T> Parameter<T>(string parameterName, T value)
+        public NpgsqlParameter Parameter<T>(string parameterName, T value)
         {
+            if (value == null)
+            {
+                return new NpgsqlParameter(parameterName, DBNull.Value);
+            }
+
             NpgsqlDbType dbType;
 
             var type = typeof(T);
@@ -136,11 +141,16 @@
         /// <summary>
         /// Creates a parameter of type T by explicitly specifying NpgsqlDbType.
         /// </summary>
-        public NpgsqlParameter<T> Parameter<T>(string parameterName, T value, NpgsqlDbType dbType)
+        public NpgsqlParameter Parameter<T>(string parameterName, T value, NpgsqlDbType dbType)
         {
-            return new NpgsqlParameter<T>(parameterName, dbType)
+            if (value == null)
             {
-                TypedValue = value
+                return new NpgsqlParameter(parameterName, DBNull.Value);
+            }
+
+            return new NpgsqlParameter(parameterName, dbType)
+            {
+                Value = value
             };
         }
 

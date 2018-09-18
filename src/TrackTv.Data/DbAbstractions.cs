@@ -105,12 +105,12 @@
         /// <summary>
         /// Creates a parameter of type T with NpgsqlDbType from the default type map 'defaultNpgsqlDbTypeMap'.
         /// </summary>
-        NpgsqlParameter<T> Parameter<T>(string parameterName, T value);
+        NpgsqlParameter Parameter<T>(string parameterName, T value);
 
         /// <summary>
         /// Creates a parameter of type T by explicitly specifying NpgsqlDbType.
         /// </summary>
-        NpgsqlParameter<T> Parameter<T>(string parameterName, T value, NpgsqlDbType dbType);
+        NpgsqlParameter Parameter<T>(string parameterName, T value, NpgsqlDbType dbType);
 
         /// <summary>
         /// Executes a query and returns objects 
@@ -246,6 +246,8 @@
         public string ForeignKeyReferenceTableName { get; set; }
 
         public bool IsClrValueType { get; set; }
+
+        public bool IsClrNullableType { get; set; }
 
         public bool IsForeignKey { get; set; }
 
