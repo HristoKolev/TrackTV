@@ -213,14 +213,7 @@ namespace TrackTv.Data
 				{
 					{{#each columns}}
 					{{#unless IsPrimaryKey}}
-					{{#if IsClrNullableType}}
-					(instance.{{PropertyName}}.HasValue ? 
-					new NpgsqlParameter<{{ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}}.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					{{/if}}
-					{{#unless IsClrNullableType}}
-					new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} },
-					{{/unless}}
+					new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} },
 					{{/unless}}
 					{{/each}}
 				};
@@ -235,15 +228,7 @@ namespace TrackTv.Data
 				if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
 				{
 					changedColumnNames.Add("{{ColumnName}}");
-					{{#if IsClrNullableType}}
-					changedColumnParameters.Add(
-					myInstance.{{PropertyName}}.HasValue ? 
-					new NpgsqlParameter<{{ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = myInstance.{{PropertyName}}.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
-					{{/if}}
-					{{#unless IsClrNullableType}}
-					changedColumnParameters.Add(new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = myInstance.{{PropertyName}} });
-					{{/unless}}					
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = myInstance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });			
 				}
 
 				{{/unless}}
@@ -258,15 +243,7 @@ namespace TrackTv.Data
 				{{#each columns}}
 				{{#unless IsPrimaryKey}}
 				columnNames.Add("{{ColumnName}}");
-				{{#if IsClrNullableType}}
-				columnParameters.Add(
-				instance.{{PropertyName}}.HasValue ? 
-				new NpgsqlParameter<{{ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}}.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
-				{{/if}}
-				{{#unless IsClrNullableType}}
-				columnParameters.Add(new NpgsqlParameter<{{ClrTypeName}}>(null, NpgsqlDbType.{{NpgsDataTypeName}}) { TypedValue = instance.{{PropertyName}} });
-				{{/unless}}
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });			
 				{{/unless}}
 				{{/each}}
 				return (columnNames, columnParameters);
@@ -280,30 +257,13 @@ namespace TrackTv.Data
 
 				{{#each columns}}
 				{{#each ValidOperators}}
-				{{#if IsClrNullableType}}
 				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
 				{
 					columnNames.Add("{{../ColumnName}}");
-					columnParameters.Add(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}.HasValue ? new NpgsqlParameter<{{../ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{../NpgsDataTypeName}})
-					{
-						TypedValue = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}.Value
-					} : new NpgsqlParameter(null, DBNull.Value));
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{../NpgsDataTypeName}}) { Value = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
 					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
-				}
+				}		 
 
-				{{/if}}
-				{{#unless IsClrNullableType}}
-				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
-				{
-					columnNames.Add("{{../ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter<{{../ClrNonNullableTypeName}}>(null, NpgsqlDbType.{{../NpgsDataTypeName}})
-					{
-						TypedValue = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if ../IsClrValueType}}.Value{{/if}}
-					});
-					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
-				}
-
-				{{/unless}}
 				{{/each}}
 				{{#if IsNullable}}
 				if(fm.{{PropertyName}}_IsNull != null)
@@ -324,20 +284,14 @@ namespace TrackTv.Data
 				if(fm.{{PropertyName}}_IsIn != null)
 				{
 					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter<{{ClrNonNullableTypeName}}[]>(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}})
-					{
-						TypedValue = fm.{{PropertyName}}_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.{{PropertyName}}_IsNotIn != null)
 				{
 					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter<{{ClrNonNullableTypeName}}[]>(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}})
-					{
-						TypedValue = fm.{{PropertyName}}_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
@@ -345,10 +299,10 @@ namespace TrackTv.Data
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<{{ClassName}}Poco>>
+			Columns = new List<ColumnMetadataModel>
 			{
 				{{#each columns}}
-				new ColumnMetadataModel<{{../ClassName}}Poco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "{{ClrTypeName}}",					
 					ClrType = typeof({{ClrTypeName}}),
@@ -370,6 +324,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("{{IsNullable}}"),
 					IsClrValueType = bool.Parse("{{IsClrValueType}}"),
 					IsClrNullableType = bool.Parse("{{IsClrNullableType}}"),
+					IsClrReferenceType = bool.Parse("{{IsClrReferenceType}}"),
 					Linq2dbDataTypeName = "{{Linq2dbDataTypeName}}",
 					Linq2dbDataType = {{Linq2dbDataTypeName}},
 					NpgsDataTypeName = "NpgsqlDbType.{{NpgsDataTypeName}}",

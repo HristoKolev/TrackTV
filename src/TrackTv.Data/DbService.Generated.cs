@@ -5056,12 +5056,10 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorImage },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorName },
-					(instance.LastUpdated.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorImage ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorName ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -5072,28 +5070,25 @@ namespace TrackTv.Data
 				if(dbInstance.ActorImage != myInstance.ActorImage)
 				{
 					changedColumnNames.Add("actor_image");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ActorImage });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ActorImage ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ActorName != myInstance.ActorName)
 				{
 					changedColumnNames.Add("actor_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ActorName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ActorName ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.LastUpdated != myInstance.LastUpdated)
 				{
 					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(
-					myInstance.LastUpdated.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.LastUpdated ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
 				{
 					changedColumnNames.Add("thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.Thetvdbid });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.Thetvdbid });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -5104,16 +5099,13 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("actor_image");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorImage });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorImage ?? (object)DBNull.Value });			
 				columnNames.Add("actor_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ActorName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorName ?? (object)DBNull.Value });			
 				columnNames.Add("last_updated");
-				columnParameters.Add(
-				instance.LastUpdated.HasValue ? 
-				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated ?? (object)DBNull.Value });			
 				columnNames.Add("thetvdbid");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -5126,162 +5118,114 @@ namespace TrackTv.Data
 				if(fm.ActorID != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ActorID_NotEqual != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ActorID_LessThan != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ActorID_LessThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ActorID_GreaterThan != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ActorID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ActorID_IsIn != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ActorID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ActorID_IsNotIn != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ActorID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ActorImage != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ActorImage_NotEqual != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ActorImage_StartsWith != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ActorImage_DoesNotStartWith != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ActorImage_EndsWith != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ActorImage_DoesNotEndWith != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ActorImage_Contains != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ActorImage_DoesNotContain != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ActorImage_IsNull != null)
 				{
@@ -5300,102 +5244,72 @@ namespace TrackTv.Data
 				if(fm.ActorImage_IsIn != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ActorImage_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ActorImage_IsNotIn != null)
 				{
 					columnNames.Add("actor_image");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorImage_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ActorImage_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ActorName != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ActorName_NotEqual != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ActorName_StartsWith != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ActorName_DoesNotStartWith != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ActorName_EndsWith != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ActorName_DoesNotEndWith != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ActorName_Contains != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ActorName_DoesNotContain != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ActorName_IsNull != null)
 				{
@@ -5414,42 +5328,30 @@ namespace TrackTv.Data
 				if(fm.ActorName_IsIn != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ActorName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ActorName_IsNotIn != null)
 				{
 					columnNames.Add("actor_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ActorName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ActorName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.LastUpdated != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_IsNull != null)
 				{
@@ -5468,109 +5370,79 @@ namespace TrackTv.Data
 				if(fm.LastUpdated_IsIn != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.LastUpdated_IsNotIn != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Thetvdbid != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.Thetvdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Thetvdbid_IsNotIn != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.Thetvdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ActorPoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ActorPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -5592,6 +5464,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -5600,7 +5473,7 @@ namespace TrackTv.Data
 					TableName = "actors",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ActorPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -5622,6 +5495,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -5630,7 +5504,7 @@ namespace TrackTv.Data
 					TableName = "actors",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ActorPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -5652,6 +5526,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -5660,7 +5535,7 @@ namespace TrackTv.Data
 					TableName = "actors",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ActorPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime?",					
 					ClrType = typeof(DateTime?),
@@ -5682,6 +5557,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -5690,7 +5566,7 @@ namespace TrackTv.Data
 					TableName = "actors",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ActorPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -5712,6 +5588,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -5753,7 +5630,7 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ApiChangeTypeName },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ApiChangeTypeName ?? (object)DBNull.Value },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -5764,7 +5641,7 @@ namespace TrackTv.Data
 				if(dbInstance.ApiChangeTypeName != myInstance.ApiChangeTypeName)
 				{
 					changedColumnNames.Add("api_change_type_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ApiChangeTypeName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ApiChangeTypeName ?? (object)DBNull.Value });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -5775,7 +5652,7 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("api_change_type_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ApiChangeTypeName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ApiChangeTypeName ?? (object)DBNull.Value });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -5788,189 +5665,135 @@ namespace TrackTv.Data
 				if(fm.ApiChangeTypeName != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_NotEqual != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_StartsWith != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_DoesNotStartWith != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_EndsWith != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_DoesNotEndWith != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_Contains != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_DoesNotContain != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeName_IsIn != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeTypeName_IsNotIn != null)
 				{
 					columnNames.Add("api_change_type_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ApiChangeTypeName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeTypeID != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeID_NotEqual != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeID_LessThan != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeID_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeID_GreaterThan != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeTypeID_IsIn != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeTypeID_IsNotIn != null)
 				{
 					columnNames.Add("api_change_type_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeTypeID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ApiChangeTypePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ApiChangeTypePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -5992,6 +5815,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -6000,7 +5824,7 @@ namespace TrackTv.Data
 					TableName = "api_change_types",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangeTypePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -6022,6 +5846,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6081,17 +5906,13 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeThetvdbid },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeFailCount },
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeCreatedDate },
-					(instance.ApiChangeLastFailedTime.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeThetvdbLastUpdated },
-					(instance.ApiChangeAttachedSeriesID.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeType },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeThetvdbid },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeFailCount },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeCreatedDate },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeLastFailedTime ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeThetvdbLastUpdated },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeAttachedSeriesID ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeType },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -6102,49 +5923,43 @@ namespace TrackTv.Data
 				if(dbInstance.ApiChangeThetvdbid != myInstance.ApiChangeThetvdbid)
 				{
 					changedColumnNames.Add("api_change_thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeThetvdbid });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeThetvdbid });			
 				}
 
 				if(dbInstance.ApiChangeFailCount != myInstance.ApiChangeFailCount)
 				{
 					changedColumnNames.Add("api_change_fail_count");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeFailCount });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeFailCount });			
 				}
 
 				if(dbInstance.ApiChangeCreatedDate != myInstance.ApiChangeCreatedDate)
 				{
 					changedColumnNames.Add("api_change_created_date");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeCreatedDate });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiChangeCreatedDate });			
 				}
 
 				if(dbInstance.ApiChangeLastFailedTime != myInstance.ApiChangeLastFailedTime)
 				{
 					changedColumnNames.Add("api_change_last_failed_time");
-					changedColumnParameters.Add(
-					myInstance.ApiChangeLastFailedTime.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeLastFailedTime.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiChangeLastFailedTime ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ApiChangeThetvdbLastUpdated != myInstance.ApiChangeThetvdbLastUpdated)
 				{
 					changedColumnNames.Add("api_change_thetvdb_last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiChangeThetvdbLastUpdated });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiChangeThetvdbLastUpdated });			
 				}
 
 				if(dbInstance.ApiChangeAttachedSeriesID != myInstance.ApiChangeAttachedSeriesID)
 				{
 					changedColumnNames.Add("api_change_attached_series_id");
-					changedColumnParameters.Add(
-					myInstance.ApiChangeAttachedSeriesID.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeAttachedSeriesID.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeAttachedSeriesID ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ApiChangeType != myInstance.ApiChangeType)
 				{
 					changedColumnNames.Add("api_change_type");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiChangeType });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeType });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -6155,25 +5970,19 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("api_change_thetvdbid");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeThetvdbid });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeThetvdbid });			
 				columnNames.Add("api_change_fail_count");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeFailCount });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeFailCount });			
 				columnNames.Add("api_change_created_date");
-				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeCreatedDate });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeCreatedDate });			
 				columnNames.Add("api_change_last_failed_time");
-				columnParameters.Add(
-				instance.ApiChangeLastFailedTime.HasValue ? 
-				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeLastFailedTime.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeLastFailedTime ?? (object)DBNull.Value });			
 				columnNames.Add("api_change_thetvdb_last_updated");
-				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiChangeThetvdbLastUpdated });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeThetvdbLastUpdated });			
 				columnNames.Add("api_change_attached_series_id");
-				columnParameters.Add(
-				instance.ApiChangeAttachedSeriesID.HasValue ? 
-				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeAttachedSeriesID.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeAttachedSeriesID ?? (object)DBNull.Value });			
 				columnNames.Add("api_change_type");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiChangeType });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeType });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -6186,342 +5995,240 @@ namespace TrackTv.Data
 				if(fm.ApiChangeThetvdbid != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbid_NotEqual != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbid_LessThan != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbid_IsIn != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeThetvdbid_IsNotIn != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeThetvdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeFailCount != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeFailCount_NotEqual != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeFailCount_LessThan != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeFailCount_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeFailCount_GreaterThan != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeFailCount_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeFailCount_IsIn != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeFailCount_IsNotIn != null)
 				{
 					columnNames.Add("api_change_fail_count");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeFailCount_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeCreatedDate != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeCreatedDate_NotEqual != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeCreatedDate_LessThan != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeCreatedDate_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeCreatedDate_GreaterThan != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeCreatedDate_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeCreatedDate_IsIn != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeCreatedDate_IsNotIn != null)
 				{
 					columnNames.Add("api_change_created_date");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeCreatedDate_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeID != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeID_NotEqual != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeID_LessThan != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeID_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeID_GreaterThan != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeID_IsIn != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeID_IsNotIn != null)
 				{
 					columnNames.Add("api_change_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeLastFailedTime != null)
 				{
 					columnNames.Add("api_change_last_failed_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeLastFailedTime.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeLastFailedTime });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeLastFailedTime_NotEqual != null)
 				{
 					columnNames.Add("api_change_last_failed_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeLastFailedTime_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeLastFailedTime_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeLastFailedTime_IsNull != null)
 				{
@@ -6540,122 +6247,86 @@ namespace TrackTv.Data
 				if(fm.ApiChangeLastFailedTime_IsIn != null)
 				{
 					columnNames.Add("api_change_last_failed_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeLastFailedTime_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiChangeLastFailedTime_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeLastFailedTime_IsNotIn != null)
 				{
 					columnNames.Add("api_change_last_failed_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeLastFailedTime_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiChangeLastFailedTime_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeThetvdbLastUpdated != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbLastUpdated_NotEqual != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbLastUpdated_LessThan != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbLastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeThetvdbLastUpdated_IsIn != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_IsNotIn != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiChangeThetvdbLastUpdated_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeAttachedSeriesID != null)
 				{
 					columnNames.Add("api_change_attached_series_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeAttachedSeriesID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeAttachedSeriesID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeAttachedSeriesID_NotEqual != null)
 				{
 					columnNames.Add("api_change_attached_series_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeAttachedSeriesID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeAttachedSeriesID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeAttachedSeriesID_IsNull != null)
 				{
@@ -6674,109 +6345,79 @@ namespace TrackTv.Data
 				if(fm.ApiChangeAttachedSeriesID_IsIn != null)
 				{
 					columnNames.Add("api_change_attached_series_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeAttachedSeriesID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeAttachedSeriesID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeAttachedSeriesID_IsNotIn != null)
 				{
 					columnNames.Add("api_change_attached_series_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeAttachedSeriesID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeAttachedSeriesID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiChangeType != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiChangeType_NotEqual != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeType_LessThan != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiChangeType_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeType_GreaterThan != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiChangeType_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiChangeType_IsIn != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeType_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiChangeType_IsNotIn != null)
 				{
 					columnNames.Add("api_change_type");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiChangeType_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiChangeType_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ApiChangePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -6798,6 +6439,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6806,7 +6448,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -6828,6 +6470,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6836,7 +6479,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime",					
 					ClrType = typeof(DateTime),
@@ -6858,6 +6501,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -6866,7 +6510,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -6888,6 +6532,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6896,7 +6541,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime?",					
 					ClrType = typeof(DateTime?),
@@ -6918,6 +6563,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -6926,7 +6572,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime",					
 					ClrType = typeof(DateTime),
@@ -6948,6 +6594,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -6956,7 +6603,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int?",					
 					ClrType = typeof(int?),
@@ -6978,6 +6625,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -6986,7 +6634,7 @@ namespace TrackTv.Data
 					TableName = "api_changes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiChangePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -7008,6 +6656,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7058,14 +6707,10 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					(instance.ApiResponseEpisodeThetvdbid.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					(instance.ApiResponseShowThetvdbid.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb) { TypedValue = instance.ApiResponseBody },
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiResponseLastUpdated },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseEpisodeThetvdbid ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseShowThetvdbid ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = instance.ApiResponseBody ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiResponseLastUpdated },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -7076,31 +6721,25 @@ namespace TrackTv.Data
 				if(dbInstance.ApiResponseEpisodeThetvdbid != myInstance.ApiResponseEpisodeThetvdbid)
 				{
 					changedColumnNames.Add("api_response_episode_thetvdbid");
-					changedColumnParameters.Add(
-					myInstance.ApiResponseEpisodeThetvdbid.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseEpisodeThetvdbid.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiResponseEpisodeThetvdbid ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ApiResponseShowThetvdbid != myInstance.ApiResponseShowThetvdbid)
 				{
 					changedColumnNames.Add("api_response_show_thetvdbid");
-					changedColumnParameters.Add(
-					myInstance.ApiResponseShowThetvdbid.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ApiResponseShowThetvdbid.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiResponseShowThetvdbid ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ApiResponseBody != myInstance.ApiResponseBody)
 				{
 					changedColumnNames.Add("api_response_body");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb) { TypedValue = myInstance.ApiResponseBody });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = myInstance.ApiResponseBody ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ApiResponseLastUpdated != myInstance.ApiResponseLastUpdated)
 				{
 					changedColumnNames.Add("api_response_last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.ApiResponseLastUpdated });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiResponseLastUpdated });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -7111,19 +6750,13 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("api_response_episode_thetvdbid");
-				columnParameters.Add(
-				instance.ApiResponseEpisodeThetvdbid.HasValue ? 
-				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseEpisodeThetvdbid.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseEpisodeThetvdbid ?? (object)DBNull.Value });			
 				columnNames.Add("api_response_show_thetvdbid");
-				columnParameters.Add(
-				instance.ApiResponseShowThetvdbid.HasValue ? 
-				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ApiResponseShowThetvdbid.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseShowThetvdbid ?? (object)DBNull.Value });			
 				columnNames.Add("api_response_body");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb) { TypedValue = instance.ApiResponseBody });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = instance.ApiResponseBody ?? (object)DBNull.Value });			
 				columnNames.Add("api_response_last_updated");
-				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.ApiResponseLastUpdated });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiResponseLastUpdated });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -7136,22 +6769,16 @@ namespace TrackTv.Data
 				if(fm.ApiResponseEpisodeThetvdbid != null)
 				{
 					columnNames.Add("api_response_episode_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseEpisodeThetvdbid.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseEpisodeThetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiResponseEpisodeThetvdbid_NotEqual != null)
 				{
 					columnNames.Add("api_response_episode_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseEpisodeThetvdbid_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseEpisodeThetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseEpisodeThetvdbid_IsNull != null)
 				{
@@ -7170,42 +6797,30 @@ namespace TrackTv.Data
 				if(fm.ApiResponseEpisodeThetvdbid_IsIn != null)
 				{
 					columnNames.Add("api_response_episode_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseEpisodeThetvdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiResponseEpisodeThetvdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiResponseEpisodeThetvdbid_IsNotIn != null)
 				{
 					columnNames.Add("api_response_episode_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseEpisodeThetvdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiResponseEpisodeThetvdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiResponseShowThetvdbid != null)
 				{
 					columnNames.Add("api_response_show_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseShowThetvdbid.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseShowThetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiResponseShowThetvdbid_NotEqual != null)
 				{
 					columnNames.Add("api_response_show_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseShowThetvdbid_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseShowThetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseShowThetvdbid_IsNull != null)
 				{
@@ -7224,289 +6839,205 @@ namespace TrackTv.Data
 				if(fm.ApiResponseShowThetvdbid_IsIn != null)
 				{
 					columnNames.Add("api_response_show_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseShowThetvdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiResponseShowThetvdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiResponseShowThetvdbid_IsNotIn != null)
 				{
 					columnNames.Add("api_response_show_thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseShowThetvdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiResponseShowThetvdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiResponseBody != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_NotEqual != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_StartsWith != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_DoesNotStartWith != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_EndsWith != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_DoesNotEndWith != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_Contains != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_DoesNotContain != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ApiResponseBody_IsIn != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiResponseBody_IsNotIn != null)
 				{
 					columnNames.Add("api_response_body");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Jsonb)
-					{
-						TypedValue = fm.ApiResponseBody_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiResponseID != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiResponseID_NotEqual != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseID_LessThan != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiResponseID_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseID_GreaterThan != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiResponseID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseID_IsIn != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiResponseID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiResponseID_IsNotIn != null)
 				{
 					columnNames.Add("api_response_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ApiResponseID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ApiResponseID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ApiResponseLastUpdated != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ApiResponseLastUpdated_NotEqual != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseLastUpdated_LessThan != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ApiResponseLastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseLastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ApiResponseLastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ApiResponseLastUpdated_IsIn != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ApiResponseLastUpdated_IsNotIn != null)
 				{
 					columnNames.Add("api_response_last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.ApiResponseLastUpdated_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ApiResponsePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ApiResponsePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int?",					
 					ClrType = typeof(int?),
@@ -7528,6 +7059,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7536,7 +7068,7 @@ namespace TrackTv.Data
 					TableName = "api_responses",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiResponsePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int?",					
 					ClrType = typeof(int?),
@@ -7558,6 +7090,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7566,7 +7099,7 @@ namespace TrackTv.Data
 					TableName = "api_responses",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiResponsePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -7588,6 +7121,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.BinaryJson",
 					Linq2dbDataType = DataType.BinaryJson,
 					NpgsDataTypeName = "NpgsqlDbType.Jsonb",
@@ -7596,7 +7130,7 @@ namespace TrackTv.Data
 					TableName = "api_responses",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiResponsePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -7618,6 +7152,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -7626,7 +7161,7 @@ namespace TrackTv.Data
 					TableName = "api_responses",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ApiResponsePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime",					
 					ClrType = typeof(DateTime),
@@ -7648,6 +7183,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -7713,17 +7249,15 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.EpisodeDescription },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.EpisodeNumber },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.EpisodeTitle },
-					(instance.FirstAired.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid },
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.SeasonNumber },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
+					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.EpisodeDescription ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.EpisodeNumber },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.EpisodeTitle ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.SeasonNumber },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -7734,58 +7268,55 @@ namespace TrackTv.Data
 				if(dbInstance.EpisodeDescription != myInstance.EpisodeDescription)
 				{
 					changedColumnNames.Add("episode_description");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = myInstance.EpisodeDescription });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.EpisodeDescription ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.EpisodeNumber != myInstance.EpisodeNumber)
 				{
 					changedColumnNames.Add("episode_number");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.EpisodeNumber });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.EpisodeNumber });			
 				}
 
 				if(dbInstance.EpisodeTitle != myInstance.EpisodeTitle)
 				{
 					changedColumnNames.Add("episode_title");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.EpisodeTitle });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.EpisodeTitle ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.FirstAired != myInstance.FirstAired)
 				{
 					changedColumnNames.Add("first_aired");
-					changedColumnParameters.Add(
-					myInstance.FirstAired.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.FirstAired ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.Imdbid != myInstance.Imdbid)
 				{
 					changedColumnNames.Add("imdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Imdbid });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Imdbid ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.LastUpdated != myInstance.LastUpdated)
 				{
 					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.LastUpdated });			
 				}
 
 				if(dbInstance.SeasonNumber != myInstance.SeasonNumber)
 				{
 					changedColumnNames.Add("season_number");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.SeasonNumber });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.SeasonNumber });			
 				}
 
 				if(dbInstance.ShowID != myInstance.ShowID)
 				{
 					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });			
 				}
 
 				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
 				{
 					changedColumnNames.Add("thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.Thetvdbid });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.Thetvdbid });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -7796,26 +7327,23 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("episode_description");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.EpisodeDescription });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.EpisodeDescription ?? (object)DBNull.Value });			
 				columnNames.Add("episode_number");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.EpisodeNumber });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.EpisodeNumber });			
 				columnNames.Add("episode_title");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.EpisodeTitle });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.EpisodeTitle ?? (object)DBNull.Value });			
 				columnNames.Add("first_aired");
-				columnParameters.Add(
-				instance.FirstAired.HasValue ? 
-				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value });			
 				columnNames.Add("imdbid");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value });			
 				columnNames.Add("last_updated");
-				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated });			
 				columnNames.Add("season_number");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.SeasonNumber });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.SeasonNumber });			
 				columnNames.Add("show_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID });			
 				columnNames.Add("thetvdbid");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -7828,162 +7356,114 @@ namespace TrackTv.Data
 				if(fm.EpisodeID != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.EpisodeID_NotEqual != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.EpisodeID_LessThan != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.EpisodeID_LessThanOrEqual != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.EpisodeID_GreaterThan != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.EpisodeID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.EpisodeID_IsIn != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.EpisodeID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.EpisodeID_IsNotIn != null)
 				{
 					columnNames.Add("episode_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.EpisodeID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.EpisodeDescription != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_NotEqual != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_StartsWith != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_DoesNotStartWith != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_EndsWith != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_DoesNotEndWith != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_Contains != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_DoesNotContain != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.EpisodeDescription_IsNull != null)
 				{
@@ -8002,182 +7482,128 @@ namespace TrackTv.Data
 				if(fm.EpisodeDescription_IsIn != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.EpisodeDescription_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.EpisodeDescription_IsNotIn != null)
 				{
 					columnNames.Add("episode_description");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Text)
-					{
-						TypedValue = fm.EpisodeDescription_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.EpisodeDescription_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.EpisodeNumber != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.EpisodeNumber_NotEqual != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.EpisodeNumber_LessThan != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.EpisodeNumber_LessThanOrEqual != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.EpisodeNumber_GreaterThan != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.EpisodeNumber_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.EpisodeNumber_IsIn != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.EpisodeNumber_IsNotIn != null)
 				{
 					columnNames.Add("episode_number");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.EpisodeNumber_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.EpisodeTitle != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_NotEqual != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_StartsWith != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_DoesNotStartWith != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_EndsWith != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_DoesNotEndWith != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_Contains != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_DoesNotContain != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.EpisodeTitle_IsNull != null)
 				{
@@ -8196,42 +7622,30 @@ namespace TrackTv.Data
 				if(fm.EpisodeTitle_IsIn != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.EpisodeTitle_IsNotIn != null)
 				{
 					columnNames.Add("episode_title");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.EpisodeTitle_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.FirstAired != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.FirstAired_NotEqual != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.FirstAired_IsNull != null)
 				{
@@ -8250,102 +7664,72 @@ namespace TrackTv.Data
 				if(fm.FirstAired_IsIn != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.FirstAired_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.FirstAired_IsNotIn != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.FirstAired_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Imdbid != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Imdbid_NotEqual != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Imdbid_StartsWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.Imdbid_DoesNotStartWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.Imdbid_EndsWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.Imdbid_DoesNotEndWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.Imdbid_Contains != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.Imdbid_DoesNotContain != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.Imdbid_IsNull != null)
 				{
@@ -8364,349 +7748,247 @@ namespace TrackTv.Data
 				if(fm.Imdbid_IsIn != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Imdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Imdbid_IsNotIn != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Imdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.LastUpdated != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_LessThan != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.LastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.LastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_IsIn != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.LastUpdated_IsNotIn != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.SeasonNumber != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.SeasonNumber_NotEqual != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.SeasonNumber_LessThan != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.SeasonNumber_LessThanOrEqual != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.SeasonNumber_GreaterThan != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.SeasonNumber_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.SeasonNumber_IsIn != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.SeasonNumber_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.SeasonNumber_IsNotIn != null)
 				{
 					columnNames.Add("season_number");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SeasonNumber_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.SeasonNumber_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowID != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_IsIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowID_IsNotIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Thetvdbid != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.Thetvdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Thetvdbid_IsNotIn != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.Thetvdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<EpisodePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -8728,6 +8010,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8736,7 +8019,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -8758,6 +8041,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Text",
 					Linq2dbDataType = DataType.Text,
 					NpgsDataTypeName = "NpgsqlDbType.Text",
@@ -8766,7 +8050,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -8788,6 +8072,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8796,7 +8081,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -8818,6 +8103,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -8826,7 +8112,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime?",					
 					ClrType = typeof(DateTime?),
@@ -8848,6 +8134,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -8856,7 +8143,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -8878,6 +8165,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -8886,7 +8174,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime",					
 					ClrType = typeof(DateTime),
@@ -8908,6 +8196,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -8916,7 +8205,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -8938,6 +8227,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8946,7 +8236,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -8968,6 +8258,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -8976,7 +8267,7 @@ namespace TrackTv.Data
 					TableName = "episodes",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<EpisodePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -8998,6 +8289,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9039,7 +8331,7 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.GenreName },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.GenreName ?? (object)DBNull.Value },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -9050,7 +8342,7 @@ namespace TrackTv.Data
 				if(dbInstance.GenreName != myInstance.GenreName)
 				{
 					changedColumnNames.Add("genre_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.GenreName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.GenreName ?? (object)DBNull.Value });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -9061,7 +8353,7 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("genre_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.GenreName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.GenreName ?? (object)DBNull.Value });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9074,189 +8366,135 @@ namespace TrackTv.Data
 				if(fm.GenreID != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.GenreID_NotEqual != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.GenreID_LessThan != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.GenreID_LessThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.GenreID_GreaterThan != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.GenreID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.GenreID_IsIn != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.GenreID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.GenreID_IsNotIn != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.GenreID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.GenreName != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.GenreName_NotEqual != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.GenreName_StartsWith != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.GenreName_DoesNotStartWith != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.GenreName_EndsWith != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.GenreName_DoesNotEndWith != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.GenreName_Contains != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.GenreName_DoesNotContain != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.GenreName_IsIn != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.GenreName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.GenreName_IsNotIn != null)
 				{
 					columnNames.Add("genre_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.GenreName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.GenreName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<GenrePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<GenrePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -9278,6 +8516,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9286,7 +8525,7 @@ namespace TrackTv.Data
 					TableName = "genres",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<GenrePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -9308,6 +8547,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -9349,7 +8589,7 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.NetworkName },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.NetworkName ?? (object)DBNull.Value },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -9360,7 +8600,7 @@ namespace TrackTv.Data
 				if(dbInstance.NetworkName != myInstance.NetworkName)
 				{
 					changedColumnNames.Add("network_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.NetworkName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.NetworkName ?? (object)DBNull.Value });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -9371,7 +8611,7 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("network_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.NetworkName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.NetworkName ?? (object)DBNull.Value });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9384,189 +8624,135 @@ namespace TrackTv.Data
 				if(fm.NetworkID != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.NetworkID_NotEqual != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.NetworkID_LessThan != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.NetworkID_LessThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.NetworkID_GreaterThan != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.NetworkID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.NetworkID_IsIn != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.NetworkID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.NetworkID_IsNotIn != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.NetworkID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.NetworkName != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.NetworkName_NotEqual != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.NetworkName_StartsWith != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.NetworkName_DoesNotStartWith != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.NetworkName_EndsWith != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.NetworkName_DoesNotEndWith != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.NetworkName_Contains != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.NetworkName_DoesNotContain != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.NetworkName_IsIn != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.NetworkName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.NetworkName_IsNotIn != null)
 				{
 					columnNames.Add("network_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.NetworkName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.NetworkName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<NetworkPoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<NetworkPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -9588,6 +8774,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9596,7 +8783,7 @@ namespace TrackTv.Data
 					TableName = "networks",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<NetworkPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -9618,6 +8805,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -9659,7 +8847,7 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ProfileName },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ProfileName ?? (object)DBNull.Value },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -9670,7 +8858,7 @@ namespace TrackTv.Data
 				if(dbInstance.ProfileName != myInstance.ProfileName)
 				{
 					changedColumnNames.Add("profile_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ProfileName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ProfileName ?? (object)DBNull.Value });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -9681,7 +8869,7 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("profile_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ProfileName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ProfileName ?? (object)DBNull.Value });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -9694,189 +8882,135 @@ namespace TrackTv.Data
 				if(fm.ProfileID != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ProfileID_NotEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_LessThan != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_IsIn != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ProfileID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ProfileID_IsNotIn != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ProfileID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ProfileName != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ProfileName_NotEqual != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ProfileName_StartsWith != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ProfileName_DoesNotStartWith != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ProfileName_EndsWith != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ProfileName_DoesNotEndWith != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ProfileName_Contains != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ProfileName_DoesNotContain != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ProfileName_IsIn != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ProfileName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ProfileName_IsNotIn != null)
 				{
 					columnNames.Add("profile_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ProfileName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ProfileName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ProfilePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ProfilePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -9898,6 +9032,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -9906,7 +9041,7 @@ namespace TrackTv.Data
 					TableName = "profiles",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ProfilePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -9928,6 +9063,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -9975,9 +9111,9 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ActorID },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.RoleName },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ActorID },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.RoleName ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -9988,19 +9124,19 @@ namespace TrackTv.Data
 				if(dbInstance.ActorID != myInstance.ActorID)
 				{
 					changedColumnNames.Add("actor_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ActorID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ActorID });			
 				}
 
 				if(dbInstance.RoleName != myInstance.RoleName)
 				{
 					changedColumnNames.Add("role_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.RoleName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.RoleName ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ShowID != myInstance.ShowID)
 				{
 					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -10011,11 +9147,11 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("actor_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ActorID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ActorID });			
 				columnNames.Add("role_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.RoleName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.RoleName ?? (object)DBNull.Value });			
 				columnNames.Add("show_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -10028,242 +9164,170 @@ namespace TrackTv.Data
 				if(fm.RoleID != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.RoleID_NotEqual != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.RoleID_LessThan != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.RoleID_LessThanOrEqual != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.RoleID_GreaterThan != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.RoleID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.RoleID_IsIn != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.RoleID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.RoleID_IsNotIn != null)
 				{
 					columnNames.Add("role_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.RoleID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.RoleID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ActorID != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ActorID_NotEqual != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ActorID_LessThan != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ActorID_LessThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ActorID_GreaterThan != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ActorID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ActorID_IsIn != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ActorID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ActorID_IsNotIn != null)
 				{
 					columnNames.Add("actor_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ActorID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ActorID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.RoleName != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.RoleName_NotEqual != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.RoleName_StartsWith != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.RoleName_DoesNotStartWith != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.RoleName_EndsWith != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.RoleName_DoesNotEndWith != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.RoleName_Contains != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.RoleName_DoesNotContain != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.RoleName_IsNull != null)
 				{
@@ -10282,109 +9346,79 @@ namespace TrackTv.Data
 				if(fm.RoleName_IsIn != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.RoleName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.RoleName_IsNotIn != null)
 				{
 					columnNames.Add("role_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.RoleName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.RoleName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowID != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_IsIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowID_IsNotIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<RolePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<RolePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -10406,6 +9440,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10414,7 +9449,7 @@ namespace TrackTv.Data
 					TableName = "roles",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<RolePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -10436,6 +9471,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10444,7 +9480,7 @@ namespace TrackTv.Data
 					TableName = "roles",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<RolePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -10466,6 +9502,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -10474,7 +9511,7 @@ namespace TrackTv.Data
 					TableName = "roles",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<RolePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -10496,6 +9533,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10540,8 +9578,8 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.SettingValue },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.SettingName },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingValue ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingName ?? (object)DBNull.Value },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -10552,13 +9590,13 @@ namespace TrackTv.Data
 				if(dbInstance.SettingValue != myInstance.SettingValue)
 				{
 					changedColumnNames.Add("setting_value");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.SettingValue });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.SettingValue ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.SettingName != myInstance.SettingName)
 				{
 					changedColumnNames.Add("setting_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.SettingName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.SettingName ?? (object)DBNull.Value });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -10569,9 +9607,9 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("setting_value");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.SettingValue });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingValue ?? (object)DBNull.Value });			
 				columnNames.Add("setting_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.SettingName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingName ?? (object)DBNull.Value });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -10584,289 +9622,205 @@ namespace TrackTv.Data
 				if(fm.SettingID != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.SettingID_NotEqual != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.SettingID_LessThan != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.SettingID_LessThanOrEqual != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.SettingID_GreaterThan != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.SettingID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.SettingID_IsIn != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.SettingID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.SettingID_IsNotIn != null)
 				{
 					columnNames.Add("setting_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SettingID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.SettingID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.SettingValue != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.SettingValue_NotEqual != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.SettingValue_StartsWith != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.SettingValue_DoesNotStartWith != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.SettingValue_EndsWith != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.SettingValue_DoesNotEndWith != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.SettingValue_Contains != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.SettingValue_DoesNotContain != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.SettingValue_IsIn != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.SettingValue_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.SettingValue_IsNotIn != null)
 				{
 					columnNames.Add("setting_value");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingValue_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.SettingValue_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.SettingName != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.SettingName_NotEqual != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.SettingName_StartsWith != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.SettingName_DoesNotStartWith != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.SettingName_EndsWith != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.SettingName_DoesNotEndWith != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.SettingName_Contains != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.SettingName_DoesNotContain != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.SettingName_IsIn != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.SettingName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.SettingName_IsNotIn != null)
 				{
 					columnNames.Add("setting_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.SettingName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.SettingName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<SettingPoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<SettingPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -10888,6 +9842,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -10896,7 +9851,7 @@ namespace TrackTv.Data
 					TableName = "settings",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<SettingPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -10918,6 +9873,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -10926,7 +9882,7 @@ namespace TrackTv.Data
 					TableName = "settings",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<SettingPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -10948,6 +9904,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -11019,23 +9976,17 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					(instance.AirDay.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.AirDay.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					(instance.AirTime.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					(instance.FirstAired.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } :
-					new NpgsqlParameter(null, DBNull.Value)),
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid },
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.NetworkID },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ShowBanner },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.ShowDescription },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ShowName },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowStatus },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.AirDay ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.AirTime ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.NetworkID },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowBanner ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.ShowDescription ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowName ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowStatus },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -11046,76 +9997,67 @@ namespace TrackTv.Data
 				if(dbInstance.AirDay != myInstance.AirDay)
 				{
 					changedColumnNames.Add("air_day");
-					changedColumnParameters.Add(
-					myInstance.AirDay.HasValue ? 
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.AirDay.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.AirDay ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.AirTime != myInstance.AirTime)
 				{
 					changedColumnNames.Add("air_time");
-					changedColumnParameters.Add(
-					myInstance.AirTime.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.AirTime.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.AirTime ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.FirstAired != myInstance.FirstAired)
 				{
 					changedColumnNames.Add("first_aired");
-					changedColumnParameters.Add(
-					myInstance.FirstAired.HasValue ? 
-					new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.FirstAired.Value } : 
-					new NpgsqlParameter(null, DBNull.Value));
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.FirstAired ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.Imdbid != myInstance.Imdbid)
 				{
 					changedColumnNames.Add("imdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Imdbid });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Imdbid ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.LastUpdated != myInstance.LastUpdated)
 				{
 					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = myInstance.LastUpdated });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.LastUpdated });			
 				}
 
 				if(dbInstance.NetworkID != myInstance.NetworkID)
 				{
 					changedColumnNames.Add("network_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.NetworkID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.NetworkID });			
 				}
 
 				if(dbInstance.ShowBanner != myInstance.ShowBanner)
 				{
 					changedColumnNames.Add("show_banner");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ShowBanner });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ShowBanner ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ShowDescription != myInstance.ShowDescription)
 				{
 					changedColumnNames.Add("show_description");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = myInstance.ShowDescription });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.ShowDescription ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ShowName != myInstance.ShowName)
 				{
 					changedColumnNames.Add("show_name");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.ShowName });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ShowName ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ShowStatus != myInstance.ShowStatus)
 				{
 					changedColumnNames.Add("show_status");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowStatus });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowStatus });			
 				}
 
 				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
 				{
 					changedColumnNames.Add("thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.Thetvdbid });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.Thetvdbid });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -11126,36 +10068,27 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("air_day");
-				columnParameters.Add(
-				instance.AirDay.HasValue ? 
-				new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.AirDay.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.AirDay ?? (object)DBNull.Value });			
 				columnNames.Add("air_time");
-				columnParameters.Add(
-				instance.AirTime.HasValue ? 
-				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.AirTime.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.AirTime ?? (object)DBNull.Value });			
 				columnNames.Add("first_aired");
-				columnParameters.Add(
-				instance.FirstAired.HasValue ? 
-				new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.FirstAired.Value } : 
-				new NpgsqlParameter(null, DBNull.Value));
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value });			
 				columnNames.Add("imdbid");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Imdbid });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value });			
 				columnNames.Add("last_updated");
-				columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp) { TypedValue = instance.LastUpdated });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated });			
 				columnNames.Add("network_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.NetworkID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.NetworkID });			
 				columnNames.Add("show_banner");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ShowBanner });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowBanner ?? (object)DBNull.Value });			
 				columnNames.Add("show_description");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text) { TypedValue = instance.ShowDescription });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.ShowDescription ?? (object)DBNull.Value });			
 				columnNames.Add("show_name");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.ShowName });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowName ?? (object)DBNull.Value });			
 				columnNames.Add("show_status");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowStatus });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowStatus });			
 				columnNames.Add("thetvdbid");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.Thetvdbid });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -11168,102 +10101,72 @@ namespace TrackTv.Data
 				if(fm.ShowID != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_IsIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowID_IsNotIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.AirDay != null)
 				{
 					columnNames.Add("air_day");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.AirDay.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.AirDay });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.AirDay_NotEqual != null)
 				{
 					columnNames.Add("air_day");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.AirDay_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.AirDay_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.AirDay_IsNull != null)
 				{
@@ -11282,42 +10185,30 @@ namespace TrackTv.Data
 				if(fm.AirDay_IsIn != null)
 				{
 					columnNames.Add("air_day");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.AirDay_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.AirDay_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.AirDay_IsNotIn != null)
 				{
 					columnNames.Add("air_day");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.AirDay_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.AirDay_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.AirTime != null)
 				{
 					columnNames.Add("air_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.AirTime.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.AirTime });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.AirTime_NotEqual != null)
 				{
 					columnNames.Add("air_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.AirTime_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.AirTime_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.AirTime_IsNull != null)
 				{
@@ -11336,42 +10227,30 @@ namespace TrackTv.Data
 				if(fm.AirTime_IsIn != null)
 				{
 					columnNames.Add("air_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.AirTime_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.AirTime_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.AirTime_IsNotIn != null)
 				{
 					columnNames.Add("air_time");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.AirTime_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.AirTime_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.FirstAired != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.FirstAired_NotEqual != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.FirstAired_IsNull != null)
 				{
@@ -11390,102 +10269,72 @@ namespace TrackTv.Data
 				if(fm.FirstAired_IsIn != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.FirstAired_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.FirstAired_IsNotIn != null)
 				{
 					columnNames.Add("first_aired");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.FirstAired_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.FirstAired_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Imdbid != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Imdbid_NotEqual != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Imdbid_StartsWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.Imdbid_DoesNotStartWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.Imdbid_EndsWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.Imdbid_DoesNotEndWith != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.Imdbid_Contains != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.Imdbid_DoesNotContain != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.Imdbid_IsNull != null)
 				{
@@ -11504,262 +10353,184 @@ namespace TrackTv.Data
 				if(fm.Imdbid_IsIn != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Imdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Imdbid_IsNotIn != null)
 				{
 					columnNames.Add("imdbid");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Imdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Imdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.LastUpdated != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_LessThan != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.LastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.LastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime>(null, NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.LastUpdated_IsIn != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.LastUpdated_IsNotIn != null)
 				{
 					columnNames.Add("last_updated");
-					columnParameters.Add(new NpgsqlParameter<DateTime[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp)
-					{
-						TypedValue = fm.LastUpdated_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.NetworkID != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.NetworkID_NotEqual != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.NetworkID_LessThan != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.NetworkID_LessThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.NetworkID_GreaterThan != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.NetworkID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.NetworkID_IsIn != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.NetworkID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.NetworkID_IsNotIn != null)
 				{
 					columnNames.Add("network_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.NetworkID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.NetworkID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowBanner != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowBanner_NotEqual != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowBanner_StartsWith != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ShowBanner_DoesNotStartWith != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ShowBanner_EndsWith != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ShowBanner_DoesNotEndWith != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ShowBanner_Contains != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ShowBanner_DoesNotContain != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ShowBanner_IsNull != null)
 				{
@@ -11778,102 +10549,72 @@ namespace TrackTv.Data
 				if(fm.ShowBanner_IsIn != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ShowBanner_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowBanner_IsNotIn != null)
 				{
 					columnNames.Add("show_banner");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowBanner_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ShowBanner_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowDescription != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowDescription_NotEqual != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowDescription_StartsWith != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ShowDescription_DoesNotStartWith != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ShowDescription_EndsWith != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ShowDescription_DoesNotEndWith != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ShowDescription_Contains != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ShowDescription_DoesNotContain != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ShowDescription_IsNull != null)
 				{
@@ -11892,289 +10633,205 @@ namespace TrackTv.Data
 				if(fm.ShowDescription_IsIn != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.ShowDescription_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowDescription_IsNotIn != null)
 				{
 					columnNames.Add("show_description");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Text)
-					{
-						TypedValue = fm.ShowDescription_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.ShowDescription_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowName != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowName_NotEqual != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowName_StartsWith != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.ShowName_DoesNotStartWith != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.ShowName_EndsWith != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.ShowName_DoesNotEndWith != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.ShowName_Contains != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.ShowName_DoesNotContain != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.ShowName_IsIn != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ShowName_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowName_IsNotIn != null)
 				{
 					columnNames.Add("show_name");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.ShowName_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.ShowName_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowStatus != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowStatus_NotEqual != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowStatus_LessThan != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowStatus_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowStatus_GreaterThan != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowStatus_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowStatus_IsIn != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowStatus_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowStatus_IsNotIn != null)
 				{
 					columnNames.Add("show_status");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowStatus_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowStatus_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Thetvdbid != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.Thetvdbid_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Thetvdbid_IsNotIn != null)
 				{
 					columnNames.Add("thetvdbid");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.Thetvdbid_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.Thetvdbid_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ShowPoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12196,6 +10853,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12204,7 +10862,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int?",					
 					ClrType = typeof(int?),
@@ -12226,6 +10884,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12234,7 +10893,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime?",					
 					ClrType = typeof(DateTime?),
@@ -12256,6 +10915,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -12264,7 +10924,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime?",					
 					ClrType = typeof(DateTime?),
@@ -12286,6 +10946,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("True"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -12294,7 +10955,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -12316,6 +10977,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -12324,7 +10986,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "DateTime",					
 					ClrType = typeof(DateTime),
@@ -12346,6 +11008,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.DateTime2",
 					Linq2dbDataType = DataType.DateTime2,
 					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
@@ -12354,7 +11017,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12376,6 +11039,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12384,7 +11048,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -12406,6 +11070,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -12414,7 +11079,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -12436,6 +11101,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("True"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.Text",
 					Linq2dbDataType = DataType.Text,
 					NpgsDataTypeName = "NpgsqlDbType.Text",
@@ -12444,7 +11110,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -12466,6 +11132,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -12474,7 +11141,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12496,6 +11163,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12504,7 +11172,7 @@ namespace TrackTv.Data
 					TableName = "shows",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12526,6 +11194,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12570,8 +11239,8 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.GenreID },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.GenreID },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -12582,13 +11251,13 @@ namespace TrackTv.Data
 				if(dbInstance.ShowID != myInstance.ShowID)
 				{
 					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });			
 				}
 
 				if(dbInstance.GenreID != myInstance.GenreID)
 				{
 					changedColumnNames.Add("genre_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.GenreID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.GenreID });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -12599,9 +11268,9 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("show_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID });			
 				columnNames.Add("genre_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.GenreID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.GenreID });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -12614,249 +11283,177 @@ namespace TrackTv.Data
 				if(fm.ShowsGenresID != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowsGenresID_NotEqual != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowsGenresID_LessThan != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowsGenresID_LessThanOrEqual != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowsGenresID_GreaterThan != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowsGenresID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowsGenresID_IsIn != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowsGenresID_IsNotIn != null)
 				{
 					columnNames.Add("shows_genres_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowsGenresID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowID != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_IsIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowID_IsNotIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.GenreID != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.GenreID_NotEqual != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.GenreID_LessThan != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.GenreID_LessThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.GenreID_GreaterThan != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.GenreID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.GenreID_IsIn != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.GenreID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.GenreID_IsNotIn != null)
 				{
 					columnNames.Add("genre_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.GenreID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.GenreID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<ShowGenrePoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<ShowGenrePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12878,6 +11475,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12886,7 +11484,7 @@ namespace TrackTv.Data
 					TableName = "shows_genres",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowGenrePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12908,6 +11506,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12916,7 +11515,7 @@ namespace TrackTv.Data
 					TableName = "shows_genres",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<ShowGenrePoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -12938,6 +11537,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -12982,8 +11582,8 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -12994,13 +11594,13 @@ namespace TrackTv.Data
 				if(dbInstance.ProfileID != myInstance.ProfileID)
 				{
 					changedColumnNames.Add("profile_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ProfileID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ProfileID });			
 				}
 
 				if(dbInstance.ShowID != myInstance.ShowID)
 				{
 					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ShowID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -13011,9 +11611,9 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("profile_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID });			
 				columnNames.Add("show_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ShowID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -13026,249 +11626,177 @@ namespace TrackTv.Data
 				if(fm.SubscriptionID != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.SubscriptionID_NotEqual != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.SubscriptionID_LessThan != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.SubscriptionID_LessThanOrEqual != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.SubscriptionID_GreaterThan != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.SubscriptionID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.SubscriptionID_IsIn != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.SubscriptionID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.SubscriptionID_IsNotIn != null)
 				{
 					columnNames.Add("subscription_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.SubscriptionID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.SubscriptionID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ProfileID != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ProfileID_NotEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_LessThan != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_IsIn != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ProfileID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ProfileID_IsNotIn != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ProfileID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ShowID != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ShowID_IsIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ShowID_IsNotIn != null)
 				{
 					columnNames.Add("show_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ShowID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ShowID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<SubscriptionPoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<SubscriptionPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -13290,6 +11818,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13298,7 +11827,7 @@ namespace TrackTv.Data
 					TableName = "subscriptions",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<SubscriptionPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -13320,6 +11849,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13328,7 +11858,7 @@ namespace TrackTv.Data
 					TableName = "subscriptions",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<SubscriptionPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -13350,6 +11880,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13400,10 +11931,10 @@ namespace TrackTv.Data
 			{
 				return new NpgsqlParameter[] 
 				{
-					new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean) { TypedValue = instance.IsAdmin },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Username },
-					new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Password },
-					new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID },
+					new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.IsAdmin },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Username ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Password ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID },
 				};
 			},
 			GetColumnChanges = (dbInstance, myInstance) =>
@@ -13414,25 +11945,25 @@ namespace TrackTv.Data
 				if(dbInstance.IsAdmin != myInstance.IsAdmin)
 				{
 					changedColumnNames.Add("is_admin");
-					changedColumnParameters.Add(new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean) { TypedValue = myInstance.IsAdmin });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.IsAdmin });			
 				}
 
 				if(dbInstance.Username != myInstance.Username)
 				{
 					changedColumnNames.Add("username");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Username });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Username ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.Password != myInstance.Password)
 				{
 					changedColumnNames.Add("password");
-					changedColumnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = myInstance.Password });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Password ?? (object)DBNull.Value });			
 				}
 
 				if(dbInstance.ProfileID != myInstance.ProfileID)
 				{
 					changedColumnNames.Add("profile_id");
-					changedColumnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = myInstance.ProfileID });
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ProfileID });			
 				}
 
 				return (changedColumnNames, changedColumnParameters);
@@ -13443,13 +11974,13 @@ namespace TrackTv.Data
 				var columnParameters = new List<NpgsqlParameter>();
 
 				columnNames.Add("is_admin");
-				columnParameters.Add(new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean) { TypedValue = instance.IsAdmin });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.IsAdmin });			
 				columnNames.Add("username");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Username });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Username ?? (object)DBNull.Value });			
 				columnNames.Add("password");
-				columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar) { TypedValue = instance.Password });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Password ?? (object)DBNull.Value });			
 				columnNames.Add("profile_id");
-				columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer) { TypedValue = instance.ProfileID });
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID });			
 				return (columnNames, columnParameters);
 			},
 			ParseFM = (instance) => {
@@ -13462,409 +11993,289 @@ namespace TrackTv.Data
 				if(fm.UserID != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.UserID_NotEqual != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.UserID_LessThan != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.UserID_LessThanOrEqual != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.UserID_GreaterThan != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.UserID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.UserID_IsIn != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.UserID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.UserID_IsNotIn != null)
 				{
 					columnNames.Add("user_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.UserID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.UserID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.IsAdmin != null)
 				{
 					columnNames.Add("is_admin");
-					columnParameters.Add(new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean)
-					{
-						TypedValue = fm.IsAdmin.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.IsAdmin });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.IsAdmin_NotEqual != null)
 				{
 					columnNames.Add("is_admin");
-					columnParameters.Add(new NpgsqlParameter<bool>(null, NpgsqlDbType.Boolean)
-					{
-						TypedValue = fm.IsAdmin_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.IsAdmin_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.IsAdmin_IsIn != null)
 				{
 					columnNames.Add("is_admin");
-					columnParameters.Add(new NpgsqlParameter<bool[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean)
-					{
-						TypedValue = fm.IsAdmin_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.IsAdmin_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.IsAdmin_IsNotIn != null)
 				{
 					columnNames.Add("is_admin");
-					columnParameters.Add(new NpgsqlParameter<bool[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean)
-					{
-						TypedValue = fm.IsAdmin_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.IsAdmin_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Username != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Username_NotEqual != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Username_StartsWith != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.Username_DoesNotStartWith != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.Username_EndsWith != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.Username_DoesNotEndWith != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.Username_Contains != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.Username_DoesNotContain != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.Username_IsIn != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Username_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Username_IsNotIn != null)
 				{
 					columnNames.Add("username");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Username_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Username_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.Password != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.Password_NotEqual != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_NotEqual
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.Password_StartsWith != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_StartsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}
+				}		 
 
 				if(fm.Password_DoesNotStartWith != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_DoesNotStartWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}
+				}		 
 
 				if(fm.Password_EndsWith != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_EndsWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}
+				}		 
 
 				if(fm.Password_DoesNotEndWith != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_DoesNotEndWith
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}
+				}		 
 
 				if(fm.Password_Contains != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_Contains
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}
+				}		 
 
 				if(fm.Password_DoesNotContain != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string>(null, NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_DoesNotContain
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}
+				}		 
 
 				if(fm.Password_IsIn != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Password_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.Password_IsNotIn != null)
 				{
 					columnNames.Add("password");
-					columnParameters.Add(new NpgsqlParameter<string[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar)
-					{
-						TypedValue = fm.Password_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.Password_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 				if(fm.ProfileID != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID });
 					operators.Add(QueryOperatorType.Equal);
-				}
+				}		 
 
 				if(fm.ProfileID_NotEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_NotEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_LessThan != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_LessThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}
+				}		 
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_LessThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_GreaterThan.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}
+				}		 
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int>(null, NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_GreaterThanOrEqual.Value
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}
+				}		 
 
 				if(fm.ProfileID_IsIn != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_IsIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ProfileID_IsIn });
 					operators.Add(QueryOperatorType.IsIn);
 				}
 
 				if(fm.ProfileID_IsNotIn != null)
 				{
 					columnNames.Add("profile_id");
-					columnParameters.Add(new NpgsqlParameter<int[]>(null, NpgsqlDbType.Array | NpgsqlDbType.Integer)
-					{
-						TypedValue = fm.ProfileID_IsNotIn
-					});
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.ProfileID_IsNotIn });
 					operators.Add(QueryOperatorType.IsNotIn);
 				}
 
 
 				return (columnNames, columnParameters, operators);
 			},
-			Columns = new List<ColumnMetadataModel<UserPoco>>
+			Columns = new List<ColumnMetadataModel>
 			{
-				new ColumnMetadataModel<UserPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -13886,6 +12297,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",
@@ -13894,7 +12306,7 @@ namespace TrackTv.Data
 					TableName = "users",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<UserPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "bool",					
 					ClrType = typeof(bool),
@@ -13916,6 +12328,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Boolean",
 					Linq2dbDataType = DataType.Boolean,
 					NpgsDataTypeName = "NpgsqlDbType.Boolean",
@@ -13924,7 +12337,7 @@ namespace TrackTv.Data
 					TableName = "users",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<UserPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -13946,6 +12359,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -13954,7 +12368,7 @@ namespace TrackTv.Data
 					TableName = "users",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<UserPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "string",					
 					ClrType = typeof(string),
@@ -13976,6 +12390,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("False"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("True"),
 					Linq2dbDataTypeName = "DataType.NVarChar",
 					Linq2dbDataType = DataType.NVarChar,
 					NpgsDataTypeName = "NpgsqlDbType.Varchar",
@@ -13984,7 +12399,7 @@ namespace TrackTv.Data
 					TableName = "users",
 					TableSchema = "public",
 				},
-				new ColumnMetadataModel<UserPoco>
+				new ColumnMetadataModel
 				{						
 					ClrTypeName = "int",					
 					ClrType = typeof(int),
@@ -14006,6 +12421,7 @@ namespace TrackTv.Data
 					IsNullable = bool.Parse("False"),
 					IsClrValueType = bool.Parse("True"),
 					IsClrNullableType = bool.Parse("False"),
+					IsClrReferenceType = bool.Parse("False"),
 					Linq2dbDataTypeName = "DataType.Int32",
 					Linq2dbDataType = DataType.Int32,
 					NpgsDataTypeName = "NpgsqlDbType.Integer",

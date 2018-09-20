@@ -149,11 +149,8 @@
         Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
     }
-
-    /// <summary>
-    /// Represemts a table in PostgreSQL
-    /// </summary>
-    public class TableMetadataModel<T>
+    
+    public class TableMetadataModel<T> : TableMetadataModel
         where T : IPoco<T>
     {
         /// <summary>
@@ -179,10 +176,6 @@
 
         public IReadOnlyDictionary<string, Action<T, object>> Setters;
 
-        public string ClassName { get; set; }
-
-        public List<ColumnMetadataModel<T>> Columns { get; set; }
-
         /// <summary>
         /// Generates a parameter for every non Primary Key column in the table.
         /// </summary>
@@ -200,6 +193,16 @@
         public Func<T, ICatalogModel<T>> MapToCM { get; set; }
 
         public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFM { get; set; }
+    }
+
+    /// <summary>
+    /// Represemts a table in PostgreSQL
+    /// </summary>
+    public class TableMetadataModel
+    {
+        public string ClassName { get; set; }
+
+        public List<ColumnMetadataModel> Columns { get; set; }
 
         public string PluralClassName { get; set; }
 
@@ -215,7 +218,7 @@
     /// <summary>
     /// Represents a column in PostgreSQL
     /// </summary>
-    public class ColumnMetadataModel<T>
+    public class ColumnMetadataModel
     {
         public Type ClrNonNullableType { get; set; }
 
@@ -249,6 +252,8 @@
 
         public bool IsClrNullableType { get; set; }
 
+        public bool IsClrReferenceType { get; set; }
+
         public bool IsForeignKey { get; set; }
 
         public bool IsNullable { get; set; }
@@ -279,7 +284,7 @@
     /// <summary>
     /// Interface for all Catalog models
     /// </summary>
-    public interface ICatalogModel<in TPoco>
+    public interface ICatalogModel<TPoco>
         where TPoco : IPoco<TPoco>
     {
     }

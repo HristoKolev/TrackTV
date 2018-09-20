@@ -8,7 +8,9 @@
 
     public partial class DbService
     {
-        public async Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(IFilterModel<TPoco> filter, CancellationToken cancellationToken = default)
+        public async Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
+            IFilterModel<TPoco> filter, 
+            CancellationToken cancellationToken = default)
             where TPoco : IPoco<TPoco>, new() 
             where TCatalogModel: ICatalogModel<TPoco>
         {
@@ -54,7 +56,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            var pocos = await this.Query<TPoco>(sql, parameters.ToArray());
+            var pocos = await this.QueryInternal<TPoco>(sql, parameters, cancellationToken);
             
             var resultList = new List<TCatalogModel>();
 

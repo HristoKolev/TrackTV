@@ -131,10 +131,10 @@
 
             var parameters = new[]
             {
-                this.Parameter("p", ids)
+                this.Parameter("pk", ids)
             };
 
-            string sql = $"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = any(@p);";
+            string sql = $"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = any(@pk);";
 
             return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
@@ -153,10 +153,10 @@
 
             var parameters = new[]
             {
-                this.Parameter("p", id)
+                this.Parameter("pk", id)
             };
 
-            string sql = $"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @p;";
+            string sql = $"DELETE FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @pk;";
 
             return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
@@ -266,9 +266,9 @@
                 throw new ApplicationException("Cannot update a model with primary key of 0.");
             }
 
-            var (names, parameters) = metadata.GetAllColumns(poco);
+            var (columnNames, parameters) = metadata.GetAllColumns(poco);
 
-            if (names.Count == 0)
+            if (columnNames.Count == 0)
             {
                 return Task.FromResult(0); // nothing to update?
             }
@@ -281,19 +281,19 @@
             sqlBuilder.Append(metadata.TableName);
             sqlBuilder.Append("\" SET ");
 
-            for (int i = 0; i < names.Count; i++)
+            for (int i = 0; i < columnNames.Count; i++)
             {
-                string name = names[i];
+                string columnName = columnNames[i];
                 var parameter = parameters[i];
 
                 string paramName = "@p" + i;
 
-                sqlBuilder.Append('\n');
-                sqlBuilder.Append(name);
-                sqlBuilder.Append(" = ");
+                sqlBuilder.Append("\n\"");
+                sqlBuilder.Append(columnName);
+                sqlBuilder.Append("\" = ");
                 sqlBuilder.Append(paramName);
 
-                if (i != names.Count - 1)
+                if (i != columnNames.Count - 1)
                 {
                     sqlBuilder.Append(',');
                 }
@@ -301,9 +301,9 @@
                 parameter.ParameterName = paramName;
             }
 
-            sqlBuilder.Append("\nWHERE ");
+            sqlBuilder.Append("\nWHERE \"");
             sqlBuilder.Append(metadata.PrimaryKeyColumnName);
-            sqlBuilder.Append(" = @pk;");
+            sqlBuilder.Append("\" = @pk;");
 
             parameters.Add(this.Parameter("pk", pk));
 
