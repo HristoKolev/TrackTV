@@ -1,11 +1,9 @@
 ﻿namespace TrackTv.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
 
-    public partial class DbService
+    public partial class DbService<TPocos>
     {
         private static Action<TObject, object> GetSetter<TObject>(string propertyName)
         {
@@ -30,15 +28,10 @@
             return result.Compile();
         }
 
-        private static Dictionary<string, Action<T, object>> GetSetterMap<T>(string tableName)
-        {
-            return TableToPropertyMap[tableName].ToDictionary(pair => pair.Key, pair => GetSetter<T>(pair.Value));
-        }
-
-        private static TableMetadataModel<T> GetMetadata<T>()
+       private TableMetadataModel<T> GetMetadata<T>()
             where T : IPoco<T>
         {
-            return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
+            return (TableMetadataModel<T>)this.Poco.MetadataByPocoType[typeof(T)];
         }
     }
 }

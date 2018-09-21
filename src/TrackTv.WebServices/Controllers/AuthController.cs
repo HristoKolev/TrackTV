@@ -41,7 +41,7 @@
 
             string hashedPassword = this.SessionService.HashPassword(model.Password);
 
-            var user = await this.DbService.Users.Where(x => x.Username == model.Username && x.Password == hashedPassword)
+            var user = await this.DbService.Poco.Users.Where(x => x.Username == model.Username && x.Password == hashedPassword)
                                  .FirstOrDefaultAsync();
 
             if (user == null)
@@ -71,7 +71,7 @@
                 return this.Failure(this.ModelState);
             }
 
-            if (await this.DbService.Users.AnyAsync(u => u.Username == model.Username))
+            if (await this.DbService.Poco.Users.AnyAsync(u => u.Username == model.Username))
             {
                 return this.Failure($"A user with an username '{model.Username}' already exists.");
             }

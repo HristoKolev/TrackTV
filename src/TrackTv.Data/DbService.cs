@@ -13,11 +13,12 @@
 
     using NpgsqlTypes;
 
-    public partial class DbService : IDbService
+    public partial class DbService<TPocos> : IDbService<TPocos> where TPocos : IDbPocos<TPocos>, new()
     {
         /// <summary>
         /// The default parameter type map that is used when creating parameters without specifying the NpgsqlDbType explicitly.
         /// </summary>
+        // ReSharper disable once StaticMemberInGenericType
         private static readonly Dictionary<Type, NpgsqlDbType> DefaultNpgsqlDbTypeMap = new Dictionary<Type, NpgsqlDbType>
         {
             { typeof(int), NpgsqlDbType.Integer },
@@ -52,6 +53,10 @@
         public DbService(NpgsqlConnection dbConnection)
         {
             this.dbConnection = dbConnection;
+            this.Poco = new TPocos
+            {
+                DbService = this
+            };
         }
 
         private DataConnection LinqToDbConnection
@@ -67,6 +72,8 @@
                 return this.linqToDbConnection;
             }
         }
+
+        public TPocos Poco { get; }
 
         public void Dispose()
         {
@@ -308,7 +315,7 @@
                     // cached setters for the result type
                     var setters = new Action<T, object>[fieldCount];
 
-                    var metadata = GetMetadata<T>();
+                    var metadata = this.GetMetadata<T>();
 
                     for (int i = 0; i < fieldCount; i++)
                     {

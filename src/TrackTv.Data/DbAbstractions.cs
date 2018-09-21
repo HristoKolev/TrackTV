@@ -22,7 +22,7 @@
         TableMetadataModel<T> Metadata { get; }
     }
 
-    public partial interface IDbService : IDisposable
+    public interface IDbService<TPocos> : IDisposable where TPocos : IDbPocos<TPocos>, new()
     {
         /// <summary>
         /// Calls `BeginTransaction` on the connection and returns the result.
@@ -148,6 +148,11 @@
         /// </summary>
         Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
+
+        IQueryable<T> GetTable<T>()
+            where T : class, IPoco<T>;
+
+        TPocos Poco { get; }
     }
     
     public class TableMetadataModel<T> : TableMetadataModel
@@ -358,5 +363,13 @@
         public string PropertyName { get; }
 
         public QueryOperatorType QueryOperatorType { get; }
+    }
+
+    public interface IDbPocos<TDbPocos>
+        where TDbPocos : IDbPocos<TDbPocos>, new()
+    {
+        IReadOnlyDictionary<Type, object> MetadataByPocoType { get; }
+
+        IDbService<TDbPocos> DbService { set; }
     }
 }

@@ -42,7 +42,7 @@
             var changeList = await this.GetChangeList();
 
             var registeredEpisodeIDs =
-                this.DbService.Episodes.Where(p => updateIDs.Contains(p.Thetvdbid)).Select(p => p.Thetvdbid).ToArray();
+                this.DbService.Poco.Episodes.Where(p => updateIDs.Contains(p.Thetvdbid)).Select(p => p.Thetvdbid).ToArray();
 
             var registeredEpisodeIDsHashSet = new HashSet<int>(registeredEpisodeIDs);
 
@@ -73,7 +73,7 @@
 
         private async Task<ConcurrentDictionary<string, ApiChangePoco>> GetChangeList()
         {
-            var list = await this.DbService.ApiChanges.Select(poco => new { ID = poco.ApiChangeThetvdbid, Type= poco.ApiChangeType }).ToListAsync();
+            var list = await this.DbService.Poco.ApiChanges.Select(poco => new { ID = poco.ApiChangeThetvdbid, Type= poco.ApiChangeType }).ToListAsync();
 
             var dict = new ConcurrentDictionary<string, ApiChangePoco>();
 

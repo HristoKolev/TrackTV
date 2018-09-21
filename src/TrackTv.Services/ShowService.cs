@@ -62,8 +62,8 @@ namespace TrackTv.Services
 
         private Task<FullShow> GetShowWithNetworkByIdAsync(int showId)
         {
-            var result = (from show in this.DbService.Shows
-                          join network in this.DbService.Networks on show.NetworkID equals network.NetworkID
+            var result = (from show in this.DbService.Poco.Shows
+                          join network in this.DbService.Poco.Networks on show.NetworkID equals network.NetworkID
                           where show.ShowID == showId
                           select new FullShow
                           {

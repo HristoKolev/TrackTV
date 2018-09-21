@@ -17,7 +17,7 @@
 
         public Task<bool> ProfileExistsAsync(int profileId)
         {
-            return this.DbService.Profiles.AnyAsync(x => x.ProfileID == profileId);
+            return this.DbService.Poco.Profiles.AnyAsync(x => x.ProfileID == profileId);
         }
     }
 }

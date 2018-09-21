@@ -17,14 +17,14 @@
 
         public async Task<string> GetSettingAsync(Setting setting)
         {
-            var poco = await this.DbService.Settings.FirstOrDefaultAsync(p => p.SettingName == setting.ToString());
+            var poco = await this.DbService.Poco.Settings.FirstOrDefaultAsync(p => p.SettingName == setting.ToString());
 
             return poco.SettingValue;
         }
 
         public async Task SetSettingAsync(Setting setting, string value)
         {
-            var poco = await this.DbService.Settings.FirstOrDefaultAsync(p => p.SettingName == setting.ToString())
+            var poco = await this.DbService.Poco.Settings.FirstOrDefaultAsync(p => p.SettingName == setting.ToString())
                        ?? new SettingPoco();
 
             poco.SettingName = setting.ToString();

@@ -26,14 +26,14 @@
             int page = 1,
             int pageSize = DefaultPageSize)
         {
-            var showQuery = this.DbService.Shows;
+            var showQuery = this.DbService.Poco.Shows;
 
             if (!string.IsNullOrWhiteSpace(showName))
             {
                 showQuery = showQuery.Where(show => show.ShowName.Contains(showName));
             }
 
-            var showGenres = this.DbService.ShowsGenres;
+            var showGenres = this.DbService.Poco.ShowsGenres;
 
             if (genreId.HasValue)
             {
@@ -43,7 +43,7 @@
             var shows = await (from show in showQuery
                                join showGenre in showGenres on show.ShowID equals showGenre.ShowID
                                select show).Distinct()
-                                           .OrderByDescending(poco => this.DbService.Subscriptions.Count(s => s.ShowID == poco.ShowID))
+                                           .OrderByDescending(poco => this.DbService.Poco.Subscriptions.Count(s => s.ShowID == poco.ShowID))
                                            .Page(page, pageSize)
                                            .ToArrayAsync()
                                            ;
@@ -84,7 +84,7 @@
 
         private Task<int> CountAllAsync(string showName, int? genreId)
         {
-            var showsQuery = this.DbService.Shows;
+            var showsQuery = this.DbService.Poco.Shows;
 
             if (!string.IsNullOrWhiteSpace(showName))
             {
@@ -97,21 +97,20 @@
             }
 
             return (from show in showsQuery
-                    join showGenre in this.DbService.ShowsGenres on show.ShowID equals showGenre.ShowID
+                    join showGenre in this.DbService.Poco.ShowsGenres on show.ShowID equals showGenre.ShowID
                     where showGenre.GenreID == genreId
                     select show).CountAsync();
         }
 
-        private async Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
+        private Task<SubscriberSummary[]> CountSubscribersAsync(int[] showIds)
         {
-            return await (from show in this.DbService.Shows
-                          where showIds.Contains(show.ShowID)
-                          select new SubscriberSummary
-                          {
-                              ShowId = show.ShowID,
-                              SubscriberCount = this.DbService.Subscriptions.Count(poco => poco.ShowID == show.ShowID)
-                          }).ToArrayAsync()
-                            ;
+            return (from show in this.DbService.Poco.Shows
+                    where showIds.Contains(show.ShowID)
+                    select new SubscriberSummary
+                    {
+                        ShowId = show.ShowID,
+                        SubscriberCount = this.DbService.Poco.Subscriptions.Count(poco => poco.ShowID == show.ShowID)
+                    }).ToArrayAsync();
         }
     }
 

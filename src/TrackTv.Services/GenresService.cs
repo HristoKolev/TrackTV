@@ -18,7 +18,7 @@
 
         public async Task<FullGenre[]> GetGenresAsync()
         {
-            var genres = await this.DbService.Genres.ToListAsync();
+            var genres = await this.DbService.Poco.Genres.ToListAsync();
 
             return genres.Select(genre => new FullGenre
                          {

@@ -2,11 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class DbService
+    public partial class DbService<TPocos>
     {
         public async Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
             IFilterModel<TPoco> filter, 
@@ -14,7 +15,7 @@
             where TPoco : IPoco<TPoco>, new() 
             where TCatalogModel: ICatalogModel<TPoco>
         {
-            var metadata = GetMetadata<TPoco>();
+            var metadata = this.GetMetadata<TPoco>();
 
             var (columnNames, parameters, operators) = metadata.ParseFM(filter);
          
@@ -197,6 +198,11 @@
                     throw new ArgumentOutOfRangeException(nameof(oper));
                 }
             }
+        }
+        public IQueryable<T> GetTable<T>()
+            where T : class, IPoco<T>
+        {
+            return this.LinqToDbConnection.GetTable<T>();
         }
     }
 }

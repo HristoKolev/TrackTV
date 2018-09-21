@@ -90,10 +90,10 @@
 
         private async Task<CalendarEpisode[]> GetMonthlyEpisodesAsync(int profileId, DateTime startDay, DateTime endDay)
         {
-            var episodes = await (from profile in this.DbService.Profiles
-                                  join subscription in this.DbService.Subscriptions on profile.ProfileID equals subscription.ProfileID
-                                  join show in this.DbService.Shows on subscription.ShowID equals show.ShowID
-                                  join episode in this.DbService.Episodes on show.ShowID equals episode.ShowID
+            var episodes = await (from profile in this.DbService.Poco.Profiles
+                                  join subscription in this.DbService.Poco.Subscriptions on profile.ProfileID equals subscription.ProfileID
+                                  join show in this.DbService.Poco.Shows on subscription.ShowID equals show.ShowID
+                                  join episode in this.DbService.Poco.Episodes on show.ShowID equals episode.ShowID
                                   where profile.ProfileID == profileId && episode.FirstAired > startDay && episode.FirstAired < endDay
                                   select new CalendarEpisode
                                   {

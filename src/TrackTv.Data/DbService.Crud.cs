@@ -8,7 +8,7 @@
 
     using Npgsql;
 
-    public partial class DbService
+    public partial class DbService<TPocos>
     {
         /// <summary>
         /// Inserts several records in single query.
@@ -16,7 +16,7 @@
         public Task<int> BulkInsert<T>(IEnumerable<T> pocos, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = GetMetadata<T>();
+            var metadata = this.GetMetadata<T>();
             var columns = metadata.Columns;
 
             var sqlBuilder = new StringBuilder(128);
@@ -123,7 +123,7 @@
                 return Task.FromResult(0);
             }
 
-            var metadata = GetMetadata<T>();
+            var metadata = this.GetMetadata<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -145,7 +145,7 @@
         public Task<int> Delete<T>(int id, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = GetMetadata<T>();
+            var metadata = this.GetMetadata<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;

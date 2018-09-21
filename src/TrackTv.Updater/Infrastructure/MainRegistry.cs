@@ -7,9 +7,6 @@ namespace TrackTv.Updater.Infrastructure
 
     using log4net;
 
-    using LinqToDB.DataProvider;
-    using LinqToDB.DataProvider.PostgreSQL;
-
     using Npgsql;
 
     using SharpRaven;
@@ -42,7 +39,6 @@ namespace TrackTv.Updater.Infrastructure
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
 
-            this.For<IDataProvider>().Use<PostgreSQLDataProvider>();
             this.For<IDbService>().Use<DbService>();
         }
  

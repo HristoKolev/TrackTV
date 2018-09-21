@@ -5,7 +5,7 @@
 
     using Npgsql;
 
-    public partial class DbService
+    public partial class DbService<TPocos>
     {
         /// <summary>
         /// Calls `BeginTransaction` on the connection and returns the result.

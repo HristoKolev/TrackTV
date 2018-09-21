@@ -84,7 +84,7 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
 
-		TableMetadataModel<ActorPoco> IPoco<ActorPoco>.Metadata => DbService.ActorPocoMetadata;
+		TableMetadataModel<ActorPoco> IPoco<ActorPoco>.Metadata => DbPocos.ActorPocoMetadata;
 
 		public ActorBM ToBm()
 		{
@@ -134,7 +134,7 @@ namespace TrackTv.Data
 		[Column(Name = "api_change_type_id", DataType = DataType.Int32)]
         public int ApiChangeTypeID { get; set; }
 
-		TableMetadataModel<ApiChangeTypePoco> IPoco<ApiChangeTypePoco>.Metadata => DbService.ApiChangeTypePocoMetadata;
+		TableMetadataModel<ApiChangeTypePoco> IPoco<ApiChangeTypePoco>.Metadata => DbPocos.ApiChangeTypePocoMetadata;
 
 		public ApiChangeTypeBM ToBm()
 		{
@@ -261,7 +261,7 @@ namespace TrackTv.Data
 		[Column(Name = "api_change_type", DataType = DataType.Int32)]
         public int ApiChangeType { get; set; }
 
-		TableMetadataModel<ApiChangePoco> IPoco<ApiChangePoco>.Metadata => DbService.ApiChangePocoMetadata;
+		TableMetadataModel<ApiChangePoco> IPoco<ApiChangePoco>.Metadata => DbPocos.ApiChangePocoMetadata;
 
 		public ApiChangeBM ToBm()
 		{
@@ -357,7 +357,7 @@ namespace TrackTv.Data
 		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
         public DateTime ApiResponseLastUpdated { get; set; }
 
-		TableMetadataModel<ApiResponsePoco> IPoco<ApiResponsePoco>.Metadata => DbService.ApiResponsePocoMetadata;
+		TableMetadataModel<ApiResponsePoco> IPoco<ApiResponsePoco>.Metadata => DbPocos.ApiResponsePocoMetadata;
 
 		public ApiResponseBM ToBm()
 		{
@@ -513,7 +513,7 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
 
-		TableMetadataModel<EpisodePoco> IPoco<EpisodePoco>.Metadata => DbService.EpisodePocoMetadata;
+		TableMetadataModel<EpisodePoco> IPoco<EpisodePoco>.Metadata => DbPocos.EpisodePocoMetadata;
 
 		public EpisodeBM ToBm()
 		{
@@ -568,7 +568,7 @@ namespace TrackTv.Data
 		[Column(Name = "genre_name", DataType = DataType.NVarChar)]
         public string GenreName { get; set; }
 
-		TableMetadataModel<GenrePoco> IPoco<GenrePoco>.Metadata => DbService.GenrePocoMetadata;
+		TableMetadataModel<GenrePoco> IPoco<GenrePoco>.Metadata => DbPocos.GenrePocoMetadata;
 
 		public GenreBM ToBm()
 		{
@@ -615,7 +615,7 @@ namespace TrackTv.Data
 		[Column(Name = "network_name", DataType = DataType.NVarChar)]
         public string NetworkName { get; set; }
 
-		TableMetadataModel<NetworkPoco> IPoco<NetworkPoco>.Metadata => DbService.NetworkPocoMetadata;
+		TableMetadataModel<NetworkPoco> IPoco<NetworkPoco>.Metadata => DbPocos.NetworkPocoMetadata;
 
 		public NetworkBM ToBm()
 		{
@@ -662,7 +662,7 @@ namespace TrackTv.Data
 		[Column(Name = "profile_name", DataType = DataType.NVarChar)]
         public string ProfileName { get; set; }
 
-		TableMetadataModel<ProfilePoco> IPoco<ProfilePoco>.Metadata => DbService.ProfilePocoMetadata;
+		TableMetadataModel<ProfilePoco> IPoco<ProfilePoco>.Metadata => DbPocos.ProfilePocoMetadata;
 
 		public ProfileBM ToBm()
 		{
@@ -739,7 +739,7 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
-		TableMetadataModel<RolePoco> IPoco<RolePoco>.Metadata => DbService.RolePocoMetadata;
+		TableMetadataModel<RolePoco> IPoco<RolePoco>.Metadata => DbPocos.RolePocoMetadata;
 
 		public RoleBM ToBm()
 		{
@@ -801,7 +801,7 @@ namespace TrackTv.Data
 		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
         public string SettingName { get; set; }
 
-		TableMetadataModel<SettingPoco> IPoco<SettingPoco>.Metadata => DbService.SettingPocoMetadata;
+		TableMetadataModel<SettingPoco> IPoco<SettingPoco>.Metadata => DbPocos.SettingPocoMetadata;
 
 		public SettingBM ToBm()
 		{
@@ -981,7 +981,7 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
 
-		TableMetadataModel<ShowPoco> IPoco<ShowPoco>.Metadata => DbService.ShowPocoMetadata;
+		TableMetadataModel<ShowPoco> IPoco<ShowPoco>.Metadata => DbPocos.ShowPocoMetadata;
 
 		public ShowBM ToBm()
 		{
@@ -1055,7 +1055,7 @@ namespace TrackTv.Data
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
 
-		TableMetadataModel<ShowGenrePoco> IPoco<ShowGenrePoco>.Metadata => DbService.ShowGenrePocoMetadata;
+		TableMetadataModel<ShowGenrePoco> IPoco<ShowGenrePoco>.Metadata => DbPocos.ShowGenrePocoMetadata;
 
 		public ShowGenreBM ToBm()
 		{
@@ -1120,7 +1120,7 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
-		TableMetadataModel<SubscriptionPoco> IPoco<SubscriptionPoco>.Metadata => DbService.SubscriptionPocoMetadata;
+		TableMetadataModel<SubscriptionPoco> IPoco<SubscriptionPoco>.Metadata => DbPocos.SubscriptionPocoMetadata;
 
 		public SubscriptionBM ToBm()
 		{
@@ -1207,7 +1207,7 @@ namespace TrackTv.Data
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
 
-		TableMetadataModel<UserPoco> IPoco<UserPoco>.Metadata => DbService.UserPocoMetadata;
+		TableMetadataModel<UserPoco> IPoco<UserPoco>.Metadata => DbPocos.UserPocoMetadata;
 
 		public UserBM ToBm()
 		{
@@ -5015,7 +5015,7 @@ namespace TrackTv.Data
 		}
 	}
     
-    public partial class DbService
+    public class DbPocos : IDbPocos<DbPocos>
     {
         internal static readonly TableMetadataModel<ActorPoco> ActorPocoMetadata = new TableMetadataModel<ActorPoco>
 		{
@@ -12433,7 +12433,7 @@ namespace TrackTv.Data
 			}
 		};
 		
-		private static readonly IReadOnlyDictionary<Type, object> MetadataByPocoType = new Dictionary<Type, object>
+		private static readonly IReadOnlyDictionary<Type, object> StaticMetadataByPocoType = new Dictionary<Type, object>
         {
             {typeof(ActorPoco), ActorPocoMetadata},
             {typeof(ApiChangeTypePoco), ApiChangeTypePocoMetadata},
@@ -12566,356 +12566,173 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'actors'.</para>		
 		/// </summary>
-        public IQueryable<ActorPoco> Actors => this.LinqToDbConnection.GetTable<ActorPoco>();
+        public IQueryable<ActorPoco> Actors => this.DbService.GetTable<ActorPoco>();
 
 		/// <summary>
 		/// <para>Database table 'actors'.</para>
 		/// <para>Filter model 'ActorFM'.</para>
 		/// <para>Catalog model 'ActorCM'.</para>
 		/// </summary>
-		public Task<List<ActorCM>> Filter(ActorFM filter) => this.FilterInternal<ActorPoco, ActorCM>(filter);
+		public Task<List<ActorCM>> Filter(ActorFM filter) => this.DbService.FilterInternal<ActorPoco, ActorCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'api_change_types'.</para>		
 		/// </summary>
-        public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.LinqToDbConnection.GetTable<ApiChangeTypePoco>();
+        public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.DbService.GetTable<ApiChangeTypePoco>();
 
 		/// <summary>
 		/// <para>Database table 'api_change_types'.</para>
 		/// <para>Filter model 'ApiChangeTypeFM'.</para>
 		/// <para>Catalog model 'ApiChangeTypeCM'.</para>
 		/// </summary>
-		public Task<List<ApiChangeTypeCM>> Filter(ApiChangeTypeFM filter) => this.FilterInternal<ApiChangeTypePoco, ApiChangeTypeCM>(filter);
+		public Task<List<ApiChangeTypeCM>> Filter(ApiChangeTypeFM filter) => this.DbService.FilterInternal<ApiChangeTypePoco, ApiChangeTypeCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>		
 		/// </summary>
-        public IQueryable<ApiChangePoco> ApiChanges => this.LinqToDbConnection.GetTable<ApiChangePoco>();
+        public IQueryable<ApiChangePoco> ApiChanges => this.DbService.GetTable<ApiChangePoco>();
 
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>
 		/// <para>Filter model 'ApiChangeFM'.</para>
 		/// <para>Catalog model 'ApiChangeCM'.</para>
 		/// </summary>
-		public Task<List<ApiChangeCM>> Filter(ApiChangeFM filter) => this.FilterInternal<ApiChangePoco, ApiChangeCM>(filter);
+		public Task<List<ApiChangeCM>> Filter(ApiChangeFM filter) => this.DbService.FilterInternal<ApiChangePoco, ApiChangeCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>		
 		/// </summary>
-        public IQueryable<ApiResponsePoco> ApiResponses => this.LinqToDbConnection.GetTable<ApiResponsePoco>();
+        public IQueryable<ApiResponsePoco> ApiResponses => this.DbService.GetTable<ApiResponsePoco>();
 
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>
 		/// <para>Filter model 'ApiResponseFM'.</para>
 		/// <para>Catalog model 'ApiResponseCM'.</para>
 		/// </summary>
-		public Task<List<ApiResponseCM>> Filter(ApiResponseFM filter) => this.FilterInternal<ApiResponsePoco, ApiResponseCM>(filter);
+		public Task<List<ApiResponseCM>> Filter(ApiResponseFM filter) => this.DbService.FilterInternal<ApiResponsePoco, ApiResponseCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>		
 		/// </summary>
-        public IQueryable<EpisodePoco> Episodes => this.LinqToDbConnection.GetTable<EpisodePoco>();
+        public IQueryable<EpisodePoco> Episodes => this.DbService.GetTable<EpisodePoco>();
 
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>
 		/// <para>Filter model 'EpisodeFM'.</para>
 		/// <para>Catalog model 'EpisodeCM'.</para>
 		/// </summary>
-		public Task<List<EpisodeCM>> Filter(EpisodeFM filter) => this.FilterInternal<EpisodePoco, EpisodeCM>(filter);
+		public Task<List<EpisodeCM>> Filter(EpisodeFM filter) => this.DbService.FilterInternal<EpisodePoco, EpisodeCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'genres'.</para>		
 		/// </summary>
-        public IQueryable<GenrePoco> Genres => this.LinqToDbConnection.GetTable<GenrePoco>();
+        public IQueryable<GenrePoco> Genres => this.DbService.GetTable<GenrePoco>();
 
 		/// <summary>
 		/// <para>Database table 'genres'.</para>
 		/// <para>Filter model 'GenreFM'.</para>
 		/// <para>Catalog model 'GenreCM'.</para>
 		/// </summary>
-		public Task<List<GenreCM>> Filter(GenreFM filter) => this.FilterInternal<GenrePoco, GenreCM>(filter);
+		public Task<List<GenreCM>> Filter(GenreFM filter) => this.DbService.FilterInternal<GenrePoco, GenreCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'networks'.</para>		
 		/// </summary>
-        public IQueryable<NetworkPoco> Networks => this.LinqToDbConnection.GetTable<NetworkPoco>();
+        public IQueryable<NetworkPoco> Networks => this.DbService.GetTable<NetworkPoco>();
 
 		/// <summary>
 		/// <para>Database table 'networks'.</para>
 		/// <para>Filter model 'NetworkFM'.</para>
 		/// <para>Catalog model 'NetworkCM'.</para>
 		/// </summary>
-		public Task<List<NetworkCM>> Filter(NetworkFM filter) => this.FilterInternal<NetworkPoco, NetworkCM>(filter);
+		public Task<List<NetworkCM>> Filter(NetworkFM filter) => this.DbService.FilterInternal<NetworkPoco, NetworkCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>		
 		/// </summary>
-        public IQueryable<ProfilePoco> Profiles => this.LinqToDbConnection.GetTable<ProfilePoco>();
+        public IQueryable<ProfilePoco> Profiles => this.DbService.GetTable<ProfilePoco>();
 
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>
 		/// <para>Filter model 'ProfileFM'.</para>
 		/// <para>Catalog model 'ProfileCM'.</para>
 		/// </summary>
-		public Task<List<ProfileCM>> Filter(ProfileFM filter) => this.FilterInternal<ProfilePoco, ProfileCM>(filter);
+		public Task<List<ProfileCM>> Filter(ProfileFM filter) => this.DbService.FilterInternal<ProfilePoco, ProfileCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'roles'.</para>		
 		/// </summary>
-        public IQueryable<RolePoco> Roles => this.LinqToDbConnection.GetTable<RolePoco>();
+        public IQueryable<RolePoco> Roles => this.DbService.GetTable<RolePoco>();
 
 		/// <summary>
 		/// <para>Database table 'roles'.</para>
 		/// <para>Filter model 'RoleFM'.</para>
 		/// <para>Catalog model 'RoleCM'.</para>
 		/// </summary>
-		public Task<List<RoleCM>> Filter(RoleFM filter) => this.FilterInternal<RolePoco, RoleCM>(filter);
+		public Task<List<RoleCM>> Filter(RoleFM filter) => this.DbService.FilterInternal<RolePoco, RoleCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'settings'.</para>		
 		/// </summary>
-        public IQueryable<SettingPoco> Settings => this.LinqToDbConnection.GetTable<SettingPoco>();
+        public IQueryable<SettingPoco> Settings => this.DbService.GetTable<SettingPoco>();
 
 		/// <summary>
 		/// <para>Database table 'settings'.</para>
 		/// <para>Filter model 'SettingFM'.</para>
 		/// <para>Catalog model 'SettingCM'.</para>
 		/// </summary>
-		public Task<List<SettingCM>> Filter(SettingFM filter) => this.FilterInternal<SettingPoco, SettingCM>(filter);
+		public Task<List<SettingCM>> Filter(SettingFM filter) => this.DbService.FilterInternal<SettingPoco, SettingCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'shows'.</para>		
 		/// </summary>
-        public IQueryable<ShowPoco> Shows => this.LinqToDbConnection.GetTable<ShowPoco>();
+        public IQueryable<ShowPoco> Shows => this.DbService.GetTable<ShowPoco>();
 
 		/// <summary>
 		/// <para>Database table 'shows'.</para>
 		/// <para>Filter model 'ShowFM'.</para>
 		/// <para>Catalog model 'ShowCM'.</para>
 		/// </summary>
-		public Task<List<ShowCM>> Filter(ShowFM filter) => this.FilterInternal<ShowPoco, ShowCM>(filter);
+		public Task<List<ShowCM>> Filter(ShowFM filter) => this.DbService.FilterInternal<ShowPoco, ShowCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>		
 		/// </summary>
-        public IQueryable<ShowGenrePoco> ShowsGenres => this.LinqToDbConnection.GetTable<ShowGenrePoco>();
+        public IQueryable<ShowGenrePoco> ShowsGenres => this.DbService.GetTable<ShowGenrePoco>();
 
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>
 		/// <para>Filter model 'ShowGenreFM'.</para>
 		/// <para>Catalog model 'ShowGenreCM'.</para>
 		/// </summary>
-		public Task<List<ShowGenreCM>> Filter(ShowGenreFM filter) => this.FilterInternal<ShowGenrePoco, ShowGenreCM>(filter);
+		public Task<List<ShowGenreCM>> Filter(ShowGenreFM filter) => this.DbService.FilterInternal<ShowGenrePoco, ShowGenreCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>		
 		/// </summary>
-        public IQueryable<SubscriptionPoco> Subscriptions => this.LinqToDbConnection.GetTable<SubscriptionPoco>();
+        public IQueryable<SubscriptionPoco> Subscriptions => this.DbService.GetTable<SubscriptionPoco>();
 
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>
 		/// <para>Filter model 'SubscriptionFM'.</para>
 		/// <para>Catalog model 'SubscriptionCM'.</para>
 		/// </summary>
-		public Task<List<SubscriptionCM>> Filter(SubscriptionFM filter) => this.FilterInternal<SubscriptionPoco, SubscriptionCM>(filter);
+		public Task<List<SubscriptionCM>> Filter(SubscriptionFM filter) => this.DbService.FilterInternal<SubscriptionPoco, SubscriptionCM>(filter);
 		
 		/// <summary>
 		/// <para>Database table 'users'.</para>		
 		/// </summary>
-        public IQueryable<UserPoco> Users => this.LinqToDbConnection.GetTable<UserPoco>();
+        public IQueryable<UserPoco> Users => this.DbService.GetTable<UserPoco>();
 
 		/// <summary>
 		/// <para>Database table 'users'.</para>
 		/// <para>Filter model 'UserFM'.</para>
 		/// <para>Catalog model 'UserCM'.</para>
 		/// </summary>
-		public Task<List<UserCM>> Filter(UserFM filter) => this.FilterInternal<UserPoco, UserCM>(filter);
+		public Task<List<UserCM>> Filter(UserFM filter) => this.DbService.FilterInternal<UserPoco, UserCM>(filter);
 		
-    }
+		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
-	public partial interface IDbService
-    {
-		/// <summary>
-		/// <para>Database table 'actors'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ActorPoco> Actors { get; }
-
-		/// <summary>
-		/// <para>Database table 'actors'.</para>
-		/// <para>Filter model 'ActorFM'.</para>
-		/// <para>Catalog model 'ActorCM'.</para>
-		/// </summary>
-		Task<List<ActorCM>> Filter(ActorFM filter);
-
-		/// <summary>
-		/// <para>Database table 'api_change_types'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ApiChangeTypePoco> ApiChangeTypes { get; }
-
-		/// <summary>
-		/// <para>Database table 'api_change_types'.</para>
-		/// <para>Filter model 'ApiChangeTypeFM'.</para>
-		/// <para>Catalog model 'ApiChangeTypeCM'.</para>
-		/// </summary>
-		Task<List<ApiChangeTypeCM>> Filter(ApiChangeTypeFM filter);
-
-		/// <summary>
-		/// <para>Database table 'api_changes'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ApiChangePoco> ApiChanges { get; }
-
-		/// <summary>
-		/// <para>Database table 'api_changes'.</para>
-		/// <para>Filter model 'ApiChangeFM'.</para>
-		/// <para>Catalog model 'ApiChangeCM'.</para>
-		/// </summary>
-		Task<List<ApiChangeCM>> Filter(ApiChangeFM filter);
-
-		/// <summary>
-		/// <para>Database table 'api_responses'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ApiResponsePoco> ApiResponses { get; }
-
-		/// <summary>
-		/// <para>Database table 'api_responses'.</para>
-		/// <para>Filter model 'ApiResponseFM'.</para>
-		/// <para>Catalog model 'ApiResponseCM'.</para>
-		/// </summary>
-		Task<List<ApiResponseCM>> Filter(ApiResponseFM filter);
-
-		/// <summary>
-		/// <para>Database table 'episodes'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<EpisodePoco> Episodes { get; }
-
-		/// <summary>
-		/// <para>Database table 'episodes'.</para>
-		/// <para>Filter model 'EpisodeFM'.</para>
-		/// <para>Catalog model 'EpisodeCM'.</para>
-		/// </summary>
-		Task<List<EpisodeCM>> Filter(EpisodeFM filter);
-
-		/// <summary>
-		/// <para>Database table 'genres'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<GenrePoco> Genres { get; }
-
-		/// <summary>
-		/// <para>Database table 'genres'.</para>
-		/// <para>Filter model 'GenreFM'.</para>
-		/// <para>Catalog model 'GenreCM'.</para>
-		/// </summary>
-		Task<List<GenreCM>> Filter(GenreFM filter);
-
-		/// <summary>
-		/// <para>Database table 'networks'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<NetworkPoco> Networks { get; }
-
-		/// <summary>
-		/// <para>Database table 'networks'.</para>
-		/// <para>Filter model 'NetworkFM'.</para>
-		/// <para>Catalog model 'NetworkCM'.</para>
-		/// </summary>
-		Task<List<NetworkCM>> Filter(NetworkFM filter);
-
-		/// <summary>
-		/// <para>Database table 'profiles'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ProfilePoco> Profiles { get; }
-
-		/// <summary>
-		/// <para>Database table 'profiles'.</para>
-		/// <para>Filter model 'ProfileFM'.</para>
-		/// <para>Catalog model 'ProfileCM'.</para>
-		/// </summary>
-		Task<List<ProfileCM>> Filter(ProfileFM filter);
-
-		/// <summary>
-		/// <para>Database table 'roles'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<RolePoco> Roles { get; }
-
-		/// <summary>
-		/// <para>Database table 'roles'.</para>
-		/// <para>Filter model 'RoleFM'.</para>
-		/// <para>Catalog model 'RoleCM'.</para>
-		/// </summary>
-		Task<List<RoleCM>> Filter(RoleFM filter);
-
-		/// <summary>
-		/// <para>Database table 'settings'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<SettingPoco> Settings { get; }
-
-		/// <summary>
-		/// <para>Database table 'settings'.</para>
-		/// <para>Filter model 'SettingFM'.</para>
-		/// <para>Catalog model 'SettingCM'.</para>
-		/// </summary>
-		Task<List<SettingCM>> Filter(SettingFM filter);
-
-		/// <summary>
-		/// <para>Database table 'shows'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ShowPoco> Shows { get; }
-
-		/// <summary>
-		/// <para>Database table 'shows'.</para>
-		/// <para>Filter model 'ShowFM'.</para>
-		/// <para>Catalog model 'ShowCM'.</para>
-		/// </summary>
-		Task<List<ShowCM>> Filter(ShowFM filter);
-
-		/// <summary>
-		/// <para>Database table 'shows_genres'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<ShowGenrePoco> ShowsGenres { get; }
-
-		/// <summary>
-		/// <para>Database table 'shows_genres'.</para>
-		/// <para>Filter model 'ShowGenreFM'.</para>
-		/// <para>Catalog model 'ShowGenreCM'.</para>
-		/// </summary>
-		Task<List<ShowGenreCM>> Filter(ShowGenreFM filter);
-
-		/// <summary>
-		/// <para>Database table 'subscriptions'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<SubscriptionPoco> Subscriptions { get; }
-
-		/// <summary>
-		/// <para>Database table 'subscriptions'.</para>
-		/// <para>Filter model 'SubscriptionFM'.</para>
-		/// <para>Catalog model 'SubscriptionCM'.</para>
-		/// </summary>
-		Task<List<SubscriptionCM>> Filter(SubscriptionFM filter);
-
-		/// <summary>
-		/// <para>Database table 'users'.</para>
-		/// <para>Table schema: 'public'.</para>
-		/// </summary>
-        IQueryable<UserPoco> Users { get; }
-
-		/// <summary>
-		/// <para>Database table 'users'.</para>
-		/// <para>Filter model 'UserFM'.</para>
-		/// <para>Catalog model 'UserCM'.</para>
-		/// </summary>
-		Task<List<UserCM>> Filter(UserFM filter);
-
+		public IDbService<DbPocos> DbService { private get; set; }
     }
 }

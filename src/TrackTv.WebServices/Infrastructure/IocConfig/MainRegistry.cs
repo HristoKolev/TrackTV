@@ -9,9 +9,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
     using log4net;
     using log4net.Config;
 
-    using LinqToDB.DataProvider;
-    using LinqToDB.DataProvider.PostgreSQL;
-
     using Npgsql;
 
     using StructureMap;
@@ -37,7 +34,6 @@ namespace TrackTv.WebServices.Infrastructure.IocConfig
                 .ContainerScoped();
 
             this.For<IDbConnection>().Use("IDbConnection", ctx => ctx.GetInstance<NpgsqlConnection>());
-            this.For<IDataProvider>().Use<PostgreSQLDataProvider>();
             this.For<IDbService>().Use<DbService>();
         }
 

@@ -49,7 +49,7 @@ namespace TrackTv.Data
         public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
         {{/each}}
-		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => DbService.{{ClassName}}PocoMetadata;
+		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => DbPocos.{{ClassName}}PocoMetadata;
 
 		public {{ClassName}}BM ToBm()
 		{
@@ -175,7 +175,7 @@ namespace TrackTv.Data
 	}
     
     {{/each}}
-    public partial class DbService
+    public class DbPocos : IDbPocos<DbPocos>
     {
 		{{#each model.tables}}
         internal static readonly TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata = new TableMetadataModel<{{ClassName}}Poco>
@@ -338,7 +338,7 @@ namespace TrackTv.Data
 		};
 		
         {{/each}}
-		private static readonly IReadOnlyDictionary<Type, object> MetadataByPocoType = new Dictionary<Type, object>
+		private static readonly IReadOnlyDictionary<Type, object> StaticMetadataByPocoType = new Dictionary<Type, object>
         {
 			{{#each model.tables}}
             {typeof({{ClassName}}Poco), {{ClassName}}PocoMetadata},
@@ -361,34 +361,18 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>		
 		/// </summary>
-        public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.LinqToDbConnection.GetTable<{{ClassName}}Poco>();
+        public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.DbService.GetTable<{{ClassName}}Poco>();
 
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>
 		/// <para>Filter model '{{ClassName}}FM'.</para>
 		/// <para>Catalog model '{{ClassName}}CM'.</para>
 		/// </summary>
-		public Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter) => this.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
+		public Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter) => this.DbService.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
 		
         {{/each}}
-    }
+		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
-	public partial interface IDbService
-    {
-        {{#each model.tables}}
-		/// <summary>
-		/// <para>Database table '{{TableName}}'.</para>
-		/// <para>Table schema: '{{TableSchema}}'.</para>
-		/// </summary>
-        IQueryable<{{ClassName}}Poco> {{PluralClassName}} { get; }
-
-		/// <summary>
-		/// <para>Database table '{{TableName}}'.</para>
-		/// <para>Filter model '{{ClassName}}FM'.</para>
-		/// <para>Catalog model '{{ClassName}}CM'.</para>
-		/// </summary>
-		Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter);
-
-        {{/each}}
+		public IDbService<DbPocos> DbService { private get; set; }
     }
 }
