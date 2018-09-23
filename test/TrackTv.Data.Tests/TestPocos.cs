@@ -1453,6 +1453,30 @@ namespace TrackTv.Data.Tests
 				{"test_char1", (instance, val) => instance.TestChar1 = (string)val },
 				{"test_char2", (instance, val) => instance.TestChar2 = (string)val },
 			},
+			Getters = new Dictionary<string, Func<Test1Poco, object>>
+			{
+				{"test_id", (instance) => instance.TestID },
+				{"test_name1", (instance) => instance.TestName1 },
+				{"test_name2", (instance) => instance.TestName2 },
+				{"test_date1", (instance) => instance.TestDate1 },
+				{"test_date2", (instance) => instance.TestDate2 },
+				{"test_timestamp1", (instance) => instance.TestTimestamp1 },
+				{"test_timestamp2", (instance) => instance.TestTimestamp2 },
+				{"test_boolean1", (instance) => instance.TestBoolean1 },
+				{"test_boolean2", (instance) => instance.TestBoolean2 },
+				{"test_integer1", (instance) => instance.TestInteger1 },
+				{"test_integer2", (instance) => instance.TestInteger2 },
+				{"test_bigint1", (instance) => instance.TestBigint1 },
+				{"test_bigint2", (instance) => instance.TestBigint2 },
+				{"test_text1", (instance) => instance.TestText1 },
+				{"test_text2", (instance) => instance.TestText2 },
+				{"test_real1", (instance) => instance.TestReal1 },
+				{"test_real2", (instance) => instance.TestReal2 },
+				{"test_double1", (instance) => instance.TestDouble1 },
+				{"test_double2", (instance) => instance.TestDouble2 },
+				{"test_char1", (instance) => instance.TestChar1 },
+				{"test_char2", (instance) => instance.TestChar2 },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 

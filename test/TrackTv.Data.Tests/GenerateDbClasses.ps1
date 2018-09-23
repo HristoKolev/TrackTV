@@ -9,9 +9,9 @@ ClassGenerator.PostgreSQL `
 -n $namespace `
 -p $pocoClassName
 
-#ClassGenerator.PostgreSQL `
-#-c  $connectionString `
-#-t "./tests-template.txt" `
-#-o "./DbTests.cs" `
-#-n $namespace `
-#-p $pocoClassName
+ClassGenerator.PostgreSQL `
+-c  $connectionString `
+-t "./tests-template.txt" `
+-o "./DbTests.cs" `
+-n $namespace `
+-p $pocoClassName

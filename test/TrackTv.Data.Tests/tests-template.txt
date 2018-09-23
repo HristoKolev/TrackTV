@@ -1,4 +1,42 @@
 ﻿namespace {{model.Namespace}}
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
+    using TrackTv.Data.Tests.Infrastructure;
+
+    using Xunit;
+
+	{{#each model.tables}}
+    public class {{ClassName}}Test : DatabaseTest
+    {
+        [Theory]
+        [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
+        public async Task Crud({{ClassName}}Poco poco)
+        {
+            int id = await this.Db.Save(poco);
+
+            var readFromDb = await this.Db.FindByID<{{ClassName}}Poco>(id);
+
+            foreach (var getter in {{../model.PocoClassName}}.{{ClassName}}PocoMetadata.Getters.Values)
+            {
+                Assert.Equal(getter(poco), getter(readFromDb));
+            }
+
+            int updatedId = await this.Db.Save(poco);
+
+            Assert.Equal(id, updatedId);
+
+            await this.Db.Delete(poco);
+        }
+
+        [Theory]
+        [ClassData(typeof(GeneratedBulkData<{{ClassName}}Poco>))]
+        public async Task BulkInsert(List<{{ClassName}}Poco> poco)
+        {
+            await this.Db.BulkInsert(poco);
+        }
+    }
+
+	{{/each}}
 }

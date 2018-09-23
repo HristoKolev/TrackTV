@@ -388,5 +388,24 @@
 
             return await this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
+
+        public Task<T> FindByID<T>(int id, CancellationToken cancellationToken = default)
+            where T : class, IPoco<T>, new()
+        {
+            var metadata = this.GetMetadata<T>();
+
+            string tableSchema = metadata.TableSchema;
+            string tableName = metadata.TableName;
+            string primaryKeyName = metadata.PrimaryKeyColumnName;
+
+            var parameters = new[]
+            {
+                this.Parameter("pk", id)
+            };
+
+            string sql = $"SELECT * FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @pk;";
+
+            return this.QueryOneInternal<T>(sql, parameters, cancellationToken);
+        }
     }
 }

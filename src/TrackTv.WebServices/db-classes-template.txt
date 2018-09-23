@@ -207,6 +207,12 @@ namespace {{model.Namespace}}
 				{"{{ColumnName}}", (instance, val) => instance.{{PropertyName}} = ({{ClrTypeName}})val },
 				{{/each}}
 			},
+			Getters = new Dictionary<string, Func<{{ClassName}}Poco, object>>
+			{
+				{{#each columns}}
+				{"{{ColumnName}}", (instance) => instance.{{PropertyName}} },
+				{{/each}}
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 

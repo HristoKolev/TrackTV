@@ -5052,6 +5052,14 @@ namespace TrackTv.Data
 				{"last_updated", (instance, val) => instance.LastUpdated = (DateTime?)val },
 				{"thetvdbid", (instance, val) => instance.Thetvdbid = (int)val },
 			},
+			Getters = new Dictionary<string, Func<ActorPoco, object>>
+			{
+				{"actor_id", (instance) => instance.ActorID },
+				{"actor_image", (instance) => instance.ActorImage },
+				{"actor_name", (instance) => instance.ActorName },
+				{"last_updated", (instance) => instance.LastUpdated },
+				{"thetvdbid", (instance) => instance.Thetvdbid },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -5626,6 +5634,11 @@ namespace TrackTv.Data
 				{"api_change_type_name", (instance, val) => instance.ApiChangeTypeName = (string)val },
 				{"api_change_type_id", (instance, val) => instance.ApiChangeTypeID = (int)val },
 			},
+			Getters = new Dictionary<string, Func<ApiChangeTypePoco, object>>
+			{
+				{"api_change_type_name", (instance) => instance.ApiChangeTypeName },
+				{"api_change_type_id", (instance) => instance.ApiChangeTypeID },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -5901,6 +5914,17 @@ namespace TrackTv.Data
 				{"api_change_thetvdb_last_updated", (instance, val) => instance.ApiChangeThetvdbLastUpdated = (DateTime)val },
 				{"api_change_attached_series_id", (instance, val) => instance.ApiChangeAttachedSeriesID = (int?)val },
 				{"api_change_type", (instance, val) => instance.ApiChangeType = (int)val },
+			},
+			Getters = new Dictionary<string, Func<ApiChangePoco, object>>
+			{
+				{"api_change_thetvdbid", (instance) => instance.ApiChangeThetvdbid },
+				{"api_change_fail_count", (instance) => instance.ApiChangeFailCount },
+				{"api_change_created_date", (instance) => instance.ApiChangeCreatedDate },
+				{"api_change_id", (instance) => instance.ApiChangeID },
+				{"api_change_last_failed_time", (instance) => instance.ApiChangeLastFailedTime },
+				{"api_change_thetvdb_last_updated", (instance) => instance.ApiChangeThetvdbLastUpdated },
+				{"api_change_attached_series_id", (instance) => instance.ApiChangeAttachedSeriesID },
+				{"api_change_type", (instance) => instance.ApiChangeType },
 			},
 			GenerateParameters = (instance) => 
 			{
@@ -6703,6 +6727,14 @@ namespace TrackTv.Data
 				{"api_response_id", (instance, val) => instance.ApiResponseID = (int)val },
 				{"api_response_last_updated", (instance, val) => instance.ApiResponseLastUpdated = (DateTime)val },
 			},
+			Getters = new Dictionary<string, Func<ApiResponsePoco, object>>
+			{
+				{"api_response_episode_thetvdbid", (instance) => instance.ApiResponseEpisodeThetvdbid },
+				{"api_response_show_thetvdbid", (instance) => instance.ApiResponseShowThetvdbid },
+				{"api_response_body", (instance) => instance.ApiResponseBody },
+				{"api_response_id", (instance) => instance.ApiResponseID },
+				{"api_response_last_updated", (instance) => instance.ApiResponseLastUpdated },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -7244,6 +7276,19 @@ namespace TrackTv.Data
 				{"season_number", (instance, val) => instance.SeasonNumber = (int)val },
 				{"show_id", (instance, val) => instance.ShowID = (int)val },
 				{"thetvdbid", (instance, val) => instance.Thetvdbid = (int)val },
+			},
+			Getters = new Dictionary<string, Func<EpisodePoco, object>>
+			{
+				{"episode_id", (instance) => instance.EpisodeID },
+				{"episode_description", (instance) => instance.EpisodeDescription },
+				{"episode_number", (instance) => instance.EpisodeNumber },
+				{"episode_title", (instance) => instance.EpisodeTitle },
+				{"first_aired", (instance) => instance.FirstAired },
+				{"imdbid", (instance) => instance.Imdbid },
+				{"last_updated", (instance) => instance.LastUpdated },
+				{"season_number", (instance) => instance.SeasonNumber },
+				{"show_id", (instance) => instance.ShowID },
+				{"thetvdbid", (instance) => instance.Thetvdbid },
 			},
 			GenerateParameters = (instance) => 
 			{
@@ -8327,6 +8372,11 @@ namespace TrackTv.Data
 				{"genre_id", (instance, val) => instance.GenreID = (int)val },
 				{"genre_name", (instance, val) => instance.GenreName = (string)val },
 			},
+			Getters = new Dictionary<string, Func<GenrePoco, object>>
+			{
+				{"genre_id", (instance) => instance.GenreID },
+				{"genre_name", (instance) => instance.GenreName },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -8585,6 +8635,11 @@ namespace TrackTv.Data
 				{"network_id", (instance, val) => instance.NetworkID = (int)val },
 				{"network_name", (instance, val) => instance.NetworkName = (string)val },
 			},
+			Getters = new Dictionary<string, Func<NetworkPoco, object>>
+			{
+				{"network_id", (instance) => instance.NetworkID },
+				{"network_name", (instance) => instance.NetworkName },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -8842,6 +8897,11 @@ namespace TrackTv.Data
 			{
 				{"profile_id", (instance, val) => instance.ProfileID = (int)val },
 				{"profile_name", (instance, val) => instance.ProfileName = (string)val },
+			},
+			Getters = new Dictionary<string, Func<ProfilePoco, object>>
+			{
+				{"profile_id", (instance) => instance.ProfileID },
+				{"profile_name", (instance) => instance.ProfileName },
 			},
 			GenerateParameters = (instance) => 
 			{
@@ -9106,6 +9166,13 @@ namespace TrackTv.Data
 				{"actor_id", (instance, val) => instance.ActorID = (int)val },
 				{"role_name", (instance, val) => instance.RoleName = (string)val },
 				{"show_id", (instance, val) => instance.ShowID = (int)val },
+			},
+			Getters = new Dictionary<string, Func<RolePoco, object>>
+			{
+				{"role_id", (instance) => instance.RoleID },
+				{"actor_id", (instance) => instance.ActorID },
+				{"role_name", (instance) => instance.RoleName },
+				{"show_id", (instance) => instance.ShowID },
 			},
 			GenerateParameters = (instance) => 
 			{
@@ -9574,6 +9641,12 @@ namespace TrackTv.Data
 				{"setting_value", (instance, val) => instance.SettingValue = (string)val },
 				{"setting_name", (instance, val) => instance.SettingName = (string)val },
 			},
+			Getters = new Dictionary<string, Func<SettingPoco, object>>
+			{
+				{"setting_id", (instance) => instance.SettingID },
+				{"setting_value", (instance) => instance.SettingValue },
+				{"setting_name", (instance) => instance.SettingName },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -9971,6 +10044,21 @@ namespace TrackTv.Data
 				{"show_name", (instance, val) => instance.ShowName = (string)val },
 				{"show_status", (instance, val) => instance.ShowStatus = (int)val },
 				{"thetvdbid", (instance, val) => instance.Thetvdbid = (int)val },
+			},
+			Getters = new Dictionary<string, Func<ShowPoco, object>>
+			{
+				{"show_id", (instance) => instance.ShowID },
+				{"air_day", (instance) => instance.AirDay },
+				{"air_time", (instance) => instance.AirTime },
+				{"first_aired", (instance) => instance.FirstAired },
+				{"imdbid", (instance) => instance.Imdbid },
+				{"last_updated", (instance) => instance.LastUpdated },
+				{"network_id", (instance) => instance.NetworkID },
+				{"show_banner", (instance) => instance.ShowBanner },
+				{"show_description", (instance) => instance.ShowDescription },
+				{"show_name", (instance) => instance.ShowName },
+				{"show_status", (instance) => instance.ShowStatus },
+				{"thetvdbid", (instance) => instance.Thetvdbid },
 			},
 			GenerateParameters = (instance) => 
 			{
@@ -11235,6 +11323,12 @@ namespace TrackTv.Data
 				{"show_id", (instance, val) => instance.ShowID = (int)val },
 				{"genre_id", (instance, val) => instance.GenreID = (int)val },
 			},
+			Getters = new Dictionary<string, Func<ShowGenrePoco, object>>
+			{
+				{"shows_genres_id", (instance) => instance.ShowsGenresID },
+				{"show_id", (instance) => instance.ShowID },
+				{"genre_id", (instance) => instance.GenreID },
+			},
 			GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -11577,6 +11671,12 @@ namespace TrackTv.Data
 				{"subscription_id", (instance, val) => instance.SubscriptionID = (int)val },
 				{"profile_id", (instance, val) => instance.ProfileID = (int)val },
 				{"show_id", (instance, val) => instance.ShowID = (int)val },
+			},
+			Getters = new Dictionary<string, Func<SubscriptionPoco, object>>
+			{
+				{"subscription_id", (instance) => instance.SubscriptionID },
+				{"profile_id", (instance) => instance.ProfileID },
+				{"show_id", (instance) => instance.ShowID },
 			},
 			GenerateParameters = (instance) => 
 			{
@@ -11926,6 +12026,14 @@ namespace TrackTv.Data
 				{"username", (instance, val) => instance.Username = (string)val },
 				{"password", (instance, val) => instance.Password = (string)val },
 				{"profile_id", (instance, val) => instance.ProfileID = (int)val },
+			},
+			Getters = new Dictionary<string, Func<UserPoco, object>>
+			{
+				{"user_id", (instance) => instance.UserID },
+				{"is_admin", (instance) => instance.IsAdmin },
+				{"username", (instance) => instance.Username },
+				{"password", (instance) => instance.Password },
+				{"profile_id", (instance) => instance.ProfileID },
 			},
 			GenerateParameters = (instance) => 
 			{

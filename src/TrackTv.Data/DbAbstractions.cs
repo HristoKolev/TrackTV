@@ -149,6 +149,9 @@
         Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
+        Task<T> FindByID<T>(int id, CancellationToken cancellationToken = default)
+            where T : class, IPoco<T>, new();
+
         IQueryable<T> GetTable<T>()
             where T : class, IPoco<T>;
 
@@ -180,6 +183,8 @@
         public Action<T, int> SetPrimaryKey;
 
         public IReadOnlyDictionary<string, Action<T, object>> Setters;
+
+        public IReadOnlyDictionary<string, Func<T, object>> Getters;
 
         /// <summary>
         /// Generates a parameter for every non Primary Key column in the table.
