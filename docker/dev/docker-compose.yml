@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 networks:
   br0:
@@ -15,6 +15,7 @@ volumes:
       device: ${frontend_src}
       o: bind
   db-data:
+  testdb-data:
 
 services:
   db:
@@ -31,6 +32,21 @@ services:
     environment:
       - POSTGRES_USER=${db_username}
       - POSTGRES_PASSWORD=${db_password}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  testdb:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "4202:5432"
+    volumes:
+      - testdb-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s

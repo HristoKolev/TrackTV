@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTv.WebServices", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackTv.Updater", "src\TrackTv.Updater\TrackTv.Updater.csproj", "{B1882723-FF2B-4F91-BB74-BEBFA31BC88F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackTv.Data.Tests", "test\TrackTv.Data.Tests\TrackTv.Data.Tests.csproj", "{FC6FA17F-FF2F-47AD-B85F-ED6AEDCDAD5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{B1882723-FF2B-4F91-BB74-BEBFA31BC88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1882723-FF2B-4F91-BB74-BEBFA31BC88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1882723-FF2B-4F91-BB74-BEBFA31BC88F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC6FA17F-FF2F-47AD-B85F-ED6AEDCDAD5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6FA17F-FF2F-47AD-B85F-ED6AEDCDAD5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6FA17F-FF2F-47AD-B85F-ED6AEDCDAD5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6FA17F-FF2F-47AD-B85F-ED6AEDCDAD5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{0DFCD03E-6232-45D6-A834-EDCA91CB6D33} = {500DBF52-3E0F-438C-BAFE-15F1470CAB50}
 		{64BD3BFA-CEC0-4034-88E7-465BB690F1C0} = {500DBF52-3E0F-438C-BAFE-15F1470CAB50}
 		{B1882723-FF2B-4F91-BB74-BEBFA31BC88F} = {500DBF52-3E0F-438C-BAFE-15F1470CAB50}
+		{FC6FA17F-FF2F-47AD-B85F-ED6AEDCDAD5A} = {F5701B60-DD65-4ABF-8BED-66A81D9402D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBB5D641-6457-488E-B701-19804295955B}

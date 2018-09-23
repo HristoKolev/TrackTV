@@ -1,4 +1,4 @@
-namespace TrackTv.Data
+namespace {{model.Namespace}}
 {
     using System;
     using System.Collections.Generic;
@@ -49,7 +49,7 @@ namespace TrackTv.Data
         public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
         {{/each}}
-		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => DbPocos.{{ClassName}}PocoMetadata;
+		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => {{../model.PocoClassName}}.{{ClassName}}PocoMetadata;
 
 		public {{ClassName}}BM ToBm()
 		{
@@ -175,7 +175,7 @@ namespace TrackTv.Data
 	}
     
     {{/each}}
-    public class DbPocos : IDbPocos<DbPocos>
+    public class {{model.PocoClassName}} : IDbPocos<{{model.PocoClassName}}>
     {
 		{{#each model.tables}}
         internal static readonly TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata = new TableMetadataModel<{{ClassName}}Poco>
@@ -373,6 +373,6 @@ namespace TrackTv.Data
         {{/each}}
 		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
-		public IDbService<DbPocos> DbService { private get; set; }
+		public IDbService<{{model.PocoClassName}}> DbService { private get; set; }
     }
 }

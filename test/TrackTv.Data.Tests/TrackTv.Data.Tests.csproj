@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TrackTv.Updater\TrackTv.Updater.csproj" />
+    <ProjectReference Include="..\..\src\TrackTv.Data\TrackTv.Data.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0">
@@ -18,4 +19,12 @@
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="NSubstitute" Version="3.1.0" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="*.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
