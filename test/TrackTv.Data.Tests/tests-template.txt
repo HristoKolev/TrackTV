@@ -36,6 +36,13 @@
         {
             await this.Db.BulkInsert(poco);
         }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<{{ClassName}}Poco, {{ClassName}}FM>))]
+        public async Task Filter({{ClassName}}FM filter)
+        {
+            await this.Db.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
+        }
     }
 
 	{{/each}}

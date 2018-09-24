@@ -2118,146 +2118,146 @@ namespace TrackTv.Data
     /// </summary>
     public class ActorFM : IFilterModel<ActorPoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ActorID", NpgsqlDbType.Integer)]
 		public int[] ActorID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ActorID", NpgsqlDbType.Integer)]
 		public int[] ActorID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ActorImage", NpgsqlDbType.Varchar)]
         public string ActorImage_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ActorImage", NpgsqlDbType.Varchar)]
 		public bool? ActorImage_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ActorImage", NpgsqlDbType.Varchar)]
 		public bool? ActorImage_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ActorImage", NpgsqlDbType.Varchar)]
 		public string[] ActorImage_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ActorImage", NpgsqlDbType.Varchar)]
 		public string[] ActorImage_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ActorName", NpgsqlDbType.Varchar)]
         public string ActorName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ActorName", NpgsqlDbType.Varchar)]
 		public bool? ActorName_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ActorName", NpgsqlDbType.Varchar)]
 		public bool? ActorName_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ActorName", NpgsqlDbType.Varchar)]
 		public string[] ActorName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ActorName", NpgsqlDbType.Varchar)]
 		public string[] ActorName_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public bool? LastUpdated_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public bool? LastUpdated_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] LastUpdated_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] LastUpdated_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Thetvdbid", NpgsqlDbType.Integer)]
 		public int[] Thetvdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Thetvdbid", NpgsqlDbType.Integer)]
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
 
@@ -2269,59 +2269,59 @@ namespace TrackTv.Data
     /// </summary>
     public class ApiChangeTypeFM : IFilterModel<ApiChangeTypePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
         public string ApiChangeTypeName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
 		public string[] ApiChangeTypeName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeTypeName", NpgsqlDbType.Varchar)]
 		public string[] ApiChangeTypeName_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeID", NpgsqlDbType.Integer)]
         public int? ApiChangeTypeID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeTypeID", NpgsqlDbType.Integer)]
         public int? ApiChangeTypeID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeTypeID", NpgsqlDbType.Integer)]
         public int? ApiChangeTypeID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer)]
         public int? ApiChangeTypeID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeTypeID", NpgsqlDbType.Integer)]
         public int? ApiChangeTypeID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer)]
         public int? ApiChangeTypeID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeTypeID", NpgsqlDbType.Integer)]
 		public int[] ApiChangeTypeID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeTypeID", NpgsqlDbType.Integer)]
 		public int[] ApiChangeTypeID_IsNotIn { get; set; }
 
 
@@ -2333,191 +2333,191 @@ namespace TrackTv.Data
     /// </summary>
     public class ApiChangeFM : IFilterModel<ApiChangePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiChangeThetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiChangeThetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiChangeThetvdbid_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiChangeThetvdbid_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiChangeThetvdbid_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiChangeThetvdbid_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
 		public int[] ApiChangeThetvdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer)]
 		public int[] ApiChangeThetvdbid_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeFailCount", NpgsqlDbType.Integer)]
         public int? ApiChangeFailCount { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeFailCount", NpgsqlDbType.Integer)]
         public int? ApiChangeFailCount_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeFailCount", NpgsqlDbType.Integer)]
         public int? ApiChangeFailCount_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer)]
         public int? ApiChangeFailCount_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeFailCount", NpgsqlDbType.Integer)]
         public int? ApiChangeFailCount_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer)]
         public int? ApiChangeFailCount_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeFailCount", NpgsqlDbType.Integer)]
 		public int[] ApiChangeFailCount_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeFailCount", NpgsqlDbType.Integer)]
 		public int[] ApiChangeFailCount_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeCreatedDate { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeCreatedDate_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeCreatedDate_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeCreatedDate_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeCreatedDate_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeCreatedDate_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiChangeCreatedDate_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiChangeCreatedDate_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeID", NpgsqlDbType.Integer)]
         public int? ApiChangeID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeID", NpgsqlDbType.Integer)]
         public int? ApiChangeID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeID", NpgsqlDbType.Integer)]
         public int? ApiChangeID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeID", NpgsqlDbType.Integer)]
         public int? ApiChangeID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeID", NpgsqlDbType.Integer)]
         public int? ApiChangeID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeID", NpgsqlDbType.Integer)]
         public int? ApiChangeID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeID", NpgsqlDbType.Integer)]
 		public int[] ApiChangeID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeID", NpgsqlDbType.Integer)]
 		public int[] ApiChangeID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeLastFailedTime { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeLastFailedTime_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp)]
 		public bool? ApiChangeLastFailedTime_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp)]
 		public bool? ApiChangeLastFailedTime_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiChangeLastFailedTime_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiChangeLastFailedTime_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeThetvdbLastUpdated { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeThetvdbLastUpdated_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeThetvdbLastUpdated_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeThetvdbLastUpdated_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeThetvdbLastUpdated_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiChangeThetvdbLastUpdated_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiChangeThetvdbLastUpdated_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiChangeThetvdbLastUpdated_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer)]
         public int? ApiChangeAttachedSeriesID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer)]
         public int? ApiChangeAttachedSeriesID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer)]
 		public bool? ApiChangeAttachedSeriesID_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer)]
 		public bool? ApiChangeAttachedSeriesID_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer)]
 		public int[] ApiChangeAttachedSeriesID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer)]
 		public int[] ApiChangeAttachedSeriesID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeType", NpgsqlDbType.Integer)]
         public int? ApiChangeType { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeType", NpgsqlDbType.Integer)]
         public int? ApiChangeType_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeType", NpgsqlDbType.Integer)]
         public int? ApiChangeType_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeType", NpgsqlDbType.Integer)]
         public int? ApiChangeType_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeType", NpgsqlDbType.Integer)]
         public int? ApiChangeType_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeType", NpgsqlDbType.Integer)]
         public int? ApiChangeType_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeType", NpgsqlDbType.Integer)]
 		public int[] ApiChangeType_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeType", NpgsqlDbType.Integer)]
 		public int[] ApiChangeType_IsNotIn { get; set; }
 
 
@@ -2529,122 +2529,122 @@ namespace TrackTv.Data
     /// </summary>
     public class ApiResponseFM : IFilterModel<ApiResponsePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiResponseEpisodeThetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiResponseEpisodeThetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer)]
 		public bool? ApiResponseEpisodeThetvdbid_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer)]
 		public bool? ApiResponseEpisodeThetvdbid_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer)]
 		public int[] ApiResponseEpisodeThetvdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer)]
 		public int[] ApiResponseEpisodeThetvdbid_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiResponseShowThetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer)]
         public int? ApiResponseShowThetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer)]
 		public bool? ApiResponseShowThetvdbid_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer)]
 		public bool? ApiResponseShowThetvdbid_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer)]
 		public int[] ApiResponseShowThetvdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer)]
 		public int[] ApiResponseShowThetvdbid_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ApiResponseBody", NpgsqlDbType.Jsonb)]
         public string ApiResponseBody_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseBody", NpgsqlDbType.Jsonb)]
 		public string[] ApiResponseBody_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseBody", NpgsqlDbType.Jsonb)]
 		public string[] ApiResponseBody_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseID", NpgsqlDbType.Integer)]
         public int? ApiResponseID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseID", NpgsqlDbType.Integer)]
         public int? ApiResponseID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiResponseID", NpgsqlDbType.Integer)]
         public int? ApiResponseID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiResponseID", NpgsqlDbType.Integer)]
         public int? ApiResponseID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiResponseID", NpgsqlDbType.Integer)]
         public int? ApiResponseID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiResponseID", NpgsqlDbType.Integer)]
         public int? ApiResponseID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseID", NpgsqlDbType.Integer)]
 		public int[] ApiResponseID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseID", NpgsqlDbType.Integer)]
 		public int[] ApiResponseID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiResponseLastUpdated { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiResponseLastUpdated_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiResponseLastUpdated_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiResponseLastUpdated_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiResponseLastUpdated_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? ApiResponseLastUpdated_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiResponseLastUpdated_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] ApiResponseLastUpdated_IsNotIn { get; set; }
 
 
@@ -2656,283 +2656,283 @@ namespace TrackTv.Data
     /// </summary>
     public class EpisodeFM : IFilterModel<EpisodePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "EpisodeID", NpgsqlDbType.Integer)]
         public int? EpisodeID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeID", NpgsqlDbType.Integer)]
         public int? EpisodeID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "EpisodeID", NpgsqlDbType.Integer)]
         public int? EpisodeID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "EpisodeID", NpgsqlDbType.Integer)]
         public int? EpisodeID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "EpisodeID", NpgsqlDbType.Integer)]
         public int? EpisodeID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "EpisodeID", NpgsqlDbType.Integer)]
         public int? EpisodeID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "EpisodeID", NpgsqlDbType.Integer)]
 		public int[] EpisodeID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeID", NpgsqlDbType.Integer)]
 		public int[] EpisodeID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "EpisodeDescription", NpgsqlDbType.Text)]
         public string EpisodeDescription_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "EpisodeDescription", NpgsqlDbType.Text)]
 		public bool? EpisodeDescription_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "EpisodeDescription", NpgsqlDbType.Text)]
 		public bool? EpisodeDescription_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "EpisodeDescription", NpgsqlDbType.Text)]
 		public string[] EpisodeDescription_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeDescription", NpgsqlDbType.Text)]
 		public string[] EpisodeDescription_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "EpisodeNumber", NpgsqlDbType.Integer)]
         public int? EpisodeNumber { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeNumber", NpgsqlDbType.Integer)]
         public int? EpisodeNumber_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "EpisodeNumber", NpgsqlDbType.Integer)]
         public int? EpisodeNumber_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "EpisodeNumber", NpgsqlDbType.Integer)]
         public int? EpisodeNumber_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "EpisodeNumber", NpgsqlDbType.Integer)]
         public int? EpisodeNumber_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "EpisodeNumber", NpgsqlDbType.Integer)]
         public int? EpisodeNumber_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "EpisodeNumber", NpgsqlDbType.Integer)]
 		public int[] EpisodeNumber_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeNumber", NpgsqlDbType.Integer)]
 		public int[] EpisodeNumber_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "EpisodeTitle", NpgsqlDbType.Varchar)]
         public string EpisodeTitle_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "EpisodeTitle", NpgsqlDbType.Varchar)]
 		public bool? EpisodeTitle_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "EpisodeTitle", NpgsqlDbType.Varchar)]
 		public bool? EpisodeTitle_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "EpisodeTitle", NpgsqlDbType.Varchar)]
 		public string[] EpisodeTitle_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeTitle", NpgsqlDbType.Varchar)]
 		public string[] EpisodeTitle_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "FirstAired", NpgsqlDbType.Timestamp)]
         public DateTime? FirstAired { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "FirstAired", NpgsqlDbType.Timestamp)]
         public DateTime? FirstAired_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "FirstAired", NpgsqlDbType.Timestamp)]
 		public bool? FirstAired_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "FirstAired", NpgsqlDbType.Timestamp)]
 		public bool? FirstAired_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "FirstAired", NpgsqlDbType.Timestamp)]
 		public DateTime[] FirstAired_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "FirstAired", NpgsqlDbType.Timestamp)]
 		public DateTime[] FirstAired_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "Imdbid", NpgsqlDbType.Varchar)]
 		public bool? Imdbid_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "Imdbid", NpgsqlDbType.Varchar)]
 		public bool? Imdbid_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Imdbid", NpgsqlDbType.Varchar)]
 		public string[] Imdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Imdbid", NpgsqlDbType.Varchar)]
 		public string[] Imdbid_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] LastUpdated_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] LastUpdated_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "SeasonNumber", NpgsqlDbType.Integer)]
         public int? SeasonNumber { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "SeasonNumber", NpgsqlDbType.Integer)]
         public int? SeasonNumber_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "SeasonNumber", NpgsqlDbType.Integer)]
         public int? SeasonNumber_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SeasonNumber", NpgsqlDbType.Integer)]
         public int? SeasonNumber_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "SeasonNumber", NpgsqlDbType.Integer)]
         public int? SeasonNumber_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SeasonNumber", NpgsqlDbType.Integer)]
         public int? SeasonNumber_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "SeasonNumber", NpgsqlDbType.Integer)]
 		public int[] SeasonNumber_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "SeasonNumber", NpgsqlDbType.Integer)]
 		public int[] SeasonNumber_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Thetvdbid", NpgsqlDbType.Integer)]
 		public int[] Thetvdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Thetvdbid", NpgsqlDbType.Integer)]
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
 
@@ -2944,59 +2944,59 @@ namespace TrackTv.Data
     /// </summary>
     public class GenreFM : IFilterModel<GenrePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "GenreID", NpgsqlDbType.Integer)]
 		public int[] GenreID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "GenreID", NpgsqlDbType.Integer)]
 		public int[] GenreID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "GenreName", NpgsqlDbType.Varchar)]
         public string GenreName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "GenreName", NpgsqlDbType.Varchar)]
 		public string[] GenreName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "GenreName", NpgsqlDbType.Varchar)]
 		public string[] GenreName_IsNotIn { get; set; }
 
 
@@ -3008,59 +3008,59 @@ namespace TrackTv.Data
     /// </summary>
     public class NetworkFM : IFilterModel<NetworkPoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "NetworkID", NpgsqlDbType.Integer)]
 		public int[] NetworkID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "NetworkID", NpgsqlDbType.Integer)]
 		public int[] NetworkID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "NetworkName", NpgsqlDbType.Varchar)]
         public string NetworkName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "NetworkName", NpgsqlDbType.Varchar)]
 		public string[] NetworkName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "NetworkName", NpgsqlDbType.Varchar)]
 		public string[] NetworkName_IsNotIn { get; set; }
 
 
@@ -3072,59 +3072,59 @@ namespace TrackTv.Data
     /// </summary>
     public class ProfileFM : IFilterModel<ProfilePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ProfileID", NpgsqlDbType.Integer)]
 		public int[] ProfileID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileID", NpgsqlDbType.Integer)]
 		public int[] ProfileID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ProfileName", NpgsqlDbType.Varchar)]
         public string ProfileName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ProfileName", NpgsqlDbType.Varchar)]
 		public string[] ProfileName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileName", NpgsqlDbType.Varchar)]
 		public string[] ProfileName_IsNotIn { get; set; }
 
 
@@ -3136,115 +3136,115 @@ namespace TrackTv.Data
     /// </summary>
     public class RoleFM : IFilterModel<RolePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "RoleID", NpgsqlDbType.Integer)]
         public int? RoleID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "RoleID", NpgsqlDbType.Integer)]
         public int? RoleID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "RoleID", NpgsqlDbType.Integer)]
         public int? RoleID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "RoleID", NpgsqlDbType.Integer)]
         public int? RoleID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "RoleID", NpgsqlDbType.Integer)]
         public int? RoleID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "RoleID", NpgsqlDbType.Integer)]
         public int? RoleID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "RoleID", NpgsqlDbType.Integer)]
 		public int[] RoleID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "RoleID", NpgsqlDbType.Integer)]
 		public int[] RoleID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ActorID", NpgsqlDbType.Integer)]
         public int? ActorID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ActorID", NpgsqlDbType.Integer)]
 		public int[] ActorID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ActorID", NpgsqlDbType.Integer)]
 		public int[] ActorID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "RoleName", NpgsqlDbType.Varchar)]
         public string RoleName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "RoleName", NpgsqlDbType.Varchar)]
 		public bool? RoleName_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "RoleName", NpgsqlDbType.Varchar)]
 		public bool? RoleName_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "RoleName", NpgsqlDbType.Varchar)]
 		public string[] RoleName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "RoleName", NpgsqlDbType.Varchar)]
 		public string[] RoleName_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsNotIn { get; set; }
 
 
@@ -3256,90 +3256,90 @@ namespace TrackTv.Data
     /// </summary>
     public class SettingFM : IFilterModel<SettingPoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "SettingID", NpgsqlDbType.Integer)]
         public int? SettingID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "SettingID", NpgsqlDbType.Integer)]
         public int? SettingID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "SettingID", NpgsqlDbType.Integer)]
         public int? SettingID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SettingID", NpgsqlDbType.Integer)]
         public int? SettingID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "SettingID", NpgsqlDbType.Integer)]
         public int? SettingID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SettingID", NpgsqlDbType.Integer)]
         public int? SettingID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "SettingID", NpgsqlDbType.Integer)]
 		public int[] SettingID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "SettingID", NpgsqlDbType.Integer)]
 		public int[] SettingID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "SettingValue", NpgsqlDbType.Varchar)]
         public string SettingValue_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "SettingValue", NpgsqlDbType.Varchar)]
 		public string[] SettingValue_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "SettingValue", NpgsqlDbType.Varchar)]
 		public string[] SettingValue_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "SettingName", NpgsqlDbType.Varchar)]
         public string SettingName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "SettingName", NpgsqlDbType.Varchar)]
 		public string[] SettingName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "SettingName", NpgsqlDbType.Varchar)]
 		public string[] SettingName_IsNotIn { get; set; }
 
 
@@ -3351,327 +3351,327 @@ namespace TrackTv.Data
     /// </summary>
     public class ShowFM : IFilterModel<ShowPoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "AirDay", NpgsqlDbType.Integer)]
         public int? AirDay { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "AirDay", NpgsqlDbType.Integer)]
         public int? AirDay_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "AirDay", NpgsqlDbType.Integer)]
 		public bool? AirDay_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "AirDay", NpgsqlDbType.Integer)]
 		public bool? AirDay_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "AirDay", NpgsqlDbType.Integer)]
 		public int[] AirDay_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "AirDay", NpgsqlDbType.Integer)]
 		public int[] AirDay_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "AirTime", NpgsqlDbType.Timestamp)]
         public DateTime? AirTime { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "AirTime", NpgsqlDbType.Timestamp)]
         public DateTime? AirTime_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "AirTime", NpgsqlDbType.Timestamp)]
 		public bool? AirTime_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "AirTime", NpgsqlDbType.Timestamp)]
 		public bool? AirTime_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "AirTime", NpgsqlDbType.Timestamp)]
 		public DateTime[] AirTime_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "AirTime", NpgsqlDbType.Timestamp)]
 		public DateTime[] AirTime_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "FirstAired", NpgsqlDbType.Timestamp)]
         public DateTime? FirstAired { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "FirstAired", NpgsqlDbType.Timestamp)]
         public DateTime? FirstAired_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "FirstAired", NpgsqlDbType.Timestamp)]
 		public bool? FirstAired_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "FirstAired", NpgsqlDbType.Timestamp)]
 		public bool? FirstAired_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "FirstAired", NpgsqlDbType.Timestamp)]
 		public DateTime[] FirstAired_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "FirstAired", NpgsqlDbType.Timestamp)]
 		public DateTime[] FirstAired_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "Imdbid", NpgsqlDbType.Varchar)]
         public string Imdbid_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "Imdbid", NpgsqlDbType.Varchar)]
 		public bool? Imdbid_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "Imdbid", NpgsqlDbType.Varchar)]
 		public bool? Imdbid_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Imdbid", NpgsqlDbType.Varchar)]
 		public string[] Imdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Imdbid", NpgsqlDbType.Varchar)]
 		public string[] Imdbid_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp)]
         public DateTime? LastUpdated_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] LastUpdated_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "LastUpdated", NpgsqlDbType.Timestamp)]
 		public DateTime[] LastUpdated_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "NetworkID", NpgsqlDbType.Integer)]
         public int? NetworkID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "NetworkID", NpgsqlDbType.Integer)]
 		public int[] NetworkID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "NetworkID", NpgsqlDbType.Integer)]
 		public int[] NetworkID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ShowBanner", NpgsqlDbType.Varchar)]
         public string ShowBanner_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ShowBanner", NpgsqlDbType.Varchar)]
 		public bool? ShowBanner_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ShowBanner", NpgsqlDbType.Varchar)]
 		public bool? ShowBanner_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowBanner", NpgsqlDbType.Varchar)]
 		public string[] ShowBanner_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowBanner", NpgsqlDbType.Varchar)]
 		public string[] ShowBanner_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ShowDescription", NpgsqlDbType.Text)]
         public string ShowDescription_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull)]
+		[FilterOperator(QueryOperatorType.IsNull, "ShowDescription", NpgsqlDbType.Text)]
 		public bool? ShowDescription_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "ShowDescription", NpgsqlDbType.Text)]
 		public bool? ShowDescription_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowDescription", NpgsqlDbType.Text)]
 		public string[] ShowDescription_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowDescription", NpgsqlDbType.Text)]
 		public string[] ShowDescription_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "ShowName", NpgsqlDbType.Varchar)]
         public string ShowName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowName", NpgsqlDbType.Varchar)]
 		public string[] ShowName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowName", NpgsqlDbType.Varchar)]
 		public string[] ShowName_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowStatus", NpgsqlDbType.Integer)]
         public int? ShowStatus { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowStatus", NpgsqlDbType.Integer)]
         public int? ShowStatus_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowStatus", NpgsqlDbType.Integer)]
         public int? ShowStatus_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowStatus", NpgsqlDbType.Integer)]
         public int? ShowStatus_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowStatus", NpgsqlDbType.Integer)]
         public int? ShowStatus_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowStatus", NpgsqlDbType.Integer)]
         public int? ShowStatus_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowStatus", NpgsqlDbType.Integer)]
 		public int[] ShowStatus_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowStatus", NpgsqlDbType.Integer)]
 		public int[] ShowStatus_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer)]
         public int? Thetvdbid_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Thetvdbid", NpgsqlDbType.Integer)]
 		public int[] Thetvdbid_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Thetvdbid", NpgsqlDbType.Integer)]
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
 
@@ -3683,78 +3683,78 @@ namespace TrackTv.Data
     /// </summary>
     public class ShowGenreFM : IFilterModel<ShowGenrePoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowsGenresID", NpgsqlDbType.Integer)]
         public int? ShowsGenresID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowsGenresID", NpgsqlDbType.Integer)]
         public int? ShowsGenresID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowsGenresID", NpgsqlDbType.Integer)]
         public int? ShowsGenresID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer)]
         public int? ShowsGenresID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowsGenresID", NpgsqlDbType.Integer)]
         public int? ShowsGenresID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer)]
         public int? ShowsGenresID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowsGenresID", NpgsqlDbType.Integer)]
 		public int[] ShowsGenresID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowsGenresID", NpgsqlDbType.Integer)]
 		public int[] ShowsGenresID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "GenreID", NpgsqlDbType.Integer)]
         public int? GenreID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "GenreID", NpgsqlDbType.Integer)]
 		public int[] GenreID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "GenreID", NpgsqlDbType.Integer)]
 		public int[] GenreID_IsNotIn { get; set; }
 
 
@@ -3766,78 +3766,78 @@ namespace TrackTv.Data
     /// </summary>
     public class SubscriptionFM : IFilterModel<SubscriptionPoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "SubscriptionID", NpgsqlDbType.Integer)]
         public int? SubscriptionID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "SubscriptionID", NpgsqlDbType.Integer)]
         public int? SubscriptionID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "SubscriptionID", NpgsqlDbType.Integer)]
         public int? SubscriptionID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer)]
         public int? SubscriptionID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "SubscriptionID", NpgsqlDbType.Integer)]
         public int? SubscriptionID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer)]
         public int? SubscriptionID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "SubscriptionID", NpgsqlDbType.Integer)]
 		public int[] SubscriptionID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "SubscriptionID", NpgsqlDbType.Integer)]
 		public int[] SubscriptionID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ProfileID", NpgsqlDbType.Integer)]
 		public int[] ProfileID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileID", NpgsqlDbType.Integer)]
 		public int[] ProfileID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer)]
         public int? ShowID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer)]
 		public int[] ShowID_IsNotIn { get; set; }
 
 
@@ -3849,128 +3849,128 @@ namespace TrackTv.Data
     /// </summary>
     public class UserFM : IFilterModel<UserPoco>
     {
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "UserID", NpgsqlDbType.Integer)]
         public int? UserID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "UserID", NpgsqlDbType.Integer)]
         public int? UserID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "UserID", NpgsqlDbType.Integer)]
         public int? UserID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "UserID", NpgsqlDbType.Integer)]
         public int? UserID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "UserID", NpgsqlDbType.Integer)]
         public int? UserID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "UserID", NpgsqlDbType.Integer)]
         public int? UserID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "UserID", NpgsqlDbType.Integer)]
 		public int[] UserID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "UserID", NpgsqlDbType.Integer)]
 		public int[] UserID_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "IsAdmin", NpgsqlDbType.Boolean)]
         public bool? IsAdmin { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "IsAdmin", NpgsqlDbType.Boolean)]
         public bool? IsAdmin_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "IsAdmin", NpgsqlDbType.Boolean)]
 		public bool[] IsAdmin_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "IsAdmin", NpgsqlDbType.Boolean)]
 		public bool[] IsAdmin_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Username", NpgsqlDbType.Varchar)]
         public string Username { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Username", NpgsqlDbType.Varchar)]
         public string Username_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "Username", NpgsqlDbType.Varchar)]
         public string Username_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Username", NpgsqlDbType.Varchar)]
         public string Username_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "Username", NpgsqlDbType.Varchar)]
         public string Username_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Username", NpgsqlDbType.Varchar)]
         public string Username_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "Username", NpgsqlDbType.Varchar)]
         public string Username_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "Username", NpgsqlDbType.Varchar)]
         public string Username_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Username", NpgsqlDbType.Varchar)]
 		public string[] Username_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Username", NpgsqlDbType.Varchar)]
 		public string[] Username_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "Password", NpgsqlDbType.Varchar)]
         public string Password { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "Password", NpgsqlDbType.Varchar)]
         public string Password_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith)]
+		[FilterOperator(QueryOperatorType.StartsWith, "Password", NpgsqlDbType.Varchar)]
         public string Password_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Password", NpgsqlDbType.Varchar)]
         public string Password_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith)]
+		[FilterOperator(QueryOperatorType.EndsWith, "Password", NpgsqlDbType.Varchar)]
         public string Password_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Password", NpgsqlDbType.Varchar)]
         public string Password_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains)]
+		[FilterOperator(QueryOperatorType.Contains, "Password", NpgsqlDbType.Varchar)]
         public string Password_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "Password", NpgsqlDbType.Varchar)]
         public string Password_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "Password", NpgsqlDbType.Varchar)]
 		public string[] Password_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "Password", NpgsqlDbType.Varchar)]
 		public string[] Password_IsNotIn { get; set; }
 
 
-		[FilterOperator(QueryOperatorType.Equal)]
+		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual)]
+		[FilterOperator(QueryOperatorType.NotEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan)]
+		[FilterOperator(QueryOperatorType.LessThan, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ProfileID", NpgsqlDbType.Integer)]
         public int? ProfileID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn)]
+		[FilterOperator(QueryOperatorType.IsIn, "ProfileID", NpgsqlDbType.Integer)]
 		public int[] ProfileID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileID", NpgsqlDbType.Integer)]
 		public int[] ProfileID_IsNotIn { get; set; }
 
 

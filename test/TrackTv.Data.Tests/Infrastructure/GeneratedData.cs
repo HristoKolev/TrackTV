@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using NpgsqlTypes;
 
@@ -15,11 +16,11 @@
         public IEnumerator<object[]> GetEnumerator()
         {
             return PocoDataGenerator.GenerateData<T>()
-                                   .Select(x => new object[]
-                                   {
-                                       x
-                                   })
-                                   .GetEnumerator();
+                                    .Select(x => new object[]
+                                    {
+                                        x
+                                    })
+                                    .GetEnumerator();
         }
 
         /// <summary>Returns an enumerator that iterates through a collection.</summary>
@@ -50,7 +51,68 @@
             return this.GetEnumerator();
         }
     }
-    
+
+    public class GeneratedFilterData<TPoco, TFilter> : IEnumerable<object[]>
+        where TPoco : class, IPoco<TPoco>, new() where TFilter : new()
+    {
+        /// <summary>Returns an enumerator that iterates through the collection.</summary>
+        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            return this.GenerateData()
+                       .Select(x => new[]
+                       {
+                           x
+                       })
+                       .GetEnumerator();
+        }
+
+        /// <summary>Returns an enumerator that iterates through a collection.</summary>
+        /// <returns>An <see cref="System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private List<object> GenerateData()
+        {
+            var list = new List<object>();
+
+            foreach (var property in typeof(TFilter).GetProperties())
+            {
+                var attribute = property.GetCustomAttribute<FilterOperatorAttribute>();
+
+                NpgsqlDbType dbType = attribute.DbType;
+                QueryOperatorType operatorType = attribute.QueryOperatorType;
+
+                if (operatorType == QueryOperatorType.IsNull || operatorType == QueryOperatorType.IsNotNull)
+                {
+                    var instance = new TFilter();
+                    property.SetValue(instance, operatorType == QueryOperatorType.IsNull);
+                    list.Add(instance);
+                }
+                else if (operatorType == QueryOperatorType.IsIn || operatorType == QueryOperatorType.IsNotIn)
+                {
+                    object values = PocoDataGenerator.GetArrayValuesByType(dbType);
+
+                    var inInstance = new TFilter();
+                    property.SetValue(inInstance, values);
+                    list.Add(inInstance);
+                }
+                else
+                {
+                    object[] values = PocoDataGenerator.GetValuesByType(dbType);
+
+                    var instance = new TFilter();
+                    property.SetValue(instance, values.First());
+                    list.Add(instance);
+                }
+            }
+
+            return list;
+        }
+    }
+
     public class PocoDataGenerator
     {
         private const int RandomSeed = 938274923;
@@ -99,6 +161,230 @@
             }
 
             return list;
+        }
+
+        public static object GetArrayValuesByType(NpgsqlDbType dbType)
+        {
+            switch (dbType)
+            {
+                case NpgsqlDbType.Bigint :
+                {
+                    return GenerateLongArray();
+                }
+                case NpgsqlDbType.Double :
+                {
+                    return GenerateDoubleArray();
+                }
+                case NpgsqlDbType.Integer :
+                {
+                    return GenerateIntArray();
+                }
+                case NpgsqlDbType.Numeric :
+                {
+                    return GenerateDecimalArray();
+                }
+                case NpgsqlDbType.Real :
+                {
+                    return GenerateFloatArray();
+                }
+                case NpgsqlDbType.Smallint :
+                {
+                    return GenerateShortArray();
+                }
+                case NpgsqlDbType.Boolean :
+                {
+                    return GenerateBooleanArray();
+                }
+                case NpgsqlDbType.Char :
+                {
+                    return GenerateCharArray();
+                }
+                case NpgsqlDbType.Text :
+                {
+                    return GenerateStringArray();
+                }
+                case NpgsqlDbType.Varchar :
+                {
+                    return GenerateStringArray();
+                }
+                case NpgsqlDbType.Bytea :
+                {
+                    return GenerateByteArray();
+                }
+                case NpgsqlDbType.Date :
+                {
+                    return GenerateDateArray();
+                }
+                case NpgsqlDbType.Timestamp :
+                {
+                    return GenerateDateTimeArray();
+                }
+                case NpgsqlDbType.Uuid :
+                {
+                    return GenerateGuidArray();
+                }
+                case NpgsqlDbType.Xml :
+                {
+                    return GenerateXmlArray();
+                }
+                case NpgsqlDbType.Json :
+                {
+                    return GenerateJsonArray();
+                }
+                case NpgsqlDbType.Jsonb :
+                {
+                    return GenerateJsonArray();
+                }
+                case NpgsqlDbType.TimestampTz :
+                {
+                    return GenerateDateTimeOffsetArray();
+                }
+                default :
+                {
+                    throw new ArgumentOutOfRangeException(nameof(dbType), dbType, null);
+                }
+            }
+        }
+
+        public static object[] GetValuesByType(NpgsqlDbType dbType)
+        {
+            switch (dbType)
+            {
+                case NpgsqlDbType.Bigint :
+                {
+                    return GenerateLongArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Double :
+                {
+                    return GenerateDoubleArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Integer :
+                {
+                    return GenerateIntArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Numeric :
+                {
+                    return GenerateDecimalArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Real :
+                {
+                    return GenerateFloatArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Smallint :
+                {
+                    return GenerateShortArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Boolean :
+                {
+                    return GenerateBooleanArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Char :
+                {
+                    return GenerateCharArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Text :
+                {
+                    return GenerateStringArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Varchar :
+                {
+                    return GenerateStringArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Bytea :
+                {
+                    return GenerateByteArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Date :
+                {
+                    return GenerateDateArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Timestamp :
+                {
+                    return GenerateDateTimeArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Uuid :
+                {
+                    return GenerateGuidArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Xml :
+                {
+                    return GenerateXmlArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Json :
+                {
+                    return GenerateJsonArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.Jsonb :
+                {
+                    return GenerateJsonArray().Cast<object>().ToArray();
+                }
+                case NpgsqlDbType.TimestampTz :
+                {
+                    return GenerateDateTimeOffsetArray().Cast<object>().ToArray();
+                }
+                default :
+                {
+                    throw new ArgumentOutOfRangeException(nameof(dbType), dbType, null);
+                }
+            }
+        }
+
+        public static object[] GetValuesByType(Type type)
+        {
+            string typeName = type.Name;
+
+            switch (typeName)
+            {
+                case "String" :
+                {
+                    return GenerateStringArray().Select(x => (object)x).ToArray();
+                }
+                case "DateTime" :
+                {
+                    return GenerateDateTimeArray().Select(x => (object)x).ToArray();
+                }
+                case "DateTimeOffset" :
+                {
+                    return GenerateDateTimeOffsetArray().Select(x => (object)x).ToArray();
+                }
+                case "decimal" :
+                {
+                    return GenerateDecimalArray().Select(x => (object)x).ToArray();
+                }
+                case "double" :
+                {
+                    return GenerateDoubleArray().Select(x => (object)x).ToArray();
+                }
+                case "float" :
+                {
+                    return GenerateFloatArray().Select(x => (object)x).ToArray();
+                }
+                case "int" :
+                {
+                    return GenerateIntArray().Select(x => (object)x).ToArray();
+                }
+                case "long" :
+                {
+                    return GenerateLongArray().Select(x => (object)x).ToArray();
+                }
+                case "short" :
+                {
+                    return GenerateShortArray().Select(x => (object)x).ToArray();
+                }
+                default :
+                {
+                    throw new ArgumentOutOfRangeException(nameof(typeName), typeName, null);
+                }
+            }
+        }
+
+        private static bool[] GenerateBooleanArray()
+        {
+            return new[]
+            {
+                true,
+                false
+            };
         }
 
         private static byte[][] GenerateByteArray()
@@ -259,98 +545,6 @@
             return new[]
             {
                 "<tag>|</tag>".Replace("|", random.Next(0, 100).ToString())
-            };
-        }
-
-        private static object[] GetValuesByType(NpgsqlDbType dbType)
-        {
-            switch (dbType)
-            {
-                case NpgsqlDbType.Bigint :
-                {
-                    return GenerateLongArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Double :
-                {
-                    return GenerateDoubleArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Integer :
-                {
-                    return GenerateIntArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Numeric :
-                {
-                    return GenerateDecimalArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Real :
-                {
-                    return GenerateFloatArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Smallint :
-                {
-                    return GenerateShortArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Boolean :
-                {
-                    return GenerateBooleanArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Char :
-                {
-                    return GenerateCharArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Text :
-                {
-                    return GenerateStringArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Varchar :
-                {
-                    return GenerateStringArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Bytea :
-                {
-                    return GenerateByteArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Date :
-                {
-                    return GenerateDateArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Timestamp :
-                {
-                    return GenerateDateTimeArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Uuid :
-                {
-                    return GenerateGuidArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Xml :
-                {
-                    return GenerateXmlArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Json :
-                {
-                    return GenerateJsonArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.Jsonb :
-                {
-                    return GenerateJsonArray().Cast<object>().ToArray();
-                }
-                case NpgsqlDbType.TimestampTz :
-                {
-                    return GenerateDateTimeOffsetArray().Cast<object>().ToArray();
-                }
-                default :
-                {
-                    throw new ArgumentOutOfRangeException(nameof(dbType), dbType, null);
-                }
-            }
-        }
-
-        private static bool[] GenerateBooleanArray()
-        {
-            return new[]
-            {
-                true,
-                false
             };
         }
     }

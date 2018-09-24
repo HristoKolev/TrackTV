@@ -9,7 +9,10 @@
         public TestDbService(NpgsqlConnection dbConnection)
             : base(dbConnection)
         {
+            this.Connection = dbConnection;
         }
+
+        public NpgsqlConnection Connection { get; }
 
         public static TestDbService Create()
         {

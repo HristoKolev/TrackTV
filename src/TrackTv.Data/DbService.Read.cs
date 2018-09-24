@@ -7,6 +7,8 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Npgsql;
+
     public partial class DbService<TPocos>
     {
         public async Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
@@ -27,6 +29,8 @@
             sqlBuilder.Append(metadata.TableName);
             sqlBuilder.Append("\"");
 
+            var allParameters = new List<NpgsqlParameter>();
+
             if (columnNames.Count > 0)
             {
                 sqlBuilder.Append(" where ");
@@ -37,10 +41,17 @@
                     var parameter = parameters[i];
                     var oper = operators[i];
 
-                    string paramName = "@p" + i;
-
                     sqlBuilder.Append('\n');
                     sqlBuilder.Append(columnName);
+
+                    string paramName = null;
+
+                    if (parameter != null)
+                    {
+                        paramName = "@p" + i;
+                        parameter.ParameterName = paramName;
+                        allParameters.Add(parameter);
+                    }
 
                     AddCondition(oper, paramName, sqlBuilder);
 
@@ -48,8 +59,6 @@
                     {
                         sqlBuilder.Append(" AND ");
                     }
-
-                    parameter.ParameterName = paramName;
                 }
             }
 
@@ -57,7 +66,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            var pocos = await this.QueryInternal<TPoco>(sql, parameters, cancellationToken);
+            var pocos = await this.QueryInternal<TPoco>(sql, allParameters, cancellationToken);
             
             var resultList = new List<TCatalogModel>();
 
@@ -165,14 +174,12 @@
                 }
                 case QueryOperatorType.IsNull :
                 {
-                    sqlBuilder.Append(paramName);
                     sqlBuilder.Append(" is null");
 
                     break;
                 }
                 case QueryOperatorType.IsNotNull :
                 {
-                    sqlBuilder.Append(paramName);
                     sqlBuilder.Append(" is not null");
 
                     break;
@@ -199,6 +206,7 @@
                 }
             }
         }
+
         public IQueryable<T> GetTable<T>()
             where T : class, IPoco<T>
         {

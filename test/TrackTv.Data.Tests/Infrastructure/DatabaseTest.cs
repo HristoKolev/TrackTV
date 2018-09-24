@@ -33,9 +33,12 @@
         /// if the class also implements that.
         /// </summary>
         [SuppressMessage("ReSharper", "AsyncConverter.AsyncAwaitMayBeElidedHighlighting")]
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
-            return this.Tx.RollbackAsync();
+            await this.Tx.RollbackAsync();
+            
+            this.Db.Connection.Dispose();
+            this.Db.Dispose();
         }
     }
 }

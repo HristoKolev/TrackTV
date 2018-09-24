@@ -35,6 +35,13 @@ namespace TrackTv.Data.Tests
         {
             await this.Db.BulkInsert(poco);
         }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<Test1Poco, Test1FM>))]
+        public async Task Filter(Test1FM filter)
+        {
+            await this.Db.FilterInternal<Test1Poco, Test1CM>(filter);
+        }
     }
 
 }
