@@ -95,7 +95,10 @@
 
             if (member.Type.IsGenericType 
                 && member.Type.GetGenericTypeDefinition() == typeof(Nullable<>)
-                && !memberValue.Type.IsArray)
+                && queryOperatorType != QueryOperatorType.IsIn
+                && queryOperatorType != QueryOperatorType.IsNotIn
+                && queryOperatorType != QueryOperatorType.IsNull
+                && queryOperatorType != QueryOperatorType.IsNotNull)
             {
                 memberValue = Expression.Convert(memberValue, member.Type);
             }
@@ -136,25 +139,25 @@
                 }
                 case QueryOperatorType.StartsWith :
                 {
-                    var method = typeof(string).GetMethod(nameof(string.StartsWith));
+                    var method = typeof(string).GetMethod(nameof(string.StartsWith), new[] { typeof(string) });
                     expression = Expression.Call(member, method, memberValue);
                     break;
                 }
                 case QueryOperatorType.DoesNotStartWith :
                 {
-                    var method = typeof(string).GetMethod(nameof(string.StartsWith));
+                    var method = typeof(string).GetMethod(nameof(string.StartsWith), new[] { typeof(string) });
                     expression = Expression.Not(Expression.Call(member, method, memberValue));
                     break;
                 }
                 case QueryOperatorType.EndsWith :
                 {
-                    var method = typeof(string).GetMethod(nameof(string.EndsWith));
+                    var method = typeof(string).GetMethod(nameof(string.EndsWith), new[] { typeof(string) });
                     expression = Expression.Call(member, method, memberValue);
                     break;
                 }
                 case QueryOperatorType.DoesNotEndWith :
                 {
-                    var method = typeof(string).GetMethod(nameof(string.EndsWith));
+                    var method = typeof(string).GetMethod(nameof(string.EndsWith), new[] { typeof(string) });
                     expression = Expression.Not(Expression.Call(member, method, memberValue));
                     break;
                 }
@@ -206,13 +209,13 @@
                 }
                 case QueryOperatorType.Contains :
                 {
-                    var method = typeof(string).GetMethod(nameof(string.Contains));
+                    var method = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) });
                     expression = Expression.Call(member, method, memberValue);
                     break;
                 }
                 case QueryOperatorType.DoesNotContain :
                 {
-                    var method = typeof(string).GetMethod(nameof(string.Contains));
+                    var method = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) });
                     expression = Expression.Not(Expression.Call(member, method, memberValue));
                     break;
                 }
