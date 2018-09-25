@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using LinqToDB;
+
     using TrackTv.Data.Tests.Infrastructure;
 
     using Xunit;
@@ -14,7 +16,7 @@
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
         public async Task Crud({{ClassName}}Poco poco)
         {
-            int id = await this.Db.Save(poco);
+            int id = await this.Db.Insert(poco);
 
             var readFromDb = await this.Db.FindByID<{{ClassName}}Poco>(id);
 
@@ -23,7 +25,7 @@
                 Assert.Equal(getter(poco), getter(readFromDb));
             }
 
-            int updatedId = await this.Db.Save(poco);
+            int updatedId = await this.Db.Update(poco);
 
             Assert.Equal(id, updatedId);
 
@@ -39,9 +41,16 @@
 
 		[Theory]
         [ClassData(typeof(GeneratedFilterData<{{ClassName}}Poco, {{ClassName}}FM>))]
-        public async Task Filter({{ClassName}}FM filter)
+        public async Task FilterSql({{ClassName}}FM filter)
         {
             await this.Db.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<{{ClassName}}Poco, {{ClassName}}FM>))]
+        public async Task FilterQueryable({{ClassName}}FM filter)
+        {
+            await this.Db.GetTable<{{ClassName}}Poco>().Filter(filter).ToArrayAsync();
         }
     }
 

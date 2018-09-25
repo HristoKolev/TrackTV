@@ -1,7 +1,6 @@
 ﻿namespace TrackTv.Data
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -34,40 +33,19 @@
         }
     }
 
-    public class QueryableFilterException : Exception
-    {
-        public QueryableFilterException(string message) : base(message)
-        {
-        }
-
-        public QueryableFilterException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-    }
-
     public static class ExpressionGenerator
     {
-        private static MethodInfo StringContainsMethod { get; } = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) });
-
-        private static MethodInfo StringEndsWithMethod { get; } = typeof(string).GetMethod(nameof(string.EndsWith), new[] { typeof(string) });
-
-        private static MethodInfo StringStartsWithMethod { get; } = typeof(string).GetMethod(nameof(string.StartsWith), new[] { typeof(string) });
-
         public static Expression<Func<T, bool>> CreateFilterExpression<T>(object filter)
             where T : class
         {
-            // Make sure the filter is valid.
-            // Throws an exception if there is something wrong with the filter.
-            ValidateFilter(filter.GetType());
-
             var expressions = new List<Expression<Func<T, bool>>>();
 
             foreach (var propertyInfo in filter.GetType().GetProperties())
             {
                 var filterAttribute = propertyInfo.GetCustomAttribute<FilterOperatorAttribute>();
 
-                QueryOperatorType queryOperatorType = filterAttribute?.QueryOperatorType ?? QueryOperatorType.Equal;
-                string propertyName = filterAttribute?.PropertyName ?? propertyInfo.Name;
+                QueryOperatorType queryOperatorType = filterAttribute.QueryOperatorType;
+                string propertyName = filterAttribute.PropertyName;
                 object propertyValue = propertyInfo.GetValue(filter);
 
                 // Properties with null values will not be used when filtering.
@@ -107,22 +85,19 @@
             return result;
         }
 
+        // ReSharper disable once CyclomaticComplexity
         private static Expression<Func<T, bool>> CreatePropertyExpression<T>(string memberName, QueryOperatorType queryOperatorType, object value)
             where T : class
         {
             var parameter = Expression.Parameter(typeof(T), "t");
-            var member = Expression.PropertyOrField(parameter, memberName);
+            Expression member = Expression.PropertyOrField(parameter, memberName);
+            Expression memberValue = Expression.Constant(value);
 
-            ConstantExpression memberValue;
-
-            // When these query types are used, the member type must be a collection.
-            if (queryOperatorType == QueryOperatorType.IsIn || queryOperatorType == QueryOperatorType.IsNotIn)
+            if (member.Type.IsGenericType 
+                && member.Type.GetGenericTypeDefinition() == typeof(Nullable<>)
+                && !memberValue.Type.IsArray)
             {
-                memberValue = Expression.Constant(value, typeof(List<>).MakeGenericType(member.Type));
-            }
-            else
-            {
-                memberValue = Expression.Constant(value, member.Type);
+                memberValue = Expression.Convert(memberValue, member.Type);
             }
 
             Expression expression;
@@ -161,44 +136,84 @@
                 }
                 case QueryOperatorType.StartsWith :
                 {
-                    expression = Expression.Call(member, StringStartsWithMethod, memberValue);
+                    var method = typeof(string).GetMethod(nameof(string.StartsWith));
+                    expression = Expression.Call(member, method, memberValue);
                     break;
                 }
                 case QueryOperatorType.DoesNotStartWith :
                 {
-                    expression = Expression.Not(Expression.Call(member, StringStartsWithMethod, memberValue));
+                    var method = typeof(string).GetMethod(nameof(string.StartsWith));
+                    expression = Expression.Not(Expression.Call(member, method, memberValue));
                     break;
                 }
                 case QueryOperatorType.EndsWith :
                 {
-                    expression = Expression.Call(member, StringEndsWithMethod, memberValue);
+                    var method = typeof(string).GetMethod(nameof(string.EndsWith));
+                    expression = Expression.Call(member, method, memberValue);
                     break;
                 }
                 case QueryOperatorType.DoesNotEndWith :
                 {
-                    expression = Expression.Not(Expression.Call(member, StringEndsWithMethod, memberValue));
+                    var method = typeof(string).GetMethod(nameof(string.EndsWith));
+                    expression = Expression.Not(Expression.Call(member, method, memberValue));
                     break;
                 }
                 case QueryOperatorType.IsIn :
                 {
-                    Type type = member.Type;
-                    expression = Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", new[] { type }), member);
+                    var genericMethod = typeof(Enumerable)
+                                        .GetMethods()
+                                        .First(x => x.Name == nameof(Enumerable.Contains) && x.GetParameters().Length == 2);
+
+                    MethodInfo method;
+
+                    if (member.Type.IsGenericType && member.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        var type = Nullable.GetUnderlyingType(member.Type);
+
+                        member = Expression.Convert(member, type);
+                        method = genericMethod.MakeGenericMethod(type);
+                    }
+                    else
+                    {
+                        method = genericMethod.MakeGenericMethod(member.Type);
+                    }
+
+                    expression = Expression.Call(null, method, memberValue, member);
                     break;
                 }
                 case QueryOperatorType.IsNotIn :
                 {
-                    Type type = member.Type;
-                    expression = Expression.Not(Expression.Call(memberValue, typeof(List<>).MakeGenericType(type).GetMethod("Contains", new[] { type }), member));
+                    var genericMethod = typeof(Enumerable)
+                                        .GetMethods()
+                                        .First(x => x.Name == nameof(Enumerable.Contains) && x.GetParameters().Length == 2);
+
+                    MethodInfo method;
+
+                    if (member.Type.IsGenericType && member.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        var type = Nullable.GetUnderlyingType(member.Type);
+
+                        member = Expression.Convert(member, type);
+                        method = genericMethod.MakeGenericMethod(type);
+                    }
+                    else
+                    {
+                        method = genericMethod.MakeGenericMethod(member.Type);
+                    }
+
+                    expression = Expression.Not(Expression.Call(null, method, memberValue, member));
                     break;
                 }
                 case QueryOperatorType.Contains :
                 {
-                    expression = Expression.Call(member, StringContainsMethod, memberValue);
+                    var method = typeof(string).GetMethod(nameof(string.Contains));
+                    expression = Expression.Call(member, method, memberValue);
                     break;
                 }
                 case QueryOperatorType.DoesNotContain :
                 {
-                    expression = Expression.Not(Expression.Call(member, StringContainsMethod, memberValue));
+                    var method = typeof(string).GetMethod(nameof(string.Contains));
+                    expression = Expression.Not(Expression.Call(member, method, memberValue));
                     break;
                 }
                 case QueryOperatorType.IsNull :
@@ -218,141 +233,6 @@
             }
 
             return Expression.Lambda<Func<T, bool>>(expression, parameter);
-        }
-
-        // ReSharper disable once CyclomaticComplexity
-        private static void ValidateFilter(Type filterType)
-        {
-            var propertyInfos = filterType.GetProperties();
-
-            foreach (var propertyInfo in propertyInfos)
-            {
-                // All properties should be nullable. 
-                // When a property has a value of null,
-                // it means that it should not be used in the filtering logic.
-                if (propertyInfo.PropertyType.IsValueType && propertyInfo.PropertyType.GetGenericTypeDefinition() != typeof(Nullable<>))
-                {
-                    string message = "All filter properties must be reference types (use T?).\r\n";
-                    message += $"FilterType: {filterType.Name};\r\n ";
-                    message += $"PropertyName: {propertyInfo.Name};\r\n";
-                    message += $"PropertyType: {propertyInfo.PropertyType.Name}\r\n";
-
-                    throw new QueryableFilterException(message);
-                }
-
-                var queryFilterAttribute = propertyInfo.GetCustomAttribute<FilterOperatorAttribute>();
-
-                // Get the query type from the QueryFilterAttribute. 
-                // If such attribute is not provided the query type defaults to QueryType.Equal.
-                var queryType = queryFilterAttribute?.QueryOperatorType ?? QueryOperatorType.Equal;
-
-                // Get the property name from the QueryFilterAttribute. 
-                // If such attribute is not provided the property name defaults to the declared property name.
-                var targetPropertyName = queryFilterAttribute?.PropertyName ?? propertyInfo.Name;
-
-                // The target property name must exist on the filter type.
-                if (propertyInfos.All(info => info.Name != targetPropertyName))
-                {
-                    throw new QueryableFilterException($"Target property {targetPropertyName} does not exists on type {filterType.Name}."
-                                                    + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                }
-
-                switch (queryType)
-                {
-                    // These can't be used with collection types.
-                    case QueryOperatorType.Equal :
-                    case QueryOperatorType.NotEqual :
-                    {
-                        if (propertyInfo.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
-                        {
-                            throw new QueryableFilterException(
-                                $"Property with QueryType: {queryType} should not have a type that is a collection.\r\n"
-                                + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                        }
-
-                        break;
-                    }
-
-                    // These types are only used for numeric or DateTime types.
-                    case QueryOperatorType.LessThan :
-                    case QueryOperatorType.LessThanOrEqual :
-                    case QueryOperatorType.GreaterThan :
-                    case QueryOperatorType.GreaterThanOrEqual :
-                    {
-                        var comparableTypes = new[]
-                        {
-                            typeof(byte),
-                            typeof(sbyte),
-                            typeof(short),
-                            typeof(ushort),
-                            typeof(ushort),
-                            typeof(int),
-                            typeof(uint),
-                            typeof(long),
-                            typeof(ulong),
-                            typeof(DateTime)
-                        };
-
-                        if (!comparableTypes.Contains(propertyInfo.PropertyType))
-                        {
-                            throw new QueryableFilterException(
-                                $"Property with QueryType: {queryType} should not have a type of {propertyInfo.PropertyType} .\r\n"
-                                + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                        }
-
-                        break;
-                    }
-
-                    // These types cn only be used with strings.
-                    case QueryOperatorType.StartsWith :
-                    case QueryOperatorType.DoesNotStartWith :
-                    case QueryOperatorType.EndsWith :
-                    case QueryOperatorType.DoesNotEndWith :
-                    case QueryOperatorType.Contains :
-                    case QueryOperatorType.DoesNotContain :
-                    {
-                        if (propertyInfo.PropertyType != typeof(string))
-                        {
-                            throw new QueryableFilterException(
-                                $"Property with QueryType: {queryType} should not be used with any type other than string.\r\n"
-                                + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                        }
-
-                        break;
-                    }
-
-                    // Only boolean values allowed here.
-                    case QueryOperatorType.IsNull :
-                    case QueryOperatorType.IsNotNull :
-                    {
-                        if (propertyInfo.PropertyType != typeof(bool))
-                        {
-                            throw new QueryableFilterException(
-                                $"Property with QueryType: {queryType} should not be used with any type other than boolean.\r\n"
-                                + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                        }
-
-                        break;
-                    }
-
-                    // These types can only be used with collection types.
-                    case QueryOperatorType.IsIn :
-                    case QueryOperatorType.IsNotIn :
-                    {
-                        if (!typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
-                        {
-                            throw new QueryableFilterException(
-                                $"Property with QueryType: {queryType} should only be used with collections.\r\n"
-                                + $"FilterType: {filterType.Name};\r\n PropertyName: {propertyInfo.Name} \r\n PropertyType: {propertyInfo.PropertyType}");
-                        }
-
-                        break;
-                    }
-
-                    default :
-                        throw new ArgumentOutOfRangeException(nameof(queryType), queryType, null);
-                }
-            }
         }
     }
 }

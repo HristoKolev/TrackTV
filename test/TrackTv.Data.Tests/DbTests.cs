@@ -3,6 +3,8 @@ namespace TrackTv.Data.Tests
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using LinqToDB;
+
     using TrackTv.Data.Tests.Infrastructure;
 
     using Xunit;
@@ -13,7 +15,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test1Poco>))]
         public async Task Crud(Test1Poco poco)
         {
-            int id = await this.Db.Save(poco);
+            int id = await this.Db.Insert(poco);
 
             var readFromDb = await this.Db.FindByID<Test1Poco>(id);
 
@@ -22,7 +24,7 @@ namespace TrackTv.Data.Tests
                 Assert.Equal(getter(poco), getter(readFromDb));
             }
 
-            int updatedId = await this.Db.Save(poco);
+            int updatedId = await this.Db.Update(poco);
 
             Assert.Equal(id, updatedId);
 
@@ -38,9 +40,16 @@ namespace TrackTv.Data.Tests
 
 		[Theory]
         [ClassData(typeof(GeneratedFilterData<Test1Poco, Test1FM>))]
-        public async Task Filter(Test1FM filter)
+        public async Task FilterSql(Test1FM filter)
         {
             await this.Db.FilterInternal<Test1Poco, Test1CM>(filter);
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<Test1Poco, Test1FM>))]
+        public async Task FilterQueryable(Test1FM filter)
+        {
+            await this.Db.GetTable<Test1Poco>().Filter(filter).ToArrayAsync();
         }
     }
 
