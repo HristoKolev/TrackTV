@@ -8,9 +8,9 @@
 
     public static class QueryableExtensions
     {
-        public static IQueryable<TModel> Filter<TFilter, TModel>(this IQueryable<TModel> collection, TFilter filter)
-            where TFilter : class 
-            where TModel : class
+        public static IQueryable<TPoco> Filter<TFilter, TPoco>(this IQueryable<TPoco> collection, TFilter filter)
+            where TFilter : class, IFilterModel<TPoco>
+            where TPoco : class, IPoco<TPoco>
         {
             if (collection == null)
             {
@@ -22,7 +22,7 @@
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            var expr = ExpressionGenerator.CreateFilterExpression<TModel>(filter);
+            var expr = ExpressionGenerator.CreateFilterExpression<TPoco>(filter);
 
             if (expr == null)
             {
@@ -35,10 +35,10 @@
 
     public static class ExpressionGenerator
     {
-        public static Expression<Func<T, bool>> CreateFilterExpression<T>(object filter)
-            where T : class
+        public static Expression<Func<TPoco, bool>> CreateFilterExpression<TPoco>(object filter)
+            where TPoco : class
         {
-            var expressions = new List<Expression<Func<T, bool>>>();
+            var expressions = new List<Expression<Func<TPoco, bool>>>();
 
             foreach (var propertyInfo in filter.GetType().GetProperties())
             {
@@ -55,7 +55,7 @@
                 }
 
                 // Create expression for the current property
-                var expression = CreatePropertyExpression<T>(propertyName, queryOperatorType, propertyValue);
+                var expression = CreatePropertyExpression<TPoco>(propertyName, queryOperatorType, propertyValue);
 
                 expressions.Add(expression);
             }
@@ -79,22 +79,21 @@
 
                 var andAlso = Expression.AndAlso(result.Body, invoke);
 
-                result = Expression.Lambda<Func<T, bool>>(andAlso, result.Parameters);
+                result = Expression.Lambda<Func<TPoco, bool>>(andAlso, result.Parameters);
             }
 
             return result;
         }
 
         // ReSharper disable once CyclomaticComplexity
-        private static Expression<Func<T, bool>> CreatePropertyExpression<T>(string memberName, QueryOperatorType queryOperatorType, object value)
-            where T : class
+        private static Expression<Func<TPoco, bool>> CreatePropertyExpression<TPoco>(string memberName, QueryOperatorType queryOperatorType, object value)
+            where TPoco : class
         {
-            var parameter = Expression.Parameter(typeof(T), "t");
+            var parameter = Expression.Parameter(typeof(TPoco), "x");
             Expression member = Expression.PropertyOrField(parameter, memberName);
             Expression memberValue = Expression.Constant(value);
 
-            if (member.Type.IsGenericType 
-                && member.Type.GetGenericTypeDefinition() == typeof(Nullable<>)
+            if (member.Type.IsGenericType && member.Type.GetGenericTypeDefinition() == typeof(Nullable<>)
                 && queryOperatorType != QueryOperatorType.IsIn
                 && queryOperatorType != QueryOperatorType.IsNotIn
                 && queryOperatorType != QueryOperatorType.IsNull
@@ -235,7 +234,7 @@
                 }
             }
 
-            return Expression.Lambda<Func<T, bool>>(expression, parameter);
+            return Expression.Lambda<Func<TPoco, bool>>(expression, parameter);
         }
     }
 }
