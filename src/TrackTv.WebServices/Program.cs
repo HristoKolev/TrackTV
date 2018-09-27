@@ -50,8 +50,6 @@
 
     public class AppConfig
     {
-        public string AuthAuthorityUrl { get; set; }
-
         public string ConnectionString { get; set; }
 
         public string[] CorsUrls { get; set; }
