@@ -416,5 +416,11 @@
 
             return Task.CompletedTask;
         }
+
+        private TableMetadataModel<T> GetMetadata<T>()
+            where T : IPoco<T>
+        {
+            return (TableMetadataModel<T>)this.Poco.MetadataByPocoType[typeof(T)];
+        }
     }
 }

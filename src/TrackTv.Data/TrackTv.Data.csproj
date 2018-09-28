@@ -12,5 +12,6 @@
   <ItemGroup>
     <PackageReference Include="linq2db.Core" Version="1.10.2" />
     <PackageReference Include="Npgsql" Version="4.0.3" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
   </ItemGroup>
 </Project>
