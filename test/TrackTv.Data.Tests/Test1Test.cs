@@ -6,7 +6,6 @@
     {
         public CatsTest1Test()
         {
-            
         }
     }
 }

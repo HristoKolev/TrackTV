@@ -11,8 +11,6 @@
     public class GeneratedData<T> : IEnumerable<object[]>
         where T : class, IPoco<T>, new()
     {
-        /// <summary>Returns an enumerator that iterates through the collection.</summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<object[]> GetEnumerator()
         {
             return PocoDataGenerator.GenerateData<T>()
@@ -23,8 +21,6 @@
                                     .GetEnumerator();
         }
 
-        /// <summary>Returns an enumerator that iterates through a collection.</summary>
-        /// <returns>An <see cref="System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
@@ -34,8 +30,6 @@
     public class GeneratedBulkData<T> : IEnumerable<object[]>
         where T : class, IPoco<T>, new()
     {
-        /// <summary>Returns an enumerator that iterates through the collection.</summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<object[]> GetEnumerator()
         {
             yield return new object[]
@@ -44,8 +38,6 @@
             };
         }
 
-        /// <summary>Returns an enumerator that iterates through a collection.</summary>
-        /// <returns>An <see cref="System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
@@ -55,8 +47,6 @@
     public class GeneratedFilterData<TPoco, TFilter> : IEnumerable<object[]>
         where TPoco : class, IPoco<TPoco>, new() where TFilter : new()
     {
-        /// <summary>Returns an enumerator that iterates through the collection.</summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<object[]> GetEnumerator()
         {
             return this.GenerateData()
@@ -67,8 +57,6 @@
                        .GetEnumerator();
         }
 
-        /// <summary>Returns an enumerator that iterates through a collection.</summary>
-        /// <returns>An <see cref="System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();

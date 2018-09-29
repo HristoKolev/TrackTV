@@ -596,7 +596,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestID", NpgsqlDbType.Integer)]
 		public int[] TestID_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestName1", NpgsqlDbType.Varchar)]
         public string TestName1 { get; set; }
 
@@ -626,7 +625,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestName1", NpgsqlDbType.Varchar)]
 		public string[] TestName1_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestName2", NpgsqlDbType.Varchar)]
         public string TestName2 { get; set; }
@@ -664,7 +662,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestName2", NpgsqlDbType.Varchar)]
 		public string[] TestName2_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestDate1", NpgsqlDbType.Date)]
         public DateTime? TestDate1 { get; set; }
 
@@ -689,7 +686,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate1", NpgsqlDbType.Date)]
 		public DateTime[] TestDate1_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestDate2", NpgsqlDbType.Date)]
         public DateTime? TestDate2 { get; set; }
 
@@ -707,7 +703,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate2", NpgsqlDbType.Date)]
 		public DateTime[] TestDate2_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestTimestamp1", NpgsqlDbType.Timestamp)]
         public DateTime? TestTimestamp1 { get; set; }
@@ -733,7 +728,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestTimestamp1", NpgsqlDbType.Timestamp)]
 		public DateTime[] TestTimestamp1_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestTimestamp2", NpgsqlDbType.Timestamp)]
         public DateTime? TestTimestamp2 { get; set; }
 
@@ -752,7 +746,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestTimestamp2", NpgsqlDbType.Timestamp)]
 		public DateTime[] TestTimestamp2_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestBoolean1", NpgsqlDbType.Boolean)]
         public bool? TestBoolean1 { get; set; }
 
@@ -764,7 +757,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestBoolean1", NpgsqlDbType.Boolean)]
 		public bool[] TestBoolean1_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestBoolean2", NpgsqlDbType.Boolean)]
         public bool? TestBoolean2 { get; set; }
@@ -784,7 +776,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestBoolean2", NpgsqlDbType.Boolean)]
 		public bool[] TestBoolean2_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestInteger1", NpgsqlDbType.Integer)]
         public int? TestInteger1 { get; set; }
 
@@ -802,7 +793,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestInteger1", NpgsqlDbType.Integer)]
 		public int[] TestInteger1_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestInteger2", NpgsqlDbType.Integer)]
         public int? TestInteger2 { get; set; }
@@ -828,7 +818,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestInteger2", NpgsqlDbType.Integer)]
 		public int[] TestInteger2_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestBigint1", NpgsqlDbType.Bigint)]
         public long? TestBigint1 { get; set; }
 
@@ -846,7 +835,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestBigint1", NpgsqlDbType.Bigint)]
 		public long[] TestBigint1_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestBigint2", NpgsqlDbType.Bigint)]
         public long? TestBigint2 { get; set; }
@@ -871,7 +859,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestBigint2", NpgsqlDbType.Bigint)]
 		public long[] TestBigint2_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestText1", NpgsqlDbType.Text)]
         public string TestText1 { get; set; }
@@ -909,7 +896,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestText1", NpgsqlDbType.Text)]
 		public string[] TestText1_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestText2", NpgsqlDbType.Text)]
         public string TestText2 { get; set; }
 
@@ -940,7 +926,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestText2", NpgsqlDbType.Text)]
 		public string[] TestText2_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestReal1", NpgsqlDbType.Real)]
         public float? TestReal1 { get; set; }
 
@@ -958,7 +943,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestReal1", NpgsqlDbType.Real)]
 		public float[] TestReal1_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestReal2", NpgsqlDbType.Real)]
         public float? TestReal2 { get; set; }
@@ -984,7 +968,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestReal2", NpgsqlDbType.Real)]
 		public float[] TestReal2_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestDouble1", NpgsqlDbType.Double)]
         public double? TestDouble1 { get; set; }
 
@@ -1002,7 +985,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestDouble1", NpgsqlDbType.Double)]
 		public double[] TestDouble1_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestDouble2", NpgsqlDbType.Double)]
         public double? TestDouble2 { get; set; }
@@ -1027,7 +1009,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestDouble2", NpgsqlDbType.Double)]
 		public double[] TestDouble2_IsNotIn { get; set; }
-
 
 		[FilterOperator(QueryOperatorType.Equal, "TestChar1", NpgsqlDbType.Char)]
         public string TestChar1 { get; set; }
@@ -1065,7 +1046,6 @@ namespace TrackTv.Data.Tests
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestChar1", NpgsqlDbType.Char)]
 		public string[] TestChar1_IsNotIn { get; set; }
 
-
 		[FilterOperator(QueryOperatorType.Equal, "TestChar2", NpgsqlDbType.Char)]
         public string TestChar2 { get; set; }
 
@@ -1095,7 +1075,6 @@ namespace TrackTv.Data.Tests
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "TestChar2", NpgsqlDbType.Char)]
 		public string[] TestChar2_IsNotIn { get; set; }
-
 
     }
     
@@ -1370,2187 +1349,2134 @@ namespace TrackTv.Data.Tests
     
     public class TestDbPocos : IDbPocos<TestDbPocos>
     {
-        internal static readonly TableMetadataModel<Test1Poco> Test1PocoMetadata = new TableMetadataModel<Test1Poco>
+		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
+
+        internal static TableMetadataModel<Test1Poco> Test1PocoMetadata;
+		
+		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
+
+		private static object InitLock = new object();
+
+		private static bool Initialized = false;
+
+		private static void InitializeInternal()
 		{
-			ClassName = "Test1",
-			PluralClassName = "Test1",
-			PrimaryKeyColumnName = "test_id",
-			PrimaryKeyPropertyName = "TestID",
-			TableName = "test1",
-			TableSchema = "public",
-			GetPrimaryKey = (instance) => instance.TestID,
-			SetPrimaryKey = (instance, val) => instance.TestID = val,
-			IsNew = (instance) => instance.TestID == default,
-			Clone = (instance) => new Test1Poco
+			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
 			{
-				TestID = instance.TestID,
-				TestName1 = instance.TestName1,
-				TestName2 = instance.TestName2,
-				TestDate1 = instance.TestDate1,
-				TestDate2 = instance.TestDate2,
-				TestTimestamp1 = instance.TestTimestamp1,
-				TestTimestamp2 = instance.TestTimestamp2,
-				TestBoolean1 = instance.TestBoolean1,
-				TestBoolean2 = instance.TestBoolean2,
-				TestInteger1 = instance.TestInteger1,
-				TestInteger2 = instance.TestInteger2,
-				TestBigint1 = instance.TestBigint1,
-				TestBigint2 = instance.TestBigint2,
-				TestText1 = instance.TestText1,
-				TestText2 = instance.TestText2,
-				TestReal1 = instance.TestReal1,
-				TestReal2 = instance.TestReal2,
-				TestDouble1 = instance.TestDouble1,
-				TestDouble2 = instance.TestDouble2,
-				TestChar1 = instance.TestChar1,
-				TestChar2 = instance.TestChar2,
-			},
-			MapToCM = (instance) => new Test1CM
+				{"test1", new Dictionary<string, string>
+				{
+					{"test_id", "TestID"},
+					{"test_name1", "TestName1"},
+					{"test_name2", "TestName2"},
+					{"test_date1", "TestDate1"},
+					{"test_date2", "TestDate2"},
+					{"test_timestamp1", "TestTimestamp1"},
+					{"test_timestamp2", "TestTimestamp2"},
+					{"test_boolean1", "TestBoolean1"},
+					{"test_boolean2", "TestBoolean2"},
+					{"test_integer1", "TestInteger1"},
+					{"test_integer2", "TestInteger2"},
+					{"test_bigint1", "TestBigint1"},
+					{"test_bigint2", "TestBigint2"},
+					{"test_text1", "TestText1"},
+					{"test_text2", "TestText2"},
+					{"test_real1", "TestReal1"},
+					{"test_real2", "TestReal2"},
+					{"test_double1", "TestDouble1"},
+					{"test_double2", "TestDouble2"},
+					{"test_char1", "TestChar1"},
+					{"test_char2", "TestChar2"},
+				}},
+			};
+
+			Test1PocoMetadata = new TableMetadataModel<Test1Poco>
 			{
-				TestID = instance.TestID,
-				TestName1 = instance.TestName1,
-				TestName2 = instance.TestName2,
-				TestDate1 = instance.TestDate1,
-				TestDate2 = instance.TestDate2,
-				TestTimestamp1 = instance.TestTimestamp1,
-				TestTimestamp2 = instance.TestTimestamp2,
-				TestBoolean1 = instance.TestBoolean1,
-				TestBoolean2 = instance.TestBoolean2,
-				TestInteger1 = instance.TestInteger1,
-				TestInteger2 = instance.TestInteger2,
-				TestBigint1 = instance.TestBigint1,
-				TestBigint2 = instance.TestBigint2,
-				TestText1 = instance.TestText1,
-				TestText2 = instance.TestText2,
-				TestReal1 = instance.TestReal1,
-				TestReal2 = instance.TestReal2,
-				TestDouble1 = instance.TestDouble1,
-				TestDouble2 = instance.TestDouble2,
-				TestChar1 = instance.TestChar1,
-				TestChar2 = instance.TestChar2,
-			},
-			Setters = new Dictionary<string, Action<Test1Poco, object>>
-			{
-				{"test_id", (instance, val) => instance.TestID = (int)val },
-				{"test_name1", (instance, val) => instance.TestName1 = (string)val },
-				{"test_name2", (instance, val) => instance.TestName2 = (string)val },
-				{"test_date1", (instance, val) => instance.TestDate1 = (DateTime)val },
-				{"test_date2", (instance, val) => instance.TestDate2 = (DateTime?)val },
-				{"test_timestamp1", (instance, val) => instance.TestTimestamp1 = (DateTime)val },
-				{"test_timestamp2", (instance, val) => instance.TestTimestamp2 = (DateTime?)val },
-				{"test_boolean1", (instance, val) => instance.TestBoolean1 = (bool)val },
-				{"test_boolean2", (instance, val) => instance.TestBoolean2 = (bool?)val },
-				{"test_integer1", (instance, val) => instance.TestInteger1 = (int?)val },
-				{"test_integer2", (instance, val) => instance.TestInteger2 = (int)val },
-				{"test_bigint1", (instance, val) => instance.TestBigint1 = (long?)val },
-				{"test_bigint2", (instance, val) => instance.TestBigint2 = (long)val },
-				{"test_text1", (instance, val) => instance.TestText1 = (string)val },
-				{"test_text2", (instance, val) => instance.TestText2 = (string)val },
-				{"test_real1", (instance, val) => instance.TestReal1 = (float?)val },
-				{"test_real2", (instance, val) => instance.TestReal2 = (float)val },
-				{"test_double1", (instance, val) => instance.TestDouble1 = (double?)val },
-				{"test_double2", (instance, val) => instance.TestDouble2 = (double)val },
-				{"test_char1", (instance, val) => instance.TestChar1 = (string)val },
-				{"test_char2", (instance, val) => instance.TestChar2 = (string)val },
-			},
-			Getters = new Dictionary<string, Func<Test1Poco, object>>
-			{
-				{"test_id", (instance) => instance.TestID },
-				{"test_name1", (instance) => instance.TestName1 },
-				{"test_name2", (instance) => instance.TestName2 },
-				{"test_date1", (instance) => instance.TestDate1 },
-				{"test_date2", (instance) => instance.TestDate2 },
-				{"test_timestamp1", (instance) => instance.TestTimestamp1 },
-				{"test_timestamp2", (instance) => instance.TestTimestamp2 },
-				{"test_boolean1", (instance) => instance.TestBoolean1 },
-				{"test_boolean2", (instance) => instance.TestBoolean2 },
-				{"test_integer1", (instance) => instance.TestInteger1 },
-				{"test_integer2", (instance) => instance.TestInteger2 },
-				{"test_bigint1", (instance) => instance.TestBigint1 },
-				{"test_bigint2", (instance) => instance.TestBigint2 },
-				{"test_text1", (instance) => instance.TestText1 },
-				{"test_text2", (instance) => instance.TestText2 },
-				{"test_real1", (instance) => instance.TestReal1 },
-				{"test_real2", (instance) => instance.TestReal2 },
-				{"test_double1", (instance) => instance.TestDouble1 },
-				{"test_double2", (instance) => instance.TestDouble2 },
-				{"test_char1", (instance) => instance.TestChar1 },
-				{"test_char2", (instance) => instance.TestChar2 },
-			},
-			GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
+				ClassName = "Test1",
+				PluralClassName = "Test1",
+				PrimaryKeyColumnName = "test_id",
+				PrimaryKeyPropertyName = "TestID",
+				TableName = "test1",
+				TableSchema = "public",
+				GetPrimaryKey = (instance) => instance.TestID,
+				SetPrimaryKey = (instance, val) => instance.TestID = val,
+				IsNew = (instance) => instance.TestID == default,
+				Clone = DbServiceHelpers.GetClone<Test1Poco>(),
+				MapToCM = DbServiceHelpers.GetMapToCM<Test1Poco, Test1CM>(),
+				Setters = DbServiceHelpers.GetSetters<Test1Poco>(TableToPropertyMap["test1"]),
+				Getters = DbServiceHelpers.GetGetters<Test1Poco>(TableToPropertyMap["test1"]),
+				GenerateParameters = (instance) => 
 				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 },
-					new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 },
-					new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 },
-					new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 },
-					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 },
-					new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 },
-					new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value },
-				};
-			},
-			GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.TestName1 != myInstance.TestName1)
+					return new NpgsqlParameter[] 
+					{
+						new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 },
+						new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 },
+						new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 },
+						new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 },
+						new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 },
+						new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 },
+						new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 },
+						new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value },
+						new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value },
+					};
+				},
+				GetColumnChanges = (dbInstance, myInstance) =>
 				{
-					changedColumnNames.Add("test_name1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName1 ?? (object)DBNull.Value });			
-				}
+					var changedColumnNames = new List<string>();
+					var changedColumnParameters = new List<NpgsqlParameter>();
 
-				if(dbInstance.TestName2 != myInstance.TestName2)
+					if(dbInstance.TestName1 != myInstance.TestName1)
+					{
+						changedColumnNames.Add("test_name1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestName2 != myInstance.TestName2)
+					{
+						changedColumnNames.Add("test_name2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName2 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestDate1 != myInstance.TestDate1)
+					{
+						changedColumnNames.Add("test_date1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate1 });
+					}
+
+					if(dbInstance.TestDate2 != myInstance.TestDate2)
+					{
+						changedColumnNames.Add("test_date2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate2 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestTimestamp1 != myInstance.TestTimestamp1)
+					{
+						changedColumnNames.Add("test_timestamp1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp1 });
+					}
+
+					if(dbInstance.TestTimestamp2 != myInstance.TestTimestamp2)
+					{
+						changedColumnNames.Add("test_timestamp2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp2 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestBoolean1 != myInstance.TestBoolean1)
+					{
+						changedColumnNames.Add("test_boolean1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean1 });
+					}
+
+					if(dbInstance.TestBoolean2 != myInstance.TestBoolean2)
+					{
+						changedColumnNames.Add("test_boolean2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean2 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestInteger1 != myInstance.TestInteger1)
+					{
+						changedColumnNames.Add("test_integer1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestInteger2 != myInstance.TestInteger2)
+					{
+						changedColumnNames.Add("test_integer2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger2 });
+					}
+
+					if(dbInstance.TestBigint1 != myInstance.TestBigint1)
+					{
+						changedColumnNames.Add("test_bigint1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestBigint2 != myInstance.TestBigint2)
+					{
+						changedColumnNames.Add("test_bigint2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint2 });
+					}
+
+					if(dbInstance.TestText1 != myInstance.TestText1)
+					{
+						changedColumnNames.Add("test_text1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestText2 != myInstance.TestText2)
+					{
+						changedColumnNames.Add("test_text2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText2 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestReal1 != myInstance.TestReal1)
+					{
+						changedColumnNames.Add("test_real1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestReal2 != myInstance.TestReal2)
+					{
+						changedColumnNames.Add("test_real2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal2 });
+					}
+
+					if(dbInstance.TestDouble1 != myInstance.TestDouble1)
+					{
+						changedColumnNames.Add("test_double1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestDouble2 != myInstance.TestDouble2)
+					{
+						changedColumnNames.Add("test_double2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble2 });
+					}
+
+					if(dbInstance.TestChar1 != myInstance.TestChar1)
+					{
+						changedColumnNames.Add("test_char1");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar1 ?? (object)DBNull.Value });
+					}
+
+					if(dbInstance.TestChar2 != myInstance.TestChar2)
+					{
+						changedColumnNames.Add("test_char2");
+						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar2 ?? (object)DBNull.Value });
+					}
+
+					return (changedColumnNames, changedColumnParameters);
+				},
+				GetAllColumns = (instance) =>
 				{
-					changedColumnNames.Add("test_name2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName2 ?? (object)DBNull.Value });			
-				}
+					var columnNames = new List<string>();
+					var columnParameters = new List<NpgsqlParameter>();
 
-				if(dbInstance.TestDate1 != myInstance.TestDate1)
-				{
-					changedColumnNames.Add("test_date1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate1 });			
-				}
-
-				if(dbInstance.TestDate2 != myInstance.TestDate2)
-				{
-					changedColumnNames.Add("test_date2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate2 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestTimestamp1 != myInstance.TestTimestamp1)
-				{
-					changedColumnNames.Add("test_timestamp1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp1 });			
-				}
-
-				if(dbInstance.TestTimestamp2 != myInstance.TestTimestamp2)
-				{
-					changedColumnNames.Add("test_timestamp2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp2 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestBoolean1 != myInstance.TestBoolean1)
-				{
-					changedColumnNames.Add("test_boolean1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean1 });			
-				}
-
-				if(dbInstance.TestBoolean2 != myInstance.TestBoolean2)
-				{
-					changedColumnNames.Add("test_boolean2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean2 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestInteger1 != myInstance.TestInteger1)
-				{
-					changedColumnNames.Add("test_integer1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger1 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestInteger2 != myInstance.TestInteger2)
-				{
-					changedColumnNames.Add("test_integer2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger2 });			
-				}
-
-				if(dbInstance.TestBigint1 != myInstance.TestBigint1)
-				{
-					changedColumnNames.Add("test_bigint1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint1 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestBigint2 != myInstance.TestBigint2)
-				{
-					changedColumnNames.Add("test_bigint2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint2 });			
-				}
-
-				if(dbInstance.TestText1 != myInstance.TestText1)
-				{
-					changedColumnNames.Add("test_text1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText1 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestText2 != myInstance.TestText2)
-				{
-					changedColumnNames.Add("test_text2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText2 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestReal1 != myInstance.TestReal1)
-				{
-					changedColumnNames.Add("test_real1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal1 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestReal2 != myInstance.TestReal2)
-				{
-					changedColumnNames.Add("test_real2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal2 });			
-				}
-
-				if(dbInstance.TestDouble1 != myInstance.TestDouble1)
-				{
-					changedColumnNames.Add("test_double1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble1 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestDouble2 != myInstance.TestDouble2)
-				{
-					changedColumnNames.Add("test_double2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble2 });			
-				}
-
-				if(dbInstance.TestChar1 != myInstance.TestChar1)
-				{
-					changedColumnNames.Add("test_char1");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar1 ?? (object)DBNull.Value });			
-				}
-
-				if(dbInstance.TestChar2 != myInstance.TestChar2)
-				{
-					changedColumnNames.Add("test_char2");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar2 ?? (object)DBNull.Value });			
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			},
-			GetAllColumns = (instance) =>
-			{
-				var columnNames = new List<string>();
-				var columnParameters = new List<NpgsqlParameter>();
-
-				columnNames.Add("test_name1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_name2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value });			
-				columnNames.Add("test_date1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 });			
-				columnNames.Add("test_date2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value });			
-				columnNames.Add("test_timestamp1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 });			
-				columnNames.Add("test_timestamp2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value });			
-				columnNames.Add("test_boolean1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 });			
-				columnNames.Add("test_boolean2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value });			
-				columnNames.Add("test_integer1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_integer2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 });			
-				columnNames.Add("test_bigint1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_bigint2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 });			
-				columnNames.Add("test_text1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_text2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value });			
-				columnNames.Add("test_real1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_real2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 });			
-				columnNames.Add("test_double1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_double2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 });			
-				columnNames.Add("test_char1");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value });			
-				columnNames.Add("test_char2");
-				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value });			
-				return (columnNames, columnParameters);
-			},
-			ParseFM = (instance) => {
-				var columnNames = new List<string>();
-				var columnParameters = new List<NpgsqlParameter>();
-				var operators = new List<QueryOperatorType>();
-
-				var fm = instance as Test1FM;
-
-				if(fm.TestID != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestID_NotEqual != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestID_LessThan != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
-
-				if(fm.TestID_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
-
-				if(fm.TestID_GreaterThan != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
-
-				if(fm.TestID_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
-
-				if(fm.TestID_IsIn != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestID_IsNotIn != null)
-				{
-					columnNames.Add("test_id");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestName1 != null)
-				{
 					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestName1_NotEqual != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestName1_StartsWith != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_StartsWith });
-					operators.Add(QueryOperatorType.StartsWith);
-				}		 
-
-				if(fm.TestName1_DoesNotStartWith != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotStartWith });
-					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
-
-				if(fm.TestName1_EndsWith != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_EndsWith });
-					operators.Add(QueryOperatorType.EndsWith);
-				}		 
-
-				if(fm.TestName1_DoesNotEndWith != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotEndWith });
-					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
-
-				if(fm.TestName1_Contains != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_Contains });
-					operators.Add(QueryOperatorType.Contains);
-				}		 
-
-				if(fm.TestName1_DoesNotContain != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotContain });
-					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
-
-				if(fm.TestName1_IsIn != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestName1_IsNotIn != null)
-				{
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestName2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value });
 					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestName2_NotEqual != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestName2_StartsWith != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_StartsWith });
-					operators.Add(QueryOperatorType.StartsWith);
-				}		 
-
-				if(fm.TestName2_DoesNotStartWith != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotStartWith });
-					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
-
-				if(fm.TestName2_EndsWith != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_EndsWith });
-					operators.Add(QueryOperatorType.EndsWith);
-				}		 
-
-				if(fm.TestName2_DoesNotEndWith != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotEndWith });
-					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
-
-				if(fm.TestName2_Contains != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_Contains });
-					operators.Add(QueryOperatorType.Contains);
-				}		 
-
-				if(fm.TestName2_DoesNotContain != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotContain });
-					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
-
-				if(fm.TestName2_IsNull != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestName2_IsNotNull != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestName2_IsIn != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestName2_IsNotIn != null)
-				{
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestDate1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value });
 					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestDate1_NotEqual != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestDate1_LessThan != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
-
-				if(fm.TestDate1_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
-
-				if(fm.TestDate1_GreaterThan != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
-
-				if(fm.TestDate1_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
-
-				if(fm.TestDate1_IsIn != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestDate1_IsNotIn != null)
-				{
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestDate2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 });
 					columnNames.Add("test_date2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestDate2_NotEqual != null)
-				{
-					columnNames.Add("test_date2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestDate2_IsNull != null)
-				{
-					columnNames.Add("test_date2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestDate2_IsNotNull != null)
-				{
-					columnNames.Add("test_date2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestDate2_IsIn != null)
-				{
-					columnNames.Add("test_date2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestDate2_IsNotIn != null)
-				{
-					columnNames.Add("test_date2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestTimestamp1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value });
 					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestTimestamp1_NotEqual != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestTimestamp1_LessThan != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
-
-				if(fm.TestTimestamp1_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
-
-				if(fm.TestTimestamp1_GreaterThan != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
-
-				if(fm.TestTimestamp1_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
-
-				if(fm.TestTimestamp1_IsIn != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestTimestamp1_IsNotIn != null)
-				{
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestTimestamp2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 });
 					columnNames.Add("test_timestamp2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestTimestamp2_NotEqual != null)
-				{
-					columnNames.Add("test_timestamp2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestTimestamp2_IsNull != null)
-				{
-					columnNames.Add("test_timestamp2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestTimestamp2_IsNotNull != null)
-				{
-					columnNames.Add("test_timestamp2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestTimestamp2_IsIn != null)
-				{
-					columnNames.Add("test_timestamp2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestTimestamp2_IsNotIn != null)
-				{
-					columnNames.Add("test_timestamp2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestBoolean1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value });
 					columnNames.Add("test_boolean1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestBoolean1_NotEqual != null)
-				{
-					columnNames.Add("test_boolean1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestBoolean1_IsIn != null)
-				{
-					columnNames.Add("test_boolean1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestBoolean1_IsNotIn != null)
-				{
-					columnNames.Add("test_boolean1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestBoolean2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 });
 					columnNames.Add("test_boolean2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestBoolean2_NotEqual != null)
-				{
-					columnNames.Add("test_boolean2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestBoolean2_IsNull != null)
-				{
-					columnNames.Add("test_boolean2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestBoolean2_IsNotNull != null)
-				{
-					columnNames.Add("test_boolean2");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestBoolean2_IsIn != null)
-				{
-					columnNames.Add("test_boolean2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestBoolean2_IsNotIn != null)
-				{
-					columnNames.Add("test_boolean2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestInteger1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value });
 					columnNames.Add("test_integer1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestInteger1_NotEqual != null)
-				{
-					columnNames.Add("test_integer1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestInteger1_IsNull != null)
-				{
-					columnNames.Add("test_integer1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestInteger1_IsNotNull != null)
-				{
-					columnNames.Add("test_integer1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestInteger1_IsIn != null)
-				{
-					columnNames.Add("test_integer1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestInteger1_IsNotIn != null)
-				{
-					columnNames.Add("test_integer1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestInteger2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value });
 					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestInteger2_NotEqual != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestInteger2_LessThan != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
-
-				if(fm.TestInteger2_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
-
-				if(fm.TestInteger2_GreaterThan != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
-
-				if(fm.TestInteger2_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
-
-				if(fm.TestInteger2_IsIn != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestInteger2_IsNotIn != null)
-				{
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestBigint1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 });
 					columnNames.Add("test_bigint1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestBigint1_NotEqual != null)
-				{
-					columnNames.Add("test_bigint1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestBigint1_IsNull != null)
-				{
-					columnNames.Add("test_bigint1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestBigint1_IsNotNull != null)
-				{
-					columnNames.Add("test_bigint1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestBigint1_IsIn != null)
-				{
-					columnNames.Add("test_bigint1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestBigint1_IsNotIn != null)
-				{
-					columnNames.Add("test_bigint1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestBigint2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value });
 					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestBigint2_NotEqual != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestBigint2_LessThan != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
-
-				if(fm.TestBigint2_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
-
-				if(fm.TestBigint2_GreaterThan != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
-
-				if(fm.TestBigint2_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
-
-				if(fm.TestBigint2_IsIn != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestBigint2_IsNotIn != null)
-				{
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestText1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 });
 					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestText1_NotEqual != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestText1_StartsWith != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_StartsWith });
-					operators.Add(QueryOperatorType.StartsWith);
-				}		 
-
-				if(fm.TestText1_DoesNotStartWith != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotStartWith });
-					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
-
-				if(fm.TestText1_EndsWith != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_EndsWith });
-					operators.Add(QueryOperatorType.EndsWith);
-				}		 
-
-				if(fm.TestText1_DoesNotEndWith != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotEndWith });
-					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
-
-				if(fm.TestText1_Contains != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_Contains });
-					operators.Add(QueryOperatorType.Contains);
-				}		 
-
-				if(fm.TestText1_DoesNotContain != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotContain });
-					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
-
-				if(fm.TestText1_IsNull != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestText1_IsNotNull != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestText1_IsIn != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestText1_IsNotIn != null)
-				{
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestText2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value });
 					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestText2_NotEqual != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestText2_StartsWith != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_StartsWith });
-					operators.Add(QueryOperatorType.StartsWith);
-				}		 
-
-				if(fm.TestText2_DoesNotStartWith != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotStartWith });
-					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
-
-				if(fm.TestText2_EndsWith != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_EndsWith });
-					operators.Add(QueryOperatorType.EndsWith);
-				}		 
-
-				if(fm.TestText2_DoesNotEndWith != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotEndWith });
-					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
-
-				if(fm.TestText2_Contains != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_Contains });
-					operators.Add(QueryOperatorType.Contains);
-				}		 
-
-				if(fm.TestText2_DoesNotContain != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotContain });
-					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
-
-				if(fm.TestText2_IsIn != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestText2_IsNotIn != null)
-				{
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestReal1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value });
 					columnNames.Add("test_real1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestReal1_NotEqual != null)
-				{
-					columnNames.Add("test_real1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestReal1_IsNull != null)
-				{
-					columnNames.Add("test_real1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestReal1_IsNotNull != null)
-				{
-					columnNames.Add("test_real1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestReal1_IsIn != null)
-				{
-					columnNames.Add("test_real1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestReal1_IsNotIn != null)
-				{
-					columnNames.Add("test_real1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestReal2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value });
 					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestReal2_NotEqual != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestReal2_LessThan != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
-
-				if(fm.TestReal2_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
-
-				if(fm.TestReal2_GreaterThan != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
-
-				if(fm.TestReal2_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
-
-				if(fm.TestReal2_IsIn != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestReal2_IsNotIn != null)
-				{
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestDouble1 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 });
 					columnNames.Add("test_double1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestDouble1_NotEqual != null)
-				{
-					columnNames.Add("test_double1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestDouble1_IsNull != null)
-				{
-					columnNames.Add("test_double1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestDouble1_IsNotNull != null)
-				{
-					columnNames.Add("test_double1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestDouble1_IsIn != null)
-				{
-					columnNames.Add("test_double1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestDouble1_IsNotIn != null)
-				{
-					columnNames.Add("test_double1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestDouble2 != null)
-				{
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value });
 					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 });
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value });
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value });
+					return (columnNames, columnParameters);
+				},
+				ParseFM = (instance) => {
+					var columnNames = new List<string>();
+					var columnParameters = new List<NpgsqlParameter>();
+					var operators = new List<QueryOperatorType>();
 
-				if(fm.TestDouble2_NotEqual != null)
-				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+					var fm = instance as Test1FM;
 
-				if(fm.TestDouble2_LessThan != null)
-				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThan });
-					operators.Add(QueryOperatorType.LessThan);
-				}		 
+					if(fm.TestID != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
 
-				if(fm.TestDouble2_LessThanOrEqual != null)
-				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThanOrEqual });
-					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+					if(fm.TestID_NotEqual != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
 
-				if(fm.TestDouble2_GreaterThan != null)
-				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThan });
-					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+					if(fm.TestID_LessThan != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
 
-				if(fm.TestDouble2_GreaterThanOrEqual != null)
-				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThanOrEqual });
-					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+					if(fm.TestID_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
 
-				if(fm.TestDouble2_IsIn != null)
+					if(fm.TestID_GreaterThan != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestID_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestID_IsIn != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestID_IsNotIn != null)
+					{
+						columnNames.Add("test_id");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestName1 != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestName1_NotEqual != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestName1_StartsWith != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_StartsWith });
+						operators.Add(QueryOperatorType.StartsWith);
+					}		 
+
+					if(fm.TestName1_DoesNotStartWith != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotStartWith });
+						operators.Add(QueryOperatorType.DoesNotStartWith);
+					}		 
+
+					if(fm.TestName1_EndsWith != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_EndsWith });
+						operators.Add(QueryOperatorType.EndsWith);
+					}		 
+
+					if(fm.TestName1_DoesNotEndWith != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotEndWith });
+						operators.Add(QueryOperatorType.DoesNotEndWith);
+					}		 
+
+					if(fm.TestName1_Contains != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_Contains });
+						operators.Add(QueryOperatorType.Contains);
+					}		 
+
+					if(fm.TestName1_DoesNotContain != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotContain });
+						operators.Add(QueryOperatorType.DoesNotContain);
+					}		 
+
+					if(fm.TestName1_IsIn != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestName1_IsNotIn != null)
+					{
+						columnNames.Add("test_name1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestName2 != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestName2_NotEqual != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestName2_StartsWith != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_StartsWith });
+						operators.Add(QueryOperatorType.StartsWith);
+					}		 
+
+					if(fm.TestName2_DoesNotStartWith != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotStartWith });
+						operators.Add(QueryOperatorType.DoesNotStartWith);
+					}		 
+
+					if(fm.TestName2_EndsWith != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_EndsWith });
+						operators.Add(QueryOperatorType.EndsWith);
+					}		 
+
+					if(fm.TestName2_DoesNotEndWith != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotEndWith });
+						operators.Add(QueryOperatorType.DoesNotEndWith);
+					}		 
+
+					if(fm.TestName2_Contains != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_Contains });
+						operators.Add(QueryOperatorType.Contains);
+					}		 
+
+					if(fm.TestName2_DoesNotContain != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotContain });
+						operators.Add(QueryOperatorType.DoesNotContain);
+					}		 
+
+					if(fm.TestName2_IsNull != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestName2_IsNotNull != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestName2_IsIn != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestName2_IsNotIn != null)
+					{
+						columnNames.Add("test_name2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestDate1 != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestDate1_NotEqual != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestDate1_LessThan != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
+
+					if(fm.TestDate1_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
+
+					if(fm.TestDate1_GreaterThan != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestDate1_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestDate1_IsIn != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestDate1_IsNotIn != null)
+					{
+						columnNames.Add("test_date1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestDate2 != null)
+					{
+						columnNames.Add("test_date2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestDate2_NotEqual != null)
+					{
+						columnNames.Add("test_date2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestDate2_IsNull != null)
+					{
+						columnNames.Add("test_date2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestDate2_IsNotNull != null)
+					{
+						columnNames.Add("test_date2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestDate2_IsIn != null)
+					{
+						columnNames.Add("test_date2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestDate2_IsNotIn != null)
+					{
+						columnNames.Add("test_date2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestTimestamp1 != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestTimestamp1_NotEqual != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestTimestamp1_LessThan != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
+
+					if(fm.TestTimestamp1_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
+
+					if(fm.TestTimestamp1_GreaterThan != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestTimestamp1_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestTimestamp1_IsIn != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestTimestamp1_IsNotIn != null)
+					{
+						columnNames.Add("test_timestamp1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestTimestamp2 != null)
+					{
+						columnNames.Add("test_timestamp2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestTimestamp2_NotEqual != null)
+					{
+						columnNames.Add("test_timestamp2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestTimestamp2_IsNull != null)
+					{
+						columnNames.Add("test_timestamp2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestTimestamp2_IsNotNull != null)
+					{
+						columnNames.Add("test_timestamp2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestTimestamp2_IsIn != null)
+					{
+						columnNames.Add("test_timestamp2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestTimestamp2_IsNotIn != null)
+					{
+						columnNames.Add("test_timestamp2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestBoolean1 != null)
+					{
+						columnNames.Add("test_boolean1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestBoolean1_NotEqual != null)
+					{
+						columnNames.Add("test_boolean1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestBoolean1_IsIn != null)
+					{
+						columnNames.Add("test_boolean1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestBoolean1_IsNotIn != null)
+					{
+						columnNames.Add("test_boolean1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestBoolean2 != null)
+					{
+						columnNames.Add("test_boolean2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestBoolean2_NotEqual != null)
+					{
+						columnNames.Add("test_boolean2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestBoolean2_IsNull != null)
+					{
+						columnNames.Add("test_boolean2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestBoolean2_IsNotNull != null)
+					{
+						columnNames.Add("test_boolean2");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestBoolean2_IsIn != null)
+					{
+						columnNames.Add("test_boolean2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestBoolean2_IsNotIn != null)
+					{
+						columnNames.Add("test_boolean2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestInteger1 != null)
+					{
+						columnNames.Add("test_integer1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestInteger1_NotEqual != null)
+					{
+						columnNames.Add("test_integer1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestInteger1_IsNull != null)
+					{
+						columnNames.Add("test_integer1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestInteger1_IsNotNull != null)
+					{
+						columnNames.Add("test_integer1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestInteger1_IsIn != null)
+					{
+						columnNames.Add("test_integer1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestInteger1_IsNotIn != null)
+					{
+						columnNames.Add("test_integer1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestInteger2 != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestInteger2_NotEqual != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestInteger2_LessThan != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
+
+					if(fm.TestInteger2_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
+
+					if(fm.TestInteger2_GreaterThan != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestInteger2_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestInteger2_IsIn != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestInteger2_IsNotIn != null)
+					{
+						columnNames.Add("test_integer2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestBigint1 != null)
+					{
+						columnNames.Add("test_bigint1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestBigint1_NotEqual != null)
+					{
+						columnNames.Add("test_bigint1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestBigint1_IsNull != null)
+					{
+						columnNames.Add("test_bigint1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestBigint1_IsNotNull != null)
+					{
+						columnNames.Add("test_bigint1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestBigint1_IsIn != null)
+					{
+						columnNames.Add("test_bigint1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestBigint1_IsNotIn != null)
+					{
+						columnNames.Add("test_bigint1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestBigint2 != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestBigint2_NotEqual != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestBigint2_LessThan != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
+
+					if(fm.TestBigint2_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
+
+					if(fm.TestBigint2_GreaterThan != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestBigint2_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestBigint2_IsIn != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestBigint2_IsNotIn != null)
+					{
+						columnNames.Add("test_bigint2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestText1 != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestText1_NotEqual != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestText1_StartsWith != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_StartsWith });
+						operators.Add(QueryOperatorType.StartsWith);
+					}		 
+
+					if(fm.TestText1_DoesNotStartWith != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotStartWith });
+						operators.Add(QueryOperatorType.DoesNotStartWith);
+					}		 
+
+					if(fm.TestText1_EndsWith != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_EndsWith });
+						operators.Add(QueryOperatorType.EndsWith);
+					}		 
+
+					if(fm.TestText1_DoesNotEndWith != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotEndWith });
+						operators.Add(QueryOperatorType.DoesNotEndWith);
+					}		 
+
+					if(fm.TestText1_Contains != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_Contains });
+						operators.Add(QueryOperatorType.Contains);
+					}		 
+
+					if(fm.TestText1_DoesNotContain != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotContain });
+						operators.Add(QueryOperatorType.DoesNotContain);
+					}		 
+
+					if(fm.TestText1_IsNull != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestText1_IsNotNull != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestText1_IsIn != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestText1_IsNotIn != null)
+					{
+						columnNames.Add("test_text1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestText2 != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestText2_NotEqual != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestText2_StartsWith != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_StartsWith });
+						operators.Add(QueryOperatorType.StartsWith);
+					}		 
+
+					if(fm.TestText2_DoesNotStartWith != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotStartWith });
+						operators.Add(QueryOperatorType.DoesNotStartWith);
+					}		 
+
+					if(fm.TestText2_EndsWith != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_EndsWith });
+						operators.Add(QueryOperatorType.EndsWith);
+					}		 
+
+					if(fm.TestText2_DoesNotEndWith != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotEndWith });
+						operators.Add(QueryOperatorType.DoesNotEndWith);
+					}		 
+
+					if(fm.TestText2_Contains != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_Contains });
+						operators.Add(QueryOperatorType.Contains);
+					}		 
+
+					if(fm.TestText2_DoesNotContain != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotContain });
+						operators.Add(QueryOperatorType.DoesNotContain);
+					}		 
+
+					if(fm.TestText2_IsIn != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestText2_IsNotIn != null)
+					{
+						columnNames.Add("test_text2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestReal1 != null)
+					{
+						columnNames.Add("test_real1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestReal1_NotEqual != null)
+					{
+						columnNames.Add("test_real1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestReal1_IsNull != null)
+					{
+						columnNames.Add("test_real1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestReal1_IsNotNull != null)
+					{
+						columnNames.Add("test_real1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestReal1_IsIn != null)
+					{
+						columnNames.Add("test_real1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestReal1_IsNotIn != null)
+					{
+						columnNames.Add("test_real1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestReal2 != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestReal2_NotEqual != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestReal2_LessThan != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
+
+					if(fm.TestReal2_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
+
+					if(fm.TestReal2_GreaterThan != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestReal2_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestReal2_IsIn != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestReal2_IsNotIn != null)
+					{
+						columnNames.Add("test_real2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestDouble1 != null)
+					{
+						columnNames.Add("test_double1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestDouble1_NotEqual != null)
+					{
+						columnNames.Add("test_double1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestDouble1_IsNull != null)
+					{
+						columnNames.Add("test_double1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestDouble1_IsNotNull != null)
+					{
+						columnNames.Add("test_double1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestDouble1_IsIn != null)
+					{
+						columnNames.Add("test_double1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestDouble1_IsNotIn != null)
+					{
+						columnNames.Add("test_double1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestDouble2 != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestDouble2_NotEqual != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestDouble2_LessThan != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThan });
+						operators.Add(QueryOperatorType.LessThan);
+					}		 
+
+					if(fm.TestDouble2_LessThanOrEqual != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThanOrEqual });
+						operators.Add(QueryOperatorType.LessThanOrEqual);
+					}		 
+
+					if(fm.TestDouble2_GreaterThan != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThan });
+						operators.Add(QueryOperatorType.GreaterThan);
+					}		 
+
+					if(fm.TestDouble2_GreaterThanOrEqual != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThanOrEqual });
+						operators.Add(QueryOperatorType.GreaterThanOrEqual);
+					}		 
+
+					if(fm.TestDouble2_IsIn != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestDouble2_IsNotIn != null)
+					{
+						columnNames.Add("test_double2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestChar1 != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestChar1_NotEqual != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestChar1_StartsWith != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_StartsWith });
+						operators.Add(QueryOperatorType.StartsWith);
+					}		 
+
+					if(fm.TestChar1_DoesNotStartWith != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotStartWith });
+						operators.Add(QueryOperatorType.DoesNotStartWith);
+					}		 
+
+					if(fm.TestChar1_EndsWith != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_EndsWith });
+						operators.Add(QueryOperatorType.EndsWith);
+					}		 
+
+					if(fm.TestChar1_DoesNotEndWith != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotEndWith });
+						operators.Add(QueryOperatorType.DoesNotEndWith);
+					}		 
+
+					if(fm.TestChar1_Contains != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_Contains });
+						operators.Add(QueryOperatorType.Contains);
+					}		 
+
+					if(fm.TestChar1_DoesNotContain != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotContain });
+						operators.Add(QueryOperatorType.DoesNotContain);
+					}		 
+
+					if(fm.TestChar1_IsNull != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNull);
+					}
+
+					if(fm.TestChar1_IsNotNull != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(null);
+						operators.Add(QueryOperatorType.IsNotNull);
+					}
+
+					if(fm.TestChar1_IsIn != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestChar1_IsNotIn != null)
+					{
+						columnNames.Add("test_char1");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+					if(fm.TestChar2 != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2 });
+						operators.Add(QueryOperatorType.Equal);
+					}		 
+
+					if(fm.TestChar2_NotEqual != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_NotEqual });
+						operators.Add(QueryOperatorType.NotEqual);
+					}		 
+
+					if(fm.TestChar2_StartsWith != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_StartsWith });
+						operators.Add(QueryOperatorType.StartsWith);
+					}		 
+
+					if(fm.TestChar2_DoesNotStartWith != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotStartWith });
+						operators.Add(QueryOperatorType.DoesNotStartWith);
+					}		 
+
+					if(fm.TestChar2_EndsWith != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_EndsWith });
+						operators.Add(QueryOperatorType.EndsWith);
+					}		 
+
+					if(fm.TestChar2_DoesNotEndWith != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotEndWith });
+						operators.Add(QueryOperatorType.DoesNotEndWith);
+					}		 
+
+					if(fm.TestChar2_Contains != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_Contains });
+						operators.Add(QueryOperatorType.Contains);
+					}		 
+
+					if(fm.TestChar2_DoesNotContain != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotContain });
+						operators.Add(QueryOperatorType.DoesNotContain);
+					}		 
+
+					if(fm.TestChar2_IsIn != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsIn });
+						operators.Add(QueryOperatorType.IsIn);
+					}
+
+					if(fm.TestChar2_IsNotIn != null)
+					{
+						columnNames.Add("test_char2");
+						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsNotIn });
+						operators.Add(QueryOperatorType.IsNotIn);
+					}
+
+
+					return (columnNames, columnParameters, operators);
+				},
+				Columns = new List<ColumnMetadataModel>
 				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),						
+						PrimaryKeyConstraintName = "test1_pkey" == string.Empty ? null : "test1_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "TestID",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_name1",
+						DbDataType = "character varying",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NVarChar",
+						Linq2dbDataType = DataType.NVarChar,
+						NpgsDataTypeName = "NpgsqlDbType.Varchar",
+						NpgsDataType = NpgsqlDbType.Varchar,
+						PropertyName = "TestName1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_name2",
+						DbDataType = "character varying",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NVarChar",
+						Linq2dbDataType = DataType.NVarChar,
+						NpgsDataTypeName = "NpgsqlDbType.Varchar",
+						NpgsDataType = NpgsqlDbType.Varchar,
+						PropertyName = "TestName2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "DateTime",
+						ClrType = typeof(DateTime),
+						ClrNonNullableTypeName = "DateTime",
+						ClrNonNullableType = typeof(DateTime),
+						ClrNullableTypeName = "DateTime?",
+						ClrNullableType = typeof(DateTime?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_date1",
+						DbDataType = "date",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Date",
+						Linq2dbDataType = DataType.Date,
+						NpgsDataTypeName = "NpgsqlDbType.Date",
+						NpgsDataType = NpgsqlDbType.Date,
+						PropertyName = "TestDate1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "DateTime?",
+						ClrType = typeof(DateTime?),
+						ClrNonNullableTypeName = "DateTime",
+						ClrNonNullableType = typeof(DateTime),
+						ClrNullableTypeName = "DateTime?",
+						ClrNullableType = typeof(DateTime?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_date2",
+						DbDataType = "date",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Date",
+						Linq2dbDataType = DataType.Date,
+						NpgsDataTypeName = "NpgsqlDbType.Date",
+						NpgsDataType = NpgsqlDbType.Date,
+						PropertyName = "TestDate2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "DateTime",
+						ClrType = typeof(DateTime),
+						ClrNonNullableTypeName = "DateTime",
+						ClrNonNullableType = typeof(DateTime),
+						ClrNullableTypeName = "DateTime?",
+						ClrNullableType = typeof(DateTime?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_timestamp1",
+						DbDataType = "timestamp without time zone",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.DateTime2",
+						Linq2dbDataType = DataType.DateTime2,
+						NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+						NpgsDataType = NpgsqlDbType.Timestamp,
+						PropertyName = "TestTimestamp1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "DateTime?",
+						ClrType = typeof(DateTime?),
+						ClrNonNullableTypeName = "DateTime",
+						ClrNonNullableType = typeof(DateTime),
+						ClrNullableTypeName = "DateTime?",
+						ClrNullableType = typeof(DateTime?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_timestamp2",
+						DbDataType = "timestamp without time zone",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.DateTime2",
+						Linq2dbDataType = DataType.DateTime2,
+						NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+						NpgsDataType = NpgsqlDbType.Timestamp,
+						PropertyName = "TestTimestamp2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "bool",
+						ClrType = typeof(bool),
+						ClrNonNullableTypeName = "bool",
+						ClrNonNullableType = typeof(bool),
+						ClrNullableTypeName = "bool?",
+						ClrNullableType = typeof(bool?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_boolean1",
+						DbDataType = "boolean",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Boolean",
+						Linq2dbDataType = DataType.Boolean,
+						NpgsDataTypeName = "NpgsqlDbType.Boolean",
+						NpgsDataType = NpgsqlDbType.Boolean,
+						PropertyName = "TestBoolean1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "bool?",
+						ClrType = typeof(bool?),
+						ClrNonNullableTypeName = "bool",
+						ClrNonNullableType = typeof(bool),
+						ClrNullableTypeName = "bool?",
+						ClrNullableType = typeof(bool?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_boolean2",
+						DbDataType = "boolean",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Boolean",
+						Linq2dbDataType = DataType.Boolean,
+						NpgsDataTypeName = "NpgsqlDbType.Boolean",
+						NpgsDataType = NpgsqlDbType.Boolean,
+						PropertyName = "TestBoolean2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int?",
+						ClrType = typeof(int?),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_integer1",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "TestInteger1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_integer2",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "TestInteger2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "long?",
+						ClrType = typeof(long?),
+						ClrNonNullableTypeName = "long",
+						ClrNonNullableType = typeof(long),
+						ClrNullableTypeName = "long?",
+						ClrNullableType = typeof(long?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_bigint1",
+						DbDataType = "bigint",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Int64",
+						Linq2dbDataType = DataType.Int64,
+						NpgsDataTypeName = "NpgsqlDbType.Bigint",
+						NpgsDataType = NpgsqlDbType.Bigint,
+						PropertyName = "TestBigint1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "long",
+						ClrType = typeof(long),
+						ClrNonNullableTypeName = "long",
+						ClrNonNullableType = typeof(long),
+						ClrNullableTypeName = "long?",
+						ClrNullableType = typeof(long?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_bigint2",
+						DbDataType = "bigint",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int64",
+						Linq2dbDataType = DataType.Int64,
+						NpgsDataTypeName = "NpgsqlDbType.Bigint",
+						NpgsDataType = NpgsqlDbType.Bigint,
+						PropertyName = "TestBigint2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_text1",
+						DbDataType = "text",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Text",
+						Linq2dbDataType = DataType.Text,
+						NpgsDataTypeName = "NpgsqlDbType.Text",
+						NpgsDataType = NpgsqlDbType.Text,
+						PropertyName = "TestText1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_text2",
+						DbDataType = "text",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Text",
+						Linq2dbDataType = DataType.Text,
+						NpgsDataTypeName = "NpgsqlDbType.Text",
+						NpgsDataType = NpgsqlDbType.Text,
+						PropertyName = "TestText2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "float?",
+						ClrType = typeof(float?),
+						ClrNonNullableTypeName = "float",
+						ClrNonNullableType = typeof(float),
+						ClrNullableTypeName = "float?",
+						ClrNullableType = typeof(float?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_real1",
+						DbDataType = "real",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Single",
+						Linq2dbDataType = DataType.Single,
+						NpgsDataTypeName = "NpgsqlDbType.Real",
+						NpgsDataType = NpgsqlDbType.Real,
+						PropertyName = "TestReal1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "float",
+						ClrType = typeof(float),
+						ClrNonNullableTypeName = "float",
+						ClrNonNullableType = typeof(float),
+						ClrNullableTypeName = "float?",
+						ClrNullableType = typeof(float?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_real2",
+						DbDataType = "real",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Single",
+						Linq2dbDataType = DataType.Single,
+						NpgsDataTypeName = "NpgsqlDbType.Real",
+						NpgsDataType = NpgsqlDbType.Real,
+						PropertyName = "TestReal2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "double?",
+						ClrType = typeof(double?),
+						ClrNonNullableTypeName = "double",
+						ClrNonNullableType = typeof(double),
+						ClrNullableTypeName = "double?",
+						ClrNullableType = typeof(double?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_double1",
+						DbDataType = "double precision",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Double",
+						Linq2dbDataType = DataType.Double,
+						NpgsDataTypeName = "NpgsqlDbType.Double",
+						NpgsDataType = NpgsqlDbType.Double,
+						PropertyName = "TestDouble1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "double",
+						ClrType = typeof(double),
+						ClrNonNullableTypeName = "double",
+						ClrNonNullableType = typeof(double),
+						ClrNullableTypeName = "double?",
+						ClrNullableType = typeof(double?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_double2",
+						DbDataType = "double precision",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Double",
+						Linq2dbDataType = DataType.Double,
+						NpgsDataTypeName = "NpgsqlDbType.Double",
+						NpgsDataType = NpgsqlDbType.Double,
+						PropertyName = "TestDouble2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_char1",
+						DbDataType = "character",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NChar",
+						Linq2dbDataType = DataType.NChar,
+						NpgsDataTypeName = "NpgsqlDbType.Char",
+						NpgsDataType = NpgsqlDbType.Char,
+						PropertyName = "TestChar1",
+						TableName = "test1",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_char2",
+						DbDataType = "character",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NChar",
+						Linq2dbDataType = DataType.NChar,
+						NpgsDataTypeName = "NpgsqlDbType.Char",
+						NpgsDataType = NpgsqlDbType.Char,
+						PropertyName = "TestChar2",
+						TableName = "test1",
+						TableSchema = "public",
+					},
 				}
+			};		
+			
 
-				if(fm.TestDouble2_IsNotIn != null)
-				{
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestChar1 != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestChar1_NotEqual != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestChar1_StartsWith != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_StartsWith });
-					operators.Add(QueryOperatorType.StartsWith);
-				}		 
-
-				if(fm.TestChar1_DoesNotStartWith != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotStartWith });
-					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
-
-				if(fm.TestChar1_EndsWith != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_EndsWith });
-					operators.Add(QueryOperatorType.EndsWith);
-				}		 
-
-				if(fm.TestChar1_DoesNotEndWith != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotEndWith });
-					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
-
-				if(fm.TestChar1_Contains != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_Contains });
-					operators.Add(QueryOperatorType.Contains);
-				}		 
-
-				if(fm.TestChar1_DoesNotContain != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotContain });
-					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
-
-				if(fm.TestChar1_IsNull != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.TestChar1_IsNotNull != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}			
-
-				if(fm.TestChar1_IsIn != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestChar1_IsNotIn != null)
-				{
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				if(fm.TestChar2 != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2 });
-					operators.Add(QueryOperatorType.Equal);
-				}		 
-
-				if(fm.TestChar2_NotEqual != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_NotEqual });
-					operators.Add(QueryOperatorType.NotEqual);
-				}		 
-
-				if(fm.TestChar2_StartsWith != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_StartsWith });
-					operators.Add(QueryOperatorType.StartsWith);
-				}		 
-
-				if(fm.TestChar2_DoesNotStartWith != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotStartWith });
-					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
-
-				if(fm.TestChar2_EndsWith != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_EndsWith });
-					operators.Add(QueryOperatorType.EndsWith);
-				}		 
-
-				if(fm.TestChar2_DoesNotEndWith != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotEndWith });
-					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
-
-				if(fm.TestChar2_Contains != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_Contains });
-					operators.Add(QueryOperatorType.Contains);
-				}		 
-
-				if(fm.TestChar2_DoesNotContain != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotContain });
-					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
-
-				if(fm.TestChar2_IsIn != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.TestChar2_IsNotIn != null)
-				{
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-
-				return (columnNames, columnParameters, operators);
-			},
-			Columns = new List<ColumnMetadataModel>
+			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "int",					
-					ClrType = typeof(int),
-					ClrNonNullableTypeName = "int",
-					ClrNonNullableType = typeof(int),
-					ClrNullableTypeName = "int?",
-					ClrNullableType = typeof(int?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_id",
-					DbDataType = "integer",
-					IsPrimaryKey = bool.Parse("True"),						
-					PrimaryKeyConstraintName = "test1_pkey" == string.Empty ? null : "test1_pkey",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Int32",
-					Linq2dbDataType = DataType.Int32,
-					NpgsDataTypeName = "NpgsqlDbType.Integer",
-					NpgsDataType = NpgsqlDbType.Integer,
-					PropertyName = "TestID",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "string",					
-					ClrType = typeof(string),
-					ClrNonNullableTypeName = "string",
-					ClrNonNullableType = typeof(string),
-					ClrNullableTypeName = "string",
-					ClrNullableType = typeof(string),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_name1",
-					DbDataType = "character varying",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("False"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.NVarChar",
-					Linq2dbDataType = DataType.NVarChar,
-					NpgsDataTypeName = "NpgsqlDbType.Varchar",
-					NpgsDataType = NpgsqlDbType.Varchar,
-					PropertyName = "TestName1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "string",					
-					ClrType = typeof(string),
-					ClrNonNullableTypeName = "string",
-					ClrNonNullableType = typeof(string),
-					ClrNullableTypeName = "string",
-					ClrNullableType = typeof(string),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_name2",
-					DbDataType = "character varying",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("False"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.NVarChar",
-					Linq2dbDataType = DataType.NVarChar,
-					NpgsDataTypeName = "NpgsqlDbType.Varchar",
-					NpgsDataType = NpgsqlDbType.Varchar,
-					PropertyName = "TestName2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "DateTime",					
-					ClrType = typeof(DateTime),
-					ClrNonNullableTypeName = "DateTime",
-					ClrNonNullableType = typeof(DateTime),
-					ClrNullableTypeName = "DateTime?",
-					ClrNullableType = typeof(DateTime?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_date1",
-					DbDataType = "date",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Date",
-					Linq2dbDataType = DataType.Date,
-					NpgsDataTypeName = "NpgsqlDbType.Date",
-					NpgsDataType = NpgsqlDbType.Date,
-					PropertyName = "TestDate1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "DateTime?",					
-					ClrType = typeof(DateTime?),
-					ClrNonNullableTypeName = "DateTime",
-					ClrNonNullableType = typeof(DateTime),
-					ClrNullableTypeName = "DateTime?",
-					ClrNullableType = typeof(DateTime?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_date2",
-					DbDataType = "date",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Date",
-					Linq2dbDataType = DataType.Date,
-					NpgsDataTypeName = "NpgsqlDbType.Date",
-					NpgsDataType = NpgsqlDbType.Date,
-					PropertyName = "TestDate2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "DateTime",					
-					ClrType = typeof(DateTime),
-					ClrNonNullableTypeName = "DateTime",
-					ClrNonNullableType = typeof(DateTime),
-					ClrNullableTypeName = "DateTime?",
-					ClrNullableType = typeof(DateTime?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_timestamp1",
-					DbDataType = "timestamp without time zone",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.DateTime2",
-					Linq2dbDataType = DataType.DateTime2,
-					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
-					NpgsDataType = NpgsqlDbType.Timestamp,
-					PropertyName = "TestTimestamp1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "DateTime?",					
-					ClrType = typeof(DateTime?),
-					ClrNonNullableTypeName = "DateTime",
-					ClrNonNullableType = typeof(DateTime),
-					ClrNullableTypeName = "DateTime?",
-					ClrNullableType = typeof(DateTime?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_timestamp2",
-					DbDataType = "timestamp without time zone",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.DateTime2",
-					Linq2dbDataType = DataType.DateTime2,
-					NpgsDataTypeName = "NpgsqlDbType.Timestamp",
-					NpgsDataType = NpgsqlDbType.Timestamp,
-					PropertyName = "TestTimestamp2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "bool",					
-					ClrType = typeof(bool),
-					ClrNonNullableTypeName = "bool",
-					ClrNonNullableType = typeof(bool),
-					ClrNullableTypeName = "bool?",
-					ClrNullableType = typeof(bool?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_boolean1",
-					DbDataType = "boolean",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Boolean",
-					Linq2dbDataType = DataType.Boolean,
-					NpgsDataTypeName = "NpgsqlDbType.Boolean",
-					NpgsDataType = NpgsqlDbType.Boolean,
-					PropertyName = "TestBoolean1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "bool?",					
-					ClrType = typeof(bool?),
-					ClrNonNullableTypeName = "bool",
-					ClrNonNullableType = typeof(bool),
-					ClrNullableTypeName = "bool?",
-					ClrNullableType = typeof(bool?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_boolean2",
-					DbDataType = "boolean",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Boolean",
-					Linq2dbDataType = DataType.Boolean,
-					NpgsDataTypeName = "NpgsqlDbType.Boolean",
-					NpgsDataType = NpgsqlDbType.Boolean,
-					PropertyName = "TestBoolean2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "int?",					
-					ClrType = typeof(int?),
-					ClrNonNullableTypeName = "int",
-					ClrNonNullableType = typeof(int),
-					ClrNullableTypeName = "int?",
-					ClrNullableType = typeof(int?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_integer1",
-					DbDataType = "integer",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Int32",
-					Linq2dbDataType = DataType.Int32,
-					NpgsDataTypeName = "NpgsqlDbType.Integer",
-					NpgsDataType = NpgsqlDbType.Integer,
-					PropertyName = "TestInteger1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "int",					
-					ClrType = typeof(int),
-					ClrNonNullableTypeName = "int",
-					ClrNonNullableType = typeof(int),
-					ClrNullableTypeName = "int?",
-					ClrNullableType = typeof(int?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_integer2",
-					DbDataType = "integer",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Int32",
-					Linq2dbDataType = DataType.Int32,
-					NpgsDataTypeName = "NpgsqlDbType.Integer",
-					NpgsDataType = NpgsqlDbType.Integer,
-					PropertyName = "TestInteger2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "long?",					
-					ClrType = typeof(long?),
-					ClrNonNullableTypeName = "long",
-					ClrNonNullableType = typeof(long),
-					ClrNullableTypeName = "long?",
-					ClrNullableType = typeof(long?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_bigint1",
-					DbDataType = "bigint",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Int64",
-					Linq2dbDataType = DataType.Int64,
-					NpgsDataTypeName = "NpgsqlDbType.Bigint",
-					NpgsDataType = NpgsqlDbType.Bigint,
-					PropertyName = "TestBigint1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "long",					
-					ClrType = typeof(long),
-					ClrNonNullableTypeName = "long",
-					ClrNonNullableType = typeof(long),
-					ClrNullableTypeName = "long?",
-					ClrNullableType = typeof(long?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_bigint2",
-					DbDataType = "bigint",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Int64",
-					Linq2dbDataType = DataType.Int64,
-					NpgsDataTypeName = "NpgsqlDbType.Bigint",
-					NpgsDataType = NpgsqlDbType.Bigint,
-					PropertyName = "TestBigint2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "string",					
-					ClrType = typeof(string),
-					ClrNonNullableTypeName = "string",
-					ClrNonNullableType = typeof(string),
-					ClrNullableTypeName = "string",
-					ClrNullableType = typeof(string),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_text1",
-					DbDataType = "text",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("False"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Text",
-					Linq2dbDataType = DataType.Text,
-					NpgsDataTypeName = "NpgsqlDbType.Text",
-					NpgsDataType = NpgsqlDbType.Text,
-					PropertyName = "TestText1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "string",					
-					ClrType = typeof(string),
-					ClrNonNullableTypeName = "string",
-					ClrNonNullableType = typeof(string),
-					ClrNullableTypeName = "string",
-					ClrNullableType = typeof(string),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_text2",
-					DbDataType = "text",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("False"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Text",
-					Linq2dbDataType = DataType.Text,
-					NpgsDataTypeName = "NpgsqlDbType.Text",
-					NpgsDataType = NpgsqlDbType.Text,
-					PropertyName = "TestText2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "float?",					
-					ClrType = typeof(float?),
-					ClrNonNullableTypeName = "float",
-					ClrNonNullableType = typeof(float),
-					ClrNullableTypeName = "float?",
-					ClrNullableType = typeof(float?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_real1",
-					DbDataType = "real",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Single",
-					Linq2dbDataType = DataType.Single,
-					NpgsDataTypeName = "NpgsqlDbType.Real",
-					NpgsDataType = NpgsqlDbType.Real,
-					PropertyName = "TestReal1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "float",					
-					ClrType = typeof(float),
-					ClrNonNullableTypeName = "float",
-					ClrNonNullableType = typeof(float),
-					ClrNullableTypeName = "float?",
-					ClrNullableType = typeof(float?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_real2",
-					DbDataType = "real",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Single",
-					Linq2dbDataType = DataType.Single,
-					NpgsDataTypeName = "NpgsqlDbType.Real",
-					NpgsDataType = NpgsqlDbType.Real,
-					PropertyName = "TestReal2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "double?",					
-					ClrType = typeof(double?),
-					ClrNonNullableTypeName = "double",
-					ClrNonNullableType = typeof(double),
-					ClrNullableTypeName = "double?",
-					ClrNullableType = typeof(double?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_double1",
-					DbDataType = "double precision",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("True"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.Double",
-					Linq2dbDataType = DataType.Double,
-					NpgsDataTypeName = "NpgsqlDbType.Double",
-					NpgsDataType = NpgsqlDbType.Double,
-					PropertyName = "TestDouble1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "double",					
-					ClrType = typeof(double),
-					ClrNonNullableTypeName = "double",
-					ClrNonNullableType = typeof(double),
-					ClrNullableTypeName = "double?",
-					ClrNullableType = typeof(double?),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_double2",
-					DbDataType = "double precision",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("True"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("False"),
-					Linq2dbDataTypeName = "DataType.Double",
-					Linq2dbDataType = DataType.Double,
-					NpgsDataTypeName = "NpgsqlDbType.Double",
-					NpgsDataType = NpgsqlDbType.Double,
-					PropertyName = "TestDouble2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "string",					
-					ClrType = typeof(string),
-					ClrNonNullableTypeName = "string",
-					ClrNonNullableType = typeof(string),
-					ClrNullableTypeName = "string",
-					ClrNullableType = typeof(string),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_char1",
-					DbDataType = "character",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("True"),
-					IsClrValueType = bool.Parse("False"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.NChar",
-					Linq2dbDataType = DataType.NChar,
-					NpgsDataTypeName = "NpgsqlDbType.Char",
-					NpgsDataType = NpgsqlDbType.Char,
-					PropertyName = "TestChar1",
-					TableName = "test1",
-					TableSchema = "public",
-				},
-				new ColumnMetadataModel
-				{						
-					ClrTypeName = "string",					
-					ClrType = typeof(string),
-					ClrNonNullableTypeName = "string",
-					ClrNonNullableType = typeof(string),
-					ClrNullableTypeName = "string",
-					ClrNullableType = typeof(string),
-					ColumnComment = "" == string.Empty ? null : "",
-					Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-					ColumnName = "test_char2",
-					DbDataType = "character",
-					IsPrimaryKey = bool.Parse("False"),						
-					PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-					IsForeignKey = bool.Parse("False"),
-					ForeignKeyConstraintName = "" == string.Empty ? null : "",						
-					ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-					ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
-					IsNullable = bool.Parse("False"),
-					IsClrValueType = bool.Parse("False"),
-					IsClrNullableType = bool.Parse("False"),
-					IsClrReferenceType = bool.Parse("True"),
-					Linq2dbDataTypeName = "DataType.NChar",
-					Linq2dbDataType = DataType.NChar,
-					NpgsDataTypeName = "NpgsqlDbType.Char",
-					NpgsDataType = NpgsqlDbType.Char,
-					PropertyName = "TestChar2",
-					TableName = "test1",
-					TableSchema = "public",
-				},
+				{typeof(Test1Poco), Test1PocoMetadata},
+			};		
+		}
+
+		public static void Initialize()
+		{
+			if(Initialized)
+			{
+				return;
 			}
-		};
-		
-		private static readonly IReadOnlyDictionary<Type, object> StaticMetadataByPocoType = new Dictionary<Type, object>
-        {
-            {typeof(Test1Poco), Test1PocoMetadata},
-        };
-		
-		private static readonly IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
-        {
-            {"test1", new Dictionary<string, string>
+
+			lock(InitLock)
 			{
-				{"test_id", "TestID"},
-				{"test_name1", "TestName1"},
-				{"test_name2", "TestName2"},
-				{"test_date1", "TestDate1"},
-				{"test_date2", "TestDate2"},
-				{"test_timestamp1", "TestTimestamp1"},
-				{"test_timestamp2", "TestTimestamp2"},
-				{"test_boolean1", "TestBoolean1"},
-				{"test_boolean2", "TestBoolean2"},
-				{"test_integer1", "TestInteger1"},
-				{"test_integer2", "TestInteger2"},
-				{"test_bigint1", "TestBigint1"},
-				{"test_bigint2", "TestBigint2"},
-				{"test_text1", "TestText1"},
-				{"test_text2", "TestText2"},
-				{"test_real1", "TestReal1"},
-				{"test_real2", "TestReal2"},
-				{"test_double1", "TestDouble1"},
-				{"test_double2", "TestDouble2"},
-				{"test_char1", "TestChar1"},
-				{"test_char2", "TestChar2"},
-			}},
-        };
+				if(Initialized)
+				{
+					return;
+				}			
+
+				InitializeInternal();	
+
+				Initialized = true;
+			}
+		}
+
+		static TestDbPocos()
+		{
+			Initialize();
+		}
 
 		/// <summary>
 		/// <para>Database table 'test1'.</para>		

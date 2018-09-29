@@ -41,8 +41,9 @@
                     var parameter = parameters[i];
                     var oper = operators[i];
 
-                    sqlBuilder.Append('\n');
+                    sqlBuilder.Append("\n\"");
                     sqlBuilder.Append(columnName);
+                    sqlBuilder.Append('"');
 
                     string paramName = null;
 
@@ -126,7 +127,7 @@
                 }
                 case QueryOperatorType.StartsWith :
                 {
-                    sqlBuilder.Append(" ~~ (");
+                    sqlBuilder.Append(" ilike (");
                     sqlBuilder.Append(paramName);
                     sqlBuilder.Append(" || '%')");
 
@@ -134,7 +135,7 @@
                 }
                 case QueryOperatorType.DoesNotStartWith :
                 {
-                    sqlBuilder.Append(" !~~ (");
+                    sqlBuilder.Append(" not ilike (");
                     sqlBuilder.Append(paramName);
                     sqlBuilder.Append(" || '%')");
 
@@ -142,7 +143,7 @@
                 }
                 case QueryOperatorType.EndsWith :
                 {
-                    sqlBuilder.Append(" ~~ ('%' || ");
+                    sqlBuilder.Append(" ilike ('%' || ");
                     sqlBuilder.Append(paramName);
                     sqlBuilder.Append(")");
 
@@ -150,7 +151,7 @@
                 }
                 case QueryOperatorType.DoesNotEndWith :
                 {
-                    sqlBuilder.Append(" !~~ ('%' || ");
+                    sqlBuilder.Append(" not ilike ('%' || ");
                     sqlBuilder.Append(paramName);
                     sqlBuilder.Append(")");
 
@@ -158,7 +159,7 @@
                 }
                 case QueryOperatorType.Contains :
                 {
-                    sqlBuilder.Append(" ~~ ('%' || ");
+                    sqlBuilder.Append(" ilike ('%' || ");
                     sqlBuilder.Append(paramName);
                     sqlBuilder.Append(" || '%')");
 
@@ -166,7 +167,7 @@
                 }
                 case QueryOperatorType.DoesNotContain :
                 {
-                    sqlBuilder.Append(" !~~ ('%' || ");
+                    sqlBuilder.Append(" not ilike ('%' || ");
                     sqlBuilder.Append(paramName);
                     sqlBuilder.Append(" || '%')");
 
