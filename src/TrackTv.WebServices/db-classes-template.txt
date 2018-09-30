@@ -184,10 +184,12 @@ namespace {{model.Namespace}}
         {{/each}}
 		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
 
-		private static object InitLock = new object();
+		private static volatile object InitLock = new object();
 
-		private static bool Initialized = false;
+		private static bool Initialized;
 
+        // ReSharper disable once FunctionComplexityOverflow
+        // ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
 			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
@@ -217,99 +219,7 @@ namespace {{model.Namespace}}
 				Clone = DbServiceHelpers.GetClone<{{ClassName}}Poco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<{{ClassName}}Poco, {{ClassName}}CM>(),
 				Setters = DbServiceHelpers.GetSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]),
-				Getters = DbServiceHelpers.GetGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]),
-				GenerateParameters = (instance) => 
-				{
-					return new NpgsqlParameter[] 
-					{
-						{{#each columns}}
-						{{#unless IsPrimaryKey}}
-						new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} },
-						{{/unless}}
-						{{/each}}
-					};
-				},
-				GetColumnChanges = (dbInstance, myInstance) =>
-				{
-					var changedColumnNames = new List<string>();
-					var changedColumnParameters = new List<NpgsqlParameter>();
-
-					{{#each columns}}
-					{{#unless IsPrimaryKey}}
-					if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
-					{
-						changedColumnNames.Add("{{ColumnName}}");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = myInstance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
-					}
-
-					{{/unless}}
-					{{/each}}
-					return (changedColumnNames, changedColumnParameters);
-				},
-				GetAllColumns = (instance) =>
-				{
-					var columnNames = new List<string>();
-					var columnParameters = new List<NpgsqlParameter>();
-
-					{{#each columns}}
-					{{#unless IsPrimaryKey}}
-					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
-					{{/unless}}
-					{{/each}}
-					return (columnNames, columnParameters);
-				},
-				ParseFM = (instance) => {
-					var columnNames = new List<string>();
-					var columnParameters = new List<NpgsqlParameter>();
-					var operators = new List<QueryOperatorType>();
-
-					var fm = instance as {{ClassName}}FM;
-
-					{{#each columns}}
-					{{#each ValidOperators}}
-					if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
-					{
-						columnNames.Add("{{../ColumnName}}");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{../NpgsDataTypeName}}) { Value = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
-						operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
-					}		 
-
-					{{/each}}
-					{{#if IsNullable}}
-					if(fm.{{PropertyName}}_IsNull != null)
-					{
-						columnNames.Add("{{ColumnName}}");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.{{PropertyName}}_IsNotNull != null)
-					{
-						columnNames.Add("{{ColumnName}}");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					{{/if}}
-					if(fm.{{PropertyName}}_IsIn != null)
-					{
-						columnNames.Add("{{ColumnName}}");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.{{PropertyName}}_IsNotIn != null)
-					{
-						columnNames.Add("{{ColumnName}}");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					{{/each}}
-
-					return (columnNames, columnParameters, operators);
-				},
+				Getters = DbServiceHelpers.GetGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]),				
 				Columns = new List<ColumnMetadataModel>
 				{
 					{{#each columns}}
@@ -346,10 +256,107 @@ namespace {{model.Namespace}}
 					},
 					{{/each}}
 				}
-			};		
+			};
 			
 			{{/each}}
+			{{#each model.tables}}
+			{{ClassName}}PocoMetadata.GenerateParameters = (instance) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					{{#each columns}}
+					{{#unless IsPrimaryKey}}
+					new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} },
+					{{/unless}}
+					{{/each}}
+				};
+			};
 
+			{{ClassName}}PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				{{#each columns}}
+				{{#unless IsPrimaryKey}}
+				if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
+				{
+					changedColumnNames.Add("{{ColumnName}}");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = myInstance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
+				}
+
+				{{/unless}}
+				{{/each}}
+				return (changedColumnNames, changedColumnParameters);
+			};
+
+			{{ClassName}}PocoMetadata.GetAllColumns = (instance) =>
+			{
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+
+				{{#each columns}}
+				{{#unless IsPrimaryKey}}
+				columnNames.Add("{{ColumnName}}");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
+				{{/unless}}
+				{{/each}}
+				return (columnNames, columnParameters);
+			};
+
+			{{ClassName}}PocoMetadata.ParseFM = (instance) => {
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+				var operators = new List<QueryOperatorType>();
+
+				var fm = instance as {{ClassName}}FM;
+
+				{{#each columns}}
+				{{#each ValidOperators}}
+				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
+				{
+					columnNames.Add("{{../ColumnName}}");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{../NpgsDataTypeName}}) { Value = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
+					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
+				}		 
+
+				{{/each}}
+				{{#if IsNullable}}
+				if(fm.{{PropertyName}}_IsNull != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.{{PropertyName}}_IsNotNull != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				{{/if}}
+				if(fm.{{PropertyName}}_IsIn != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.{{PropertyName}}_IsNotIn != null)
+				{
+					columnNames.Add("{{ColumnName}}");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				{{/each}}
+
+				return (columnNames, columnParameters, operators);
+			};			
+			
+			{{/each}}
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
 				{{#each model.tables}}

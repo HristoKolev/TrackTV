@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Reflection.Emit;
 
+    using Npgsql;
+
     public class DbServiceHelpers
     {
         public static T GenerateMethod<T>(Action<ILGenerator> generate)
@@ -131,6 +133,19 @@
                 }
 
                 il.Emit(OpCodes.Ldloc_1);
+
+                il.Emit(OpCodes.Ret);
+            });
+        }
+
+        public static Func<TPoco, NpgsqlParameter[]> GenerateParameters<TPoco>()
+            where TPoco : IPoco<TPoco>
+        {
+            var pocoType = typeof(TPoco);
+
+            return GenerateMethod<Func<TPoco, NpgsqlParameter[]>>(il =>
+            {
+               
 
                 il.Emit(OpCodes.Ret);
             });

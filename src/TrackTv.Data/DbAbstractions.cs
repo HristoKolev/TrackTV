@@ -169,7 +169,7 @@
 
         /// <summary>		
         /// <para>Returns the primary key for the table.</para>
-        /// </summary>   
+        /// </summary>
         public Func<T, int> GetPrimaryKey;
 
         /// <summary>		

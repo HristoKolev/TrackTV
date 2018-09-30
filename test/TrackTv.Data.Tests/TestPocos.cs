@@ -1355,10 +1355,12 @@ namespace TrackTv.Data.Tests
 		
 		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
 
-		private static object InitLock = new object();
+		private static volatile object InitLock = new object();
 
-		private static bool Initialized = false;
+		private static bool Initialized;
 
+        // ReSharper disable once FunctionComplexityOverflow
+        // ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
 			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
@@ -1403,1393 +1405,7 @@ namespace TrackTv.Data.Tests
 				Clone = DbServiceHelpers.GetClone<Test1Poco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<Test1Poco, Test1CM>(),
 				Setters = DbServiceHelpers.GetSetters<Test1Poco>(TableToPropertyMap["test1"]),
-				Getters = DbServiceHelpers.GetGetters<Test1Poco>(TableToPropertyMap["test1"]),
-				GenerateParameters = (instance) => 
-				{
-					return new NpgsqlParameter[] 
-					{
-						new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 },
-						new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 },
-						new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 },
-						new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 },
-						new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 },
-						new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 },
-						new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 },
-						new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value },
-						new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value },
-					};
-				},
-				GetColumnChanges = (dbInstance, myInstance) =>
-				{
-					var changedColumnNames = new List<string>();
-					var changedColumnParameters = new List<NpgsqlParameter>();
-
-					if(dbInstance.TestName1 != myInstance.TestName1)
-					{
-						changedColumnNames.Add("test_name1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestName2 != myInstance.TestName2)
-					{
-						changedColumnNames.Add("test_name2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName2 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestDate1 != myInstance.TestDate1)
-					{
-						changedColumnNames.Add("test_date1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate1 });
-					}
-
-					if(dbInstance.TestDate2 != myInstance.TestDate2)
-					{
-						changedColumnNames.Add("test_date2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate2 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestTimestamp1 != myInstance.TestTimestamp1)
-					{
-						changedColumnNames.Add("test_timestamp1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp1 });
-					}
-
-					if(dbInstance.TestTimestamp2 != myInstance.TestTimestamp2)
-					{
-						changedColumnNames.Add("test_timestamp2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp2 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestBoolean1 != myInstance.TestBoolean1)
-					{
-						changedColumnNames.Add("test_boolean1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean1 });
-					}
-
-					if(dbInstance.TestBoolean2 != myInstance.TestBoolean2)
-					{
-						changedColumnNames.Add("test_boolean2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean2 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestInteger1 != myInstance.TestInteger1)
-					{
-						changedColumnNames.Add("test_integer1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestInteger2 != myInstance.TestInteger2)
-					{
-						changedColumnNames.Add("test_integer2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger2 });
-					}
-
-					if(dbInstance.TestBigint1 != myInstance.TestBigint1)
-					{
-						changedColumnNames.Add("test_bigint1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestBigint2 != myInstance.TestBigint2)
-					{
-						changedColumnNames.Add("test_bigint2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint2 });
-					}
-
-					if(dbInstance.TestText1 != myInstance.TestText1)
-					{
-						changedColumnNames.Add("test_text1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestText2 != myInstance.TestText2)
-					{
-						changedColumnNames.Add("test_text2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText2 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestReal1 != myInstance.TestReal1)
-					{
-						changedColumnNames.Add("test_real1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestReal2 != myInstance.TestReal2)
-					{
-						changedColumnNames.Add("test_real2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal2 });
-					}
-
-					if(dbInstance.TestDouble1 != myInstance.TestDouble1)
-					{
-						changedColumnNames.Add("test_double1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestDouble2 != myInstance.TestDouble2)
-					{
-						changedColumnNames.Add("test_double2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble2 });
-					}
-
-					if(dbInstance.TestChar1 != myInstance.TestChar1)
-					{
-						changedColumnNames.Add("test_char1");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar1 ?? (object)DBNull.Value });
-					}
-
-					if(dbInstance.TestChar2 != myInstance.TestChar2)
-					{
-						changedColumnNames.Add("test_char2");
-						changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar2 ?? (object)DBNull.Value });
-					}
-
-					return (changedColumnNames, changedColumnParameters);
-				},
-				GetAllColumns = (instance) =>
-				{
-					var columnNames = new List<string>();
-					var columnParameters = new List<NpgsqlParameter>();
-
-					columnNames.Add("test_name1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value });
-					columnNames.Add("test_name2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value });
-					columnNames.Add("test_date1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 });
-					columnNames.Add("test_date2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value });
-					columnNames.Add("test_timestamp1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 });
-					columnNames.Add("test_timestamp2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value });
-					columnNames.Add("test_boolean1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 });
-					columnNames.Add("test_boolean2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value });
-					columnNames.Add("test_integer1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value });
-					columnNames.Add("test_integer2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 });
-					columnNames.Add("test_bigint1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value });
-					columnNames.Add("test_bigint2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 });
-					columnNames.Add("test_text1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value });
-					columnNames.Add("test_text2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value });
-					columnNames.Add("test_real1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value });
-					columnNames.Add("test_real2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 });
-					columnNames.Add("test_double1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value });
-					columnNames.Add("test_double2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 });
-					columnNames.Add("test_char1");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value });
-					columnNames.Add("test_char2");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value });
-					return (columnNames, columnParameters);
-				},
-				ParseFM = (instance) => {
-					var columnNames = new List<string>();
-					var columnParameters = new List<NpgsqlParameter>();
-					var operators = new List<QueryOperatorType>();
-
-					var fm = instance as Test1FM;
-
-					if(fm.TestID != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestID_NotEqual != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestID_LessThan != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestID_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestID_GreaterThan != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestID_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestID_IsIn != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestID_IsNotIn != null)
-					{
-						columnNames.Add("test_id");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestName1 != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestName1_NotEqual != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestName1_StartsWith != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_StartsWith });
-						operators.Add(QueryOperatorType.StartsWith);
-					}		 
-
-					if(fm.TestName1_DoesNotStartWith != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotStartWith });
-						operators.Add(QueryOperatorType.DoesNotStartWith);
-					}		 
-
-					if(fm.TestName1_EndsWith != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_EndsWith });
-						operators.Add(QueryOperatorType.EndsWith);
-					}		 
-
-					if(fm.TestName1_DoesNotEndWith != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotEndWith });
-						operators.Add(QueryOperatorType.DoesNotEndWith);
-					}		 
-
-					if(fm.TestName1_Contains != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_Contains });
-						operators.Add(QueryOperatorType.Contains);
-					}		 
-
-					if(fm.TestName1_DoesNotContain != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotContain });
-						operators.Add(QueryOperatorType.DoesNotContain);
-					}		 
-
-					if(fm.TestName1_IsIn != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestName1_IsNotIn != null)
-					{
-						columnNames.Add("test_name1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestName2 != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestName2_NotEqual != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestName2_StartsWith != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_StartsWith });
-						operators.Add(QueryOperatorType.StartsWith);
-					}		 
-
-					if(fm.TestName2_DoesNotStartWith != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotStartWith });
-						operators.Add(QueryOperatorType.DoesNotStartWith);
-					}		 
-
-					if(fm.TestName2_EndsWith != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_EndsWith });
-						operators.Add(QueryOperatorType.EndsWith);
-					}		 
-
-					if(fm.TestName2_DoesNotEndWith != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotEndWith });
-						operators.Add(QueryOperatorType.DoesNotEndWith);
-					}		 
-
-					if(fm.TestName2_Contains != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_Contains });
-						operators.Add(QueryOperatorType.Contains);
-					}		 
-
-					if(fm.TestName2_DoesNotContain != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotContain });
-						operators.Add(QueryOperatorType.DoesNotContain);
-					}		 
-
-					if(fm.TestName2_IsNull != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestName2_IsNotNull != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestName2_IsIn != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestName2_IsNotIn != null)
-					{
-						columnNames.Add("test_name2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestDate1 != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestDate1_NotEqual != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestDate1_LessThan != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestDate1_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestDate1_GreaterThan != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestDate1_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestDate1_IsIn != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestDate1_IsNotIn != null)
-					{
-						columnNames.Add("test_date1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestDate2 != null)
-					{
-						columnNames.Add("test_date2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestDate2_NotEqual != null)
-					{
-						columnNames.Add("test_date2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestDate2_IsNull != null)
-					{
-						columnNames.Add("test_date2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestDate2_IsNotNull != null)
-					{
-						columnNames.Add("test_date2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestDate2_IsIn != null)
-					{
-						columnNames.Add("test_date2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestDate2_IsNotIn != null)
-					{
-						columnNames.Add("test_date2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestTimestamp1 != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestTimestamp1_NotEqual != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestTimestamp1_LessThan != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestTimestamp1_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestTimestamp1_GreaterThan != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestTimestamp1_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestTimestamp1_IsIn != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestTimestamp1_IsNotIn != null)
-					{
-						columnNames.Add("test_timestamp1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestTimestamp2 != null)
-					{
-						columnNames.Add("test_timestamp2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestTimestamp2_NotEqual != null)
-					{
-						columnNames.Add("test_timestamp2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestTimestamp2_IsNull != null)
-					{
-						columnNames.Add("test_timestamp2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestTimestamp2_IsNotNull != null)
-					{
-						columnNames.Add("test_timestamp2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestTimestamp2_IsIn != null)
-					{
-						columnNames.Add("test_timestamp2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestTimestamp2_IsNotIn != null)
-					{
-						columnNames.Add("test_timestamp2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestBoolean1 != null)
-					{
-						columnNames.Add("test_boolean1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestBoolean1_NotEqual != null)
-					{
-						columnNames.Add("test_boolean1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestBoolean1_IsIn != null)
-					{
-						columnNames.Add("test_boolean1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestBoolean1_IsNotIn != null)
-					{
-						columnNames.Add("test_boolean1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestBoolean2 != null)
-					{
-						columnNames.Add("test_boolean2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestBoolean2_NotEqual != null)
-					{
-						columnNames.Add("test_boolean2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestBoolean2_IsNull != null)
-					{
-						columnNames.Add("test_boolean2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestBoolean2_IsNotNull != null)
-					{
-						columnNames.Add("test_boolean2");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestBoolean2_IsIn != null)
-					{
-						columnNames.Add("test_boolean2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestBoolean2_IsNotIn != null)
-					{
-						columnNames.Add("test_boolean2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestInteger1 != null)
-					{
-						columnNames.Add("test_integer1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestInteger1_NotEqual != null)
-					{
-						columnNames.Add("test_integer1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestInteger1_IsNull != null)
-					{
-						columnNames.Add("test_integer1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestInteger1_IsNotNull != null)
-					{
-						columnNames.Add("test_integer1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestInteger1_IsIn != null)
-					{
-						columnNames.Add("test_integer1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestInteger1_IsNotIn != null)
-					{
-						columnNames.Add("test_integer1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestInteger2 != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestInteger2_NotEqual != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestInteger2_LessThan != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestInteger2_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestInteger2_GreaterThan != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestInteger2_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestInteger2_IsIn != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestInteger2_IsNotIn != null)
-					{
-						columnNames.Add("test_integer2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestBigint1 != null)
-					{
-						columnNames.Add("test_bigint1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestBigint1_NotEqual != null)
-					{
-						columnNames.Add("test_bigint1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestBigint1_IsNull != null)
-					{
-						columnNames.Add("test_bigint1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestBigint1_IsNotNull != null)
-					{
-						columnNames.Add("test_bigint1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestBigint1_IsIn != null)
-					{
-						columnNames.Add("test_bigint1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestBigint1_IsNotIn != null)
-					{
-						columnNames.Add("test_bigint1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestBigint2 != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestBigint2_NotEqual != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestBigint2_LessThan != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestBigint2_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestBigint2_GreaterThan != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestBigint2_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestBigint2_IsIn != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestBigint2_IsNotIn != null)
-					{
-						columnNames.Add("test_bigint2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestText1 != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestText1_NotEqual != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestText1_StartsWith != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_StartsWith });
-						operators.Add(QueryOperatorType.StartsWith);
-					}		 
-
-					if(fm.TestText1_DoesNotStartWith != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotStartWith });
-						operators.Add(QueryOperatorType.DoesNotStartWith);
-					}		 
-
-					if(fm.TestText1_EndsWith != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_EndsWith });
-						operators.Add(QueryOperatorType.EndsWith);
-					}		 
-
-					if(fm.TestText1_DoesNotEndWith != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotEndWith });
-						operators.Add(QueryOperatorType.DoesNotEndWith);
-					}		 
-
-					if(fm.TestText1_Contains != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_Contains });
-						operators.Add(QueryOperatorType.Contains);
-					}		 
-
-					if(fm.TestText1_DoesNotContain != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotContain });
-						operators.Add(QueryOperatorType.DoesNotContain);
-					}		 
-
-					if(fm.TestText1_IsNull != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestText1_IsNotNull != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestText1_IsIn != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestText1_IsNotIn != null)
-					{
-						columnNames.Add("test_text1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestText2 != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestText2_NotEqual != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestText2_StartsWith != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_StartsWith });
-						operators.Add(QueryOperatorType.StartsWith);
-					}		 
-
-					if(fm.TestText2_DoesNotStartWith != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotStartWith });
-						operators.Add(QueryOperatorType.DoesNotStartWith);
-					}		 
-
-					if(fm.TestText2_EndsWith != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_EndsWith });
-						operators.Add(QueryOperatorType.EndsWith);
-					}		 
-
-					if(fm.TestText2_DoesNotEndWith != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotEndWith });
-						operators.Add(QueryOperatorType.DoesNotEndWith);
-					}		 
-
-					if(fm.TestText2_Contains != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_Contains });
-						operators.Add(QueryOperatorType.Contains);
-					}		 
-
-					if(fm.TestText2_DoesNotContain != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotContain });
-						operators.Add(QueryOperatorType.DoesNotContain);
-					}		 
-
-					if(fm.TestText2_IsIn != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestText2_IsNotIn != null)
-					{
-						columnNames.Add("test_text2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestReal1 != null)
-					{
-						columnNames.Add("test_real1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestReal1_NotEqual != null)
-					{
-						columnNames.Add("test_real1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestReal1_IsNull != null)
-					{
-						columnNames.Add("test_real1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestReal1_IsNotNull != null)
-					{
-						columnNames.Add("test_real1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestReal1_IsIn != null)
-					{
-						columnNames.Add("test_real1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestReal1_IsNotIn != null)
-					{
-						columnNames.Add("test_real1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestReal2 != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestReal2_NotEqual != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestReal2_LessThan != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestReal2_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestReal2_GreaterThan != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestReal2_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestReal2_IsIn != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestReal2_IsNotIn != null)
-					{
-						columnNames.Add("test_real2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestDouble1 != null)
-					{
-						columnNames.Add("test_double1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestDouble1_NotEqual != null)
-					{
-						columnNames.Add("test_double1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestDouble1_IsNull != null)
-					{
-						columnNames.Add("test_double1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestDouble1_IsNotNull != null)
-					{
-						columnNames.Add("test_double1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestDouble1_IsIn != null)
-					{
-						columnNames.Add("test_double1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestDouble1_IsNotIn != null)
-					{
-						columnNames.Add("test_double1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestDouble2 != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestDouble2_NotEqual != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestDouble2_LessThan != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThan });
-						operators.Add(QueryOperatorType.LessThan);
-					}		 
-
-					if(fm.TestDouble2_LessThanOrEqual != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThanOrEqual });
-						operators.Add(QueryOperatorType.LessThanOrEqual);
-					}		 
-
-					if(fm.TestDouble2_GreaterThan != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThan });
-						operators.Add(QueryOperatorType.GreaterThan);
-					}		 
-
-					if(fm.TestDouble2_GreaterThanOrEqual != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThanOrEqual });
-						operators.Add(QueryOperatorType.GreaterThanOrEqual);
-					}		 
-
-					if(fm.TestDouble2_IsIn != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestDouble2_IsNotIn != null)
-					{
-						columnNames.Add("test_double2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestChar1 != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestChar1_NotEqual != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestChar1_StartsWith != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_StartsWith });
-						operators.Add(QueryOperatorType.StartsWith);
-					}		 
-
-					if(fm.TestChar1_DoesNotStartWith != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotStartWith });
-						operators.Add(QueryOperatorType.DoesNotStartWith);
-					}		 
-
-					if(fm.TestChar1_EndsWith != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_EndsWith });
-						operators.Add(QueryOperatorType.EndsWith);
-					}		 
-
-					if(fm.TestChar1_DoesNotEndWith != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotEndWith });
-						operators.Add(QueryOperatorType.DoesNotEndWith);
-					}		 
-
-					if(fm.TestChar1_Contains != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_Contains });
-						operators.Add(QueryOperatorType.Contains);
-					}		 
-
-					if(fm.TestChar1_DoesNotContain != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotContain });
-						operators.Add(QueryOperatorType.DoesNotContain);
-					}		 
-
-					if(fm.TestChar1_IsNull != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNull);
-					}
-
-					if(fm.TestChar1_IsNotNull != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(null);
-						operators.Add(QueryOperatorType.IsNotNull);
-					}
-
-					if(fm.TestChar1_IsIn != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestChar1_IsNotIn != null)
-					{
-						columnNames.Add("test_char1");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-					if(fm.TestChar2 != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2 });
-						operators.Add(QueryOperatorType.Equal);
-					}		 
-
-					if(fm.TestChar2_NotEqual != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_NotEqual });
-						operators.Add(QueryOperatorType.NotEqual);
-					}		 
-
-					if(fm.TestChar2_StartsWith != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_StartsWith });
-						operators.Add(QueryOperatorType.StartsWith);
-					}		 
-
-					if(fm.TestChar2_DoesNotStartWith != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotStartWith });
-						operators.Add(QueryOperatorType.DoesNotStartWith);
-					}		 
-
-					if(fm.TestChar2_EndsWith != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_EndsWith });
-						operators.Add(QueryOperatorType.EndsWith);
-					}		 
-
-					if(fm.TestChar2_DoesNotEndWith != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotEndWith });
-						operators.Add(QueryOperatorType.DoesNotEndWith);
-					}		 
-
-					if(fm.TestChar2_Contains != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_Contains });
-						operators.Add(QueryOperatorType.Contains);
-					}		 
-
-					if(fm.TestChar2_DoesNotContain != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotContain });
-						operators.Add(QueryOperatorType.DoesNotContain);
-					}		 
-
-					if(fm.TestChar2_IsIn != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsIn });
-						operators.Add(QueryOperatorType.IsIn);
-					}
-
-					if(fm.TestChar2_IsNotIn != null)
-					{
-						columnNames.Add("test_char2");
-						columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsNotIn });
-						operators.Add(QueryOperatorType.IsNotIn);
-					}
-
-
-					return (columnNames, columnParameters, operators);
-				},
+				Getters = DbServiceHelpers.GetGetters<Test1Poco>(TableToPropertyMap["test1"]),				
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -3444,9 +2060,1398 @@ namespace TrackTv.Data.Tests
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
+			Test1PocoMetadata.GenerateParameters = (instance) => 
+			{
+				return new NpgsqlParameter[] 
+				{
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 },
+					new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 },
+					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 },
+					new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 },
+					new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 },
+					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 },
+					new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 },
+					new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value },
+					new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value },
+				};
+			};
 
+			Test1PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.TestName1 != myInstance.TestName1)
+				{
+					changedColumnNames.Add("test_name1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestName2 != myInstance.TestName2)
+				{
+					changedColumnNames.Add("test_name2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestDate1 != myInstance.TestDate1)
+				{
+					changedColumnNames.Add("test_date1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate1 });
+				}
+
+				if(dbInstance.TestDate2 != myInstance.TestDate2)
+				{
+					changedColumnNames.Add("test_date2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestTimestamp1 != myInstance.TestTimestamp1)
+				{
+					changedColumnNames.Add("test_timestamp1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp1 });
+				}
+
+				if(dbInstance.TestTimestamp2 != myInstance.TestTimestamp2)
+				{
+					changedColumnNames.Add("test_timestamp2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestBoolean1 != myInstance.TestBoolean1)
+				{
+					changedColumnNames.Add("test_boolean1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean1 });
+				}
+
+				if(dbInstance.TestBoolean2 != myInstance.TestBoolean2)
+				{
+					changedColumnNames.Add("test_boolean2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestInteger1 != myInstance.TestInteger1)
+				{
+					changedColumnNames.Add("test_integer1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestInteger2 != myInstance.TestInteger2)
+				{
+					changedColumnNames.Add("test_integer2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger2 });
+				}
+
+				if(dbInstance.TestBigint1 != myInstance.TestBigint1)
+				{
+					changedColumnNames.Add("test_bigint1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestBigint2 != myInstance.TestBigint2)
+				{
+					changedColumnNames.Add("test_bigint2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint2 });
+				}
+
+				if(dbInstance.TestText1 != myInstance.TestText1)
+				{
+					changedColumnNames.Add("test_text1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestText2 != myInstance.TestText2)
+				{
+					changedColumnNames.Add("test_text2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestReal1 != myInstance.TestReal1)
+				{
+					changedColumnNames.Add("test_real1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestReal2 != myInstance.TestReal2)
+				{
+					changedColumnNames.Add("test_real2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal2 });
+				}
+
+				if(dbInstance.TestDouble1 != myInstance.TestDouble1)
+				{
+					changedColumnNames.Add("test_double1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestDouble2 != myInstance.TestDouble2)
+				{
+					changedColumnNames.Add("test_double2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble2 });
+				}
+
+				if(dbInstance.TestChar1 != myInstance.TestChar1)
+				{
+					changedColumnNames.Add("test_char1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestChar2 != myInstance.TestChar2)
+				{
+					changedColumnNames.Add("test_char2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar2 ?? (object)DBNull.Value });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			};
+
+			Test1PocoMetadata.GetAllColumns = (instance) =>
+			{
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+
+				columnNames.Add("test_name1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value });
+				columnNames.Add("test_name2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value });
+				columnNames.Add("test_date1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 });
+				columnNames.Add("test_date2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value });
+				columnNames.Add("test_timestamp1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 });
+				columnNames.Add("test_timestamp2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value });
+				columnNames.Add("test_boolean1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 });
+				columnNames.Add("test_boolean2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value });
+				columnNames.Add("test_integer1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value });
+				columnNames.Add("test_integer2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 });
+				columnNames.Add("test_bigint1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value });
+				columnNames.Add("test_bigint2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 });
+				columnNames.Add("test_text1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value });
+				columnNames.Add("test_text2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value });
+				columnNames.Add("test_real1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value });
+				columnNames.Add("test_real2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 });
+				columnNames.Add("test_double1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value });
+				columnNames.Add("test_double2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 });
+				columnNames.Add("test_char1");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value });
+				columnNames.Add("test_char2");
+				columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value });
+				return (columnNames, columnParameters);
+			};
+
+			Test1PocoMetadata.ParseFM = (instance) => {
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+				var operators = new List<QueryOperatorType>();
+
+				var fm = instance as Test1FM;
+
+				if(fm.TestID != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestID_NotEqual != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestID_LessThan != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestID_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestID_GreaterThan != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestID_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestID_IsIn != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestID_IsNotIn != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestName1 != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestName1_NotEqual != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestName1_StartsWith != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestName1_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestName1_EndsWith != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestName1_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestName1_Contains != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestName1_DoesNotContain != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName1_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestName1_IsIn != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestName1_IsNotIn != null)
+				{
+					columnNames.Add("test_name1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestName2 != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestName2_NotEqual != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestName2_StartsWith != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestName2_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestName2_EndsWith != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestName2_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestName2_Contains != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestName2_DoesNotContain != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.TestName2_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestName2_IsNull != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestName2_IsNotNull != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestName2_IsIn != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestName2_IsNotIn != null)
+				{
+					columnNames.Add("test_name2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Varchar) { Value = fm.TestName2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestDate1 != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestDate1_NotEqual != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestDate1_LessThan != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestDate1_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestDate1_GreaterThan != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestDate1_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate1_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestDate1_IsIn != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestDate1_IsNotIn != null)
+				{
+					columnNames.Add("test_date1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestDate2 != null)
+				{
+					columnNames.Add("test_date2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestDate2_NotEqual != null)
+				{
+					columnNames.Add("test_date2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = fm.TestDate2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestDate2_IsNull != null)
+				{
+					columnNames.Add("test_date2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestDate2_IsNotNull != null)
+				{
+					columnNames.Add("test_date2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestDate2_IsIn != null)
+				{
+					columnNames.Add("test_date2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestDate2_IsNotIn != null)
+				{
+					columnNames.Add("test_date2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Date) { Value = fm.TestDate2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestTimestamp1 != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestTimestamp1_NotEqual != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestTimestamp1_LessThan != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestTimestamp1_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestTimestamp1_GreaterThan != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestTimestamp1_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestTimestamp1_IsIn != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestTimestamp1_IsNotIn != null)
+				{
+					columnNames.Add("test_timestamp1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestTimestamp2 != null)
+				{
+					columnNames.Add("test_timestamp2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestTimestamp2_NotEqual != null)
+				{
+					columnNames.Add("test_timestamp2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestTimestamp2_IsNull != null)
+				{
+					columnNames.Add("test_timestamp2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestTimestamp2_IsNotNull != null)
+				{
+					columnNames.Add("test_timestamp2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestTimestamp2_IsIn != null)
+				{
+					columnNames.Add("test_timestamp2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestTimestamp2_IsNotIn != null)
+				{
+					columnNames.Add("test_timestamp2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestTimestamp2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestBoolean1 != null)
+				{
+					columnNames.Add("test_boolean1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestBoolean1_NotEqual != null)
+				{
+					columnNames.Add("test_boolean1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestBoolean1_IsIn != null)
+				{
+					columnNames.Add("test_boolean1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestBoolean1_IsNotIn != null)
+				{
+					columnNames.Add("test_boolean1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestBoolean2 != null)
+				{
+					columnNames.Add("test_boolean2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestBoolean2_NotEqual != null)
+				{
+					columnNames.Add("test_boolean2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestBoolean2_IsNull != null)
+				{
+					columnNames.Add("test_boolean2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestBoolean2_IsNotNull != null)
+				{
+					columnNames.Add("test_boolean2");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestBoolean2_IsIn != null)
+				{
+					columnNames.Add("test_boolean2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestBoolean2_IsNotIn != null)
+				{
+					columnNames.Add("test_boolean2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Boolean) { Value = fm.TestBoolean2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestInteger1 != null)
+				{
+					columnNames.Add("test_integer1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestInteger1_NotEqual != null)
+				{
+					columnNames.Add("test_integer1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestInteger1_IsNull != null)
+				{
+					columnNames.Add("test_integer1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestInteger1_IsNotNull != null)
+				{
+					columnNames.Add("test_integer1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestInteger1_IsIn != null)
+				{
+					columnNames.Add("test_integer1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestInteger1_IsNotIn != null)
+				{
+					columnNames.Add("test_integer1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestInteger2 != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestInteger2_NotEqual != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestInteger2_LessThan != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestInteger2_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestInteger2_GreaterThan != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestInteger2_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestInteger2_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestInteger2_IsIn != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestInteger2_IsNotIn != null)
+				{
+					columnNames.Add("test_integer2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestInteger2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestBigint1 != null)
+				{
+					columnNames.Add("test_bigint1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestBigint1_NotEqual != null)
+				{
+					columnNames.Add("test_bigint1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestBigint1_IsNull != null)
+				{
+					columnNames.Add("test_bigint1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestBigint1_IsNotNull != null)
+				{
+					columnNames.Add("test_bigint1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestBigint1_IsIn != null)
+				{
+					columnNames.Add("test_bigint1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestBigint1_IsNotIn != null)
+				{
+					columnNames.Add("test_bigint1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestBigint2 != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestBigint2_NotEqual != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestBigint2_LessThan != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestBigint2_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestBigint2_GreaterThan != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestBigint2_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = fm.TestBigint2_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestBigint2_IsIn != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestBigint2_IsNotIn != null)
+				{
+					columnNames.Add("test_bigint2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Bigint) { Value = fm.TestBigint2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestText1 != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestText1_NotEqual != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestText1_StartsWith != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestText1_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestText1_EndsWith != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestText1_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestText1_Contains != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestText1_DoesNotContain != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText1_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestText1_IsNull != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestText1_IsNotNull != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestText1_IsIn != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestText1_IsNotIn != null)
+				{
+					columnNames.Add("test_text1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestText2 != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestText2_NotEqual != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestText2_StartsWith != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestText2_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestText2_EndsWith != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestText2_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestText2_Contains != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestText2_DoesNotContain != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestText2_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestText2_IsIn != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestText2_IsNotIn != null)
+				{
+					columnNames.Add("test_text2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestText2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestReal1 != null)
+				{
+					columnNames.Add("test_real1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestReal1_NotEqual != null)
+				{
+					columnNames.Add("test_real1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestReal1_IsNull != null)
+				{
+					columnNames.Add("test_real1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestReal1_IsNotNull != null)
+				{
+					columnNames.Add("test_real1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestReal1_IsIn != null)
+				{
+					columnNames.Add("test_real1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestReal1_IsNotIn != null)
+				{
+					columnNames.Add("test_real1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestReal2 != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestReal2_NotEqual != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestReal2_LessThan != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestReal2_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestReal2_GreaterThan != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestReal2_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = fm.TestReal2_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestReal2_IsIn != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestReal2_IsNotIn != null)
+				{
+					columnNames.Add("test_real2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Real) { Value = fm.TestReal2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestDouble1 != null)
+				{
+					columnNames.Add("test_double1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestDouble1_NotEqual != null)
+				{
+					columnNames.Add("test_double1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestDouble1_IsNull != null)
+				{
+					columnNames.Add("test_double1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestDouble1_IsNotNull != null)
+				{
+					columnNames.Add("test_double1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestDouble1_IsIn != null)
+				{
+					columnNames.Add("test_double1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestDouble1_IsNotIn != null)
+				{
+					columnNames.Add("test_double1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestDouble2 != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestDouble2_NotEqual != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestDouble2_LessThan != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestDouble2_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestDouble2_GreaterThan != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestDouble2_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = fm.TestDouble2_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestDouble2_IsIn != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestDouble2_IsNotIn != null)
+				{
+					columnNames.Add("test_double2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Double) { Value = fm.TestDouble2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestChar1 != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestChar1_NotEqual != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestChar1_StartsWith != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestChar1_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestChar1_EndsWith != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestChar1_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestChar1_Contains != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestChar1_DoesNotContain != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar1_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestChar1_IsNull != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNull);
+				}
+
+				if(fm.TestChar1_IsNotNull != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(null);
+					operators.Add(QueryOperatorType.IsNotNull);
+				}
+
+				if(fm.TestChar1_IsIn != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestChar1_IsNotIn != null)
+				{
+					columnNames.Add("test_char1");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar1_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestChar2 != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2 });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestChar2_NotEqual != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestChar2_StartsWith != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestChar2_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestChar2_EndsWith != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestChar2_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestChar2_Contains != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestChar2_DoesNotContain != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = fm.TestChar2_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestChar2_IsIn != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestChar2_IsNotIn != null)
+				{
+					columnNames.Add("test_char2");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Char) { Value = fm.TestChar2_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+
+				return (columnNames, columnParameters, operators);
+			};			
+			
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
 				{typeof(Test1Poco), Test1PocoMetadata},
