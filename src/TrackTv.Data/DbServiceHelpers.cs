@@ -138,14 +138,20 @@
             });
         }
 
-        public static Func<TPoco, NpgsqlParameter[]> GenerateParameters<TPoco>()
+        public static Func<TPoco, NpgsqlParameter[]> GetGenerateParameters<TPoco>(TableMetadataModel<TPoco> metadata)
             where TPoco : IPoco<TPoco>
         {
             var pocoType = typeof(TPoco);
 
+            var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+
             return GenerateMethod<Func<TPoco, NpgsqlParameter[]>>(il =>
             {
-               
+                il.DeclareLocal(typeof(NpgsqlParameter[]));
+
+                il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
+                il.Emit(OpCodes.Newarr, pocoType);
+                il.Emit(OpCodes.Stloc_0);
 
                 il.Emit(OpCodes.Ret);
             });

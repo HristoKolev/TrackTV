@@ -4983,10 +4983,12 @@ namespace TrackTv.Data
 		
 		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
 
-		private static object InitLock = new object();
+		private static volatile object InitLock = new object();
 
-		private static bool Initialized = false;
+		private static bool Initialized;
 
+        // ReSharper disable once FunctionComplexityOverflow
+        // ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
 			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
@@ -5274,7 +5276,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			ApiChangeTypePocoMetadata = new TableMetadataModel<ApiChangeTypePoco>
 			{
@@ -5356,7 +5358,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			ApiChangePocoMetadata = new TableMetadataModel<ApiChangePoco>
 			{
@@ -5624,7 +5626,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			ApiResponsePocoMetadata = new TableMetadataModel<ApiResponsePoco>
 			{
@@ -5799,7 +5801,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			EpisodePocoMetadata = new TableMetadataModel<EpisodePoco>
 			{
@@ -6129,7 +6131,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			GenrePocoMetadata = new TableMetadataModel<GenrePoco>
 			{
@@ -6211,7 +6213,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			NetworkPocoMetadata = new TableMetadataModel<NetworkPoco>
 			{
@@ -6293,7 +6295,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			ProfilePocoMetadata = new TableMetadataModel<ProfilePoco>
 			{
@@ -6375,7 +6377,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			RolePocoMetadata = new TableMetadataModel<RolePoco>
 			{
@@ -6519,7 +6521,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			SettingPocoMetadata = new TableMetadataModel<SettingPoco>
 			{
@@ -6632,7 +6634,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			ShowPocoMetadata = new TableMetadataModel<ShowPoco>
 			{
@@ -7024,7 +7026,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			ShowGenrePocoMetadata = new TableMetadataModel<ShowGenrePoco>
 			{
@@ -7137,7 +7139,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			SubscriptionPocoMetadata = new TableMetadataModel<SubscriptionPoco>
 			{
@@ -7250,7 +7252,7 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
 			UserPocoMetadata = new TableMetadataModel<UserPoco>
 			{
@@ -7425,9 +7427,8 @@ namespace TrackTv.Data
 						TableSchema = "public",
 					},
 				}
-			};		
+			};
 			
-
 			ActorPocoMetadata.GenerateParameters = (instance) => 
 			{
 				return new NpgsqlParameter[] 
@@ -12306,7 +12307,6 @@ namespace TrackTv.Data
 				return (columnNames, columnParameters, operators);
 			};			
 			
-
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
 				{typeof(ActorPoco), ActorPocoMetadata},
