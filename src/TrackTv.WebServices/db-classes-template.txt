@@ -260,7 +260,18 @@ namespace {{model.Namespace}}
 			
 			{{/each}}
 			{{#each model.tables}}
-			{{ClassName}}PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters({{ClassName}}PocoMetadata);
+			{{ClassName}}PocoMetadata.GenerateParameters = (instance) => 
+            {
+                return new NpgsqlParameter[] 
+                {
+                    {{#each columns}}
+                    {{#unless IsPrimaryKey}}
+                    new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = instance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} },
+                    {{/unless}}
+                    {{/each}}
+                };
+            };
+
 
 			{{ClassName}}PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{

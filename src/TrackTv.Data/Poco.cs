@@ -5117,7 +5117,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ActorPoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ActorPoco, ActorCM>(),
 				Setters = DbServiceHelpers.GetSetters<ActorPoco>(TableToPropertyMap["actors"]),
-				Getters = DbServiceHelpers.GetGetters<ActorPoco>(TableToPropertyMap["actors"]),				
+				Getters = DbServiceHelpers.GetGetters<ActorPoco>(TableToPropertyMap["actors"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5292,7 +5292,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ApiChangeTypePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ApiChangeTypePoco, ApiChangeTypeCM>(),
 				Setters = DbServiceHelpers.GetSetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]),
-				Getters = DbServiceHelpers.GetGetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]),				
+				Getters = DbServiceHelpers.GetGetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5374,7 +5374,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ApiChangePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ApiChangePoco, ApiChangeCM>(),
 				Setters = DbServiceHelpers.GetSetters<ApiChangePoco>(TableToPropertyMap["api_changes"]),
-				Getters = DbServiceHelpers.GetGetters<ApiChangePoco>(TableToPropertyMap["api_changes"]),				
+				Getters = DbServiceHelpers.GetGetters<ApiChangePoco>(TableToPropertyMap["api_changes"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5642,7 +5642,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ApiResponsePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ApiResponsePoco, ApiResponseCM>(),
 				Setters = DbServiceHelpers.GetSetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]),
-				Getters = DbServiceHelpers.GetGetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]),				
+				Getters = DbServiceHelpers.GetGetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5817,7 +5817,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<EpisodePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<EpisodePoco, EpisodeCM>(),
 				Setters = DbServiceHelpers.GetSetters<EpisodePoco>(TableToPropertyMap["episodes"]),
-				Getters = DbServiceHelpers.GetGetters<EpisodePoco>(TableToPropertyMap["episodes"]),				
+				Getters = DbServiceHelpers.GetGetters<EpisodePoco>(TableToPropertyMap["episodes"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6147,7 +6147,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<GenrePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<GenrePoco, GenreCM>(),
 				Setters = DbServiceHelpers.GetSetters<GenrePoco>(TableToPropertyMap["genres"]),
-				Getters = DbServiceHelpers.GetGetters<GenrePoco>(TableToPropertyMap["genres"]),				
+				Getters = DbServiceHelpers.GetGetters<GenrePoco>(TableToPropertyMap["genres"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6229,7 +6229,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<NetworkPoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<NetworkPoco, NetworkCM>(),
 				Setters = DbServiceHelpers.GetSetters<NetworkPoco>(TableToPropertyMap["networks"]),
-				Getters = DbServiceHelpers.GetGetters<NetworkPoco>(TableToPropertyMap["networks"]),				
+				Getters = DbServiceHelpers.GetGetters<NetworkPoco>(TableToPropertyMap["networks"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6311,7 +6311,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ProfilePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ProfilePoco, ProfileCM>(),
 				Setters = DbServiceHelpers.GetSetters<ProfilePoco>(TableToPropertyMap["profiles"]),
-				Getters = DbServiceHelpers.GetGetters<ProfilePoco>(TableToPropertyMap["profiles"]),				
+				Getters = DbServiceHelpers.GetGetters<ProfilePoco>(TableToPropertyMap["profiles"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6393,7 +6393,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<RolePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<RolePoco, RoleCM>(),
 				Setters = DbServiceHelpers.GetSetters<RolePoco>(TableToPropertyMap["roles"]),
-				Getters = DbServiceHelpers.GetGetters<RolePoco>(TableToPropertyMap["roles"]),				
+				Getters = DbServiceHelpers.GetGetters<RolePoco>(TableToPropertyMap["roles"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6537,7 +6537,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<SettingPoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<SettingPoco, SettingCM>(),
 				Setters = DbServiceHelpers.GetSetters<SettingPoco>(TableToPropertyMap["settings"]),
-				Getters = DbServiceHelpers.GetGetters<SettingPoco>(TableToPropertyMap["settings"]),				
+				Getters = DbServiceHelpers.GetGetters<SettingPoco>(TableToPropertyMap["settings"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6650,7 +6650,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ShowPoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ShowPoco, ShowCM>(),
 				Setters = DbServiceHelpers.GetSetters<ShowPoco>(TableToPropertyMap["shows"]),
-				Getters = DbServiceHelpers.GetGetters<ShowPoco>(TableToPropertyMap["shows"]),				
+				Getters = DbServiceHelpers.GetGetters<ShowPoco>(TableToPropertyMap["shows"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7042,7 +7042,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<ShowGenrePoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<ShowGenrePoco, ShowGenreCM>(),
 				Setters = DbServiceHelpers.GetSetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]),
-				Getters = DbServiceHelpers.GetGetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]),				
+				Getters = DbServiceHelpers.GetGetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7155,7 +7155,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<SubscriptionPoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<SubscriptionPoco, SubscriptionCM>(),
 				Setters = DbServiceHelpers.GetSetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]),
-				Getters = DbServiceHelpers.GetGetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]),				
+				Getters = DbServiceHelpers.GetGetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7268,7 +7268,7 @@ namespace TrackTv.Data
 				Clone = DbServiceHelpers.GetClone<UserPoco>(),
 				MapToCM = DbServiceHelpers.GetMapToCM<UserPoco, UserCM>(),
 				Setters = DbServiceHelpers.GetSetters<UserPoco>(TableToPropertyMap["users"]),
-				Getters = DbServiceHelpers.GetGetters<UserPoco>(TableToPropertyMap["users"]),				
+				Getters = DbServiceHelpers.GetGetters<UserPoco>(TableToPropertyMap["users"]),
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7430,15 +7430,16 @@ namespace TrackTv.Data
 			};
 			
 			ActorPocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorImage ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorName ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorImage ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ActorName ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
+                };
+            };
+
 
 			ActorPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -7822,12 +7823,13 @@ namespace TrackTv.Data
 			};			
 			
 			ApiChangeTypePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ApiChangeTypeName ?? (object)DBNull.Value },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ApiChangeTypeName ?? (object)DBNull.Value },
+                };
+            };
+
 
 			ApiChangeTypePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -7991,18 +7993,19 @@ namespace TrackTv.Data
 			};			
 			
 			ApiChangePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeThetvdbid },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeFailCount },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeCreatedDate },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeLastFailedTime ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeThetvdbLastUpdated },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeAttachedSeriesID ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeType },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeThetvdbid },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeFailCount },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeCreatedDate },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeLastFailedTime ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiChangeThetvdbLastUpdated },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeAttachedSeriesID ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiChangeType },
+                };
+            };
+
 
 			ApiChangePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -8508,15 +8511,16 @@ namespace TrackTv.Data
 			};			
 			
 			ApiResponsePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseEpisodeThetvdbid ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseShowThetvdbid ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = instance.ApiResponseBody ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiResponseLastUpdated },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseEpisodeThetvdbid ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ApiResponseShowThetvdbid ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = instance.ApiResponseBody ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.ApiResponseLastUpdated },
+                };
+            };
+
 
 			ApiResponsePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -8844,20 +8848,21 @@ namespace TrackTv.Data
 			};			
 			
 			EpisodePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.EpisodeDescription ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.EpisodeNumber },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.EpisodeTitle ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.SeasonNumber },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.EpisodeDescription ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.EpisodeNumber },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.EpisodeTitle ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.SeasonNumber },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
+                };
+            };
+
 
 			EpisodePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -9589,12 +9594,13 @@ namespace TrackTv.Data
 			};			
 			
 			GenrePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.GenreName ?? (object)DBNull.Value },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.GenreName ?? (object)DBNull.Value },
+                };
+            };
+
 
 			GenrePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -9758,12 +9764,13 @@ namespace TrackTv.Data
 			};			
 			
 			NetworkPocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.NetworkName ?? (object)DBNull.Value },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.NetworkName ?? (object)DBNull.Value },
+                };
+            };
+
 
 			NetworkPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -9927,12 +9934,13 @@ namespace TrackTv.Data
 			};			
 			
 			ProfilePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ProfileName ?? (object)DBNull.Value },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ProfileName ?? (object)DBNull.Value },
+                };
+            };
+
 
 			ProfilePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -10096,14 +10104,15 @@ namespace TrackTv.Data
 			};			
 			
 			RolePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ActorID },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.RoleName ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ActorID },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.RoleName ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
+                };
+            };
+
 
 			RolePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -10409,13 +10418,14 @@ namespace TrackTv.Data
 			};			
 			
 			SettingPocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingValue ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingName ?? (object)DBNull.Value },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingValue ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.SettingName ?? (object)DBNull.Value },
+                };
+            };
+
 
 			SettingPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -10657,22 +10667,23 @@ namespace TrackTv.Data
 			};			
 			
 			ShowPocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.AirDay ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.AirTime ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.NetworkID },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowBanner ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.ShowDescription ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowName ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowStatus },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.AirDay ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.AirTime ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.FirstAired ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Imdbid ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.LastUpdated },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.NetworkID },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowBanner ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.ShowDescription ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.ShowName ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowStatus },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.Thetvdbid },
+                };
+            };
+
 
 			ShowPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -11518,13 +11529,14 @@ namespace TrackTv.Data
 			};			
 			
 			ShowGenrePocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.GenreID },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.GenreID },
+                };
+            };
+
 
 			ShowGenrePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -11738,13 +11750,14 @@ namespace TrackTv.Data
 			};			
 			
 			SubscriptionPocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ShowID },
+                };
+            };
+
 
 			SubscriptionPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
@@ -11958,15 +11971,16 @@ namespace TrackTv.Data
 			};			
 			
 			UserPocoMetadata.GenerateParameters = (instance) => 
-			{
-				return new NpgsqlParameter[] 
-				{
-					new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.IsAdmin },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Username ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Password ?? (object)DBNull.Value },
-					new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID },
-				};
-			};
+            {
+                return new NpgsqlParameter[] 
+                {
+                    new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.IsAdmin },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Username ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.Password ?? (object)DBNull.Value },
+                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.ProfileID },
+                };
+            };
+
 
 			UserPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{
