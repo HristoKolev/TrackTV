@@ -2062,33 +2062,7 @@ namespace TrackTv.Data.Tests
 				}
 			};
 			
-			Test1PocoMetadata.GenerateParameters = (instance) => 
-            {
-                return new NpgsqlParameter[] 
-                {
-                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = instance.TestName2 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate1 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = instance.TestDate2 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp1 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = instance.TestTimestamp2 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean1 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = instance.TestBoolean2 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = instance.TestInteger2 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = instance.TestBigint2 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = instance.TestText2 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = instance.TestReal2 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = instance.TestDouble2 },
-                    new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar1 ?? (object)DBNull.Value },
-                    new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = instance.TestChar2 ?? (object)DBNull.Value },
-                };
-            };
-
+			Test1PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test1PocoMetadata);
 
 			Test1PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
 			{

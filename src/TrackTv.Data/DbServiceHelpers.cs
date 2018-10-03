@@ -153,6 +153,23 @@
                 il.Emit(OpCodes.Newarr, pocoType);
                 il.Emit(OpCodes.Stloc_0);
 
+                int i = 0;
+
+                foreach (var column in metadata.Columns)
+                {
+                    il.Emit(OpCodes.Ldloc_0);
+                    il.Emit(OpCodes.Ldc_I4, i);
+
+                    var property = pocoType.GetProperty(column.PropertyName);
+
+                    il.Emit(OpCodes.Ldarg_0);
+                    il.Emit(OpCodes.Call, property.GetMethod);
+
+
+
+                    i++;
+                }
+
                 il.Emit(OpCodes.Ret);
             });
         }
