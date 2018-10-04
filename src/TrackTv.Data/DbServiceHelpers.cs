@@ -7,6 +7,8 @@
 
     using Npgsql;
 
+    using NpgsqlTypes;
+
     public class DbServiceHelpers
     {
         public static T GenerateMethod<T>(Action<ILGenerator> generate)
@@ -142,6 +144,8 @@
             where TPoco : IPoco<TPoco>
         {
             var pocoType = typeof(TPoco);
+            var parameterType = typeof(NpgsqlParameter);
+            var parameterValueProperty = parameterType.GetProperty("Value");
 
             var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
 
@@ -150,25 +154,32 @@
                 il.DeclareLocal(typeof(NpgsqlParameter[]));
 
                 il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
-                il.Emit(OpCodes.Newarr, pocoType);
+                il.Emit(OpCodes.Newarr, parameterType);
                 il.Emit(OpCodes.Stloc_0);
 
                 int i = 0;
 
-                foreach (var column in metadata.Columns)
+                foreach (var column in nonPrimaryKeyColumns)
                 {
                     il.Emit(OpCodes.Ldloc_0);
-                    il.Emit(OpCodes.Ldc_I4, i);
+                    il.Emit(OpCodes.Ldc_I4, i++);
+
+                    il.Emit(OpCodes.Ldnull);
+                    il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
+                    il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new [] {typeof(string), typeof(NpgsqlDbType)}));
 
                     var property = pocoType.GetProperty(column.PropertyName);
 
+                    il.Emit(OpCodes.Dup);
                     il.Emit(OpCodes.Ldarg_0);
                     il.Emit(OpCodes.Call, property.GetMethod);
 
+                    il.Emit(OpCodes.Call, parameterValueProperty.SetMethod);
 
-
-                    i++;
+                    il.Emit(OpCodes.Stelem, parameterType);
                 }
+
+                il.Emit(OpCodes.Ldloc_0);
 
                 il.Emit(OpCodes.Ret);
             });
