@@ -72,6 +72,7 @@
                 recordsFirstRun = false;
 
                 var parameters = metadata.GenerateParameters(record);
+
                 allParameters.AddRange(parameters);
                 
                 for (int i = 0; i < parameters.Length; i++)

@@ -146,6 +146,7 @@
             var pocoType = typeof(TPoco);
             var parameterType = typeof(NpgsqlParameter);
             var parameterValueProperty = parameterType.GetProperty("Value");
+            var dbNullValue = typeof(DBNull).GetField("Value");
 
             var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
 
@@ -153,6 +154,7 @@
             {
                 il.DeclareLocal(typeof(NpgsqlParameter[]));
 
+                // create the array and save it in local0
                 il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
                 il.Emit(OpCodes.Newarr, parameterType);
                 il.Emit(OpCodes.Stloc_0);
@@ -161,18 +163,41 @@
 
                 foreach (var column in nonPrimaryKeyColumns)
                 {
+                    // load the array and the index
                     il.Emit(OpCodes.Ldloc_0);
                     il.Emit(OpCodes.Ldc_I4, i++);
 
+                    // create the new parameter
                     il.Emit(OpCodes.Ldnull);
                     il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                    il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new [] {typeof(string), typeof(NpgsqlDbType)}));
+                    il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
 
+                    // set the param.Value property to the property value
                     var property = pocoType.GetProperty(column.PropertyName);
 
                     il.Emit(OpCodes.Dup);
                     il.Emit(OpCodes.Ldarg_0);
                     il.Emit(OpCodes.Call, property.GetMethod);
+
+                    if (column.ClrType.IsValueType)
+                    {
+                        il.Emit(OpCodes.Box, column.ClrType);
+                    }
+                    else
+                    {
+                        // if its null then set it to dbnull
+                        var endif = il.DefineLabel();
+
+                        il.Emit(OpCodes.Dup);
+                        il.Emit(OpCodes.Ldnull);
+                        il.Emit(OpCodes.Ceq);
+                        il.Emit(OpCodes.Brfalse_S, endif);
+
+                        il.Emit(OpCodes.Pop);
+                        il.Emit(OpCodes.Ldsfld, dbNullValue);
+
+                        il.MarkLabel(endif);
+                    }
 
                     il.Emit(OpCodes.Call, parameterValueProperty.SetMethod);
 

@@ -189,28 +189,35 @@ namespace TrackTv.Data.Tests
 			Assert.Equal(poco.TestChar2, newObj.TestChar2);
         }
 
-		//[Theory]
-  //      [ClassData(typeof(GeneratedData<Test1Poco>))]
-		//// ReSharper disable once CyclomaticComplexity
-  //      public void GenerateParameters(Test1Poco poco)
-  //      {
-  //          var getParameters = TestDbPocos.Test1PocoMetadata.GenerateParameters;
+        [Theory]
+        [ClassData(typeof(GeneratedData<Test1Poco>))]
+        // ReSharper disable once CyclomaticComplexity
+        public void GenerateParameters(Test1Poco poco)
+        {
+            var getParameters = TestDbPocos.Test1PocoMetadata.GenerateParameters;
 
-		//	var parameters = getParameters(poco);
+            var parameters = getParameters(poco);
 
-  //          var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-  //          var getters = TestDbPocos.Test1PocoMetadata.Getters;
+            var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbPocos.Test1PocoMetadata.Getters;
 
-  //          for (int i = 0; i < columns.Length; i++)
-  //          {
-  //              var column = columns[i];
-  //              var getter = getters[column.ColumnName];
+            for (int i = 0; i < columns.Length; i++)
+            {
+                var column = columns[i];
+                var getter = getters[column.ColumnName];
 
-  //              var parameter = parameters[i];
+                var parameter = parameters[i];
 
-  //              Assert.Equal(getter(poco), parameter.Value == DBNull.Value ? null : parameter.Value);
-  //          }
-  //      }		
+                if (column.IsNullable)
+                {
+                    Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
+                }
+                else
+                {
+                    Assert.Equal(getter(poco), parameter.Value);
+                }
+            }
+        }
     }
 
 }
