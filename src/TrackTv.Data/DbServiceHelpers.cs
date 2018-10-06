@@ -183,24 +183,23 @@
                     {
                         il.Emit(OpCodes.Box, column.ClrType);
                     }
-                    else
-                    {
-                        // if its null then set it to dbnull
-                        var endif = il.DefineLabel();
+                  
+                    // if its null then set it to dbnull
+                    var endif = il.DefineLabel();
 
-                        il.Emit(OpCodes.Dup);
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ceq);
-                        il.Emit(OpCodes.Brfalse_S, endif);
+                    il.Emit(OpCodes.Dup);
 
-                        il.Emit(OpCodes.Pop);
-                        il.Emit(OpCodes.Ldsfld, dbNullValue);
+                    il.Emit(OpCodes.Brtrue_S, endif);
 
-                        il.MarkLabel(endif);
-                    }
+                    il.Emit(OpCodes.Pop);
+                    il.Emit(OpCodes.Ldsfld, dbNullValue);
 
+                    il.MarkLabel(endif);
+
+                    // set the Value property of the NpgsqlParameter
                     il.Emit(OpCodes.Call, parameterValueProperty.SetMethod);
 
+                    // set the parameter to the appropriate index
                     il.Emit(OpCodes.Stelem, parameterType);
                 }
 

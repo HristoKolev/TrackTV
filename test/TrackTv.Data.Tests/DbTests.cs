@@ -208,14 +208,7 @@ namespace TrackTv.Data.Tests
 
                 var parameter = parameters[i];
 
-                if (column.IsNullable)
-                {
-                    Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
-                }
-                else
-                {
-                    Assert.Equal(getter(poco), parameter.Value);
-                }
+                Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
             }
         }
     }
