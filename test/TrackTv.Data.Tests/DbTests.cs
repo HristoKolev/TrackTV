@@ -189,14 +189,14 @@ namespace TrackTv.Data.Tests
 			Assert.Equal(poco.TestChar2, newObj.TestChar2);
         }
 
-        [Theory]
+		[Theory]
         [ClassData(typeof(GeneratedData<Test1Poco>))]
-        // ReSharper disable once CyclomaticComplexity
+		// ReSharper disable once CyclomaticComplexity
         public void GenerateParameters(Test1Poco poco)
         {
             var getParameters = TestDbPocos.Test1PocoMetadata.GenerateParameters;
 
-            var parameters = getParameters(poco);
+			var parameters = getParameters(poco);
 
             var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
             var getters = TestDbPocos.Test1PocoMetadata.Getters;
@@ -208,7 +208,79 @@ namespace TrackTv.Data.Tests
 
                 var parameter = parameters[i];
 
+				Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
+            }
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedData<Test1Poco>))]
+        // ReSharper disable once CyclomaticComplexity
+        public void GetAllColumns(Test1Poco poco)
+        {
+            var getAllColumns = TestDbPocos.Test1PocoMetadata.GetAllColumns;
+
+            var (columnNames, parameters) = getAllColumns(poco);
+
+            var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbPocos.Test1PocoMetadata.Getters;
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                var column = columns[i];
+                var getter = getters[column.ColumnName];
+                var parameter = parameters[i];
+
+                Assert.Equal(columnNames[i], column.ColumnName);
+
                 Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
+            }
+        }
+        
+        [Theory]
+        [ClassData(typeof(GeneratedBulkData<Test1Poco>))]
+        public void GetColumnChanges(List<Test1Poco> pocos)
+        {
+            var getColumnChanges = TestDbPocos.Test1PocoMetadata.GetColumnChanges;
+
+            var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbPocos.Test1PocoMetadata.Getters;
+
+            var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
+
+            foreach (var (instance1, instance2) in pocos.Zip(Enumerable.Reverse(pocos), (x, y) => (x, y)))
+            {
+                var (columnNames, parameters) = getColumnChanges(instance1, instance2);
+
+                Assert.Equal(parameters.Count, columnNames.Count);
+                Assert.True(columnNames.Count <= columns.Length);
+
+                foreach (string columnName in columnNames)
+                {
+                    Assert.Contains(columnName, allColumnNames);
+                }
+
+                foreach (var column in columns)
+                {
+                    var getter = getters[column.ColumnName];
+
+                    var value1 = getter(instance1);
+                    var value2 = getter(instance2);
+
+                    if (this.StupidEquals(value1, value2))
+                    {
+                        Assert.DoesNotContain(column.ColumnName, columnNames);
+                    }
+                    else
+                    {
+                        Assert.Contains(column.ColumnName, columnNames);
+                        int index = columnNames.IndexOf(column.ColumnName);
+                        var parameter = parameters[index];
+
+                        Assert.Equal(column.NpgsDataType, parameter.NpgsqlDbType);
+
+                        Assert.Equal(parameter.Value, value2);
+                    }
+                }
             }
         }
     }

@@ -115,9 +115,33 @@
 
                 var parameter = parameters[i];
 
-                Assert.Equal(getter(poco), parameter.Value == DBNull.Value ? null : parameter.Value);
+				Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
             }
-        }		
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
+        // ReSharper disable once CyclomaticComplexity
+        public void GetAllColumns({{ClassName}}Poco poco)
+        {
+            var getAllColumns = TestDbPocos.{{ClassName}}PocoMetadata.GetAllColumns;
+
+            var (columnNames, parameters) = getAllColumns(poco);
+
+            var columns = TestDbPocos.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbPocos.{{ClassName}}PocoMetadata.Getters;
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                var column = columns[i];
+                var getter = getters[column.ColumnName];
+                var parameter = parameters[i];
+
+                Assert.Equal(columnNames[i], column.ColumnName);
+
+                Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
+            }
+        }
     }
 
 	{{/each}}

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -194,7 +195,7 @@
             sqlBuilder.Append(metadata.TableName);
             sqlBuilder.Append("\" (");
 
-            for (int i = 0; i < columnNames.Count; i++)
+            for (int i = 0; i < columnNames.Length; i++)
             {
                 if (i != 0)
                 {
@@ -208,7 +209,7 @@
 
             sqlBuilder.Append(")\n VALUES (");
 
-            for (int i = 0; i < parameters.Count; i++)
+            for (int i = 0; i < parameters.Length; i++)
             {
                 if (i != 0)
                 {
@@ -269,7 +270,7 @@
 
             var (columnNames, parameters) = metadata.GetAllColumns(poco);
 
-            if (columnNames.Count == 0)
+            if (columnNames.Length == 0)
             {
                 return Task.FromResult(0); // nothing to update?
             }
@@ -282,7 +283,7 @@
             sqlBuilder.Append(metadata.TableName);
             sqlBuilder.Append("\" SET ");
 
-            for (int i = 0; i < columnNames.Count; i++)
+            for (int i = 0; i < columnNames.Length; i++)
             {
                 string columnName = columnNames[i];
                 var parameter = parameters[i];
@@ -294,7 +295,7 @@
                 sqlBuilder.Append("\" = ");
                 sqlBuilder.Append(paramName);
 
-                if (i != columnNames.Count - 1)
+                if (i != columnNames.Length - 1)
                 {
                     sqlBuilder.Append(',');
                 }
@@ -306,11 +307,14 @@
             sqlBuilder.Append(metadata.PrimaryKeyColumnName);
             sqlBuilder.Append("\" = @pk;");
 
-            parameters.Add(this.Parameter("pk", pk));
-
             string sql = sqlBuilder.ToString();
 
-            return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
+            var allParameters = parameters.Concat(new[]
+            {
+                this.Parameter("pk", pk)
+            });
+
+            return this.ExecuteNonQueryInternal(sql, allParameters, cancellationToken);
         }
 
         /// <summary>

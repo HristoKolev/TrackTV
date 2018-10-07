@@ -191,7 +191,7 @@
         /// </summary>
         public Func<T, NpgsqlParameter[]> GenerateParameters { get; set; }
 
-        public Func<T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetAllColumns { get; set; }
+        public Func<T, ValueTuple<string[], NpgsqlParameter[]>> GetAllColumns { get; set; }
 
         /// <summary>
         /// Generates the changes between 2 instances of the poco class.
