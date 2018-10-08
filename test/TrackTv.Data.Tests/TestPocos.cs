@@ -323,6 +323,67 @@ namespace TrackTv.Data.Tests
 		}
     }
 
+    /// <summary>
+    /// <para>Table name: 'test2'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    [Table(Schema="public", Name = "test2")]
+    public class Test2Poco : IPoco<Test2Poco>
+    {
+        /// <summary>
+		/// <para>Column name: 'test_id'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>Primary key of table: 'test2'.</para>
+		/// <para>Primary key constraint name: 'test2_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+		[PrimaryKey, Identity]
+		[Column(Name = "test_id", DataType = DataType.Int32)]
+        public int TestID { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'test_name'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>
+		[NotNull]
+		[Column(Name = "test_name", DataType = DataType.Text)]
+        public string TestName { get; set; }
+
+        /// <summary>
+		/// <para>Column name: 'test_date'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+		[NotNull]
+		[Column(Name = "test_date", DataType = DataType.DateTime2)]
+        public DateTime TestDate { get; set; }
+
+		TableMetadataModel<Test2Poco> IPoco<Test2Poco>.Metadata => TestDbPocos.Test2PocoMetadata;
+
+		public Test2BM ToBm()
+		{
+			return new Test2BM
+			{
+				TestID = this.TestID,
+				TestName = this.TestName,
+				TestDate = this.TestDate,
+			};
+		}
+    }
+
 
     /// <summary>
     /// <para>Table name: 'test1'.</para>
@@ -562,6 +623,49 @@ namespace TrackTv.Data.Tests
 		/// <para>linq2db data type: 'DataType.NChar'.</para>
         /// </summary>
         public string TestChar2 { get; set; }
+
+    }
+    
+    /// <summary>
+    /// <para>Table name: 'test2'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class Test2CM : ICatalogModel<Test2Poco>
+    {
+		/// <summary>
+		/// <para>Column name: 'test_id'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>Primary key of table: 'test2'.</para>
+		/// <para>Primary key constraint name: 'test2_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int TestID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'test_name'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>
+        public string TestName { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'test_date'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime TestDate { get; set; }
 
     }
     
@@ -1078,6 +1182,92 @@ namespace TrackTv.Data.Tests
 
     }
     
+    /// <summary>
+    /// <para>Table name: 'test2'.</para>
+	/// <para>Table schema: 'public'.</para>
+    /// </summary>
+    public class Test2FM : IFilterModel<Test2Poco>
+    {
+		[FilterOperator(QueryOperatorType.Equal, "TestID", NpgsqlDbType.Integer)]
+        public int? TestID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "TestID", NpgsqlDbType.Integer)]
+        public int? TestID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "TestID", NpgsqlDbType.Integer)]
+        public int? TestID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestID", NpgsqlDbType.Integer)]
+        public int? TestID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestID", NpgsqlDbType.Integer)]
+        public int? TestID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestID", NpgsqlDbType.Integer)]
+        public int? TestID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "TestID", NpgsqlDbType.Integer)]
+		public int[] TestID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestID", NpgsqlDbType.Integer)]
+		public int[] TestID_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "TestName", NpgsqlDbType.Text)]
+        public string TestName { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "TestName", NpgsqlDbType.Text)]
+        public string TestName_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.StartsWith, "TestName", NpgsqlDbType.Text)]
+        public string TestName_StartsWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName", NpgsqlDbType.Text)]
+        public string TestName_DoesNotStartWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.EndsWith, "TestName", NpgsqlDbType.Text)]
+        public string TestName_EndsWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName", NpgsqlDbType.Text)]
+        public string TestName_DoesNotEndWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.Contains, "TestName", NpgsqlDbType.Text)]
+        public string TestName_Contains { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName", NpgsqlDbType.Text)]
+        public string TestName_DoesNotContain { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "TestName", NpgsqlDbType.Text)]
+		public string[] TestName_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestName", NpgsqlDbType.Text)]
+		public string[] TestName_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "TestDate", NpgsqlDbType.Timestamp)]
+        public DateTime? TestDate { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "TestDate", NpgsqlDbType.Timestamp)]
+        public DateTime? TestDate_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "TestDate", NpgsqlDbType.Timestamp)]
+        public DateTime? TestDate_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDate", NpgsqlDbType.Timestamp)]
+        public DateTime? TestDate_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestDate", NpgsqlDbType.Timestamp)]
+        public DateTime? TestDate_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDate", NpgsqlDbType.Timestamp)]
+        public DateTime? TestDate_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "TestDate", NpgsqlDbType.Timestamp)]
+		public DateTime[] TestDate_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate", NpgsqlDbType.Timestamp)]
+		public DateTime[] TestDate_IsNotIn { get; set; }
+
+    }
+    
 
     /// <summary>
     /// <para>Table name: 'test1'.</para>
@@ -1347,11 +1537,65 @@ namespace TrackTv.Data.Tests
 		}
 	}
     
+    /// <summary>
+    /// <para>Table name: 'test2'.</para>
+	/// <para>Table schema: 'public'.</para>  
+    /// </summary>
+    public partial class Test2BM : IBusinessModel<Test2Poco>
+    {
+		/// <summary>
+		/// <para>Column name: 'test_id'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>Primary key of table: 'test2'.</para>
+		/// <para>Primary key constraint name: 'test2_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+        /// </summary>
+        public int TestID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'test_name'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+        /// </summary>
+        public string TestName { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'test_date'.</para>
+		/// <para>Table name: 'test2'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'timestamp without time zone'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
+		/// <para>CLR type: 'DateTime'.</para>
+		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
+        /// </summary>
+        public DateTime TestDate { get; set; }
+
+		public Test2Poco ToPoco()
+		{
+			return new Test2Poco
+			{
+				TestID = this.TestID,
+				TestName = this.TestName,
+				TestDate = this.TestDate,
+			};
+		}
+	}
+    
     public class TestDbPocos : IDbPocos<TestDbPocos>
     {
 		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
 
         internal static TableMetadataModel<Test1Poco> Test1PocoMetadata;
+		
+        internal static TableMetadataModel<Test2Poco> Test2PocoMetadata;
 		
 		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
 
@@ -1388,6 +1632,12 @@ namespace TrackTv.Data.Tests
 					{"test_double2", "TestDouble2"},
 					{"test_char1", "TestChar1"},
 					{"test_char2", "TestChar2"},
+				}},
+				{"test2", new Dictionary<string, string>
+				{
+					{"test_id", "TestID"},
+					{"test_name", "TestName"},
+					{"test_date", "TestDate"},
 				}},
 			};
 
@@ -2057,6 +2307,119 @@ namespace TrackTv.Data.Tests
 						NpgsDataType = NpgsqlDbType.Char,
 						PropertyName = "TestChar2",
 						TableName = "test1",
+						TableSchema = "public",
+					},
+				}
+			};
+			
+			Test2PocoMetadata = new TableMetadataModel<Test2Poco>
+			{
+				ClassName = "Test2",
+				PluralClassName = "Test2",
+				PrimaryKeyColumnName = "test_id",
+				PrimaryKeyPropertyName = "TestID",
+				TableName = "test2",
+				TableSchema = "public",
+				GetPrimaryKey = (instance) => instance.TestID,
+				SetPrimaryKey = (instance, val) => instance.TestID = val,
+				IsNew = (instance) => instance.TestID == default,
+				Clone = DbServiceHelpers.GetClone<Test2Poco>(),
+				MapToCM = DbServiceHelpers.GetMapToCM<Test2Poco, Test2CM>(),
+				Setters = DbServiceHelpers.GetSetters<Test2Poco>(TableToPropertyMap["test2"]),
+				Getters = DbServiceHelpers.GetGetters<Test2Poco>(TableToPropertyMap["test2"]),
+				Columns = new List<ColumnMetadataModel>
+				{
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),						
+						PrimaryKeyConstraintName = "test2_pkey" == string.Empty ? null : "test2_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "TestID",
+						TableName = "test2",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_name",
+						DbDataType = "text",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Text",
+						Linq2dbDataType = DataType.Text,
+						NpgsDataTypeName = "NpgsqlDbType.Text",
+						NpgsDataType = NpgsqlDbType.Text,
+						PropertyName = "TestName",
+						TableName = "test2",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "DateTime",
+						ClrType = typeof(DateTime),
+						ClrNonNullableTypeName = "DateTime",
+						ClrNonNullableType = typeof(DateTime),
+						ClrNullableTypeName = "DateTime?",
+						ClrNullableType = typeof(DateTime?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "test_date",
+						DbDataType = "timestamp without time zone",
+						IsPrimaryKey = bool.Parse("False"),						
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.DateTime2",
+						Linq2dbDataType = DataType.DateTime2,
+						NpgsDataTypeName = "NpgsqlDbType.Timestamp",
+						NpgsDataType = NpgsqlDbType.Timestamp,
+						PropertyName = "TestDate",
+						TableName = "test2",
 						TableSchema = "public",
 					},
 				}
@@ -3255,9 +3618,209 @@ namespace TrackTv.Data.Tests
 				return (columnNames, columnParameters, operators);
 			};			
 			
+			Test2PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test2PocoMetadata);
+
+			Test2PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test2PocoMetadata);			
+
+			Test2PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test2PocoMetadata);
+
+			Test2PocoMetadata.ParseFM = (instance) => {
+				var columnNames = new List<string>();
+				var columnParameters = new List<NpgsqlParameter>();
+				var operators = new List<QueryOperatorType>();
+
+				var fm = instance as Test2FM;
+
+				if(fm.TestID != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestID_NotEqual != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestID_LessThan != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestID_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestID_GreaterThan != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestID_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.TestID_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestID_IsIn != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestID_IsNotIn != null)
+				{
+					columnNames.Add("test_id");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Integer) { Value = fm.TestID_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestName != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestName_NotEqual != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestName_StartsWith != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_StartsWith });
+					operators.Add(QueryOperatorType.StartsWith);
+				}		 
+
+				if(fm.TestName_DoesNotStartWith != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_DoesNotStartWith });
+					operators.Add(QueryOperatorType.DoesNotStartWith);
+				}		 
+
+				if(fm.TestName_EndsWith != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_EndsWith });
+					operators.Add(QueryOperatorType.EndsWith);
+				}		 
+
+				if(fm.TestName_DoesNotEndWith != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_DoesNotEndWith });
+					operators.Add(QueryOperatorType.DoesNotEndWith);
+				}		 
+
+				if(fm.TestName_Contains != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_Contains });
+					operators.Add(QueryOperatorType.Contains);
+				}		 
+
+				if(fm.TestName_DoesNotContain != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.TestName_DoesNotContain });
+					operators.Add(QueryOperatorType.DoesNotContain);
+				}		 
+
+				if(fm.TestName_IsIn != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestName_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestName_IsNotIn != null)
+				{
+					columnNames.Add("test_name");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Text) { Value = fm.TestName_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+				if(fm.TestDate != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestDate });
+					operators.Add(QueryOperatorType.Equal);
+				}		 
+
+				if(fm.TestDate_NotEqual != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestDate_NotEqual });
+					operators.Add(QueryOperatorType.NotEqual);
+				}		 
+
+				if(fm.TestDate_LessThan != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestDate_LessThan });
+					operators.Add(QueryOperatorType.LessThan);
+				}		 
+
+				if(fm.TestDate_LessThanOrEqual != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestDate_LessThanOrEqual });
+					operators.Add(QueryOperatorType.LessThanOrEqual);
+				}		 
+
+				if(fm.TestDate_GreaterThan != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestDate_GreaterThan });
+					operators.Add(QueryOperatorType.GreaterThan);
+				}		 
+
+				if(fm.TestDate_GreaterThanOrEqual != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.TestDate_GreaterThanOrEqual });
+					operators.Add(QueryOperatorType.GreaterThanOrEqual);
+				}		 
+
+				if(fm.TestDate_IsIn != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestDate_IsIn });
+					operators.Add(QueryOperatorType.IsIn);
+				}
+
+				if(fm.TestDate_IsNotIn != null)
+				{
+					columnNames.Add("test_date");
+					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.Timestamp) { Value = fm.TestDate_IsNotIn });
+					operators.Add(QueryOperatorType.IsNotIn);
+				}
+
+
+				return (columnNames, columnParameters, operators);
+			};			
+			
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
 				{typeof(Test1Poco), Test1PocoMetadata},
+				{typeof(Test2Poco), Test2PocoMetadata},
 			};		
 		}
 
@@ -3297,6 +3860,18 @@ namespace TrackTv.Data.Tests
 		/// <para>Catalog model 'Test1CM'.</para>
 		/// </summary>
 		public Task<List<Test1CM>> Filter(Test1FM filter) => this.DbService.FilterInternal<Test1Poco, Test1CM>(filter);
+		
+		/// <summary>
+		/// <para>Database table 'test2'.</para>		
+		/// </summary>
+        public IQueryable<Test2Poco> Test2 => this.DbService.GetTable<Test2Poco>();
+
+		/// <summary>
+		/// <para>Database table 'test2'.</para>
+		/// <para>Filter model 'Test2FM'.</para>
+		/// <para>Catalog model 'Test2CM'.</para>
+		/// </summary>
+		public Task<List<Test2CM>> Filter(Test2FM filter) => this.DbService.FilterInternal<Test2Poco, Test2CM>(filter);
 		
 		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 

@@ -28,3 +28,10 @@ create table "public"."test1" (
 	primary key (test_id)
 );
 
+CREATE TABLE "public"."test2" (
+  test_id serial,
+  test_name text NOT NULL,
+  test_date timestamp NOT NULL,
+  PRIMARY KEY (test_id)
+);
+

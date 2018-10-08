@@ -142,6 +142,54 @@
                 Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
             }
         }
+
+		[Theory]
+        [ClassData(typeof(GeneratedBulkData<{{ClassName}}Poco>))]
+        public void GetColumnChanges(List<{{ClassName}}Poco> pocos)
+        {
+            var getColumnChanges = TestDbPocos.{{ClassName}}PocoMetadata.GetColumnChanges;
+
+            var columns = TestDbPocos.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbPocos.{{ClassName}}PocoMetadata.Getters;
+
+            var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
+
+            foreach (var (instance1, instance2) in pocos.Zip(Enumerable.Reverse(pocos), (x, y) => (x, y)))
+            {
+                var (columnNames, parameters) = getColumnChanges(instance1, instance2);
+
+                Assert.Equal(parameters.Count, columnNames.Count);
+                Assert.True(columnNames.Count <= columns.Length);
+
+                foreach (string columnName in columnNames)
+                {
+                    Assert.Contains(columnName, allColumnNames);
+                }
+
+                foreach (var column in columns)
+                {
+                    var getter = getters[column.ColumnName];
+
+                    var value1 = getter(instance1);
+                    var value2 = getter(instance2);
+
+                    if (this.StupidEquals(value1, value2))
+                    {
+                        Assert.DoesNotContain(column.ColumnName, columnNames);
+                    }
+                    else
+                    {
+                        Assert.Contains(column.ColumnName, columnNames);
+                        int index = columnNames.IndexOf(column.ColumnName);
+                        var parameter = parameters[index];
+
+                        Assert.Equal(column.NpgsDataType, parameter.NpgsqlDbType);
+
+                        Assert.Equal(value2 ?? DBNull.Value, parameter.Value);
+                    }
+                }
+            }
+        }
     }
 
 	{{/each}}

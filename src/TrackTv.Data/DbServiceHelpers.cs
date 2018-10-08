@@ -384,7 +384,16 @@
                         il.Emit(OpCodes.Ldarg_1);
                         il.Emit(OpCodes.Call, property.GetMethod);
 
-                        il.Emit(OpCodes.Ceq);
+                        var equalityOperator = property.PropertyType.GetMethod("op_Equality");
+
+                        if (equalityOperator!= null)
+                        {
+                            il.Emit(OpCodes.Call, equalityOperator);
+                        }
+                        else
+                        {
+                            il.Emit(OpCodes.Ceq);
+                        }
                     }
 
                     il.Emit(OpCodes.Brtrue_S, notChangedEndif);
