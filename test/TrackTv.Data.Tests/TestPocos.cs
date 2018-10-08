@@ -2427,7 +2427,133 @@ namespace TrackTv.Data.Tests
 			
 			Test1PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test1PocoMetadata);
 
-			Test1PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test1PocoMetadata);			
+			Test1PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.TestName1 != myInstance.TestName1)
+				{
+					changedColumnNames.Add("test_name1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestName2 != myInstance.TestName2)
+				{
+					changedColumnNames.Add("test_name2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.TestName2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestDate1 != myInstance.TestDate1)
+				{
+					changedColumnNames.Add("test_date1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate1 });
+				}
+
+				if(dbInstance.TestDate2 != myInstance.TestDate2)
+				{
+					changedColumnNames.Add("test_date2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Date) { Value = myInstance.TestDate2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestTimestamp1 != myInstance.TestTimestamp1)
+				{
+					changedColumnNames.Add("test_timestamp1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp1 });
+				}
+
+				if(dbInstance.TestTimestamp2 != myInstance.TestTimestamp2)
+				{
+					changedColumnNames.Add("test_timestamp2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestTimestamp2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestBoolean1 != myInstance.TestBoolean1)
+				{
+					changedColumnNames.Add("test_boolean1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean1 });
+				}
+
+				if(dbInstance.TestBoolean2 != myInstance.TestBoolean2)
+				{
+					changedColumnNames.Add("test_boolean2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.TestBoolean2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestInteger1 != myInstance.TestInteger1)
+				{
+					changedColumnNames.Add("test_integer1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestInteger2 != myInstance.TestInteger2)
+				{
+					changedColumnNames.Add("test_integer2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.TestInteger2 });
+				}
+
+				if(dbInstance.TestBigint1 != myInstance.TestBigint1)
+				{
+					changedColumnNames.Add("test_bigint1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestBigint2 != myInstance.TestBigint2)
+				{
+					changedColumnNames.Add("test_bigint2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Bigint) { Value = myInstance.TestBigint2 });
+				}
+
+				if(dbInstance.TestText1 != myInstance.TestText1)
+				{
+					changedColumnNames.Add("test_text1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestText2 != myInstance.TestText2)
+				{
+					changedColumnNames.Add("test_text2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestText2 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestReal1 != myInstance.TestReal1)
+				{
+					changedColumnNames.Add("test_real1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestReal2 != myInstance.TestReal2)
+				{
+					changedColumnNames.Add("test_real2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Real) { Value = myInstance.TestReal2 });
+				}
+
+				if(dbInstance.TestDouble1 != myInstance.TestDouble1)
+				{
+					changedColumnNames.Add("test_double1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestDouble2 != myInstance.TestDouble2)
+				{
+					changedColumnNames.Add("test_double2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Double) { Value = myInstance.TestDouble2 });
+				}
+
+				if(dbInstance.TestChar1 != myInstance.TestChar1)
+				{
+					changedColumnNames.Add("test_char1");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar1 ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestChar2 != myInstance.TestChar2)
+				{
+					changedColumnNames.Add("test_char2");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Char) { Value = myInstance.TestChar2 ?? (object)DBNull.Value });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			};		
 
 			Test1PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test1PocoMetadata);
 
@@ -3620,7 +3746,25 @@ namespace TrackTv.Data.Tests
 			
 			Test2PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test2PocoMetadata);
 
-			Test2PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test2PocoMetadata);			
+			Test2PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				if(dbInstance.TestName != myInstance.TestName)
+				{
+					changedColumnNames.Add("test_name");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.TestName ?? (object)DBNull.Value });
+				}
+
+				if(dbInstance.TestDate != myInstance.TestDate)
+				{
+					changedColumnNames.Add("test_date");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.TestDate });
+				}
+
+				return (changedColumnNames, changedColumnParameters);
+			};		
 
 			Test2PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test2PocoMetadata);
 

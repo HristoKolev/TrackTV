@@ -7461,7 +7461,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ActorPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ActorPocoMetadata);
 
@@ -7812,7 +7812,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ApiChangeTypePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiChangeTypePocoMetadata);
 
@@ -8003,7 +8003,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ApiChangePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiChangePocoMetadata);
 
@@ -8470,7 +8470,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ApiResponsePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiResponsePocoMetadata);
 
@@ -8813,7 +8813,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			EpisodePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(EpisodePocoMetadata);
 
@@ -9472,7 +9472,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			GenrePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(GenrePocoMetadata);
 
@@ -9627,7 +9627,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			NetworkPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(NetworkPocoMetadata);
 
@@ -9782,7 +9782,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ProfilePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ProfilePocoMetadata);
 
@@ -9949,7 +9949,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			RolePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(RolePocoMetadata);
 
@@ -10236,7 +10236,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			SettingPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(SettingPocoMetadata);
 
@@ -10521,7 +10521,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ShowPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ShowPocoMetadata);
 
@@ -11284,7 +11284,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			ShowGenrePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ShowGenrePocoMetadata);
 
@@ -11487,7 +11487,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			SubscriptionPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(SubscriptionPocoMetadata);
 
@@ -11702,7 +11702,7 @@ namespace TrackTv.Data
 				}
 
 				return (changedColumnNames, changedColumnParameters);
-			};
+			};		
 
 			UserPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(UserPocoMetadata);
 

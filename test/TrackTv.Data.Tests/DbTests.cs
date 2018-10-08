@@ -236,7 +236,7 @@ namespace TrackTv.Data.Tests
             }
         }
 
-        [Theory(Skip = "skip")]
+		[Theory]
         [ClassData(typeof(GeneratedBulkData<Test1Poco>))]
         public void GetColumnChanges(List<Test1Poco> pocos)
         {

@@ -262,7 +262,23 @@ namespace {{model.Namespace}}
 			{{#each model.tables}}
 			{{ClassName}}PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters({{ClassName}}PocoMetadata);
 
-			{{ClassName}}PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges({{ClassName}}PocoMetadata);			
+			{{ClassName}}PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
+			{
+				var changedColumnNames = new List<string>();
+				var changedColumnParameters = new List<NpgsqlParameter>();
+
+				{{#each columns}}
+				{{#unless IsPrimaryKey}}
+				if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
+				{
+					changedColumnNames.Add("{{ColumnName}}");
+					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = myInstance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
+				}
+
+				{{/unless}}
+				{{/each}}
+				return (changedColumnNames, changedColumnParameters);
+			};		
 
 			{{ClassName}}PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns({{ClassName}}PocoMetadata);
 
