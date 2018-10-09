@@ -28,7 +28,7 @@ namespace {{model.Namespace}}
 		{{#if IsPrimaryKey}}
 		/// <para>Primary key of table: '{{TableName}}'.</para>
 		/// <para>Primary key constraint name: '{{PrimaryKeyConstraintName}}'.</para>
-		{{/if}}		
+		{{/if}}
 		{{#if IsForeignKey}}
 		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
 		/// <para>Foreign key constraint name: '{{ForeignKeyConstraintName}}'.</para>
@@ -81,7 +81,7 @@ namespace {{model.Namespace}}
 		{{#if IsPrimaryKey}}
 		/// <para>Primary key of table: '{{TableName}}'.</para>
 		/// <para>Primary key constraint name: '{{PrimaryKeyConstraintName}}'.</para>
-		{{/if}}		
+		{{/if}}
 		{{#if IsForeignKey}}
 		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
 		/// <para>Foreign key constraint name: '{{ForeignKeyConstraintName}}'.</para>
@@ -96,7 +96,7 @@ namespace {{model.Namespace}}
 
         {{/each}}
     }
-    
+
     {{/each}}
 
 	{{#each model.tables}}
@@ -128,13 +128,13 @@ namespace {{model.Namespace}}
 
         {{/each}}
     }
-    
+
     {{/each}}
 
 	{{#each model.tables}}
     /// <summary>
     /// <para>Table name: '{{TableName}}'.</para>
-	/// <para>Table schema: '{{TableSchema}}'.</para>  
+	/// <para>Table schema: '{{TableSchema}}'.</para>
     /// </summary>
     public partial class {{ClassName}}BM : IBusinessModel<{{ClassName}}Poco>
     {
@@ -148,7 +148,7 @@ namespace {{model.Namespace}}
 		{{#if IsPrimaryKey}}
 		/// <para>Primary key of table: '{{TableName}}'.</para>
 		/// <para>Primary key constraint name: '{{PrimaryKeyConstraintName}}'.</para>
-		{{/if}}		
+		{{/if}}
 		{{#if IsForeignKey}}
 		/// <para>Foreign key column [{{TableSchema}}.{{TableName}}.{{ColumnName}} -> {{ForeignKeyReferenceSchemaName}}.{{ForeignKeyReferenceTableName}}.{{ForeignKeyReferenceColumnName}}].</para>
 		/// <para>Foreign key constraint name: '{{ForeignKeyConstraintName}}'.</para>
@@ -172,7 +172,7 @@ namespace {{model.Namespace}}
 			};
 		}
 	}
-    
+
     {{/each}}
     public class {{model.PocoClassName}} : IDbPocos<{{model.PocoClassName}}>
     {
@@ -180,7 +180,7 @@ namespace {{model.Namespace}}
 
 		{{#each model.tables}}
         internal static TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata;
-		
+
         {{/each}}
 		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
 
@@ -235,13 +235,13 @@ namespace {{model.Namespace}}
 						Comments = "{{ColumnComment}}".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "{{ColumnName}}",
 						DbDataType = "{{DbDataType}}",
-						IsPrimaryKey = bool.Parse("{{IsPrimaryKey}}"),						
+						IsPrimaryKey = bool.Parse("{{IsPrimaryKey}}"),
 						PrimaryKeyConstraintName = "{{PrimaryKeyConstraintName}}" == string.Empty ? null : "{{PrimaryKeyConstraintName}}",
 						IsForeignKey = bool.Parse("{{IsForeignKey}}"),
-						ForeignKeyConstraintName = "{{ForeignKeyConstraintName}}" == string.Empty ? null : "{{ForeignKeyConstraintName}}",						
+						ForeignKeyConstraintName = "{{ForeignKeyConstraintName}}" == string.Empty ? null : "{{ForeignKeyConstraintName}}",
 						ForeignKeyReferenceColumnName = "{{ForeignKeyReferenceColumnName}}" == string.Empty ? null : "{{ForeignKeyReferenceColumnName}}",
 						ForeignKeyReferenceSchemaName = "{{ForeignKeyReferenceSchemaName}}" == string.Empty ? null : "{{ForeignKeyReferenceSchemaName}}",
-						ForeignKeyReferenceTableName = "{{ForeignKeyReferenceTableName}}" == string.Empty ? null : "{{ForeignKeyReferenceTableName}}",												
+						ForeignKeyReferenceTableName = "{{ForeignKeyReferenceTableName}}" == string.Empty ? null : "{{ForeignKeyReferenceTableName}}",
 						IsNullable = bool.Parse("{{IsNullable}}"),
 						IsClrValueType = bool.Parse("{{IsClrValueType}}"),
 						IsClrNullableType = bool.Parse("{{IsClrNullableType}}"),
@@ -257,28 +257,12 @@ namespace {{model.Namespace}}
 					{{/each}}
 				}
 			};
-			
+
 			{{/each}}
 			{{#each model.tables}}
 			{{ClassName}}PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters({{ClassName}}PocoMetadata);
 
-			{{ClassName}}PocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				{{#each columns}}
-				{{#unless IsPrimaryKey}}
-				if(dbInstance.{{PropertyName}} != myInstance.{{PropertyName}})
-				{
-					changedColumnNames.Add("{{ColumnName}}");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{NpgsDataTypeName}}) { Value = myInstance.{{PropertyName}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
-				}
-
-				{{/unless}}
-				{{/each}}
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			{{ClassName}}PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges({{ClassName}}PocoMetadata);
 
 			{{ClassName}}PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns({{ClassName}}PocoMetadata);
 
@@ -296,7 +280,7 @@ namespace {{model.Namespace}}
 					columnNames.Add("{{../ColumnName}}");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{../NpgsDataTypeName}}) { Value = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
 					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
-				}		 
+				}
 
 				{{/each}}
 				{{#if IsNullable}}
@@ -332,15 +316,15 @@ namespace {{model.Namespace}}
 				{{/each}}
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			{{/each}}
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
 				{{#each model.tables}}
 				{typeof({{ClassName}}Poco), {{ClassName}}PocoMetadata},
 				{{/each}}
-			};		
+			};
 		}
 
 		public static void Initialize()
@@ -355,9 +339,9 @@ namespace {{model.Namespace}}
 				if(Initialized)
 				{
 					return;
-				}			
+				}
 
-				InitializeInternal();	
+				InitializeInternal();
 
 				Initialized = true;
 			}
@@ -370,7 +354,7 @@ namespace {{model.Namespace}}
 
         {{#each model.tables}}
 		/// <summary>
-		/// <para>Database table '{{TableName}}'.</para>		
+		/// <para>Database table '{{TableName}}'.</para>
 		/// </summary>
         public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.DbService.GetTable<{{ClassName}}Poco>();
 
@@ -380,7 +364,7 @@ namespace {{model.Namespace}}
 		/// <para>Catalog model '{{ClassName}}CM'.</para>
 		/// </summary>
 		public Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter) => this.DbService.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
-		
+
         {{/each}}
 		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 

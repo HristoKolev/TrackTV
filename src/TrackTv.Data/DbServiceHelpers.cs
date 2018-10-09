@@ -33,6 +33,11 @@
             return (T)method;
         }
 
+        private static bool IsNullableType(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
         public static Dictionary<string, Action<T, object>> GetSetters<T>(IReadOnlyDictionary<string, string> map)
         {
             return map.ToDictionary(x => x.Key, x => GetSetter<T>(x.Value));
@@ -313,8 +318,6 @@
         {
             var pocoType = typeof(TPoco);
             var parameterType = typeof(NpgsqlParameter);
-            var parameterValueProperty = parameterType.GetProperty("Value");
-            var dbNullValue = typeof(DBNull).GetField("Value");
 
             var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>>)
                 .GetConstructor(new[] { typeof(List<string>), typeof(List<NpgsqlParameter>) });
@@ -322,18 +325,24 @@
             var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
 
             var stringListType = typeof(List<string>);
-            var parameterList = typeof(List<NpgsqlParameter>);
+            var parameterListType = typeof(List<NpgsqlParameter>);
 
             return GenerateMethod<Func<TPoco, TPoco, ValueTuple<List<string>, List<NpgsqlParameter>>>>(il =>
             {
-                il.DeclareLocal(stringListType);
-                il.DeclareLocal(parameterList);
-
+                // create the columnNames list.
+                var columnNamesLocal = il.DeclareLocal(stringListType);
                 il.Emit(OpCodes.Newobj, stringListType.GetConstructor(Array.Empty<Type>()));
-                il.Emit(OpCodes.Stloc_0);
+                il.Emit(OpCodes.Stloc, columnNamesLocal);
 
-                il.Emit(OpCodes.Newobj, parameterList.GetConstructor(Array.Empty<Type>()));
-                il.Emit(OpCodes.Stloc_1);
+                // create the parameter list.
+                var parameterListLocal = il.DeclareLocal(parameterListType);
+                il.Emit(OpCodes.Newobj, parameterListType.GetConstructor(Array.Empty<Type>()));
+                il.Emit(OpCodes.Stloc, parameterListLocal);
+
+                // for each unique nullable types declare 2 locals.
+                var nullableLocals = nonPrimaryKeyColumns
+                                     .Where(x => IsNullableType(x.ClrType)).Select(x => x.ClrType).Distinct()
+                                     .ToDictionary(type => type, type => (il.DeclareLocal(type), il.DeclareLocal(type)));
 
                 foreach (var column in nonPrimaryKeyColumns)
                 {
@@ -341,35 +350,36 @@
 
                     var property = pocoType.GetProperty(column.PropertyName);
 
-                    var isNullableType = property.PropertyType.IsGenericType
-                                    && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-
-                    if (isNullableType)
+                    if (IsNullableType(property.PropertyType))
                     {
                         var nullableType = property.PropertyType;
                         var getValueOrDefault = nullableType.GetMethod("GetValueOrDefault", Array.Empty<Type>());
                         var hasValue = nullableType.GetProperty("HasValue");
+                        
+                        var (local1, local2) = nullableLocals[nullableType];
 
-                        // check that the HasValue and Value properties are equal.
-
+                        // get the first value and store it into a local
                         il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Call, hasValue.GetMethod);
+                        il.Emit(OpCodes.Stloc, local1);
 
+                        // get the second value and store it into a local
                         il.Emit(OpCodes.Ldarg_1);
                         il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Call, hasValue.GetMethod);
+                        il.Emit(OpCodes.Stloc, local2);
 
+                        // compare the HasValue properties
+                        il.Emit(OpCodes.Ldloca_S, local1.LocalIndex);
+                        il.Emit(OpCodes.Call, hasValue.GetMethod);
+                        il.Emit(OpCodes.Ldloca_S, local2.LocalIndex);
+                        il.Emit(OpCodes.Call, hasValue.GetMethod);
                         il.Emit(OpCodes.Ceq);
 
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
+                        // compare the GetValueOrDefault() result.
+                        il.Emit(OpCodes.Ldloca_S, local1.LocalIndex);
                         il.Emit(OpCodes.Call, getValueOrDefault);
-
-                        il.Emit(OpCodes.Ldarg_1);
-                        il.Emit(OpCodes.Call, property.GetMethod);
+                        il.Emit(OpCodes.Ldloca_S, local2.LocalIndex);
                         il.Emit(OpCodes.Call, getValueOrDefault);
-
                         il.Emit(OpCodes.Ceq);
 
                         il.Emit(OpCodes.And);
@@ -398,11 +408,13 @@
 
                     il.Emit(OpCodes.Brtrue_S, notChangedEndif);
 
-                    il.Emit(OpCodes.Ldloc_0);
+                    // Add the column name
+                    il.Emit(OpCodes.Ldloc, columnNamesLocal);
                     il.Emit(OpCodes.Ldstr, column.ColumnName);
                     il.Emit(OpCodes.Call, stringListType.GetMethod("Add"));
 
-                    il.Emit(OpCodes.Ldloc_1);
+
+                    il.Emit(OpCodes.Ldloc, parameterListLocal); // the parameter list
 
                     // create the new parameter
                     il.Emit(OpCodes.Ldnull);
@@ -425,21 +437,22 @@
 
                     il.Emit(OpCodes.Brtrue_S, endif);
 
+                    // the value is null, replace it with DbNull.Value
                     il.Emit(OpCodes.Pop);
-                    il.Emit(OpCodes.Ldsfld, dbNullValue);
+                    il.Emit(OpCodes.Ldsfld, typeof(DBNull).GetField("Value"));
 
                     il.MarkLabel(endif);
 
                     // set the Value property of the NpgsqlParameter
-                    il.Emit(OpCodes.Call, parameterValueProperty.SetMethod);
+                    il.Emit(OpCodes.Call, parameterType.GetProperty("Value").SetMethod);
 
-                    il.Emit(OpCodes.Call, parameterList.GetMethod("Add"));
+                    il.Emit(OpCodes.Call, parameterListType.GetMethod("Add"));
 
                     il.MarkLabel(notChangedEndif);
                 }
 
-                il.Emit(OpCodes.Ldloc_0);
-                il.Emit(OpCodes.Ldloc_1);
+                il.Emit(OpCodes.Ldloc, columnNamesLocal);
+                il.Emit(OpCodes.Ldloc, parameterListLocal);
 
                 il.Emit(OpCodes.Newobj, tupleConstructor);
 
