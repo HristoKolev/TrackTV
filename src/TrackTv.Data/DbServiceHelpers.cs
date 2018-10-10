@@ -369,18 +369,30 @@
                         il.Emit(OpCodes.Stloc, local2);
 
                         // compare the HasValue properties
-                        il.Emit(OpCodes.Ldloca_S, local1.LocalIndex);
+                        il.Emit(OpCodes.Ldloca_S, local1);
                         il.Emit(OpCodes.Call, hasValue.GetMethod);
-                        il.Emit(OpCodes.Ldloca_S, local2.LocalIndex);
+                        il.Emit(OpCodes.Ldloca_S, local2);
                         il.Emit(OpCodes.Call, hasValue.GetMethod);
                         il.Emit(OpCodes.Ceq);
 
                         // compare the GetValueOrDefault() result.
-                        il.Emit(OpCodes.Ldloca_S, local1.LocalIndex);
+                        il.Emit(OpCodes.Ldloca_S, local1);
                         il.Emit(OpCodes.Call, getValueOrDefault);
-                        il.Emit(OpCodes.Ldloca_S, local2.LocalIndex);
+                        il.Emit(OpCodes.Ldloca_S, local2);
                         il.Emit(OpCodes.Call, getValueOrDefault);
-                        il.Emit(OpCodes.Ceq);
+
+                        var underlyingType = Nullable.GetUnderlyingType(nullableType);
+
+                        var eqOperator = underlyingType.GetMethod("op_Equality");
+
+                        if (eqOperator != null)
+                        {
+                            il.Emit(OpCodes.Call, eqOperator);
+                        }
+                        else
+                        {
+                            il.Emit(OpCodes.Ceq);
+                        }
 
                         il.Emit(OpCodes.And);
                     }
@@ -394,11 +406,11 @@
                         il.Emit(OpCodes.Ldarg_1);
                         il.Emit(OpCodes.Call, property.GetMethod);
 
-                        var equalityOperator = property.PropertyType.GetMethod("op_Equality");
+                        var eqOperator = property.PropertyType.GetMethod("op_Equality");
 
-                        if (equalityOperator!= null)
+                        if (eqOperator!= null)
                         {
-                            il.Emit(OpCodes.Call, equalityOperator);
+                            il.Emit(OpCodes.Call, eqOperator);
                         }
                         else
                         {
