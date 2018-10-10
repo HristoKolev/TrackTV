@@ -1287,7 +1287,7 @@ namespace TrackTv.Data
         public int Thetvdbid { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1319,7 +1319,7 @@ namespace TrackTv.Data
         public int ApiChangeTypeID { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1419,7 +1419,7 @@ namespace TrackTv.Data
         public int ApiChangeType { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1488,7 +1488,7 @@ namespace TrackTv.Data
         public DateTime ApiResponseLastUpdated { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1610,7 +1610,7 @@ namespace TrackTv.Data
         public int Thetvdbid { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1642,7 +1642,7 @@ namespace TrackTv.Data
         public string GenreName { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1674,7 +1674,7 @@ namespace TrackTv.Data
         public string NetworkName { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1706,7 +1706,7 @@ namespace TrackTv.Data
         public string ProfileName { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1764,7 +1764,7 @@ namespace TrackTv.Data
         public int ShowID { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1807,7 +1807,7 @@ namespace TrackTv.Data
         public string SettingName { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1951,7 +1951,7 @@ namespace TrackTv.Data
         public int Thetvdbid { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -1998,7 +1998,7 @@ namespace TrackTv.Data
         public int GenreID { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2045,7 +2045,7 @@ namespace TrackTv.Data
         public int ShowID { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2110,7 +2110,7 @@ namespace TrackTv.Data
         public int ProfileID { get; set; }
 
     }
-    
+
 
     /// <summary>
     /// <para>Table name: 'actors'.</para>
@@ -2257,7 +2257,7 @@ namespace TrackTv.Data
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2319,7 +2319,7 @@ namespace TrackTv.Data
 		public int[] ApiChangeTypeID_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2507,7 +2507,7 @@ namespace TrackTv.Data
 		public int[] ApiChangeType_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2629,7 +2629,7 @@ namespace TrackTv.Data
 		public DateTime[] ApiResponseLastUpdated_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2907,7 +2907,7 @@ namespace TrackTv.Data
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2969,7 +2969,7 @@ namespace TrackTv.Data
 		public string[] GenreName_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3031,7 +3031,7 @@ namespace TrackTv.Data
 		public string[] NetworkName_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3093,7 +3093,7 @@ namespace TrackTv.Data
 		public string[] ProfileName_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3209,7 +3209,7 @@ namespace TrackTv.Data
 		public int[] ShowID_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3301,7 +3301,7 @@ namespace TrackTv.Data
 		public string[] SettingName_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3621,7 +3621,7 @@ namespace TrackTv.Data
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3701,7 +3701,7 @@ namespace TrackTv.Data
 		public int[] GenreID_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3781,7 +3781,7 @@ namespace TrackTv.Data
 		public int[] ShowID_IsNotIn { get; set; }
 
     }
-    
+
     /// <summary>
     /// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -3909,11 +3909,11 @@ namespace TrackTv.Data
 		public int[] ProfileID_IsNotIn { get; set; }
 
     }
-    
+
 
     /// <summary>
     /// <para>Table name: 'actors'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ActorBM : IBusinessModel<ActorPoco>
     {
@@ -3986,10 +3986,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'api_change_types'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ApiChangeTypeBM : IBusinessModel<ApiChangeTypePoco>
     {
@@ -4026,10 +4026,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'api_changes'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ApiChangeBM : IBusinessModel<ApiChangePoco>
     {
@@ -4140,10 +4140,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'api_responses'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ApiResponseBM : IBusinessModel<ApiResponsePoco>
     {
@@ -4220,10 +4220,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'episodes'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class EpisodeBM : IBusinessModel<EpisodePoco>
     {
@@ -4358,10 +4358,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'genres'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class GenreBM : IBusinessModel<GenrePoco>
     {
@@ -4398,10 +4398,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'networks'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class NetworkBM : IBusinessModel<NetworkPoco>
     {
@@ -4438,10 +4438,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'profiles'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ProfileBM : IBusinessModel<ProfilePoco>
     {
@@ -4478,10 +4478,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'roles'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class RoleBM : IBusinessModel<RolePoco>
     {
@@ -4546,10 +4546,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'settings'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class SettingBM : IBusinessModel<SettingPoco>
     {
@@ -4598,10 +4598,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'shows'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ShowBM : IBusinessModel<ShowPoco>
     {
@@ -4760,10 +4760,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'shows_genres'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class ShowGenreBM : IBusinessModel<ShowGenrePoco>
     {
@@ -4816,10 +4816,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'subscriptions'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class SubscriptionBM : IBusinessModel<SubscriptionPoco>
     {
@@ -4872,10 +4872,10 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     /// <summary>
     /// <para>Table name: 'users'.</para>
-	/// <para>Table schema: 'public'.</para>  
+	/// <para>Table schema: 'public'.</para>
     /// </summary>
     public partial class UserBM : IBusinessModel<UserPoco>
     {
@@ -4948,39 +4948,39 @@ namespace TrackTv.Data
 			};
 		}
 	}
-    
+
     public class DbPocos : IDbPocos<DbPocos>
     {
 		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
 
         internal static TableMetadataModel<ActorPoco> ActorPocoMetadata;
-		
+
         internal static TableMetadataModel<ApiChangeTypePoco> ApiChangeTypePocoMetadata;
-		
+
         internal static TableMetadataModel<ApiChangePoco> ApiChangePocoMetadata;
-		
+
         internal static TableMetadataModel<ApiResponsePoco> ApiResponsePocoMetadata;
-		
+
         internal static TableMetadataModel<EpisodePoco> EpisodePocoMetadata;
-		
+
         internal static TableMetadataModel<GenrePoco> GenrePocoMetadata;
-		
+
         internal static TableMetadataModel<NetworkPoco> NetworkPocoMetadata;
-		
+
         internal static TableMetadataModel<ProfilePoco> ProfilePocoMetadata;
-		
+
         internal static TableMetadataModel<RolePoco> RolePocoMetadata;
-		
+
         internal static TableMetadataModel<SettingPoco> SettingPocoMetadata;
-		
+
         internal static TableMetadataModel<ShowPoco> ShowPocoMetadata;
-		
+
         internal static TableMetadataModel<ShowGenrePoco> ShowGenrePocoMetadata;
-		
+
         internal static TableMetadataModel<SubscriptionPoco> SubscriptionPocoMetadata;
-		
+
         internal static TableMetadataModel<UserPoco> UserPocoMetadata;
-		
+
 		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
 
 		private static volatile object InitLock = new object();
@@ -5132,13 +5132,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "actor_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "actors_pkey" == string.Empty ? null : "actors_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5163,13 +5163,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "actor_image",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5194,13 +5194,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "actor_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5225,13 +5225,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "last_updated",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -5256,13 +5256,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "thetvdbid",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5277,7 +5277,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ApiChangeTypePocoMetadata = new TableMetadataModel<ApiChangeTypePoco>
 			{
 				ClassName = "ApiChangeType",
@@ -5307,13 +5307,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_type_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5338,13 +5338,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_type_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "api_change_types_pkey" == string.Empty ? null : "api_change_types_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5359,7 +5359,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ApiChangePocoMetadata = new TableMetadataModel<ApiChangePoco>
 			{
 				ClassName = "ApiChange",
@@ -5389,13 +5389,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_thetvdbid",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5420,13 +5420,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_fail_count",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5451,13 +5451,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_created_date",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5482,13 +5482,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "api_changes_pkey" == string.Empty ? null : "api_changes_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5513,13 +5513,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_last_failed_time",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -5544,13 +5544,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_thetvdb_last_updated",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5575,13 +5575,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_attached_series_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -5606,13 +5606,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_change_type",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_api_changes_api_change_type" == string.Empty ? null : "fk_api_changes_api_change_type",						
+						ForeignKeyConstraintName = "fk_api_changes_api_change_type" == string.Empty ? null : "fk_api_changes_api_change_type",
 						ForeignKeyReferenceColumnName = "api_change_type_id" == string.Empty ? null : "api_change_type_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "api_change_types" == string.Empty ? null : "api_change_types",												
+						ForeignKeyReferenceTableName = "api_change_types" == string.Empty ? null : "api_change_types",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5627,7 +5627,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ApiResponsePocoMetadata = new TableMetadataModel<ApiResponsePoco>
 			{
 				ClassName = "ApiResponse",
@@ -5657,13 +5657,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_response_episode_thetvdbid",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_api_responses_episodes_thetvdbid" == string.Empty ? null : "fk_api_responses_episodes_thetvdbid",						
+						ForeignKeyConstraintName = "fk_api_responses_episodes_thetvdbid" == string.Empty ? null : "fk_api_responses_episodes_thetvdbid",
 						ForeignKeyReferenceColumnName = "thetvdbid" == string.Empty ? null : "thetvdbid",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "episodes" == string.Empty ? null : "episodes",												
+						ForeignKeyReferenceTableName = "episodes" == string.Empty ? null : "episodes",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -5688,13 +5688,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_response_show_thetvdbid",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_api_responses_shows_thetvdbid" == string.Empty ? null : "fk_api_responses_shows_thetvdbid",						
+						ForeignKeyConstraintName = "fk_api_responses_shows_thetvdbid" == string.Empty ? null : "fk_api_responses_shows_thetvdbid",
 						ForeignKeyReferenceColumnName = "thetvdbid" == string.Empty ? null : "thetvdbid",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
+						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -5719,13 +5719,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_response_body",
 						DbDataType = "jsonb",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5750,13 +5750,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_response_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "api_responses_pkey" == string.Empty ? null : "api_responses_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5781,13 +5781,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "api_response_last_updated",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5802,7 +5802,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			EpisodePocoMetadata = new TableMetadataModel<EpisodePoco>
 			{
 				ClassName = "Episode",
@@ -5832,13 +5832,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "episode_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "episodes_pkey" == string.Empty ? null : "episodes_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5863,13 +5863,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "episode_description",
 						DbDataType = "text",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5894,13 +5894,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "episode_number",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5925,13 +5925,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "episode_title",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -5956,13 +5956,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "first_aired",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -5987,13 +5987,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "imdbid",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6018,13 +6018,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "last_updated",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6049,13 +6049,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "season_number",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6080,13 +6080,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_episodes_show_id" == string.Empty ? null : "fk_episodes_show_id",						
+						ForeignKeyConstraintName = "fk_episodes_show_id" == string.Empty ? null : "fk_episodes_show_id",
 						ForeignKeyReferenceColumnName = "show_id" == string.Empty ? null : "show_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
+						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6111,13 +6111,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "thetvdbid",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6132,7 +6132,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			GenrePocoMetadata = new TableMetadataModel<GenrePoco>
 			{
 				ClassName = "Genre",
@@ -6162,13 +6162,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "genre_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "genres_pkey" == string.Empty ? null : "genres_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6193,13 +6193,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "genre_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6214,7 +6214,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			NetworkPocoMetadata = new TableMetadataModel<NetworkPoco>
 			{
 				ClassName = "Network",
@@ -6244,13 +6244,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "network_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "networks_pkey" == string.Empty ? null : "networks_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6275,13 +6275,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "network_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6296,7 +6296,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ProfilePocoMetadata = new TableMetadataModel<ProfilePoco>
 			{
 				ClassName = "Profile",
@@ -6326,13 +6326,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "profile_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "profiles_pkey" == string.Empty ? null : "profiles_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6357,13 +6357,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "profile_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6378,7 +6378,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			RolePocoMetadata = new TableMetadataModel<RolePoco>
 			{
 				ClassName = "Role",
@@ -6408,13 +6408,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "role_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "roles_pkey" == string.Empty ? null : "roles_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6439,13 +6439,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "actor_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_roles_actor_id" == string.Empty ? null : "fk_roles_actor_id",						
+						ForeignKeyConstraintName = "fk_roles_actor_id" == string.Empty ? null : "fk_roles_actor_id",
 						ForeignKeyReferenceColumnName = "actor_id" == string.Empty ? null : "actor_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "actors" == string.Empty ? null : "actors",												
+						ForeignKeyReferenceTableName = "actors" == string.Empty ? null : "actors",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6470,13 +6470,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "role_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6501,13 +6501,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_roles_show_id" == string.Empty ? null : "fk_roles_show_id",						
+						ForeignKeyConstraintName = "fk_roles_show_id" == string.Empty ? null : "fk_roles_show_id",
 						ForeignKeyReferenceColumnName = "show_id" == string.Empty ? null : "show_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
+						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6522,7 +6522,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			SettingPocoMetadata = new TableMetadataModel<SettingPoco>
 			{
 				ClassName = "Setting",
@@ -6552,13 +6552,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "setting_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "settings_pkey" == string.Empty ? null : "settings_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6583,13 +6583,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "setting_value",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6614,13 +6614,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "setting_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6635,7 +6635,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ShowPocoMetadata = new TableMetadataModel<ShowPoco>
 			{
 				ClassName = "Show",
@@ -6665,13 +6665,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "shows_pkey" == string.Empty ? null : "shows_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6696,13 +6696,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "air_day",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -6727,13 +6727,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "air_time",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -6758,13 +6758,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "first_aired",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("True"),
@@ -6789,13 +6789,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "imdbid",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6820,13 +6820,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "last_updated",
 						DbDataType = "timestamp without time zone",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6851,13 +6851,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "network_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_shows_network_id" == string.Empty ? null : "fk_shows_network_id",						
+						ForeignKeyConstraintName = "fk_shows_network_id" == string.Empty ? null : "fk_shows_network_id",
 						ForeignKeyReferenceColumnName = "network_id" == string.Empty ? null : "network_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "networks" == string.Empty ? null : "networks",												
+						ForeignKeyReferenceTableName = "networks" == string.Empty ? null : "networks",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6882,13 +6882,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_banner",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6913,13 +6913,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_description",
 						DbDataType = "text",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6944,13 +6944,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_name",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -6975,13 +6975,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_status",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7006,13 +7006,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "thetvdbid",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7027,7 +7027,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ShowGenrePocoMetadata = new TableMetadataModel<ShowGenrePoco>
 			{
 				ClassName = "ShowGenre",
@@ -7057,13 +7057,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "shows_genres_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "shows_genres_pkey" == string.Empty ? null : "shows_genres_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7088,13 +7088,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_shows_genres_show_id" == string.Empty ? null : "fk_shows_genres_show_id",						
+						ForeignKeyConstraintName = "fk_shows_genres_show_id" == string.Empty ? null : "fk_shows_genres_show_id",
 						ForeignKeyReferenceColumnName = "show_id" == string.Empty ? null : "show_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
+						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7119,13 +7119,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "genre_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_shows_genres_genre_id" == string.Empty ? null : "fk_shows_genres_genre_id",						
+						ForeignKeyConstraintName = "fk_shows_genres_genre_id" == string.Empty ? null : "fk_shows_genres_genre_id",
 						ForeignKeyReferenceColumnName = "genre_id" == string.Empty ? null : "genre_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "genres" == string.Empty ? null : "genres",												
+						ForeignKeyReferenceTableName = "genres" == string.Empty ? null : "genres",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7140,7 +7140,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			SubscriptionPocoMetadata = new TableMetadataModel<SubscriptionPoco>
 			{
 				ClassName = "Subscription",
@@ -7170,13 +7170,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "subscription_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "subscriptions_pkey" == string.Empty ? null : "subscriptions_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7201,13 +7201,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "profile_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_subscriptions_profile_id" == string.Empty ? null : "fk_subscriptions_profile_id",						
+						ForeignKeyConstraintName = "fk_subscriptions_profile_id" == string.Empty ? null : "fk_subscriptions_profile_id",
 						ForeignKeyReferenceColumnName = "profile_id" == string.Empty ? null : "profile_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "profiles" == string.Empty ? null : "profiles",												
+						ForeignKeyReferenceTableName = "profiles" == string.Empty ? null : "profiles",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7232,13 +7232,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "show_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_subscriptions_show_id" == string.Empty ? null : "fk_subscriptions_show_id",						
+						ForeignKeyConstraintName = "fk_subscriptions_show_id" == string.Empty ? null : "fk_subscriptions_show_id",
 						ForeignKeyReferenceColumnName = "show_id" == string.Empty ? null : "show_id",
 						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",												
+						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7253,7 +7253,7 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			UserPocoMetadata = new TableMetadataModel<UserPoco>
 			{
 				ClassName = "User",
@@ -7283,13 +7283,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "user_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),						
+						IsPrimaryKey = bool.Parse("True"),
 						PrimaryKeyConstraintName = "users_pkey" == string.Empty ? null : "users_pkey",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7314,13 +7314,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "is_admin",
 						DbDataType = "boolean",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7345,13 +7345,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "username",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7376,13 +7376,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "password",
 						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("False"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7407,13 +7407,13 @@ namespace TrackTv.Data
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "profile_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),						
+						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
 						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",						
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",												
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7428,40 +7428,10 @@ namespace TrackTv.Data
 					},
 				}
 			};
-			
+
 			ActorPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ActorPocoMetadata);
 
-			ActorPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ActorImage != myInstance.ActorImage)
-				{
-					changedColumnNames.Add("actor_image");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ActorImage ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ActorName != myInstance.ActorName)
-				{
-					changedColumnNames.Add("actor_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ActorName ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.LastUpdated != myInstance.LastUpdated)
-				{
-					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.LastUpdated ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
-				{
-					changedColumnNames.Add("thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.Thetvdbid });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ActorPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ActorPocoMetadata);
 
 			ActorPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ActorPocoMetadata);
 
@@ -7477,42 +7447,42 @@ namespace TrackTv.Data
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ActorID_NotEqual != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ActorID_LessThan != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ActorID_LessThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ActorID_GreaterThan != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ActorID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ActorID_IsIn != null)
 				{
@@ -7533,56 +7503,56 @@ namespace TrackTv.Data
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ActorImage_NotEqual != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ActorImage_StartsWith != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ActorImage_DoesNotStartWith != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ActorImage_EndsWith != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ActorImage_DoesNotEndWith != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ActorImage_Contains != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ActorImage_DoesNotContain != null)
 				{
 					columnNames.Add("actor_image");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorImage_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ActorImage_IsNull != null)
 				{
@@ -7617,56 +7587,56 @@ namespace TrackTv.Data
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ActorName_NotEqual != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ActorName_StartsWith != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ActorName_DoesNotStartWith != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ActorName_EndsWith != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ActorName_DoesNotEndWith != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ActorName_Contains != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ActorName_DoesNotContain != null)
 				{
 					columnNames.Add("actor_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ActorName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ActorName_IsNull != null)
 				{
@@ -7701,14 +7671,14 @@ namespace TrackTv.Data
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_IsNull != null)
 				{
@@ -7743,42 +7713,42 @@ namespace TrackTv.Data
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
@@ -7796,23 +7766,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			ApiChangeTypePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ApiChangeTypePocoMetadata);
 
-			ApiChangeTypePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ApiChangeTypeName != myInstance.ApiChangeTypeName)
-				{
-					changedColumnNames.Add("api_change_type_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ApiChangeTypeName ?? (object)DBNull.Value });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ApiChangeTypePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ApiChangeTypePocoMetadata);
 
 			ApiChangeTypePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiChangeTypePocoMetadata);
 
@@ -7828,56 +7786,56 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_NotEqual != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_StartsWith != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_DoesNotStartWith != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_EndsWith != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_DoesNotEndWith != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_Contains != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_DoesNotContain != null)
 				{
 					columnNames.Add("api_change_type_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ApiChangeTypeName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeName_IsIn != null)
 				{
@@ -7898,42 +7856,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_type_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeID_NotEqual != null)
 				{
 					columnNames.Add("api_change_type_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeID_LessThan != null)
 				{
 					columnNames.Add("api_change_type_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeID_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeID_GreaterThan != null)
 				{
 					columnNames.Add("api_change_type_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeTypeID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeTypeID_IsIn != null)
 				{
@@ -7951,59 +7909,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			ApiChangePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ApiChangePocoMetadata);
 
-			ApiChangePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ApiChangeThetvdbid != myInstance.ApiChangeThetvdbid)
-				{
-					changedColumnNames.Add("api_change_thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeThetvdbid });
-				}
-
-				if(dbInstance.ApiChangeFailCount != myInstance.ApiChangeFailCount)
-				{
-					changedColumnNames.Add("api_change_fail_count");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeFailCount });
-				}
-
-				if(dbInstance.ApiChangeCreatedDate != myInstance.ApiChangeCreatedDate)
-				{
-					changedColumnNames.Add("api_change_created_date");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiChangeCreatedDate });
-				}
-
-				if(dbInstance.ApiChangeLastFailedTime != myInstance.ApiChangeLastFailedTime)
-				{
-					changedColumnNames.Add("api_change_last_failed_time");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiChangeLastFailedTime ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ApiChangeThetvdbLastUpdated != myInstance.ApiChangeThetvdbLastUpdated)
-				{
-					changedColumnNames.Add("api_change_thetvdb_last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiChangeThetvdbLastUpdated });
-				}
-
-				if(dbInstance.ApiChangeAttachedSeriesID != myInstance.ApiChangeAttachedSeriesID)
-				{
-					changedColumnNames.Add("api_change_attached_series_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeAttachedSeriesID ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ApiChangeType != myInstance.ApiChangeType)
-				{
-					changedColumnNames.Add("api_change_type");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiChangeType });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ApiChangePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ApiChangePocoMetadata);
 
 			ApiChangePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiChangePocoMetadata);
 
@@ -8019,42 +7929,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbid_NotEqual != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbid_LessThan != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeThetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbid_IsIn != null)
 				{
@@ -8075,42 +7985,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_fail_count");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeFailCount_NotEqual != null)
 				{
 					columnNames.Add("api_change_fail_count");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeFailCount_LessThan != null)
 				{
 					columnNames.Add("api_change_fail_count");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeFailCount_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_fail_count");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeFailCount_GreaterThan != null)
 				{
 					columnNames.Add("api_change_fail_count");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeFailCount_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_fail_count");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeFailCount_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeFailCount_IsIn != null)
 				{
@@ -8131,42 +8041,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_created_date");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeCreatedDate_NotEqual != null)
 				{
 					columnNames.Add("api_change_created_date");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeCreatedDate_LessThan != null)
 				{
 					columnNames.Add("api_change_created_date");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeCreatedDate_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_created_date");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeCreatedDate_GreaterThan != null)
 				{
 					columnNames.Add("api_change_created_date");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeCreatedDate_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_created_date");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeCreatedDate_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeCreatedDate_IsIn != null)
 				{
@@ -8187,42 +8097,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeID_NotEqual != null)
 				{
 					columnNames.Add("api_change_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeID_LessThan != null)
 				{
 					columnNames.Add("api_change_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeID_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeID_GreaterThan != null)
 				{
 					columnNames.Add("api_change_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeID_IsIn != null)
 				{
@@ -8243,14 +8153,14 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_last_failed_time");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeLastFailedTime });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeLastFailedTime_NotEqual != null)
 				{
 					columnNames.Add("api_change_last_failed_time");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeLastFailedTime_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeLastFailedTime_IsNull != null)
 				{
@@ -8285,42 +8195,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_thetvdb_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_NotEqual != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_LessThan != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_thetvdb_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiChangeThetvdbLastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeThetvdbLastUpdated_IsIn != null)
 				{
@@ -8341,14 +8251,14 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_attached_series_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeAttachedSeriesID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeAttachedSeriesID_NotEqual != null)
 				{
 					columnNames.Add("api_change_attached_series_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeAttachedSeriesID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeAttachedSeriesID_IsNull != null)
 				{
@@ -8383,42 +8293,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_change_type");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiChangeType_NotEqual != null)
 				{
 					columnNames.Add("api_change_type");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeType_LessThan != null)
 				{
 					columnNames.Add("api_change_type");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiChangeType_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeType_GreaterThan != null)
 				{
 					columnNames.Add("api_change_type");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiChangeType_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_change_type");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiChangeType_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiChangeType_IsIn != null)
 				{
@@ -8436,41 +8346,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			ApiResponsePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ApiResponsePocoMetadata);
 
-			ApiResponsePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ApiResponseEpisodeThetvdbid != myInstance.ApiResponseEpisodeThetvdbid)
-				{
-					changedColumnNames.Add("api_response_episode_thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiResponseEpisodeThetvdbid ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ApiResponseShowThetvdbid != myInstance.ApiResponseShowThetvdbid)
-				{
-					changedColumnNames.Add("api_response_show_thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ApiResponseShowThetvdbid ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ApiResponseBody != myInstance.ApiResponseBody)
-				{
-					changedColumnNames.Add("api_response_body");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = myInstance.ApiResponseBody ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ApiResponseLastUpdated != myInstance.ApiResponseLastUpdated)
-				{
-					changedColumnNames.Add("api_response_last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.ApiResponseLastUpdated });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ApiResponsePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ApiResponsePocoMetadata);
 
 			ApiResponsePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiResponsePocoMetadata);
 
@@ -8486,14 +8366,14 @@ namespace TrackTv.Data
 					columnNames.Add("api_response_episode_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseEpisodeThetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiResponseEpisodeThetvdbid_NotEqual != null)
 				{
 					columnNames.Add("api_response_episode_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseEpisodeThetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseEpisodeThetvdbid_IsNull != null)
 				{
@@ -8528,14 +8408,14 @@ namespace TrackTv.Data
 					columnNames.Add("api_response_show_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseShowThetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiResponseShowThetvdbid_NotEqual != null)
 				{
 					columnNames.Add("api_response_show_thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseShowThetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseShowThetvdbid_IsNull != null)
 				{
@@ -8570,56 +8450,56 @@ namespace TrackTv.Data
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_NotEqual != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_StartsWith != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_DoesNotStartWith != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_EndsWith != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_DoesNotEndWith != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_Contains != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_DoesNotContain != null)
 				{
 					columnNames.Add("api_response_body");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Jsonb) { Value = fm.ApiResponseBody_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ApiResponseBody_IsIn != null)
 				{
@@ -8640,42 +8520,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_response_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiResponseID_NotEqual != null)
 				{
 					columnNames.Add("api_response_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseID_LessThan != null)
 				{
 					columnNames.Add("api_response_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiResponseID_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_response_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseID_GreaterThan != null)
 				{
 					columnNames.Add("api_response_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiResponseID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_response_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ApiResponseID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseID_IsIn != null)
 				{
@@ -8696,42 +8576,42 @@ namespace TrackTv.Data
 					columnNames.Add("api_response_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ApiResponseLastUpdated_NotEqual != null)
 				{
 					columnNames.Add("api_response_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseLastUpdated_LessThan != null)
 				{
 					columnNames.Add("api_response_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ApiResponseLastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("api_response_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseLastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("api_response_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ApiResponseLastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("api_response_last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.ApiResponseLastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ApiResponseLastUpdated_IsIn != null)
 				{
@@ -8749,71 +8629,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			EpisodePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(EpisodePocoMetadata);
 
-			EpisodePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.EpisodeDescription != myInstance.EpisodeDescription)
-				{
-					changedColumnNames.Add("episode_description");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.EpisodeDescription ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.EpisodeNumber != myInstance.EpisodeNumber)
-				{
-					changedColumnNames.Add("episode_number");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.EpisodeNumber });
-				}
-
-				if(dbInstance.EpisodeTitle != myInstance.EpisodeTitle)
-				{
-					changedColumnNames.Add("episode_title");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.EpisodeTitle ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.FirstAired != myInstance.FirstAired)
-				{
-					changedColumnNames.Add("first_aired");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.FirstAired ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.Imdbid != myInstance.Imdbid)
-				{
-					changedColumnNames.Add("imdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Imdbid ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.LastUpdated != myInstance.LastUpdated)
-				{
-					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.LastUpdated });
-				}
-
-				if(dbInstance.SeasonNumber != myInstance.SeasonNumber)
-				{
-					changedColumnNames.Add("season_number");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.SeasonNumber });
-				}
-
-				if(dbInstance.ShowID != myInstance.ShowID)
-				{
-					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });
-				}
-
-				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
-				{
-					changedColumnNames.Add("thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.Thetvdbid });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			EpisodePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(EpisodePocoMetadata);
 
 			EpisodePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(EpisodePocoMetadata);
 
@@ -8829,42 +8649,42 @@ namespace TrackTv.Data
 					columnNames.Add("episode_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.EpisodeID_NotEqual != null)
 				{
 					columnNames.Add("episode_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.EpisodeID_LessThan != null)
 				{
 					columnNames.Add("episode_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.EpisodeID_LessThanOrEqual != null)
 				{
 					columnNames.Add("episode_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.EpisodeID_GreaterThan != null)
 				{
 					columnNames.Add("episode_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.EpisodeID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("episode_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.EpisodeID_IsIn != null)
 				{
@@ -8885,56 +8705,56 @@ namespace TrackTv.Data
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_NotEqual != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_StartsWith != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_DoesNotStartWith != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_EndsWith != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_DoesNotEndWith != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_Contains != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_DoesNotContain != null)
 				{
 					columnNames.Add("episode_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.EpisodeDescription_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.EpisodeDescription_IsNull != null)
 				{
@@ -8969,42 +8789,42 @@ namespace TrackTv.Data
 					columnNames.Add("episode_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.EpisodeNumber_NotEqual != null)
 				{
 					columnNames.Add("episode_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.EpisodeNumber_LessThan != null)
 				{
 					columnNames.Add("episode_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.EpisodeNumber_LessThanOrEqual != null)
 				{
 					columnNames.Add("episode_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.EpisodeNumber_GreaterThan != null)
 				{
 					columnNames.Add("episode_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.EpisodeNumber_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("episode_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.EpisodeNumber_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.EpisodeNumber_IsIn != null)
 				{
@@ -9025,56 +8845,56 @@ namespace TrackTv.Data
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_NotEqual != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_StartsWith != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_DoesNotStartWith != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_EndsWith != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_DoesNotEndWith != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_Contains != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_DoesNotContain != null)
 				{
 					columnNames.Add("episode_title");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.EpisodeTitle_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.EpisodeTitle_IsNull != null)
 				{
@@ -9109,14 +8929,14 @@ namespace TrackTv.Data
 					columnNames.Add("first_aired");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.FirstAired_NotEqual != null)
 				{
 					columnNames.Add("first_aired");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.FirstAired_IsNull != null)
 				{
@@ -9151,56 +8971,56 @@ namespace TrackTv.Data
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Imdbid_NotEqual != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Imdbid_StartsWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.Imdbid_DoesNotStartWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.Imdbid_EndsWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.Imdbid_DoesNotEndWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.Imdbid_Contains != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.Imdbid_DoesNotContain != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.Imdbid_IsNull != null)
 				{
@@ -9235,42 +9055,42 @@ namespace TrackTv.Data
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_LessThan != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.LastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.LastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_IsIn != null)
 				{
@@ -9291,42 +9111,42 @@ namespace TrackTv.Data
 					columnNames.Add("season_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.SeasonNumber_NotEqual != null)
 				{
 					columnNames.Add("season_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.SeasonNumber_LessThan != null)
 				{
 					columnNames.Add("season_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.SeasonNumber_LessThanOrEqual != null)
 				{
 					columnNames.Add("season_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.SeasonNumber_GreaterThan != null)
 				{
 					columnNames.Add("season_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.SeasonNumber_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("season_number");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SeasonNumber_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.SeasonNumber_IsIn != null)
 				{
@@ -9347,42 +9167,42 @@ namespace TrackTv.Data
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -9403,42 +9223,42 @@ namespace TrackTv.Data
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
@@ -9456,23 +9276,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			GenrePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(GenrePocoMetadata);
 
-			GenrePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.GenreName != myInstance.GenreName)
-				{
-					changedColumnNames.Add("genre_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.GenreName ?? (object)DBNull.Value });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			GenrePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(GenrePocoMetadata);
 
 			GenrePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(GenrePocoMetadata);
 
@@ -9488,42 +9296,42 @@ namespace TrackTv.Data
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.GenreID_NotEqual != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.GenreID_LessThan != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.GenreID_LessThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.GenreID_GreaterThan != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.GenreID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.GenreID_IsIn != null)
 				{
@@ -9544,56 +9352,56 @@ namespace TrackTv.Data
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.GenreName_NotEqual != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.GenreName_StartsWith != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.GenreName_DoesNotStartWith != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.GenreName_EndsWith != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.GenreName_DoesNotEndWith != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.GenreName_Contains != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.GenreName_DoesNotContain != null)
 				{
 					columnNames.Add("genre_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.GenreName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.GenreName_IsIn != null)
 				{
@@ -9611,23 +9419,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			NetworkPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(NetworkPocoMetadata);
 
-			NetworkPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.NetworkName != myInstance.NetworkName)
-				{
-					changedColumnNames.Add("network_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.NetworkName ?? (object)DBNull.Value });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			NetworkPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(NetworkPocoMetadata);
 
 			NetworkPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(NetworkPocoMetadata);
 
@@ -9643,42 +9439,42 @@ namespace TrackTv.Data
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.NetworkID_NotEqual != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.NetworkID_LessThan != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.NetworkID_LessThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.NetworkID_GreaterThan != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.NetworkID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.NetworkID_IsIn != null)
 				{
@@ -9699,56 +9495,56 @@ namespace TrackTv.Data
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.NetworkName_NotEqual != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.NetworkName_StartsWith != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.NetworkName_DoesNotStartWith != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.NetworkName_EndsWith != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.NetworkName_DoesNotEndWith != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.NetworkName_Contains != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.NetworkName_DoesNotContain != null)
 				{
 					columnNames.Add("network_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.NetworkName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.NetworkName_IsIn != null)
 				{
@@ -9766,23 +9562,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			ProfilePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ProfilePocoMetadata);
 
-			ProfilePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ProfileName != myInstance.ProfileName)
-				{
-					changedColumnNames.Add("profile_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ProfileName ?? (object)DBNull.Value });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ProfilePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ProfilePocoMetadata);
 
 			ProfilePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ProfilePocoMetadata);
 
@@ -9798,42 +9582,42 @@ namespace TrackTv.Data
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ProfileID_NotEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_LessThan != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_IsIn != null)
 				{
@@ -9854,56 +9638,56 @@ namespace TrackTv.Data
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ProfileName_NotEqual != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ProfileName_StartsWith != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ProfileName_DoesNotStartWith != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ProfileName_EndsWith != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ProfileName_DoesNotEndWith != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ProfileName_Contains != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ProfileName_DoesNotContain != null)
 				{
 					columnNames.Add("profile_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ProfileName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ProfileName_IsIn != null)
 				{
@@ -9921,35 +9705,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			RolePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(RolePocoMetadata);
 
-			RolePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ActorID != myInstance.ActorID)
-				{
-					changedColumnNames.Add("actor_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ActorID });
-				}
-
-				if(dbInstance.RoleName != myInstance.RoleName)
-				{
-					changedColumnNames.Add("role_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.RoleName ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ShowID != myInstance.ShowID)
-				{
-					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			RolePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(RolePocoMetadata);
 
 			RolePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(RolePocoMetadata);
 
@@ -9965,42 +9725,42 @@ namespace TrackTv.Data
 					columnNames.Add("role_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.RoleID_NotEqual != null)
 				{
 					columnNames.Add("role_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.RoleID_LessThan != null)
 				{
 					columnNames.Add("role_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.RoleID_LessThanOrEqual != null)
 				{
 					columnNames.Add("role_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.RoleID_GreaterThan != null)
 				{
 					columnNames.Add("role_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.RoleID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("role_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.RoleID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.RoleID_IsIn != null)
 				{
@@ -10021,42 +9781,42 @@ namespace TrackTv.Data
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ActorID_NotEqual != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ActorID_LessThan != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ActorID_LessThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ActorID_GreaterThan != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ActorID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("actor_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ActorID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ActorID_IsIn != null)
 				{
@@ -10077,56 +9837,56 @@ namespace TrackTv.Data
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.RoleName_NotEqual != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.RoleName_StartsWith != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.RoleName_DoesNotStartWith != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.RoleName_EndsWith != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.RoleName_DoesNotEndWith != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.RoleName_Contains != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.RoleName_DoesNotContain != null)
 				{
 					columnNames.Add("role_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.RoleName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.RoleName_IsNull != null)
 				{
@@ -10161,42 +9921,42 @@ namespace TrackTv.Data
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -10214,29 +9974,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			SettingPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(SettingPocoMetadata);
 
-			SettingPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.SettingValue != myInstance.SettingValue)
-				{
-					changedColumnNames.Add("setting_value");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.SettingValue ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.SettingName != myInstance.SettingName)
-				{
-					changedColumnNames.Add("setting_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.SettingName ?? (object)DBNull.Value });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			SettingPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(SettingPocoMetadata);
 
 			SettingPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(SettingPocoMetadata);
 
@@ -10252,42 +9994,42 @@ namespace TrackTv.Data
 					columnNames.Add("setting_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.SettingID_NotEqual != null)
 				{
 					columnNames.Add("setting_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.SettingID_LessThan != null)
 				{
 					columnNames.Add("setting_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.SettingID_LessThanOrEqual != null)
 				{
 					columnNames.Add("setting_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.SettingID_GreaterThan != null)
 				{
 					columnNames.Add("setting_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.SettingID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("setting_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SettingID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.SettingID_IsIn != null)
 				{
@@ -10308,56 +10050,56 @@ namespace TrackTv.Data
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.SettingValue_NotEqual != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.SettingValue_StartsWith != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.SettingValue_DoesNotStartWith != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.SettingValue_EndsWith != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.SettingValue_DoesNotEndWith != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.SettingValue_Contains != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.SettingValue_DoesNotContain != null)
 				{
 					columnNames.Add("setting_value");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingValue_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.SettingValue_IsIn != null)
 				{
@@ -10378,56 +10120,56 @@ namespace TrackTv.Data
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.SettingName_NotEqual != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.SettingName_StartsWith != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.SettingName_DoesNotStartWith != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.SettingName_EndsWith != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.SettingName_DoesNotEndWith != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.SettingName_Contains != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.SettingName_DoesNotContain != null)
 				{
 					columnNames.Add("setting_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.SettingName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.SettingName_IsIn != null)
 				{
@@ -10445,83 +10187,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			ShowPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ShowPocoMetadata);
 
-			ShowPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.AirDay != myInstance.AirDay)
-				{
-					changedColumnNames.Add("air_day");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.AirDay ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.AirTime != myInstance.AirTime)
-				{
-					changedColumnNames.Add("air_time");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.AirTime ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.FirstAired != myInstance.FirstAired)
-				{
-					changedColumnNames.Add("first_aired");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.FirstAired ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.Imdbid != myInstance.Imdbid)
-				{
-					changedColumnNames.Add("imdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Imdbid ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.LastUpdated != myInstance.LastUpdated)
-				{
-					changedColumnNames.Add("last_updated");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = myInstance.LastUpdated });
-				}
-
-				if(dbInstance.NetworkID != myInstance.NetworkID)
-				{
-					changedColumnNames.Add("network_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.NetworkID });
-				}
-
-				if(dbInstance.ShowBanner != myInstance.ShowBanner)
-				{
-					changedColumnNames.Add("show_banner");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ShowBanner ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ShowDescription != myInstance.ShowDescription)
-				{
-					changedColumnNames.Add("show_description");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = myInstance.ShowDescription ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ShowName != myInstance.ShowName)
-				{
-					changedColumnNames.Add("show_name");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.ShowName ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ShowStatus != myInstance.ShowStatus)
-				{
-					changedColumnNames.Add("show_status");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowStatus });
-				}
-
-				if(dbInstance.Thetvdbid != myInstance.Thetvdbid)
-				{
-					changedColumnNames.Add("thetvdbid");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.Thetvdbid });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ShowPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ShowPocoMetadata);
 
 			ShowPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ShowPocoMetadata);
 
@@ -10537,42 +10207,42 @@ namespace TrackTv.Data
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -10593,14 +10263,14 @@ namespace TrackTv.Data
 					columnNames.Add("air_day");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.AirDay });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.AirDay_NotEqual != null)
 				{
 					columnNames.Add("air_day");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.AirDay_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.AirDay_IsNull != null)
 				{
@@ -10635,14 +10305,14 @@ namespace TrackTv.Data
 					columnNames.Add("air_time");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.AirTime });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.AirTime_NotEqual != null)
 				{
 					columnNames.Add("air_time");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.AirTime_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.AirTime_IsNull != null)
 				{
@@ -10677,14 +10347,14 @@ namespace TrackTv.Data
 					columnNames.Add("first_aired");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.FirstAired_NotEqual != null)
 				{
 					columnNames.Add("first_aired");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.FirstAired_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.FirstAired_IsNull != null)
 				{
@@ -10719,56 +10389,56 @@ namespace TrackTv.Data
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Imdbid_NotEqual != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Imdbid_StartsWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.Imdbid_DoesNotStartWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.Imdbid_EndsWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.Imdbid_DoesNotEndWith != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.Imdbid_Contains != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.Imdbid_DoesNotContain != null)
 				{
 					columnNames.Add("imdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Imdbid_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.Imdbid_IsNull != null)
 				{
@@ -10803,42 +10473,42 @@ namespace TrackTv.Data
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.LastUpdated_NotEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_LessThan != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.LastUpdated_LessThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_GreaterThan != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.LastUpdated_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("last_updated");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Timestamp) { Value = fm.LastUpdated_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.LastUpdated_IsIn != null)
 				{
@@ -10859,42 +10529,42 @@ namespace TrackTv.Data
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.NetworkID_NotEqual != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.NetworkID_LessThan != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.NetworkID_LessThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.NetworkID_GreaterThan != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.NetworkID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("network_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.NetworkID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.NetworkID_IsIn != null)
 				{
@@ -10915,56 +10585,56 @@ namespace TrackTv.Data
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowBanner_NotEqual != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowBanner_StartsWith != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ShowBanner_DoesNotStartWith != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ShowBanner_EndsWith != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ShowBanner_DoesNotEndWith != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ShowBanner_Contains != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ShowBanner_DoesNotContain != null)
 				{
 					columnNames.Add("show_banner");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowBanner_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ShowBanner_IsNull != null)
 				{
@@ -10999,56 +10669,56 @@ namespace TrackTv.Data
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowDescription_NotEqual != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowDescription_StartsWith != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ShowDescription_DoesNotStartWith != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ShowDescription_EndsWith != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ShowDescription_DoesNotEndWith != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ShowDescription_Contains != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ShowDescription_DoesNotContain != null)
 				{
 					columnNames.Add("show_description");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Text) { Value = fm.ShowDescription_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ShowDescription_IsNull != null)
 				{
@@ -11083,56 +10753,56 @@ namespace TrackTv.Data
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowName_NotEqual != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowName_StartsWith != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.ShowName_DoesNotStartWith != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.ShowName_EndsWith != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.ShowName_DoesNotEndWith != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.ShowName_Contains != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.ShowName_DoesNotContain != null)
 				{
 					columnNames.Add("show_name");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.ShowName_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.ShowName_IsIn != null)
 				{
@@ -11153,42 +10823,42 @@ namespace TrackTv.Data
 					columnNames.Add("show_status");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowStatus_NotEqual != null)
 				{
 					columnNames.Add("show_status");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowStatus_LessThan != null)
 				{
 					columnNames.Add("show_status");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowStatus_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_status");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowStatus_GreaterThan != null)
 				{
 					columnNames.Add("show_status");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowStatus_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_status");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowStatus_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowStatus_IsIn != null)
 				{
@@ -11209,42 +10879,42 @@ namespace TrackTv.Data
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Thetvdbid_NotEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_LessThan != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.Thetvdbid_LessThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_GreaterThan != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.Thetvdbid_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("thetvdbid");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.Thetvdbid_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.Thetvdbid_IsIn != null)
 				{
@@ -11262,29 +10932,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			ShowGenrePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ShowGenrePocoMetadata);
 
-			ShowGenrePocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ShowID != myInstance.ShowID)
-				{
-					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });
-				}
-
-				if(dbInstance.GenreID != myInstance.GenreID)
-				{
-					changedColumnNames.Add("genre_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.GenreID });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			ShowGenrePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ShowGenrePocoMetadata);
 
 			ShowGenrePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ShowGenrePocoMetadata);
 
@@ -11300,42 +10952,42 @@ namespace TrackTv.Data
 					columnNames.Add("shows_genres_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowsGenresID_NotEqual != null)
 				{
 					columnNames.Add("shows_genres_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowsGenresID_LessThan != null)
 				{
 					columnNames.Add("shows_genres_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowsGenresID_LessThanOrEqual != null)
 				{
 					columnNames.Add("shows_genres_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowsGenresID_GreaterThan != null)
 				{
 					columnNames.Add("shows_genres_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowsGenresID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("shows_genres_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowsGenresID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowsGenresID_IsIn != null)
 				{
@@ -11356,42 +11008,42 @@ namespace TrackTv.Data
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -11412,42 +11064,42 @@ namespace TrackTv.Data
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.GenreID_NotEqual != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.GenreID_LessThan != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.GenreID_LessThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.GenreID_GreaterThan != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.GenreID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("genre_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.GenreID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.GenreID_IsIn != null)
 				{
@@ -11465,29 +11117,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			SubscriptionPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(SubscriptionPocoMetadata);
 
-			SubscriptionPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.ProfileID != myInstance.ProfileID)
-				{
-					changedColumnNames.Add("profile_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ProfileID });
-				}
-
-				if(dbInstance.ShowID != myInstance.ShowID)
-				{
-					changedColumnNames.Add("show_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ShowID });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			SubscriptionPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(SubscriptionPocoMetadata);
 
 			SubscriptionPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(SubscriptionPocoMetadata);
 
@@ -11503,42 +11137,42 @@ namespace TrackTv.Data
 					columnNames.Add("subscription_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.SubscriptionID_NotEqual != null)
 				{
 					columnNames.Add("subscription_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.SubscriptionID_LessThan != null)
 				{
 					columnNames.Add("subscription_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.SubscriptionID_LessThanOrEqual != null)
 				{
 					columnNames.Add("subscription_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.SubscriptionID_GreaterThan != null)
 				{
 					columnNames.Add("subscription_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.SubscriptionID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("subscription_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.SubscriptionID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.SubscriptionID_IsIn != null)
 				{
@@ -11559,42 +11193,42 @@ namespace TrackTv.Data
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ProfileID_NotEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_LessThan != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_IsIn != null)
 				{
@@ -11615,42 +11249,42 @@ namespace TrackTv.Data
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ShowID_NotEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ShowID_LessThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ShowID_LessThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThan != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ShowID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("show_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ShowID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ShowID_IsIn != null)
 				{
@@ -11668,41 +11302,11 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			UserPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(UserPocoMetadata);
 
-			UserPocoMetadata.GetColumnChanges = (dbInstance, myInstance) =>
-			{
-				var changedColumnNames = new List<string>();
-				var changedColumnParameters = new List<NpgsqlParameter>();
-
-				if(dbInstance.IsAdmin != myInstance.IsAdmin)
-				{
-					changedColumnNames.Add("is_admin");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = myInstance.IsAdmin });
-				}
-
-				if(dbInstance.Username != myInstance.Username)
-				{
-					changedColumnNames.Add("username");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Username ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.Password != myInstance.Password)
-				{
-					changedColumnNames.Add("password");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = myInstance.Password ?? (object)DBNull.Value });
-				}
-
-				if(dbInstance.ProfileID != myInstance.ProfileID)
-				{
-					changedColumnNames.Add("profile_id");
-					changedColumnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = myInstance.ProfileID });
-				}
-
-				return (changedColumnNames, changedColumnParameters);
-			};		
+			UserPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(UserPocoMetadata);
 
 			UserPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(UserPocoMetadata);
 
@@ -11718,42 +11322,42 @@ namespace TrackTv.Data
 					columnNames.Add("user_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.UserID_NotEqual != null)
 				{
 					columnNames.Add("user_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.UserID_LessThan != null)
 				{
 					columnNames.Add("user_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.UserID_LessThanOrEqual != null)
 				{
 					columnNames.Add("user_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.UserID_GreaterThan != null)
 				{
 					columnNames.Add("user_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.UserID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("user_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.UserID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.UserID_IsIn != null)
 				{
@@ -11774,14 +11378,14 @@ namespace TrackTv.Data
 					columnNames.Add("is_admin");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.IsAdmin });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.IsAdmin_NotEqual != null)
 				{
 					columnNames.Add("is_admin");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Boolean) { Value = fm.IsAdmin_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.IsAdmin_IsIn != null)
 				{
@@ -11802,56 +11406,56 @@ namespace TrackTv.Data
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Username_NotEqual != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Username_StartsWith != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.Username_DoesNotStartWith != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.Username_EndsWith != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.Username_DoesNotEndWith != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.Username_Contains != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.Username_DoesNotContain != null)
 				{
 					columnNames.Add("username");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Username_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.Username_IsIn != null)
 				{
@@ -11872,56 +11476,56 @@ namespace TrackTv.Data
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.Password_NotEqual != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.Password_StartsWith != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_StartsWith });
 					operators.Add(QueryOperatorType.StartsWith);
-				}		 
+				}
 
 				if(fm.Password_DoesNotStartWith != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_DoesNotStartWith });
 					operators.Add(QueryOperatorType.DoesNotStartWith);
-				}		 
+				}
 
 				if(fm.Password_EndsWith != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_EndsWith });
 					operators.Add(QueryOperatorType.EndsWith);
-				}		 
+				}
 
 				if(fm.Password_DoesNotEndWith != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_DoesNotEndWith });
 					operators.Add(QueryOperatorType.DoesNotEndWith);
-				}		 
+				}
 
 				if(fm.Password_Contains != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_Contains });
 					operators.Add(QueryOperatorType.Contains);
-				}		 
+				}
 
 				if(fm.Password_DoesNotContain != null)
 				{
 					columnNames.Add("password");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Varchar) { Value = fm.Password_DoesNotContain });
 					operators.Add(QueryOperatorType.DoesNotContain);
-				}		 
+				}
 
 				if(fm.Password_IsIn != null)
 				{
@@ -11942,42 +11546,42 @@ namespace TrackTv.Data
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID });
 					operators.Add(QueryOperatorType.Equal);
-				}		 
+				}
 
 				if(fm.ProfileID_NotEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_NotEqual });
 					operators.Add(QueryOperatorType.NotEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_LessThan != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThan });
 					operators.Add(QueryOperatorType.LessThan);
-				}		 
+				}
 
 				if(fm.ProfileID_LessThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_LessThanOrEqual });
 					operators.Add(QueryOperatorType.LessThanOrEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_GreaterThan != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThan });
 					operators.Add(QueryOperatorType.GreaterThan);
-				}		 
+				}
 
 				if(fm.ProfileID_GreaterThanOrEqual != null)
 				{
 					columnNames.Add("profile_id");
 					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Integer) { Value = fm.ProfileID_GreaterThanOrEqual });
 					operators.Add(QueryOperatorType.GreaterThanOrEqual);
-				}		 
+				}
 
 				if(fm.ProfileID_IsIn != null)
 				{
@@ -11995,8 +11599,8 @@ namespace TrackTv.Data
 
 
 				return (columnNames, columnParameters, operators);
-			};			
-			
+			};
+
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{
 				{typeof(ActorPoco), ActorPocoMetadata},
@@ -12013,7 +11617,7 @@ namespace TrackTv.Data
 				{typeof(ShowGenrePoco), ShowGenrePocoMetadata},
 				{typeof(SubscriptionPoco), SubscriptionPocoMetadata},
 				{typeof(UserPoco), UserPocoMetadata},
-			};		
+			};
 		}
 
 		public static void Initialize()
@@ -12028,9 +11632,9 @@ namespace TrackTv.Data
 				if(Initialized)
 				{
 					return;
-				}			
+				}
 
-				InitializeInternal();	
+				InitializeInternal();
 
 				Initialized = true;
 			}
@@ -12042,7 +11646,7 @@ namespace TrackTv.Data
 		}
 
 		/// <summary>
-		/// <para>Database table 'actors'.</para>		
+		/// <para>Database table 'actors'.</para>
 		/// </summary>
         public IQueryable<ActorPoco> Actors => this.DbService.GetTable<ActorPoco>();
 
@@ -12052,9 +11656,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ActorCM'.</para>
 		/// </summary>
 		public Task<List<ActorCM>> Filter(ActorFM filter) => this.DbService.FilterInternal<ActorPoco, ActorCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'api_change_types'.</para>		
+		/// <para>Database table 'api_change_types'.</para>
 		/// </summary>
         public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.DbService.GetTable<ApiChangeTypePoco>();
 
@@ -12064,9 +11668,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ApiChangeTypeCM'.</para>
 		/// </summary>
 		public Task<List<ApiChangeTypeCM>> Filter(ApiChangeTypeFM filter) => this.DbService.FilterInternal<ApiChangeTypePoco, ApiChangeTypeCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'api_changes'.</para>		
+		/// <para>Database table 'api_changes'.</para>
 		/// </summary>
         public IQueryable<ApiChangePoco> ApiChanges => this.DbService.GetTable<ApiChangePoco>();
 
@@ -12076,9 +11680,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ApiChangeCM'.</para>
 		/// </summary>
 		public Task<List<ApiChangeCM>> Filter(ApiChangeFM filter) => this.DbService.FilterInternal<ApiChangePoco, ApiChangeCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'api_responses'.</para>		
+		/// <para>Database table 'api_responses'.</para>
 		/// </summary>
         public IQueryable<ApiResponsePoco> ApiResponses => this.DbService.GetTable<ApiResponsePoco>();
 
@@ -12088,9 +11692,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ApiResponseCM'.</para>
 		/// </summary>
 		public Task<List<ApiResponseCM>> Filter(ApiResponseFM filter) => this.DbService.FilterInternal<ApiResponsePoco, ApiResponseCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'episodes'.</para>		
+		/// <para>Database table 'episodes'.</para>
 		/// </summary>
         public IQueryable<EpisodePoco> Episodes => this.DbService.GetTable<EpisodePoco>();
 
@@ -12100,9 +11704,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'EpisodeCM'.</para>
 		/// </summary>
 		public Task<List<EpisodeCM>> Filter(EpisodeFM filter) => this.DbService.FilterInternal<EpisodePoco, EpisodeCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'genres'.</para>		
+		/// <para>Database table 'genres'.</para>
 		/// </summary>
         public IQueryable<GenrePoco> Genres => this.DbService.GetTable<GenrePoco>();
 
@@ -12112,9 +11716,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'GenreCM'.</para>
 		/// </summary>
 		public Task<List<GenreCM>> Filter(GenreFM filter) => this.DbService.FilterInternal<GenrePoco, GenreCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'networks'.</para>		
+		/// <para>Database table 'networks'.</para>
 		/// </summary>
         public IQueryable<NetworkPoco> Networks => this.DbService.GetTable<NetworkPoco>();
 
@@ -12124,9 +11728,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'NetworkCM'.</para>
 		/// </summary>
 		public Task<List<NetworkCM>> Filter(NetworkFM filter) => this.DbService.FilterInternal<NetworkPoco, NetworkCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'profiles'.</para>		
+		/// <para>Database table 'profiles'.</para>
 		/// </summary>
         public IQueryable<ProfilePoco> Profiles => this.DbService.GetTable<ProfilePoco>();
 
@@ -12136,9 +11740,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ProfileCM'.</para>
 		/// </summary>
 		public Task<List<ProfileCM>> Filter(ProfileFM filter) => this.DbService.FilterInternal<ProfilePoco, ProfileCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'roles'.</para>		
+		/// <para>Database table 'roles'.</para>
 		/// </summary>
         public IQueryable<RolePoco> Roles => this.DbService.GetTable<RolePoco>();
 
@@ -12148,9 +11752,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'RoleCM'.</para>
 		/// </summary>
 		public Task<List<RoleCM>> Filter(RoleFM filter) => this.DbService.FilterInternal<RolePoco, RoleCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'settings'.</para>		
+		/// <para>Database table 'settings'.</para>
 		/// </summary>
         public IQueryable<SettingPoco> Settings => this.DbService.GetTable<SettingPoco>();
 
@@ -12160,9 +11764,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'SettingCM'.</para>
 		/// </summary>
 		public Task<List<SettingCM>> Filter(SettingFM filter) => this.DbService.FilterInternal<SettingPoco, SettingCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'shows'.</para>		
+		/// <para>Database table 'shows'.</para>
 		/// </summary>
         public IQueryable<ShowPoco> Shows => this.DbService.GetTable<ShowPoco>();
 
@@ -12172,9 +11776,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ShowCM'.</para>
 		/// </summary>
 		public Task<List<ShowCM>> Filter(ShowFM filter) => this.DbService.FilterInternal<ShowPoco, ShowCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'shows_genres'.</para>		
+		/// <para>Database table 'shows_genres'.</para>
 		/// </summary>
         public IQueryable<ShowGenrePoco> ShowsGenres => this.DbService.GetTable<ShowGenrePoco>();
 
@@ -12184,9 +11788,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'ShowGenreCM'.</para>
 		/// </summary>
 		public Task<List<ShowGenreCM>> Filter(ShowGenreFM filter) => this.DbService.FilterInternal<ShowGenrePoco, ShowGenreCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'subscriptions'.</para>		
+		/// <para>Database table 'subscriptions'.</para>
 		/// </summary>
         public IQueryable<SubscriptionPoco> Subscriptions => this.DbService.GetTable<SubscriptionPoco>();
 
@@ -12196,9 +11800,9 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'SubscriptionCM'.</para>
 		/// </summary>
 		public Task<List<SubscriptionCM>> Filter(SubscriptionFM filter) => this.DbService.FilterInternal<SubscriptionPoco, SubscriptionCM>(filter);
-		
+
 		/// <summary>
-		/// <para>Database table 'users'.</para>		
+		/// <para>Database table 'users'.</para>
 		/// </summary>
         public IQueryable<UserPoco> Users => this.DbService.GetTable<UserPoco>();
 
@@ -12208,7 +11812,7 @@ namespace TrackTv.Data
 		/// <para>Catalog model 'UserCM'.</para>
 		/// </summary>
 		public Task<List<UserCM>> Filter(UserFM filter) => this.DbService.FilterInternal<UserPoco, UserCM>(filter);
-		
+
 		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
 		public IDbService<DbPocos> DbService { private get; set; }

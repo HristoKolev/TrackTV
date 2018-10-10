@@ -75,10 +75,10 @@
 			var newObj = new {{ClassName}}Poco();
 
 			{{#each columns}}
-			setters["{{ColumnName}}"](newObj, poco.{{PropertyName}});	
+			setters["{{ColumnName}}"](newObj, poco.{{PropertyName}});
 			Assert.Equal(poco.{{PropertyName}}, newObj.{{PropertyName}});
 
-			{{/each}}			
+			{{/each}}
         }
 
 		[Theory]
