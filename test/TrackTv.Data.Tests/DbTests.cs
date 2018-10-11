@@ -3,7 +3,8 @@ namespace TrackTv.Data.Tests
 	using System;
     using System.Collections.Generic;
 	using System.Linq;
-    using System.Threading.Tasks;	
+	using System.Reflection;
+	using System.Threading.Tasks;	
 
     using LinqToDB;
 
@@ -283,6 +284,35 @@ namespace TrackTv.Data.Tests
                 }
             }
         }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<Test1Poco, Test1FM>))]
+        public void ParseFm(Test1FM filter)
+        {
+            var properties = typeof(Test1FM).GetProperties().Where(x => x.GetValue(filter) != null);
+            var attributes = properties.Select(x => x.GetCustomAttribute<FilterOperatorAttribute>()).ToList();
+
+            var expectedNames = attributes.Select(x => x.ColumnName).ToList();
+            var expectedOperators = attributes.Select(x => x.QueryOperatorType).ToList();
+            var expectedValues = properties.Select(x =>
+               {
+                   var attr = x.GetCustomAttribute<FilterOperatorAttribute>();
+
+                   if (attr.QueryOperatorType    == QueryOperatorType.IsNull
+                       || attr.QueryOperatorType == QueryOperatorType.IsNotNull)
+                   {
+                       return null;
+                   }
+
+                   return x.GetValue(filter);
+               }).ToList();
+
+            var (columnNames, columnParameters, operators) = TestDbPocos.Test1PocoMetadata.ParseFM(filter);
+
+            Assert.Equal(expectedNames, columnNames);
+            Assert.Equal(expectedOperators, operators);
+            Assert.Equal(expectedValues, columnParameters.Select(x => x?.Value).ToList());
+        }
     }
 
     public class Test2Test : DatabaseTest
@@ -466,6 +496,35 @@ namespace TrackTv.Data.Tests
                     }
                 }
             }
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<Test2Poco, Test2FM>))]
+        public void ParseFm(Test2FM filter)
+        {
+            var properties = typeof(Test2FM).GetProperties().Where(x => x.GetValue(filter) != null);
+            var attributes = properties.Select(x => x.GetCustomAttribute<FilterOperatorAttribute>()).ToList();
+
+            var expectedNames = attributes.Select(x => x.ColumnName).ToList();
+            var expectedOperators = attributes.Select(x => x.QueryOperatorType).ToList();
+            var expectedValues = properties.Select(x =>
+               {
+                   var attr = x.GetCustomAttribute<FilterOperatorAttribute>();
+
+                   if (attr.QueryOperatorType    == QueryOperatorType.IsNull
+                       || attr.QueryOperatorType == QueryOperatorType.IsNotNull)
+                   {
+                       return null;
+                   }
+
+                   return x.GetValue(filter);
+               }).ToList();
+
+            var (columnNames, columnParameters, operators) = TestDbPocos.Test2PocoMetadata.ParseFM(filter);
+
+            Assert.Equal(expectedNames, columnNames);
+            Assert.Equal(expectedOperators, operators);
+            Assert.Equal(expectedValues, columnParameters.Select(x => x?.Value).ToList());
         }
     }
 

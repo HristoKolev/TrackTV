@@ -372,6 +372,16 @@
             this.DbType = dbType;
         }
 
+        public FilterOperatorAttribute(QueryOperatorType queryOperatorType, string propertyName, NpgsqlDbType dbType, string columnName)
+        {
+            this.QueryOperatorType = queryOperatorType;
+            this.PropertyName = propertyName;
+            this.DbType = dbType;
+            this.ColumnName = columnName;
+        }
+
+        public string ColumnName { get; }
+
         public string PropertyName { get; }
 
         public NpgsqlDbType DbType { get; }

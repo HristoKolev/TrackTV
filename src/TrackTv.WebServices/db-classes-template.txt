@@ -108,22 +108,22 @@ namespace {{model.Namespace}}
     {
         {{#each columns}}
 		{{#each ValidOperators}}
-		[FilterOperator(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}}, "{{../PropertyName}}", NpgsqlDbType.{{../NpgsDataTypeName}})]
+		[FilterOperator(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}}, "{{../PropertyName}}", NpgsqlDbType.{{../NpgsDataTypeName}}, "{{../ColumnName}}")]
         public {{../ClrNullableTypeName}} {{../PropertyName}}{{#if this}}_{{/if}}{{this}} { get; set; }
 
 		{{/each}}
 		{{#if IsNullable}}
-		[FilterOperator(QueryOperatorType.IsNull, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}})]
+		[FilterOperator(QueryOperatorType.IsNull, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}}, "{{ColumnName}}")]
 		public bool? {{PropertyName}}_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}})]
+		[FilterOperator(QueryOperatorType.IsNotNull, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}}, "{{ColumnName}}")]
 		public bool? {{PropertyName}}_IsNotNull { get; set; }
 
 		{{/if}}
-		[FilterOperator(QueryOperatorType.IsIn, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}})]
+		[FilterOperator(QueryOperatorType.IsIn, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}}, "{{ColumnName}}")]
 		public {{ClrNonNullableTypeName}}[] {{PropertyName}}_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}})]
+		[FilterOperator(QueryOperatorType.IsNotIn, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}}, "{{ColumnName}}")]
 		public {{ClrNonNullableTypeName}}[] {{PropertyName}}_IsNotIn { get; set; }
 
         {{/each}}

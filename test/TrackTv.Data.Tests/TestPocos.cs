@@ -676,508 +676,508 @@ namespace TrackTv.Data.Tests
     /// </summary>
     public class Test1FM : IFilterModel<Test1Poco>
     {
-		[FilterOperator(QueryOperatorType.Equal, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.Equal, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestID", NpgsqlDbType.Integer, "test_id")]
 		public int[] TestID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestID", NpgsqlDbType.Integer, "test_id")]
 		public int[] TestID_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.Equal, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.Contains, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
         public string TestName1_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
 		public string[] TestName1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestName1", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestName1", NpgsqlDbType.Varchar, "test_name1")]
 		public string[] TestName1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.Equal, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.Contains, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
         public string TestName2_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
 		public bool? TestName2_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
 		public bool? TestName2_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
 		public string[] TestName2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestName2", NpgsqlDbType.Varchar)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestName2", NpgsqlDbType.Varchar, "test_name2")]
 		public string[] TestName2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.Equal, "TestDate1", NpgsqlDbType.Date, "test_date1")]
         public DateTime? TestDate1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestDate1", NpgsqlDbType.Date, "test_date1")]
         public DateTime? TestDate1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestDate1", NpgsqlDbType.Date, "test_date1")]
         public DateTime? TestDate1_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDate1", NpgsqlDbType.Date, "test_date1")]
         public DateTime? TestDate1_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestDate1", NpgsqlDbType.Date, "test_date1")]
         public DateTime? TestDate1_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDate1", NpgsqlDbType.Date, "test_date1")]
         public DateTime? TestDate1_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestDate1", NpgsqlDbType.Date, "test_date1")]
 		public DateTime[] TestDate1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate1", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate1", NpgsqlDbType.Date, "test_date1")]
 		public DateTime[] TestDate1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestDate2", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.Equal, "TestDate2", NpgsqlDbType.Date, "test_date2")]
         public DateTime? TestDate2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestDate2", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestDate2", NpgsqlDbType.Date, "test_date2")]
         public DateTime? TestDate2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestDate2", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestDate2", NpgsqlDbType.Date, "test_date2")]
 		public bool? TestDate2_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestDate2", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestDate2", NpgsqlDbType.Date, "test_date2")]
 		public bool? TestDate2_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestDate2", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestDate2", NpgsqlDbType.Date, "test_date2")]
 		public DateTime[] TestDate2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate2", NpgsqlDbType.Date)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate2", NpgsqlDbType.Date, "test_date2")]
 		public DateTime[] TestDate2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.Equal, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
         public DateTime? TestTimestamp1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
         public DateTime? TestTimestamp1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
         public DateTime? TestTimestamp1_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
         public DateTime? TestTimestamp1_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
         public DateTime? TestTimestamp1_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
         public DateTime? TestTimestamp1_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
 		public DateTime[] TestTimestamp1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestTimestamp1", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestTimestamp1", NpgsqlDbType.Timestamp, "test_timestamp1")]
 		public DateTime[] TestTimestamp1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestTimestamp2", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.Equal, "TestTimestamp2", NpgsqlDbType.Timestamp, "test_timestamp2")]
         public DateTime? TestTimestamp2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestTimestamp2", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestTimestamp2", NpgsqlDbType.Timestamp, "test_timestamp2")]
         public DateTime? TestTimestamp2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestTimestamp2", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestTimestamp2", NpgsqlDbType.Timestamp, "test_timestamp2")]
 		public bool? TestTimestamp2_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestTimestamp2", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestTimestamp2", NpgsqlDbType.Timestamp, "test_timestamp2")]
 		public bool? TestTimestamp2_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestTimestamp2", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestTimestamp2", NpgsqlDbType.Timestamp, "test_timestamp2")]
 		public DateTime[] TestTimestamp2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestTimestamp2", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestTimestamp2", NpgsqlDbType.Timestamp, "test_timestamp2")]
 		public DateTime[] TestTimestamp2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestBoolean1", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.Equal, "TestBoolean1", NpgsqlDbType.Boolean, "test_boolean1")]
         public bool? TestBoolean1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestBoolean1", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestBoolean1", NpgsqlDbType.Boolean, "test_boolean1")]
         public bool? TestBoolean1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestBoolean1", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestBoolean1", NpgsqlDbType.Boolean, "test_boolean1")]
 		public bool[] TestBoolean1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestBoolean1", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestBoolean1", NpgsqlDbType.Boolean, "test_boolean1")]
 		public bool[] TestBoolean1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestBoolean2", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.Equal, "TestBoolean2", NpgsqlDbType.Boolean, "test_boolean2")]
         public bool? TestBoolean2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestBoolean2", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestBoolean2", NpgsqlDbType.Boolean, "test_boolean2")]
         public bool? TestBoolean2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestBoolean2", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestBoolean2", NpgsqlDbType.Boolean, "test_boolean2")]
 		public bool? TestBoolean2_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestBoolean2", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestBoolean2", NpgsqlDbType.Boolean, "test_boolean2")]
 		public bool? TestBoolean2_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestBoolean2", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestBoolean2", NpgsqlDbType.Boolean, "test_boolean2")]
 		public bool[] TestBoolean2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestBoolean2", NpgsqlDbType.Boolean)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestBoolean2", NpgsqlDbType.Boolean, "test_boolean2")]
 		public bool[] TestBoolean2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestInteger1", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.Equal, "TestInteger1", NpgsqlDbType.Integer, "test_integer1")]
         public int? TestInteger1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestInteger1", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestInteger1", NpgsqlDbType.Integer, "test_integer1")]
         public int? TestInteger1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestInteger1", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestInteger1", NpgsqlDbType.Integer, "test_integer1")]
 		public bool? TestInteger1_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestInteger1", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestInteger1", NpgsqlDbType.Integer, "test_integer1")]
 		public bool? TestInteger1_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestInteger1", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestInteger1", NpgsqlDbType.Integer, "test_integer1")]
 		public int[] TestInteger1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestInteger1", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestInteger1", NpgsqlDbType.Integer, "test_integer1")]
 		public int[] TestInteger1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.Equal, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
         public int? TestInteger2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
         public int? TestInteger2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
         public int? TestInteger2_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
         public int? TestInteger2_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
         public int? TestInteger2_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
         public int? TestInteger2_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
 		public int[] TestInteger2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestInteger2", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestInteger2", NpgsqlDbType.Integer, "test_integer2")]
 		public int[] TestInteger2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestBigint1", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.Equal, "TestBigint1", NpgsqlDbType.Bigint, "test_bigint1")]
         public long? TestBigint1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestBigint1", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestBigint1", NpgsqlDbType.Bigint, "test_bigint1")]
         public long? TestBigint1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestBigint1", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestBigint1", NpgsqlDbType.Bigint, "test_bigint1")]
 		public bool? TestBigint1_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestBigint1", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestBigint1", NpgsqlDbType.Bigint, "test_bigint1")]
 		public bool? TestBigint1_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestBigint1", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestBigint1", NpgsqlDbType.Bigint, "test_bigint1")]
 		public long[] TestBigint1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestBigint1", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestBigint1", NpgsqlDbType.Bigint, "test_bigint1")]
 		public long[] TestBigint1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.Equal, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
         public long? TestBigint2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
         public long? TestBigint2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
         public long? TestBigint2_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
         public long? TestBigint2_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
         public long? TestBigint2_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
         public long? TestBigint2_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
 		public long[] TestBigint2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestBigint2", NpgsqlDbType.Bigint)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestBigint2", NpgsqlDbType.Bigint, "test_bigint2")]
 		public long[] TestBigint2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.Equal, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.Contains, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestText1", NpgsqlDbType.Text, "test_text1")]
         public string TestText1_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestText1", NpgsqlDbType.Text, "test_text1")]
 		public bool? TestText1_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestText1", NpgsqlDbType.Text, "test_text1")]
 		public bool? TestText1_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestText1", NpgsqlDbType.Text, "test_text1")]
 		public string[] TestText1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestText1", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestText1", NpgsqlDbType.Text, "test_text1")]
 		public string[] TestText1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.Equal, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.Contains, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestText2", NpgsqlDbType.Text, "test_text2")]
         public string TestText2_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestText2", NpgsqlDbType.Text, "test_text2")]
 		public string[] TestText2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestText2", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestText2", NpgsqlDbType.Text, "test_text2")]
 		public string[] TestText2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestReal1", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.Equal, "TestReal1", NpgsqlDbType.Real, "test_real1")]
         public float? TestReal1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestReal1", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestReal1", NpgsqlDbType.Real, "test_real1")]
         public float? TestReal1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestReal1", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestReal1", NpgsqlDbType.Real, "test_real1")]
 		public bool? TestReal1_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestReal1", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestReal1", NpgsqlDbType.Real, "test_real1")]
 		public bool? TestReal1_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestReal1", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestReal1", NpgsqlDbType.Real, "test_real1")]
 		public float[] TestReal1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestReal1", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestReal1", NpgsqlDbType.Real, "test_real1")]
 		public float[] TestReal1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.Equal, "TestReal2", NpgsqlDbType.Real, "test_real2")]
         public float? TestReal2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestReal2", NpgsqlDbType.Real, "test_real2")]
         public float? TestReal2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestReal2", NpgsqlDbType.Real, "test_real2")]
         public float? TestReal2_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestReal2", NpgsqlDbType.Real, "test_real2")]
         public float? TestReal2_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestReal2", NpgsqlDbType.Real, "test_real2")]
         public float? TestReal2_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestReal2", NpgsqlDbType.Real, "test_real2")]
         public float? TestReal2_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestReal2", NpgsqlDbType.Real, "test_real2")]
 		public float[] TestReal2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestReal2", NpgsqlDbType.Real)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestReal2", NpgsqlDbType.Real, "test_real2")]
 		public float[] TestReal2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestDouble1", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.Equal, "TestDouble1", NpgsqlDbType.Double, "test_double1")]
         public double? TestDouble1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestDouble1", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestDouble1", NpgsqlDbType.Double, "test_double1")]
         public double? TestDouble1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestDouble1", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestDouble1", NpgsqlDbType.Double, "test_double1")]
 		public bool? TestDouble1_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestDouble1", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestDouble1", NpgsqlDbType.Double, "test_double1")]
 		public bool? TestDouble1_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestDouble1", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestDouble1", NpgsqlDbType.Double, "test_double1")]
 		public double[] TestDouble1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestDouble1", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestDouble1", NpgsqlDbType.Double, "test_double1")]
 		public double[] TestDouble1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.Equal, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
         public double? TestDouble2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
         public double? TestDouble2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
         public double? TestDouble2_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
         public double? TestDouble2_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
         public double? TestDouble2_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
         public double? TestDouble2_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
 		public double[] TestDouble2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestDouble2", NpgsqlDbType.Double)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestDouble2", NpgsqlDbType.Double, "test_double2")]
 		public double[] TestDouble2_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.Equal, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.Contains, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestChar1", NpgsqlDbType.Char, "test_char1")]
         public string TestChar1_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.IsNull, "TestChar1", NpgsqlDbType.Char, "test_char1")]
 		public bool? TestChar1_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.IsNotNull, "TestChar1", NpgsqlDbType.Char, "test_char1")]
 		public bool? TestChar1_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestChar1", NpgsqlDbType.Char, "test_char1")]
 		public string[] TestChar1_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestChar1", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestChar1", NpgsqlDbType.Char, "test_char1")]
 		public string[] TestChar1_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.Equal, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2 { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.Contains, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestChar2", NpgsqlDbType.Char, "test_char2")]
         public string TestChar2_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestChar2", NpgsqlDbType.Char, "test_char2")]
 		public string[] TestChar2_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestChar2", NpgsqlDbType.Char)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestChar2", NpgsqlDbType.Char, "test_char2")]
 		public string[] TestChar2_IsNotIn { get; set; }
 
     }
@@ -1188,82 +1188,82 @@ namespace TrackTv.Data.Tests
     /// </summary>
     public class Test2FM : IFilterModel<Test2Poco>
     {
-		[FilterOperator(QueryOperatorType.Equal, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.Equal, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestID", NpgsqlDbType.Integer, "test_id")]
         public int? TestID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestID", NpgsqlDbType.Integer, "test_id")]
 		public int[] TestID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestID", NpgsqlDbType.Integer)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestID", NpgsqlDbType.Integer, "test_id")]
 		public int[] TestID_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.Equal, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.StartsWith, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.StartsWith, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_StartsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_DoesNotStartWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.EndsWith, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.EndsWith, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_EndsWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_DoesNotEndWith { get; set; }
 
-		[FilterOperator(QueryOperatorType.Contains, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.Contains, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_Contains { get; set; }
 
-		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.DoesNotContain, "TestName", NpgsqlDbType.Text, "test_name")]
         public string TestName_DoesNotContain { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestName", NpgsqlDbType.Text, "test_name")]
 		public string[] TestName_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestName", NpgsqlDbType.Text)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestName", NpgsqlDbType.Text, "test_name")]
 		public string[] TestName_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.Equal, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
         public DateTime? TestDate { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.NotEqual, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
         public DateTime? TestDate_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.LessThan, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
         public DateTime? TestDate_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
         public DateTime? TestDate_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.GreaterThan, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
         public DateTime? TestDate_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
         public DateTime? TestDate_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsIn, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
 		public DateTime[] TestDate_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate", NpgsqlDbType.Timestamp)]
+		[FilterOperator(QueryOperatorType.IsNotIn, "TestDate", NpgsqlDbType.Timestamp, "test_date")]
 		public DateTime[] TestDate_IsNotIn { get; set; }
 
     }

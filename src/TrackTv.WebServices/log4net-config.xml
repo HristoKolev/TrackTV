@@ -13,7 +13,7 @@
 
     <maximumFileSize value="10MB" />
 
-    <maxSizeRollBackups value="100" />
+    <maxSizeRollBackups value="10" />
 
     <encoding value="utf-8" />
 

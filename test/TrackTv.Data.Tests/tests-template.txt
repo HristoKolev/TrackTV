@@ -3,7 +3,8 @@
 	using System;
     using System.Collections.Generic;
 	using System.Linq;
-    using System.Threading.Tasks;	
+	using System.Reflection;
+	using System.Threading.Tasks;	
 
     using LinqToDB;
 
@@ -189,6 +190,35 @@
                     }
                 }
             }
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedFilterData<{{ClassName}}Poco, {{ClassName}}FM>))]
+        public void ParseFm({{ClassName}}FM filter)
+        {
+            var properties = typeof({{ClassName}}FM).GetProperties().Where(x => x.GetValue(filter) != null);
+            var attributes = properties.Select(x => x.GetCustomAttribute<FilterOperatorAttribute>()).ToList();
+
+            var expectedNames = attributes.Select(x => x.ColumnName).ToList();
+            var expectedOperators = attributes.Select(x => x.QueryOperatorType).ToList();
+            var expectedValues = properties.Select(x =>
+               {
+                   var attr = x.GetCustomAttribute<FilterOperatorAttribute>();
+
+                   if (attr.QueryOperatorType    == QueryOperatorType.IsNull
+                       || attr.QueryOperatorType == QueryOperatorType.IsNotNull)
+                   {
+                       return null;
+                   }
+
+                   return x.GetValue(filter);
+               }).ToList();
+
+            var (columnNames, columnParameters, operators) = TestDbPocos.{{ClassName}}PocoMetadata.ParseFM(filter);
+
+            Assert.Equal(expectedNames, columnNames);
+            Assert.Equal(expectedOperators, operators);
+            Assert.Equal(expectedValues, columnParameters.Select(x => x?.Value).ToList());
         }
     }
 
