@@ -471,5 +471,11 @@
                 il.Emit(OpCodes.Ret);
             });
         }
+
+        public static Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFM<T>(TableMetadataModel<T> metadata)
+            where T : IPoco<T>
+        {
+            throw new NotImplementedException();
+        }
     }
 }

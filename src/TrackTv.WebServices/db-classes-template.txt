@@ -266,57 +266,7 @@ namespace {{model.Namespace}}
 
 			{{ClassName}}PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns({{ClassName}}PocoMetadata);
 
-			{{ClassName}}PocoMetadata.ParseFM = (instance) => {
-				var columnNames = new List<string>();
-				var columnParameters = new List<NpgsqlParameter>();
-				var operators = new List<QueryOperatorType>();
-
-				var fm = instance as {{ClassName}}FM;
-
-				{{#each columns}}
-				{{#each ValidOperators}}
-				if(fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}} != null)
-				{
-					columnNames.Add("{{../ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.{{../NpgsDataTypeName}}) { Value = fm.{{../PropertyName}}{{#if this}}_{{/if}}{{this}}{{#if IsClrReferenceType}} ?? (object)DBNull.Value{{/if}} });
-					operators.Add(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}});
-				}
-
-				{{/each}}
-				{{#if IsNullable}}
-				if(fm.{{PropertyName}}_IsNull != null)
-				{
-					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNull);
-				}
-
-				if(fm.{{PropertyName}}_IsNotNull != null)
-				{
-					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(null);
-					operators.Add(QueryOperatorType.IsNotNull);
-				}
-
-				{{/if}}
-				if(fm.{{PropertyName}}_IsIn != null)
-				{
-					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsIn });
-					operators.Add(QueryOperatorType.IsIn);
-				}
-
-				if(fm.{{PropertyName}}_IsNotIn != null)
-				{
-					columnNames.Add("{{ColumnName}}");
-					columnParameters.Add(new NpgsqlParameter(null, NpgsqlDbType.Array | NpgsqlDbType.{{NpgsDataTypeName}}) { Value = fm.{{PropertyName}}_IsNotIn });
-					operators.Add(QueryOperatorType.IsNotIn);
-				}
-
-				{{/each}}
-
-				return (columnNames, columnParameters, operators);
-			};
+			{{ClassName}}PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM({{ClassName}}PocoMetadata);
 
 			{{/each}}
 			StaticMetadataByPocoType = new Dictionary<Type, object>
