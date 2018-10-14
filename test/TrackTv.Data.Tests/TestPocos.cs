@@ -2431,7 +2431,7 @@ namespace TrackTv.Data.Tests
 
 			Test1PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test1PocoMetadata);
 
-			Test1PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test1PocoMetadata);
+			Test1PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test1PocoMetadata, typeof(Test1FM));
 
 			Test2PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test2PocoMetadata);
 
@@ -2439,7 +2439,7 @@ namespace TrackTv.Data.Tests
 
 			Test2PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test2PocoMetadata);
 
-			Test2PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test2PocoMetadata);
+			Test2PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test2PocoMetadata, typeof(Test2FM));
 
 			StaticMetadataByPocoType = new Dictionary<Type, object>
 			{

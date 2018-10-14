@@ -472,10 +472,53 @@
             });
         }
 
-        public static Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFM<T>(TableMetadataModel<T> metadata)
-            where T : IPoco<T>
+        public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> 
+            GetParseFM<TPoco>(TableMetadataModel<TPoco> metadata, Type fmType)
+            where TPoco : IPoco<TPoco>
         {
-            throw new NotImplementedException();
+            var pocoType = typeof(TPoco);
+            var parameterType = typeof(NpgsqlParameter);
+
+            var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>)
+                .GetConstructor(new[] { typeof(List<string>), typeof(List<NpgsqlParameter>), typeof(List<QueryOperatorType>) });
+
+            var nullableTypes = fmType.GetProperties().Select(x => x.PropertyType).Where(IsNullableType).Distinct().ToList();
+
+            var stringListType = typeof(List<string>);
+            var parameterListType = typeof(List<NpgsqlParameter>);
+            var operatorListType = typeof(List<QueryOperatorType>);
+
+            return GenerateMethod<Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>>>(il =>
+            {
+                // create the columnNames list.
+                var columnNamesLocal = il.DeclareLocal(stringListType);
+                il.Emit(OpCodes.Newobj, stringListType.GetConstructor(Array.Empty<Type>()));
+                il.Emit(OpCodes.Stloc, columnNamesLocal);
+
+                // create the parameter list.
+                var parameterListLocal = il.DeclareLocal(parameterListType);
+                il.Emit(OpCodes.Newobj, parameterListType.GetConstructor(Array.Empty<Type>()));
+                il.Emit(OpCodes.Stloc, parameterListLocal);
+
+                // create the operator list.
+                var operatorListLocal = il.DeclareLocal(operatorListType);
+                il.Emit(OpCodes.Newobj, operatorListType.GetConstructor(Array.Empty<Type>()));
+                il.Emit(OpCodes.Stloc, operatorListLocal);
+
+                // for each unique nullable types declare 2 locals.
+                var nullableLocals = nullableTypes.ToDictionary(type => type, type => (il.DeclareLocal(type), il.DeclareLocal(type)));
+
+
+                 
+
+                il.Emit(OpCodes.Ldloc, columnNamesLocal);
+                il.Emit(OpCodes.Ldloc, parameterListLocal);
+                il.Emit(OpCodes.Ldloc, operatorListLocal);
+
+                il.Emit(OpCodes.Newobj, tupleConstructor);
+
+                il.Emit(OpCodes.Ret);
+            });
         }
     }
 }
