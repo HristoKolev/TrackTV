@@ -506,10 +506,54 @@
                 il.Emit(OpCodes.Stloc, operatorListLocal);
 
                 // for each unique nullable types declare 2 locals.
-                var nullableLocals = nullableTypes.ToDictionary(type => type, type => (il.DeclareLocal(type), il.DeclareLocal(type)));
+                var nullableLocals = nullableTypes.ToDictionary(type => type, il.DeclareLocal);
 
+                foreach (var property in fmType.GetProperties())
+                {
+                    var includedEndif = il.DefineLabel();
 
-                 
+                    if (IsNullableType(property.PropertyType))
+                    {
+                        var nullableType = property.PropertyType;
+                        var hasValue = nullableType.GetProperty("HasValue");
+
+                        var local = nullableLocals[nullableType];
+
+                        // get the first value and store it into a local
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Call, property.GetMethod);
+                        il.Emit(OpCodes.Stloc, local);
+
+                        // compare the HasValue properties
+                        il.Emit(OpCodes.Ldloca_S, local);
+                        il.Emit(OpCodes.Call, hasValue.GetMethod);
+                    }
+                    else
+                    {
+                        // simple equality check
+
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Call, property.GetMethod);
+
+                        il.Emit(OpCodes.Ldarg_1);
+                        il.Emit(OpCodes.Call, property.GetMethod);
+
+                        var eqOperator = property.PropertyType.GetMethod("op_Equality");
+
+                        if (eqOperator != null)
+                        {
+                            il.Emit(OpCodes.Call, eqOperator);
+                        }
+                        else
+                        {
+                            il.Emit(OpCodes.Ceq);
+                        }
+                    }
+
+                    il.Emit(OpCodes.Brtrue_S, includedEndif);
+
+                    il.MarkLabel(includedEndif);
+                }
 
                 il.Emit(OpCodes.Ldloc, columnNamesLocal);
                 il.Emit(OpCodes.Ldloc, parameterListLocal);
