@@ -476,7 +476,6 @@
             GetParseFM<TPoco>(TableMetadataModel<TPoco> metadata, Type fmType)
             where TPoco : IPoco<TPoco>
         {
-            var pocoType = typeof(TPoco);
             var parameterType = typeof(NpgsqlParameter);
 
             var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>)
@@ -530,28 +529,72 @@
                     }
                     else
                     {
-                        // simple equality check
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Call, property.GetMethod);
+                    }
 
+                    il.Emit(OpCodes.Brfalse_S, includedEndif);
+                    // is not default(Type)
+
+                    var attribute = property.GetCustomAttribute<FilterOperatorAttribute>();
+                    var column = metadata.Columns.First(x => x.ColumnName == attribute.ColumnName);
+
+                    // Add the column name
+                    il.Emit(OpCodes.Ldloc, columnNamesLocal);
+                    il.Emit(OpCodes.Ldstr, column.ColumnName);
+                    il.Emit(OpCodes.Call, stringListType.GetMethod("Add"));
+                    
+                    #region AddTheParameter
+
+                    il.Emit(OpCodes.Ldloc, parameterListLocal); // the parameter list
+
+                    if (attribute.QueryOperatorType == QueryOperatorType.IsNull || attribute.QueryOperatorType == QueryOperatorType.IsNotNull)
+                    {
+                        il.Emit(OpCodes.Ldnull);
+                    }
+                    else
+                    {
+                        // create the new parameter
+                        il.Emit(OpCodes.Ldnull);
+                        il.Emit(OpCodes.Ldc_I4, property.PropertyType.IsArray ? (int)(NpgsqlDbType.Array | column.NpgsDataType) : (int)column.NpgsDataType);
+                        il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
+
+                        il.Emit(OpCodes.Dup);
                         il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Call, property.GetMethod);
 
-                        il.Emit(OpCodes.Ldarg_1);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-
-                        var eqOperator = property.PropertyType.GetMethod("op_Equality");
-
-                        if (eqOperator != null)
+                        if (property.PropertyType.IsValueType)
                         {
-                            il.Emit(OpCodes.Call, eqOperator);
+                            il.Emit(OpCodes.Box, property.PropertyType);
                         }
-                        else
-                        {
-                            il.Emit(OpCodes.Ceq);
-                        }
+
+                        // if its null then set it to dbnull
+                        var endif = il.DefineLabel();
+
+                        il.Emit(OpCodes.Dup);
+
+                        il.Emit(OpCodes.Brtrue_S, endif);
+
+                        // the value is null, replace it with DbNull.Value
+                        il.Emit(OpCodes.Pop);
+                        il.Emit(OpCodes.Ldsfld, typeof(DBNull).GetField("Value"));
+
+                        il.MarkLabel(endif);
+
+                        // set the Value property of the NpgsqlParameter
+                        il.Emit(OpCodes.Call, parameterType.GetProperty("Value").SetMethod);
                     }
 
-                    il.Emit(OpCodes.Brtrue_S, includedEndif);
+                    il.Emit(OpCodes.Call, parameterListType.GetMethod("Add"));
 
+                    #endregion
+
+                    // Add the operator
+                    il.Emit(OpCodes.Ldloc, operatorListLocal);
+                    il.Emit(OpCodes.Ldc_I4, (int)attribute.QueryOperatorType);
+                    il.Emit(OpCodes.Call, operatorListType.GetMethod("Add"));
+
+                    // is default(Type)
                     il.MarkLabel(includedEndif);
                 }
 
