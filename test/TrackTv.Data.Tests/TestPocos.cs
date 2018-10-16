@@ -8,8 +8,7 @@ namespace TrackTv.Data.Tests
     using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
-	using Npgsql;
-
+	
     /// <summary>
     /// <para>Table name: 'test1'.</para>
 	/// <para>Table schema: 'public'.</para>
@@ -2312,6 +2311,11 @@ namespace TrackTv.Data.Tests
 				}
 			};
 
+			Test1PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test1PocoMetadata);
+			Test1PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test1PocoMetadata);
+			Test1PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test1PocoMetadata);
+			Test1PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test1PocoMetadata, typeof(Test1FM));
+
 			Test2PocoMetadata = new TableMetadataModel<Test2Poco>
 			{
 				ClassName = "Test2",
@@ -2425,20 +2429,9 @@ namespace TrackTv.Data.Tests
 				}
 			};
 
-			Test1PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test1PocoMetadata);
-
-			Test1PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test1PocoMetadata);
-
-			Test1PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test1PocoMetadata);
-
-			Test1PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test1PocoMetadata, typeof(Test1FM));
-
 			Test2PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test2PocoMetadata);
-
 			Test2PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test2PocoMetadata);
-
 			Test2PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test2PocoMetadata);
-
 			Test2PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test2PocoMetadata, typeof(Test2FM));
 
 			StaticMetadataByPocoType = new Dictionary<Type, object>

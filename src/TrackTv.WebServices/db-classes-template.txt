@@ -8,8 +8,7 @@ namespace {{model.Namespace}}
     using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
-	using Npgsql;
-
+	
     {{#each model.tables}}
     /// <summary>
     /// <para>Table name: '{{TableName}}'.</para>
@@ -258,14 +257,9 @@ namespace {{model.Namespace}}
 				}
 			};
 
-			{{/each}}
-			{{#each model.tables}}
 			{{ClassName}}PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters({{ClassName}}PocoMetadata);
-
 			{{ClassName}}PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges({{ClassName}}PocoMetadata);
-
 			{{ClassName}}PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns({{ClassName}}PocoMetadata);
-
 			{{ClassName}}PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
 			{{/each}}
