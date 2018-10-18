@@ -50,13 +50,11 @@
 
         private DataConnection linqToDbConnection;
 
+        private TPocos poco;
+
         public DbService(NpgsqlConnection dbConnection)
         {
             this.dbConnection = dbConnection;
-            this.Poco = new TPocos
-            {
-                DbService = this
-            };
         }
 
         private DataConnection LinqToDbConnection
@@ -73,7 +71,21 @@
             }
         }
 
-        public TPocos Poco { get; }
+        public TPocos Poco
+        {
+            get
+            {
+                if (this.poco == null)
+                {
+                    this.poco = new TPocos
+                    {
+                        DbService = this
+                    };
+                }
+
+                return this.poco;
+            }
+        }
 
         public void Dispose()
         {
@@ -177,7 +189,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            return this.QueryInternal<T>(sql, parameters);
+            return this.QueryPocoInternal<T>(sql, parameters);
         }
 
         /// <summary>
@@ -198,7 +210,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            return this.QueryOneInternal<T>(sql, parameters);
+            return this.QueryOnePocoInternal<T>(sql, parameters);
         }
 
         private async Task<int> ExecuteNonQueryInternal(
@@ -286,11 +298,23 @@
             }
         }
 
-        private async Task<List<T>> QueryInternal<T>(
+        private Task<List<T>> QueryPocoInternal<T>(
             string sql,
             IEnumerable<NpgsqlParameter> parameters,
             CancellationToken cancellationToken = default)
             where T : IPoco<T>, new()
+        {
+            var setters = this.GetMetadata<T>().Setters;
+
+            return this.QueryInternal(sql, parameters, setters, cancellationToken);
+        }
+
+        private async Task<List<T>> QueryInternal<T>(
+            string sql,
+            IEnumerable<NpgsqlParameter> parameters, 
+            IReadOnlyDictionary<string, Action<T, object>> setters, 
+            CancellationToken cancellationToken = default)
+            where T : new()
         {
             await this.VerifyConnectionState(cancellationToken);
 
@@ -313,13 +337,11 @@
                     int fieldCount = reader.FieldCount;
 
                     // cached setters for the result type
-                    var setters = new Action<T, object>[fieldCount];
-
-                    var metadata = this.GetMetadata<T>();
+                    var settersByColumnOrder = new Action<T, object>[fieldCount];
 
                     for (int i = 0; i < fieldCount; i++)
                     {
-                        setters[i] = metadata.Setters[reader.GetName(i)];
+                        settersByColumnOrder[i] = setters[reader.GetName(i)];
                     }
 
                     while (await reader.ReadAsync(cancellationToken))
@@ -331,11 +353,11 @@
                             // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                             if (reader.IsDBNull(i))
                             {
-                                setters[i](instance, null);
+                                settersByColumnOrder[i](instance, null);
                             }
                             else
                             {
-                                setters[i](instance, reader.GetValue(i));
+                                settersByColumnOrder[i](instance, reader.GetValue(i));
                             }
                         }
 
@@ -347,11 +369,23 @@
             return result;
         }
 
-        private async Task<T> QueryOneInternal<T>(
+        private Task<T> QueryOnePocoInternal<T>(
             string sql,
             IEnumerable<NpgsqlParameter> parameters,
             CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
+        {
+            var setters = this.GetMetadata<T>().Setters;
+
+            return this.QueryOneInternal(sql, parameters, setters, cancellationToken);
+        }
+
+        private async Task<T> QueryOneInternal<T>(
+            string sql, 
+            IEnumerable<NpgsqlParameter> parameters,  
+            IReadOnlyDictionary<string, Action<T, object>> setters, 
+            CancellationToken cancellationToken = default)
+            where T : class, new()
         {
             await this.VerifyConnectionState(cancellationToken);
 
@@ -379,7 +413,7 @@
 
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        var setter = instance.Metadata.Setters[reader.GetName(i)];
+                        var setter = setters[reader.GetName(i)];
 
                         // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                         if (reader.IsDBNull(i))

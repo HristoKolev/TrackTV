@@ -341,7 +341,7 @@
                 this.Parameter("pk", pk)
             };
 
-            var currentInstance = await this.QueryOneInternal<T>(selectSql, selectParameters, cancellationToken);
+            var currentInstance = await this.QueryOnePocoInternal<T>(selectSql, selectParameters, cancellationToken);
 
             if (currentInstance == null)
             {
@@ -410,7 +410,7 @@
 
             string sql = $"SELECT * FROM \"{tableSchema}\".\"{tableName}\" WHERE \"{primaryKeyName}\" = @pk;";
 
-            return this.QueryOneInternal<T>(sql, parameters, cancellationToken);
+            return this.QueryOnePocoInternal<T>(sql, parameters, cancellationToken);
         }
     }
 }

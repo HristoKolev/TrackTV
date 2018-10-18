@@ -67,7 +67,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            var pocos = await this.QueryInternal<TPoco>(sql, allParameters, cancellationToken);
+            var pocos = await this.QueryPocoInternal<TPoco>(sql, allParameters, cancellationToken);
             
             var resultList = new List<TCatalogModel>();
 
