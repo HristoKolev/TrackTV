@@ -291,7 +291,7 @@ namespace TrackTv.Data.Tests
 		[Column(Name = "test_char2", DataType = DataType.NChar)]
         public string TestChar2 { get; set; }
 
-		TableMetadataModel<Test1Poco> IPoco<Test1Poco>.Metadata => TestDbPocos.Test1PocoMetadata;
+		TableMetadataModel<Test1Poco> IPoco<Test1Poco>.Metadata => TestDbMetadata.Test1PocoMetadata;
 
 		public Test1BM ToBm()
 		{
@@ -370,7 +370,7 @@ namespace TrackTv.Data.Tests
 		[Column(Name = "test_date", DataType = DataType.DateTime2)]
         public DateTime TestDate { get; set; }
 
-		TableMetadataModel<Test2Poco> IPoco<Test2Poco>.Metadata => TestDbPocos.Test2PocoMetadata;
+		TableMetadataModel<Test2Poco> IPoco<Test2Poco>.Metadata => TestDbMetadata.Test2PocoMetadata;
 
 		public Test2BM ToBm()
 		{
@@ -1590,6 +1590,36 @@ namespace TrackTv.Data.Tests
 
     public class TestDbPocos : IDbPocos<TestDbPocos>
     {
+		/// <summary>
+		/// <para>Database table 'test1'.</para>
+		/// </summary>
+        public IQueryable<Test1Poco> Test1 => this.DbService.GetTable<Test1Poco>();
+
+		/// <summary>
+		/// <para>Database table 'test1'.</para>
+		/// <para>Filter model 'Test1FM'.</para>
+		/// <para>Catalog model 'Test1CM'.</para>
+		/// </summary>
+		public Task<List<Test1CM>> Filter(Test1FM filter) => this.DbService.FilterInternal<Test1Poco, Test1CM>(filter);
+
+		/// <summary>
+		/// <para>Database table 'test2'.</para>
+		/// </summary>
+        public IQueryable<Test2Poco> Test2 => this.DbService.GetTable<Test2Poco>();
+
+		/// <summary>
+		/// <para>Database table 'test2'.</para>
+		/// <para>Filter model 'Test2FM'.</para>
+		/// <para>Catalog model 'Test2CM'.</para>
+		/// </summary>
+		public Task<List<Test2CM>> Filter(Test2FM filter) => this.DbService.FilterInternal<Test2Poco, Test2CM>(filter);
+
+
+		public IDbService<TestDbPocos> DbService { private get; set; }
+    }
+
+	public class TestDbMetadata : IDbMetadata
+    {
 		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
 
         internal static TableMetadataModel<Test1Poco> Test1PocoMetadata;
@@ -1598,7 +1628,7 @@ namespace TrackTv.Data.Tests
 
 		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
 
-		private static volatile object InitLock = new object();
+		private static readonly object InitLock = new object();
 
 		private static bool Initialized;
 
@@ -2441,7 +2471,7 @@ namespace TrackTv.Data.Tests
 			};
 		}
 
-		public TableMetadataModel<T> GetMetadata<T>() where T : IPoco<T>
+		public TableMetadataModel<T> Get<T>() where T : IPoco<T>
 		{
 			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
 		}
@@ -2466,36 +2496,9 @@ namespace TrackTv.Data.Tests
 			}
 		}
 
-		static TestDbPocos()
+		static TestDbMetadata()
 		{
 			Initialize();
-		}
-
-		/// <summary>
-		/// <para>Database table 'test1'.</para>
-		/// </summary>
-        public IQueryable<Test1Poco> Test1 => this.DbService.GetTable<Test1Poco>();
-
-		/// <summary>
-		/// <para>Database table 'test1'.</para>
-		/// <para>Filter model 'Test1FM'.</para>
-		/// <para>Catalog model 'Test1CM'.</para>
-		/// </summary>
-		public Task<List<Test1CM>> Filter(Test1FM filter) => this.DbService.FilterInternal<Test1Poco, Test1CM>(filter);
-
-		/// <summary>
-		/// <para>Database table 'test2'.</para>
-		/// </summary>
-        public IQueryable<Test2Poco> Test2 => this.DbService.GetTable<Test2Poco>();
-
-		/// <summary>
-		/// <para>Database table 'test2'.</para>
-		/// <para>Filter model 'Test2FM'.</para>
-		/// <para>Catalog model 'Test2CM'.</para>
-		/// </summary>
-		public Task<List<Test2CM>> Filter(Test2FM filter) => this.DbService.FilterInternal<Test2Poco, Test2CM>(filter);
-
-
-		public IDbService<TestDbPocos> DbService { private get; set; }
+		}        
     }
 }

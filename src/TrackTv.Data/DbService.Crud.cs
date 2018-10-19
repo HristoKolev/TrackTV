@@ -17,7 +17,7 @@
         public Task<int> BulkInsert<T>(IEnumerable<T> pocos, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = this.Poco.GetMetadata<T>();
+            var metadata = this.Metadata.Get<T>();
             var columns = metadata.Columns;
 
             var sqlBuilder = new StringBuilder(128);
@@ -125,7 +125,7 @@
                 return Task.FromResult(0);
             }
 
-            var metadata = this.Poco.GetMetadata<T>();
+            var metadata = this.Metadata.Get<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -147,7 +147,7 @@
         public Task<int> Delete<T>(int id, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = this.Poco.GetMetadata<T>();
+            var metadata = this.Metadata.Get<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -397,7 +397,7 @@
         public Task<T> FindByID<T>(int id, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = this.Poco.GetMetadata<T>();
+            var metadata = this.Metadata.Get<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;

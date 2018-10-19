@@ -22,7 +22,7 @@ namespace TrackTv.Data.Tests
 
             var readFromDb = await this.Db.FindByID<Test1Poco>(id);
 
-            foreach (var getter in TestDbPocos.Test1PocoMetadata.Getters.Values)
+            foreach (var getter in TestDbMetadata.Test1PocoMetadata.Getters.Values)
             {
                 Assert.Equal(getter(poco), getter(readFromDb));
             }
@@ -59,7 +59,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test1Poco>))]
         public void Getters(Test1Poco poco)
         {
-            var getters = TestDbPocos.Test1PocoMetadata.Getters;
+            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
 
 			Assert.Equal(poco.TestID, getters["test_id"](poco));
 			Assert.Equal(poco.TestName1, getters["test_name1"](poco));
@@ -88,7 +88,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test1Poco>))]
         public void Setters(Test1Poco poco)
         {
-            var setters = TestDbPocos.Test1PocoMetadata.Setters;
+            var setters = TestDbMetadata.Test1PocoMetadata.Setters;
 
 			var newObj = new Test1Poco();
 
@@ -161,7 +161,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test1Poco>))]
         public void Clone(Test1Poco poco)
         {
-            var clone = TestDbPocos.Test1PocoMetadata.Clone;
+            var clone = TestDbMetadata.Test1PocoMetadata.Clone;
 
 			var newObj = clone(poco);
 
@@ -195,12 +195,12 @@ namespace TrackTv.Data.Tests
 		// ReSharper disable once CyclomaticComplexity
         public void GenerateParameters(Test1Poco poco)
         {
-            var getParameters = TestDbPocos.Test1PocoMetadata.GenerateParameters;
+            var getParameters = TestDbMetadata.Test1PocoMetadata.GenerateParameters;
 
 			var parameters = getParameters(poco);
 
-            var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.Test1PocoMetadata.Getters;
+            var columns = TestDbMetadata.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -218,12 +218,12 @@ namespace TrackTv.Data.Tests
         // ReSharper disable once CyclomaticComplexity
         public void GetAllColumns(Test1Poco poco)
         {
-            var getAllColumns = TestDbPocos.Test1PocoMetadata.GetAllColumns;
+            var getAllColumns = TestDbMetadata.Test1PocoMetadata.GetAllColumns;
 
             var (columnNames, parameters) = getAllColumns(poco);
 
-            var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.Test1PocoMetadata.Getters;
+            var columns = TestDbMetadata.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -241,10 +241,10 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedBulkData<Test1Poco>))]
         public void GetColumnChanges(List<Test1Poco> pocos)
         {
-            var getColumnChanges = TestDbPocos.Test1PocoMetadata.GetColumnChanges;
+            var getColumnChanges = TestDbMetadata.Test1PocoMetadata.GetColumnChanges;
 
-            var columns = TestDbPocos.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.Test1PocoMetadata.Getters;
+            var columns = TestDbMetadata.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
 
             var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
 
@@ -307,7 +307,7 @@ namespace TrackTv.Data.Tests
                    return x.GetValue(filter);
                }).ToList();
 
-            var (columnNames, columnParameters, operators) = TestDbPocos.Test1PocoMetadata.ParseFM(filter);
+            var (columnNames, columnParameters, operators) = TestDbMetadata.Test1PocoMetadata.ParseFM(filter);
 
             Assert.Equal(expectedNames, columnNames);
             Assert.Equal(expectedOperators, operators);
@@ -325,7 +325,7 @@ namespace TrackTv.Data.Tests
 
             var readFromDb = await this.Db.FindByID<Test2Poco>(id);
 
-            foreach (var getter in TestDbPocos.Test2PocoMetadata.Getters.Values)
+            foreach (var getter in TestDbMetadata.Test2PocoMetadata.Getters.Values)
             {
                 Assert.Equal(getter(poco), getter(readFromDb));
             }
@@ -362,7 +362,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test2Poco>))]
         public void Getters(Test2Poco poco)
         {
-            var getters = TestDbPocos.Test2PocoMetadata.Getters;
+            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
 
 			Assert.Equal(poco.TestID, getters["test_id"](poco));
 			Assert.Equal(poco.TestName, getters["test_name"](poco));
@@ -373,7 +373,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test2Poco>))]
         public void Setters(Test2Poco poco)
         {
-            var setters = TestDbPocos.Test2PocoMetadata.Setters;
+            var setters = TestDbMetadata.Test2PocoMetadata.Setters;
 
 			var newObj = new Test2Poco();
 
@@ -392,7 +392,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test2Poco>))]
         public void Clone(Test2Poco poco)
         {
-            var clone = TestDbPocos.Test2PocoMetadata.Clone;
+            var clone = TestDbMetadata.Test2PocoMetadata.Clone;
 
 			var newObj = clone(poco);
 
@@ -408,12 +408,12 @@ namespace TrackTv.Data.Tests
 		// ReSharper disable once CyclomaticComplexity
         public void GenerateParameters(Test2Poco poco)
         {
-            var getParameters = TestDbPocos.Test2PocoMetadata.GenerateParameters;
+            var getParameters = TestDbMetadata.Test2PocoMetadata.GenerateParameters;
 
 			var parameters = getParameters(poco);
 
-            var columns = TestDbPocos.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.Test2PocoMetadata.Getters;
+            var columns = TestDbMetadata.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -431,12 +431,12 @@ namespace TrackTv.Data.Tests
         // ReSharper disable once CyclomaticComplexity
         public void GetAllColumns(Test2Poco poco)
         {
-            var getAllColumns = TestDbPocos.Test2PocoMetadata.GetAllColumns;
+            var getAllColumns = TestDbMetadata.Test2PocoMetadata.GetAllColumns;
 
             var (columnNames, parameters) = getAllColumns(poco);
 
-            var columns = TestDbPocos.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.Test2PocoMetadata.Getters;
+            var columns = TestDbMetadata.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -454,10 +454,10 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedBulkData<Test2Poco>))]
         public void GetColumnChanges(List<Test2Poco> pocos)
         {
-            var getColumnChanges = TestDbPocos.Test2PocoMetadata.GetColumnChanges;
+            var getColumnChanges = TestDbMetadata.Test2PocoMetadata.GetColumnChanges;
 
-            var columns = TestDbPocos.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.Test2PocoMetadata.Getters;
+            var columns = TestDbMetadata.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
 
             var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
 
@@ -520,7 +520,7 @@ namespace TrackTv.Data.Tests
                    return x.GetValue(filter);
                }).ToList();
 
-            var (columnNames, columnParameters, operators) = TestDbPocos.Test2PocoMetadata.ParseFM(filter);
+            var (columnNames, columnParameters, operators) = TestDbMetadata.Test2PocoMetadata.ParseFM(filter);
 
             Assert.Equal(expectedNames, columnNames);
             Assert.Equal(expectedOperators, operators);

@@ -389,12 +389,15 @@
         public QueryOperatorType QueryOperatorType { get; }
     }
 
+    public interface IDbMetadata
+    {
+        TableMetadataModel<T> Get<T>()
+            where T : IPoco<T>;
+    }
+
     public interface IDbPocos<TDbPocos>
         where TDbPocos : IDbPocos<TDbPocos>, new()
     {
-        TableMetadataModel<T> GetMetadata<T>()
-            where T : IPoco<T>;
-
         IDbService<TDbPocos> DbService { set; }
     }
 }

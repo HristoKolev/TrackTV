@@ -2,14 +2,14 @@
 {
     using Npgsql;
 
-    public interface IDbService : IDbService<DbPocos>
+    public interface IDbService : IDbService<TrackTvPocos>
     {
     }
 
-    public class DbService : DbService<DbPocos>, IDbService
+    public class DbService : DbService<TrackTvPocos>, IDbService
     {
         public DbService(NpgsqlConnection dbConnection)
-            : base(dbConnection)
+            : base(dbConnection, new TrackTvMetadata())
         {
         }
     }

@@ -23,7 +23,7 @@
 
             var readFromDb = await this.Db.FindByID<{{ClassName}}Poco>(id);
 
-            foreach (var getter in {{../model.PocoClassName}}.{{ClassName}}PocoMetadata.Getters.Values)
+            foreach (var getter in {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters.Values)
             {
                 Assert.Equal(getter(poco), getter(readFromDb));
             }
@@ -60,7 +60,7 @@
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
         public void Getters({{ClassName}}Poco poco)
         {
-            var getters = TestDbPocos.{{ClassName}}PocoMetadata.Getters;
+            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
 
 			{{#each columns}}
 			Assert.Equal(poco.{{PropertyName}}, getters["{{ColumnName}}"](poco));
@@ -71,7 +71,7 @@
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
         public void Setters({{ClassName}}Poco poco)
         {
-            var setters = TestDbPocos.{{ClassName}}PocoMetadata.Setters;
+            var setters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Setters;
 
 			var newObj = new {{ClassName}}Poco();
 
@@ -86,7 +86,7 @@
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
         public void Clone({{ClassName}}Poco poco)
         {
-            var clone = TestDbPocos.{{ClassName}}PocoMetadata.Clone;
+            var clone = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Clone;
 
 			var newObj = clone(poco);
 
@@ -102,12 +102,12 @@
 		// ReSharper disable once CyclomaticComplexity
         public void GenerateParameters({{ClassName}}Poco poco)
         {
-            var getParameters = TestDbPocos.{{ClassName}}PocoMetadata.GenerateParameters;
+            var getParameters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.GenerateParameters;
 
 			var parameters = getParameters(poco);
 
-            var columns = TestDbPocos.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.{{ClassName}}PocoMetadata.Getters;
+            var columns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -125,12 +125,12 @@
         // ReSharper disable once CyclomaticComplexity
         public void GetAllColumns({{ClassName}}Poco poco)
         {
-            var getAllColumns = TestDbPocos.{{ClassName}}PocoMetadata.GetAllColumns;
+            var getAllColumns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.GetAllColumns;
 
             var (columnNames, parameters) = getAllColumns(poco);
 
-            var columns = TestDbPocos.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.{{ClassName}}PocoMetadata.Getters;
+            var columns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -148,10 +148,10 @@
         [ClassData(typeof(GeneratedBulkData<{{ClassName}}Poco>))]
         public void GetColumnChanges(List<{{ClassName}}Poco> pocos)
         {
-            var getColumnChanges = TestDbPocos.{{ClassName}}PocoMetadata.GetColumnChanges;
+            var getColumnChanges = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.GetColumnChanges;
 
-            var columns = TestDbPocos.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbPocos.{{ClassName}}PocoMetadata.Getters;
+            var columns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
 
             var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
 
@@ -214,7 +214,7 @@
                    return x.GetValue(filter);
                }).ToList();
 
-            var (columnNames, columnParameters, operators) = TestDbPocos.{{ClassName}}PocoMetadata.ParseFM(filter);
+            var (columnNames, columnParameters, operators) = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.ParseFM(filter);
 
             Assert.Equal(expectedNames, columnNames);
             Assert.Equal(expectedOperators, operators);

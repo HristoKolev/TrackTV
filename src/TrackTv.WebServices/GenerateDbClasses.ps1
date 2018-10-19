@@ -3,4 +3,5 @@ ClassGenerator.PostgreSQL `
 -t "./db-classes-template.txt" `
 -o "../TrackTv.Data/Poco.cs" `
 -n "TrackTv.Data" `
--p "DbPocos"
+-p "TrackTvPocos" `
+-m "TrackTvMetadata"

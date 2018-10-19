@@ -15,6 +15,8 @@
 
     public partial class DbService<TPocos> : IDbService<TPocos> where TPocos : IDbPocos<TPocos>, new()
     {
+        private IDbMetadata Metadata { get; }
+
         /// <summary>
         /// The default parameter type map that is used when creating parameters without specifying the NpgsqlDbType explicitly.
         /// </summary>
@@ -52,8 +54,9 @@
 
         private TPocos poco;
 
-        public DbService(NpgsqlConnection dbConnection)
+        public DbService(NpgsqlConnection dbConnection, IDbMetadata metadata)
         {
+            this.Metadata = metadata;
             this.dbConnection = dbConnection;
         }
 
@@ -304,7 +307,7 @@
             CancellationToken cancellationToken = default)
             where T : IPoco<T>, new()
         {
-            var setters = this.Poco.GetMetadata<T>().Setters;
+            var setters = this.Metadata.Get<T>().Setters;
 
             return this.QueryInternal(sql, parameters, setters, cancellationToken);
         }
@@ -375,7 +378,7 @@
             CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var setters = this.Poco.GetMetadata<T>().Setters;
+            var setters = this.Metadata.Get<T>().Setters;
 
             return this.QueryOneInternal(sql, parameters, setters, cancellationToken);
         }
