@@ -392,7 +392,8 @@
     public interface IDbPocos<TDbPocos>
         where TDbPocos : IDbPocos<TDbPocos>, new()
     {
-        IReadOnlyDictionary<Type, object> MetadataByPocoType { get; }
+        TableMetadataModel<T> GetMetadata<T>()
+            where T : IPoco<T>;
 
         IDbService<TDbPocos> DbService { set; }
     }

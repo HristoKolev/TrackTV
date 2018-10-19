@@ -181,7 +181,7 @@ namespace {{model.Namespace}}
         internal static TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata;
 
         {{/each}}
-		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
+		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
 
 		private static volatile object InitLock = new object();
 
@@ -263,12 +263,17 @@ namespace {{model.Namespace}}
 			{{ClassName}}PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
 			{{/each}}
-			StaticMetadataByPocoType = new Dictionary<Type, object>
+			MetadataByPocoType = new Dictionary<Type, object>
 			{
 				{{#each model.tables}}
 				{typeof({{ClassName}}Poco), {{ClassName}}PocoMetadata},
 				{{/each}}
 			};
+		}
+
+		public TableMetadataModel<T> GetMetadata<T>() where T : IPoco<T>
+		{
+			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
 		}
 
 		public static void Initialize()
@@ -310,7 +315,6 @@ namespace {{model.Namespace}}
 		public Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter) => this.DbService.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
 
         {{/each}}
-		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
 		public IDbService<{{model.PocoClassName}}> DbService { private get; set; }
     }

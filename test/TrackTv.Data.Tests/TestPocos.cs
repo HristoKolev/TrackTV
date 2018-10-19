@@ -1596,7 +1596,7 @@ namespace TrackTv.Data.Tests
 
         internal static TableMetadataModel<Test2Poco> Test2PocoMetadata;
 
-		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
+		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
 
 		private static volatile object InitLock = new object();
 
@@ -2434,11 +2434,16 @@ namespace TrackTv.Data.Tests
 			Test2PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test2PocoMetadata);
 			Test2PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test2PocoMetadata, typeof(Test2FM));
 
-			StaticMetadataByPocoType = new Dictionary<Type, object>
+			MetadataByPocoType = new Dictionary<Type, object>
 			{
 				{typeof(Test1Poco), Test1PocoMetadata},
 				{typeof(Test2Poco), Test2PocoMetadata},
 			};
+		}
+
+		public TableMetadataModel<T> GetMetadata<T>() where T : IPoco<T>
+		{
+			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
 		}
 
 		public static void Initialize()
@@ -2490,7 +2495,6 @@ namespace TrackTv.Data.Tests
 		/// </summary>
 		public Task<List<Test2CM>> Filter(Test2FM filter) => this.DbService.FilterInternal<Test2Poco, Test2CM>(filter);
 
-		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
 		public IDbService<TestDbPocos> DbService { private get; set; }
     }

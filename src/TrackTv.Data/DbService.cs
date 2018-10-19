@@ -304,7 +304,7 @@
             CancellationToken cancellationToken = default)
             where T : IPoco<T>, new()
         {
-            var setters = this.GetMetadata<T>().Setters;
+            var setters = this.Poco.GetMetadata<T>().Setters;
 
             return this.QueryInternal(sql, parameters, setters, cancellationToken);
         }
@@ -375,7 +375,7 @@
             CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var setters = this.GetMetadata<T>().Setters;
+            var setters = this.Poco.GetMetadata<T>().Setters;
 
             return this.QueryOneInternal(sql, parameters, setters, cancellationToken);
         }
@@ -449,12 +449,6 @@
             }
 
             return Task.CompletedTask;
-        }
-
-        private TableMetadataModel<T> GetMetadata<T>()
-            where T : IPoco<T>
-        {
-            return (TableMetadataModel<T>)this.Poco.MetadataByPocoType[typeof(T)];
         }
     }
 }

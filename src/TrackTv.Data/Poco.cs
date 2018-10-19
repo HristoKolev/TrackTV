@@ -4980,7 +4980,7 @@ namespace TrackTv.Data
 
         internal static TableMetadataModel<UserPoco> UserPocoMetadata;
 
-		private static IReadOnlyDictionary<Type, object> StaticMetadataByPocoType;
+		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
 
 		private static volatile object InitLock = new object();
 
@@ -7498,7 +7498,7 @@ namespace TrackTv.Data
 			UserPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(UserPocoMetadata);
 			UserPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(UserPocoMetadata, typeof(UserFM));
 
-			StaticMetadataByPocoType = new Dictionary<Type, object>
+			MetadataByPocoType = new Dictionary<Type, object>
 			{
 				{typeof(ActorPoco), ActorPocoMetadata},
 				{typeof(ApiChangeTypePoco), ApiChangeTypePocoMetadata},
@@ -7515,6 +7515,11 @@ namespace TrackTv.Data
 				{typeof(SubscriptionPoco), SubscriptionPocoMetadata},
 				{typeof(UserPoco), UserPocoMetadata},
 			};
+		}
+
+		public TableMetadataModel<T> GetMetadata<T>() where T : IPoco<T>
+		{
+			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
 		}
 
 		public static void Initialize()
@@ -7710,7 +7715,6 @@ namespace TrackTv.Data
 		/// </summary>
 		public Task<List<UserCM>> Filter(UserFM filter) => this.DbService.FilterInternal<UserPoco, UserCM>(filter);
 
-		public IReadOnlyDictionary<Type, object> MetadataByPocoType => StaticMetadataByPocoType;
 
 		public IDbService<DbPocos> DbService { private get; set; }
     }

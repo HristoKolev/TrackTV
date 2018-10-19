@@ -17,7 +17,7 @@
             where TPoco : IPoco<TPoco>, new() 
             where TCatalogModel: ICatalogModel<TPoco>
         {
-            var metadata = this.GetMetadata<TPoco>();
+            var metadata = this.Poco.GetMetadata<TPoco>();
 
             var (columnNames, parameters, operators) = metadata.ParseFM(filter);
          
