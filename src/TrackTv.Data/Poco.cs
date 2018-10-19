@@ -5286,11 +5286,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ActorID,
 				SetPrimaryKey = (instance, val) => instance.ActorID = val,
-				IsNew = (instance) => instance.ActorID == default,
-				Clone = DbServiceHelpers.GetClone<ActorPoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ActorPoco, ActorCM>(),
-				Setters = DbServiceHelpers.GetSetters<ActorPoco>(TableToPropertyMap["actors"]),
-				Getters = DbServiceHelpers.GetGetters<ActorPoco>(TableToPropertyMap["actors"]),
+				IsNew = (instance) => instance.ActorID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5451,10 +5447,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ActorPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ActorPocoMetadata);
-			ActorPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ActorPocoMetadata);
-			ActorPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ActorPocoMetadata);
-			ActorPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ActorPocoMetadata, typeof(ActorFM));
+			ActorPocoMetadata.Clone = DbCodeGenerator.GetClone<ActorPoco>();
+			ActorPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ActorPoco, ActorCM>();
+			ActorPocoMetadata.Setters = DbCodeGenerator.GetSetters<ActorPoco>(TableToPropertyMap["actors"]);
+			ActorPocoMetadata.Getters = DbCodeGenerator.GetGetters<ActorPoco>(TableToPropertyMap["actors"]);
+			ActorPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ActorPocoMetadata);
+			ActorPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ActorPocoMetadata);
+			ActorPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ActorPocoMetadata);
+			ActorPocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ActorPocoMetadata, typeof(ActorFM));
 
 			ApiChangeTypePocoMetadata = new TableMetadataModel<ApiChangeTypePoco>
 			{
@@ -5466,11 +5466,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ApiChangeTypeID,
 				SetPrimaryKey = (instance, val) => instance.ApiChangeTypeID = val,
-				IsNew = (instance) => instance.ApiChangeTypeID == default,
-				Clone = DbServiceHelpers.GetClone<ApiChangeTypePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ApiChangeTypePoco, ApiChangeTypeCM>(),
-				Setters = DbServiceHelpers.GetSetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]),
-				Getters = DbServiceHelpers.GetGetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]),
+				IsNew = (instance) => instance.ApiChangeTypeID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5538,10 +5534,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ApiChangeTypePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ApiChangeTypePocoMetadata);
-			ApiChangeTypePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ApiChangeTypePocoMetadata);
-			ApiChangeTypePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiChangeTypePocoMetadata);
-			ApiChangeTypePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ApiChangeTypePocoMetadata, typeof(ApiChangeTypeFM));
+			ApiChangeTypePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangeTypePoco>();
+			ApiChangeTypePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiChangeTypePoco, ApiChangeTypeCM>();
+			ApiChangeTypePocoMetadata.Setters = DbCodeGenerator.GetSetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]);
+			ApiChangeTypePocoMetadata.Getters = DbCodeGenerator.GetGetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]);
+			ApiChangeTypePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangeTypePocoMetadata);
+			ApiChangeTypePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiChangeTypePocoMetadata);
+			ApiChangeTypePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiChangeTypePocoMetadata);
+			ApiChangeTypePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ApiChangeTypePocoMetadata, typeof(ApiChangeTypeFM));
 
 			ApiChangePocoMetadata = new TableMetadataModel<ApiChangePoco>
 			{
@@ -5553,11 +5553,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ApiChangeID,
 				SetPrimaryKey = (instance, val) => instance.ApiChangeID = val,
-				IsNew = (instance) => instance.ApiChangeID == default,
-				Clone = DbServiceHelpers.GetClone<ApiChangePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ApiChangePoco, ApiChangeCM>(),
-				Setters = DbServiceHelpers.GetSetters<ApiChangePoco>(TableToPropertyMap["api_changes"]),
-				Getters = DbServiceHelpers.GetGetters<ApiChangePoco>(TableToPropertyMap["api_changes"]),
+				IsNew = (instance) => instance.ApiChangeID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5811,10 +5807,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ApiChangePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ApiChangePocoMetadata);
-			ApiChangePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ApiChangePocoMetadata);
-			ApiChangePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiChangePocoMetadata);
-			ApiChangePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ApiChangePocoMetadata, typeof(ApiChangeFM));
+			ApiChangePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangePoco>();
+			ApiChangePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiChangePoco, ApiChangeCM>();
+			ApiChangePocoMetadata.Setters = DbCodeGenerator.GetSetters<ApiChangePoco>(TableToPropertyMap["api_changes"]);
+			ApiChangePocoMetadata.Getters = DbCodeGenerator.GetGetters<ApiChangePoco>(TableToPropertyMap["api_changes"]);
+			ApiChangePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangePocoMetadata);
+			ApiChangePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiChangePocoMetadata);
+			ApiChangePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiChangePocoMetadata);
+			ApiChangePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ApiChangePocoMetadata, typeof(ApiChangeFM));
 
 			ApiResponsePocoMetadata = new TableMetadataModel<ApiResponsePoco>
 			{
@@ -5826,11 +5826,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ApiResponseID,
 				SetPrimaryKey = (instance, val) => instance.ApiResponseID = val,
-				IsNew = (instance) => instance.ApiResponseID == default,
-				Clone = DbServiceHelpers.GetClone<ApiResponsePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ApiResponsePoco, ApiResponseCM>(),
-				Setters = DbServiceHelpers.GetSetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]),
-				Getters = DbServiceHelpers.GetGetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]),
+				IsNew = (instance) => instance.ApiResponseID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5991,10 +5987,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ApiResponsePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ApiResponsePocoMetadata);
-			ApiResponsePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ApiResponsePocoMetadata);
-			ApiResponsePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ApiResponsePocoMetadata);
-			ApiResponsePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ApiResponsePocoMetadata, typeof(ApiResponseFM));
+			ApiResponsePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiResponsePoco>();
+			ApiResponsePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiResponsePoco, ApiResponseCM>();
+			ApiResponsePocoMetadata.Setters = DbCodeGenerator.GetSetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]);
+			ApiResponsePocoMetadata.Getters = DbCodeGenerator.GetGetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]);
+			ApiResponsePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiResponsePocoMetadata);
+			ApiResponsePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiResponsePocoMetadata);
+			ApiResponsePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiResponsePocoMetadata);
+			ApiResponsePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ApiResponsePocoMetadata, typeof(ApiResponseFM));
 
 			EpisodePocoMetadata = new TableMetadataModel<EpisodePoco>
 			{
@@ -6006,11 +6006,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.EpisodeID,
 				SetPrimaryKey = (instance, val) => instance.EpisodeID = val,
-				IsNew = (instance) => instance.EpisodeID == default,
-				Clone = DbServiceHelpers.GetClone<EpisodePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<EpisodePoco, EpisodeCM>(),
-				Setters = DbServiceHelpers.GetSetters<EpisodePoco>(TableToPropertyMap["episodes"]),
-				Getters = DbServiceHelpers.GetGetters<EpisodePoco>(TableToPropertyMap["episodes"]),
+				IsNew = (instance) => instance.EpisodeID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6326,10 +6322,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			EpisodePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(EpisodePocoMetadata);
-			EpisodePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(EpisodePocoMetadata);
-			EpisodePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(EpisodePocoMetadata);
-			EpisodePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(EpisodePocoMetadata, typeof(EpisodeFM));
+			EpisodePocoMetadata.Clone = DbCodeGenerator.GetClone<EpisodePoco>();
+			EpisodePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<EpisodePoco, EpisodeCM>();
+			EpisodePocoMetadata.Setters = DbCodeGenerator.GetSetters<EpisodePoco>(TableToPropertyMap["episodes"]);
+			EpisodePocoMetadata.Getters = DbCodeGenerator.GetGetters<EpisodePoco>(TableToPropertyMap["episodes"]);
+			EpisodePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(EpisodePocoMetadata);
+			EpisodePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(EpisodePocoMetadata);
+			EpisodePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(EpisodePocoMetadata);
+			EpisodePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(EpisodePocoMetadata, typeof(EpisodeFM));
 
 			GenrePocoMetadata = new TableMetadataModel<GenrePoco>
 			{
@@ -6341,11 +6341,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.GenreID,
 				SetPrimaryKey = (instance, val) => instance.GenreID = val,
-				IsNew = (instance) => instance.GenreID == default,
-				Clone = DbServiceHelpers.GetClone<GenrePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<GenrePoco, GenreCM>(),
-				Setters = DbServiceHelpers.GetSetters<GenrePoco>(TableToPropertyMap["genres"]),
-				Getters = DbServiceHelpers.GetGetters<GenrePoco>(TableToPropertyMap["genres"]),
+				IsNew = (instance) => instance.GenreID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6413,10 +6409,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			GenrePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(GenrePocoMetadata);
-			GenrePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(GenrePocoMetadata);
-			GenrePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(GenrePocoMetadata);
-			GenrePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(GenrePocoMetadata, typeof(GenreFM));
+			GenrePocoMetadata.Clone = DbCodeGenerator.GetClone<GenrePoco>();
+			GenrePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<GenrePoco, GenreCM>();
+			GenrePocoMetadata.Setters = DbCodeGenerator.GetSetters<GenrePoco>(TableToPropertyMap["genres"]);
+			GenrePocoMetadata.Getters = DbCodeGenerator.GetGetters<GenrePoco>(TableToPropertyMap["genres"]);
+			GenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(GenrePocoMetadata);
+			GenrePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(GenrePocoMetadata);
+			GenrePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(GenrePocoMetadata);
+			GenrePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(GenrePocoMetadata, typeof(GenreFM));
 
 			NetworkPocoMetadata = new TableMetadataModel<NetworkPoco>
 			{
@@ -6428,11 +6428,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.NetworkID,
 				SetPrimaryKey = (instance, val) => instance.NetworkID = val,
-				IsNew = (instance) => instance.NetworkID == default,
-				Clone = DbServiceHelpers.GetClone<NetworkPoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<NetworkPoco, NetworkCM>(),
-				Setters = DbServiceHelpers.GetSetters<NetworkPoco>(TableToPropertyMap["networks"]),
-				Getters = DbServiceHelpers.GetGetters<NetworkPoco>(TableToPropertyMap["networks"]),
+				IsNew = (instance) => instance.NetworkID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6500,10 +6496,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			NetworkPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(NetworkPocoMetadata);
-			NetworkPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(NetworkPocoMetadata);
-			NetworkPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(NetworkPocoMetadata);
-			NetworkPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(NetworkPocoMetadata, typeof(NetworkFM));
+			NetworkPocoMetadata.Clone = DbCodeGenerator.GetClone<NetworkPoco>();
+			NetworkPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<NetworkPoco, NetworkCM>();
+			NetworkPocoMetadata.Setters = DbCodeGenerator.GetSetters<NetworkPoco>(TableToPropertyMap["networks"]);
+			NetworkPocoMetadata.Getters = DbCodeGenerator.GetGetters<NetworkPoco>(TableToPropertyMap["networks"]);
+			NetworkPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(NetworkPocoMetadata);
+			NetworkPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(NetworkPocoMetadata);
+			NetworkPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(NetworkPocoMetadata);
+			NetworkPocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(NetworkPocoMetadata, typeof(NetworkFM));
 
 			ProfilePocoMetadata = new TableMetadataModel<ProfilePoco>
 			{
@@ -6515,11 +6515,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ProfileID,
 				SetPrimaryKey = (instance, val) => instance.ProfileID = val,
-				IsNew = (instance) => instance.ProfileID == default,
-				Clone = DbServiceHelpers.GetClone<ProfilePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ProfilePoco, ProfileCM>(),
-				Setters = DbServiceHelpers.GetSetters<ProfilePoco>(TableToPropertyMap["profiles"]),
-				Getters = DbServiceHelpers.GetGetters<ProfilePoco>(TableToPropertyMap["profiles"]),
+				IsNew = (instance) => instance.ProfileID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6587,10 +6583,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ProfilePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ProfilePocoMetadata);
-			ProfilePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ProfilePocoMetadata);
-			ProfilePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ProfilePocoMetadata);
-			ProfilePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ProfilePocoMetadata, typeof(ProfileFM));
+			ProfilePocoMetadata.Clone = DbCodeGenerator.GetClone<ProfilePoco>();
+			ProfilePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ProfilePoco, ProfileCM>();
+			ProfilePocoMetadata.Setters = DbCodeGenerator.GetSetters<ProfilePoco>(TableToPropertyMap["profiles"]);
+			ProfilePocoMetadata.Getters = DbCodeGenerator.GetGetters<ProfilePoco>(TableToPropertyMap["profiles"]);
+			ProfilePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ProfilePocoMetadata);
+			ProfilePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ProfilePocoMetadata);
+			ProfilePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ProfilePocoMetadata);
+			ProfilePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ProfilePocoMetadata, typeof(ProfileFM));
 
 			RolePocoMetadata = new TableMetadataModel<RolePoco>
 			{
@@ -6602,11 +6602,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.RoleID,
 				SetPrimaryKey = (instance, val) => instance.RoleID = val,
-				IsNew = (instance) => instance.RoleID == default,
-				Clone = DbServiceHelpers.GetClone<RolePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<RolePoco, RoleCM>(),
-				Setters = DbServiceHelpers.GetSetters<RolePoco>(TableToPropertyMap["roles"]),
-				Getters = DbServiceHelpers.GetGetters<RolePoco>(TableToPropertyMap["roles"]),
+				IsNew = (instance) => instance.RoleID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6736,10 +6732,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			RolePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(RolePocoMetadata);
-			RolePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(RolePocoMetadata);
-			RolePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(RolePocoMetadata);
-			RolePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(RolePocoMetadata, typeof(RoleFM));
+			RolePocoMetadata.Clone = DbCodeGenerator.GetClone<RolePoco>();
+			RolePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<RolePoco, RoleCM>();
+			RolePocoMetadata.Setters = DbCodeGenerator.GetSetters<RolePoco>(TableToPropertyMap["roles"]);
+			RolePocoMetadata.Getters = DbCodeGenerator.GetGetters<RolePoco>(TableToPropertyMap["roles"]);
+			RolePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(RolePocoMetadata);
+			RolePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(RolePocoMetadata);
+			RolePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(RolePocoMetadata);
+			RolePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(RolePocoMetadata, typeof(RoleFM));
 
 			SettingPocoMetadata = new TableMetadataModel<SettingPoco>
 			{
@@ -6751,11 +6751,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.SettingID,
 				SetPrimaryKey = (instance, val) => instance.SettingID = val,
-				IsNew = (instance) => instance.SettingID == default,
-				Clone = DbServiceHelpers.GetClone<SettingPoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<SettingPoco, SettingCM>(),
-				Setters = DbServiceHelpers.GetSetters<SettingPoco>(TableToPropertyMap["settings"]),
-				Getters = DbServiceHelpers.GetGetters<SettingPoco>(TableToPropertyMap["settings"]),
+				IsNew = (instance) => instance.SettingID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6854,10 +6850,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			SettingPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(SettingPocoMetadata);
-			SettingPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(SettingPocoMetadata);
-			SettingPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(SettingPocoMetadata);
-			SettingPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(SettingPocoMetadata, typeof(SettingFM));
+			SettingPocoMetadata.Clone = DbCodeGenerator.GetClone<SettingPoco>();
+			SettingPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<SettingPoco, SettingCM>();
+			SettingPocoMetadata.Setters = DbCodeGenerator.GetSetters<SettingPoco>(TableToPropertyMap["settings"]);
+			SettingPocoMetadata.Getters = DbCodeGenerator.GetGetters<SettingPoco>(TableToPropertyMap["settings"]);
+			SettingPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SettingPocoMetadata);
+			SettingPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(SettingPocoMetadata);
+			SettingPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(SettingPocoMetadata);
+			SettingPocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(SettingPocoMetadata, typeof(SettingFM));
 
 			ShowPocoMetadata = new TableMetadataModel<ShowPoco>
 			{
@@ -6869,11 +6869,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ShowID,
 				SetPrimaryKey = (instance, val) => instance.ShowID = val,
-				IsNew = (instance) => instance.ShowID == default,
-				Clone = DbServiceHelpers.GetClone<ShowPoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ShowPoco, ShowCM>(),
-				Setters = DbServiceHelpers.GetSetters<ShowPoco>(TableToPropertyMap["shows"]),
-				Getters = DbServiceHelpers.GetGetters<ShowPoco>(TableToPropertyMap["shows"]),
+				IsNew = (instance) => instance.ShowID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7251,10 +7247,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ShowPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ShowPocoMetadata);
-			ShowPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ShowPocoMetadata);
-			ShowPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ShowPocoMetadata);
-			ShowPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ShowPocoMetadata, typeof(ShowFM));
+			ShowPocoMetadata.Clone = DbCodeGenerator.GetClone<ShowPoco>();
+			ShowPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ShowPoco, ShowCM>();
+			ShowPocoMetadata.Setters = DbCodeGenerator.GetSetters<ShowPoco>(TableToPropertyMap["shows"]);
+			ShowPocoMetadata.Getters = DbCodeGenerator.GetGetters<ShowPoco>(TableToPropertyMap["shows"]);
+			ShowPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowPocoMetadata);
+			ShowPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ShowPocoMetadata);
+			ShowPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ShowPocoMetadata);
+			ShowPocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ShowPocoMetadata, typeof(ShowFM));
 
 			ShowGenrePocoMetadata = new TableMetadataModel<ShowGenrePoco>
 			{
@@ -7266,11 +7266,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.ShowsGenresID,
 				SetPrimaryKey = (instance, val) => instance.ShowsGenresID = val,
-				IsNew = (instance) => instance.ShowsGenresID == default,
-				Clone = DbServiceHelpers.GetClone<ShowGenrePoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<ShowGenrePoco, ShowGenreCM>(),
-				Setters = DbServiceHelpers.GetSetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]),
-				Getters = DbServiceHelpers.GetGetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]),
+				IsNew = (instance) => instance.ShowsGenresID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7369,10 +7365,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			ShowGenrePocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(ShowGenrePocoMetadata);
-			ShowGenrePocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(ShowGenrePocoMetadata);
-			ShowGenrePocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(ShowGenrePocoMetadata);
-			ShowGenrePocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(ShowGenrePocoMetadata, typeof(ShowGenreFM));
+			ShowGenrePocoMetadata.Clone = DbCodeGenerator.GetClone<ShowGenrePoco>();
+			ShowGenrePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ShowGenrePoco, ShowGenreCM>();
+			ShowGenrePocoMetadata.Setters = DbCodeGenerator.GetSetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]);
+			ShowGenrePocoMetadata.Getters = DbCodeGenerator.GetGetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]);
+			ShowGenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowGenrePocoMetadata);
+			ShowGenrePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ShowGenrePocoMetadata);
+			ShowGenrePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ShowGenrePocoMetadata);
+			ShowGenrePocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(ShowGenrePocoMetadata, typeof(ShowGenreFM));
 
 			SubscriptionPocoMetadata = new TableMetadataModel<SubscriptionPoco>
 			{
@@ -7384,11 +7384,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.SubscriptionID,
 				SetPrimaryKey = (instance, val) => instance.SubscriptionID = val,
-				IsNew = (instance) => instance.SubscriptionID == default,
-				Clone = DbServiceHelpers.GetClone<SubscriptionPoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<SubscriptionPoco, SubscriptionCM>(),
-				Setters = DbServiceHelpers.GetSetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]),
-				Getters = DbServiceHelpers.GetGetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]),
+				IsNew = (instance) => instance.SubscriptionID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7487,10 +7483,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			SubscriptionPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(SubscriptionPocoMetadata);
-			SubscriptionPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(SubscriptionPocoMetadata);
-			SubscriptionPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(SubscriptionPocoMetadata);
-			SubscriptionPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(SubscriptionPocoMetadata, typeof(SubscriptionFM));
+			SubscriptionPocoMetadata.Clone = DbCodeGenerator.GetClone<SubscriptionPoco>();
+			SubscriptionPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<SubscriptionPoco, SubscriptionCM>();
+			SubscriptionPocoMetadata.Setters = DbCodeGenerator.GetSetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]);
+			SubscriptionPocoMetadata.Getters = DbCodeGenerator.GetGetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]);
+			SubscriptionPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SubscriptionPocoMetadata);
+			SubscriptionPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(SubscriptionPocoMetadata);
+			SubscriptionPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(SubscriptionPocoMetadata);
+			SubscriptionPocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(SubscriptionPocoMetadata, typeof(SubscriptionFM));
 
 			UserPocoMetadata = new TableMetadataModel<UserPoco>
 			{
@@ -7502,11 +7502,7 @@ namespace TrackTv.Data
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.UserID,
 				SetPrimaryKey = (instance, val) => instance.UserID = val,
-				IsNew = (instance) => instance.UserID == default,
-				Clone = DbServiceHelpers.GetClone<UserPoco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<UserPoco, UserCM>(),
-				Setters = DbServiceHelpers.GetSetters<UserPoco>(TableToPropertyMap["users"]),
-				Getters = DbServiceHelpers.GetGetters<UserPoco>(TableToPropertyMap["users"]),
+				IsNew = (instance) => instance.UserID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7667,10 +7663,14 @@ namespace TrackTv.Data
 				}
 			};
 
-			UserPocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(UserPocoMetadata);
-			UserPocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(UserPocoMetadata);
-			UserPocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(UserPocoMetadata);
-			UserPocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(UserPocoMetadata, typeof(UserFM));
+			UserPocoMetadata.Clone = DbCodeGenerator.GetClone<UserPoco>();
+			UserPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<UserPoco, UserCM>();
+			UserPocoMetadata.Setters = DbCodeGenerator.GetSetters<UserPoco>(TableToPropertyMap["users"]);
+			UserPocoMetadata.Getters = DbCodeGenerator.GetGetters<UserPoco>(TableToPropertyMap["users"]);
+			UserPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(UserPocoMetadata);
+			UserPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(UserPocoMetadata);
+			UserPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(UserPocoMetadata);
+			UserPocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(UserPocoMetadata, typeof(UserFM));
 
 			MetadataByPocoType = new Dictionary<Type, object>
 			{

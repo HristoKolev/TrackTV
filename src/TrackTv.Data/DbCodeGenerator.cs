@@ -10,7 +10,7 @@
 
     using NpgsqlTypes;
 
-    public class DbServiceHelpers
+    public class DbCodeGenerator
     {
         public static T GenerateMethod<T>(Action<ILGenerator> generate)
             where T : Delegate
@@ -472,8 +472,10 @@
             });
         }
 
-        public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> 
-            GetParseFM<TPoco>(TableMetadataModel<TPoco> metadata, Type fmType)
+        public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFM<TPoco>(
+            TableMetadataModel<TPoco> metadata, 
+            Type fmType
+        )
             where TPoco : IPoco<TPoco>
         {
             var parameterType = typeof(NpgsqlParameter);

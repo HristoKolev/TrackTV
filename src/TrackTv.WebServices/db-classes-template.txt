@@ -234,11 +234,7 @@ namespace {{model.Namespace}}
 				TableSchema = "{{TableSchema}}",
 				GetPrimaryKey = (instance) => instance.{{PrimaryKeyPropertyName}},
 				SetPrimaryKey = (instance, val) => instance.{{PrimaryKeyPropertyName}} = val,
-				IsNew = (instance) => instance.{{PrimaryKeyPropertyName}} == default,
-				Clone = DbServiceHelpers.GetClone<{{ClassName}}Poco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<{{ClassName}}Poco, {{ClassName}}CM>(),
-				Setters = DbServiceHelpers.GetSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]),
-				Getters = DbServiceHelpers.GetGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]),
+				IsNew = (instance) => instance.{{PrimaryKeyPropertyName}} == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					{{#each columns}}
@@ -277,10 +273,14 @@ namespace {{model.Namespace}}
 				}
 			};
 
-			{{ClassName}}PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters({{ClassName}}PocoMetadata);
-			{{ClassName}}PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges({{ClassName}}PocoMetadata);
-			{{ClassName}}PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns({{ClassName}}PocoMetadata);
-			{{ClassName}}PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
+			{{ClassName}}PocoMetadata.Clone = DbCodeGenerator.GetClone<{{ClassName}}Poco>();
+			{{ClassName}}PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<{{ClassName}}Poco, {{ClassName}}CM>();
+			{{ClassName}}PocoMetadata.Setters = DbCodeGenerator.GetSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
+			{{ClassName}}PocoMetadata.Getters = DbCodeGenerator.GetGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
+			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
+			{{ClassName}}PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges({{ClassName}}PocoMetadata);
+			{{ClassName}}PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns({{ClassName}}PocoMetadata);
+			{{ClassName}}PocoMetadata.ParseFM = DbCodeGenerator.GetParseFM({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
 			{{/each}}
 			MetadataByPocoType = new Dictionary<Type, object>

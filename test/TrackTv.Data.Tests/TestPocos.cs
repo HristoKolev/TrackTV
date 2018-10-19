@@ -1680,11 +1680,7 @@ namespace TrackTv.Data.Tests
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.TestID,
 				SetPrimaryKey = (instance, val) => instance.TestID = val,
-				IsNew = (instance) => instance.TestID == default,
-				Clone = DbServiceHelpers.GetClone<Test1Poco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<Test1Poco, Test1CM>(),
-				Setters = DbServiceHelpers.GetSetters<Test1Poco>(TableToPropertyMap["test1"]),
-				Getters = DbServiceHelpers.GetGetters<Test1Poco>(TableToPropertyMap["test1"]),
+				IsNew = (instance) => instance.TestID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -2341,10 +2337,14 @@ namespace TrackTv.Data.Tests
 				}
 			};
 
-			Test1PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test1PocoMetadata);
-			Test1PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test1PocoMetadata);
-			Test1PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test1PocoMetadata);
-			Test1PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test1PocoMetadata, typeof(Test1FM));
+			Test1PocoMetadata.Clone = DbCodeGenerator.GetClone<Test1Poco>();
+			Test1PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test1Poco, Test1CM>();
+			Test1PocoMetadata.Setters = DbCodeGenerator.GetSetters<Test1Poco>(TableToPropertyMap["test1"]);
+			Test1PocoMetadata.Getters = DbCodeGenerator.GetGetters<Test1Poco>(TableToPropertyMap["test1"]);
+			Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
+			Test1PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test1PocoMetadata);
+			Test1PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test1PocoMetadata);
+			Test1PocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(Test1PocoMetadata, typeof(Test1FM));
 
 			Test2PocoMetadata = new TableMetadataModel<Test2Poco>
 			{
@@ -2356,11 +2356,7 @@ namespace TrackTv.Data.Tests
 				TableSchema = "public",
 				GetPrimaryKey = (instance) => instance.TestID,
 				SetPrimaryKey = (instance, val) => instance.TestID = val,
-				IsNew = (instance) => instance.TestID == default,
-				Clone = DbServiceHelpers.GetClone<Test2Poco>(),
-				MapToCM = DbServiceHelpers.GetMapToCM<Test2Poco, Test2CM>(),
-				Setters = DbServiceHelpers.GetSetters<Test2Poco>(TableToPropertyMap["test2"]),
-				Getters = DbServiceHelpers.GetGetters<Test2Poco>(TableToPropertyMap["test2"]),
+				IsNew = (instance) => instance.TestID == default,		
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -2459,10 +2455,14 @@ namespace TrackTv.Data.Tests
 				}
 			};
 
-			Test2PocoMetadata.GenerateParameters = DbServiceHelpers.GetGenerateParameters(Test2PocoMetadata);
-			Test2PocoMetadata.GetColumnChanges = DbServiceHelpers.GetGetColumnChanges(Test2PocoMetadata);
-			Test2PocoMetadata.GetAllColumns = DbServiceHelpers.GetGetAllColumns(Test2PocoMetadata);
-			Test2PocoMetadata.ParseFM = DbServiceHelpers.GetParseFM(Test2PocoMetadata, typeof(Test2FM));
+			Test2PocoMetadata.Clone = DbCodeGenerator.GetClone<Test2Poco>();
+			Test2PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test2Poco, Test2CM>();
+			Test2PocoMetadata.Setters = DbCodeGenerator.GetSetters<Test2Poco>(TableToPropertyMap["test2"]);
+			Test2PocoMetadata.Getters = DbCodeGenerator.GetGetters<Test2Poco>(TableToPropertyMap["test2"]);
+			Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);
+			Test2PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test2PocoMetadata);
+			Test2PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test2PocoMetadata);
+			Test2PocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(Test2PocoMetadata, typeof(Test2FM));
 
 			MetadataByPocoType = new Dictionary<Type, object>
 			{
