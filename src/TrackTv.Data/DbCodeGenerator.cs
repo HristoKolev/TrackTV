@@ -96,61 +96,51 @@
             
             return GenerateMethod<Func<T, T>>(il =>
             {
-                il.DeclareLocal(instanceType);
-                il.DeclareLocal(instanceType);
-
-                il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Stloc_0);
+                var cloneObject = il.DeclareLocal(instanceType);
 
                 il.Emit(OpCodes.Newobj, instanceType.GetConstructor(Array.Empty<Type>()));
-                il.Emit(OpCodes.Stloc_1);
+                il.Emit(OpCodes.Stloc, cloneObject);
 
-                foreach (var propertyInfo in instanceType.GetProperties())
+                var fields = instanceType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+                foreach (var fieldInfo in fields)
                 {
-                    il.Emit(OpCodes.Ldloc_1);
-
-                    il.Emit(OpCodes.Ldloc_0);
-                    il.Emit(OpCodes.Call, propertyInfo.GetMethod);
-
-                    il.Emit(OpCodes.Call, propertyInfo.SetMethod);
+                    il.Emit(OpCodes.Ldloc, cloneObject);
+                    il.Emit(OpCodes.Ldarg_0);
+                    il.Emit(OpCodes.Ldfld, fieldInfo);
+                    il.Emit(OpCodes.Stfld, fieldInfo);
                 }
 
-                il.Emit(OpCodes.Ldloc_1);
-                
+                il.Emit(OpCodes.Ldloc, cloneObject);
                 il.Emit(OpCodes.Ret);
             });
         }
 
-        public static Func<TPoco, TCM> GetMapToCM<TPoco, TCM>()
+        public static Func<TPoco, TCM> GetMapToCM<TPoco, TCM>(TableMetadataModel<TPoco> metadata)
+            where TPoco : IPoco<TPoco>
         {
             var pocoType = typeof(TPoco);
             var cmType = typeof(TCM);
 
             return GenerateMethod<Func<TPoco, TCM>>(il =>
             {
-                il.DeclareLocal(pocoType);
-                il.DeclareLocal(cmType);
-
-                il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Stloc_0);
+                var cmLocal = il.DeclareLocal(cmType);
 
                 il.Emit(OpCodes.Newobj, cmType.GetConstructor(Array.Empty<Type>()));
-                il.Emit(OpCodes.Stloc_1);
+                il.Emit(OpCodes.Stloc, cmLocal);
 
-                foreach (var pocoProperty in pocoType.GetProperties())
+                foreach (var column in metadata.Columns)
                 {
-                    var cmProperty = cmType.GetProperty(pocoProperty.Name);
+                    var pocoProperty = pocoType.GetProperty(column.PropertyName);
+                    var cmProperty = cmType.GetProperty(column.PropertyName);
 
-                    il.Emit(OpCodes.Ldloc_1);
-
-                    il.Emit(OpCodes.Ldloc_0);
+                    il.Emit(OpCodes.Ldloc, cmLocal);
+                    il.Emit(OpCodes.Ldarg_0);
                     il.Emit(OpCodes.Call, pocoProperty.GetMethod);
-
                     il.Emit(OpCodes.Call, cmProperty.SetMethod);
                 }
 
-                il.Emit(OpCodes.Ldloc_1);
-
+                il.Emit(OpCodes.Ldloc, cmLocal);
                 il.Emit(OpCodes.Ret);
             });
         }
@@ -554,8 +544,7 @@
 
         public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFM<TPoco>(
             TableMetadataModel<TPoco> metadata, 
-            Type fmType
-        )
+            Type fmType) 
             where TPoco : IPoco<TPoco>
         {
             var parameterType = typeof(NpgsqlParameter);

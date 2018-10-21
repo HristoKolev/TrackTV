@@ -5448,7 +5448,7 @@ namespace TrackTv.Data
 			};
 
 			ActorPocoMetadata.Clone = DbCodeGenerator.GetClone<ActorPoco>();
-			ActorPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ActorPoco, ActorCM>();
+			ActorPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ActorPoco, ActorCM>(ActorPocoMetadata);
 			ActorPocoMetadata.Setters = DbCodeGenerator.GetSetters<ActorPoco>(TableToPropertyMap["actors"]);
 			ActorPocoMetadata.Getters = DbCodeGenerator.GetGetters<ActorPoco>(TableToPropertyMap["actors"]);
 			ActorPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ActorPocoMetadata);
@@ -5535,7 +5535,7 @@ namespace TrackTv.Data
 			};
 
 			ApiChangeTypePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangeTypePoco>();
-			ApiChangeTypePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiChangeTypePoco, ApiChangeTypeCM>();
+			ApiChangeTypePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiChangeTypePoco, ApiChangeTypeCM>(ApiChangeTypePocoMetadata);
 			ApiChangeTypePocoMetadata.Setters = DbCodeGenerator.GetSetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]);
 			ApiChangeTypePocoMetadata.Getters = DbCodeGenerator.GetGetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]);
 			ApiChangeTypePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangeTypePocoMetadata);
@@ -5808,7 +5808,7 @@ namespace TrackTv.Data
 			};
 
 			ApiChangePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangePoco>();
-			ApiChangePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiChangePoco, ApiChangeCM>();
+			ApiChangePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiChangePoco, ApiChangeCM>(ApiChangePocoMetadata);
 			ApiChangePocoMetadata.Setters = DbCodeGenerator.GetSetters<ApiChangePoco>(TableToPropertyMap["api_changes"]);
 			ApiChangePocoMetadata.Getters = DbCodeGenerator.GetGetters<ApiChangePoco>(TableToPropertyMap["api_changes"]);
 			ApiChangePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangePocoMetadata);
@@ -5988,7 +5988,7 @@ namespace TrackTv.Data
 			};
 
 			ApiResponsePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiResponsePoco>();
-			ApiResponsePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiResponsePoco, ApiResponseCM>();
+			ApiResponsePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ApiResponsePoco, ApiResponseCM>(ApiResponsePocoMetadata);
 			ApiResponsePocoMetadata.Setters = DbCodeGenerator.GetSetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]);
 			ApiResponsePocoMetadata.Getters = DbCodeGenerator.GetGetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]);
 			ApiResponsePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiResponsePocoMetadata);
@@ -6323,7 +6323,7 @@ namespace TrackTv.Data
 			};
 
 			EpisodePocoMetadata.Clone = DbCodeGenerator.GetClone<EpisodePoco>();
-			EpisodePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<EpisodePoco, EpisodeCM>();
+			EpisodePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<EpisodePoco, EpisodeCM>(EpisodePocoMetadata);
 			EpisodePocoMetadata.Setters = DbCodeGenerator.GetSetters<EpisodePoco>(TableToPropertyMap["episodes"]);
 			EpisodePocoMetadata.Getters = DbCodeGenerator.GetGetters<EpisodePoco>(TableToPropertyMap["episodes"]);
 			EpisodePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(EpisodePocoMetadata);
@@ -6410,7 +6410,7 @@ namespace TrackTv.Data
 			};
 
 			GenrePocoMetadata.Clone = DbCodeGenerator.GetClone<GenrePoco>();
-			GenrePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<GenrePoco, GenreCM>();
+			GenrePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<GenrePoco, GenreCM>(GenrePocoMetadata);
 			GenrePocoMetadata.Setters = DbCodeGenerator.GetSetters<GenrePoco>(TableToPropertyMap["genres"]);
 			GenrePocoMetadata.Getters = DbCodeGenerator.GetGetters<GenrePoco>(TableToPropertyMap["genres"]);
 			GenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(GenrePocoMetadata);
@@ -6497,7 +6497,7 @@ namespace TrackTv.Data
 			};
 
 			NetworkPocoMetadata.Clone = DbCodeGenerator.GetClone<NetworkPoco>();
-			NetworkPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<NetworkPoco, NetworkCM>();
+			NetworkPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<NetworkPoco, NetworkCM>(NetworkPocoMetadata);
 			NetworkPocoMetadata.Setters = DbCodeGenerator.GetSetters<NetworkPoco>(TableToPropertyMap["networks"]);
 			NetworkPocoMetadata.Getters = DbCodeGenerator.GetGetters<NetworkPoco>(TableToPropertyMap["networks"]);
 			NetworkPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(NetworkPocoMetadata);
@@ -6584,7 +6584,7 @@ namespace TrackTv.Data
 			};
 
 			ProfilePocoMetadata.Clone = DbCodeGenerator.GetClone<ProfilePoco>();
-			ProfilePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ProfilePoco, ProfileCM>();
+			ProfilePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ProfilePoco, ProfileCM>(ProfilePocoMetadata);
 			ProfilePocoMetadata.Setters = DbCodeGenerator.GetSetters<ProfilePoco>(TableToPropertyMap["profiles"]);
 			ProfilePocoMetadata.Getters = DbCodeGenerator.GetGetters<ProfilePoco>(TableToPropertyMap["profiles"]);
 			ProfilePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ProfilePocoMetadata);
@@ -6733,7 +6733,7 @@ namespace TrackTv.Data
 			};
 
 			RolePocoMetadata.Clone = DbCodeGenerator.GetClone<RolePoco>();
-			RolePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<RolePoco, RoleCM>();
+			RolePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<RolePoco, RoleCM>(RolePocoMetadata);
 			RolePocoMetadata.Setters = DbCodeGenerator.GetSetters<RolePoco>(TableToPropertyMap["roles"]);
 			RolePocoMetadata.Getters = DbCodeGenerator.GetGetters<RolePoco>(TableToPropertyMap["roles"]);
 			RolePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(RolePocoMetadata);
@@ -6851,7 +6851,7 @@ namespace TrackTv.Data
 			};
 
 			SettingPocoMetadata.Clone = DbCodeGenerator.GetClone<SettingPoco>();
-			SettingPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<SettingPoco, SettingCM>();
+			SettingPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<SettingPoco, SettingCM>(SettingPocoMetadata);
 			SettingPocoMetadata.Setters = DbCodeGenerator.GetSetters<SettingPoco>(TableToPropertyMap["settings"]);
 			SettingPocoMetadata.Getters = DbCodeGenerator.GetGetters<SettingPoco>(TableToPropertyMap["settings"]);
 			SettingPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SettingPocoMetadata);
@@ -7248,7 +7248,7 @@ namespace TrackTv.Data
 			};
 
 			ShowPocoMetadata.Clone = DbCodeGenerator.GetClone<ShowPoco>();
-			ShowPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ShowPoco, ShowCM>();
+			ShowPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ShowPoco, ShowCM>(ShowPocoMetadata);
 			ShowPocoMetadata.Setters = DbCodeGenerator.GetSetters<ShowPoco>(TableToPropertyMap["shows"]);
 			ShowPocoMetadata.Getters = DbCodeGenerator.GetGetters<ShowPoco>(TableToPropertyMap["shows"]);
 			ShowPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowPocoMetadata);
@@ -7366,7 +7366,7 @@ namespace TrackTv.Data
 			};
 
 			ShowGenrePocoMetadata.Clone = DbCodeGenerator.GetClone<ShowGenrePoco>();
-			ShowGenrePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ShowGenrePoco, ShowGenreCM>();
+			ShowGenrePocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<ShowGenrePoco, ShowGenreCM>(ShowGenrePocoMetadata);
 			ShowGenrePocoMetadata.Setters = DbCodeGenerator.GetSetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]);
 			ShowGenrePocoMetadata.Getters = DbCodeGenerator.GetGetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]);
 			ShowGenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowGenrePocoMetadata);
@@ -7484,7 +7484,7 @@ namespace TrackTv.Data
 			};
 
 			SubscriptionPocoMetadata.Clone = DbCodeGenerator.GetClone<SubscriptionPoco>();
-			SubscriptionPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<SubscriptionPoco, SubscriptionCM>();
+			SubscriptionPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<SubscriptionPoco, SubscriptionCM>(SubscriptionPocoMetadata);
 			SubscriptionPocoMetadata.Setters = DbCodeGenerator.GetSetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]);
 			SubscriptionPocoMetadata.Getters = DbCodeGenerator.GetGetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]);
 			SubscriptionPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SubscriptionPocoMetadata);
@@ -7664,7 +7664,7 @@ namespace TrackTv.Data
 			};
 
 			UserPocoMetadata.Clone = DbCodeGenerator.GetClone<UserPoco>();
-			UserPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<UserPoco, UserCM>();
+			UserPocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<UserPoco, UserCM>(UserPocoMetadata);
 			UserPocoMetadata.Setters = DbCodeGenerator.GetSetters<UserPoco>(TableToPropertyMap["users"]);
 			UserPocoMetadata.Getters = DbCodeGenerator.GetGetters<UserPoco>(TableToPropertyMap["users"]);
 			UserPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(UserPocoMetadata);

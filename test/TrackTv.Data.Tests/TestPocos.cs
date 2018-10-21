@@ -2338,7 +2338,7 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test1PocoMetadata.Clone = DbCodeGenerator.GetClone<Test1Poco>();
-			Test1PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test1Poco, Test1CM>();
+			Test1PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test1Poco, Test1CM>(Test1PocoMetadata);
 			Test1PocoMetadata.Setters = DbCodeGenerator.GetSetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.Getters = DbCodeGenerator.GetGetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
@@ -2456,7 +2456,7 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test2PocoMetadata.Clone = DbCodeGenerator.GetClone<Test2Poco>();
-			Test2PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test2Poco, Test2CM>();
+			Test2PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test2Poco, Test2CM>(Test2PocoMetadata);
 			Test2PocoMetadata.Setters = DbCodeGenerator.GetSetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.Getters = DbCodeGenerator.GetGetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);
