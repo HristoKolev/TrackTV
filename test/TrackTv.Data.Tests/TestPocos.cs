@@ -2338,13 +2338,13 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test1PocoMetadata.Clone = DbCodeGenerator.GetClone<Test1Poco>();
-			Test1PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test1Poco, Test1CM>(Test1PocoMetadata);
+			Test1PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<Test1Poco, Test1CM>(Test1PocoMetadata);
 			Test1PocoMetadata.Setters = DbCodeGenerator.GetSetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.Getters = DbCodeGenerator.GetGetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
 			Test1PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test1PocoMetadata);
 			Test1PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test1PocoMetadata);
-			Test1PocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(Test1PocoMetadata, typeof(Test1FM));
+			Test1PocoMetadata.ParseFM = DbCodeGenerator.GetParseFm(Test1PocoMetadata, typeof(Test1FM));
 
 			Test2PocoMetadata = new TableMetadataModel<Test2Poco>
 			{
@@ -2456,13 +2456,13 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test2PocoMetadata.Clone = DbCodeGenerator.GetClone<Test2Poco>();
-			Test2PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<Test2Poco, Test2CM>(Test2PocoMetadata);
+			Test2PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<Test2Poco, Test2CM>(Test2PocoMetadata);
 			Test2PocoMetadata.Setters = DbCodeGenerator.GetSetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.Getters = DbCodeGenerator.GetGetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);
 			Test2PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test2PocoMetadata);
 			Test2PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test2PocoMetadata);
-			Test2PocoMetadata.ParseFM = DbCodeGenerator.GetParseFM(Test2PocoMetadata, typeof(Test2FM));
+			Test2PocoMetadata.ParseFM = DbCodeGenerator.GetParseFm(Test2PocoMetadata, typeof(Test2FM));
 
 			MetadataByPocoType = new Dictionary<Type, object>
 			{

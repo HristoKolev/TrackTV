@@ -57,7 +57,7 @@
             return GenerateMethod<Func<T, object>>(il =>
             {
                 il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Call, property.GetMethod);
+                il.Emit(OpCodes.Ldfld, property.GetBackingField());
 
                 if (property.PropertyType.IsValueType)
                 {
@@ -85,7 +85,7 @@
                     il.Emit(OpCodes.Ldobj, property.PropertyType);
                 }
 
-                il.Emit(OpCodes.Call, property.SetMethod);
+                il.Emit(OpCodes.Stfld, property.GetBackingField());
                 il.Emit(OpCodes.Ret);
             });
         }
@@ -101,14 +101,12 @@
                 il.Emit(OpCodes.Newobj, instanceType.GetConstructor(Array.Empty<Type>()));
                 il.Emit(OpCodes.Stloc, cloneObject);
 
-                var fields = instanceType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
-
-                foreach (var fieldInfo in fields)
+                foreach (var propertyInfo in instanceType.GetProperties())
                 {
                     il.Emit(OpCodes.Ldloc, cloneObject);
                     il.Emit(OpCodes.Ldarg_0);
-                    il.Emit(OpCodes.Ldfld, fieldInfo);
-                    il.Emit(OpCodes.Stfld, fieldInfo);
+                    il.Emit(OpCodes.Ldfld, propertyInfo.GetBackingField());
+                    il.Emit(OpCodes.Stfld, propertyInfo.GetBackingField());
                 }
 
                 il.Emit(OpCodes.Ldloc, cloneObject);
@@ -116,13 +114,13 @@
             });
         }
 
-        public static Func<TPoco, TCM> GetMapToCM<TPoco, TCM>(TableMetadataModel<TPoco> metadata)
+        public static Func<TPoco, TCm> GetMapToCm<TPoco, TCm>(TableMetadataModel<TPoco> metadata)
             where TPoco : IPoco<TPoco>
         {
             var pocoType = typeof(TPoco);
-            var cmType = typeof(TCM);
+            var cmType = typeof(TCm);
 
-            return GenerateMethod<Func<TPoco, TCM>>(il =>
+            return GenerateMethod<Func<TPoco, TCm>>(il =>
             {
                 var cmLocal = il.DeclareLocal(cmType);
 
@@ -136,8 +134,8 @@
 
                     il.Emit(OpCodes.Ldloc, cmLocal);
                     il.Emit(OpCodes.Ldarg_0);
-                    il.Emit(OpCodes.Call, pocoProperty.GetMethod);
-                    il.Emit(OpCodes.Call, cmProperty.SetMethod);
+                    il.Emit(OpCodes.Ldfld, pocoProperty.GetBackingField());
+                    il.Emit(OpCodes.Stfld, cmProperty.GetBackingField());
                 }
 
                 il.Emit(OpCodes.Ldloc, cmLocal);
@@ -542,7 +540,7 @@
             });
         }
 
-        public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFM<TPoco>(
+        public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFm<TPoco>(
             TableMetadataModel<TPoco> metadata, 
             Type fmType) 
             where TPoco : IPoco<TPoco>
@@ -677,6 +675,19 @@
 
                 il.Emit(OpCodes.Ret);
             });
+        }
+    }
+
+    public static class PropertyInfoExtensions
+    {
+        public static FieldInfo GetBackingField(this PropertyInfo prop)
+        {
+            return prop?.DeclaringType?.GetField($"<{prop.Name}>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        public static bool IsAutoImplemented(this PropertyInfo prop)
+        {
+            return prop.GetBackingField() != null;
         }
     }
 }

@@ -274,13 +274,13 @@ namespace {{model.Namespace}}
 			};
 
 			{{ClassName}}PocoMetadata.Clone = DbCodeGenerator.GetClone<{{ClassName}}Poco>();
-			{{ClassName}}PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCM<{{ClassName}}Poco, {{ClassName}}CM>({{ClassName}}PocoMetadata);
+			{{ClassName}}PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<{{ClassName}}Poco, {{ClassName}}CM>({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.Setters = DbCodeGenerator.GetSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
 			{{ClassName}}PocoMetadata.Getters = DbCodeGenerator.GetGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
 			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns({{ClassName}}PocoMetadata);
-			{{ClassName}}PocoMetadata.ParseFM = DbCodeGenerator.GetParseFM({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
+			{{ClassName}}PocoMetadata.ParseFM = DbCodeGenerator.GetParseFm({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
 			{{/each}}
 			MetadataByPocoType = new Dictionary<Type, object>
