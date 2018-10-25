@@ -148,20 +148,13 @@
         {
             var pocoType = typeof(TPoco);
             var parameterType = typeof(NpgsqlParameter);
-            var genericParameterType = typeof(NpgsqlParameter<>);
-            var dbNullValue = typeof(DBNull).GetField("Value");
-            
+      
             var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
 
             return GenerateMethod<Func<TPoco, NpgsqlParameter[]>>(il =>
             {
                 il.DeclareLocal(typeof(NpgsqlParameter[]));
-
-                var nullableLocals = nonPrimaryKeyColumns
-                                     .Where(x => IsNullableType(x.ClrType))
-                                     .Select(x => x.ClrType).Distinct()
-                                     .ToDictionary(type => type, il.DeclareLocal);
-
+                
                 // create the array and save it in local0
                 il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
                 il.Emit(OpCodes.Newarr, parameterType);
@@ -177,117 +170,13 @@
                     il.Emit(OpCodes.Ldloc_0);
                     il.Emit(OpCodes.Ldc_I4, i++);
 
-                    #region CreateTheParameter
-
-                    if (!property.PropertyType.IsValueType)
-                    {
-                        var nullParameterType = genericParameterType.MakeGenericType(typeof(DBNull));
-                        var concreteParameterType = genericParameterType.MakeGenericType(property.PropertyType);
-
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        
-                        var ifNotNullLabel = il.DefineLabel();
-                        var endifLabel = il.DefineLabel();
-
-                        il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
-
-                        // if null
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                        il.Emit(OpCodes.Newobj, nullParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                        il.Emit(OpCodes.Dup);
-
-                        il.Emit(OpCodes.Ldsfld, dbNullValue);
-                        il.Emit(OpCodes.Call, nullParameterType.GetProperty("TypedValue").SetMethod);
-
-                        il.Emit(OpCodes.Br_S, endifLabel);
-
-                        il.MarkLabel(ifNotNullLabel);
-
-                        // if not null
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                        il.Emit(OpCodes.Newobj, concreteParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                        il.Emit(OpCodes.Dup);
-
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Call, concreteParameterType.GetProperty("TypedValue").SetMethod);
-
-                        il.MarkLabel(endifLabel);
-                    }
-                    else if (IsNullableType(property.PropertyType))
-                    {
-                        var nullParameterType = genericParameterType.MakeGenericType(typeof(DBNull));
-                        var concreteParameterType = genericParameterType.MakeGenericType(Nullable.GetUnderlyingType(property.PropertyType));
-
-                        var nullableValueLocal = nullableLocals[property.PropertyType];
-
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Stloc, nullableValueLocal);
-
-                        var ifNotNullLabel = il.DefineLabel();
-                        var endifLabel = il.DefineLabel();
-
-                        il.Emit(OpCodes.Ldloca_S, nullableValueLocal);
-                        il.Emit(OpCodes.Call, property.PropertyType.GetProperty("HasValue").GetMethod);
-
-                        il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
-
-                        // if null
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                        il.Emit(OpCodes.Newobj, nullParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                        il.Emit(OpCodes.Dup);
-
-                        il.Emit(OpCodes.Ldsfld, dbNullValue);
-                        il.Emit(OpCodes.Call, nullParameterType.GetProperty("TypedValue").SetMethod);
-
-                        il.Emit(OpCodes.Br_S, endifLabel);
-
-                        il.MarkLabel(ifNotNullLabel);
-
-                        // if not null
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                        il.Emit(OpCodes.Newobj, concreteParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                        il.Emit(OpCodes.Dup);
-
-                        il.Emit(OpCodes.Ldloca_S, nullableValueLocal);
-                        il.Emit(OpCodes.Call, property.PropertyType.GetMethod("GetValueOrDefault", Array.Empty<Type>()));
-                        il.Emit(OpCodes.Call, concreteParameterType.GetProperty("TypedValue").SetMethod);
-
-                        il.MarkLabel(endifLabel);
-                    }
-                    else
-                    {
-                        var concreteParameterType = genericParameterType.MakeGenericType(property.PropertyType);
-
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                        il.Emit(OpCodes.Newobj, concreteParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                        il.Emit(OpCodes.Dup);
-
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Call, concreteParameterType.GetProperty("TypedValue").SetMethod);
-                    }
-                    
-                    #endregion
+                    EmitNpgsqlParameter(il, property, column.NpgsDataType, () => il.Emit(OpCodes.Ldarg_0));
 
                     // set the parameter to the appropriate index
                     il.Emit(OpCodes.Stelem, parameterType);
                 }
 
                 il.Emit(OpCodes.Ldloc_0);
-
                 il.Emit(OpCodes.Ret);
             });
         }
@@ -297,8 +186,6 @@
         {
             var pocoType = typeof(TPoco);
             var parameterType = typeof(NpgsqlParameter);
-            var parameterValueProperty = parameterType.GetProperty("Value");
-            var dbNullValue = typeof(DBNull).GetField("Value");
 
             var tupleConstructor = typeof(ValueTuple<string[], NpgsqlParameter[]>)
                 .GetConstructor(new[] { typeof(string[]), typeof(NpgsqlParameter[]) });
@@ -307,73 +194,38 @@
 
             return GenerateMethod<Func<TPoco, ValueTuple<string[], NpgsqlParameter[]>>>(il =>
             {
-                il.DeclareLocal(typeof(string[]));
-                il.DeclareLocal(typeof(NpgsqlParameter[]));
+                var columnNamesLocal = il.DeclareLocal(typeof(string[]));
+                var parametersLocal = il.DeclareLocal(typeof(NpgsqlParameter[]));
 
-                // create the column name array and save it in local0
                 il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
                 il.Emit(OpCodes.Newarr, typeof(string));
-                il.Emit(OpCodes.Stloc_0);
+                il.Emit(OpCodes.Stloc, columnNamesLocal);
 
-                // create the parameter array and save it in local1
                 il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
                 il.Emit(OpCodes.Newarr, parameterType);
-                il.Emit(OpCodes.Stloc_1);
+                il.Emit(OpCodes.Stloc, parametersLocal);
 
                 int i = 0;
 
                 foreach (var column in nonPrimaryKeyColumns)
                 {
                     // add the column name to the array
-                    il.Emit(OpCodes.Ldloc_0);
+                    il.Emit(OpCodes.Ldloc, columnNamesLocal);
                     il.Emit(OpCodes.Ldc_I4, i);
                     il.Emit(OpCodes.Ldstr, column.ColumnName);
                     il.Emit(OpCodes.Stelem, typeof(string));
 
                     // add the parameter to the array
-                    il.Emit(OpCodes.Ldloc_1);
+                    il.Emit(OpCodes.Ldloc, parametersLocal);
                     il.Emit(OpCodes.Ldc_I4, i);
-
-                    // create the new parameter
-                    il.Emit(OpCodes.Ldnull);
-                    il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                    il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                    // set the param.Value property to the property value
-                    var property = pocoType.GetProperty(column.PropertyName);
-
-                    il.Emit(OpCodes.Dup);
-                    il.Emit(OpCodes.Ldarg_0);
-                    il.Emit(OpCodes.Call, property.GetMethod);
-
-                    if (column.ClrType.IsValueType)
-                    {
-                        il.Emit(OpCodes.Box, column.ClrType);
-                    }
-
-                    // if its null then set it to dbnull
-                    var endif = il.DefineLabel();
-
-                    il.Emit(OpCodes.Dup);
-
-                    il.Emit(OpCodes.Brtrue_S, endif);
-
-                    il.Emit(OpCodes.Pop);
-                    il.Emit(OpCodes.Ldsfld, dbNullValue);
-
-                    il.MarkLabel(endif);
-
-                    // set the Value property of the NpgsqlParameter
-                    il.Emit(OpCodes.Call, parameterValueProperty.SetMethod);
-
-                    // set the parameter to the appropriate index
+                    EmitNpgsqlParameter(il, pocoType.GetProperty(column.PropertyName), column.NpgsDataType, () => il.Emit(OpCodes.Ldarg_0));
                     il.Emit(OpCodes.Stelem, parameterType);
 
                     i++;
                 }
 
-                il.Emit(OpCodes.Ldloc_0);
-                il.Emit(OpCodes.Ldloc_1);
+                il.Emit(OpCodes.Ldloc, columnNamesLocal);
+                il.Emit(OpCodes.Ldloc, parametersLocal);
 
                 il.Emit(OpCodes.Newobj, tupleConstructor);
 
@@ -385,7 +237,6 @@
             where TPoco : IPoco<TPoco>
         {
             var pocoType = typeof(TPoco);
-            var parameterType = typeof(NpgsqlParameter);
 
             var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>>)
                 .GetConstructor(new[] { typeof(List<string>), typeof(List<NpgsqlParameter>) });
@@ -407,11 +258,6 @@
                 il.Emit(OpCodes.Newobj, parameterListType.GetConstructor(Array.Empty<Type>()));
                 il.Emit(OpCodes.Stloc, parameterListLocal);
 
-                // for each unique nullable types declare 2 locals.
-                var nullableLocals = nonPrimaryKeyColumns
-                                     .Where(x => IsNullableType(x.ClrType)).Select(x => x.ClrType).Distinct()
-                                     .ToDictionary(type => type, type => (il.DeclareLocal(type), il.DeclareLocal(type)));
-
                 foreach (var column in nonPrimaryKeyColumns)
                 {
                     var notChangedEndif = il.DefineLabel();
@@ -424,29 +270,24 @@
                         var getValueOrDefault = nullableType.GetMethod("GetValueOrDefault", Array.Empty<Type>());
                         var hasValue = nullableType.GetProperty("HasValue");
                         
-                        var (local1, local2) = nullableLocals[nullableType];
-
-                        // get the first value and store it into a local
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Stloc, local1);
-
-                        // get the second value and store it into a local
-                        il.Emit(OpCodes.Ldarg_1);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Stloc, local2);
-
                         // compare the HasValue properties
-                        il.Emit(OpCodes.Ldloca_S, local1);
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
                         il.Emit(OpCodes.Call, hasValue.GetMethod);
-                        il.Emit(OpCodes.Ldloca_S, local2);
+
+                        il.Emit(OpCodes.Ldarg_1);
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
                         il.Emit(OpCodes.Call, hasValue.GetMethod);
+
                         il.Emit(OpCodes.Ceq);
 
                         // compare the GetValueOrDefault() result.
-                        il.Emit(OpCodes.Ldloca_S, local1);
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
                         il.Emit(OpCodes.Call, getValueOrDefault);
-                        il.Emit(OpCodes.Ldloca_S, local2);
+
+                        il.Emit(OpCodes.Ldarg_1);
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
                         il.Emit(OpCodes.Call, getValueOrDefault);
 
                         var underlyingType = Nullable.GetUnderlyingType(nullableType);
@@ -469,10 +310,10 @@
                         // simple equality check
 
                         il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
+                        il.Emit(OpCodes.Ldfld, property.GetBackingField());
 
                         il.Emit(OpCodes.Ldarg_1);
-                        il.Emit(OpCodes.Call, property.GetMethod);
+                        il.Emit(OpCodes.Ldfld, property.GetBackingField());
 
                         var eqOperator = property.PropertyType.GetMethod("op_Equality");
 
@@ -493,39 +334,8 @@
                     il.Emit(OpCodes.Ldstr, column.ColumnName);
                     il.Emit(OpCodes.Call, stringListType.GetMethod("Add"));
 
-
                     il.Emit(OpCodes.Ldloc, parameterListLocal); // the parameter list
-
-                    // create the new parameter
-                    il.Emit(OpCodes.Ldnull);
-                    il.Emit(OpCodes.Ldc_I4, (int)column.NpgsDataType);
-                    il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                    il.Emit(OpCodes.Dup);
-                    il.Emit(OpCodes.Ldarg_1);
-                    il.Emit(OpCodes.Call, property.GetMethod);
-
-                    if (column.ClrType.IsValueType)
-                    {
-                        il.Emit(OpCodes.Box, column.ClrType);
-                    }
-
-                    // if its null then set it to dbnull
-                    var endif = il.DefineLabel();
-
-                    il.Emit(OpCodes.Dup);
-
-                    il.Emit(OpCodes.Brtrue_S, endif);
-
-                    // the value is null, replace it with DbNull.Value
-                    il.Emit(OpCodes.Pop);
-                    il.Emit(OpCodes.Ldsfld, typeof(DBNull).GetField("Value"));
-
-                    il.MarkLabel(endif);
-
-                    // set the Value property of the NpgsqlParameter
-                    il.Emit(OpCodes.Call, parameterType.GetProperty("Value").SetMethod);
-
+                    EmitNpgsqlParameter(il, property, column.NpgsDataType, () => il.Emit(OpCodes.Ldarg_1));
                     il.Emit(OpCodes.Call, parameterListType.GetMethod("Add"));
 
                     il.MarkLabel(notChangedEndif);
@@ -545,22 +355,18 @@
             Type fmType) 
             where TPoco : IPoco<TPoco>
         {
-            var parameterType = typeof(NpgsqlParameter);
-
             var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>)
                 .GetConstructor(new[] { typeof(List<string>), typeof(List<NpgsqlParameter>), typeof(List<QueryOperatorType>) });
 
-            var nullableTypes = fmType.GetProperties().Select(x => x.PropertyType).Where(IsNullableType).Distinct().ToList();
-
-            var stringListType = typeof(List<string>);
+            var columnNamesListType = typeof(List<string>);
             var parameterListType = typeof(List<NpgsqlParameter>);
             var operatorListType = typeof(List<QueryOperatorType>);
 
             return GenerateMethod<Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>>>(il =>
             {
                 // create the columnNames list.
-                var columnNamesLocal = il.DeclareLocal(stringListType);
-                il.Emit(OpCodes.Newobj, stringListType.GetConstructor(Array.Empty<Type>()));
+                var columnNamesLocal = il.DeclareLocal(columnNamesListType);
+                il.Emit(OpCodes.Newobj, columnNamesListType.GetConstructor(Array.Empty<Type>()));
                 il.Emit(OpCodes.Stloc, columnNamesLocal);
 
                 // create the parameter list.
@@ -573,33 +379,21 @@
                 il.Emit(OpCodes.Newobj, operatorListType.GetConstructor(Array.Empty<Type>()));
                 il.Emit(OpCodes.Stloc, operatorListLocal);
 
-                // for each unique nullable types declare 2 locals.
-                var nullableLocals = nullableTypes.ToDictionary(type => type, il.DeclareLocal);
-
                 foreach (var property in fmType.GetProperties())
                 {
                     var includedEndif = il.DefineLabel();
 
                     if (IsNullableType(property.PropertyType))
                     {
-                        var nullableType = property.PropertyType;
-                        var hasValue = nullableType.GetProperty("HasValue");
-
-                        var local = nullableLocals[nullableType];
-
                         // get the first value and store it into a local
                         il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-                        il.Emit(OpCodes.Stloc, local);
-
-                        // compare the HasValue properties
-                        il.Emit(OpCodes.Ldloca_S, local);
-                        il.Emit(OpCodes.Call, hasValue.GetMethod);
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
+                        il.Emit(OpCodes.Call, property.PropertyType.GetProperty("HasValue").GetMethod);
                     }
                     else
                     {
                         il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
+                        il.Emit(OpCodes.Ldfld, property.GetBackingField());
                     }
 
                     il.Emit(OpCodes.Brfalse_S, includedEndif);
@@ -611,7 +405,7 @@
                     // Add the column name
                     il.Emit(OpCodes.Ldloc, columnNamesLocal);
                     il.Emit(OpCodes.Ldstr, column.ColumnName);
-                    il.Emit(OpCodes.Call, stringListType.GetMethod("Add"));
+                    il.Emit(OpCodes.Call, columnNamesListType.GetMethod("Add"));
                     
                     #region AddTheParameter
 
@@ -623,35 +417,8 @@
                     }
                     else
                     {
-                        // create the new parameter
-                        il.Emit(OpCodes.Ldnull);
-                        il.Emit(OpCodes.Ldc_I4, property.PropertyType.IsArray ? (int)(NpgsqlDbType.Array | column.NpgsDataType) : (int)column.NpgsDataType);
-                        il.Emit(OpCodes.Newobj, parameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
-
-                        il.Emit(OpCodes.Dup);
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Call, property.GetMethod);
-
-                        if (property.PropertyType.IsValueType)
-                        {
-                            il.Emit(OpCodes.Box, property.PropertyType);
-                        }
-
-                        // if its null then set it to dbnull
-                        var endif = il.DefineLabel();
-
-                        il.Emit(OpCodes.Dup);
-
-                        il.Emit(OpCodes.Brtrue_S, endif);
-
-                        // the value is null, replace it with DbNull.Value
-                        il.Emit(OpCodes.Pop);
-                        il.Emit(OpCodes.Ldsfld, typeof(DBNull).GetField("Value"));
-
-                        il.MarkLabel(endif);
-
-                        // set the Value property of the NpgsqlParameter
-                        il.Emit(OpCodes.Call, parameterType.GetProperty("Value").SetMethod);
+                        var npgsDataType = property.PropertyType.IsArray ? NpgsqlDbType.Array | column.NpgsDataType : column.NpgsDataType;
+                        EmitNpgsqlParameter(il, property, npgsDataType, () => il.Emit(OpCodes.Ldarg_0));
                     }
 
                     il.Emit(OpCodes.Call, parameterListType.GetMethod("Add"));
@@ -675,6 +442,116 @@
 
                 il.Emit(OpCodes.Ret);
             });
+        }
+
+        /// <summary>
+        /// Emits a reference to a newly created NpgsqlParameter(Of T) object 
+        /// </summary>
+        /// <param name="il">The generator.</param>
+        /// <param name="property">The property from which to retrieve the value for the parameter.</param>
+        /// <param name="npgsDataType">The NpgsqlDbType value for the parameter.</param>
+        /// <param name="loadObject">A function that emits the code required to push the clr object to the stack.</param>
+        private static void EmitNpgsqlParameter(ILGenerator il, PropertyInfo property, NpgsqlDbType npgsDataType, Action loadObject)
+        {
+            var genericParameterType = typeof(NpgsqlParameter<>);
+            var dbNullValue = typeof(DBNull).GetField("Value");
+
+            if (!property.PropertyType.IsValueType) { 
+
+                var nullParameterType = genericParameterType.MakeGenericType(typeof(DBNull));
+                var concreteParameterType = genericParameterType.MakeGenericType(property.PropertyType);
+
+                loadObject();
+                il.Emit(OpCodes.Ldfld, property.GetBackingField());
+
+                var ifNotNullLabel = il.DefineLabel();
+                var endifLabel = il.DefineLabel();
+
+                il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
+
+                // if null
+                il.Emit(OpCodes.Ldnull);
+                il.Emit(OpCodes.Ldc_I4, (int)npgsDataType);
+                il.Emit(OpCodes.Newobj, nullParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
+
+                il.Emit(OpCodes.Dup);
+
+                il.Emit(OpCodes.Ldsfld, dbNullValue);
+                il.Emit(OpCodes.Stfld, nullParameterType.GetProperty("TypedValue").GetBackingField());
+
+                il.Emit(OpCodes.Br_S, endifLabel);
+
+                il.MarkLabel(ifNotNullLabel);
+
+                // if not null
+                il.Emit(OpCodes.Ldnull);
+                il.Emit(OpCodes.Ldc_I4, (int)npgsDataType);
+                il.Emit(OpCodes.Newobj, concreteParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
+
+                il.Emit(OpCodes.Dup);
+
+                loadObject();
+                il.Emit(OpCodes.Ldfld, property.GetBackingField());
+                il.Emit(OpCodes.Stfld, concreteParameterType.GetProperty("TypedValue").GetBackingField());
+
+                il.MarkLabel(endifLabel);
+            }
+            else if (IsNullableType(property.PropertyType))
+            {
+                var nullParameterType = genericParameterType.MakeGenericType(typeof(DBNull));
+                var concreteParameterType = genericParameterType.MakeGenericType(Nullable.GetUnderlyingType(property.PropertyType));
+
+                var ifNotNullLabel = il.DefineLabel();
+                var endifLabel = il.DefineLabel();
+
+                loadObject();
+                il.Emit(OpCodes.Ldflda, property.GetBackingField());
+                il.Emit(OpCodes.Call, property.PropertyType.GetProperty("HasValue").GetMethod);
+
+                il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
+
+                // if null
+                il.Emit(OpCodes.Ldnull);
+                il.Emit(OpCodes.Ldc_I4, (int)npgsDataType);
+                il.Emit(OpCodes.Newobj, nullParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
+
+                il.Emit(OpCodes.Dup);
+
+                il.Emit(OpCodes.Ldsfld, dbNullValue);
+                il.Emit(OpCodes.Stfld, nullParameterType.GetProperty("TypedValue").GetBackingField());
+
+                il.Emit(OpCodes.Br_S, endifLabel);
+
+                il.MarkLabel(ifNotNullLabel);
+
+                // if not null
+                il.Emit(OpCodes.Ldnull);
+                il.Emit(OpCodes.Ldc_I4, (int)npgsDataType);
+                il.Emit(OpCodes.Newobj, concreteParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
+
+                il.Emit(OpCodes.Dup);
+
+                loadObject();
+                il.Emit(OpCodes.Ldflda, property.GetBackingField());
+                il.Emit(OpCodes.Call, property.PropertyType.GetMethod("GetValueOrDefault", Array.Empty<Type>()));
+                il.Emit(OpCodes.Stfld, concreteParameterType.GetProperty("TypedValue").GetBackingField());
+
+                il.MarkLabel(endifLabel);
+            }
+            else
+            {
+                var concreteParameterType = genericParameterType.MakeGenericType(property.PropertyType);
+
+                il.Emit(OpCodes.Ldnull);
+                il.Emit(OpCodes.Ldc_I4, (int)npgsDataType);
+                il.Emit(OpCodes.Newobj, concreteParameterType.GetConstructor(new[] { typeof(string), typeof(NpgsqlDbType) }));
+
+                il.Emit(OpCodes.Dup);
+
+                loadObject();
+                il.Emit(OpCodes.Ldfld, property.GetBackingField());
+                il.Emit(OpCodes.Stfld, concreteParameterType.GetProperty("TypedValue").GetBackingField());
+            }
         }
     }
 
