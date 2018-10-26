@@ -12,6 +12,11 @@
 
     public class DbCodeGenerator
     {
+        /// <summary>
+        /// A helper method that takes care of setting the metadata for a DynamicMethod
+        /// that allows you to work with the ILGenerator without needing to do any other work
+        /// in order to have a working method.
+        /// </summary>
         public static T GenerateMethod<T>(Action<ILGenerator> generate)
             where T : Delegate
         {
@@ -101,12 +106,12 @@
                 il.Emit(OpCodes.Newobj, instanceType.GetConstructor(Array.Empty<Type>()));
                 il.Emit(OpCodes.Stloc, cloneObject);
 
-                foreach (var propertyInfo in instanceType.GetProperties())
+                foreach (var fieldInfo in instanceType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
                 {
                     il.Emit(OpCodes.Ldloc, cloneObject);
                     il.Emit(OpCodes.Ldarg_0);
-                    il.Emit(OpCodes.Ldfld, propertyInfo.GetBackingField());
-                    il.Emit(OpCodes.Stfld, propertyInfo.GetBackingField());
+                    il.Emit(OpCodes.Ldfld, fieldInfo);
+                    il.Emit(OpCodes.Stfld, fieldInfo);
                 }
 
                 il.Emit(OpCodes.Ldloc, cloneObject);
@@ -379,7 +384,7 @@
                 il.Emit(OpCodes.Newobj, operatorListType.GetConstructor(Array.Empty<Type>()));
                 il.Emit(OpCodes.Stloc, operatorListLocal);
 
-                foreach (var property in fmType.GetProperties())
+                foreach (var property in fmType.GetProperties().Where(x => x.GetCustomAttribute<FilterOperatorAttribute>() != null))
                 {
                     var includedEndif = il.DefineLabel();
 

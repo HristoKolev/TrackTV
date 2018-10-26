@@ -66,7 +66,7 @@
         {
             var list = new List<object>();
 
-            foreach (var property in typeof(TFilter).GetProperties())
+            foreach (var property in typeof(TFilter).GetProperties().Where(x => x.GetCustomAttribute<FilterOperatorAttribute>() != null))
             {
                 var attribute = property.GetCustomAttribute<FilterOperatorAttribute>();
 

@@ -40,7 +40,7 @@
         {
             var expressions = new List<Expression<Func<TPoco, bool>>>();
 
-            foreach (var propertyInfo in filter.GetType().GetProperties())
+            foreach (var propertyInfo in filter.GetType().GetProperties().Where(x => x.GetCustomAttribute<FilterOperatorAttribute>() != null))
             {
                 var filterAttribute = propertyInfo.GetCustomAttribute<FilterOperatorAttribute>();
 
