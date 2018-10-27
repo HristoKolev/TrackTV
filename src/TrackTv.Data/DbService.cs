@@ -386,7 +386,7 @@
         private async Task<T> QueryOneInternal<T>(
             string sql, 
             IEnumerable<NpgsqlParameter> parameters,  
-            IReadOnlyDictionary<string, Action<T, object>> setters, 
+            IReadOnlyDictionary<string, Action<T, object>> setters,
             CancellationToken cancellationToken = default)
             where T : class, new()
         {
