@@ -16,7 +16,6 @@
     /// Interface for all Poco classes.
     /// </summary>
     public interface IPoco<T>
-        where T : IPoco<T>
     {
         TableMetadataModel<T> Metadata { get; }
     }
@@ -158,7 +157,6 @@
     }
     
     public class TableMetadataModel<T> : TableMetadataModel
-        where T : IPoco<T>
     {
         /// <summary>
         /// <para>Clones the current object and returns the clone.</para>
@@ -294,7 +292,6 @@
     /// Interface for all Catalog models
     /// </summary>
     public interface ICatalogModel<TPoco>
-        where TPoco : IPoco<TPoco>
     {
     }
 
@@ -302,7 +299,6 @@
     /// Interface for all Filter models
     /// </summary>
     public interface IFilterModel<TPoco>
-        where TPoco : IPoco<TPoco>
     {
     }
 

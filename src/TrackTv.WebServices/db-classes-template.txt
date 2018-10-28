@@ -275,8 +275,8 @@ namespace {{model.Namespace}}
 
 			{{ClassName}}PocoMetadata.Clone = DbCodeGenerator.GetClone<{{ClassName}}Poco>();
 			{{ClassName}}PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<{{ClassName}}Poco, {{ClassName}}CM>({{ClassName}}PocoMetadata);
-			{{ClassName}}PocoMetadata.Setters = DbCodeGenerator.GetSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
-			{{ClassName}}PocoMetadata.Getters = DbCodeGenerator.GetGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
+			{{ClassName}}PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
+			{{ClassName}}PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
 			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns({{ClassName}}PocoMetadata);

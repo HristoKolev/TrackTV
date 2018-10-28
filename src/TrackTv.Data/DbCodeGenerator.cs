@@ -10,7 +10,7 @@
 
     using NpgsqlTypes;
 
-    public class DbCodeGenerator
+    public static class DbCodeGenerator
     {
         /// <summary>
         /// A helper method that takes care of setting the metadata for a DynamicMethod
@@ -22,6 +22,7 @@
         {
             var type = typeof(T);
 
+            // all delegates have an `Invoke` method.
             var invoke = type.GetMethod("Invoke");
 
             var returnType = invoke.ReturnType;
@@ -43,12 +44,12 @@
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-        public static Dictionary<string, Action<T, object>> GetSetters<T>(IReadOnlyDictionary<string, string> map)
+        public static Dictionary<string, Action<T, object>> GetPocoSetters<T>(IReadOnlyDictionary<string, string> map)
         {
             return map.ToDictionary(x => x.Key, x => GetSetter<T>(x.Value));
         }
 
-        public static Dictionary<string, Func<T, object>> GetGetters<T>(IReadOnlyDictionary<string, string> map)
+        public static Dictionary<string, Func<T, object>> GetPocoGetters<T>(IReadOnlyDictionary<string, string> map)
         {
             return map.ToDictionary(x => x.Key, x => GetGetter<T>(x.Value));
         }

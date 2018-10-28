@@ -192,7 +192,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            return this.QueryPocoInternal<T>(sql, parameters);
+            return this.QueryInternal<T>(sql, parameters);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            return this.QueryOnePocoInternal<T>(sql, parameters);
+            return this.QueryOneInternal<T>(sql, parameters);
         }
 
         private async Task<int> ExecuteNonQueryInternal(
@@ -301,21 +301,9 @@
             }
         }
 
-        private Task<List<T>> QueryPocoInternal<T>(
-            string sql,
-            IEnumerable<NpgsqlParameter> parameters,
-            CancellationToken cancellationToken = default)
-            where T : IPoco<T>, new()
-        {
-            var setters = this.Metadata.Get<T>().Setters;
-
-            return this.QueryInternal(sql, parameters, setters, cancellationToken);
-        }
-
         private async Task<List<T>> QueryInternal<T>(
             string sql,
-            IEnumerable<NpgsqlParameter> parameters, 
-            IReadOnlyDictionary<string, Action<T, object>> setters, 
+            IEnumerable<NpgsqlParameter> parameters,
             CancellationToken cancellationToken = default)
             where T : new()
         {
@@ -336,6 +324,8 @@
 
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                 {
+                    var setters = new T() is IPoco<T> x ? x.Metadata.Setters : throw new NotImplementedException();
+
                     // cached field count - I know it pointless, but I feel better by having it cached here.
                     int fieldCount = reader.FieldCount;
 
@@ -371,22 +361,10 @@
 
             return result;
         }
-
-        private Task<T> QueryOnePocoInternal<T>(
-            string sql,
-            IEnumerable<NpgsqlParameter> parameters,
-            CancellationToken cancellationToken = default)
-            where T : class, IPoco<T>, new()
-        {
-            var setters = this.Metadata.Get<T>().Setters;
-
-            return this.QueryOneInternal(sql, parameters, setters, cancellationToken);
-        }
-
+        
         private async Task<T> QueryOneInternal<T>(
             string sql, 
-            IEnumerable<NpgsqlParameter> parameters,  
-            IReadOnlyDictionary<string, Action<T, object>> setters,
+            IEnumerable<NpgsqlParameter> parameters,
             CancellationToken cancellationToken = default)
             where T : class, new()
         {
@@ -405,14 +383,16 @@
 
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                 {
+                    var instance = new T();
+
+                    var setters = instance is IPoco<T> x ? x.Metadata.Setters : throw new NotImplementedException();
+
                     bool hasRow = await reader.ReadAsync(cancellationToken);
 
                     if (!hasRow)
                     {
                         return null;
                     }
-
-                    var instance = new T();
 
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
