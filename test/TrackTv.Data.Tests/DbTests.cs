@@ -8,6 +8,8 @@ namespace TrackTv.Data.Tests
 
     using LinqToDB;
 
+	using Npgsql;
+
     using TrackTv.Data.Tests.Infrastructure;
 
     using Xunit;
@@ -22,10 +24,64 @@ namespace TrackTv.Data.Tests
 
             var readFromDb = await this.Db.FindByID<Test1Poco>(id);
 
-            foreach (var getter in TestDbMetadata.Test1PocoMetadata.Getters.Values)
-            {
-                Assert.Equal(getter(poco), getter(readFromDb));
-            }
+			Assert.Equal(poco.TestID, readFromDb.TestID);
+			Assert.Equal(poco.TestName1, readFromDb.TestName1);
+			Assert.Equal(poco.TestName2, readFromDb.TestName2);
+			Assert.Equal(poco.TestDate1, readFromDb.TestDate1);
+			Assert.Equal(poco.TestDate2, readFromDb.TestDate2);
+			Assert.Equal(poco.TestTimestamp1, readFromDb.TestTimestamp1);
+			Assert.Equal(poco.TestTimestamp2, readFromDb.TestTimestamp2);
+			Assert.Equal(poco.TestBoolean1, readFromDb.TestBoolean1);
+			Assert.Equal(poco.TestBoolean2, readFromDb.TestBoolean2);
+			Assert.Equal(poco.TestInteger1, readFromDb.TestInteger1);
+			Assert.Equal(poco.TestInteger2, readFromDb.TestInteger2);
+			Assert.Equal(poco.TestBigint1, readFromDb.TestBigint1);
+			Assert.Equal(poco.TestBigint2, readFromDb.TestBigint2);
+			Assert.Equal(poco.TestText1, readFromDb.TestText1);
+			Assert.Equal(poco.TestText2, readFromDb.TestText2);
+			Assert.Equal(poco.TestReal1, readFromDb.TestReal1);
+			Assert.Equal(poco.TestReal2, readFromDb.TestReal2);
+			Assert.Equal(poco.TestDouble1, readFromDb.TestDouble1);
+			Assert.Equal(poco.TestDouble2, readFromDb.TestDouble2);
+			Assert.Equal(poco.TestChar1, readFromDb.TestChar1);
+			Assert.Equal(poco.TestChar2, readFromDb.TestChar2);
+
+            int updatedId = await this.Db.Update(poco);
+
+            Assert.Equal(id, updatedId);
+
+            await this.Db.Delete(poco);
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedData<Test1Poco>))]
+        public async Task CrudNonPocoRead(Test1Poco poco)
+        {
+            int id = await this.Db.Insert(poco);
+
+            var readFromDb = await this.Db.QueryOne<Test1BM>("select * from test1 where test_id = @pk;", new NpgsqlParameter("pk", id));
+
+			Assert.Equal(poco.TestID, readFromDb.TestID);
+			Assert.Equal(poco.TestName1, readFromDb.TestName1);
+			Assert.Equal(poco.TestName2, readFromDb.TestName2);
+			Assert.Equal(poco.TestDate1, readFromDb.TestDate1);
+			Assert.Equal(poco.TestDate2, readFromDb.TestDate2);
+			Assert.Equal(poco.TestTimestamp1, readFromDb.TestTimestamp1);
+			Assert.Equal(poco.TestTimestamp2, readFromDb.TestTimestamp2);
+			Assert.Equal(poco.TestBoolean1, readFromDb.TestBoolean1);
+			Assert.Equal(poco.TestBoolean2, readFromDb.TestBoolean2);
+			Assert.Equal(poco.TestInteger1, readFromDb.TestInteger1);
+			Assert.Equal(poco.TestInteger2, readFromDb.TestInteger2);
+			Assert.Equal(poco.TestBigint1, readFromDb.TestBigint1);
+			Assert.Equal(poco.TestBigint2, readFromDb.TestBigint2);
+			Assert.Equal(poco.TestText1, readFromDb.TestText1);
+			Assert.Equal(poco.TestText2, readFromDb.TestText2);
+			Assert.Equal(poco.TestReal1, readFromDb.TestReal1);
+			Assert.Equal(poco.TestReal2, readFromDb.TestReal2);
+			Assert.Equal(poco.TestDouble1, readFromDb.TestDouble1);
+			Assert.Equal(poco.TestDouble2, readFromDb.TestDouble2);
+			Assert.Equal(poco.TestChar1, readFromDb.TestChar1);
+			Assert.Equal(poco.TestChar2, readFromDb.TestChar2);
 
             int updatedId = await this.Db.Update(poco);
 
@@ -325,10 +381,28 @@ namespace TrackTv.Data.Tests
 
             var readFromDb = await this.Db.FindByID<Test2Poco>(id);
 
-            foreach (var getter in TestDbMetadata.Test2PocoMetadata.Getters.Values)
-            {
-                Assert.Equal(getter(poco), getter(readFromDb));
-            }
+			Assert.Equal(poco.TestID, readFromDb.TestID);
+			Assert.Equal(poco.TestName, readFromDb.TestName);
+			Assert.Equal(poco.TestDate, readFromDb.TestDate);
+
+            int updatedId = await this.Db.Update(poco);
+
+            Assert.Equal(id, updatedId);
+
+            await this.Db.Delete(poco);
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedData<Test2Poco>))]
+        public async Task CrudNonPocoRead(Test2Poco poco)
+        {
+            int id = await this.Db.Insert(poco);
+
+            var readFromDb = await this.Db.QueryOne<Test2BM>("select * from test2 where test_id = @pk;", new NpgsqlParameter("pk", id));
+
+			Assert.Equal(poco.TestID, readFromDb.TestID);
+			Assert.Equal(poco.TestName, readFromDb.TestName);
+			Assert.Equal(poco.TestDate, readFromDb.TestDate);
 
             int updatedId = await this.Db.Update(poco);
 

@@ -98,7 +98,7 @@
             where T : IPoco<T>;
 
         Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(IFilterModel<TPoco> filter, CancellationToken cancellationToken = default)
-            where TPoco : IPoco<TPoco>, new() where TCatalogModel : ICatalogModel<TPoco>;
+            where TPoco : IPoco<TPoco>, new() where TCatalogModel : ICatalogModel<TPoco>, new();
 
         /// <summary>
         /// Creates a parameter of type T with NpgsqlDbType from the default type map 'defaultNpgsqlDbTypeMap'.
@@ -114,7 +114,7 @@
         /// Executes a query and returns objects 
         /// </summary>
         Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
-            where T : IPoco<T>, new();
+            where T : new();
 
         /// <summary>
         /// Returns one object of type T.
@@ -122,7 +122,7 @@
         /// If there is more that one row then throws.
         /// </summary>
         Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
-            where T : class, IPoco<T>, new();
+            where T : class, new();
 
         /// <summary>
         /// Saves a record to the database.

@@ -8,6 +8,8 @@
 
     using LinqToDB;
 
+	using Npgsql;
+
     using TrackTv.Data.Tests.Infrastructure;
 
     using Xunit;
@@ -23,10 +25,28 @@
 
             var readFromDb = await this.Db.FindByID<{{ClassName}}Poco>(id);
 
-            foreach (var getter in {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters.Values)
-            {
-                Assert.Equal(getter(poco), getter(readFromDb));
-            }
+			{{#each columns}}
+			Assert.Equal(poco.{{PropertyName}}, readFromDb.{{PropertyName}});
+			{{/each}}
+
+            int updatedId = await this.Db.Update(poco);
+
+            Assert.Equal(id, updatedId);
+
+            await this.Db.Delete(poco);
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
+        public async Task CrudNonPocoRead({{ClassName}}Poco poco)
+        {
+            int id = await this.Db.Insert(poco);
+
+            var readFromDb = await this.Db.QueryOne<{{ClassName}}BM>("select * from {{TableName}} where {{PrimaryKeyColumnName}} = @pk;", new NpgsqlParameter("pk", id));
+
+			{{#each columns}}
+			Assert.Equal(poco.{{PropertyName}}, readFromDb.{{PropertyName}});
+			{{/each}}
 
             int updatedId = await this.Db.Update(poco);
 

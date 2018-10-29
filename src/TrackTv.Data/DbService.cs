@@ -180,7 +180,7 @@
         /// Executes a query and returns objects 
         /// </summary>
         public Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
-            where T : IPoco<T>, new()
+            where T : new()
         {
             if (sql == null)
             {
@@ -201,7 +201,7 @@
         /// If there is more that one row then throws.
         /// </summary>
         public Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
-            where T : class, IPoco<T>, new()
+            where T : class, new()
         {
             if (sql == null)
             {
@@ -324,7 +324,16 @@
 
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                 {
-                    var setters = new T() is IPoco<T> x ? x.Metadata.Setters : throw new NotImplementedException();
+                    IReadOnlyDictionary<string, Action<T, object>> setters;
+
+                    if (new T() is IPoco<T> x)
+                    {
+                        setters = x.Metadata.Setters;
+                    }
+                    else
+                    {
+                        setters = DbCodeGenerator.GenerateSetters<T>();
+                    }
 
                     // cached field count - I know it pointless, but I feel better by having it cached here.
                     int fieldCount = reader.FieldCount;
@@ -385,7 +394,16 @@
                 {
                     var instance = new T();
 
-                    var setters = instance is IPoco<T> x ? x.Metadata.Setters : throw new NotImplementedException();
+                    IReadOnlyDictionary<string, Action<T, object>> setters;
+
+                    if (instance is IPoco<T> x)
+                    {
+                        setters = x.Metadata.Setters;
+                    }
+                    else
+                    {
+                        setters = DbCodeGenerator.GenerateSetters<T>();
+                    }
 
                     bool hasRow = await reader.ReadAsync(cancellationToken);
 

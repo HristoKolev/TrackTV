@@ -11,11 +11,11 @@
 
     public partial class DbService<TPocos>
     {
-        public async Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
+        public Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
             IFilterModel<TPoco> filter, 
             CancellationToken cancellationToken = default)
             where TPoco : IPoco<TPoco>, new() 
-            where TCatalogModel: ICatalogModel<TPoco>
+            where TCatalogModel: ICatalogModel<TPoco>, new()
         {
             var metadata = this.Metadata.Get<TPoco>();
 
@@ -67,16 +67,7 @@
 
             string sql = sqlBuilder.ToString();
 
-            var pocos = await this.QueryInternal<TPoco>(sql, allParameters, cancellationToken);
-            
-            var resultList = new List<TCatalogModel>();
-
-            for (int i = 0; i < pocos.Count; i++)
-            {
-                resultList.Add((TCatalogModel)metadata.MapToCM(pocos[i]));
-            }
-
-            return resultList;
+            return  this.QueryInternal<TCatalogModel>(sql, allParameters, cancellationToken);
         }
 
         private static void AddCondition(QueryOperatorType oper, string paramName, StringBuilder sqlBuilder)

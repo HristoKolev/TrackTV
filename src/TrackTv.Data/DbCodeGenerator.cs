@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Reflection.Emit;
+    using System.Text;
 
     using Npgsql;
 
@@ -12,6 +13,8 @@
 
     public static class DbCodeGenerator
     {
+        private static Dictionary<Type, object> setterMapCache = new Dictionary<Type, object>();
+
         /// <summary>
         /// A helper method that takes care of setting the metadata for a DynamicMethod
         /// that allows you to work with the ILGenerator without needing to do any other work
@@ -79,6 +82,11 @@
             var instanceType = typeof(T);
 
             var property = instanceType.GetProperty(propertyName);
+
+            if (!property.IsAutoImplemented())
+            {
+                throw new ApplicationException($"The propety `{property.Name}` of type `{instanceType.Name}` is not autoimplemented.");
+            }
 
             return GenerateMethod<Action<T, object>>(il =>
             {
@@ -558,6 +566,53 @@
                 il.Emit(OpCodes.Ldfld, property.GetBackingField());
                 il.Emit(OpCodes.Stfld, concreteParameterType.GetProperty("TypedValue").GetBackingField());
             }
+        }
+
+        public static Dictionary<string, Action<T, object>> GenerateSetters<T>(Func<string, string> propertyNameToColumnName)
+        {
+            var type = typeof(T);
+
+            if (setterMapCache.ContainsKey(type))
+            {
+                return (Dictionary<string, Action<T, object>>)setterMapCache[type];
+            }
+
+            var map = type.GetProperties().ToDictionary(x => propertyNameToColumnName(x.Name), x => GetSetter<T>(x.Name));
+
+            setterMapCache[type] = map;
+
+            return map;
+        }
+
+        public static Dictionary<string, Action<T, object>> GenerateSetters<T>() => GenerateSetters<T>(DefaultPropertyNameToColumnName);
+
+        public static string DefaultPropertyNameToColumnName(string propertyName)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(char.ToLower(propertyName[0]));
+
+            for (int i = 1; i < propertyName.Length; i++)
+            {
+                char c = propertyName[i];
+
+                if (c == 'I' && i + 1 < propertyName.Length && propertyName[i + 1] == 'D')
+                {
+                    sb.Append("_id");
+                    i++;
+                }
+                else if (char.IsUpper(c))
+                {
+                    sb.Append('_');
+                    sb.Append(char.ToLower(c));
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+
+            return sb.ToString();
         }
     }
 
