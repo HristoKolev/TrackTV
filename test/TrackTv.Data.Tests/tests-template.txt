@@ -55,6 +55,20 @@
             await this.Db.Delete(poco);
         }
 
+		[Theory]
+        [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
+        public async Task Map({{ClassName}}Poco poco)
+        {
+            await this.Db.Insert(poco);
+
+            var pocoFromDb = await this.Db.Poco.{{ClassName}}.FirstAsync();
+			var cmFromDb = await this.Db.Poco.{{ClassName}}.Map<{{ClassName}}Poco, {{ClassName}}CM>().FirstAsync();
+
+			{{#each columns}}
+			Assert.Equal(pocoFromDb.{{PropertyName}}, cmFromDb.{{PropertyName}});
+			{{/each}}
+        }
+
         [Theory]
         [ClassData(typeof(GeneratedBulkData<{{ClassName}}Poco>))]
         public async Task BulkInsert(List<{{ClassName}}Poco> poco)

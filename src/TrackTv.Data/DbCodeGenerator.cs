@@ -13,7 +13,10 @@
 
     public static class DbCodeGenerator
     {
-        private static Dictionary<Type, object> setterMapCache = new Dictionary<Type, object>();
+        /// <summary>
+        /// Cache dictionary for objects generated with the `GenerateSetters` method.
+        /// </summary>
+        private static readonly Dictionary<Type, object> SetterMapCache = new Dictionary<Type, object>();
 
         /// <summary>
         /// A helper method that takes care of setting the metadata for a DynamicMethod
@@ -62,6 +65,11 @@
             var instanceType = typeof(T);
 
             var property = instanceType.GetProperty(propertyName);
+
+            if (!property.IsAutoImplemented())
+            {
+                throw new ApplicationException($"The propety `{property.Name}` of type `{instanceType.Name}` is not autoimplemented.");
+            }
 
             return GenerateMethod<Func<T, object>>(il =>
             {
@@ -124,35 +132,6 @@
                 }
 
                 il.Emit(OpCodes.Ldloc, cloneObject);
-                il.Emit(OpCodes.Ret);
-            });
-        }
-
-        public static Func<TPoco, TCm> GetMapToCm<TPoco, TCm>(TableMetadataModel<TPoco> metadata)
-            where TPoco : IPoco<TPoco>
-        {
-            var pocoType = typeof(TPoco);
-            var cmType = typeof(TCm);
-
-            return GenerateMethod<Func<TPoco, TCm>>(il =>
-            {
-                var cmLocal = il.DeclareLocal(cmType);
-
-                il.Emit(OpCodes.Newobj, cmType.GetConstructor(Array.Empty<Type>()));
-                il.Emit(OpCodes.Stloc, cmLocal);
-
-                foreach (var column in metadata.Columns)
-                {
-                    var pocoProperty = pocoType.GetProperty(column.PropertyName);
-                    var cmProperty = cmType.GetProperty(column.PropertyName);
-
-                    il.Emit(OpCodes.Ldloc, cmLocal);
-                    il.Emit(OpCodes.Ldarg_0);
-                    il.Emit(OpCodes.Ldfld, pocoProperty.GetBackingField());
-                    il.Emit(OpCodes.Stfld, cmProperty.GetBackingField());
-                }
-
-                il.Emit(OpCodes.Ldloc, cmLocal);
                 il.Emit(OpCodes.Ret);
             });
         }
@@ -572,20 +551,32 @@
         {
             var type = typeof(T);
 
-            if (setterMapCache.ContainsKey(type))
+            // ReSharper disable once InconsistentlySynchronizedField
+            if (SetterMapCache.ContainsKey(type))
             {
-                return (Dictionary<string, Action<T, object>>)setterMapCache[type];
+                // ReSharper disable once InconsistentlySynchronizedField
+                return (Dictionary<string, Action<T, object>>)SetterMapCache[type];
             }
 
             var map = type.GetProperties().ToDictionary(x => propertyNameToColumnName(x.Name), x => GetSetter<T>(x.Name));
 
-            setterMapCache[type] = map;
+            lock (SetterMapCache)
+            {
+                SetterMapCache[type] = map;
+            }
 
             return map;
         }
 
         public static Dictionary<string, Action<T, object>> GenerateSetters<T>() => GenerateSetters<T>(DefaultPropertyNameToColumnName);
 
+        /// <summary>
+        /// Converts `PascalCase` property names into `snake_case` column names.
+        /// The conversion happens on Uppercase letter or the string `ID`.
+        /// Examples:
+        /// SystemSettingName => system_setting_name
+        /// SystemSettingID => system_setting_id 
+        /// </summary>
         public static string DefaultPropertyNameToColumnName(string propertyName)
         {
             var sb = new StringBuilder();

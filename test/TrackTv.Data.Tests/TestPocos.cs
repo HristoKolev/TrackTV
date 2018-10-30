@@ -1618,6 +1618,20 @@ namespace TrackTv.Data.Tests
 		public IDbService<TestDbPocos> DbService { private get; set; }
     }
 
+	public static class TestDbPocosExtensions
+	{
+		/// <summary>
+		/// <para>Database table 'test1'.</para>
+		/// </summary>
+		public static IQueryable<Test1CM> MapToCm(this IQueryable<Test1Poco> collection) => collection.Map<Test1Poco, Test1CM>();
+
+		/// <summary>
+		/// <para>Database table 'test2'.</para>
+		/// </summary>
+		public static IQueryable<Test2CM> MapToCm(this IQueryable<Test2Poco> collection) => collection.Map<Test2Poco, Test2CM>();
+
+	}
+
 	public class TestDbMetadata : IDbMetadata
     {
 		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
@@ -2338,7 +2352,6 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test1PocoMetadata.Clone = DbCodeGenerator.GetClone<Test1Poco>();
-			Test1PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<Test1Poco, Test1CM>(Test1PocoMetadata);
 			Test1PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
@@ -2456,7 +2469,6 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test2PocoMetadata.Clone = DbCodeGenerator.GetClone<Test2Poco>();
-			Test2PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<Test2Poco, Test2CM>(Test2PocoMetadata);
 			Test2PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);

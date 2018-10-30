@@ -90,6 +90,38 @@ namespace TrackTv.Data.Tests
             await this.Db.Delete(poco);
         }
 
+		[Theory]
+        [ClassData(typeof(GeneratedData<Test1Poco>))]
+        public async Task Map(Test1Poco poco)
+        {
+            await this.Db.Insert(poco);
+
+            var pocoFromDb = await this.Db.Poco.Test1.FirstAsync();
+			var cmFromDb = await this.Db.Poco.Test1.Map<Test1Poco, Test1CM>().FirstAsync();
+
+			Assert.Equal(pocoFromDb.TestID, cmFromDb.TestID);
+			Assert.Equal(pocoFromDb.TestName1, cmFromDb.TestName1);
+			Assert.Equal(pocoFromDb.TestName2, cmFromDb.TestName2);
+			Assert.Equal(pocoFromDb.TestDate1, cmFromDb.TestDate1);
+			Assert.Equal(pocoFromDb.TestDate2, cmFromDb.TestDate2);
+			Assert.Equal(pocoFromDb.TestTimestamp1, cmFromDb.TestTimestamp1);
+			Assert.Equal(pocoFromDb.TestTimestamp2, cmFromDb.TestTimestamp2);
+			Assert.Equal(pocoFromDb.TestBoolean1, cmFromDb.TestBoolean1);
+			Assert.Equal(pocoFromDb.TestBoolean2, cmFromDb.TestBoolean2);
+			Assert.Equal(pocoFromDb.TestInteger1, cmFromDb.TestInteger1);
+			Assert.Equal(pocoFromDb.TestInteger2, cmFromDb.TestInteger2);
+			Assert.Equal(pocoFromDb.TestBigint1, cmFromDb.TestBigint1);
+			Assert.Equal(pocoFromDb.TestBigint2, cmFromDb.TestBigint2);
+			Assert.Equal(pocoFromDb.TestText1, cmFromDb.TestText1);
+			Assert.Equal(pocoFromDb.TestText2, cmFromDb.TestText2);
+			Assert.Equal(pocoFromDb.TestReal1, cmFromDb.TestReal1);
+			Assert.Equal(pocoFromDb.TestReal2, cmFromDb.TestReal2);
+			Assert.Equal(pocoFromDb.TestDouble1, cmFromDb.TestDouble1);
+			Assert.Equal(pocoFromDb.TestDouble2, cmFromDb.TestDouble2);
+			Assert.Equal(pocoFromDb.TestChar1, cmFromDb.TestChar1);
+			Assert.Equal(pocoFromDb.TestChar2, cmFromDb.TestChar2);
+        }
+
         [Theory]
         [ClassData(typeof(GeneratedBulkData<Test1Poco>))]
         public async Task BulkInsert(List<Test1Poco> poco)
@@ -409,6 +441,20 @@ namespace TrackTv.Data.Tests
             Assert.Equal(id, updatedId);
 
             await this.Db.Delete(poco);
+        }
+
+		[Theory]
+        [ClassData(typeof(GeneratedData<Test2Poco>))]
+        public async Task Map(Test2Poco poco)
+        {
+            await this.Db.Insert(poco);
+
+            var pocoFromDb = await this.Db.Poco.Test2.FirstAsync();
+			var cmFromDb = await this.Db.Poco.Test2.Map<Test2Poco, Test2CM>().FirstAsync();
+
+			Assert.Equal(pocoFromDb.TestID, cmFromDb.TestID);
+			Assert.Equal(pocoFromDb.TestName, cmFromDb.TestName);
+			Assert.Equal(pocoFromDb.TestDate, cmFromDb.TestDate);
         }
 
         [Theory]

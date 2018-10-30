@@ -98,7 +98,8 @@
             where T : IPoco<T>;
 
         Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(IFilterModel<TPoco> filter, CancellationToken cancellationToken = default)
-            where TPoco : IPoco<TPoco>, new() where TCatalogModel : ICatalogModel<TPoco>, new();
+            where TPoco : IPoco<TPoco>, new()
+            where TCatalogModel : ICatalogModel<TPoco>, new();
 
         /// <summary>
         /// Creates a parameter of type T with NpgsqlDbType from the default type map 'defaultNpgsqlDbTypeMap'.

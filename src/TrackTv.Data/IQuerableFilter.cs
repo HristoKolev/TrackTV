@@ -6,7 +6,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
 
-    public static class QueryableExtensions
+    public static class QueryableFilterExtensions
     {
         public static IQueryable<TPoco> Filter<TFilter, TPoco>(this IQueryable<TPoco> collection, TFilter filter)
             where TFilter : class, IFilterModel<TPoco>
@@ -22,7 +22,7 @@
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            var expr = ExpressionGenerator.CreateFilterExpression<TPoco>(filter);
+            var expr = FilterExpressionGenerator.CreateFilterExpression<TPoco>(filter);
 
             if (expr == null)
             {
@@ -33,7 +33,7 @@
         }
     }
 
-    public static class ExpressionGenerator
+    public static class FilterExpressionGenerator
     {
         public static Expression<Func<TPoco, bool>> CreateFilterExpression<TPoco>(object filter)
             where TPoco : class

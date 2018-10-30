@@ -193,6 +193,17 @@ namespace {{model.Namespace}}
 		public IDbService<{{model.PocoClassName}}> DbService { private get; set; }
     }
 
+	public static class {{model.PocoClassName}}Extensions
+	{
+		{{#each model.tables}}
+		/// <summary>
+		/// <para>Database table '{{TableName}}'.</para>
+		/// </summary>
+		public static IQueryable<{{ClassName}}CM> MapToCm(this IQueryable<{{ClassName}}Poco> collection) => collection.Map<{{ClassName}}Poco, {{ClassName}}CM>();
+
+		{{/each}}
+	}
+
 	public class {{model.MetadataClassName}} : IDbMetadata
     {
 		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
@@ -274,7 +285,6 @@ namespace {{model.Namespace}}
 			};
 
 			{{ClassName}}PocoMetadata.Clone = DbCodeGenerator.GetClone<{{ClassName}}Poco>();
-			{{ClassName}}PocoMetadata.MapToCM = DbCodeGenerator.GetMapToCm<{{ClassName}}Poco, {{ClassName}}CM>({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
 			{{ClassName}}PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
 			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
