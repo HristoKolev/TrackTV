@@ -36,7 +36,7 @@
         /// <summary>
         /// Deletes a record by its PrimaryKey.
         /// </summary>
-        Task<int> Delete<T>(T poco, CancellationToken cancellationToken = default)
+        Task<int> Delete<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
@@ -88,13 +88,13 @@
         /// <summary>
         /// Inserts a record and attaches it's ID to the poco object. 
         /// </summary>
-        Task<int> Insert<T>(T poco, CancellationToken cancellationToken = default)
+        Task<int> Insert<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         /// <summary>
         /// Inserts a record and returns its ID.
         /// </summary>
-        Task<int> InsertWithoutMutating<T>(T poco, CancellationToken cancellationToken = default)
+        Task<int> InsertWithoutMutating<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>;
 
         Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(IFilterModel<TPoco> filter, CancellationToken cancellationToken = default)
@@ -131,21 +131,21 @@
         /// If the primary key value is 0 it inserts the record.
         /// Returns the record's primary key value.
         /// </summary>
-        Task<int> Save<T>(T poco, CancellationToken cancellationToken = default)
+        Task<int> Save<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
         /// <summary>
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
-        Task<int> Update<T>(T poco, CancellationToken cancellationToken = default)
+        Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
         /// <summary>
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
-        Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
+        Task<int> UpdateChangesOnly<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
         Task<T> FindByID<T>(int id, CancellationToken cancellationToken = default)
@@ -196,11 +196,8 @@
         /// Returns the names of the changed columns and parameters for every column value.
         /// </summary>
         public Func<T, T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetColumnChanges { get; set; }
-
-        // ReSharper disable once InconsistentNaming
-        public Func<T, ICatalogModel<T>> MapToCM { get; set; }
-
-        public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFM { get; set; }
+        
+        public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFm { get; set; }
     }
 
     /// <summary>

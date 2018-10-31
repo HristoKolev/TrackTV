@@ -2357,7 +2357,7 @@ namespace TrackTv.Data.Tests
 			Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
 			Test1PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test1PocoMetadata);
 			Test1PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test1PocoMetadata);
-			Test1PocoMetadata.ParseFM = DbCodeGenerator.GetParseFm(Test1PocoMetadata, typeof(Test1FM));
+			Test1PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(Test1PocoMetadata, typeof(Test1FM));
 
 			Test2PocoMetadata = new TableMetadataModel<Test2Poco>
 			{
@@ -2474,7 +2474,7 @@ namespace TrackTv.Data.Tests
 			Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);
 			Test2PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test2PocoMetadata);
 			Test2PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test2PocoMetadata);
-			Test2PocoMetadata.ParseFM = DbCodeGenerator.GetParseFm(Test2PocoMetadata, typeof(Test2FM));
+			Test2PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(Test2PocoMetadata, typeof(Test2FM));
 
 			MetadataByPocoType = new Dictionary<Type, object>
 			{

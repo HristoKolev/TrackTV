@@ -395,7 +395,7 @@ namespace TrackTv.Data.Tests
                    return x.GetValue(filter);
                }).ToList();
 
-            var (columnNames, columnParameters, operators) = TestDbMetadata.Test1PocoMetadata.ParseFM(filter);
+            var (columnNames, columnParameters, operators) = TestDbMetadata.Test1PocoMetadata.ParseFm(filter);
 
             Assert.Equal(expectedNames, columnNames);
             Assert.Equal(expectedOperators, operators);
@@ -640,7 +640,7 @@ namespace TrackTv.Data.Tests
                    return x.GetValue(filter);
                }).ToList();
 
-            var (columnNames, columnParameters, operators) = TestDbMetadata.Test2PocoMetadata.ParseFM(filter);
+            var (columnNames, columnParameters, operators) = TestDbMetadata.Test2PocoMetadata.ParseFm(filter);
 
             Assert.Equal(expectedNames, columnNames);
             Assert.Equal(expectedOperators, operators);

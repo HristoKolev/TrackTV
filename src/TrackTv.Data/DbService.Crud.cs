@@ -104,12 +104,12 @@
         /// <summary>
         /// Deletes a record by its PrimaryKey.
         /// </summary>
-        public Task<int> Delete<T>(T poco, CancellationToken cancellationToken = default)
+        public Task<int> Delete<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = poco.Metadata;
+            var metadata = model.Metadata;
 
-            int pk = metadata.GetPrimaryKey(poco);
+            int pk = metadata.GetPrimaryKey(model);
 
             return this.Delete<T>(pk, cancellationToken);
         }
@@ -166,12 +166,12 @@
         /// <summary>
         /// Inserts a record and attaches it's ID to the poco object. 
         /// </summary>
-        public async Task<int> Insert<T>(T poco, CancellationToken cancellationToken = default)
+        public async Task<int> Insert<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            int pk = await this.InsertWithoutMutating(poco, cancellationToken);
+            int pk = await this.InsertWithoutMutating(model, cancellationToken);
 
-            poco.Metadata.SetPrimaryKey(poco, pk);
+            model.Metadata.SetPrimaryKey(model, pk);
 
             return pk;
         }
@@ -179,12 +179,12 @@
         /// <summary>
         /// Inserts a record and returns its ID.
         /// </summary>
-        public Task<int> InsertWithoutMutating<T>(T poco, CancellationToken cancellationToken = default)
+        public Task<int> InsertWithoutMutating<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = poco.Metadata;
+            var metadata = model.Metadata;
 
-            var (columnNames, parameters) = metadata.GetAllColumns(poco);
+            var (columnNames, parameters) = metadata.GetAllColumns(model);
 
             var sqlBuilder = new StringBuilder(128);
 
@@ -238,37 +238,37 @@
         /// If the primary key value is 0 it inserts the record.
         /// Returns the record's primary key value.
         /// </summary>
-        public async Task<int> Save<T>(T poco, CancellationToken cancellationToken = default)
+        public async Task<int> Save<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = poco.Metadata;
+            var metadata = model.Metadata;
 
-            if (metadata.IsNew(poco))
+            if (metadata.IsNew(model))
             {
-                return await this.Insert(poco, cancellationToken);
+                return await this.Insert(model, cancellationToken);
             }
 
-            await this.Update(poco, cancellationToken);
+            await this.Update(model, cancellationToken);
 
-            return metadata.GetPrimaryKey(poco);
+            return metadata.GetPrimaryKey(model);
         }
 
         /// <summary>
         /// Updates a record by its ID.
         /// </summary>
-        public Task<int> Update<T>(T poco, CancellationToken cancellationToken = default)
+        public Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = poco.Metadata;
+            var metadata = model.Metadata;
 
-            int pk = metadata.GetPrimaryKey(poco);
+            int pk = metadata.GetPrimaryKey(model);
 
             if (pk == default)
             {
                 throw new ApplicationException("Cannot update a model with primary key of 0.");
             }
 
-            var (columnNames, parameters) = metadata.GetAllColumns(poco);
+            var (columnNames, parameters) = metadata.GetAllColumns(model);
 
             if (columnNames.Length == 0)
             {
@@ -321,12 +321,12 @@
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
-        public async Task<int> UpdateChangesOnly<T>(T poco, CancellationToken cancellationToken = default)
+        public async Task<int> UpdateChangesOnly<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = poco.Metadata;
+            var metadata = model.Metadata;
 
-            int pk = metadata.GetPrimaryKey(poco);
+            int pk = metadata.GetPrimaryKey(model);
 
             if (pk == default)
             {
@@ -348,7 +348,7 @@
                 throw new ApplicationException("Cannot update record: record does not exists."); // no record to update?
             }
 
-            var (names, parameters) = metadata.GetColumnChanges(currentInstance, poco);
+            var (names, parameters) = metadata.GetColumnChanges(currentInstance, model);
 
             if (names.Count == 0)
             {

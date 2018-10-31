@@ -15,29 +15,47 @@
                 throw new ArgumentNullException(nameof(collection));
             }
 
-            return collection.Select(MapExpressionGenerator.GenerateMap<TPoco, TCm>());
+            return collection.Select(MapExpressionGenerator.GenerateMapToCm<TPoco, TCm>());
         }
     }
 
     public static class MapExpressionGenerator
     {
-        public static Expression<Func<TPoco, TCm>> GenerateMap<TPoco, TCm>()
-        {
-            var parameter = Expression.Parameter(typeof(TPoco), "x");
-            var newExpression = Expression.New(typeof(TCm));
+        private static readonly Dictionary<Type, object> MapToCmCache = new Dictionary<Type, object>();
 
+        public static Expression<Func<TPoco, TCm>> GenerateMapToCm<TPoco, TCm>()
+        {
+            var pocoType = typeof(TPoco);
+
+            // ReSharper disable once InconsistentlySynchronizedField
+            if (MapToCmCache.ContainsKey(pocoType))
+            {
+                // ReSharper disable once InconsistentlySynchronizedField
+                return (Expression<Func<TPoco, TCm>>)MapToCmCache[pocoType];
+            }
+
+            var cmType = typeof(TCm);
+
+            var parameter = Expression.Parameter(pocoType, "x");
+            var newExpression = Expression.New(cmType);
             var bindExpressions = new List<MemberAssignment>();
 
-            foreach (var pocoProperty in typeof(TPoco).GetProperties())
+            foreach (var pocoProperty in pocoType.GetProperties())
             {
-                var cmProperty = typeof(TCm).GetProperty(pocoProperty.Name);
+                var cmProperty = cmType.GetProperty(pocoProperty.Name);
                 var propertyExpression = Expression.Property(parameter, pocoProperty);
                 bindExpressions.Add(Expression.Bind(cmProperty, propertyExpression));
             }
 
             var body = Expression.MemberInit(newExpression, bindExpressions);
+            var mapToCm = Expression.Lambda<Func<TPoco, TCm>>(body, parameter);
 
-            return Expression.Lambda<Func<TPoco, TCm>>(body, parameter);
+            lock (MapToCmCache)
+            {
+                MapToCmCache[pocoType] = mapToCm;
+            }
+
+            return mapToCm;
         }
     }
 }

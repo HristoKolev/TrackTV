@@ -248,7 +248,7 @@
                    return x.GetValue(filter);
                }).ToList();
 
-            var (columnNames, columnParameters, operators) = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.ParseFM(filter);
+            var (columnNames, columnParameters, operators) = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.ParseFm(filter);
 
             Assert.Equal(expectedNames, columnNames);
             Assert.Equal(expectedOperators, operators);

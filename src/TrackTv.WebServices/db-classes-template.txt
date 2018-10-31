@@ -290,7 +290,7 @@ namespace {{model.Namespace}}
 			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns({{ClassName}}PocoMetadata);
-			{{ClassName}}PocoMetadata.ParseFM = DbCodeGenerator.GetParseFm({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
+			{{ClassName}}PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
 			{{/each}}
 			MetadataByPocoType = new Dictionary<Type, object>

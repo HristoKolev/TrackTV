@@ -19,7 +19,7 @@
         {
             var metadata = this.Metadata.Get<TPoco>();
 
-            var (columnNames, parameters, operators) = metadata.ParseFM(filter);
+            var (columnNames, parameters, operators) = metadata.ParseFm(filter);
          
             var sqlBuilder = new StringBuilder();
 
