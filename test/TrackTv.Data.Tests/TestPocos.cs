@@ -291,7 +291,7 @@ namespace TrackTv.Data.Tests
 		[Column(Name = "test_char2", DataType = DataType.NChar)]
         public string TestChar2 { get; set; }
 
-		TableMetadataModel<Test1Poco> IPoco<Test1Poco>.Metadata => TestDbMetadata.Test1PocoMetadata;
+		public static TableMetadataModel<Test1Poco> Metadata => TestDbMetadata.Test1PocoMetadata;
 
 		public Test1BM ToBm()
 		{
@@ -370,7 +370,7 @@ namespace TrackTv.Data.Tests
 		[Column(Name = "test_date", DataType = DataType.DateTime2)]
         public DateTime TestDate { get; set; }
 
-		TableMetadataModel<Test2Poco> IPoco<Test2Poco>.Metadata => TestDbMetadata.Test2PocoMetadata;
+		public static TableMetadataModel<Test2Poco> Metadata => TestDbMetadata.Test2PocoMetadata;
 
 		public Test2BM ToBm()
 		{
@@ -1623,24 +1623,20 @@ namespace TrackTv.Data.Tests
 		/// <summary>
 		/// <para>Database table 'test1'.</para>
 		/// </summary>
-		public static IQueryable<Test1CM> MapToCm(this IQueryable<Test1Poco> collection) => collection.Map<Test1Poco, Test1CM>();
+		public static IQueryable<Test1CM> SelectCm(this IQueryable<Test1Poco> collection) => collection.SelectCm<Test1Poco, Test1CM>();
 
 		/// <summary>
 		/// <para>Database table 'test2'.</para>
 		/// </summary>
-		public static IQueryable<Test2CM> MapToCm(this IQueryable<Test2Poco> collection) => collection.Map<Test2Poco, Test2CM>();
+		public static IQueryable<Test2CM> SelectCm(this IQueryable<Test2Poco> collection) => collection.SelectCm<Test2Poco, Test2CM>();
 
 	}
 
 	public class TestDbMetadata : IDbMetadata
     {
-		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
-
         internal static TableMetadataModel<Test1Poco> Test1PocoMetadata;
 
         internal static TableMetadataModel<Test2Poco> Test2PocoMetadata;
-
-		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
 
 		private static readonly object InitLock = new object();
 
@@ -1650,40 +1646,6 @@ namespace TrackTv.Data.Tests
         // ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
-			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
-			{
-				{"test1", new Dictionary<string, string>
-				{
-					{"test_id", "TestID"},
-					{"test_name1", "TestName1"},
-					{"test_name2", "TestName2"},
-					{"test_date1", "TestDate1"},
-					{"test_date2", "TestDate2"},
-					{"test_timestamp1", "TestTimestamp1"},
-					{"test_timestamp2", "TestTimestamp2"},
-					{"test_boolean1", "TestBoolean1"},
-					{"test_boolean2", "TestBoolean2"},
-					{"test_integer1", "TestInteger1"},
-					{"test_integer2", "TestInteger2"},
-					{"test_bigint1", "TestBigint1"},
-					{"test_bigint2", "TestBigint2"},
-					{"test_text1", "TestText1"},
-					{"test_text2", "TestText2"},
-					{"test_real1", "TestReal1"},
-					{"test_real2", "TestReal2"},
-					{"test_double1", "TestDouble1"},
-					{"test_double2", "TestDouble2"},
-					{"test_char1", "TestChar1"},
-					{"test_char2", "TestChar2"},
-				}},
-				{"test2", new Dictionary<string, string>
-				{
-					{"test_id", "TestID"},
-					{"test_name", "TestName"},
-					{"test_date", "TestDate"},
-				}},
-			};
-
 			Test1PocoMetadata = new TableMetadataModel<Test1Poco>
 			{
 				ClassName = "Test1",
@@ -2352,8 +2314,6 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test1PocoMetadata.Clone = DbCodeGenerator.GetClone<Test1Poco>();
-			Test1PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<Test1Poco>(TableToPropertyMap["test1"]);
-			Test1PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<Test1Poco>(TableToPropertyMap["test1"]);
 			Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
 			Test1PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test1PocoMetadata);
 			Test1PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test1PocoMetadata);
@@ -2469,23 +2429,11 @@ namespace TrackTv.Data.Tests
 			};
 
 			Test2PocoMetadata.Clone = DbCodeGenerator.GetClone<Test2Poco>();
-			Test2PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<Test2Poco>(TableToPropertyMap["test2"]);
-			Test2PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<Test2Poco>(TableToPropertyMap["test2"]);
 			Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);
 			Test2PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test2PocoMetadata);
 			Test2PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test2PocoMetadata);
 			Test2PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(Test2PocoMetadata, typeof(Test2FM));
 
-			MetadataByPocoType = new Dictionary<Type, object>
-			{
-				{typeof(Test1Poco), Test1PocoMetadata},
-				{typeof(Test2Poco), Test2PocoMetadata},
-			};
-		}
-
-		public TableMetadataModel<T> Get<T>() where T : IPoco<T>
-		{
-			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
 		}
 
 		public static void Initialize()

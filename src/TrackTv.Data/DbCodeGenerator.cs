@@ -1,6 +1,7 @@
 ﻿namespace TrackTv.Data
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -16,7 +17,17 @@
         /// <summary>
         /// Cache dictionary for objects generated with the `GenerateSetters` method.
         /// </summary>
-        private static readonly Dictionary<Type, object> SetterMapCache = new Dictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, object> GenerateSettersCache = new ConcurrentDictionary<Type, object>();
+
+        /// <summary>
+        /// Cache dictionary for objects generated with the `GenerateGetters` method.
+        /// </summary>
+        private static readonly ConcurrentDictionary<Type, object> GenerateGettersCache = new ConcurrentDictionary<Type, object>();
+
+        /// <summary>
+        /// Cache dictionary for objects generated with the `GetMetadata` method.
+        /// </summary>
+        private static readonly ConcurrentDictionary<Type, object> GetMetadataCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
         /// A helper method that takes care of setting the metadata for a DynamicMethod
@@ -50,21 +61,11 @@
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-        public static Dictionary<string, Action<T, object>> GetPocoSetters<T>(IReadOnlyDictionary<string, string> map)
-        {
-            return map.ToDictionary(x => x.Key, x => GetSetter<T>(x.Value));
-        }
-
-        public static Dictionary<string, Func<T, object>> GetPocoGetters<T>(IReadOnlyDictionary<string, string> map)
-        {
-            return map.ToDictionary(x => x.Key, x => GetGetter<T>(x.Value));
-        }
-
         private static Func<T, object> GetGetter<T>(string propertyName)
         {
             var instanceType = typeof(T);
 
-            var property = instanceType.GetProperty(propertyName);
+            var property = instanceType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
 
             if (!property.IsAutoImplemented())
             {
@@ -89,7 +90,7 @@
         {
             var instanceType = typeof(T);
 
-            var property = instanceType.GetProperty(propertyName);
+            var property = instanceType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
 
             if (!property.IsAutoImplemented())
             {
@@ -344,7 +345,7 @@
         }
 
         public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFm<TPoco>(
-            TableMetadataModel<TPoco> metadata, 
+            TableMetadataModel<TPoco> metadata,
             Type fmType) 
             where TPoco : IPoco<TPoco>
         {
@@ -549,26 +550,29 @@
 
         public static Dictionary<string, Action<T, object>> GenerateSetters<T>(Func<string, string> propertyNameToColumnName)
         {
-            var type = typeof(T);
-
-            // ReSharper disable once InconsistentlySynchronizedField
-            if (SetterMapCache.ContainsKey(type))
+            Dictionary<string, Action<T, object>> ValueFactory(Type type)
             {
-                // ReSharper disable once InconsistentlySynchronizedField
-                return (Dictionary<string, Action<T, object>>)SetterMapCache[type];
+                return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                           .ToDictionary(x => propertyNameToColumnName(x.Name), x => GetSetter<T>(x.Name));
             }
 
-            var map = type.GetProperties().ToDictionary(x => propertyNameToColumnName(x.Name), x => GetSetter<T>(x.Name));
+            return (Dictionary<string, Action<T, object>>)GenerateGettersCache.GetOrAdd(typeof(T), ValueFactory);
+        }
 
-            lock (SetterMapCache)
+        public static Dictionary<string, Func<T, object>> GenerateGetters<T>(Func<string, string> propertyNameToColumnName)
+        {
+            Dictionary<string, Func<T, object>> ValueFactory(Type type)
             {
-                SetterMapCache[type] = map;
+                return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                           .ToDictionary(x => propertyNameToColumnName(x.Name), x => GetGetter<T>(x.Name));
             }
 
-            return map;
+            return (Dictionary<string, Func<T, object>>)GenerateSettersCache.GetOrAdd(typeof(T), ValueFactory);
         }
 
         public static Dictionary<string, Action<T, object>> GenerateSetters<T>() => GenerateSetters<T>(DefaultPropertyNameToColumnName);
+
+        public static Dictionary<string, Func<T, object>> GenerateGetters<T>() => GenerateGetters<T>(DefaultPropertyNameToColumnName);
 
         /// <summary>
         /// Converts `PascalCase` property names into `snake_case` column names.
@@ -604,6 +608,19 @@
             }
 
             return sb.ToString();
+        }
+
+        public static TableMetadataModel<TPoco> GetMetadata<TPoco>() where TPoco: IPoco<TPoco>
+        {
+            object ValueFactory(Type type)
+            {
+                var metadataProperty = type.GetProperty("Metadata", BindingFlags.Public | BindingFlags.Static);
+
+                // ReSharper disable once PossibleNullReferenceException
+                return metadataProperty.GetValue(null);
+            }
+
+            return (TableMetadataModel<TPoco>)GetMetadataCache.GetOrAdd(typeof(TPoco), ValueFactory);
         }
     }
 

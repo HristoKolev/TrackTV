@@ -110,7 +110,9 @@
         {
             var list = new List<T>();
 
-            var metadata = new T().Metadata;
+            var metadata = DbCodeGenerator.GetMetadata<T>();
+
+            var setters = DbCodeGenerator.GenerateSetters<T>();
 
             var valuesArray = metadata.Columns.Select(x => GetValuesByType(x.NpgsDataType)).ToArray();
 
@@ -135,12 +137,12 @@
                     {
                         var instance = new T();
 
-                        metadata.Setters[column.ColumnName](instance, value);
+                        setters[column.ColumnName](instance, value);
 
                         foreach (var otherColumn in metadata.Columns.Where(x => x != column && !x.IsPrimaryKey))
                         {
                             var newValue = GetValuesByType(otherColumn.NpgsDataType).First();
-                            metadata.Setters[otherColumn.ColumnName](instance, newValue);
+                            setters[otherColumn.ColumnName](instance, newValue);
                         }
 
                         list.Add(instance);

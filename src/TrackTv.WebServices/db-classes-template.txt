@@ -48,7 +48,7 @@ namespace {{model.Namespace}}
         public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
         {{/each}}
-		TableMetadataModel<{{ClassName}}Poco> IPoco<{{ClassName}}Poco>.Metadata => {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata;
+		public static TableMetadataModel<{{ClassName}}Poco> Metadata => {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata;
 
 		public {{ClassName}}BM ToBm()
 		{
@@ -199,21 +199,17 @@ namespace {{model.Namespace}}
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>
 		/// </summary>
-		public static IQueryable<{{ClassName}}CM> MapToCm(this IQueryable<{{ClassName}}Poco> collection) => collection.Map<{{ClassName}}Poco, {{ClassName}}CM>();
+		public static IQueryable<{{ClassName}}CM> SelectCm(this IQueryable<{{ClassName}}Poco> collection) => collection.SelectCm<{{ClassName}}Poco, {{ClassName}}CM>();
 
 		{{/each}}
 	}
 
 	public class {{model.MetadataClassName}} : IDbMetadata
     {
-		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
-
 		{{#each model.tables}}
         internal static TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata;
 
         {{/each}}
-		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
-
 		private static readonly object InitLock = new object();
 
 		private static bool Initialized;
@@ -222,18 +218,6 @@ namespace {{model.Namespace}}
         // ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
-			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
-			{
-				{{#each model.tables}}
-				{"{{TableName}}", new Dictionary<string, string>
-				{
-					{{#each columns}}
-					{"{{ColumnName}}", "{{PropertyName}}"},
-					{{/each}}
-				}},
-				{{/each}}
-			};
-
 			{{#each model.tables}}
 			{{ClassName}}PocoMetadata = new TableMetadataModel<{{ClassName}}Poco>
 			{
@@ -285,25 +269,12 @@ namespace {{model.Namespace}}
 			};
 
 			{{ClassName}}PocoMetadata.Clone = DbCodeGenerator.GetClone<{{ClassName}}Poco>();
-			{{ClassName}}PocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
-			{{ClassName}}PocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<{{ClassName}}Poco>(TableToPropertyMap["{{TableName}}"]);
 			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
-			{{/each}}
-			MetadataByPocoType = new Dictionary<Type, object>
-			{
-				{{#each model.tables}}
-				{typeof({{ClassName}}Poco), {{ClassName}}PocoMetadata},
-				{{/each}}
-			};
-		}
-
-		public TableMetadataModel<T> Get<T>() where T : IPoco<T>
-		{
-			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
+			{{/each}}			
 		}
 
 		public static void Initialize()

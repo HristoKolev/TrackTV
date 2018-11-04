@@ -9,7 +9,7 @@
     public class DbService : DbService<TrackTvPocos>, IDbService
     {
         public DbService(NpgsqlConnection dbConnection)
-            : base(dbConnection, new TrackTvMetadata())
+            : base(dbConnection)
         {
         }
     }

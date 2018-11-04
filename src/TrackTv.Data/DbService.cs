@@ -15,8 +15,6 @@
 
     public partial class DbService<TPocos> : IDbService<TPocos> where TPocos : IDbPocos<TPocos>, new()
     {
-        private IDbMetadata Metadata { get; }
-
         /// <summary>
         /// The default parameter type map that is used when creating parameters without specifying the NpgsqlDbType explicitly.
         /// </summary>
@@ -54,9 +52,8 @@
 
         private TPocos poco;
 
-        public DbService(NpgsqlConnection dbConnection, IDbMetadata metadata)
+        public DbService(NpgsqlConnection dbConnection)
         {
-            this.Metadata = metadata;
             this.dbConnection = dbConnection;
         }
 
@@ -324,16 +321,7 @@
 
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                 {
-                    IReadOnlyDictionary<string, Action<T, object>> setters;
-
-                    if (new T() is IPoco<T> x)
-                    {
-                        setters = x.Metadata.Setters;
-                    }
-                    else
-                    {
-                        setters = DbCodeGenerator.GenerateSetters<T>();
-                    }
+                    var setters = DbCodeGenerator.GenerateSetters<T>();
 
                     // cached field count - I know it pointless, but I feel better by having it cached here.
                     int fieldCount = reader.FieldCount;
@@ -394,16 +382,7 @@
                 {
                     var instance = new T();
 
-                    IReadOnlyDictionary<string, Action<T, object>> setters;
-
-                    if (instance is IPoco<T> x)
-                    {
-                        setters = x.Metadata.Setters;
-                    }
-                    else
-                    {
-                        setters = DbCodeGenerator.GenerateSetters<T>();
-                    }
+                    var setters = DbCodeGenerator.GenerateSetters<T>();
 
                     bool hasRow = await reader.ReadAsync(cancellationToken);
 

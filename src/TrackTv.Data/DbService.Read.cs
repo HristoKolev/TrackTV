@@ -17,7 +17,7 @@
             where TPoco : IPoco<TPoco>, new() 
             where TCatalogModel: ICatalogModel<TPoco>, new()
         {
-            var metadata = this.Metadata.Get<TPoco>();
+            var metadata = DbCodeGenerator.GetMetadata<TPoco>();
 
             var (columnNames, parameters, operators) = metadata.ParseFm(filter);
          

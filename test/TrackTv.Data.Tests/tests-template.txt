@@ -57,12 +57,12 @@
 
 		[Theory]
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
-        public async Task Map({{ClassName}}Poco poco)
+        public async Task SelectCm({{ClassName}}Poco poco)
         {
             await this.Db.Insert(poco);
 
             var pocoFromDb = await this.Db.Poco.{{ClassName}}.FirstAsync();
-			var cmFromDb = await this.Db.Poco.{{ClassName}}.Map<{{ClassName}}Poco, {{ClassName}}CM>().FirstAsync();
+			var cmFromDb = await this.Db.Poco.{{ClassName}}.SelectCm<{{ClassName}}Poco, {{ClassName}}CM>().FirstAsync();
 
 			{{#each columns}}
 			Assert.Equal(pocoFromDb.{{PropertyName}}, cmFromDb.{{PropertyName}});
@@ -89,12 +89,24 @@
         {
             await this.Db.GetTable<{{ClassName}}Poco>().Filter(filter).ToArrayAsync();
         }
+		
+		[Fact]
+        public async Task OrderByPrimaryKey()
+        {
+            await this.Db.GetTable<{{ClassName}}Poco>().OrderByPrimaryKey().ToArrayAsync();
+        }
+
+		[Fact]
+        public async Task OrderByPrimaryKeyDescending()
+        {
+            await this.Db.GetTable<{{ClassName}}Poco>().OrderByPrimaryKeyDescending().ToArrayAsync();
+        }
 
 		[Theory]
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
         public void Getters({{ClassName}}Poco poco)
         {
-            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<{{ClassName}}Poco>();
 
 			{{#each columns}}
 			Assert.Equal(poco.{{PropertyName}}, getters["{{ColumnName}}"](poco));
@@ -105,7 +117,7 @@
         [ClassData(typeof(GeneratedData<{{ClassName}}Poco>))]
         public void Setters({{ClassName}}Poco poco)
         {
-            var setters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Setters;
+            var setters = DbCodeGenerator.GenerateSetters<{{ClassName}}Poco>();
 
 			var newObj = new {{ClassName}}Poco();
 
@@ -141,7 +153,7 @@
 			var parameters = getParameters(poco);
 
             var columns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<{{ClassName}}Poco>();
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -164,7 +176,7 @@
             var (columnNames, parameters) = getAllColumns(poco);
 
             var columns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<{{ClassName}}Poco>();
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -185,7 +197,7 @@
             var getColumnChanges = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.GetColumnChanges;
 
             var columns = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<{{ClassName}}Poco>();
 
             var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
 

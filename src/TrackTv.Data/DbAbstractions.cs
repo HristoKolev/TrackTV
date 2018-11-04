@@ -17,7 +17,6 @@
     /// </summary>
     public interface IPoco<T>
     {
-        TableMetadataModel<T> Metadata { get; }
     }
 
     public interface IDbService<TPocos> : IDisposable where TPocos : IDbPocos<TPocos>, new()
@@ -179,10 +178,6 @@
         /// <para>Sets the primary key for the table.</para>
         /// </summary> 
         public Action<T, int> SetPrimaryKey;
-
-        public IReadOnlyDictionary<string, Action<T, object>> Setters;
-
-        public IReadOnlyDictionary<string, Func<T, object>> Getters;
 
         /// <summary>
         /// Generates a parameter for every non Primary Key column in the table.
@@ -366,8 +361,6 @@
 
     public interface IDbMetadata
     {
-        TableMetadataModel<T> Get<T>()
-            where T : IPoco<T>;
     }
 
     public interface IDbPocos<TDbPocos>

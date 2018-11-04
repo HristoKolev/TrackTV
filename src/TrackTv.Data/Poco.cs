@@ -83,7 +83,7 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
 
-		TableMetadataModel<ActorPoco> IPoco<ActorPoco>.Metadata => TrackTvMetadata.ActorPocoMetadata;
+		public static TableMetadataModel<ActorPoco> Metadata => TrackTvMetadata.ActorPocoMetadata;
 
 		public ActorBM ToBm()
 		{
@@ -133,7 +133,7 @@ namespace TrackTv.Data
 		[Column(Name = "api_change_type_id", DataType = DataType.Int32)]
         public int ApiChangeTypeID { get; set; }
 
-		TableMetadataModel<ApiChangeTypePoco> IPoco<ApiChangeTypePoco>.Metadata => TrackTvMetadata.ApiChangeTypePocoMetadata;
+		public static TableMetadataModel<ApiChangeTypePoco> Metadata => TrackTvMetadata.ApiChangeTypePocoMetadata;
 
 		public ApiChangeTypeBM ToBm()
 		{
@@ -260,7 +260,7 @@ namespace TrackTv.Data
 		[Column(Name = "api_change_type", DataType = DataType.Int32)]
         public int ApiChangeType { get; set; }
 
-		TableMetadataModel<ApiChangePoco> IPoco<ApiChangePoco>.Metadata => TrackTvMetadata.ApiChangePocoMetadata;
+		public static TableMetadataModel<ApiChangePoco> Metadata => TrackTvMetadata.ApiChangePocoMetadata;
 
 		public ApiChangeBM ToBm()
 		{
@@ -356,7 +356,7 @@ namespace TrackTv.Data
 		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
         public DateTime ApiResponseLastUpdated { get; set; }
 
-		TableMetadataModel<ApiResponsePoco> IPoco<ApiResponsePoco>.Metadata => TrackTvMetadata.ApiResponsePocoMetadata;
+		public static TableMetadataModel<ApiResponsePoco> Metadata => TrackTvMetadata.ApiResponsePocoMetadata;
 
 		public ApiResponseBM ToBm()
 		{
@@ -512,7 +512,7 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
 
-		TableMetadataModel<EpisodePoco> IPoco<EpisodePoco>.Metadata => TrackTvMetadata.EpisodePocoMetadata;
+		public static TableMetadataModel<EpisodePoco> Metadata => TrackTvMetadata.EpisodePocoMetadata;
 
 		public EpisodeBM ToBm()
 		{
@@ -567,7 +567,7 @@ namespace TrackTv.Data
 		[Column(Name = "genre_name", DataType = DataType.NVarChar)]
         public string GenreName { get; set; }
 
-		TableMetadataModel<GenrePoco> IPoco<GenrePoco>.Metadata => TrackTvMetadata.GenrePocoMetadata;
+		public static TableMetadataModel<GenrePoco> Metadata => TrackTvMetadata.GenrePocoMetadata;
 
 		public GenreBM ToBm()
 		{
@@ -614,7 +614,7 @@ namespace TrackTv.Data
 		[Column(Name = "network_name", DataType = DataType.NVarChar)]
         public string NetworkName { get; set; }
 
-		TableMetadataModel<NetworkPoco> IPoco<NetworkPoco>.Metadata => TrackTvMetadata.NetworkPocoMetadata;
+		public static TableMetadataModel<NetworkPoco> Metadata => TrackTvMetadata.NetworkPocoMetadata;
 
 		public NetworkBM ToBm()
 		{
@@ -661,7 +661,7 @@ namespace TrackTv.Data
 		[Column(Name = "profile_name", DataType = DataType.NVarChar)]
         public string ProfileName { get; set; }
 
-		TableMetadataModel<ProfilePoco> IPoco<ProfilePoco>.Metadata => TrackTvMetadata.ProfilePocoMetadata;
+		public static TableMetadataModel<ProfilePoco> Metadata => TrackTvMetadata.ProfilePocoMetadata;
 
 		public ProfileBM ToBm()
 		{
@@ -738,7 +738,7 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
-		TableMetadataModel<RolePoco> IPoco<RolePoco>.Metadata => TrackTvMetadata.RolePocoMetadata;
+		public static TableMetadataModel<RolePoco> Metadata => TrackTvMetadata.RolePocoMetadata;
 
 		public RoleBM ToBm()
 		{
@@ -800,7 +800,7 @@ namespace TrackTv.Data
 		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
         public string SettingName { get; set; }
 
-		TableMetadataModel<SettingPoco> IPoco<SettingPoco>.Metadata => TrackTvMetadata.SettingPocoMetadata;
+		public static TableMetadataModel<SettingPoco> Metadata => TrackTvMetadata.SettingPocoMetadata;
 
 		public SettingBM ToBm()
 		{
@@ -980,7 +980,7 @@ namespace TrackTv.Data
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
         public int Thetvdbid { get; set; }
 
-		TableMetadataModel<ShowPoco> IPoco<ShowPoco>.Metadata => TrackTvMetadata.ShowPocoMetadata;
+		public static TableMetadataModel<ShowPoco> Metadata => TrackTvMetadata.ShowPocoMetadata;
 
 		public ShowBM ToBm()
 		{
@@ -1054,7 +1054,7 @@ namespace TrackTv.Data
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
         public int GenreID { get; set; }
 
-		TableMetadataModel<ShowGenrePoco> IPoco<ShowGenrePoco>.Metadata => TrackTvMetadata.ShowGenrePocoMetadata;
+		public static TableMetadataModel<ShowGenrePoco> Metadata => TrackTvMetadata.ShowGenrePocoMetadata;
 
 		public ShowGenreBM ToBm()
 		{
@@ -1119,7 +1119,7 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
         public int ShowID { get; set; }
 
-		TableMetadataModel<SubscriptionPoco> IPoco<SubscriptionPoco>.Metadata => TrackTvMetadata.SubscriptionPocoMetadata;
+		public static TableMetadataModel<SubscriptionPoco> Metadata => TrackTvMetadata.SubscriptionPocoMetadata;
 
 		public SubscriptionBM ToBm()
 		{
@@ -1206,7 +1206,7 @@ namespace TrackTv.Data
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
         public int ProfileID { get; set; }
 
-		TableMetadataModel<UserPoco> IPoco<UserPoco>.Metadata => TrackTvMetadata.UserPocoMetadata;
+		public static TableMetadataModel<UserPoco> Metadata => TrackTvMetadata.UserPocoMetadata;
 
 		public UserBM ToBm()
 		{
@@ -5122,10 +5122,82 @@ namespace TrackTv.Data
 		public IDbService<TrackTvPocos> DbService { private get; set; }
     }
 
+	public static class TrackTvPocosExtensions
+	{
+		/// <summary>
+		/// <para>Database table 'actors'.</para>
+		/// </summary>
+		public static IQueryable<ActorCM> SelectCm(this IQueryable<ActorPoco> collection) => collection.SelectCm<ActorPoco, ActorCM>();
+
+		/// <summary>
+		/// <para>Database table 'api_change_types'.</para>
+		/// </summary>
+		public static IQueryable<ApiChangeTypeCM> SelectCm(this IQueryable<ApiChangeTypePoco> collection) => collection.SelectCm<ApiChangeTypePoco, ApiChangeTypeCM>();
+
+		/// <summary>
+		/// <para>Database table 'api_changes'.</para>
+		/// </summary>
+		public static IQueryable<ApiChangeCM> SelectCm(this IQueryable<ApiChangePoco> collection) => collection.SelectCm<ApiChangePoco, ApiChangeCM>();
+
+		/// <summary>
+		/// <para>Database table 'api_responses'.</para>
+		/// </summary>
+		public static IQueryable<ApiResponseCM> SelectCm(this IQueryable<ApiResponsePoco> collection) => collection.SelectCm<ApiResponsePoco, ApiResponseCM>();
+
+		/// <summary>
+		/// <para>Database table 'episodes'.</para>
+		/// </summary>
+		public static IQueryable<EpisodeCM> SelectCm(this IQueryable<EpisodePoco> collection) => collection.SelectCm<EpisodePoco, EpisodeCM>();
+
+		/// <summary>
+		/// <para>Database table 'genres'.</para>
+		/// </summary>
+		public static IQueryable<GenreCM> SelectCm(this IQueryable<GenrePoco> collection) => collection.SelectCm<GenrePoco, GenreCM>();
+
+		/// <summary>
+		/// <para>Database table 'networks'.</para>
+		/// </summary>
+		public static IQueryable<NetworkCM> SelectCm(this IQueryable<NetworkPoco> collection) => collection.SelectCm<NetworkPoco, NetworkCM>();
+
+		/// <summary>
+		/// <para>Database table 'profiles'.</para>
+		/// </summary>
+		public static IQueryable<ProfileCM> SelectCm(this IQueryable<ProfilePoco> collection) => collection.SelectCm<ProfilePoco, ProfileCM>();
+
+		/// <summary>
+		/// <para>Database table 'roles'.</para>
+		/// </summary>
+		public static IQueryable<RoleCM> SelectCm(this IQueryable<RolePoco> collection) => collection.SelectCm<RolePoco, RoleCM>();
+
+		/// <summary>
+		/// <para>Database table 'settings'.</para>
+		/// </summary>
+		public static IQueryable<SettingCM> SelectCm(this IQueryable<SettingPoco> collection) => collection.SelectCm<SettingPoco, SettingCM>();
+
+		/// <summary>
+		/// <para>Database table 'shows'.</para>
+		/// </summary>
+		public static IQueryable<ShowCM> SelectCm(this IQueryable<ShowPoco> collection) => collection.SelectCm<ShowPoco, ShowCM>();
+
+		/// <summary>
+		/// <para>Database table 'shows_genres'.</para>
+		/// </summary>
+		public static IQueryable<ShowGenreCM> SelectCm(this IQueryable<ShowGenrePoco> collection) => collection.SelectCm<ShowGenrePoco, ShowGenreCM>();
+
+		/// <summary>
+		/// <para>Database table 'subscriptions'.</para>
+		/// </summary>
+		public static IQueryable<SubscriptionCM> SelectCm(this IQueryable<SubscriptionPoco> collection) => collection.SelectCm<SubscriptionPoco, SubscriptionCM>();
+
+		/// <summary>
+		/// <para>Database table 'users'.</para>
+		/// </summary>
+		public static IQueryable<UserCM> SelectCm(this IQueryable<UserPoco> collection) => collection.SelectCm<UserPoco, UserCM>();
+
+	}
+
 	public class TrackTvMetadata : IDbMetadata
     {
-		private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> TableToPropertyMap;
-
         internal static TableMetadataModel<ActorPoco> ActorPocoMetadata;
 
         internal static TableMetadataModel<ApiChangeTypePoco> ApiChangeTypePocoMetadata;
@@ -5154,8 +5226,6 @@ namespace TrackTv.Data
 
         internal static TableMetadataModel<UserPoco> UserPocoMetadata;
 
-		private static IReadOnlyDictionary<Type, object> MetadataByPocoType;
-
 		private static readonly object InitLock = new object();
 
 		private static bool Initialized;
@@ -5164,118 +5234,6 @@ namespace TrackTv.Data
         // ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
-			TableToPropertyMap = new Dictionary<string, IReadOnlyDictionary<string, string>>
-			{
-				{"actors", new Dictionary<string, string>
-				{
-					{"actor_id", "ActorID"},
-					{"actor_image", "ActorImage"},
-					{"actor_name", "ActorName"},
-					{"last_updated", "LastUpdated"},
-					{"thetvdbid", "Thetvdbid"},
-				}},
-				{"api_change_types", new Dictionary<string, string>
-				{
-					{"api_change_type_name", "ApiChangeTypeName"},
-					{"api_change_type_id", "ApiChangeTypeID"},
-				}},
-				{"api_changes", new Dictionary<string, string>
-				{
-					{"api_change_thetvdbid", "ApiChangeThetvdbid"},
-					{"api_change_fail_count", "ApiChangeFailCount"},
-					{"api_change_created_date", "ApiChangeCreatedDate"},
-					{"api_change_id", "ApiChangeID"},
-					{"api_change_last_failed_time", "ApiChangeLastFailedTime"},
-					{"api_change_thetvdb_last_updated", "ApiChangeThetvdbLastUpdated"},
-					{"api_change_attached_series_id", "ApiChangeAttachedSeriesID"},
-					{"api_change_type", "ApiChangeType"},
-				}},
-				{"api_responses", new Dictionary<string, string>
-				{
-					{"api_response_episode_thetvdbid", "ApiResponseEpisodeThetvdbid"},
-					{"api_response_show_thetvdbid", "ApiResponseShowThetvdbid"},
-					{"api_response_body", "ApiResponseBody"},
-					{"api_response_id", "ApiResponseID"},
-					{"api_response_last_updated", "ApiResponseLastUpdated"},
-				}},
-				{"episodes", new Dictionary<string, string>
-				{
-					{"episode_id", "EpisodeID"},
-					{"episode_description", "EpisodeDescription"},
-					{"episode_number", "EpisodeNumber"},
-					{"episode_title", "EpisodeTitle"},
-					{"first_aired", "FirstAired"},
-					{"imdbid", "Imdbid"},
-					{"last_updated", "LastUpdated"},
-					{"season_number", "SeasonNumber"},
-					{"show_id", "ShowID"},
-					{"thetvdbid", "Thetvdbid"},
-				}},
-				{"genres", new Dictionary<string, string>
-				{
-					{"genre_id", "GenreID"},
-					{"genre_name", "GenreName"},
-				}},
-				{"networks", new Dictionary<string, string>
-				{
-					{"network_id", "NetworkID"},
-					{"network_name", "NetworkName"},
-				}},
-				{"profiles", new Dictionary<string, string>
-				{
-					{"profile_id", "ProfileID"},
-					{"profile_name", "ProfileName"},
-				}},
-				{"roles", new Dictionary<string, string>
-				{
-					{"role_id", "RoleID"},
-					{"actor_id", "ActorID"},
-					{"role_name", "RoleName"},
-					{"show_id", "ShowID"},
-				}},
-				{"settings", new Dictionary<string, string>
-				{
-					{"setting_id", "SettingID"},
-					{"setting_value", "SettingValue"},
-					{"setting_name", "SettingName"},
-				}},
-				{"shows", new Dictionary<string, string>
-				{
-					{"show_id", "ShowID"},
-					{"air_day", "AirDay"},
-					{"air_time", "AirTime"},
-					{"first_aired", "FirstAired"},
-					{"imdbid", "Imdbid"},
-					{"last_updated", "LastUpdated"},
-					{"network_id", "NetworkID"},
-					{"show_banner", "ShowBanner"},
-					{"show_description", "ShowDescription"},
-					{"show_name", "ShowName"},
-					{"show_status", "ShowStatus"},
-					{"thetvdbid", "Thetvdbid"},
-				}},
-				{"shows_genres", new Dictionary<string, string>
-				{
-					{"shows_genres_id", "ShowsGenresID"},
-					{"show_id", "ShowID"},
-					{"genre_id", "GenreID"},
-				}},
-				{"subscriptions", new Dictionary<string, string>
-				{
-					{"subscription_id", "SubscriptionID"},
-					{"profile_id", "ProfileID"},
-					{"show_id", "ShowID"},
-				}},
-				{"users", new Dictionary<string, string>
-				{
-					{"user_id", "UserID"},
-					{"is_admin", "IsAdmin"},
-					{"username", "Username"},
-					{"password", "Password"},
-					{"profile_id", "ProfileID"},
-				}},
-			};
-
 			ActorPocoMetadata = new TableMetadataModel<ActorPoco>
 			{
 				ClassName = "Actor",
@@ -5448,8 +5406,6 @@ namespace TrackTv.Data
 			};
 
 			ActorPocoMetadata.Clone = DbCodeGenerator.GetClone<ActorPoco>();
-			ActorPocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ActorPoco>(TableToPropertyMap["actors"]);
-			ActorPocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ActorPoco>(TableToPropertyMap["actors"]);
 			ActorPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ActorPocoMetadata);
 			ActorPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ActorPocoMetadata);
 			ActorPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ActorPocoMetadata);
@@ -5534,8 +5490,6 @@ namespace TrackTv.Data
 			};
 
 			ApiChangeTypePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangeTypePoco>();
-			ApiChangeTypePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]);
-			ApiChangeTypePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ApiChangeTypePoco>(TableToPropertyMap["api_change_types"]);
 			ApiChangeTypePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangeTypePocoMetadata);
 			ApiChangeTypePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiChangeTypePocoMetadata);
 			ApiChangeTypePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiChangeTypePocoMetadata);
@@ -5806,8 +5760,6 @@ namespace TrackTv.Data
 			};
 
 			ApiChangePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangePoco>();
-			ApiChangePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ApiChangePoco>(TableToPropertyMap["api_changes"]);
-			ApiChangePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ApiChangePoco>(TableToPropertyMap["api_changes"]);
 			ApiChangePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangePocoMetadata);
 			ApiChangePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiChangePocoMetadata);
 			ApiChangePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiChangePocoMetadata);
@@ -5985,8 +5937,6 @@ namespace TrackTv.Data
 			};
 
 			ApiResponsePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiResponsePoco>();
-			ApiResponsePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]);
-			ApiResponsePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ApiResponsePoco>(TableToPropertyMap["api_responses"]);
 			ApiResponsePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiResponsePocoMetadata);
 			ApiResponsePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiResponsePocoMetadata);
 			ApiResponsePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiResponsePocoMetadata);
@@ -6319,8 +6269,6 @@ namespace TrackTv.Data
 			};
 
 			EpisodePocoMetadata.Clone = DbCodeGenerator.GetClone<EpisodePoco>();
-			EpisodePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<EpisodePoco>(TableToPropertyMap["episodes"]);
-			EpisodePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<EpisodePoco>(TableToPropertyMap["episodes"]);
 			EpisodePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(EpisodePocoMetadata);
 			EpisodePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(EpisodePocoMetadata);
 			EpisodePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(EpisodePocoMetadata);
@@ -6405,8 +6353,6 @@ namespace TrackTv.Data
 			};
 
 			GenrePocoMetadata.Clone = DbCodeGenerator.GetClone<GenrePoco>();
-			GenrePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<GenrePoco>(TableToPropertyMap["genres"]);
-			GenrePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<GenrePoco>(TableToPropertyMap["genres"]);
 			GenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(GenrePocoMetadata);
 			GenrePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(GenrePocoMetadata);
 			GenrePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(GenrePocoMetadata);
@@ -6491,8 +6437,6 @@ namespace TrackTv.Data
 			};
 
 			NetworkPocoMetadata.Clone = DbCodeGenerator.GetClone<NetworkPoco>();
-			NetworkPocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<NetworkPoco>(TableToPropertyMap["networks"]);
-			NetworkPocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<NetworkPoco>(TableToPropertyMap["networks"]);
 			NetworkPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(NetworkPocoMetadata);
 			NetworkPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(NetworkPocoMetadata);
 			NetworkPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(NetworkPocoMetadata);
@@ -6577,8 +6521,6 @@ namespace TrackTv.Data
 			};
 
 			ProfilePocoMetadata.Clone = DbCodeGenerator.GetClone<ProfilePoco>();
-			ProfilePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ProfilePoco>(TableToPropertyMap["profiles"]);
-			ProfilePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ProfilePoco>(TableToPropertyMap["profiles"]);
 			ProfilePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ProfilePocoMetadata);
 			ProfilePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ProfilePocoMetadata);
 			ProfilePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ProfilePocoMetadata);
@@ -6725,8 +6667,6 @@ namespace TrackTv.Data
 			};
 
 			RolePocoMetadata.Clone = DbCodeGenerator.GetClone<RolePoco>();
-			RolePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<RolePoco>(TableToPropertyMap["roles"]);
-			RolePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<RolePoco>(TableToPropertyMap["roles"]);
 			RolePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(RolePocoMetadata);
 			RolePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(RolePocoMetadata);
 			RolePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(RolePocoMetadata);
@@ -6842,8 +6782,6 @@ namespace TrackTv.Data
 			};
 
 			SettingPocoMetadata.Clone = DbCodeGenerator.GetClone<SettingPoco>();
-			SettingPocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<SettingPoco>(TableToPropertyMap["settings"]);
-			SettingPocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<SettingPoco>(TableToPropertyMap["settings"]);
 			SettingPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SettingPocoMetadata);
 			SettingPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(SettingPocoMetadata);
 			SettingPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(SettingPocoMetadata);
@@ -7238,8 +7176,6 @@ namespace TrackTv.Data
 			};
 
 			ShowPocoMetadata.Clone = DbCodeGenerator.GetClone<ShowPoco>();
-			ShowPocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ShowPoco>(TableToPropertyMap["shows"]);
-			ShowPocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ShowPoco>(TableToPropertyMap["shows"]);
 			ShowPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowPocoMetadata);
 			ShowPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ShowPocoMetadata);
 			ShowPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ShowPocoMetadata);
@@ -7355,8 +7291,6 @@ namespace TrackTv.Data
 			};
 
 			ShowGenrePocoMetadata.Clone = DbCodeGenerator.GetClone<ShowGenrePoco>();
-			ShowGenrePocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]);
-			ShowGenrePocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<ShowGenrePoco>(TableToPropertyMap["shows_genres"]);
 			ShowGenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowGenrePocoMetadata);
 			ShowGenrePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ShowGenrePocoMetadata);
 			ShowGenrePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ShowGenrePocoMetadata);
@@ -7472,8 +7406,6 @@ namespace TrackTv.Data
 			};
 
 			SubscriptionPocoMetadata.Clone = DbCodeGenerator.GetClone<SubscriptionPoco>();
-			SubscriptionPocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]);
-			SubscriptionPocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<SubscriptionPoco>(TableToPropertyMap["subscriptions"]);
 			SubscriptionPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SubscriptionPocoMetadata);
 			SubscriptionPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(SubscriptionPocoMetadata);
 			SubscriptionPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(SubscriptionPocoMetadata);
@@ -7651,35 +7583,11 @@ namespace TrackTv.Data
 			};
 
 			UserPocoMetadata.Clone = DbCodeGenerator.GetClone<UserPoco>();
-			UserPocoMetadata.Setters = DbCodeGenerator.GetPocoSetters<UserPoco>(TableToPropertyMap["users"]);
-			UserPocoMetadata.Getters = DbCodeGenerator.GetPocoGetters<UserPoco>(TableToPropertyMap["users"]);
 			UserPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(UserPocoMetadata);
 			UserPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(UserPocoMetadata);
 			UserPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(UserPocoMetadata);
 			UserPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(UserPocoMetadata, typeof(UserFM));
 
-			MetadataByPocoType = new Dictionary<Type, object>
-			{
-				{typeof(ActorPoco), ActorPocoMetadata},
-				{typeof(ApiChangeTypePoco), ApiChangeTypePocoMetadata},
-				{typeof(ApiChangePoco), ApiChangePocoMetadata},
-				{typeof(ApiResponsePoco), ApiResponsePocoMetadata},
-				{typeof(EpisodePoco), EpisodePocoMetadata},
-				{typeof(GenrePoco), GenrePocoMetadata},
-				{typeof(NetworkPoco), NetworkPocoMetadata},
-				{typeof(ProfilePoco), ProfilePocoMetadata},
-				{typeof(RolePoco), RolePocoMetadata},
-				{typeof(SettingPoco), SettingPocoMetadata},
-				{typeof(ShowPoco), ShowPocoMetadata},
-				{typeof(ShowGenrePoco), ShowGenrePocoMetadata},
-				{typeof(SubscriptionPoco), SubscriptionPocoMetadata},
-				{typeof(UserPoco), UserPocoMetadata},
-			};
-		}
-
-		public TableMetadataModel<T> Get<T>() where T : IPoco<T>
-		{
-			return (TableMetadataModel<T>)MetadataByPocoType[typeof(T)];
 		}
 
 		public static void Initialize()

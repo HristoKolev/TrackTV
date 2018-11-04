@@ -92,12 +92,12 @@ namespace TrackTv.Data.Tests
 
 		[Theory]
         [ClassData(typeof(GeneratedData<Test1Poco>))]
-        public async Task Map(Test1Poco poco)
+        public async Task SelectCm(Test1Poco poco)
         {
             await this.Db.Insert(poco);
 
             var pocoFromDb = await this.Db.Poco.Test1.FirstAsync();
-			var cmFromDb = await this.Db.Poco.Test1.Map<Test1Poco, Test1CM>().FirstAsync();
+			var cmFromDb = await this.Db.Poco.Test1.SelectCm<Test1Poco, Test1CM>().FirstAsync();
 
 			Assert.Equal(pocoFromDb.TestID, cmFromDb.TestID);
 			Assert.Equal(pocoFromDb.TestName1, cmFromDb.TestName1);
@@ -142,12 +142,24 @@ namespace TrackTv.Data.Tests
         {
             await this.Db.GetTable<Test1Poco>().Filter(filter).ToArrayAsync();
         }
+		
+		[Fact]
+        public async Task OrderByPrimaryKey()
+        {
+            await this.Db.GetTable<Test1Poco>().OrderByPrimaryKey().ToArrayAsync();
+        }
+
+		[Fact]
+        public async Task OrderByPrimaryKeyDescending()
+        {
+            await this.Db.GetTable<Test1Poco>().OrderByPrimaryKeyDescending().ToArrayAsync();
+        }
 
 		[Theory]
         [ClassData(typeof(GeneratedData<Test1Poco>))]
         public void Getters(Test1Poco poco)
         {
-            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test1Poco>();
 
 			Assert.Equal(poco.TestID, getters["test_id"](poco));
 			Assert.Equal(poco.TestName1, getters["test_name1"](poco));
@@ -176,7 +188,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test1Poco>))]
         public void Setters(Test1Poco poco)
         {
-            var setters = TestDbMetadata.Test1PocoMetadata.Setters;
+            var setters = DbCodeGenerator.GenerateSetters<Test1Poco>();
 
 			var newObj = new Test1Poco();
 
@@ -288,7 +300,7 @@ namespace TrackTv.Data.Tests
 			var parameters = getParameters(poco);
 
             var columns = TestDbMetadata.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test1Poco>();
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -311,7 +323,7 @@ namespace TrackTv.Data.Tests
             var (columnNames, parameters) = getAllColumns(poco);
 
             var columns = TestDbMetadata.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test1Poco>();
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -332,7 +344,7 @@ namespace TrackTv.Data.Tests
             var getColumnChanges = TestDbMetadata.Test1PocoMetadata.GetColumnChanges;
 
             var columns = TestDbMetadata.Test1PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbMetadata.Test1PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test1Poco>();
 
             var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
 
@@ -445,12 +457,12 @@ namespace TrackTv.Data.Tests
 
 		[Theory]
         [ClassData(typeof(GeneratedData<Test2Poco>))]
-        public async Task Map(Test2Poco poco)
+        public async Task SelectCm(Test2Poco poco)
         {
             await this.Db.Insert(poco);
 
             var pocoFromDb = await this.Db.Poco.Test2.FirstAsync();
-			var cmFromDb = await this.Db.Poco.Test2.Map<Test2Poco, Test2CM>().FirstAsync();
+			var cmFromDb = await this.Db.Poco.Test2.SelectCm<Test2Poco, Test2CM>().FirstAsync();
 
 			Assert.Equal(pocoFromDb.TestID, cmFromDb.TestID);
 			Assert.Equal(pocoFromDb.TestName, cmFromDb.TestName);
@@ -477,12 +489,24 @@ namespace TrackTv.Data.Tests
         {
             await this.Db.GetTable<Test2Poco>().Filter(filter).ToArrayAsync();
         }
+		
+		[Fact]
+        public async Task OrderByPrimaryKey()
+        {
+            await this.Db.GetTable<Test2Poco>().OrderByPrimaryKey().ToArrayAsync();
+        }
+
+		[Fact]
+        public async Task OrderByPrimaryKeyDescending()
+        {
+            await this.Db.GetTable<Test2Poco>().OrderByPrimaryKeyDescending().ToArrayAsync();
+        }
 
 		[Theory]
         [ClassData(typeof(GeneratedData<Test2Poco>))]
         public void Getters(Test2Poco poco)
         {
-            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test2Poco>();
 
 			Assert.Equal(poco.TestID, getters["test_id"](poco));
 			Assert.Equal(poco.TestName, getters["test_name"](poco));
@@ -493,7 +517,7 @@ namespace TrackTv.Data.Tests
         [ClassData(typeof(GeneratedData<Test2Poco>))]
         public void Setters(Test2Poco poco)
         {
-            var setters = TestDbMetadata.Test2PocoMetadata.Setters;
+            var setters = DbCodeGenerator.GenerateSetters<Test2Poco>();
 
 			var newObj = new Test2Poco();
 
@@ -533,7 +557,7 @@ namespace TrackTv.Data.Tests
 			var parameters = getParameters(poco);
 
             var columns = TestDbMetadata.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test2Poco>();
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -556,7 +580,7 @@ namespace TrackTv.Data.Tests
             var (columnNames, parameters) = getAllColumns(poco);
 
             var columns = TestDbMetadata.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test2Poco>();
 
             for (int i = 0; i < columns.Length; i++)
             {
@@ -577,7 +601,7 @@ namespace TrackTv.Data.Tests
             var getColumnChanges = TestDbMetadata.Test2PocoMetadata.GetColumnChanges;
 
             var columns = TestDbMetadata.Test2PocoMetadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
-            var getters = TestDbMetadata.Test2PocoMetadata.Getters;
+            var getters = DbCodeGenerator.GenerateGetters<Test2Poco>();
 
             var allColumnNames = new HashSet<string>(columns.Select(x => x.ColumnName));
 

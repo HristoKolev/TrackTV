@@ -7,7 +7,7 @@
         const string TestConnectionString = "Server=vm5;Port=4202;Database=test;Uid=test;Pwd=test;";
 
         public TestDbService(NpgsqlConnection dbConnection)
-            : base(dbConnection, new TestDbMetadata())
+            : base(dbConnection)
         {
             this.Connection = dbConnection;
         }

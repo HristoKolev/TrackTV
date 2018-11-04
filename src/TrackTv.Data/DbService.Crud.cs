@@ -17,7 +17,7 @@
         public Task<int> BulkInsert<T>(IEnumerable<T> pocos, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = this.Metadata.Get<T>();
+            var metadata = DbCodeGenerator.GetMetadata<T>();
             var columns = metadata.Columns;
 
             var sqlBuilder = new StringBuilder(128);
@@ -107,7 +107,7 @@
         public Task<int> Delete<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = model.Metadata;
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             int pk = metadata.GetPrimaryKey(model);
 
@@ -125,7 +125,7 @@
                 return Task.FromResult(0);
             }
 
-            var metadata = this.Metadata.Get<T>();
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -147,7 +147,7 @@
         public Task<int> Delete<T>(int id, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = this.Metadata.Get<T>();
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
@@ -169,9 +169,11 @@
         public async Task<int> Insert<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
+            var metadata = DbCodeGenerator.GetMetadata<T>();
+
             int pk = await this.InsertWithoutMutating(model, cancellationToken);
 
-            model.Metadata.SetPrimaryKey(model, pk);
+            metadata.SetPrimaryKey(model, pk);
 
             return pk;
         }
@@ -182,7 +184,7 @@
         public Task<int> InsertWithoutMutating<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
-            var metadata = model.Metadata;
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             var (columnNames, parameters) = metadata.GetAllColumns(model);
 
@@ -241,7 +243,7 @@
         public async Task<int> Save<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = model.Metadata;
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             if (metadata.IsNew(model))
             {
@@ -259,7 +261,7 @@
         public Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = model.Metadata;
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             int pk = metadata.GetPrimaryKey(model);
 
@@ -324,7 +326,7 @@
         public async Task<int> UpdateChangesOnly<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = model.Metadata;
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             int pk = metadata.GetPrimaryKey(model);
 
@@ -397,7 +399,7 @@
         public Task<T> FindByID<T>(int id, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
-            var metadata = this.Metadata.Get<T>();
+            var metadata = DbCodeGenerator.GetMetadata<T>();
 
             string tableSchema = metadata.TableSchema;
             string tableName = metadata.TableName;
