@@ -12,10 +12,14 @@
 
     using NpgsqlTypes;
 
+    public interface IReadOnlyPoco<T>
+    {
+    }
+
     /// <summary>
     /// Interface for all Poco classes.
     /// </summary>
-    public interface IPoco<T>
+    public interface IPoco<T> : IReadOnlyPoco<T>
     {
     }
 
@@ -97,7 +101,7 @@
             where T : IPoco<T>;
 
         Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(IFilterModel<TPoco> filter, CancellationToken cancellationToken = default)
-            where TPoco : IPoco<TPoco>, new()
+            where TPoco : IReadOnlyPoco<TPoco>
             where TCatalogModel : ICatalogModel<TPoco>, new();
 
         /// <summary>
@@ -131,14 +135,14 @@
         /// Returns the record's primary key value.
         /// </summary>
         Task<int> Save<T>(T model, CancellationToken cancellationToken = default)
-            where T : class, IPoco<T>, new();
+            where T : class, IPoco<T>;
 
         /// <summary>
         /// Updates a record by its ID.
         /// Only updates the changed rows. 
         /// </summary>
         Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
-            where T : class, IPoco<T>, new();
+            where T : class, IPoco<T>;
 
         /// <summary>
         /// Updates a record by its ID.
@@ -151,7 +155,7 @@
             where T : class, IPoco<T>, new();
 
         IQueryable<T> GetTable<T>()
-            where T : class, IPoco<T>;
+            where T : class, IReadOnlyPoco<T>;
 
         TPocos Poco { get; }
     }

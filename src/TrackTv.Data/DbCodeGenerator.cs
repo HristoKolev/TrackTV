@@ -610,7 +610,7 @@
             return sb.ToString();
         }
 
-        public static TableMetadataModel<TPoco> GetMetadata<TPoco>() where TPoco: IPoco<TPoco>
+        public static TableMetadataModel<TPoco> GetMetadata<TPoco>() where TPoco: IReadOnlyPoco<TPoco>
         {
             object ValueFactory(Type type)
             {

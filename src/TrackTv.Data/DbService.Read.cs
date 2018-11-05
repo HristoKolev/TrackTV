@@ -14,7 +14,7 @@
         public Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
             IFilterModel<TPoco> filter, 
             CancellationToken cancellationToken = default)
-            where TPoco : IPoco<TPoco>, new() 
+            where TPoco : IReadOnlyPoco<TPoco>
             where TCatalogModel: ICatalogModel<TPoco>, new()
         {
             var metadata = DbCodeGenerator.GetMetadata<TPoco>();
@@ -200,7 +200,7 @@
         }
 
         public IQueryable<T> GetTable<T>()
-            where T : class, IPoco<T>
+            where T : class, IReadOnlyPoco<T>
         {
             return this.LinqToDbConnection.GetTable<T>();
         }

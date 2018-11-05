@@ -241,7 +241,7 @@
         /// Returns the record's primary key value.
         /// </summary>
         public async Task<int> Save<T>(T model, CancellationToken cancellationToken = default)
-            where T : class, IPoco<T>, new()
+            where T : class, IPoco<T>
         {
             var metadata = DbCodeGenerator.GetMetadata<T>();
 
@@ -259,7 +259,7 @@
         /// Updates a record by its ID.
         /// </summary>
         public Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
-            where T : class, IPoco<T>, new()
+            where T : class, IPoco<T>
         {
             var metadata = DbCodeGenerator.GetMetadata<T>();
 
