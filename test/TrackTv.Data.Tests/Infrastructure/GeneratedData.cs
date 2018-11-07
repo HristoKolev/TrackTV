@@ -9,7 +9,7 @@
     using NpgsqlTypes;
 
     public class GeneratedData<T> : IEnumerable<object[]>
-        where T : class, IPoco<T>, new()
+        where T : class, IReadOnlyPoco<T>, new()
     {
         public IEnumerator<object[]> GetEnumerator()
         {
@@ -28,7 +28,7 @@
     }
 
     public class GeneratedBulkData<T> : IEnumerable<object[]>
-        where T : class, IPoco<T>, new()
+        where T : class, IReadOnlyPoco<T>, new()
     {
         public IEnumerator<object[]> GetEnumerator()
         {
@@ -45,15 +45,12 @@
     }
 
     public class GeneratedFilterData<TPoco, TFilter> : IEnumerable<object[]>
-        where TPoco : class, IPoco<TPoco>, new() where TFilter : new()
+        where TPoco : class, IReadOnlyPoco<TPoco>, new() where TFilter : new()
     {
         public IEnumerator<object[]> GetEnumerator()
         {
             return this.GenerateData()
-                       .Select(x => new[]
-                       {
-                           x
-                       })
+                       .Select(x => new[] { x })
                        .GetEnumerator();
         }
 
@@ -106,7 +103,7 @@
         private const int RandomSeed = 938274923;
 
         public static List<T> GenerateData<T>()
-            where T : class, IPoco<T>, new()
+            where T : class, IReadOnlyPoco<T>, new()
         {
             var list = new List<T>();
 
@@ -126,11 +123,7 @@
 
                     if (column.IsNullable)
                     {
-                        values = values.Concat(new object[]
-                                       {
-                                           null
-                                       })
-                                       .ToArray();
+                        values = values.Concat(new object[] { null }).ToArray();
                     }
 
                     foreach (object value in values)
@@ -370,11 +363,7 @@
 
         private static bool[] GenerateBooleanArray()
         {
-            return new[]
-            {
-                true,
-                false
-            };
+            return new[] { true, false };
         }
 
         private static byte[][] GenerateByteArray()

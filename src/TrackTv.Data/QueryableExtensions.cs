@@ -11,7 +11,7 @@
     {
         public static IQueryable<TCm> SelectCm<TPoco, TCm>(this IQueryable<TPoco> collection)
             where TCm : ICatalogModel<TPoco>
-            where TPoco : IPoco<TPoco>
+            where TPoco : IReadOnlyPoco<TPoco>
         {
             if (collection == null)
             {
@@ -45,7 +45,7 @@
 
         public static IQueryable<TPoco> Filter<TFilter, TPoco>(this IQueryable<TPoco> collection, TFilter filter)
             where TFilter : IFilterModel<TPoco>
-            where TPoco : IPoco<TPoco>
+            where TPoco : IReadOnlyPoco<TPoco>
         {
             if (collection == null)
             {
@@ -68,7 +68,7 @@
         }
 
         public static IQueryable<TPoco> Page<TPoco>(this IQueryable<TPoco> collection, int page, int pageSize)
-            where TPoco : IPoco<TPoco>
+            where TPoco : IReadOnlyPoco<TPoco>
         {
             if (collection == null)
             {

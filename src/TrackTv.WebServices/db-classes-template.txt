@@ -1,26 +1,26 @@
 namespace {{model.Namespace}}
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.Linq;
+	using System;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Linq;
 	using LinqToDB;
-    using LinqToDB.Mapping;
+	using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
 	
-    {{#each model.tables}}
-    /// <summary>
-    /// <para>Table name: '{{TableName}}'.</para>
+	{{#each model.tables}}
+	/// <summary>
+	/// <para>Table name: '{{TableName}}'.</para>
 	/// <para>Table schema: '{{TableSchema}}'.</para>
-    /// </summary>
-    [Table(Schema="{{TableSchema}}", Name = "{{TableName}}")]
-    public class {{ClassName}}Poco : IPoco<{{ClassName}}Poco>
-    {
-        {{#each columns}}
-        /// <summary>
+	/// </summary>
+	[Table(Schema="{{TableSchema}}", Name = "{{TableName}}")]
+	public class {{ClassName}}Poco : {{#if IsView}}IReadOnlyPoco<{{ClassName}}Poco>{{/if}}{{#unless IsView}}IPoco<{{ClassName}}Poco>{{/unless}}
+	{
+		{{#each columns}}
+		/// <summary>
 		{{#if ColumnComment}}
-        {{#each comments}}/// <para>{{this}}</para>{{/each}}
+		{{#each comments}}/// <para>{{this}}</para>{{/each}}
 		{{/if}}
 		/// <para>Column name: '{{ColumnName}}'.</para>
 		/// <para>Table name: '{{TableName}}'.</para>
@@ -37,19 +37,20 @@ namespace {{model.Namespace}}
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.{{NpgsDataTypeName}}'.</para>
 		/// <para>CLR type: '{{ClrTypeName}}'.</para>
 		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
-        /// </summary>
-        {{#if IsPrimaryKey}}
+		/// </summary>
+		{{#if IsPrimaryKey}}
 		[PrimaryKey, Identity]
 		{{/if}}
 		{{#unless IsPrimaryKey}}
 		{{#if IsNullable}}[Nullable]{{/if}}{{#unless IsNullable}}[NotNull]{{/unless}}
 		{{/unless}}
 		[Column(Name = "{{ColumnName}}", DataType = {{Linq2dbDataTypeName}})]
-        public {{ClrTypeName}} {{PropertyName}} { get; set; }
+		public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
-        {{/each}}
+		{{/each}}
 		public static TableMetadataModel<{{ClassName}}Poco> Metadata => {{../model.MetadataClassName}}.{{ClassName}}PocoMetadata;
 
+		{{#unless IsView}}
 		public {{ClassName}}BM ToBm()
 		{
 			return new {{ClassName}}BM
@@ -59,21 +60,22 @@ namespace {{model.Namespace}}
 				{{/each}}
 			};
 		}
-    }
+		{{/unless}}
+	}
 
 	{{/each}}
 
 	{{#each model.tables}}
-    /// <summary>
-    /// <para>Table name: '{{TableName}}'.</para>
+	/// <summary>
+	/// <para>Table name: '{{TableName}}'.</para>
 	/// <para>Table schema: '{{TableSchema}}'.</para>
-    /// </summary>
-    public class {{ClassName}}CM : ICatalogModel<{{ClassName}}Poco>
-    {
-        {{#each columns}}
+	/// </summary>
+	public class {{ClassName}}CM : ICatalogModel<{{ClassName}}Poco>
+	{
+		{{#each columns}}
 		/// <summary>
 		{{#if ColumnComment}}
-        {{#each comments}}/// <para>{{this}}</para>{{/each}}
+		{{#each comments}}/// <para>{{this}}</para>{{/each}}
 		{{/if}}
 		/// <para>Column name: '{{ColumnName}}'.</para>
 		/// <para>Table name: '{{TableName}}'.</para>
@@ -90,25 +92,25 @@ namespace {{model.Namespace}}
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.{{NpgsDataTypeName}}'.</para>
 		/// <para>CLR type: '{{ClrTypeName}}'.</para>
 		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
-        /// </summary>
-        public {{ClrTypeName}} {{PropertyName}} { get; set; }
+		/// </summary>
+		public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
-        {{/each}}
-    }
+		{{/each}}
+	}
 
-    {{/each}}
+	{{/each}}
 
 	{{#each model.tables}}
-    /// <summary>
-    /// <para>Table name: '{{TableName}}'.</para>
+	/// <summary>
+	/// <para>Table name: '{{TableName}}'.</para>
 	/// <para>Table schema: '{{TableSchema}}'.</para>
-    /// </summary>
-    public class {{ClassName}}FM : IFilterModel<{{ClassName}}Poco>
-    {
-        {{#each columns}}
+	/// </summary>
+	public class {{ClassName}}FM : IFilterModel<{{ClassName}}Poco>
+	{
+		{{#each columns}}
 		{{#each ValidOperators}}
 		[FilterOperator(QueryOperatorType.{{#if this}}{{this}}{{/if}}{{#unless this}}Equal{{/unless}}, "{{../PropertyName}}", NpgsqlDbType.{{../NpgsDataTypeName}}, "{{../ColumnName}}")]
-        public {{../ClrNullableTypeName}} {{../PropertyName}}{{#if this}}_{{/if}}{{this}} { get; set; }
+		public {{../ClrNullableTypeName}} {{../PropertyName}}{{#if this}}_{{/if}}{{this}} { get; set; }
 
 		{{/each}}
 		{{#if IsNullable}}
@@ -125,22 +127,23 @@ namespace {{model.Namespace}}
 		[FilterOperator(QueryOperatorType.IsNotIn, "{{PropertyName}}", NpgsqlDbType.{{NpgsDataTypeName}}, "{{ColumnName}}")]
 		public {{ClrNonNullableTypeName}}[] {{PropertyName}}_IsNotIn { get; set; }
 
-        {{/each}}
-    }
+		{{/each}}
+	}
 
-    {{/each}}
+	{{/each}}
 
 	{{#each model.tables}}
-    /// <summary>
-    /// <para>Table name: '{{TableName}}'.</para>
+	{{#unless IsView}}
+	/// <summary>
+	/// <para>Table name: '{{TableName}}'.</para>
 	/// <para>Table schema: '{{TableSchema}}'.</para>
-    /// </summary>
-    public partial class {{ClassName}}BM : IBusinessModel<{{ClassName}}Poco>
-    {
-        {{#each columns}}
+	/// </summary>
+	public partial class {{ClassName}}BM : IBusinessModel<{{ClassName}}Poco>
+	{
+		{{#each columns}}
 		/// <summary>
 		{{#if ColumnComment}}
-        {{#each comments}}/// <para>{{this}}</para>{{/each}}
+		{{#each comments}}/// <para>{{this}}</para>{{/each}}
 		{{/if}}
 		/// <para>Column name: '{{ColumnName}}'.</para>
 		/// <para>Table name: '{{TableName}}'.</para>
@@ -157,8 +160,8 @@ namespace {{model.Namespace}}
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.{{NpgsDataTypeName}}'.</para>
 		/// <para>CLR type: '{{ClrTypeName}}'.</para>
 		/// <para>linq2db data type: '{{Linq2dbDataTypeName}}'.</para>
-        /// </summary>
-        public {{ClrTypeName}} {{PropertyName}} { get; set; }
+		/// </summary>
+		public {{ClrTypeName}} {{PropertyName}} { get; set; }
 
 		{{/each}}
 		public {{ClassName}}Poco ToPoco()
@@ -172,14 +175,15 @@ namespace {{model.Namespace}}
 		}
 	}
 
-    {{/each}}
-    public class {{model.PocoClassName}} : IDbPocos<{{model.PocoClassName}}>
-    {
-        {{#each model.tables}}
+	{{/unless}}
+	{{/each}}
+	public class {{model.PocoClassName}} : IDbPocos<{{model.PocoClassName}}>
+	{
+		{{#each model.tables}}
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>
 		/// </summary>
-        public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.DbService.GetTable<{{ClassName}}Poco>();
+		public IQueryable<{{ClassName}}Poco> {{PluralClassName}} => this.DbService.GetTable<{{ClassName}}Poco>();
 
 		/// <summary>
 		/// <para>Database table '{{TableName}}'.</para>
@@ -188,10 +192,10 @@ namespace {{model.Namespace}}
 		/// </summary>
 		public Task<List<{{ClassName}}CM>> Filter({{ClassName}}FM filter) => this.DbService.FilterInternal<{{ClassName}}Poco, {{ClassName}}CM>(filter);
 
-        {{/each}}
+		{{/each}}
 
 		public IDbService<{{model.PocoClassName}}> DbService { private get; set; }
-    }
+	}
 
 	public static class {{model.PocoClassName}}Extensions
 	{
@@ -205,17 +209,17 @@ namespace {{model.Namespace}}
 	}
 
 	public class {{model.MetadataClassName}} : IDbMetadata
-    {
+	{
 		{{#each model.tables}}
-        internal static TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata;
+		internal static TableMetadataModel<{{ClassName}}Poco> {{ClassName}}PocoMetadata;
 
-        {{/each}}
+		{{/each}}
 		private static readonly object InitLock = new object();
 
 		private static bool Initialized;
 
-        // ReSharper disable once FunctionComplexityOverflow
-        // ReSharper disable once CyclomaticComplexity
+		// ReSharper disable once FunctionComplexityOverflow
+		// ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
 			{{#each model.tables}}
@@ -223,13 +227,15 @@ namespace {{model.Namespace}}
 			{
 				ClassName = "{{ClassName}}",
 				PluralClassName = "{{PluralClassName}}",
-				PrimaryKeyColumnName = "{{PrimaryKeyColumnName}}",
-				PrimaryKeyPropertyName = "{{PrimaryKeyPropertyName}}",
 				TableName = "{{TableName}}",
 				TableSchema = "{{TableSchema}}",
+				{{#unless IsView}}
+				PrimaryKeyColumnName = "{{PrimaryKeyColumnName}}",
+				PrimaryKeyPropertyName = "{{PrimaryKeyPropertyName}}",
 				GetPrimaryKey = (instance) => instance.{{PrimaryKeyPropertyName}},
 				SetPrimaryKey = (instance, val) => instance.{{PrimaryKeyPropertyName}} = val,
-				IsNew = (instance) => instance.{{PrimaryKeyPropertyName}} == default,		
+				IsNew = (instance) => instance.{{PrimaryKeyPropertyName}} == default,
+				{{/unless}}
 				Columns = new List<ColumnMetadataModel>
 				{
 					{{#each columns}}
@@ -269,12 +275,14 @@ namespace {{model.Namespace}}
 			};
 
 			{{ClassName}}PocoMetadata.Clone = DbCodeGenerator.GetClone<{{ClassName}}Poco>();
+			{{#unless IsView}}
 			{{ClassName}}PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges({{ClassName}}PocoMetadata);
 			{{ClassName}}PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns({{ClassName}}PocoMetadata);
+			{{/unless}}
 			{{ClassName}}PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm({{ClassName}}PocoMetadata, typeof({{ClassName}}FM));
 
-			{{/each}}			
+			{{/each}}
 		}
 
 		public static void Initialize()
@@ -300,6 +308,6 @@ namespace {{model.Namespace}}
 		static {{model.MetadataClassName}}()
 		{
 			Initialize();
-		}        
-    }
+		}
+	}
 }

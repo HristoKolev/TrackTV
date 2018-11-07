@@ -217,6 +217,8 @@
         public string TableName { get; set; }
 
         public string TableSchema { get; set; }
+
+        public bool IsView { get; set; }
     }
 
     /// <summary>

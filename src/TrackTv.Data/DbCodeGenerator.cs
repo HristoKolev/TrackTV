@@ -347,7 +347,7 @@
         public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFm<TPoco>(
             TableMetadataModel<TPoco> metadata,
             Type fmType) 
-            where TPoco : IPoco<TPoco>
+            where TPoco : IReadOnlyPoco<TPoco>
         {
             var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>)
                 .GetConstructor(new[] { typeof(List<string>), typeof(List<NpgsqlParameter>), typeof(List<QueryOperatorType>) });

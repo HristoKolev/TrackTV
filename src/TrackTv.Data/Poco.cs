@@ -1,22 +1,22 @@
 namespace TrackTv.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.Linq;
+	using System;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Linq;
 	using LinqToDB;
-    using LinqToDB.Mapping;
+	using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
 	
-    /// <summary>
-    /// <para>Table name: 'actors'.</para>
+	/// <summary>
+	/// <para>Table name: 'actors'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "actors")]
-    public class ActorPoco : IPoco<ActorPoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "actors")]
+	public class ActorPoco : IPoco<ActorPoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'actors'.</para>
 		/// <para>Primary key of table: 'actors'.</para>
@@ -26,12 +26,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "actor_id", DataType = DataType.Int32)]
-        public int ActorID { get; set; }
+		public int ActorID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'actor_image'.</para>
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
@@ -39,12 +39,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "actor_image", DataType = DataType.NVarChar)]
-        public string ActorImage { get; set; }
+		public string ActorImage { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'actor_name'.</para>
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
@@ -52,12 +52,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "actor_name", DataType = DataType.NVarChar)]
-        public string ActorName { get; set; }
+		public string ActorName { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is nullable.</para>
@@ -65,12 +65,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
-        public DateTime? LastUpdated { get; set; }
+		public DateTime? LastUpdated { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
 		/// <para>Table name: 'actors'.</para>
 		/// <para>This column is not nullable.</para>
@@ -78,10 +78,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
-        public int Thetvdbid { get; set; }
+		public int Thetvdbid { get; set; }
 
 		public static TableMetadataModel<ActorPoco> Metadata => TrackTvMetadata.ActorPocoMetadata;
 
@@ -96,16 +96,16 @@ namespace TrackTv.Data
 				Thetvdbid = this.Thetvdbid,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_change_types'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "api_change_types")]
-    public class ApiChangeTypePoco : IPoco<ApiChangeTypePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "api_change_types")]
+	public class ApiChangeTypePoco : IPoco<ApiChangeTypePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'api_change_type_name'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
 		/// <para>This column is not nullable.</para>
@@ -113,12 +113,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_change_type_name", DataType = DataType.NVarChar)]
-        public string ApiChangeTypeName { get; set; }
+		public string ApiChangeTypeName { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_type_id'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
 		/// <para>Primary key of table: 'api_change_types'.</para>
@@ -128,10 +128,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "api_change_type_id", DataType = DataType.Int32)]
-        public int ApiChangeTypeID { get; set; }
+		public int ApiChangeTypeID { get; set; }
 
 		public static TableMetadataModel<ApiChangeTypePoco> Metadata => TrackTvMetadata.ApiChangeTypePocoMetadata;
 
@@ -143,16 +143,16 @@ namespace TrackTv.Data
 				ApiChangeTypeID = this.ApiChangeTypeID,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_changes'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "api_changes")]
-    public class ApiChangePoco : IPoco<ApiChangePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "api_changes")]
+	public class ApiChangePoco : IPoco<ApiChangePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'api_change_thetvdbid'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -160,12 +160,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_change_thetvdbid", DataType = DataType.Int32)]
-        public int ApiChangeThetvdbid { get; set; }
+		public int ApiChangeThetvdbid { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_fail_count'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -173,12 +173,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_change_fail_count", DataType = DataType.Int32)]
-        public int ApiChangeFailCount { get; set; }
+		public int ApiChangeFailCount { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_created_date'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -186,12 +186,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_change_created_date", DataType = DataType.DateTime2)]
-        public DateTime ApiChangeCreatedDate { get; set; }
+		public DateTime ApiChangeCreatedDate { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>Primary key of table: 'api_changes'.</para>
@@ -201,12 +201,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "api_change_id", DataType = DataType.Int32)]
-        public int ApiChangeID { get; set; }
+		public int ApiChangeID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_last_failed_time'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is nullable.</para>
@@ -214,12 +214,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "api_change_last_failed_time", DataType = DataType.DateTime2)]
-        public DateTime? ApiChangeLastFailedTime { get; set; }
+		public DateTime? ApiChangeLastFailedTime { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_thetvdb_last_updated'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -227,12 +227,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_change_thetvdb_last_updated", DataType = DataType.DateTime2)]
-        public DateTime ApiChangeThetvdbLastUpdated { get; set; }
+		public DateTime ApiChangeThetvdbLastUpdated { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_attached_series_id'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>This column is nullable.</para>
@@ -240,12 +240,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "api_change_attached_series_id", DataType = DataType.Int32)]
-        public int? ApiChangeAttachedSeriesID { get; set; }
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
 		/// <para>Table name: 'api_changes'.</para>
 		/// <para>Foreign key column [public.api_changes.api_change_type -> public.api_change_types.api_change_type_id].</para>
@@ -255,10 +255,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_change_type", DataType = DataType.Int32)]
-        public int ApiChangeType { get; set; }
+		public int ApiChangeType { get; set; }
 
 		public static TableMetadataModel<ApiChangePoco> Metadata => TrackTvMetadata.ApiChangePocoMetadata;
 
@@ -276,16 +276,16 @@ namespace TrackTv.Data
 				ApiChangeType = this.ApiChangeType,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_responses'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "api_responses")]
-    public class ApiResponsePoco : IPoco<ApiResponsePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "api_responses")]
+	public class ApiResponsePoco : IPoco<ApiResponsePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>Foreign key column [public.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
@@ -295,12 +295,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "api_response_episode_thetvdbid", DataType = DataType.Int32)]
-        public int? ApiResponseEpisodeThetvdbid { get; set; }
+		public int? ApiResponseEpisodeThetvdbid { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
@@ -310,12 +310,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "api_response_show_thetvdbid", DataType = DataType.Int32)]
-        public int? ApiResponseShowThetvdbid { get; set; }
+		public int? ApiResponseShowThetvdbid { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_response_body'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
@@ -323,12 +323,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_response_body", DataType = DataType.BinaryJson)]
-        public string ApiResponseBody { get; set; }
+		public string ApiResponseBody { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>Primary key of table: 'api_responses'.</para>
@@ -338,12 +338,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "api_response_id", DataType = DataType.Int32)]
-        public int ApiResponseID { get; set; }
+		public int ApiResponseID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>This column is not nullable.</para>
@@ -351,10 +351,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
-        public DateTime ApiResponseLastUpdated { get; set; }
+		public DateTime ApiResponseLastUpdated { get; set; }
 
 		public static TableMetadataModel<ApiResponsePoco> Metadata => TrackTvMetadata.ApiResponsePocoMetadata;
 
@@ -369,16 +369,16 @@ namespace TrackTv.Data
 				ApiResponseLastUpdated = this.ApiResponseLastUpdated,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'episodes'.</para>
+	/// <summary>
+	/// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "episodes")]
-    public class EpisodePoco : IPoco<EpisodePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "episodes")]
+	public class EpisodePoco : IPoco<EpisodePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'episode_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>Primary key of table: 'episodes'.</para>
@@ -388,12 +388,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "episode_id", DataType = DataType.Int32)]
-        public int EpisodeID { get; set; }
+		public int EpisodeID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'episode_description'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
@@ -401,12 +401,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "episode_description", DataType = DataType.Text)]
-        public string EpisodeDescription { get; set; }
+		public string EpisodeDescription { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'episode_number'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -414,12 +414,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "episode_number", DataType = DataType.Int32)]
-        public int EpisodeNumber { get; set; }
+		public int EpisodeNumber { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'episode_title'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
@@ -427,12 +427,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "episode_title", DataType = DataType.NVarChar)]
-        public string EpisodeTitle { get; set; }
+		public string EpisodeTitle { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'first_aired'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
@@ -440,12 +440,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "first_aired", DataType = DataType.DateTime2)]
-        public DateTime? FirstAired { get; set; }
+		public DateTime? FirstAired { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'imdbid'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is nullable.</para>
@@ -453,12 +453,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "imdbid", DataType = DataType.NVarChar)]
-        public string Imdbid { get; set; }
+		public string Imdbid { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -466,12 +466,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
-        public DateTime LastUpdated { get; set; }
+		public DateTime LastUpdated { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'season_number'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -479,12 +479,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "season_number", DataType = DataType.Int32)]
-        public int SeasonNumber { get; set; }
+		public int SeasonNumber { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>Foreign key column [public.episodes.show_id -> public.shows.show_id].</para>
@@ -494,12 +494,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
-        public int ShowID { get; set; }
+		public int ShowID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
 		/// <para>Table name: 'episodes'.</para>
 		/// <para>This column is not nullable.</para>
@@ -507,10 +507,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
-        public int Thetvdbid { get; set; }
+		public int Thetvdbid { get; set; }
 
 		public static TableMetadataModel<EpisodePoco> Metadata => TrackTvMetadata.EpisodePocoMetadata;
 
@@ -530,16 +530,16 @@ namespace TrackTv.Data
 				Thetvdbid = this.Thetvdbid,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "genres")]
-    public class GenrePoco : IPoco<GenrePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "genres")]
+	public class GenrePoco : IPoco<GenrePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'genres'.</para>
 		/// <para>Primary key of table: 'genres'.</para>
@@ -549,12 +549,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
-        public int GenreID { get; set; }
+		public int GenreID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'genre_name'.</para>
 		/// <para>Table name: 'genres'.</para>
 		/// <para>This column is not nullable.</para>
@@ -562,10 +562,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "genre_name", DataType = DataType.NVarChar)]
-        public string GenreName { get; set; }
+		public string GenreName { get; set; }
 
 		public static TableMetadataModel<GenrePoco> Metadata => TrackTvMetadata.GenrePocoMetadata;
 
@@ -577,16 +577,16 @@ namespace TrackTv.Data
 				GenreName = this.GenreName,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'networks'.</para>
+	/// <summary>
+	/// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "networks")]
-    public class NetworkPoco : IPoco<NetworkPoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "networks")]
+	public class NetworkPoco : IPoco<NetworkPoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'network_id'.</para>
 		/// <para>Table name: 'networks'.</para>
 		/// <para>Primary key of table: 'networks'.</para>
@@ -596,12 +596,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "network_id", DataType = DataType.Int32)]
-        public int NetworkID { get; set; }
+		public int NetworkID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'network_name'.</para>
 		/// <para>Table name: 'networks'.</para>
 		/// <para>This column is not nullable.</para>
@@ -609,10 +609,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "network_name", DataType = DataType.NVarChar)]
-        public string NetworkName { get; set; }
+		public string NetworkName { get; set; }
 
 		public static TableMetadataModel<NetworkPoco> Metadata => TrackTvMetadata.NetworkPocoMetadata;
 
@@ -624,16 +624,16 @@ namespace TrackTv.Data
 				NetworkName = this.NetworkName,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'profiles'.</para>
+	/// <summary>
+	/// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "profiles")]
-    public class ProfilePoco : IPoco<ProfilePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "profiles")]
+	public class ProfilePoco : IPoco<ProfilePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'profiles'.</para>
 		/// <para>Primary key of table: 'profiles'.</para>
@@ -643,12 +643,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
-        public int ProfileID { get; set; }
+		public int ProfileID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'profile_name'.</para>
 		/// <para>Table name: 'profiles'.</para>
 		/// <para>This column is not nullable.</para>
@@ -656,10 +656,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "profile_name", DataType = DataType.NVarChar)]
-        public string ProfileName { get; set; }
+		public string ProfileName { get; set; }
 
 		public static TableMetadataModel<ProfilePoco> Metadata => TrackTvMetadata.ProfilePocoMetadata;
 
@@ -671,16 +671,16 @@ namespace TrackTv.Data
 				ProfileName = this.ProfileName,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'roles'.</para>
+	/// <summary>
+	/// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "roles")]
-    public class RolePoco : IPoco<RolePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "roles")]
+	public class RolePoco : IPoco<RolePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'role_id'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>Primary key of table: 'roles'.</para>
@@ -690,12 +690,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "role_id", DataType = DataType.Int32)]
-        public int RoleID { get; set; }
+		public int RoleID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>Foreign key column [public.roles.actor_id -> public.actors.actor_id].</para>
@@ -705,12 +705,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "actor_id", DataType = DataType.Int32)]
-        public int ActorID { get; set; }
+		public int ActorID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'role_name'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>This column is nullable.</para>
@@ -718,12 +718,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "role_name", DataType = DataType.NVarChar)]
-        public string RoleName { get; set; }
+		public string RoleName { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>Foreign key column [public.roles.show_id -> public.shows.show_id].</para>
@@ -733,10 +733,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
-        public int ShowID { get; set; }
+		public int ShowID { get; set; }
 
 		public static TableMetadataModel<RolePoco> Metadata => TrackTvMetadata.RolePocoMetadata;
 
@@ -750,16 +750,16 @@ namespace TrackTv.Data
 				ShowID = this.ShowID,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'settings'.</para>
+	/// <summary>
+	/// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "settings")]
-    public class SettingPoco : IPoco<SettingPoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "settings")]
+	public class SettingPoco : IPoco<SettingPoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'setting_id'.</para>
 		/// <para>Table name: 'settings'.</para>
 		/// <para>Primary key of table: 'settings'.</para>
@@ -769,12 +769,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "setting_id", DataType = DataType.Int32)]
-        public int SettingID { get; set; }
+		public int SettingID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'setting_value'.</para>
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
@@ -782,12 +782,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "setting_value", DataType = DataType.NVarChar)]
-        public string SettingValue { get; set; }
+		public string SettingValue { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'setting_name'.</para>
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
@@ -795,10 +795,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
-        public string SettingName { get; set; }
+		public string SettingName { get; set; }
 
 		public static TableMetadataModel<SettingPoco> Metadata => TrackTvMetadata.SettingPocoMetadata;
 
@@ -811,16 +811,16 @@ namespace TrackTv.Data
 				SettingName = this.SettingName,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'shows'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "shows")]
-    public class ShowPoco : IPoco<ShowPoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "shows")]
+	public class ShowPoco : IPoco<ShowPoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>Primary key of table: 'shows'.</para>
@@ -830,12 +830,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
-        public int ShowID { get; set; }
+		public int ShowID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'air_day'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
@@ -843,12 +843,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "air_day", DataType = DataType.Int32)]
-        public int? AirDay { get; set; }
+		public int? AirDay { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'air_time'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
@@ -856,12 +856,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "air_time", DataType = DataType.DateTime2)]
-        public DateTime? AirTime { get; set; }
+		public DateTime? AirTime { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'first_aired'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
@@ -869,12 +869,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "first_aired", DataType = DataType.DateTime2)]
-        public DateTime? FirstAired { get; set; }
+		public DateTime? FirstAired { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'imdbid'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
@@ -882,12 +882,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "imdbid", DataType = DataType.NVarChar)]
-        public string Imdbid { get; set; }
+		public string Imdbid { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -895,12 +895,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "last_updated", DataType = DataType.DateTime2)]
-        public DateTime LastUpdated { get; set; }
+		public DateTime LastUpdated { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'network_id'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>Foreign key column [public.shows.network_id -> public.networks.network_id].</para>
@@ -910,12 +910,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "network_id", DataType = DataType.Int32)]
-        public int NetworkID { get; set; }
+		public int NetworkID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_banner'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
@@ -923,12 +923,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "show_banner", DataType = DataType.NVarChar)]
-        public string ShowBanner { get; set; }
+		public string ShowBanner { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_description'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is nullable.</para>
@@ -936,12 +936,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
-        /// </summary>
+		/// </summary>
 		[Nullable]
 		[Column(Name = "show_description", DataType = DataType.Text)]
-        public string ShowDescription { get; set; }
+		public string ShowDescription { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_name'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -949,12 +949,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "show_name", DataType = DataType.NVarChar)]
-        public string ShowName { get; set; }
+		public string ShowName { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_status'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -962,12 +962,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "show_status", DataType = DataType.Int32)]
-        public int ShowStatus { get; set; }
+		public int ShowStatus { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -975,10 +975,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "thetvdbid", DataType = DataType.Int32)]
-        public int Thetvdbid { get; set; }
+		public int Thetvdbid { get; set; }
 
 		public static TableMetadataModel<ShowPoco> Metadata => TrackTvMetadata.ShowPocoMetadata;
 
@@ -1000,16 +1000,16 @@ namespace TrackTv.Data
 				Thetvdbid = this.Thetvdbid,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'shows_genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "shows_genres")]
-    public class ShowGenrePoco : IPoco<ShowGenrePoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "shows_genres")]
+	public class ShowGenrePoco : IPoco<ShowGenrePoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'shows_genres_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
 		/// <para>Primary key of table: 'shows_genres'.</para>
@@ -1019,12 +1019,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "shows_genres_id", DataType = DataType.Int32)]
-        public int ShowsGenresID { get; set; }
+		public int ShowsGenresID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
 		/// <para>Foreign key column [public.shows_genres.show_id -> public.shows.show_id].</para>
@@ -1034,12 +1034,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
-        public int ShowID { get; set; }
+		public int ShowID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
 		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
@@ -1049,10 +1049,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "genre_id", DataType = DataType.Int32)]
-        public int GenreID { get; set; }
+		public int GenreID { get; set; }
 
 		public static TableMetadataModel<ShowGenrePoco> Metadata => TrackTvMetadata.ShowGenrePocoMetadata;
 
@@ -1065,16 +1065,16 @@ namespace TrackTv.Data
 				GenreID = this.GenreID,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'subscriptions'.</para>
+	/// <summary>
+	/// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "subscriptions")]
-    public class SubscriptionPoco : IPoco<SubscriptionPoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "subscriptions")]
+	public class SubscriptionPoco : IPoco<SubscriptionPoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'subscription_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
 		/// <para>Primary key of table: 'subscriptions'.</para>
@@ -1084,12 +1084,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "subscription_id", DataType = DataType.Int32)]
-        public int SubscriptionID { get; set; }
+		public int SubscriptionID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
 		/// <para>Foreign key column [public.subscriptions.profile_id -> public.profiles.profile_id].</para>
@@ -1099,12 +1099,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
-        public int ProfileID { get; set; }
+		public int ProfileID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
 		/// <para>Foreign key column [public.subscriptions.show_id -> public.shows.show_id].</para>
@@ -1114,10 +1114,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "show_id", DataType = DataType.Int32)]
-        public int ShowID { get; set; }
+		public int ShowID { get; set; }
 
 		public static TableMetadataModel<SubscriptionPoco> Metadata => TrackTvMetadata.SubscriptionPocoMetadata;
 
@@ -1130,16 +1130,16 @@ namespace TrackTv.Data
 				ShowID = this.ShowID,
 			};
 		}
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'users'.</para>
+	/// <summary>
+	/// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    [Table(Schema="public", Name = "users")]
-    public class UserPoco : IPoco<UserPoco>
-    {
-        /// <summary>
+	/// </summary>
+	[Table(Schema="public", Name = "users")]
+	public class UserPoco : IPoco<UserPoco>
+	{
+		/// <summary>
 		/// <para>Column name: 'user_id'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>Primary key of table: 'users'.</para>
@@ -1149,12 +1149,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[PrimaryKey, Identity]
 		[Column(Name = "user_id", DataType = DataType.Int32)]
-        public int UserID { get; set; }
+		public int UserID { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'is_admin'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1162,12 +1162,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Boolean'.</para>
 		/// <para>CLR type: 'bool'.</para>
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "is_admin", DataType = DataType.Boolean)]
-        public bool IsAdmin { get; set; }
+		public bool IsAdmin { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'username'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1175,12 +1175,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "username", DataType = DataType.NVarChar)]
-        public string Username { get; set; }
+		public string Username { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'password'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1188,12 +1188,12 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "password", DataType = DataType.NVarChar)]
-        public string Password { get; set; }
+		public string Password { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1201,10 +1201,10 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
+		/// </summary>
 		[NotNull]
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
-        public int ProfileID { get; set; }
+		public int ProfileID { get; set; }
 
 		public static TableMetadataModel<UserPoco> Metadata => TrackTvMetadata.UserPocoMetadata;
 
@@ -1219,15 +1219,15 @@ namespace TrackTv.Data
 				ProfileID = this.ProfileID,
 			};
 		}
-    }
+	}
 
 
-    /// <summary>
-    /// <para>Table name: 'actors'.</para>
+	/// <summary>
+	/// <para>Table name: 'actors'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ActorCM : ICatalogModel<ActorPoco>
-    {
+	/// </summary>
+	public class ActorCM : ICatalogModel<ActorPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'actors'.</para>
@@ -1238,8 +1238,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ActorID { get; set; }
+		/// </summary>
+		public int ActorID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'actor_image'.</para>
@@ -1249,8 +1249,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ActorImage { get; set; }
+		/// </summary>
+		public string ActorImage { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'actor_name'.</para>
@@ -1260,8 +1260,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ActorName { get; set; }
+		/// </summary>
+		public string ActorName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
@@ -1271,8 +1271,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? LastUpdated { get; set; }
+		/// </summary>
+		public DateTime? LastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
@@ -1282,17 +1282,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int Thetvdbid { get; set; }
+		/// </summary>
+		public int Thetvdbid { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_change_types'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ApiChangeTypeCM : ICatalogModel<ApiChangeTypePoco>
-    {
+	/// </summary>
+	public class ApiChangeTypeCM : ICatalogModel<ApiChangeTypePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'api_change_type_name'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
@@ -1301,8 +1301,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ApiChangeTypeName { get; set; }
+		/// </summary>
+		public string ApiChangeTypeName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type_id'.</para>
@@ -1314,17 +1314,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeTypeID { get; set; }
+		/// </summary>
+		public int ApiChangeTypeID { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_changes'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ApiChangeCM : ICatalogModel<ApiChangePoco>
-    {
+	/// </summary>
+	public class ApiChangeCM : ICatalogModel<ApiChangePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'api_change_thetvdbid'.</para>
 		/// <para>Table name: 'api_changes'.</para>
@@ -1333,8 +1333,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeThetvdbid { get; set; }
+		/// </summary>
+		public int ApiChangeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_fail_count'.</para>
@@ -1344,8 +1344,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeFailCount { get; set; }
+		/// </summary>
+		public int ApiChangeFailCount { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_created_date'.</para>
@@ -1355,8 +1355,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime ApiChangeCreatedDate { get; set; }
+		/// </summary>
+		public DateTime ApiChangeCreatedDate { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
@@ -1368,8 +1368,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeID { get; set; }
+		/// </summary>
+		public int ApiChangeID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_last_failed_time'.</para>
@@ -1379,8 +1379,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? ApiChangeLastFailedTime { get; set; }
+		/// </summary>
+		public DateTime? ApiChangeLastFailedTime { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_thetvdb_last_updated'.</para>
@@ -1390,8 +1390,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime ApiChangeThetvdbLastUpdated { get; set; }
+		/// </summary>
+		public DateTime ApiChangeThetvdbLastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_attached_series_id'.</para>
@@ -1401,8 +1401,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? ApiChangeAttachedSeriesID { get; set; }
+		/// </summary>
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
@@ -1414,17 +1414,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeType { get; set; }
+		/// </summary>
+		public int ApiChangeType { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_responses'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ApiResponseCM : ICatalogModel<ApiResponsePoco>
-    {
+	/// </summary>
+	public class ApiResponseCM : ICatalogModel<ApiResponsePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
@@ -1435,8 +1435,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? ApiResponseEpisodeThetvdbid { get; set; }
+		/// </summary>
+		public int? ApiResponseEpisodeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
@@ -1448,8 +1448,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? ApiResponseShowThetvdbid { get; set; }
+		/// </summary>
+		public int? ApiResponseShowThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_body'.</para>
@@ -1459,8 +1459,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-        /// </summary>
-        public string ApiResponseBody { get; set; }
+		/// </summary>
+		public string ApiResponseBody { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
@@ -1472,8 +1472,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiResponseID { get; set; }
+		/// </summary>
+		public int ApiResponseID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
@@ -1483,17 +1483,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime ApiResponseLastUpdated { get; set; }
+		/// </summary>
+		public DateTime ApiResponseLastUpdated { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'episodes'.</para>
+	/// <summary>
+	/// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class EpisodeCM : ICatalogModel<EpisodePoco>
-    {
+	/// </summary>
+	public class EpisodeCM : ICatalogModel<EpisodePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'episode_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
@@ -1504,8 +1504,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int EpisodeID { get; set; }
+		/// </summary>
+		public int EpisodeID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_description'.</para>
@@ -1515,8 +1515,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
-        /// </summary>
-        public string EpisodeDescription { get; set; }
+		/// </summary>
+		public string EpisodeDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_number'.</para>
@@ -1526,8 +1526,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int EpisodeNumber { get; set; }
+		/// </summary>
+		public int EpisodeNumber { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_title'.</para>
@@ -1537,8 +1537,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string EpisodeTitle { get; set; }
+		/// </summary>
+		public string EpisodeTitle { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'first_aired'.</para>
@@ -1548,8 +1548,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? FirstAired { get; set; }
+		/// </summary>
+		public DateTime? FirstAired { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'imdbid'.</para>
@@ -1559,8 +1559,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Imdbid { get; set; }
+		/// </summary>
+		public string Imdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
@@ -1570,8 +1570,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime LastUpdated { get; set; }
+		/// </summary>
+		public DateTime LastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'season_number'.</para>
@@ -1581,8 +1581,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int SeasonNumber { get; set; }
+		/// </summary>
+		public int SeasonNumber { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -1594,8 +1594,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
@@ -1605,17 +1605,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int Thetvdbid { get; set; }
+		/// </summary>
+		public int Thetvdbid { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class GenreCM : ICatalogModel<GenrePoco>
-    {
+	/// </summary>
+	public class GenreCM : ICatalogModel<GenrePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'genres'.</para>
@@ -1626,8 +1626,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int GenreID { get; set; }
+		/// </summary>
+		public int GenreID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'genre_name'.</para>
@@ -1637,17 +1637,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string GenreName { get; set; }
+		/// </summary>
+		public string GenreName { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'networks'.</para>
+	/// <summary>
+	/// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class NetworkCM : ICatalogModel<NetworkPoco>
-    {
+	/// </summary>
+	public class NetworkCM : ICatalogModel<NetworkPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'network_id'.</para>
 		/// <para>Table name: 'networks'.</para>
@@ -1658,8 +1658,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int NetworkID { get; set; }
+		/// </summary>
+		public int NetworkID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'network_name'.</para>
@@ -1669,17 +1669,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string NetworkName { get; set; }
+		/// </summary>
+		public string NetworkName { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'profiles'.</para>
+	/// <summary>
+	/// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ProfileCM : ICatalogModel<ProfilePoco>
-    {
+	/// </summary>
+	public class ProfileCM : ICatalogModel<ProfilePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'profiles'.</para>
@@ -1690,8 +1690,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ProfileID { get; set; }
+		/// </summary>
+		public int ProfileID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'profile_name'.</para>
@@ -1701,17 +1701,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ProfileName { get; set; }
+		/// </summary>
+		public string ProfileName { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'roles'.</para>
+	/// <summary>
+	/// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class RoleCM : ICatalogModel<RolePoco>
-    {
+	/// </summary>
+	public class RoleCM : ICatalogModel<RolePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'role_id'.</para>
 		/// <para>Table name: 'roles'.</para>
@@ -1722,8 +1722,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int RoleID { get; set; }
+		/// </summary>
+		public int RoleID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
@@ -1735,8 +1735,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ActorID { get; set; }
+		/// </summary>
+		public int ActorID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'role_name'.</para>
@@ -1746,8 +1746,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string RoleName { get; set; }
+		/// </summary>
+		public string RoleName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -1759,17 +1759,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'settings'.</para>
+	/// <summary>
+	/// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class SettingCM : ICatalogModel<SettingPoco>
-    {
+	/// </summary>
+	public class SettingCM : ICatalogModel<SettingPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'setting_id'.</para>
 		/// <para>Table name: 'settings'.</para>
@@ -1780,8 +1780,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int SettingID { get; set; }
+		/// </summary>
+		public int SettingID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'setting_value'.</para>
@@ -1791,8 +1791,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string SettingValue { get; set; }
+		/// </summary>
+		public string SettingValue { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'setting_name'.</para>
@@ -1802,17 +1802,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string SettingName { get; set; }
+		/// </summary>
+		public string SettingName { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'shows'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ShowCM : ICatalogModel<ShowPoco>
-    {
+	/// </summary>
+	public class ShowCM : ICatalogModel<ShowPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'shows'.</para>
@@ -1823,8 +1823,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'air_day'.</para>
@@ -1834,8 +1834,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? AirDay { get; set; }
+		/// </summary>
+		public int? AirDay { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'air_time'.</para>
@@ -1845,8 +1845,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? AirTime { get; set; }
+		/// </summary>
+		public DateTime? AirTime { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'first_aired'.</para>
@@ -1856,8 +1856,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? FirstAired { get; set; }
+		/// </summary>
+		public DateTime? FirstAired { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'imdbid'.</para>
@@ -1867,8 +1867,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Imdbid { get; set; }
+		/// </summary>
+		public string Imdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
@@ -1878,8 +1878,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime LastUpdated { get; set; }
+		/// </summary>
+		public DateTime LastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'network_id'.</para>
@@ -1891,8 +1891,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int NetworkID { get; set; }
+		/// </summary>
+		public int NetworkID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_banner'.</para>
@@ -1902,8 +1902,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ShowBanner { get; set; }
+		/// </summary>
+		public string ShowBanner { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_description'.</para>
@@ -1913,8 +1913,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
-        /// </summary>
-        public string ShowDescription { get; set; }
+		/// </summary>
+		public string ShowDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_name'.</para>
@@ -1924,8 +1924,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ShowName { get; set; }
+		/// </summary>
+		public string ShowName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_status'.</para>
@@ -1935,8 +1935,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowStatus { get; set; }
+		/// </summary>
+		public int ShowStatus { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
@@ -1946,17 +1946,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int Thetvdbid { get; set; }
+		/// </summary>
+		public int Thetvdbid { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'shows_genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ShowGenreCM : ICatalogModel<ShowGenrePoco>
-    {
+	/// </summary>
+	public class ShowGenreCM : ICatalogModel<ShowGenrePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'shows_genres_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
@@ -1967,8 +1967,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowsGenresID { get; set; }
+		/// </summary>
+		public int ShowsGenresID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -1980,8 +1980,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'genre_id'.</para>
@@ -1993,17 +1993,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int GenreID { get; set; }
+		/// </summary>
+		public int GenreID { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'subscriptions'.</para>
+	/// <summary>
+	/// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class SubscriptionCM : ICatalogModel<SubscriptionPoco>
-    {
+	/// </summary>
+	public class SubscriptionCM : ICatalogModel<SubscriptionPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'subscription_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
@@ -2014,8 +2014,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int SubscriptionID { get; set; }
+		/// </summary>
+		public int SubscriptionID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -2027,8 +2027,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ProfileID { get; set; }
+		/// </summary>
+		public int ProfileID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -2040,17 +2040,17 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'users'.</para>
+	/// <summary>
+	/// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class UserCM : ICatalogModel<UserPoco>
-    {
+	/// </summary>
+	public class UserCM : ICatalogModel<UserPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'user_id'.</para>
 		/// <para>Table name: 'users'.</para>
@@ -2061,8 +2061,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int UserID { get; set; }
+		/// </summary>
+		public int UserID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'is_admin'.</para>
@@ -2072,8 +2072,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Boolean'.</para>
 		/// <para>CLR type: 'bool'.</para>
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
-        /// </summary>
-        public bool IsAdmin { get; set; }
+		/// </summary>
+		public bool IsAdmin { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'username'.</para>
@@ -2083,8 +2083,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Username { get; set; }
+		/// </summary>
+		public string Username { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'password'.</para>
@@ -2094,8 +2094,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Password { get; set; }
+		/// </summary>
+		public string Password { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -2105,35 +2105,35 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ProfileID { get; set; }
+		/// </summary>
+		public int ProfileID { get; set; }
 
-    }
+	}
 
 
-    /// <summary>
-    /// <para>Table name: 'actors'.</para>
+	/// <summary>
+	/// <para>Table name: 'actors'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ActorFM : IFilterModel<ActorPoco>
-    {
+	/// </summary>
+	public class ActorFM : IFilterModel<ActorPoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID { get; set; }
+		public int? ActorID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_NotEqual { get; set; }
+		public int? ActorID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_LessThan { get; set; }
+		public int? ActorID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_LessThanOrEqual { get; set; }
+		public int? ActorID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_GreaterThan { get; set; }
+		public int? ActorID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_GreaterThanOrEqual { get; set; }
+		public int? ActorID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ActorID", NpgsqlDbType.Integer, "actor_id")]
 		public int[] ActorID_IsIn { get; set; }
@@ -2142,28 +2142,28 @@ namespace TrackTv.Data
 		public int[] ActorID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage { get; set; }
+		public string ActorImage { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_NotEqual { get; set; }
+		public string ActorImage_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_StartsWith { get; set; }
+		public string ActorImage_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_DoesNotStartWith { get; set; }
+		public string ActorImage_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_EndsWith { get; set; }
+		public string ActorImage_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_DoesNotEndWith { get; set; }
+		public string ActorImage_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_Contains { get; set; }
+		public string ActorImage_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
-        public string ActorImage_DoesNotContain { get; set; }
+		public string ActorImage_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ActorImage", NpgsqlDbType.Varchar, "actor_image")]
 		public bool? ActorImage_IsNull { get; set; }
@@ -2178,28 +2178,28 @@ namespace TrackTv.Data
 		public string[] ActorImage_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName { get; set; }
+		public string ActorName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_NotEqual { get; set; }
+		public string ActorName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_StartsWith { get; set; }
+		public string ActorName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_DoesNotStartWith { get; set; }
+		public string ActorName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_EndsWith { get; set; }
+		public string ActorName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_DoesNotEndWith { get; set; }
+		public string ActorName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_Contains { get; set; }
+		public string ActorName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
-        public string ActorName_DoesNotContain { get; set; }
+		public string ActorName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ActorName", NpgsqlDbType.Varchar, "actor_name")]
 		public bool? ActorName_IsNull { get; set; }
@@ -2214,10 +2214,10 @@ namespace TrackTv.Data
 		public string[] ActorName_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated { get; set; }
+		public DateTime? LastUpdated { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_NotEqual { get; set; }
+		public DateTime? LastUpdated_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
 		public bool? LastUpdated_IsNull { get; set; }
@@ -2232,22 +2232,22 @@ namespace TrackTv.Data
 		public DateTime[] LastUpdated_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid { get; set; }
+		public int? Thetvdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_NotEqual { get; set; }
+		public int? Thetvdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_LessThan { get; set; }
+		public int? Thetvdbid_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_LessThanOrEqual { get; set; }
+		public int? Thetvdbid_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_GreaterThan { get; set; }
+		public int? Thetvdbid_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_GreaterThanOrEqual { get; set; }
+		public int? Thetvdbid_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
 		public int[] Thetvdbid_IsIn { get; set; }
@@ -2255,37 +2255,37 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_change_types'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ApiChangeTypeFM : IFilterModel<ApiChangeTypePoco>
-    {
+	/// </summary>
+	public class ApiChangeTypeFM : IFilterModel<ApiChangeTypePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName { get; set; }
+		public string ApiChangeTypeName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_NotEqual { get; set; }
+		public string ApiChangeTypeName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_StartsWith { get; set; }
+		public string ApiChangeTypeName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_DoesNotStartWith { get; set; }
+		public string ApiChangeTypeName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_EndsWith { get; set; }
+		public string ApiChangeTypeName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_DoesNotEndWith { get; set; }
+		public string ApiChangeTypeName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_Contains { get; set; }
+		public string ApiChangeTypeName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
-        public string ApiChangeTypeName_DoesNotContain { get; set; }
+		public string ApiChangeTypeName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
 		public string[] ApiChangeTypeName_IsIn { get; set; }
@@ -2294,22 +2294,22 @@ namespace TrackTv.Data
 		public string[] ApiChangeTypeName_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-        public int? ApiChangeTypeID { get; set; }
+		public int? ApiChangeTypeID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-        public int? ApiChangeTypeID_NotEqual { get; set; }
+		public int? ApiChangeTypeID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-        public int? ApiChangeTypeID_LessThan { get; set; }
+		public int? ApiChangeTypeID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-        public int? ApiChangeTypeID_LessThanOrEqual { get; set; }
+		public int? ApiChangeTypeID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-        public int? ApiChangeTypeID_GreaterThan { get; set; }
+		public int? ApiChangeTypeID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-        public int? ApiChangeTypeID_GreaterThanOrEqual { get; set; }
+		public int? ApiChangeTypeID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
 		public int[] ApiChangeTypeID_IsIn { get; set; }
@@ -2317,31 +2317,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
 		public int[] ApiChangeTypeID_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_changes'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ApiChangeFM : IFilterModel<ApiChangePoco>
-    {
+	/// </summary>
+	public class ApiChangeFM : IFilterModel<ApiChangePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-        public int? ApiChangeThetvdbid { get; set; }
+		public int? ApiChangeThetvdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-        public int? ApiChangeThetvdbid_NotEqual { get; set; }
+		public int? ApiChangeThetvdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-        public int? ApiChangeThetvdbid_LessThan { get; set; }
+		public int? ApiChangeThetvdbid_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-        public int? ApiChangeThetvdbid_LessThanOrEqual { get; set; }
+		public int? ApiChangeThetvdbid_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-        public int? ApiChangeThetvdbid_GreaterThan { get; set; }
+		public int? ApiChangeThetvdbid_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-        public int? ApiChangeThetvdbid_GreaterThanOrEqual { get; set; }
+		public int? ApiChangeThetvdbid_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
 		public int[] ApiChangeThetvdbid_IsIn { get; set; }
@@ -2350,22 +2350,22 @@ namespace TrackTv.Data
 		public int[] ApiChangeThetvdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-        public int? ApiChangeFailCount { get; set; }
+		public int? ApiChangeFailCount { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-        public int? ApiChangeFailCount_NotEqual { get; set; }
+		public int? ApiChangeFailCount_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-        public int? ApiChangeFailCount_LessThan { get; set; }
+		public int? ApiChangeFailCount_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-        public int? ApiChangeFailCount_LessThanOrEqual { get; set; }
+		public int? ApiChangeFailCount_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-        public int? ApiChangeFailCount_GreaterThan { get; set; }
+		public int? ApiChangeFailCount_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-        public int? ApiChangeFailCount_GreaterThanOrEqual { get; set; }
+		public int? ApiChangeFailCount_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
 		public int[] ApiChangeFailCount_IsIn { get; set; }
@@ -2374,22 +2374,22 @@ namespace TrackTv.Data
 		public int[] ApiChangeFailCount_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
-        public DateTime? ApiChangeCreatedDate { get; set; }
+		public DateTime? ApiChangeCreatedDate { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
-        public DateTime? ApiChangeCreatedDate_NotEqual { get; set; }
+		public DateTime? ApiChangeCreatedDate_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
-        public DateTime? ApiChangeCreatedDate_LessThan { get; set; }
+		public DateTime? ApiChangeCreatedDate_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
-        public DateTime? ApiChangeCreatedDate_LessThanOrEqual { get; set; }
+		public DateTime? ApiChangeCreatedDate_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
-        public DateTime? ApiChangeCreatedDate_GreaterThan { get; set; }
+		public DateTime? ApiChangeCreatedDate_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
-        public DateTime? ApiChangeCreatedDate_GreaterThanOrEqual { get; set; }
+		public DateTime? ApiChangeCreatedDate_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
 		public DateTime[] ApiChangeCreatedDate_IsIn { get; set; }
@@ -2398,22 +2398,22 @@ namespace TrackTv.Data
 		public DateTime[] ApiChangeCreatedDate_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
-        public int? ApiChangeID { get; set; }
+		public int? ApiChangeID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
-        public int? ApiChangeID_NotEqual { get; set; }
+		public int? ApiChangeID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
-        public int? ApiChangeID_LessThan { get; set; }
+		public int? ApiChangeID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
-        public int? ApiChangeID_LessThanOrEqual { get; set; }
+		public int? ApiChangeID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
-        public int? ApiChangeID_GreaterThan { get; set; }
+		public int? ApiChangeID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
-        public int? ApiChangeID_GreaterThanOrEqual { get; set; }
+		public int? ApiChangeID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
 		public int[] ApiChangeID_IsIn { get; set; }
@@ -2422,10 +2422,10 @@ namespace TrackTv.Data
 		public int[] ApiChangeID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp, "api_change_last_failed_time")]
-        public DateTime? ApiChangeLastFailedTime { get; set; }
+		public DateTime? ApiChangeLastFailedTime { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp, "api_change_last_failed_time")]
-        public DateTime? ApiChangeLastFailedTime_NotEqual { get; set; }
+		public DateTime? ApiChangeLastFailedTime_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ApiChangeLastFailedTime", NpgsqlDbType.Timestamp, "api_change_last_failed_time")]
 		public bool? ApiChangeLastFailedTime_IsNull { get; set; }
@@ -2440,22 +2440,22 @@ namespace TrackTv.Data
 		public DateTime[] ApiChangeLastFailedTime_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
-        public DateTime? ApiChangeThetvdbLastUpdated { get; set; }
+		public DateTime? ApiChangeThetvdbLastUpdated { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
-        public DateTime? ApiChangeThetvdbLastUpdated_NotEqual { get; set; }
+		public DateTime? ApiChangeThetvdbLastUpdated_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
-        public DateTime? ApiChangeThetvdbLastUpdated_LessThan { get; set; }
+		public DateTime? ApiChangeThetvdbLastUpdated_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
-        public DateTime? ApiChangeThetvdbLastUpdated_LessThanOrEqual { get; set; }
+		public DateTime? ApiChangeThetvdbLastUpdated_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
-        public DateTime? ApiChangeThetvdbLastUpdated_GreaterThan { get; set; }
+		public DateTime? ApiChangeThetvdbLastUpdated_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
-        public DateTime? ApiChangeThetvdbLastUpdated_GreaterThanOrEqual { get; set; }
+		public DateTime? ApiChangeThetvdbLastUpdated_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
 		public DateTime[] ApiChangeThetvdbLastUpdated_IsIn { get; set; }
@@ -2464,10 +2464,10 @@ namespace TrackTv.Data
 		public DateTime[] ApiChangeThetvdbLastUpdated_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-        public int? ApiChangeAttachedSeriesID { get; set; }
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-        public int? ApiChangeAttachedSeriesID_NotEqual { get; set; }
+		public int? ApiChangeAttachedSeriesID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
 		public bool? ApiChangeAttachedSeriesID_IsNull { get; set; }
@@ -2482,22 +2482,22 @@ namespace TrackTv.Data
 		public int[] ApiChangeAttachedSeriesID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
-        public int? ApiChangeType { get; set; }
+		public int? ApiChangeType { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
-        public int? ApiChangeType_NotEqual { get; set; }
+		public int? ApiChangeType_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
-        public int? ApiChangeType_LessThan { get; set; }
+		public int? ApiChangeType_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
-        public int? ApiChangeType_LessThanOrEqual { get; set; }
+		public int? ApiChangeType_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
-        public int? ApiChangeType_GreaterThan { get; set; }
+		public int? ApiChangeType_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
-        public int? ApiChangeType_GreaterThanOrEqual { get; set; }
+		public int? ApiChangeType_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
 		public int[] ApiChangeType_IsIn { get; set; }
@@ -2505,19 +2505,19 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
 		public int[] ApiChangeType_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'api_responses'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ApiResponseFM : IFilterModel<ApiResponsePoco>
-    {
+	/// </summary>
+	public class ApiResponseFM : IFilterModel<ApiResponsePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-        public int? ApiResponseEpisodeThetvdbid { get; set; }
+		public int? ApiResponseEpisodeThetvdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-        public int? ApiResponseEpisodeThetvdbid_NotEqual { get; set; }
+		public int? ApiResponseEpisodeThetvdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
 		public bool? ApiResponseEpisodeThetvdbid_IsNull { get; set; }
@@ -2532,10 +2532,10 @@ namespace TrackTv.Data
 		public int[] ApiResponseEpisodeThetvdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-        public int? ApiResponseShowThetvdbid { get; set; }
+		public int? ApiResponseShowThetvdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-        public int? ApiResponseShowThetvdbid_NotEqual { get; set; }
+		public int? ApiResponseShowThetvdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
 		public bool? ApiResponseShowThetvdbid_IsNull { get; set; }
@@ -2550,28 +2550,28 @@ namespace TrackTv.Data
 		public int[] ApiResponseShowThetvdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody { get; set; }
+		public string ApiResponseBody { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_NotEqual { get; set; }
+		public string ApiResponseBody_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_StartsWith { get; set; }
+		public string ApiResponseBody_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_DoesNotStartWith { get; set; }
+		public string ApiResponseBody_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_EndsWith { get; set; }
+		public string ApiResponseBody_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_DoesNotEndWith { get; set; }
+		public string ApiResponseBody_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_Contains { get; set; }
+		public string ApiResponseBody_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
-        public string ApiResponseBody_DoesNotContain { get; set; }
+		public string ApiResponseBody_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
 		public string[] ApiResponseBody_IsIn { get; set; }
@@ -2580,22 +2580,22 @@ namespace TrackTv.Data
 		public string[] ApiResponseBody_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
-        public int? ApiResponseID { get; set; }
+		public int? ApiResponseID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
-        public int? ApiResponseID_NotEqual { get; set; }
+		public int? ApiResponseID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
-        public int? ApiResponseID_LessThan { get; set; }
+		public int? ApiResponseID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
-        public int? ApiResponseID_LessThanOrEqual { get; set; }
+		public int? ApiResponseID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
-        public int? ApiResponseID_GreaterThan { get; set; }
+		public int? ApiResponseID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
-        public int? ApiResponseID_GreaterThanOrEqual { get; set; }
+		public int? ApiResponseID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
 		public int[] ApiResponseID_IsIn { get; set; }
@@ -2604,22 +2604,22 @@ namespace TrackTv.Data
 		public int[] ApiResponseID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
-        public DateTime? ApiResponseLastUpdated { get; set; }
+		public DateTime? ApiResponseLastUpdated { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
-        public DateTime? ApiResponseLastUpdated_NotEqual { get; set; }
+		public DateTime? ApiResponseLastUpdated_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
-        public DateTime? ApiResponseLastUpdated_LessThan { get; set; }
+		public DateTime? ApiResponseLastUpdated_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
-        public DateTime? ApiResponseLastUpdated_LessThanOrEqual { get; set; }
+		public DateTime? ApiResponseLastUpdated_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
-        public DateTime? ApiResponseLastUpdated_GreaterThan { get; set; }
+		public DateTime? ApiResponseLastUpdated_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
-        public DateTime? ApiResponseLastUpdated_GreaterThanOrEqual { get; set; }
+		public DateTime? ApiResponseLastUpdated_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
 		public DateTime[] ApiResponseLastUpdated_IsIn { get; set; }
@@ -2627,31 +2627,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
 		public DateTime[] ApiResponseLastUpdated_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'episodes'.</para>
+	/// <summary>
+	/// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class EpisodeFM : IFilterModel<EpisodePoco>
-    {
+	/// </summary>
+	public class EpisodeFM : IFilterModel<EpisodePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-        public int? EpisodeID { get; set; }
+		public int? EpisodeID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-        public int? EpisodeID_NotEqual { get; set; }
+		public int? EpisodeID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-        public int? EpisodeID_LessThan { get; set; }
+		public int? EpisodeID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-        public int? EpisodeID_LessThanOrEqual { get; set; }
+		public int? EpisodeID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-        public int? EpisodeID_GreaterThan { get; set; }
+		public int? EpisodeID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-        public int? EpisodeID_GreaterThanOrEqual { get; set; }
+		public int? EpisodeID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
 		public int[] EpisodeID_IsIn { get; set; }
@@ -2660,28 +2660,28 @@ namespace TrackTv.Data
 		public int[] EpisodeID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription { get; set; }
+		public string EpisodeDescription { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_NotEqual { get; set; }
+		public string EpisodeDescription_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_StartsWith { get; set; }
+		public string EpisodeDescription_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_DoesNotStartWith { get; set; }
+		public string EpisodeDescription_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_EndsWith { get; set; }
+		public string EpisodeDescription_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_DoesNotEndWith { get; set; }
+		public string EpisodeDescription_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_Contains { get; set; }
+		public string EpisodeDescription_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
-        public string EpisodeDescription_DoesNotContain { get; set; }
+		public string EpisodeDescription_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
 		public bool? EpisodeDescription_IsNull { get; set; }
@@ -2696,22 +2696,22 @@ namespace TrackTv.Data
 		public string[] EpisodeDescription_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
-        public int? EpisodeNumber { get; set; }
+		public int? EpisodeNumber { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
-        public int? EpisodeNumber_NotEqual { get; set; }
+		public int? EpisodeNumber_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
-        public int? EpisodeNumber_LessThan { get; set; }
+		public int? EpisodeNumber_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
-        public int? EpisodeNumber_LessThanOrEqual { get; set; }
+		public int? EpisodeNumber_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
-        public int? EpisodeNumber_GreaterThan { get; set; }
+		public int? EpisodeNumber_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
-        public int? EpisodeNumber_GreaterThanOrEqual { get; set; }
+		public int? EpisodeNumber_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
 		public int[] EpisodeNumber_IsIn { get; set; }
@@ -2720,28 +2720,28 @@ namespace TrackTv.Data
 		public int[] EpisodeNumber_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle { get; set; }
+		public string EpisodeTitle { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_NotEqual { get; set; }
+		public string EpisodeTitle_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_StartsWith { get; set; }
+		public string EpisodeTitle_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_DoesNotStartWith { get; set; }
+		public string EpisodeTitle_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_EndsWith { get; set; }
+		public string EpisodeTitle_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_DoesNotEndWith { get; set; }
+		public string EpisodeTitle_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_Contains { get; set; }
+		public string EpisodeTitle_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
-        public string EpisodeTitle_DoesNotContain { get; set; }
+		public string EpisodeTitle_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "EpisodeTitle", NpgsqlDbType.Varchar, "episode_title")]
 		public bool? EpisodeTitle_IsNull { get; set; }
@@ -2756,10 +2756,10 @@ namespace TrackTv.Data
 		public string[] EpisodeTitle_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "FirstAired", NpgsqlDbType.Timestamp, "first_aired")]
-        public DateTime? FirstAired { get; set; }
+		public DateTime? FirstAired { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "FirstAired", NpgsqlDbType.Timestamp, "first_aired")]
-        public DateTime? FirstAired_NotEqual { get; set; }
+		public DateTime? FirstAired_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "FirstAired", NpgsqlDbType.Timestamp, "first_aired")]
 		public bool? FirstAired_IsNull { get; set; }
@@ -2774,28 +2774,28 @@ namespace TrackTv.Data
 		public DateTime[] FirstAired_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid { get; set; }
+		public string Imdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_NotEqual { get; set; }
+		public string Imdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_StartsWith { get; set; }
+		public string Imdbid_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_DoesNotStartWith { get; set; }
+		public string Imdbid_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_EndsWith { get; set; }
+		public string Imdbid_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_DoesNotEndWith { get; set; }
+		public string Imdbid_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_Contains { get; set; }
+		public string Imdbid_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_DoesNotContain { get; set; }
+		public string Imdbid_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
 		public bool? Imdbid_IsNull { get; set; }
@@ -2810,22 +2810,22 @@ namespace TrackTv.Data
 		public string[] Imdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated { get; set; }
+		public DateTime? LastUpdated { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_NotEqual { get; set; }
+		public DateTime? LastUpdated_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_LessThan { get; set; }
+		public DateTime? LastUpdated_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_LessThanOrEqual { get; set; }
+		public DateTime? LastUpdated_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_GreaterThan { get; set; }
+		public DateTime? LastUpdated_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_GreaterThanOrEqual { get; set; }
+		public DateTime? LastUpdated_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
 		public DateTime[] LastUpdated_IsIn { get; set; }
@@ -2834,22 +2834,22 @@ namespace TrackTv.Data
 		public DateTime[] LastUpdated_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
-        public int? SeasonNumber { get; set; }
+		public int? SeasonNumber { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
-        public int? SeasonNumber_NotEqual { get; set; }
+		public int? SeasonNumber_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
-        public int? SeasonNumber_LessThan { get; set; }
+		public int? SeasonNumber_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
-        public int? SeasonNumber_LessThanOrEqual { get; set; }
+		public int? SeasonNumber_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
-        public int? SeasonNumber_GreaterThan { get; set; }
+		public int? SeasonNumber_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
-        public int? SeasonNumber_GreaterThanOrEqual { get; set; }
+		public int? SeasonNumber_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "SeasonNumber", NpgsqlDbType.Integer, "season_number")]
 		public int[] SeasonNumber_IsIn { get; set; }
@@ -2858,22 +2858,22 @@ namespace TrackTv.Data
 		public int[] SeasonNumber_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID { get; set; }
+		public int? ShowID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_NotEqual { get; set; }
+		public int? ShowID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThan { get; set; }
+		public int? ShowID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThanOrEqual { get; set; }
+		public int? ShowID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThan { get; set; }
+		public int? ShowID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThanOrEqual { get; set; }
+		public int? ShowID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsIn { get; set; }
@@ -2882,22 +2882,22 @@ namespace TrackTv.Data
 		public int[] ShowID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid { get; set; }
+		public int? Thetvdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_NotEqual { get; set; }
+		public int? Thetvdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_LessThan { get; set; }
+		public int? Thetvdbid_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_LessThanOrEqual { get; set; }
+		public int? Thetvdbid_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_GreaterThan { get; set; }
+		public int? Thetvdbid_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_GreaterThanOrEqual { get; set; }
+		public int? Thetvdbid_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
 		public int[] Thetvdbid_IsIn { get; set; }
@@ -2905,31 +2905,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class GenreFM : IFilterModel<GenrePoco>
-    {
+	/// </summary>
+	public class GenreFM : IFilterModel<GenrePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID { get; set; }
+		public int? GenreID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_NotEqual { get; set; }
+		public int? GenreID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_LessThan { get; set; }
+		public int? GenreID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_LessThanOrEqual { get; set; }
+		public int? GenreID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_GreaterThan { get; set; }
+		public int? GenreID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_GreaterThanOrEqual { get; set; }
+		public int? GenreID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
 		public int[] GenreID_IsIn { get; set; }
@@ -2938,28 +2938,28 @@ namespace TrackTv.Data
 		public int[] GenreID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName { get; set; }
+		public string GenreName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_NotEqual { get; set; }
+		public string GenreName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_StartsWith { get; set; }
+		public string GenreName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_DoesNotStartWith { get; set; }
+		public string GenreName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_EndsWith { get; set; }
+		public string GenreName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_DoesNotEndWith { get; set; }
+		public string GenreName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_Contains { get; set; }
+		public string GenreName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
-        public string GenreName_DoesNotContain { get; set; }
+		public string GenreName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
 		public string[] GenreName_IsIn { get; set; }
@@ -2967,31 +2967,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "GenreName", NpgsqlDbType.Varchar, "genre_name")]
 		public string[] GenreName_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'networks'.</para>
+	/// <summary>
+	/// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class NetworkFM : IFilterModel<NetworkPoco>
-    {
+	/// </summary>
+	public class NetworkFM : IFilterModel<NetworkPoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID { get; set; }
+		public int? NetworkID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_NotEqual { get; set; }
+		public int? NetworkID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_LessThan { get; set; }
+		public int? NetworkID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_LessThanOrEqual { get; set; }
+		public int? NetworkID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_GreaterThan { get; set; }
+		public int? NetworkID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_GreaterThanOrEqual { get; set; }
+		public int? NetworkID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "NetworkID", NpgsqlDbType.Integer, "network_id")]
 		public int[] NetworkID_IsIn { get; set; }
@@ -3000,28 +3000,28 @@ namespace TrackTv.Data
 		public int[] NetworkID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName { get; set; }
+		public string NetworkName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_NotEqual { get; set; }
+		public string NetworkName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_StartsWith { get; set; }
+		public string NetworkName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_DoesNotStartWith { get; set; }
+		public string NetworkName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_EndsWith { get; set; }
+		public string NetworkName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_DoesNotEndWith { get; set; }
+		public string NetworkName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_Contains { get; set; }
+		public string NetworkName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
-        public string NetworkName_DoesNotContain { get; set; }
+		public string NetworkName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
 		public string[] NetworkName_IsIn { get; set; }
@@ -3029,31 +3029,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "NetworkName", NpgsqlDbType.Varchar, "network_name")]
 		public string[] NetworkName_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'profiles'.</para>
+	/// <summary>
+	/// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ProfileFM : IFilterModel<ProfilePoco>
-    {
+	/// </summary>
+	public class ProfileFM : IFilterModel<ProfilePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID { get; set; }
+		public int? ProfileID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_NotEqual { get; set; }
+		public int? ProfileID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_LessThan { get; set; }
+		public int? ProfileID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_LessThanOrEqual { get; set; }
+		public int? ProfileID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_GreaterThan { get; set; }
+		public int? ProfileID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_GreaterThanOrEqual { get; set; }
+		public int? ProfileID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
 		public int[] ProfileID_IsIn { get; set; }
@@ -3062,28 +3062,28 @@ namespace TrackTv.Data
 		public int[] ProfileID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName { get; set; }
+		public string ProfileName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_NotEqual { get; set; }
+		public string ProfileName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_StartsWith { get; set; }
+		public string ProfileName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_DoesNotStartWith { get; set; }
+		public string ProfileName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_EndsWith { get; set; }
+		public string ProfileName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_DoesNotEndWith { get; set; }
+		public string ProfileName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_Contains { get; set; }
+		public string ProfileName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
-        public string ProfileName_DoesNotContain { get; set; }
+		public string ProfileName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
 		public string[] ProfileName_IsIn { get; set; }
@@ -3091,31 +3091,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileName", NpgsqlDbType.Varchar, "profile_name")]
 		public string[] ProfileName_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'roles'.</para>
+	/// <summary>
+	/// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class RoleFM : IFilterModel<RolePoco>
-    {
+	/// </summary>
+	public class RoleFM : IFilterModel<RolePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "RoleID", NpgsqlDbType.Integer, "role_id")]
-        public int? RoleID { get; set; }
+		public int? RoleID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
-        public int? RoleID_NotEqual { get; set; }
+		public int? RoleID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "RoleID", NpgsqlDbType.Integer, "role_id")]
-        public int? RoleID_LessThan { get; set; }
+		public int? RoleID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
-        public int? RoleID_LessThanOrEqual { get; set; }
+		public int? RoleID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "RoleID", NpgsqlDbType.Integer, "role_id")]
-        public int? RoleID_GreaterThan { get; set; }
+		public int? RoleID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
-        public int? RoleID_GreaterThanOrEqual { get; set; }
+		public int? RoleID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "RoleID", NpgsqlDbType.Integer, "role_id")]
 		public int[] RoleID_IsIn { get; set; }
@@ -3124,22 +3124,22 @@ namespace TrackTv.Data
 		public int[] RoleID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID { get; set; }
+		public int? ActorID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_NotEqual { get; set; }
+		public int? ActorID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_LessThan { get; set; }
+		public int? ActorID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_LessThanOrEqual { get; set; }
+		public int? ActorID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_GreaterThan { get; set; }
+		public int? ActorID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ActorID", NpgsqlDbType.Integer, "actor_id")]
-        public int? ActorID_GreaterThanOrEqual { get; set; }
+		public int? ActorID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ActorID", NpgsqlDbType.Integer, "actor_id")]
 		public int[] ActorID_IsIn { get; set; }
@@ -3148,28 +3148,28 @@ namespace TrackTv.Data
 		public int[] ActorID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName { get; set; }
+		public string RoleName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_NotEqual { get; set; }
+		public string RoleName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_StartsWith { get; set; }
+		public string RoleName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_DoesNotStartWith { get; set; }
+		public string RoleName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_EndsWith { get; set; }
+		public string RoleName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_DoesNotEndWith { get; set; }
+		public string RoleName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_Contains { get; set; }
+		public string RoleName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "RoleName", NpgsqlDbType.Varchar, "role_name")]
-        public string RoleName_DoesNotContain { get; set; }
+		public string RoleName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "RoleName", NpgsqlDbType.Varchar, "role_name")]
 		public bool? RoleName_IsNull { get; set; }
@@ -3184,22 +3184,22 @@ namespace TrackTv.Data
 		public string[] RoleName_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID { get; set; }
+		public int? ShowID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_NotEqual { get; set; }
+		public int? ShowID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThan { get; set; }
+		public int? ShowID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThanOrEqual { get; set; }
+		public int? ShowID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThan { get; set; }
+		public int? ShowID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThanOrEqual { get; set; }
+		public int? ShowID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsIn { get; set; }
@@ -3207,31 +3207,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'settings'.</para>
+	/// <summary>
+	/// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class SettingFM : IFilterModel<SettingPoco>
-    {
+	/// </summary>
+	public class SettingFM : IFilterModel<SettingPoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "SettingID", NpgsqlDbType.Integer, "setting_id")]
-        public int? SettingID { get; set; }
+		public int? SettingID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "SettingID", NpgsqlDbType.Integer, "setting_id")]
-        public int? SettingID_NotEqual { get; set; }
+		public int? SettingID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "SettingID", NpgsqlDbType.Integer, "setting_id")]
-        public int? SettingID_LessThan { get; set; }
+		public int? SettingID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SettingID", NpgsqlDbType.Integer, "setting_id")]
-        public int? SettingID_LessThanOrEqual { get; set; }
+		public int? SettingID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "SettingID", NpgsqlDbType.Integer, "setting_id")]
-        public int? SettingID_GreaterThan { get; set; }
+		public int? SettingID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SettingID", NpgsqlDbType.Integer, "setting_id")]
-        public int? SettingID_GreaterThanOrEqual { get; set; }
+		public int? SettingID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "SettingID", NpgsqlDbType.Integer, "setting_id")]
 		public int[] SettingID_IsIn { get; set; }
@@ -3240,28 +3240,28 @@ namespace TrackTv.Data
 		public int[] SettingID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue { get; set; }
+		public string SettingValue { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_NotEqual { get; set; }
+		public string SettingValue_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_StartsWith { get; set; }
+		public string SettingValue_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_DoesNotStartWith { get; set; }
+		public string SettingValue_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_EndsWith { get; set; }
+		public string SettingValue_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_DoesNotEndWith { get; set; }
+		public string SettingValue_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_Contains { get; set; }
+		public string SettingValue_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-        public string SettingValue_DoesNotContain { get; set; }
+		public string SettingValue_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
 		public string[] SettingValue_IsIn { get; set; }
@@ -3270,28 +3270,28 @@ namespace TrackTv.Data
 		public string[] SettingValue_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName { get; set; }
+		public string SettingName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_NotEqual { get; set; }
+		public string SettingName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_StartsWith { get; set; }
+		public string SettingName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_DoesNotStartWith { get; set; }
+		public string SettingName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_EndsWith { get; set; }
+		public string SettingName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_DoesNotEndWith { get; set; }
+		public string SettingName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_Contains { get; set; }
+		public string SettingName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
-        public string SettingName_DoesNotContain { get; set; }
+		public string SettingName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
 		public string[] SettingName_IsIn { get; set; }
@@ -3299,31 +3299,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
 		public string[] SettingName_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'shows'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ShowFM : IFilterModel<ShowPoco>
-    {
+	/// </summary>
+	public class ShowFM : IFilterModel<ShowPoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID { get; set; }
+		public int? ShowID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_NotEqual { get; set; }
+		public int? ShowID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThan { get; set; }
+		public int? ShowID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThanOrEqual { get; set; }
+		public int? ShowID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThan { get; set; }
+		public int? ShowID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThanOrEqual { get; set; }
+		public int? ShowID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsIn { get; set; }
@@ -3332,10 +3332,10 @@ namespace TrackTv.Data
 		public int[] ShowID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "AirDay", NpgsqlDbType.Integer, "air_day")]
-        public int? AirDay { get; set; }
+		public int? AirDay { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "AirDay", NpgsqlDbType.Integer, "air_day")]
-        public int? AirDay_NotEqual { get; set; }
+		public int? AirDay_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "AirDay", NpgsqlDbType.Integer, "air_day")]
 		public bool? AirDay_IsNull { get; set; }
@@ -3350,10 +3350,10 @@ namespace TrackTv.Data
 		public int[] AirDay_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "AirTime", NpgsqlDbType.Timestamp, "air_time")]
-        public DateTime? AirTime { get; set; }
+		public DateTime? AirTime { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "AirTime", NpgsqlDbType.Timestamp, "air_time")]
-        public DateTime? AirTime_NotEqual { get; set; }
+		public DateTime? AirTime_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "AirTime", NpgsqlDbType.Timestamp, "air_time")]
 		public bool? AirTime_IsNull { get; set; }
@@ -3368,10 +3368,10 @@ namespace TrackTv.Data
 		public DateTime[] AirTime_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "FirstAired", NpgsqlDbType.Timestamp, "first_aired")]
-        public DateTime? FirstAired { get; set; }
+		public DateTime? FirstAired { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "FirstAired", NpgsqlDbType.Timestamp, "first_aired")]
-        public DateTime? FirstAired_NotEqual { get; set; }
+		public DateTime? FirstAired_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "FirstAired", NpgsqlDbType.Timestamp, "first_aired")]
 		public bool? FirstAired_IsNull { get; set; }
@@ -3386,28 +3386,28 @@ namespace TrackTv.Data
 		public DateTime[] FirstAired_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid { get; set; }
+		public string Imdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_NotEqual { get; set; }
+		public string Imdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_StartsWith { get; set; }
+		public string Imdbid_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_DoesNotStartWith { get; set; }
+		public string Imdbid_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_EndsWith { get; set; }
+		public string Imdbid_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_DoesNotEndWith { get; set; }
+		public string Imdbid_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_Contains { get; set; }
+		public string Imdbid_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
-        public string Imdbid_DoesNotContain { get; set; }
+		public string Imdbid_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "Imdbid", NpgsqlDbType.Varchar, "imdbid")]
 		public bool? Imdbid_IsNull { get; set; }
@@ -3422,22 +3422,22 @@ namespace TrackTv.Data
 		public string[] Imdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated { get; set; }
+		public DateTime? LastUpdated { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_NotEqual { get; set; }
+		public DateTime? LastUpdated_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_LessThan { get; set; }
+		public DateTime? LastUpdated_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_LessThanOrEqual { get; set; }
+		public DateTime? LastUpdated_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_GreaterThan { get; set; }
+		public DateTime? LastUpdated_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
-        public DateTime? LastUpdated_GreaterThanOrEqual { get; set; }
+		public DateTime? LastUpdated_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "LastUpdated", NpgsqlDbType.Timestamp, "last_updated")]
 		public DateTime[] LastUpdated_IsIn { get; set; }
@@ -3446,22 +3446,22 @@ namespace TrackTv.Data
 		public DateTime[] LastUpdated_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID { get; set; }
+		public int? NetworkID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_NotEqual { get; set; }
+		public int? NetworkID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_LessThan { get; set; }
+		public int? NetworkID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_LessThanOrEqual { get; set; }
+		public int? NetworkID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_GreaterThan { get; set; }
+		public int? NetworkID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "NetworkID", NpgsqlDbType.Integer, "network_id")]
-        public int? NetworkID_GreaterThanOrEqual { get; set; }
+		public int? NetworkID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "NetworkID", NpgsqlDbType.Integer, "network_id")]
 		public int[] NetworkID_IsIn { get; set; }
@@ -3470,28 +3470,28 @@ namespace TrackTv.Data
 		public int[] NetworkID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner { get; set; }
+		public string ShowBanner { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_NotEqual { get; set; }
+		public string ShowBanner_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_StartsWith { get; set; }
+		public string ShowBanner_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_DoesNotStartWith { get; set; }
+		public string ShowBanner_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_EndsWith { get; set; }
+		public string ShowBanner_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_DoesNotEndWith { get; set; }
+		public string ShowBanner_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_Contains { get; set; }
+		public string ShowBanner_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
-        public string ShowBanner_DoesNotContain { get; set; }
+		public string ShowBanner_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ShowBanner", NpgsqlDbType.Varchar, "show_banner")]
 		public bool? ShowBanner_IsNull { get; set; }
@@ -3506,28 +3506,28 @@ namespace TrackTv.Data
 		public string[] ShowBanner_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription { get; set; }
+		public string ShowDescription { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_NotEqual { get; set; }
+		public string ShowDescription_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_StartsWith { get; set; }
+		public string ShowDescription_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_DoesNotStartWith { get; set; }
+		public string ShowDescription_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_EndsWith { get; set; }
+		public string ShowDescription_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_DoesNotEndWith { get; set; }
+		public string ShowDescription_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_Contains { get; set; }
+		public string ShowDescription_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ShowDescription", NpgsqlDbType.Text, "show_description")]
-        public string ShowDescription_DoesNotContain { get; set; }
+		public string ShowDescription_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsNull, "ShowDescription", NpgsqlDbType.Text, "show_description")]
 		public bool? ShowDescription_IsNull { get; set; }
@@ -3542,28 +3542,28 @@ namespace TrackTv.Data
 		public string[] ShowDescription_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName { get; set; }
+		public string ShowName { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_NotEqual { get; set; }
+		public string ShowName_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_StartsWith { get; set; }
+		public string ShowName_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_DoesNotStartWith { get; set; }
+		public string ShowName_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_EndsWith { get; set; }
+		public string ShowName_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_DoesNotEndWith { get; set; }
+		public string ShowName_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_Contains { get; set; }
+		public string ShowName_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "ShowName", NpgsqlDbType.Varchar, "show_name")]
-        public string ShowName_DoesNotContain { get; set; }
+		public string ShowName_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowName", NpgsqlDbType.Varchar, "show_name")]
 		public string[] ShowName_IsIn { get; set; }
@@ -3572,22 +3572,22 @@ namespace TrackTv.Data
 		public string[] ShowName_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
-        public int? ShowStatus { get; set; }
+		public int? ShowStatus { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
-        public int? ShowStatus_NotEqual { get; set; }
+		public int? ShowStatus_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
-        public int? ShowStatus_LessThan { get; set; }
+		public int? ShowStatus_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
-        public int? ShowStatus_LessThanOrEqual { get; set; }
+		public int? ShowStatus_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
-        public int? ShowStatus_GreaterThan { get; set; }
+		public int? ShowStatus_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
-        public int? ShowStatus_GreaterThanOrEqual { get; set; }
+		public int? ShowStatus_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowStatus", NpgsqlDbType.Integer, "show_status")]
 		public int[] ShowStatus_IsIn { get; set; }
@@ -3596,22 +3596,22 @@ namespace TrackTv.Data
 		public int[] ShowStatus_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid { get; set; }
+		public int? Thetvdbid { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_NotEqual { get; set; }
+		public int? Thetvdbid_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_LessThan { get; set; }
+		public int? Thetvdbid_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_LessThanOrEqual { get; set; }
+		public int? Thetvdbid_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_GreaterThan { get; set; }
+		public int? Thetvdbid_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
-        public int? Thetvdbid_GreaterThanOrEqual { get; set; }
+		public int? Thetvdbid_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
 		public int[] Thetvdbid_IsIn { get; set; }
@@ -3619,31 +3619,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "Thetvdbid", NpgsqlDbType.Integer, "thetvdbid")]
 		public int[] Thetvdbid_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'shows_genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class ShowGenreFM : IFilterModel<ShowGenrePoco>
-    {
+	/// </summary>
+	public class ShowGenreFM : IFilterModel<ShowGenrePoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-        public int? ShowsGenresID { get; set; }
+		public int? ShowsGenresID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-        public int? ShowsGenresID_NotEqual { get; set; }
+		public int? ShowsGenresID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-        public int? ShowsGenresID_LessThan { get; set; }
+		public int? ShowsGenresID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-        public int? ShowsGenresID_LessThanOrEqual { get; set; }
+		public int? ShowsGenresID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-        public int? ShowsGenresID_GreaterThan { get; set; }
+		public int? ShowsGenresID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-        public int? ShowsGenresID_GreaterThanOrEqual { get; set; }
+		public int? ShowsGenresID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
 		public int[] ShowsGenresID_IsIn { get; set; }
@@ -3652,22 +3652,22 @@ namespace TrackTv.Data
 		public int[] ShowsGenresID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID { get; set; }
+		public int? ShowID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_NotEqual { get; set; }
+		public int? ShowID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThan { get; set; }
+		public int? ShowID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThanOrEqual { get; set; }
+		public int? ShowID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThan { get; set; }
+		public int? ShowID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThanOrEqual { get; set; }
+		public int? ShowID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsIn { get; set; }
@@ -3676,22 +3676,22 @@ namespace TrackTv.Data
 		public int[] ShowID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID { get; set; }
+		public int? GenreID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_NotEqual { get; set; }
+		public int? GenreID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_LessThan { get; set; }
+		public int? GenreID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_LessThanOrEqual { get; set; }
+		public int? GenreID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_GreaterThan { get; set; }
+		public int? GenreID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-        public int? GenreID_GreaterThanOrEqual { get; set; }
+		public int? GenreID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
 		public int[] GenreID_IsIn { get; set; }
@@ -3699,31 +3699,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
 		public int[] GenreID_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'subscriptions'.</para>
+	/// <summary>
+	/// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class SubscriptionFM : IFilterModel<SubscriptionPoco>
-    {
+	/// </summary>
+	public class SubscriptionFM : IFilterModel<SubscriptionPoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-        public int? SubscriptionID { get; set; }
+		public int? SubscriptionID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-        public int? SubscriptionID_NotEqual { get; set; }
+		public int? SubscriptionID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-        public int? SubscriptionID_LessThan { get; set; }
+		public int? SubscriptionID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-        public int? SubscriptionID_LessThanOrEqual { get; set; }
+		public int? SubscriptionID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-        public int? SubscriptionID_GreaterThan { get; set; }
+		public int? SubscriptionID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-        public int? SubscriptionID_GreaterThanOrEqual { get; set; }
+		public int? SubscriptionID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
 		public int[] SubscriptionID_IsIn { get; set; }
@@ -3732,22 +3732,22 @@ namespace TrackTv.Data
 		public int[] SubscriptionID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID { get; set; }
+		public int? ProfileID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_NotEqual { get; set; }
+		public int? ProfileID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_LessThan { get; set; }
+		public int? ProfileID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_LessThanOrEqual { get; set; }
+		public int? ProfileID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_GreaterThan { get; set; }
+		public int? ProfileID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_GreaterThanOrEqual { get; set; }
+		public int? ProfileID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
 		public int[] ProfileID_IsIn { get; set; }
@@ -3756,22 +3756,22 @@ namespace TrackTv.Data
 		public int[] ProfileID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID { get; set; }
+		public int? ShowID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_NotEqual { get; set; }
+		public int? ShowID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThan { get; set; }
+		public int? ShowID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_LessThanOrEqual { get; set; }
+		public int? ShowID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThan { get; set; }
+		public int? ShowID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-        public int? ShowID_GreaterThanOrEqual { get; set; }
+		public int? ShowID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsIn { get; set; }
@@ -3779,31 +3779,31 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsNotIn { get; set; }
 
-    }
+	}
 
-    /// <summary>
-    /// <para>Table name: 'users'.</para>
+	/// <summary>
+	/// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public class UserFM : IFilterModel<UserPoco>
-    {
+	/// </summary>
+	public class UserFM : IFilterModel<UserPoco>
+	{
 		[FilterOperator(QueryOperatorType.Equal, "UserID", NpgsqlDbType.Integer, "user_id")]
-        public int? UserID { get; set; }
+		public int? UserID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
-        public int? UserID_NotEqual { get; set; }
+		public int? UserID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "UserID", NpgsqlDbType.Integer, "user_id")]
-        public int? UserID_LessThan { get; set; }
+		public int? UserID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
-        public int? UserID_LessThanOrEqual { get; set; }
+		public int? UserID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "UserID", NpgsqlDbType.Integer, "user_id")]
-        public int? UserID_GreaterThan { get; set; }
+		public int? UserID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
-        public int? UserID_GreaterThanOrEqual { get; set; }
+		public int? UserID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "UserID", NpgsqlDbType.Integer, "user_id")]
 		public int[] UserID_IsIn { get; set; }
@@ -3812,10 +3812,10 @@ namespace TrackTv.Data
 		public int[] UserID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "IsAdmin", NpgsqlDbType.Boolean, "is_admin")]
-        public bool? IsAdmin { get; set; }
+		public bool? IsAdmin { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "IsAdmin", NpgsqlDbType.Boolean, "is_admin")]
-        public bool? IsAdmin_NotEqual { get; set; }
+		public bool? IsAdmin_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "IsAdmin", NpgsqlDbType.Boolean, "is_admin")]
 		public bool[] IsAdmin_IsIn { get; set; }
@@ -3824,28 +3824,28 @@ namespace TrackTv.Data
 		public bool[] IsAdmin_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username { get; set; }
+		public string Username { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_NotEqual { get; set; }
+		public string Username_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_StartsWith { get; set; }
+		public string Username_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_DoesNotStartWith { get; set; }
+		public string Username_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_EndsWith { get; set; }
+		public string Username_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_DoesNotEndWith { get; set; }
+		public string Username_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_Contains { get; set; }
+		public string Username_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "Username", NpgsqlDbType.Varchar, "username")]
-        public string Username_DoesNotContain { get; set; }
+		public string Username_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "Username", NpgsqlDbType.Varchar, "username")]
 		public string[] Username_IsIn { get; set; }
@@ -3854,28 +3854,28 @@ namespace TrackTv.Data
 		public string[] Username_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password { get; set; }
+		public string Password { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_NotEqual { get; set; }
+		public string Password_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.StartsWith, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_StartsWith { get; set; }
+		public string Password_StartsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_DoesNotStartWith { get; set; }
+		public string Password_DoesNotStartWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.EndsWith, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_EndsWith { get; set; }
+		public string Password_EndsWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_DoesNotEndWith { get; set; }
+		public string Password_DoesNotEndWith { get; set; }
 
 		[FilterOperator(QueryOperatorType.Contains, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_Contains { get; set; }
+		public string Password_Contains { get; set; }
 
 		[FilterOperator(QueryOperatorType.DoesNotContain, "Password", NpgsqlDbType.Varchar, "password")]
-        public string Password_DoesNotContain { get; set; }
+		public string Password_DoesNotContain { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "Password", NpgsqlDbType.Varchar, "password")]
 		public string[] Password_IsIn { get; set; }
@@ -3884,22 +3884,22 @@ namespace TrackTv.Data
 		public string[] Password_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID { get; set; }
+		public int? ProfileID { get; set; }
 
 		[FilterOperator(QueryOperatorType.NotEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_NotEqual { get; set; }
+		public int? ProfileID_NotEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThan, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_LessThan { get; set; }
+		public int? ProfileID_LessThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_LessThanOrEqual { get; set; }
+		public int? ProfileID_LessThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThan, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_GreaterThan { get; set; }
+		public int? ProfileID_GreaterThan { get; set; }
 
 		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
-        public int? ProfileID_GreaterThanOrEqual { get; set; }
+		public int? ProfileID_GreaterThanOrEqual { get; set; }
 
 		[FilterOperator(QueryOperatorType.IsIn, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
 		public int[] ProfileID_IsIn { get; set; }
@@ -3907,15 +3907,15 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
 		public int[] ProfileID_IsNotIn { get; set; }
 
-    }
+	}
 
 
-    /// <summary>
-    /// <para>Table name: 'actors'.</para>
+	/// <summary>
+	/// <para>Table name: 'actors'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ActorBM : IBusinessModel<ActorPoco>
-    {
+	/// </summary>
+	public partial class ActorBM : IBusinessModel<ActorPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'actors'.</para>
@@ -3926,8 +3926,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ActorID { get; set; }
+		/// </summary>
+		public int ActorID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'actor_image'.</para>
@@ -3937,8 +3937,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ActorImage { get; set; }
+		/// </summary>
+		public string ActorImage { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'actor_name'.</para>
@@ -3948,8 +3948,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ActorName { get; set; }
+		/// </summary>
+		public string ActorName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
@@ -3959,8 +3959,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? LastUpdated { get; set; }
+		/// </summary>
+		public DateTime? LastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
@@ -3970,8 +3970,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int Thetvdbid { get; set; }
+		/// </summary>
+		public int Thetvdbid { get; set; }
 
 		public ActorPoco ToPoco()
 		{
@@ -3986,12 +3986,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'api_change_types'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_change_types'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ApiChangeTypeBM : IBusinessModel<ApiChangeTypePoco>
-    {
+	/// </summary>
+	public partial class ApiChangeTypeBM : IBusinessModel<ApiChangeTypePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'api_change_type_name'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
@@ -4000,8 +4000,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ApiChangeTypeName { get; set; }
+		/// </summary>
+		public string ApiChangeTypeName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type_id'.</para>
@@ -4013,8 +4013,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeTypeID { get; set; }
+		/// </summary>
+		public int ApiChangeTypeID { get; set; }
 
 		public ApiChangeTypePoco ToPoco()
 		{
@@ -4026,12 +4026,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'api_changes'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_changes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ApiChangeBM : IBusinessModel<ApiChangePoco>
-    {
+	/// </summary>
+	public partial class ApiChangeBM : IBusinessModel<ApiChangePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'api_change_thetvdbid'.</para>
 		/// <para>Table name: 'api_changes'.</para>
@@ -4040,8 +4040,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeThetvdbid { get; set; }
+		/// </summary>
+		public int ApiChangeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_fail_count'.</para>
@@ -4051,8 +4051,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeFailCount { get; set; }
+		/// </summary>
+		public int ApiChangeFailCount { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_created_date'.</para>
@@ -4062,8 +4062,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime ApiChangeCreatedDate { get; set; }
+		/// </summary>
+		public DateTime ApiChangeCreatedDate { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
@@ -4075,8 +4075,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeID { get; set; }
+		/// </summary>
+		public int ApiChangeID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_last_failed_time'.</para>
@@ -4086,8 +4086,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? ApiChangeLastFailedTime { get; set; }
+		/// </summary>
+		public DateTime? ApiChangeLastFailedTime { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_thetvdb_last_updated'.</para>
@@ -4097,8 +4097,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime ApiChangeThetvdbLastUpdated { get; set; }
+		/// </summary>
+		public DateTime ApiChangeThetvdbLastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_attached_series_id'.</para>
@@ -4108,8 +4108,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? ApiChangeAttachedSeriesID { get; set; }
+		/// </summary>
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
@@ -4121,8 +4121,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiChangeType { get; set; }
+		/// </summary>
+		public int ApiChangeType { get; set; }
 
 		public ApiChangePoco ToPoco()
 		{
@@ -4140,12 +4140,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'api_responses'.</para>
+	/// <summary>
+	/// <para>Table name: 'api_responses'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ApiResponseBM : IBusinessModel<ApiResponsePoco>
-    {
+	/// </summary>
+	public partial class ApiResponseBM : IBusinessModel<ApiResponsePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
@@ -4156,8 +4156,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? ApiResponseEpisodeThetvdbid { get; set; }
+		/// </summary>
+		public int? ApiResponseEpisodeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
@@ -4169,8 +4169,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? ApiResponseShowThetvdbid { get; set; }
+		/// </summary>
+		public int? ApiResponseShowThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_body'.</para>
@@ -4180,8 +4180,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-        /// </summary>
-        public string ApiResponseBody { get; set; }
+		/// </summary>
+		public string ApiResponseBody { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
@@ -4193,8 +4193,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ApiResponseID { get; set; }
+		/// </summary>
+		public int ApiResponseID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_last_updated'.</para>
@@ -4204,8 +4204,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime ApiResponseLastUpdated { get; set; }
+		/// </summary>
+		public DateTime ApiResponseLastUpdated { get; set; }
 
 		public ApiResponsePoco ToPoco()
 		{
@@ -4220,12 +4220,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'episodes'.</para>
+	/// <summary>
+	/// <para>Table name: 'episodes'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class EpisodeBM : IBusinessModel<EpisodePoco>
-    {
+	/// </summary>
+	public partial class EpisodeBM : IBusinessModel<EpisodePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'episode_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
@@ -4236,8 +4236,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int EpisodeID { get; set; }
+		/// </summary>
+		public int EpisodeID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_description'.</para>
@@ -4247,8 +4247,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
-        /// </summary>
-        public string EpisodeDescription { get; set; }
+		/// </summary>
+		public string EpisodeDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_number'.</para>
@@ -4258,8 +4258,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int EpisodeNumber { get; set; }
+		/// </summary>
+		public int EpisodeNumber { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_title'.</para>
@@ -4269,8 +4269,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string EpisodeTitle { get; set; }
+		/// </summary>
+		public string EpisodeTitle { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'first_aired'.</para>
@@ -4280,8 +4280,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? FirstAired { get; set; }
+		/// </summary>
+		public DateTime? FirstAired { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'imdbid'.</para>
@@ -4291,8 +4291,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Imdbid { get; set; }
+		/// </summary>
+		public string Imdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
@@ -4302,8 +4302,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime LastUpdated { get; set; }
+		/// </summary>
+		public DateTime LastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'season_number'.</para>
@@ -4313,8 +4313,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int SeasonNumber { get; set; }
+		/// </summary>
+		public int SeasonNumber { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -4326,8 +4326,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
@@ -4337,8 +4337,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int Thetvdbid { get; set; }
+		/// </summary>
+		public int Thetvdbid { get; set; }
 
 		public EpisodePoco ToPoco()
 		{
@@ -4358,12 +4358,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class GenreBM : IBusinessModel<GenrePoco>
-    {
+	/// </summary>
+	public partial class GenreBM : IBusinessModel<GenrePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'genres'.</para>
@@ -4374,8 +4374,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int GenreID { get; set; }
+		/// </summary>
+		public int GenreID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'genre_name'.</para>
@@ -4385,8 +4385,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string GenreName { get; set; }
+		/// </summary>
+		public string GenreName { get; set; }
 
 		public GenrePoco ToPoco()
 		{
@@ -4398,12 +4398,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'networks'.</para>
+	/// <summary>
+	/// <para>Table name: 'networks'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class NetworkBM : IBusinessModel<NetworkPoco>
-    {
+	/// </summary>
+	public partial class NetworkBM : IBusinessModel<NetworkPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'network_id'.</para>
 		/// <para>Table name: 'networks'.</para>
@@ -4414,8 +4414,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int NetworkID { get; set; }
+		/// </summary>
+		public int NetworkID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'network_name'.</para>
@@ -4425,8 +4425,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string NetworkName { get; set; }
+		/// </summary>
+		public string NetworkName { get; set; }
 
 		public NetworkPoco ToPoco()
 		{
@@ -4438,12 +4438,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'profiles'.</para>
+	/// <summary>
+	/// <para>Table name: 'profiles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ProfileBM : IBusinessModel<ProfilePoco>
-    {
+	/// </summary>
+	public partial class ProfileBM : IBusinessModel<ProfilePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'profiles'.</para>
@@ -4454,8 +4454,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ProfileID { get; set; }
+		/// </summary>
+		public int ProfileID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'profile_name'.</para>
@@ -4465,8 +4465,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ProfileName { get; set; }
+		/// </summary>
+		public string ProfileName { get; set; }
 
 		public ProfilePoco ToPoco()
 		{
@@ -4478,12 +4478,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'roles'.</para>
+	/// <summary>
+	/// <para>Table name: 'roles'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class RoleBM : IBusinessModel<RolePoco>
-    {
+	/// </summary>
+	public partial class RoleBM : IBusinessModel<RolePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'role_id'.</para>
 		/// <para>Table name: 'roles'.</para>
@@ -4494,8 +4494,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int RoleID { get; set; }
+		/// </summary>
+		public int RoleID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
@@ -4507,8 +4507,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ActorID { get; set; }
+		/// </summary>
+		public int ActorID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'role_name'.</para>
@@ -4518,8 +4518,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string RoleName { get; set; }
+		/// </summary>
+		public string RoleName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -4531,8 +4531,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		public RolePoco ToPoco()
 		{
@@ -4546,12 +4546,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'settings'.</para>
+	/// <summary>
+	/// <para>Table name: 'settings'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class SettingBM : IBusinessModel<SettingPoco>
-    {
+	/// </summary>
+	public partial class SettingBM : IBusinessModel<SettingPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'setting_id'.</para>
 		/// <para>Table name: 'settings'.</para>
@@ -4562,8 +4562,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int SettingID { get; set; }
+		/// </summary>
+		public int SettingID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'setting_value'.</para>
@@ -4573,8 +4573,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string SettingValue { get; set; }
+		/// </summary>
+		public string SettingValue { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'setting_name'.</para>
@@ -4584,8 +4584,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string SettingName { get; set; }
+		/// </summary>
+		public string SettingName { get; set; }
 
 		public SettingPoco ToPoco()
 		{
@@ -4598,12 +4598,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'shows'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ShowBM : IBusinessModel<ShowPoco>
-    {
+	/// </summary>
+	public partial class ShowBM : IBusinessModel<ShowPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
 		/// <para>Table name: 'shows'.</para>
@@ -4614,8 +4614,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'air_day'.</para>
@@ -4625,8 +4625,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int? AirDay { get; set; }
+		/// </summary>
+		public int? AirDay { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'air_time'.</para>
@@ -4636,8 +4636,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? AirTime { get; set; }
+		/// </summary>
+		public DateTime? AirTime { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'first_aired'.</para>
@@ -4647,8 +4647,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime?'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime? FirstAired { get; set; }
+		/// </summary>
+		public DateTime? FirstAired { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'imdbid'.</para>
@@ -4658,8 +4658,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Imdbid { get; set; }
+		/// </summary>
+		public string Imdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'last_updated'.</para>
@@ -4669,8 +4669,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Timestamp'.</para>
 		/// <para>CLR type: 'DateTime'.</para>
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
-        /// </summary>
-        public DateTime LastUpdated { get; set; }
+		/// </summary>
+		public DateTime LastUpdated { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'network_id'.</para>
@@ -4682,8 +4682,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int NetworkID { get; set; }
+		/// </summary>
+		public int NetworkID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_banner'.</para>
@@ -4693,8 +4693,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ShowBanner { get; set; }
+		/// </summary>
+		public string ShowBanner { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_description'.</para>
@@ -4704,8 +4704,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.Text'.</para>
-        /// </summary>
-        public string ShowDescription { get; set; }
+		/// </summary>
+		public string ShowDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_name'.</para>
@@ -4715,8 +4715,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string ShowName { get; set; }
+		/// </summary>
+		public string ShowName { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_status'.</para>
@@ -4726,8 +4726,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowStatus { get; set; }
+		/// </summary>
+		public int ShowStatus { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'thetvdbid'.</para>
@@ -4737,8 +4737,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int Thetvdbid { get; set; }
+		/// </summary>
+		public int Thetvdbid { get; set; }
 
 		public ShowPoco ToPoco()
 		{
@@ -4760,12 +4760,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'shows_genres'.</para>
+	/// <summary>
+	/// <para>Table name: 'shows_genres'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class ShowGenreBM : IBusinessModel<ShowGenrePoco>
-    {
+	/// </summary>
+	public partial class ShowGenreBM : IBusinessModel<ShowGenrePoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'shows_genres_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
@@ -4776,8 +4776,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowsGenresID { get; set; }
+		/// </summary>
+		public int ShowsGenresID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -4789,8 +4789,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'genre_id'.</para>
@@ -4802,8 +4802,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int GenreID { get; set; }
+		/// </summary>
+		public int GenreID { get; set; }
 
 		public ShowGenrePoco ToPoco()
 		{
@@ -4816,12 +4816,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'subscriptions'.</para>
+	/// <summary>
+	/// <para>Table name: 'subscriptions'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class SubscriptionBM : IBusinessModel<SubscriptionPoco>
-    {
+	/// </summary>
+	public partial class SubscriptionBM : IBusinessModel<SubscriptionPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'subscription_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
@@ -4832,8 +4832,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int SubscriptionID { get; set; }
+		/// </summary>
+		public int SubscriptionID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -4845,8 +4845,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ProfileID { get; set; }
+		/// </summary>
+		public int ProfileID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -4858,8 +4858,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ShowID { get; set; }
+		/// </summary>
+		public int ShowID { get; set; }
 
 		public SubscriptionPoco ToPoco()
 		{
@@ -4872,12 +4872,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    /// <summary>
-    /// <para>Table name: 'users'.</para>
+	/// <summary>
+	/// <para>Table name: 'users'.</para>
 	/// <para>Table schema: 'public'.</para>
-    /// </summary>
-    public partial class UserBM : IBusinessModel<UserPoco>
-    {
+	/// </summary>
+	public partial class UserBM : IBusinessModel<UserPoco>
+	{
 		/// <summary>
 		/// <para>Column name: 'user_id'.</para>
 		/// <para>Table name: 'users'.</para>
@@ -4888,8 +4888,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int UserID { get; set; }
+		/// </summary>
+		public int UserID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'is_admin'.</para>
@@ -4899,8 +4899,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Boolean'.</para>
 		/// <para>CLR type: 'bool'.</para>
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
-        /// </summary>
-        public bool IsAdmin { get; set; }
+		/// </summary>
+		public bool IsAdmin { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'username'.</para>
@@ -4910,8 +4910,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Username { get; set; }
+		/// </summary>
+		public string Username { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'password'.</para>
@@ -4921,8 +4921,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
 		/// <para>CLR type: 'string'.</para>
 		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-        /// </summary>
-        public string Password { get; set; }
+		/// </summary>
+		public string Password { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
@@ -4932,8 +4932,8 @@ namespace TrackTv.Data
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
-        /// </summary>
-        public int ProfileID { get; set; }
+		/// </summary>
+		public int ProfileID { get; set; }
 
 		public UserPoco ToPoco()
 		{
@@ -4948,12 +4948,12 @@ namespace TrackTv.Data
 		}
 	}
 
-    public class TrackTvPocos : IDbPocos<TrackTvPocos>
-    {
+	public class TrackTvPocos : IDbPocos<TrackTvPocos>
+	{
 		/// <summary>
 		/// <para>Database table 'actors'.</para>
 		/// </summary>
-        public IQueryable<ActorPoco> Actors => this.DbService.GetTable<ActorPoco>();
+		public IQueryable<ActorPoco> Actors => this.DbService.GetTable<ActorPoco>();
 
 		/// <summary>
 		/// <para>Database table 'actors'.</para>
@@ -4965,7 +4965,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'api_change_types'.</para>
 		/// </summary>
-        public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.DbService.GetTable<ApiChangeTypePoco>();
+		public IQueryable<ApiChangeTypePoco> ApiChangeTypes => this.DbService.GetTable<ApiChangeTypePoco>();
 
 		/// <summary>
 		/// <para>Database table 'api_change_types'.</para>
@@ -4977,7 +4977,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>
 		/// </summary>
-        public IQueryable<ApiChangePoco> ApiChanges => this.DbService.GetTable<ApiChangePoco>();
+		public IQueryable<ApiChangePoco> ApiChanges => this.DbService.GetTable<ApiChangePoco>();
 
 		/// <summary>
 		/// <para>Database table 'api_changes'.</para>
@@ -4989,7 +4989,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>
 		/// </summary>
-        public IQueryable<ApiResponsePoco> ApiResponses => this.DbService.GetTable<ApiResponsePoco>();
+		public IQueryable<ApiResponsePoco> ApiResponses => this.DbService.GetTable<ApiResponsePoco>();
 
 		/// <summary>
 		/// <para>Database table 'api_responses'.</para>
@@ -5001,7 +5001,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>
 		/// </summary>
-        public IQueryable<EpisodePoco> Episodes => this.DbService.GetTable<EpisodePoco>();
+		public IQueryable<EpisodePoco> Episodes => this.DbService.GetTable<EpisodePoco>();
 
 		/// <summary>
 		/// <para>Database table 'episodes'.</para>
@@ -5013,7 +5013,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'genres'.</para>
 		/// </summary>
-        public IQueryable<GenrePoco> Genres => this.DbService.GetTable<GenrePoco>();
+		public IQueryable<GenrePoco> Genres => this.DbService.GetTable<GenrePoco>();
 
 		/// <summary>
 		/// <para>Database table 'genres'.</para>
@@ -5025,7 +5025,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'networks'.</para>
 		/// </summary>
-        public IQueryable<NetworkPoco> Networks => this.DbService.GetTable<NetworkPoco>();
+		public IQueryable<NetworkPoco> Networks => this.DbService.GetTable<NetworkPoco>();
 
 		/// <summary>
 		/// <para>Database table 'networks'.</para>
@@ -5037,7 +5037,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>
 		/// </summary>
-        public IQueryable<ProfilePoco> Profiles => this.DbService.GetTable<ProfilePoco>();
+		public IQueryable<ProfilePoco> Profiles => this.DbService.GetTable<ProfilePoco>();
 
 		/// <summary>
 		/// <para>Database table 'profiles'.</para>
@@ -5049,7 +5049,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'roles'.</para>
 		/// </summary>
-        public IQueryable<RolePoco> Roles => this.DbService.GetTable<RolePoco>();
+		public IQueryable<RolePoco> Roles => this.DbService.GetTable<RolePoco>();
 
 		/// <summary>
 		/// <para>Database table 'roles'.</para>
@@ -5061,7 +5061,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'settings'.</para>
 		/// </summary>
-        public IQueryable<SettingPoco> Settings => this.DbService.GetTable<SettingPoco>();
+		public IQueryable<SettingPoco> Settings => this.DbService.GetTable<SettingPoco>();
 
 		/// <summary>
 		/// <para>Database table 'settings'.</para>
@@ -5073,7 +5073,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'shows'.</para>
 		/// </summary>
-        public IQueryable<ShowPoco> Shows => this.DbService.GetTable<ShowPoco>();
+		public IQueryable<ShowPoco> Shows => this.DbService.GetTable<ShowPoco>();
 
 		/// <summary>
 		/// <para>Database table 'shows'.</para>
@@ -5085,7 +5085,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>
 		/// </summary>
-        public IQueryable<ShowGenrePoco> ShowsGenres => this.DbService.GetTable<ShowGenrePoco>();
+		public IQueryable<ShowGenrePoco> ShowsGenres => this.DbService.GetTable<ShowGenrePoco>();
 
 		/// <summary>
 		/// <para>Database table 'shows_genres'.</para>
@@ -5097,7 +5097,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>
 		/// </summary>
-        public IQueryable<SubscriptionPoco> Subscriptions => this.DbService.GetTable<SubscriptionPoco>();
+		public IQueryable<SubscriptionPoco> Subscriptions => this.DbService.GetTable<SubscriptionPoco>();
 
 		/// <summary>
 		/// <para>Database table 'subscriptions'.</para>
@@ -5109,7 +5109,7 @@ namespace TrackTv.Data
 		/// <summary>
 		/// <para>Database table 'users'.</para>
 		/// </summary>
-        public IQueryable<UserPoco> Users => this.DbService.GetTable<UserPoco>();
+		public IQueryable<UserPoco> Users => this.DbService.GetTable<UserPoco>();
 
 		/// <summary>
 		/// <para>Database table 'users'.</para>
@@ -5120,7 +5120,7 @@ namespace TrackTv.Data
 
 
 		public IDbService<TrackTvPocos> DbService { private get; set; }
-    }
+	}
 
 	public static class TrackTvPocosExtensions
 	{
@@ -5197,54 +5197,54 @@ namespace TrackTv.Data
 	}
 
 	public class TrackTvMetadata : IDbMetadata
-    {
-        internal static TableMetadataModel<ActorPoco> ActorPocoMetadata;
+	{
+		internal static TableMetadataModel<ActorPoco> ActorPocoMetadata;
 
-        internal static TableMetadataModel<ApiChangeTypePoco> ApiChangeTypePocoMetadata;
+		internal static TableMetadataModel<ApiChangeTypePoco> ApiChangeTypePocoMetadata;
 
-        internal static TableMetadataModel<ApiChangePoco> ApiChangePocoMetadata;
+		internal static TableMetadataModel<ApiChangePoco> ApiChangePocoMetadata;
 
-        internal static TableMetadataModel<ApiResponsePoco> ApiResponsePocoMetadata;
+		internal static TableMetadataModel<ApiResponsePoco> ApiResponsePocoMetadata;
 
-        internal static TableMetadataModel<EpisodePoco> EpisodePocoMetadata;
+		internal static TableMetadataModel<EpisodePoco> EpisodePocoMetadata;
 
-        internal static TableMetadataModel<GenrePoco> GenrePocoMetadata;
+		internal static TableMetadataModel<GenrePoco> GenrePocoMetadata;
 
-        internal static TableMetadataModel<NetworkPoco> NetworkPocoMetadata;
+		internal static TableMetadataModel<NetworkPoco> NetworkPocoMetadata;
 
-        internal static TableMetadataModel<ProfilePoco> ProfilePocoMetadata;
+		internal static TableMetadataModel<ProfilePoco> ProfilePocoMetadata;
 
-        internal static TableMetadataModel<RolePoco> RolePocoMetadata;
+		internal static TableMetadataModel<RolePoco> RolePocoMetadata;
 
-        internal static TableMetadataModel<SettingPoco> SettingPocoMetadata;
+		internal static TableMetadataModel<SettingPoco> SettingPocoMetadata;
 
-        internal static TableMetadataModel<ShowPoco> ShowPocoMetadata;
+		internal static TableMetadataModel<ShowPoco> ShowPocoMetadata;
 
-        internal static TableMetadataModel<ShowGenrePoco> ShowGenrePocoMetadata;
+		internal static TableMetadataModel<ShowGenrePoco> ShowGenrePocoMetadata;
 
-        internal static TableMetadataModel<SubscriptionPoco> SubscriptionPocoMetadata;
+		internal static TableMetadataModel<SubscriptionPoco> SubscriptionPocoMetadata;
 
-        internal static TableMetadataModel<UserPoco> UserPocoMetadata;
+		internal static TableMetadataModel<UserPoco> UserPocoMetadata;
 
 		private static readonly object InitLock = new object();
 
 		private static bool Initialized;
 
-        // ReSharper disable once FunctionComplexityOverflow
-        // ReSharper disable once CyclomaticComplexity
+		// ReSharper disable once FunctionComplexityOverflow
+		// ReSharper disable once CyclomaticComplexity
 		private static void InitializeInternal()
 		{
 			ActorPocoMetadata = new TableMetadataModel<ActorPoco>
 			{
 				ClassName = "Actor",
 				PluralClassName = "Actors",
-				PrimaryKeyColumnName = "actor_id",
-				PrimaryKeyPropertyName = "ActorID",
 				TableName = "actors",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "actor_id",
+				PrimaryKeyPropertyName = "ActorID",
 				GetPrimaryKey = (instance) => instance.ActorID,
 				SetPrimaryKey = (instance, val) => instance.ActorID = val,
-				IsNew = (instance) => instance.ActorID == default,		
+				IsNew = (instance) => instance.ActorID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5415,13 +5415,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "ApiChangeType",
 				PluralClassName = "ApiChangeTypes",
-				PrimaryKeyColumnName = "api_change_type_id",
-				PrimaryKeyPropertyName = "ApiChangeTypeID",
 				TableName = "api_change_types",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "api_change_type_id",
+				PrimaryKeyPropertyName = "ApiChangeTypeID",
 				GetPrimaryKey = (instance) => instance.ApiChangeTypeID,
 				SetPrimaryKey = (instance, val) => instance.ApiChangeTypeID = val,
-				IsNew = (instance) => instance.ApiChangeTypeID == default,		
+				IsNew = (instance) => instance.ApiChangeTypeID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5499,13 +5499,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "ApiChange",
 				PluralClassName = "ApiChanges",
-				PrimaryKeyColumnName = "api_change_id",
-				PrimaryKeyPropertyName = "ApiChangeID",
 				TableName = "api_changes",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "api_change_id",
+				PrimaryKeyPropertyName = "ApiChangeID",
 				GetPrimaryKey = (instance) => instance.ApiChangeID,
 				SetPrimaryKey = (instance, val) => instance.ApiChangeID = val,
-				IsNew = (instance) => instance.ApiChangeID == default,		
+				IsNew = (instance) => instance.ApiChangeID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5769,13 +5769,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "ApiResponse",
 				PluralClassName = "ApiResponses",
-				PrimaryKeyColumnName = "api_response_id",
-				PrimaryKeyPropertyName = "ApiResponseID",
 				TableName = "api_responses",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "api_response_id",
+				PrimaryKeyPropertyName = "ApiResponseID",
 				GetPrimaryKey = (instance) => instance.ApiResponseID,
 				SetPrimaryKey = (instance, val) => instance.ApiResponseID = val,
-				IsNew = (instance) => instance.ApiResponseID == default,		
+				IsNew = (instance) => instance.ApiResponseID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -5946,13 +5946,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Episode",
 				PluralClassName = "Episodes",
-				PrimaryKeyColumnName = "episode_id",
-				PrimaryKeyPropertyName = "EpisodeID",
 				TableName = "episodes",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "episode_id",
+				PrimaryKeyPropertyName = "EpisodeID",
 				GetPrimaryKey = (instance) => instance.EpisodeID,
 				SetPrimaryKey = (instance, val) => instance.EpisodeID = val,
-				IsNew = (instance) => instance.EpisodeID == default,		
+				IsNew = (instance) => instance.EpisodeID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6278,13 +6278,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Genre",
 				PluralClassName = "Genres",
-				PrimaryKeyColumnName = "genre_id",
-				PrimaryKeyPropertyName = "GenreID",
 				TableName = "genres",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "genre_id",
+				PrimaryKeyPropertyName = "GenreID",
 				GetPrimaryKey = (instance) => instance.GenreID,
 				SetPrimaryKey = (instance, val) => instance.GenreID = val,
-				IsNew = (instance) => instance.GenreID == default,		
+				IsNew = (instance) => instance.GenreID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6362,13 +6362,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Network",
 				PluralClassName = "Networks",
-				PrimaryKeyColumnName = "network_id",
-				PrimaryKeyPropertyName = "NetworkID",
 				TableName = "networks",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "network_id",
+				PrimaryKeyPropertyName = "NetworkID",
 				GetPrimaryKey = (instance) => instance.NetworkID,
 				SetPrimaryKey = (instance, val) => instance.NetworkID = val,
-				IsNew = (instance) => instance.NetworkID == default,		
+				IsNew = (instance) => instance.NetworkID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6446,13 +6446,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Profile",
 				PluralClassName = "Profiles",
-				PrimaryKeyColumnName = "profile_id",
-				PrimaryKeyPropertyName = "ProfileID",
 				TableName = "profiles",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "profile_id",
+				PrimaryKeyPropertyName = "ProfileID",
 				GetPrimaryKey = (instance) => instance.ProfileID,
 				SetPrimaryKey = (instance, val) => instance.ProfileID = val,
-				IsNew = (instance) => instance.ProfileID == default,		
+				IsNew = (instance) => instance.ProfileID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6530,13 +6530,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Role",
 				PluralClassName = "Roles",
-				PrimaryKeyColumnName = "role_id",
-				PrimaryKeyPropertyName = "RoleID",
 				TableName = "roles",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "role_id",
+				PrimaryKeyPropertyName = "RoleID",
 				GetPrimaryKey = (instance) => instance.RoleID,
 				SetPrimaryKey = (instance, val) => instance.RoleID = val,
-				IsNew = (instance) => instance.RoleID == default,		
+				IsNew = (instance) => instance.RoleID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6676,13 +6676,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Setting",
 				PluralClassName = "Settings",
-				PrimaryKeyColumnName = "setting_id",
-				PrimaryKeyPropertyName = "SettingID",
 				TableName = "settings",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "setting_id",
+				PrimaryKeyPropertyName = "SettingID",
 				GetPrimaryKey = (instance) => instance.SettingID,
 				SetPrimaryKey = (instance, val) => instance.SettingID = val,
-				IsNew = (instance) => instance.SettingID == default,		
+				IsNew = (instance) => instance.SettingID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -6791,13 +6791,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Show",
 				PluralClassName = "Shows",
-				PrimaryKeyColumnName = "show_id",
-				PrimaryKeyPropertyName = "ShowID",
 				TableName = "shows",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "show_id",
+				PrimaryKeyPropertyName = "ShowID",
 				GetPrimaryKey = (instance) => instance.ShowID,
 				SetPrimaryKey = (instance, val) => instance.ShowID = val,
-				IsNew = (instance) => instance.ShowID == default,		
+				IsNew = (instance) => instance.ShowID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7185,13 +7185,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "ShowGenre",
 				PluralClassName = "ShowsGenres",
-				PrimaryKeyColumnName = "shows_genres_id",
-				PrimaryKeyPropertyName = "ShowsGenresID",
 				TableName = "shows_genres",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "shows_genres_id",
+				PrimaryKeyPropertyName = "ShowsGenresID",
 				GetPrimaryKey = (instance) => instance.ShowsGenresID,
 				SetPrimaryKey = (instance, val) => instance.ShowsGenresID = val,
-				IsNew = (instance) => instance.ShowsGenresID == default,		
+				IsNew = (instance) => instance.ShowsGenresID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7300,13 +7300,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "Subscription",
 				PluralClassName = "Subscriptions",
-				PrimaryKeyColumnName = "subscription_id",
-				PrimaryKeyPropertyName = "SubscriptionID",
 				TableName = "subscriptions",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "subscription_id",
+				PrimaryKeyPropertyName = "SubscriptionID",
 				GetPrimaryKey = (instance) => instance.SubscriptionID,
 				SetPrimaryKey = (instance, val) => instance.SubscriptionID = val,
-				IsNew = (instance) => instance.SubscriptionID == default,		
+				IsNew = (instance) => instance.SubscriptionID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7415,13 +7415,13 @@ namespace TrackTv.Data
 			{
 				ClassName = "User",
 				PluralClassName = "Users",
-				PrimaryKeyColumnName = "user_id",
-				PrimaryKeyPropertyName = "UserID",
 				TableName = "users",
 				TableSchema = "public",
+				PrimaryKeyColumnName = "user_id",
+				PrimaryKeyPropertyName = "UserID",
 				GetPrimaryKey = (instance) => instance.UserID,
 				SetPrimaryKey = (instance, val) => instance.UserID = val,
-				IsNew = (instance) => instance.UserID == default,		
+				IsNew = (instance) => instance.UserID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
 					new ColumnMetadataModel
@@ -7613,6 +7613,6 @@ namespace TrackTv.Data
 		static TrackTvMetadata()
 		{
 			Initialize();
-		}        
-    }
+		}
+	}
 }
