@@ -285,6 +285,8 @@
         public string TableSchema { get; set; }
 
         public string[] ValidOperators { get; set; }
+
+        public bool IsViewColumn { get; set; }
     }
 
     /// <summary>
