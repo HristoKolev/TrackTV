@@ -1,7 +1,7 @@
 drop view if exists "public"."db_columns";
 
 create view "public"."db_columns" as
-  (SELECT
+  ((SELECT
       t.tablename as TableName,
       n.nspname AS TableSchema,
       a.attname as ColumnName,
@@ -52,4 +52,4 @@ create view "public"."db_columns" as
       WHERE a.atttypid <> 0::oid
         AND (n.nspname != 'information_schema' AND n.nspname NOT LIKE 'pg_%')
         and not (n.nspname = 'public' and t.viewname = 'db_columns')
-  );
+  )) ORDER BY IsViewColumn, TableName, ColumnName;
