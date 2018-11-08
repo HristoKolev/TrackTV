@@ -106,19 +106,6 @@ namespace TrackTv.Data
 	public class ApiChangeTypePoco : IPoco<ApiChangeTypePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'api_change_type_name'.</para>
-		/// <para>Table name: 'api_change_types'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		[NotNull]
-		[Column(Name = "api_change_type_name", DataType = DataType.NVarChar)]
-		public string ApiChangeTypeName { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'api_change_type_id'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
 		/// <para>Primary key of table: 'api_change_types'.</para>
@@ -133,14 +120,27 @@ namespace TrackTv.Data
 		[Column(Name = "api_change_type_id", DataType = DataType.Int32)]
 		public int ApiChangeTypeID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'api_change_type_name'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		[NotNull]
+		[Column(Name = "api_change_type_name", DataType = DataType.NVarChar)]
+		public string ApiChangeTypeName { get; set; }
+
 		public static TableMetadataModel<ApiChangeTypePoco> Metadata => TrackTvMetadata.ApiChangeTypePocoMetadata;
 
 		public ApiChangeTypeBM ToBm()
 		{
 			return new ApiChangeTypeBM
 			{
-				ApiChangeTypeName = this.ApiChangeTypeName,
 				ApiChangeTypeID = this.ApiChangeTypeID,
+				ApiChangeTypeName = this.ApiChangeTypeName,
 			};
 		}
 	}
@@ -153,30 +153,17 @@ namespace TrackTv.Data
 	public class ApiChangePoco : IPoco<ApiChangePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'api_change_thetvdbid'.</para>
+		/// <para>Column name: 'api_change_attached_series_id'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
+		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		[NotNull]
-		[Column(Name = "api_change_thetvdbid", DataType = DataType.Int32)]
-		public int ApiChangeThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_change_fail_count'.</para>
-		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		[NotNull]
-		[Column(Name = "api_change_fail_count", DataType = DataType.Int32)]
-		public int ApiChangeFailCount { get; set; }
+		[Nullable]
+		[Column(Name = "api_change_attached_series_id", DataType = DataType.Int32)]
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_created_date'.</para>
@@ -190,6 +177,19 @@ namespace TrackTv.Data
 		[NotNull]
 		[Column(Name = "api_change_created_date", DataType = DataType.DateTime2)]
 		public DateTime ApiChangeCreatedDate { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'api_change_fail_count'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		[NotNull]
+		[Column(Name = "api_change_fail_count", DataType = DataType.Int32)]
+		public int ApiChangeFailCount { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
@@ -233,17 +233,17 @@ namespace TrackTv.Data
 		public DateTime ApiChangeThetvdbLastUpdated { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'api_change_attached_series_id'.</para>
+		/// <para>Column name: 'api_change_thetvdbid'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is nullable.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int?'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		[Nullable]
-		[Column(Name = "api_change_attached_series_id", DataType = DataType.Int32)]
-		public int? ApiChangeAttachedSeriesID { get; set; }
+		[NotNull]
+		[Column(Name = "api_change_thetvdbid", DataType = DataType.Int32)]
+		public int ApiChangeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
@@ -266,13 +266,13 @@ namespace TrackTv.Data
 		{
 			return new ApiChangeBM
 			{
-				ApiChangeThetvdbid = this.ApiChangeThetvdbid,
-				ApiChangeFailCount = this.ApiChangeFailCount,
+				ApiChangeAttachedSeriesID = this.ApiChangeAttachedSeriesID,
 				ApiChangeCreatedDate = this.ApiChangeCreatedDate,
+				ApiChangeFailCount = this.ApiChangeFailCount,
 				ApiChangeID = this.ApiChangeID,
 				ApiChangeLastFailedTime = this.ApiChangeLastFailedTime,
 				ApiChangeThetvdbLastUpdated = this.ApiChangeThetvdbLastUpdated,
-				ApiChangeAttachedSeriesID = this.ApiChangeAttachedSeriesID,
+				ApiChangeThetvdbid = this.ApiChangeThetvdbid,
 				ApiChangeType = this.ApiChangeType,
 			};
 		}
@@ -285,6 +285,19 @@ namespace TrackTv.Data
 	[Table(Schema="public", Name = "api_responses")]
 	public class ApiResponsePoco : IPoco<ApiResponsePoco>
 	{
+		/// <summary>
+		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
+		/// </summary>
+		[NotNull]
+		[Column(Name = "api_response_body", DataType = DataType.BinaryJson)]
+		public string ApiResponseBody { get; set; }
+
 		/// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
@@ -299,34 +312,6 @@ namespace TrackTv.Data
 		[Nullable]
 		[Column(Name = "api_response_episode_thetvdbid", DataType = DataType.Int32)]
 		public int? ApiResponseEpisodeThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
-		/// <para>Table name: 'api_responses'.</para>
-		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
-		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
-		/// <para>This column is nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int?'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		[Nullable]
-		[Column(Name = "api_response_show_thetvdbid", DataType = DataType.Int32)]
-		public int? ApiResponseShowThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_response_body'.</para>
-		/// <para>Table name: 'api_responses'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'jsonb'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-		/// </summary>
-		[NotNull]
-		[Column(Name = "api_response_body", DataType = DataType.BinaryJson)]
-		public string ApiResponseBody { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
@@ -356,17 +341,32 @@ namespace TrackTv.Data
 		[Column(Name = "api_response_last_updated", DataType = DataType.DateTime2)]
 		public DateTime ApiResponseLastUpdated { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
+		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		[Nullable]
+		[Column(Name = "api_response_show_thetvdbid", DataType = DataType.Int32)]
+		public int? ApiResponseShowThetvdbid { get; set; }
+
 		public static TableMetadataModel<ApiResponsePoco> Metadata => TrackTvMetadata.ApiResponsePocoMetadata;
 
 		public ApiResponseBM ToBm()
 		{
 			return new ApiResponseBM
 			{
-				ApiResponseEpisodeThetvdbid = this.ApiResponseEpisodeThetvdbid,
-				ApiResponseShowThetvdbid = this.ApiResponseShowThetvdbid,
 				ApiResponseBody = this.ApiResponseBody,
+				ApiResponseEpisodeThetvdbid = this.ApiResponseEpisodeThetvdbid,
 				ApiResponseID = this.ApiResponseID,
 				ApiResponseLastUpdated = this.ApiResponseLastUpdated,
+				ApiResponseShowThetvdbid = this.ApiResponseShowThetvdbid,
 			};
 		}
 	}
@@ -378,6 +378,19 @@ namespace TrackTv.Data
 	[Table(Schema="public", Name = "episodes")]
 	public class EpisodePoco : IPoco<EpisodePoco>
 	{
+		/// <summary>
+		/// <para>Column name: 'episode_description'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+		/// </summary>
+		[Nullable]
+		[Column(Name = "episode_description", DataType = DataType.Text)]
+		public string EpisodeDescription { get; set; }
+
 		/// <summary>
 		/// <para>Column name: 'episode_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
@@ -392,19 +405,6 @@ namespace TrackTv.Data
 		[PrimaryKey, Identity]
 		[Column(Name = "episode_id", DataType = DataType.Int32)]
 		public int EpisodeID { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'episode_description'.</para>
-		/// <para>Table name: 'episodes'.</para>
-		/// <para>This column is nullable.</para>
-		/// <para>PostgreSQL data type: 'text'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.Text'.</para>
-		/// </summary>
-		[Nullable]
-		[Column(Name = "episode_description", DataType = DataType.Text)]
-		public string EpisodeDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_number'.</para>
@@ -518,8 +518,8 @@ namespace TrackTv.Data
 		{
 			return new EpisodeBM
 			{
-				EpisodeID = this.EpisodeID,
 				EpisodeDescription = this.EpisodeDescription,
+				EpisodeID = this.EpisodeID,
 				EpisodeNumber = this.EpisodeNumber,
 				EpisodeTitle = this.EpisodeTitle,
 				FirstAired = this.FirstAired,
@@ -681,21 +681,6 @@ namespace TrackTv.Data
 	public class RolePoco : IPoco<RolePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'role_id'.</para>
-		/// <para>Table name: 'roles'.</para>
-		/// <para>Primary key of table: 'roles'.</para>
-		/// <para>Primary key constraint name: 'roles_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		[PrimaryKey, Identity]
-		[Column(Name = "role_id", DataType = DataType.Int32)]
-		public int RoleID { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>Foreign key column [public.roles.actor_id -> public.actors.actor_id].</para>
@@ -709,6 +694,21 @@ namespace TrackTv.Data
 		[NotNull]
 		[Column(Name = "actor_id", DataType = DataType.Int32)]
 		public int ActorID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'role_id'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Primary key of table: 'roles'.</para>
+		/// <para>Primary key constraint name: 'roles_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		[PrimaryKey, Identity]
+		[Column(Name = "role_id", DataType = DataType.Int32)]
+		public int RoleID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'role_name'.</para>
@@ -744,8 +744,8 @@ namespace TrackTv.Data
 		{
 			return new RoleBM
 			{
-				RoleID = this.RoleID,
 				ActorID = this.ActorID,
+				RoleID = this.RoleID,
 				RoleName = this.RoleName,
 				ShowID = this.ShowID,
 			};
@@ -775,19 +775,6 @@ namespace TrackTv.Data
 		public int SettingID { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'setting_value'.</para>
-		/// <para>Table name: 'settings'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		[NotNull]
-		[Column(Name = "setting_value", DataType = DataType.NVarChar)]
-		public string SettingValue { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'setting_name'.</para>
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
@@ -800,6 +787,19 @@ namespace TrackTv.Data
 		[Column(Name = "setting_name", DataType = DataType.NVarChar)]
 		public string SettingName { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'setting_value'.</para>
+		/// <para>Table name: 'settings'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		[NotNull]
+		[Column(Name = "setting_value", DataType = DataType.NVarChar)]
+		public string SettingValue { get; set; }
+
 		public static TableMetadataModel<SettingPoco> Metadata => TrackTvMetadata.SettingPocoMetadata;
 
 		public SettingBM ToBm()
@@ -807,8 +807,8 @@ namespace TrackTv.Data
 			return new SettingBM
 			{
 				SettingID = this.SettingID,
-				SettingValue = this.SettingValue,
 				SettingName = this.SettingName,
+				SettingValue = this.SettingValue,
 			};
 		}
 	}
@@ -820,21 +820,6 @@ namespace TrackTv.Data
 	[Table(Schema="public", Name = "shows")]
 	public class ShowPoco : IPoco<ShowPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'show_id'.</para>
-		/// <para>Table name: 'shows'.</para>
-		/// <para>Primary key of table: 'shows'.</para>
-		/// <para>Primary key constraint name: 'shows_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		[PrimaryKey, Identity]
-		[Column(Name = "show_id", DataType = DataType.Int32)]
-		public int ShowID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'air_day'.</para>
 		/// <para>Table name: 'shows'.</para>
@@ -942,6 +927,21 @@ namespace TrackTv.Data
 		public string ShowDescription { get; set; }
 
 		/// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>Primary key of table: 'shows'.</para>
+		/// <para>Primary key constraint name: 'shows_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		[PrimaryKey, Identity]
+		[Column(Name = "show_id", DataType = DataType.Int32)]
+		public int ShowID { get; set; }
+
+		/// <summary>
 		/// <para>Column name: 'show_name'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -986,7 +986,6 @@ namespace TrackTv.Data
 		{
 			return new ShowBM
 			{
-				ShowID = this.ShowID,
 				AirDay = this.AirDay,
 				AirTime = this.AirTime,
 				FirstAired = this.FirstAired,
@@ -995,6 +994,7 @@ namespace TrackTv.Data
 				NetworkID = this.NetworkID,
 				ShowBanner = this.ShowBanner,
 				ShowDescription = this.ShowDescription,
+				ShowID = this.ShowID,
 				ShowName = this.ShowName,
 				ShowStatus = this.ShowStatus,
 				Thetvdbid = this.Thetvdbid,
@@ -1010,19 +1010,19 @@ namespace TrackTv.Data
 	public class ShowGenrePoco : IPoco<ShowGenrePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
-		/// <para>Primary key of table: 'shows_genres'.</para>
-		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
+		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
+		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		[PrimaryKey, Identity]
-		[Column(Name = "shows_genres_id", DataType = DataType.Int32)]
-		public int ShowsGenresID { get; set; }
+		[NotNull]
+		[Column(Name = "genre_id", DataType = DataType.Int32)]
+		public int GenreID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -1040,19 +1040,19 @@ namespace TrackTv.Data
 		public int ShowID { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Column name: 'shows_genres_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
-		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
-		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
+		/// <para>Primary key of table: 'shows_genres'.</para>
+		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		[NotNull]
-		[Column(Name = "genre_id", DataType = DataType.Int32)]
-		public int GenreID { get; set; }
+		[PrimaryKey, Identity]
+		[Column(Name = "shows_genres_id", DataType = DataType.Int32)]
+		public int ShowsGenresID { get; set; }
 
 		public static TableMetadataModel<ShowGenrePoco> Metadata => TrackTvMetadata.ShowGenrePocoMetadata;
 
@@ -1060,9 +1060,9 @@ namespace TrackTv.Data
 		{
 			return new ShowGenreBM
 			{
-				ShowsGenresID = this.ShowsGenresID,
-				ShowID = this.ShowID,
 				GenreID = this.GenreID,
+				ShowID = this.ShowID,
+				ShowsGenresID = this.ShowsGenresID,
 			};
 		}
 	}
@@ -1074,21 +1074,6 @@ namespace TrackTv.Data
 	[Table(Schema="public", Name = "subscriptions")]
 	public class SubscriptionPoco : IPoco<SubscriptionPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'subscription_id'.</para>
-		/// <para>Table name: 'subscriptions'.</para>
-		/// <para>Primary key of table: 'subscriptions'.</para>
-		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		[PrimaryKey, Identity]
-		[Column(Name = "subscription_id", DataType = DataType.Int32)]
-		public int SubscriptionID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
@@ -1119,15 +1104,30 @@ namespace TrackTv.Data
 		[Column(Name = "show_id", DataType = DataType.Int32)]
 		public int ShowID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Primary key of table: 'subscriptions'.</para>
+		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		[PrimaryKey, Identity]
+		[Column(Name = "subscription_id", DataType = DataType.Int32)]
+		public int SubscriptionID { get; set; }
+
 		public static TableMetadataModel<SubscriptionPoco> Metadata => TrackTvMetadata.SubscriptionPocoMetadata;
 
 		public SubscriptionBM ToBm()
 		{
 			return new SubscriptionBM
 			{
-				SubscriptionID = this.SubscriptionID,
 				ProfileID = this.ProfileID,
 				ShowID = this.ShowID,
+				SubscriptionID = this.SubscriptionID,
 			};
 		}
 	}
@@ -1140,21 +1140,6 @@ namespace TrackTv.Data
 	public class UserPoco : IPoco<UserPoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'user_id'.</para>
-		/// <para>Table name: 'users'.</para>
-		/// <para>Primary key of table: 'users'.</para>
-		/// <para>Primary key constraint name: 'users_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		[PrimaryKey, Identity]
-		[Column(Name = "user_id", DataType = DataType.Int32)]
-		public int UserID { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'is_admin'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1166,19 +1151,6 @@ namespace TrackTv.Data
 		[NotNull]
 		[Column(Name = "is_admin", DataType = DataType.Boolean)]
 		public bool IsAdmin { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'username'.</para>
-		/// <para>Table name: 'users'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		[NotNull]
-		[Column(Name = "username", DataType = DataType.NVarChar)]
-		public string Username { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'password'.</para>
@@ -1206,17 +1178,45 @@ namespace TrackTv.Data
 		[Column(Name = "profile_id", DataType = DataType.Int32)]
 		public int ProfileID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'user_id'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>Primary key of table: 'users'.</para>
+		/// <para>Primary key constraint name: 'users_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		[PrimaryKey, Identity]
+		[Column(Name = "user_id", DataType = DataType.Int32)]
+		public int UserID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'username'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		[NotNull]
+		[Column(Name = "username", DataType = DataType.NVarChar)]
+		public string Username { get; set; }
+
 		public static TableMetadataModel<UserPoco> Metadata => TrackTvMetadata.UserPocoMetadata;
 
 		public UserBM ToBm()
 		{
 			return new UserBM
 			{
-				UserID = this.UserID,
 				IsAdmin = this.IsAdmin,
-				Username = this.Username,
 				Password = this.Password,
 				ProfileID = this.ProfileID,
+				UserID = this.UserID,
+				Username = this.Username,
 			};
 		}
 	}
@@ -1294,17 +1294,6 @@ namespace TrackTv.Data
 	public class ApiChangeTypeCM : ICatalogModel<ApiChangeTypePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'api_change_type_name'.</para>
-		/// <para>Table name: 'api_change_types'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		public string ApiChangeTypeName { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'api_change_type_id'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
 		/// <para>Primary key of table: 'api_change_types'.</para>
@@ -1317,6 +1306,17 @@ namespace TrackTv.Data
 		/// </summary>
 		public int ApiChangeTypeID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'api_change_type_name'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		public string ApiChangeTypeName { get; set; }
+
 	}
 
 	/// <summary>
@@ -1326,26 +1326,15 @@ namespace TrackTv.Data
 	public class ApiChangeCM : ICatalogModel<ApiChangePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'api_change_thetvdbid'.</para>
+		/// <para>Column name: 'api_change_attached_series_id'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
+		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int ApiChangeThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_change_fail_count'.</para>
-		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int ApiChangeFailCount { get; set; }
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_created_date'.</para>
@@ -1357,6 +1346,17 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
 		/// </summary>
 		public DateTime ApiChangeCreatedDate { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'api_change_fail_count'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int ApiChangeFailCount { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
@@ -1394,15 +1394,15 @@ namespace TrackTv.Data
 		public DateTime ApiChangeThetvdbLastUpdated { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'api_change_attached_series_id'.</para>
+		/// <para>Column name: 'api_change_thetvdbid'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is nullable.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int?'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int? ApiChangeAttachedSeriesID { get; set; }
+		public int ApiChangeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
@@ -1426,6 +1426,17 @@ namespace TrackTv.Data
 	public class ApiResponseCM : ICatalogModel<ApiResponsePoco>
 	{
 		/// <summary>
+		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
+		/// </summary>
+		public string ApiResponseBody { get; set; }
+
+		/// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>Foreign key column [public.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
@@ -1437,30 +1448,6 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int? ApiResponseEpisodeThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
-		/// <para>Table name: 'api_responses'.</para>
-		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
-		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
-		/// <para>This column is nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int?'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int? ApiResponseShowThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_response_body'.</para>
-		/// <para>Table name: 'api_responses'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'jsonb'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-		/// </summary>
-		public string ApiResponseBody { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
@@ -1486,6 +1473,19 @@ namespace TrackTv.Data
 		/// </summary>
 		public DateTime ApiResponseLastUpdated { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
+		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int? ApiResponseShowThetvdbid { get; set; }
+
 	}
 
 	/// <summary>
@@ -1494,6 +1494,17 @@ namespace TrackTv.Data
 	/// </summary>
 	public class EpisodeCM : ICatalogModel<EpisodePoco>
 	{
+		/// <summary>
+		/// <para>Column name: 'episode_description'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+		/// </summary>
+		public string EpisodeDescription { get; set; }
+
 		/// <summary>
 		/// <para>Column name: 'episode_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
@@ -1506,17 +1517,6 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int EpisodeID { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'episode_description'.</para>
-		/// <para>Table name: 'episodes'.</para>
-		/// <para>This column is nullable.</para>
-		/// <para>PostgreSQL data type: 'text'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.Text'.</para>
-		/// </summary>
-		public string EpisodeDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_number'.</para>
@@ -1713,19 +1713,6 @@ namespace TrackTv.Data
 	public class RoleCM : ICatalogModel<RolePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'role_id'.</para>
-		/// <para>Table name: 'roles'.</para>
-		/// <para>Primary key of table: 'roles'.</para>
-		/// <para>Primary key constraint name: 'roles_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int RoleID { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>Foreign key column [public.roles.actor_id -> public.actors.actor_id].</para>
@@ -1737,6 +1724,19 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int ActorID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'role_id'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Primary key of table: 'roles'.</para>
+		/// <para>Primary key constraint name: 'roles_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int RoleID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'role_name'.</para>
@@ -1784,17 +1784,6 @@ namespace TrackTv.Data
 		public int SettingID { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'setting_value'.</para>
-		/// <para>Table name: 'settings'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		public string SettingValue { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'setting_name'.</para>
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1805,6 +1794,17 @@ namespace TrackTv.Data
 		/// </summary>
 		public string SettingName { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'setting_value'.</para>
+		/// <para>Table name: 'settings'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		public string SettingValue { get; set; }
+
 	}
 
 	/// <summary>
@@ -1813,19 +1813,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class ShowCM : ICatalogModel<ShowPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'show_id'.</para>
-		/// <para>Table name: 'shows'.</para>
-		/// <para>Primary key of table: 'shows'.</para>
-		/// <para>Primary key constraint name: 'shows_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int ShowID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'air_day'.</para>
 		/// <para>Table name: 'shows'.</para>
@@ -1917,6 +1904,19 @@ namespace TrackTv.Data
 		public string ShowDescription { get; set; }
 
 		/// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>Primary key of table: 'shows'.</para>
+		/// <para>Primary key constraint name: 'shows_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int ShowID { get; set; }
+
+		/// <summary>
 		/// <para>Column name: 'show_name'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -1958,17 +1958,17 @@ namespace TrackTv.Data
 	public class ShowGenreCM : ICatalogModel<ShowGenrePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
-		/// <para>Primary key of table: 'shows_genres'.</para>
-		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
+		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
+		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int ShowsGenresID { get; set; }
+		public int GenreID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -1984,17 +1984,17 @@ namespace TrackTv.Data
 		public int ShowID { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Column name: 'shows_genres_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
-		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
-		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
+		/// <para>Primary key of table: 'shows_genres'.</para>
+		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int GenreID { get; set; }
+		public int ShowsGenresID { get; set; }
 
 	}
 
@@ -2004,19 +2004,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class SubscriptionCM : ICatalogModel<SubscriptionPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'subscription_id'.</para>
-		/// <para>Table name: 'subscriptions'.</para>
-		/// <para>Primary key of table: 'subscriptions'.</para>
-		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int SubscriptionID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
@@ -2043,6 +2030,19 @@ namespace TrackTv.Data
 		/// </summary>
 		public int ShowID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Primary key of table: 'subscriptions'.</para>
+		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int SubscriptionID { get; set; }
+
 	}
 
 	/// <summary>
@@ -2051,19 +2051,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class UserCM : ICatalogModel<UserPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'user_id'.</para>
-		/// <para>Table name: 'users'.</para>
-		/// <para>Primary key of table: 'users'.</para>
-		/// <para>Primary key constraint name: 'users_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int UserID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'is_admin'.</para>
 		/// <para>Table name: 'users'.</para>
@@ -2074,17 +2061,6 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
 		/// </summary>
 		public bool IsAdmin { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'username'.</para>
-		/// <para>Table name: 'users'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		public string Username { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'password'.</para>
@@ -2107,6 +2083,30 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int ProfileID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'user_id'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>Primary key of table: 'users'.</para>
+		/// <para>Primary key constraint name: 'users_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int UserID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'username'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		public string Username { get; set; }
 
 	}
 
@@ -2263,6 +2263,30 @@ namespace TrackTv.Data
 	/// </summary>
 	public class ApiChangeTypeFM : IFilterModel<ApiChangeTypePoco>
 	{
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int? ApiChangeTypeID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int? ApiChangeTypeID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int? ApiChangeTypeID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int? ApiChangeTypeID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int? ApiChangeTypeID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int? ApiChangeTypeID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int[] ApiChangeTypeID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
+		public int[] ApiChangeTypeID_IsNotIn { get; set; }
+
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
 		public string ApiChangeTypeName { get; set; }
 
@@ -2293,30 +2317,6 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeTypeName", NpgsqlDbType.Varchar, "api_change_type_name")]
 		public string[] ApiChangeTypeName_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int? ApiChangeTypeID { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int? ApiChangeTypeID_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int? ApiChangeTypeID_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int? ApiChangeTypeID_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int? ApiChangeTypeID_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int? ApiChangeTypeID_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int[] ApiChangeTypeID_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeTypeID", NpgsqlDbType.Integer, "api_change_type_id")]
-		public int[] ApiChangeTypeID_IsNotIn { get; set; }
-
 	}
 
 	/// <summary>
@@ -2325,53 +2325,23 @@ namespace TrackTv.Data
 	/// </summary>
 	public class ApiChangeFM : IFilterModel<ApiChangePoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int? ApiChangeThetvdbid { get; set; }
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int? ApiChangeThetvdbid_NotEqual { get; set; }
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
+		public int? ApiChangeAttachedSeriesID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int? ApiChangeThetvdbid_LessThan { get; set; }
+		[FilterOperator(QueryOperatorType.IsNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
+		public bool? ApiChangeAttachedSeriesID_IsNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int? ApiChangeThetvdbid_LessThanOrEqual { get; set; }
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
+		public bool? ApiChangeAttachedSeriesID_IsNotNull { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int? ApiChangeThetvdbid_GreaterThan { get; set; }
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
+		public int[] ApiChangeAttachedSeriesID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int? ApiChangeThetvdbid_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int[] ApiChangeThetvdbid_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
-		public int[] ApiChangeThetvdbid_IsNotIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.Equal, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int? ApiChangeFailCount { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int? ApiChangeFailCount_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int? ApiChangeFailCount_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int? ApiChangeFailCount_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int? ApiChangeFailCount_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int? ApiChangeFailCount_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int[] ApiChangeFailCount_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
-		public int[] ApiChangeFailCount_IsNotIn { get; set; }
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
+		public int[] ApiChangeAttachedSeriesID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
 		public DateTime? ApiChangeCreatedDate { get; set; }
@@ -2396,6 +2366,30 @@ namespace TrackTv.Data
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeCreatedDate", NpgsqlDbType.Timestamp, "api_change_created_date")]
 		public DateTime[] ApiChangeCreatedDate_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int? ApiChangeFailCount { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int? ApiChangeFailCount_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int? ApiChangeFailCount_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int? ApiChangeFailCount_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int? ApiChangeFailCount_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int? ApiChangeFailCount_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int[] ApiChangeFailCount_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeFailCount", NpgsqlDbType.Integer, "api_change_fail_count")]
+		public int[] ApiChangeFailCount_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeID", NpgsqlDbType.Integer, "api_change_id")]
 		public int? ApiChangeID { get; set; }
@@ -2463,23 +2457,29 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeThetvdbLastUpdated", NpgsqlDbType.Timestamp, "api_change_thetvdb_last_updated")]
 		public DateTime[] ApiChangeThetvdbLastUpdated_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-		public int? ApiChangeAttachedSeriesID { get; set; }
+		[FilterOperator(QueryOperatorType.Equal, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int? ApiChangeThetvdbid { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-		public int? ApiChangeAttachedSeriesID_NotEqual { get; set; }
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int? ApiChangeThetvdbid_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-		public bool? ApiChangeAttachedSeriesID_IsNull { get; set; }
+		[FilterOperator(QueryOperatorType.LessThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int? ApiChangeThetvdbid_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotNull, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-		public bool? ApiChangeAttachedSeriesID_IsNotNull { get; set; }
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int? ApiChangeThetvdbid_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-		public int[] ApiChangeAttachedSeriesID_IsIn { get; set; }
+		[FilterOperator(QueryOperatorType.GreaterThan, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int? ApiChangeThetvdbid_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeAttachedSeriesID", NpgsqlDbType.Integer, "api_change_attached_series_id")]
-		public int[] ApiChangeAttachedSeriesID_IsNotIn { get; set; }
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int? ApiChangeThetvdbid_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int[] ApiChangeThetvdbid_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiChangeThetvdbid", NpgsqlDbType.Integer, "api_change_thetvdbid")]
+		public int[] ApiChangeThetvdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiChangeType", NpgsqlDbType.Integer, "api_change_type")]
 		public int? ApiChangeType { get; set; }
@@ -2513,42 +2513,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class ApiResponseFM : IFilterModel<ApiResponsePoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-		public int? ApiResponseEpisodeThetvdbid { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-		public int? ApiResponseEpisodeThetvdbid_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-		public bool? ApiResponseEpisodeThetvdbid_IsNull { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-		public bool? ApiResponseEpisodeThetvdbid_IsNotNull { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-		public int[] ApiResponseEpisodeThetvdbid_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
-		public int[] ApiResponseEpisodeThetvdbid_IsNotIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.Equal, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-		public int? ApiResponseShowThetvdbid { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-		public int? ApiResponseShowThetvdbid_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-		public bool? ApiResponseShowThetvdbid_IsNull { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-		public bool? ApiResponseShowThetvdbid_IsNotNull { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-		public int[] ApiResponseShowThetvdbid_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
-		public int[] ApiResponseShowThetvdbid_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
 		public string ApiResponseBody { get; set; }
 
@@ -2578,6 +2542,24 @@ namespace TrackTv.Data
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseBody", NpgsqlDbType.Jsonb, "api_response_body")]
 		public string[] ApiResponseBody_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
+		public int? ApiResponseEpisodeThetvdbid { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
+		public int? ApiResponseEpisodeThetvdbid_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
+		public bool? ApiResponseEpisodeThetvdbid_IsNull { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
+		public bool? ApiResponseEpisodeThetvdbid_IsNotNull { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
+		public int[] ApiResponseEpisodeThetvdbid_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseEpisodeThetvdbid", NpgsqlDbType.Integer, "api_response_episode_thetvdbid")]
+		public int[] ApiResponseEpisodeThetvdbid_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ApiResponseID", NpgsqlDbType.Integer, "api_response_id")]
 		public int? ApiResponseID { get; set; }
@@ -2627,6 +2609,24 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseLastUpdated", NpgsqlDbType.Timestamp, "api_response_last_updated")]
 		public DateTime[] ApiResponseLastUpdated_IsNotIn { get; set; }
 
+		[FilterOperator(QueryOperatorType.Equal, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
+		public int? ApiResponseShowThetvdbid { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
+		public int? ApiResponseShowThetvdbid_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
+		public bool? ApiResponseShowThetvdbid_IsNull { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotNull, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
+		public bool? ApiResponseShowThetvdbid_IsNotNull { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
+		public int[] ApiResponseShowThetvdbid_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "ApiResponseShowThetvdbid", NpgsqlDbType.Integer, "api_response_show_thetvdbid")]
+		public int[] ApiResponseShowThetvdbid_IsNotIn { get; set; }
+
 	}
 
 	/// <summary>
@@ -2635,30 +2635,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class EpisodeFM : IFilterModel<EpisodePoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int? EpisodeID { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int? EpisodeID_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int? EpisodeID_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int? EpisodeID_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int? EpisodeID_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int? EpisodeID_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int[] EpisodeID_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
-		public int[] EpisodeID_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
 		public string EpisodeDescription { get; set; }
 
@@ -2694,6 +2670,30 @@ namespace TrackTv.Data
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeDescription", NpgsqlDbType.Text, "episode_description")]
 		public string[] EpisodeDescription_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int? EpisodeID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int? EpisodeID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int? EpisodeID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int? EpisodeID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int? EpisodeID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int? EpisodeID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int[] EpisodeID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "EpisodeID", NpgsqlDbType.Integer, "episode_id")]
+		public int[] EpisodeID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "EpisodeNumber", NpgsqlDbType.Integer, "episode_number")]
 		public int? EpisodeNumber { get; set; }
@@ -3099,30 +3099,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class RoleFM : IFilterModel<RolePoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int? RoleID { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int? RoleID_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int? RoleID_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int? RoleID_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int? RoleID_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int? RoleID_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int[] RoleID_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "RoleID", NpgsqlDbType.Integer, "role_id")]
-		public int[] RoleID_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "ActorID", NpgsqlDbType.Integer, "actor_id")]
 		public int? ActorID { get; set; }
 
@@ -3146,6 +3122,30 @@ namespace TrackTv.Data
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "ActorID", NpgsqlDbType.Integer, "actor_id")]
 		public int[] ActorID_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int? RoleID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int? RoleID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int? RoleID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int? RoleID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int? RoleID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int? RoleID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int[] RoleID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "RoleID", NpgsqlDbType.Integer, "role_id")]
+		public int[] RoleID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "RoleName", NpgsqlDbType.Varchar, "role_name")]
 		public string RoleName { get; set; }
@@ -3239,36 +3239,6 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "SettingID", NpgsqlDbType.Integer, "setting_id")]
 		public int[] SettingID_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.StartsWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_StartsWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_DoesNotStartWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.EndsWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_EndsWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_DoesNotEndWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.Contains, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_Contains { get; set; }
-
-		[FilterOperator(QueryOperatorType.DoesNotContain, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string SettingValue_DoesNotContain { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string[] SettingValue_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
-		public string[] SettingValue_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
 		public string SettingName { get; set; }
 
@@ -3299,6 +3269,36 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "SettingName", NpgsqlDbType.Varchar, "setting_name")]
 		public string[] SettingName_IsNotIn { get; set; }
 
+		[FilterOperator(QueryOperatorType.Equal, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.StartsWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_StartsWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_DoesNotStartWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.EndsWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_EndsWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_DoesNotEndWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.Contains, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_Contains { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotContain, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string SettingValue_DoesNotContain { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string[] SettingValue_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "SettingValue", NpgsqlDbType.Varchar, "setting_value")]
+		public string[] SettingValue_IsNotIn { get; set; }
+
 	}
 
 	/// <summary>
@@ -3307,30 +3307,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class ShowFM : IFilterModel<ShowPoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int? ShowID { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int? ShowID_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int? ShowID_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int? ShowID_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int? ShowID_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int? ShowID_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int[] ShowID_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
-		public int[] ShowID_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "AirDay", NpgsqlDbType.Integer, "air_day")]
 		public int? AirDay { get; set; }
 
@@ -3541,6 +3517,30 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ShowDescription", NpgsqlDbType.Text, "show_description")]
 		public string[] ShowDescription_IsNotIn { get; set; }
 
+		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int? ShowID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int? ShowID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int? ShowID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int? ShowID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int? ShowID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int? ShowID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int[] ShowID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
+		public int[] ShowID_IsNotIn { get; set; }
+
 		[FilterOperator(QueryOperatorType.Equal, "ShowName", NpgsqlDbType.Varchar, "show_name")]
 		public string ShowName { get; set; }
 
@@ -3627,29 +3627,29 @@ namespace TrackTv.Data
 	/// </summary>
 	public class ShowGenreFM : IFilterModel<ShowGenrePoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int? ShowsGenresID { get; set; }
+		[FilterOperator(QueryOperatorType.Equal, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int? GenreID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int? ShowsGenresID_NotEqual { get; set; }
+		[FilterOperator(QueryOperatorType.NotEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int? GenreID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int? ShowsGenresID_LessThan { get; set; }
+		[FilterOperator(QueryOperatorType.LessThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int? GenreID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int? ShowsGenresID_LessThanOrEqual { get; set; }
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int? GenreID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int? ShowsGenresID_GreaterThan { get; set; }
+		[FilterOperator(QueryOperatorType.GreaterThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int? GenreID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int? ShowsGenresID_GreaterThanOrEqual { get; set; }
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int? GenreID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int[] ShowsGenresID_IsIn { get; set; }
+		[FilterOperator(QueryOperatorType.IsIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int[] GenreID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
-		public int[] ShowsGenresID_IsNotIn { get; set; }
+		[FilterOperator(QueryOperatorType.IsNotIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
+		public int[] GenreID_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int? ShowID { get; set; }
@@ -3675,29 +3675,29 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsNotIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.Equal, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int? GenreID { get; set; }
+		[FilterOperator(QueryOperatorType.Equal, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int? ShowsGenresID { get; set; }
 
-		[FilterOperator(QueryOperatorType.NotEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int? GenreID_NotEqual { get; set; }
+		[FilterOperator(QueryOperatorType.NotEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int? ShowsGenresID_NotEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int? GenreID_LessThan { get; set; }
+		[FilterOperator(QueryOperatorType.LessThan, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int? ShowsGenresID_LessThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int? GenreID_LessThanOrEqual { get; set; }
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int? ShowsGenresID_LessThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThan, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int? GenreID_GreaterThan { get; set; }
+		[FilterOperator(QueryOperatorType.GreaterThan, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int? ShowsGenresID_GreaterThan { get; set; }
 
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int? GenreID_GreaterThanOrEqual { get; set; }
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int? ShowsGenresID_GreaterThanOrEqual { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int[] GenreID_IsIn { get; set; }
+		[FilterOperator(QueryOperatorType.IsIn, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int[] ShowsGenresID_IsIn { get; set; }
 
-		[FilterOperator(QueryOperatorType.IsNotIn, "GenreID", NpgsqlDbType.Integer, "genre_id")]
-		public int[] GenreID_IsNotIn { get; set; }
+		[FilterOperator(QueryOperatorType.IsNotIn, "ShowsGenresID", NpgsqlDbType.Integer, "shows_genres_id")]
+		public int[] ShowsGenresID_IsNotIn { get; set; }
 
 	}
 
@@ -3707,30 +3707,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class SubscriptionFM : IFilterModel<SubscriptionPoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int? SubscriptionID { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int? SubscriptionID_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int? SubscriptionID_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int? SubscriptionID_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int? SubscriptionID_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int? SubscriptionID_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int[] SubscriptionID_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
-		public int[] SubscriptionID_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
 		public int? ProfileID { get; set; }
 
@@ -3779,6 +3755,30 @@ namespace TrackTv.Data
 		[FilterOperator(QueryOperatorType.IsNotIn, "ShowID", NpgsqlDbType.Integer, "show_id")]
 		public int[] ShowID_IsNotIn { get; set; }
 
+		[FilterOperator(QueryOperatorType.Equal, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int? SubscriptionID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int? SubscriptionID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int? SubscriptionID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int? SubscriptionID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int? SubscriptionID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int? SubscriptionID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int[] SubscriptionID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "SubscriptionID", NpgsqlDbType.Integer, "subscription_id")]
+		public int[] SubscriptionID_IsNotIn { get; set; }
+
 	}
 
 	/// <summary>
@@ -3787,30 +3787,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public class UserFM : IFilterModel<UserPoco>
 	{
-		[FilterOperator(QueryOperatorType.Equal, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int? UserID { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int? UserID_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThan, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int? UserID_LessThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.LessThanOrEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int? UserID_LessThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThan, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int? UserID_GreaterThan { get; set; }
-
-		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int? UserID_GreaterThanOrEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int[] UserID_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "UserID", NpgsqlDbType.Integer, "user_id")]
-		public int[] UserID_IsNotIn { get; set; }
-
 		[FilterOperator(QueryOperatorType.Equal, "IsAdmin", NpgsqlDbType.Boolean, "is_admin")]
 		public bool? IsAdmin { get; set; }
 
@@ -3822,36 +3798,6 @@ namespace TrackTv.Data
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "IsAdmin", NpgsqlDbType.Boolean, "is_admin")]
 		public bool[] IsAdmin_IsNotIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.Equal, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username { get; set; }
-
-		[FilterOperator(QueryOperatorType.NotEqual, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_NotEqual { get; set; }
-
-		[FilterOperator(QueryOperatorType.StartsWith, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_StartsWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_DoesNotStartWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.EndsWith, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_EndsWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_DoesNotEndWith { get; set; }
-
-		[FilterOperator(QueryOperatorType.Contains, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_Contains { get; set; }
-
-		[FilterOperator(QueryOperatorType.DoesNotContain, "Username", NpgsqlDbType.Varchar, "username")]
-		public string Username_DoesNotContain { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsIn, "Username", NpgsqlDbType.Varchar, "username")]
-		public string[] Username_IsIn { get; set; }
-
-		[FilterOperator(QueryOperatorType.IsNotIn, "Username", NpgsqlDbType.Varchar, "username")]
-		public string[] Username_IsNotIn { get; set; }
 
 		[FilterOperator(QueryOperatorType.Equal, "Password", NpgsqlDbType.Varchar, "password")]
 		public string Password { get; set; }
@@ -3906,6 +3852,60 @@ namespace TrackTv.Data
 
 		[FilterOperator(QueryOperatorType.IsNotIn, "ProfileID", NpgsqlDbType.Integer, "profile_id")]
 		public int[] ProfileID_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int? UserID { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int? UserID_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThan, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int? UserID_LessThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.LessThanOrEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int? UserID_LessThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThan, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int? UserID_GreaterThan { get; set; }
+
+		[FilterOperator(QueryOperatorType.GreaterThanOrEqual, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int? UserID_GreaterThanOrEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int[] UserID_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "UserID", NpgsqlDbType.Integer, "user_id")]
+		public int[] UserID_IsNotIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.Equal, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username { get; set; }
+
+		[FilterOperator(QueryOperatorType.NotEqual, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_NotEqual { get; set; }
+
+		[FilterOperator(QueryOperatorType.StartsWith, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_StartsWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotStartWith, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_DoesNotStartWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.EndsWith, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_EndsWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotEndWith, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_DoesNotEndWith { get; set; }
+
+		[FilterOperator(QueryOperatorType.Contains, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_Contains { get; set; }
+
+		[FilterOperator(QueryOperatorType.DoesNotContain, "Username", NpgsqlDbType.Varchar, "username")]
+		public string Username_DoesNotContain { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsIn, "Username", NpgsqlDbType.Varchar, "username")]
+		public string[] Username_IsIn { get; set; }
+
+		[FilterOperator(QueryOperatorType.IsNotIn, "Username", NpgsqlDbType.Varchar, "username")]
+		public string[] Username_IsNotIn { get; set; }
 
 	}
 
@@ -3993,17 +3993,6 @@ namespace TrackTv.Data
 	public partial class ApiChangeTypeBM : IBusinessModel<ApiChangeTypePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'api_change_type_name'.</para>
-		/// <para>Table name: 'api_change_types'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		public string ApiChangeTypeName { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'api_change_type_id'.</para>
 		/// <para>Table name: 'api_change_types'.</para>
 		/// <para>Primary key of table: 'api_change_types'.</para>
@@ -4016,12 +4005,23 @@ namespace TrackTv.Data
 		/// </summary>
 		public int ApiChangeTypeID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'api_change_type_name'.</para>
+		/// <para>Table name: 'api_change_types'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		public string ApiChangeTypeName { get; set; }
+
 		public ApiChangeTypePoco ToPoco()
 		{
 			return new ApiChangeTypePoco
 			{
-				ApiChangeTypeName = this.ApiChangeTypeName,
 				ApiChangeTypeID = this.ApiChangeTypeID,
+				ApiChangeTypeName = this.ApiChangeTypeName,
 			};
 		}
 	}
@@ -4033,26 +4033,15 @@ namespace TrackTv.Data
 	public partial class ApiChangeBM : IBusinessModel<ApiChangePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'api_change_thetvdbid'.</para>
+		/// <para>Column name: 'api_change_attached_series_id'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
+		/// <para>This column is nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
+		/// <para>CLR type: 'int?'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int ApiChangeThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_change_fail_count'.</para>
-		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int ApiChangeFailCount { get; set; }
+		public int? ApiChangeAttachedSeriesID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_created_date'.</para>
@@ -4064,6 +4053,17 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.DateTime2'.</para>
 		/// </summary>
 		public DateTime ApiChangeCreatedDate { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'api_change_fail_count'.</para>
+		/// <para>Table name: 'api_changes'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int ApiChangeFailCount { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_id'.</para>
@@ -4101,15 +4101,15 @@ namespace TrackTv.Data
 		public DateTime ApiChangeThetvdbLastUpdated { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'api_change_attached_series_id'.</para>
+		/// <para>Column name: 'api_change_thetvdbid'.</para>
 		/// <para>Table name: 'api_changes'.</para>
-		/// <para>This column is nullable.</para>
+		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int?'.</para>
+		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int? ApiChangeAttachedSeriesID { get; set; }
+		public int ApiChangeThetvdbid { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_change_type'.</para>
@@ -4128,13 +4128,13 @@ namespace TrackTv.Data
 		{
 			return new ApiChangePoco
 			{
-				ApiChangeThetvdbid = this.ApiChangeThetvdbid,
-				ApiChangeFailCount = this.ApiChangeFailCount,
+				ApiChangeAttachedSeriesID = this.ApiChangeAttachedSeriesID,
 				ApiChangeCreatedDate = this.ApiChangeCreatedDate,
+				ApiChangeFailCount = this.ApiChangeFailCount,
 				ApiChangeID = this.ApiChangeID,
 				ApiChangeLastFailedTime = this.ApiChangeLastFailedTime,
 				ApiChangeThetvdbLastUpdated = this.ApiChangeThetvdbLastUpdated,
-				ApiChangeAttachedSeriesID = this.ApiChangeAttachedSeriesID,
+				ApiChangeThetvdbid = this.ApiChangeThetvdbid,
 				ApiChangeType = this.ApiChangeType,
 			};
 		}
@@ -4147,6 +4147,17 @@ namespace TrackTv.Data
 	public partial class ApiResponseBM : IBusinessModel<ApiResponsePoco>
 	{
 		/// <summary>
+		/// <para>Column name: 'api_response_body'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'jsonb'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
+		/// </summary>
+		public string ApiResponseBody { get; set; }
+
+		/// <summary>
 		/// <para>Column name: 'api_response_episode_thetvdbid'.</para>
 		/// <para>Table name: 'api_responses'.</para>
 		/// <para>Foreign key column [public.api_responses.api_response_episode_thetvdbid -> public.episodes.thetvdbid].</para>
@@ -4158,30 +4169,6 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int? ApiResponseEpisodeThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
-		/// <para>Table name: 'api_responses'.</para>
-		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
-		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
-		/// <para>This column is nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int?'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int? ApiResponseShowThetvdbid { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'api_response_body'.</para>
-		/// <para>Table name: 'api_responses'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'jsonb'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Jsonb'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.BinaryJson'.</para>
-		/// </summary>
-		public string ApiResponseBody { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'api_response_id'.</para>
@@ -4207,15 +4194,28 @@ namespace TrackTv.Data
 		/// </summary>
 		public DateTime ApiResponseLastUpdated { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'api_response_show_thetvdbid'.</para>
+		/// <para>Table name: 'api_responses'.</para>
+		/// <para>Foreign key column [public.api_responses.api_response_show_thetvdbid -> public.shows.thetvdbid].</para>
+		/// <para>Foreign key constraint name: 'fk_api_responses_shows_thetvdbid'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int?'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int? ApiResponseShowThetvdbid { get; set; }
+
 		public ApiResponsePoco ToPoco()
 		{
 			return new ApiResponsePoco
 			{
-				ApiResponseEpisodeThetvdbid = this.ApiResponseEpisodeThetvdbid,
-				ApiResponseShowThetvdbid = this.ApiResponseShowThetvdbid,
 				ApiResponseBody = this.ApiResponseBody,
+				ApiResponseEpisodeThetvdbid = this.ApiResponseEpisodeThetvdbid,
 				ApiResponseID = this.ApiResponseID,
 				ApiResponseLastUpdated = this.ApiResponseLastUpdated,
+				ApiResponseShowThetvdbid = this.ApiResponseShowThetvdbid,
 			};
 		}
 	}
@@ -4226,6 +4226,17 @@ namespace TrackTv.Data
 	/// </summary>
 	public partial class EpisodeBM : IBusinessModel<EpisodePoco>
 	{
+		/// <summary>
+		/// <para>Column name: 'episode_description'.</para>
+		/// <para>Table name: 'episodes'.</para>
+		/// <para>This column is nullable.</para>
+		/// <para>PostgreSQL data type: 'text'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.Text'.</para>
+		/// </summary>
+		public string EpisodeDescription { get; set; }
+
 		/// <summary>
 		/// <para>Column name: 'episode_id'.</para>
 		/// <para>Table name: 'episodes'.</para>
@@ -4238,17 +4249,6 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int EpisodeID { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'episode_description'.</para>
-		/// <para>Table name: 'episodes'.</para>
-		/// <para>This column is nullable.</para>
-		/// <para>PostgreSQL data type: 'text'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Text'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.Text'.</para>
-		/// </summary>
-		public string EpisodeDescription { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'episode_number'.</para>
@@ -4344,8 +4344,8 @@ namespace TrackTv.Data
 		{
 			return new EpisodePoco
 			{
-				EpisodeID = this.EpisodeID,
 				EpisodeDescription = this.EpisodeDescription,
+				EpisodeID = this.EpisodeID,
 				EpisodeNumber = this.EpisodeNumber,
 				EpisodeTitle = this.EpisodeTitle,
 				FirstAired = this.FirstAired,
@@ -4485,19 +4485,6 @@ namespace TrackTv.Data
 	public partial class RoleBM : IBusinessModel<RolePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'role_id'.</para>
-		/// <para>Table name: 'roles'.</para>
-		/// <para>Primary key of table: 'roles'.</para>
-		/// <para>Primary key constraint name: 'roles_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int RoleID { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'actor_id'.</para>
 		/// <para>Table name: 'roles'.</para>
 		/// <para>Foreign key column [public.roles.actor_id -> public.actors.actor_id].</para>
@@ -4509,6 +4496,19 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
 		public int ActorID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'role_id'.</para>
+		/// <para>Table name: 'roles'.</para>
+		/// <para>Primary key of table: 'roles'.</para>
+		/// <para>Primary key constraint name: 'roles_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int RoleID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'role_name'.</para>
@@ -4538,8 +4538,8 @@ namespace TrackTv.Data
 		{
 			return new RolePoco
 			{
-				RoleID = this.RoleID,
 				ActorID = this.ActorID,
+				RoleID = this.RoleID,
 				RoleName = this.RoleName,
 				ShowID = this.ShowID,
 			};
@@ -4566,17 +4566,6 @@ namespace TrackTv.Data
 		public int SettingID { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'setting_value'.</para>
-		/// <para>Table name: 'settings'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		public string SettingValue { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'setting_name'.</para>
 		/// <para>Table name: 'settings'.</para>
 		/// <para>This column is not nullable.</para>
@@ -4587,13 +4576,24 @@ namespace TrackTv.Data
 		/// </summary>
 		public string SettingName { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'setting_value'.</para>
+		/// <para>Table name: 'settings'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		public string SettingValue { get; set; }
+
 		public SettingPoco ToPoco()
 		{
 			return new SettingPoco
 			{
 				SettingID = this.SettingID,
-				SettingValue = this.SettingValue,
 				SettingName = this.SettingName,
+				SettingValue = this.SettingValue,
 			};
 		}
 	}
@@ -4604,19 +4604,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public partial class ShowBM : IBusinessModel<ShowPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'show_id'.</para>
-		/// <para>Table name: 'shows'.</para>
-		/// <para>Primary key of table: 'shows'.</para>
-		/// <para>Primary key constraint name: 'shows_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int ShowID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'air_day'.</para>
 		/// <para>Table name: 'shows'.</para>
@@ -4708,6 +4695,19 @@ namespace TrackTv.Data
 		public string ShowDescription { get; set; }
 
 		/// <summary>
+		/// <para>Column name: 'show_id'.</para>
+		/// <para>Table name: 'shows'.</para>
+		/// <para>Primary key of table: 'shows'.</para>
+		/// <para>Primary key constraint name: 'shows_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int ShowID { get; set; }
+
+		/// <summary>
 		/// <para>Column name: 'show_name'.</para>
 		/// <para>Table name: 'shows'.</para>
 		/// <para>This column is not nullable.</para>
@@ -4744,7 +4744,6 @@ namespace TrackTv.Data
 		{
 			return new ShowPoco
 			{
-				ShowID = this.ShowID,
 				AirDay = this.AirDay,
 				AirTime = this.AirTime,
 				FirstAired = this.FirstAired,
@@ -4753,6 +4752,7 @@ namespace TrackTv.Data
 				NetworkID = this.NetworkID,
 				ShowBanner = this.ShowBanner,
 				ShowDescription = this.ShowDescription,
+				ShowID = this.ShowID,
 				ShowName = this.ShowName,
 				ShowStatus = this.ShowStatus,
 				Thetvdbid = this.Thetvdbid,
@@ -4767,17 +4767,17 @@ namespace TrackTv.Data
 	public partial class ShowGenreBM : IBusinessModel<ShowGenrePoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'shows_genres_id'.</para>
+		/// <para>Column name: 'genre_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
-		/// <para>Primary key of table: 'shows_genres'.</para>
-		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
+		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
+		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int ShowsGenresID { get; set; }
+		public int GenreID { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'show_id'.</para>
@@ -4793,25 +4793,25 @@ namespace TrackTv.Data
 		public int ShowID { get; set; }
 
 		/// <summary>
-		/// <para>Column name: 'genre_id'.</para>
+		/// <para>Column name: 'shows_genres_id'.</para>
 		/// <para>Table name: 'shows_genres'.</para>
-		/// <para>Foreign key column [public.shows_genres.genre_id -> public.genres.genre_id].</para>
-		/// <para>Foreign key constraint name: 'fk_shows_genres_genre_id'.</para>
+		/// <para>Primary key of table: 'shows_genres'.</para>
+		/// <para>Primary key constraint name: 'shows_genres_pkey'.</para>
 		/// <para>This column is not nullable.</para>
 		/// <para>PostgreSQL data type: 'integer'.</para>
 		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
 		/// <para>CLR type: 'int'.</para>
 		/// <para>linq2db data type: 'DataType.Int32'.</para>
 		/// </summary>
-		public int GenreID { get; set; }
+		public int ShowsGenresID { get; set; }
 
 		public ShowGenrePoco ToPoco()
 		{
 			return new ShowGenrePoco
 			{
-				ShowsGenresID = this.ShowsGenresID,
-				ShowID = this.ShowID,
 				GenreID = this.GenreID,
+				ShowID = this.ShowID,
+				ShowsGenresID = this.ShowsGenresID,
 			};
 		}
 	}
@@ -4822,19 +4822,6 @@ namespace TrackTv.Data
 	/// </summary>
 	public partial class SubscriptionBM : IBusinessModel<SubscriptionPoco>
 	{
-		/// <summary>
-		/// <para>Column name: 'subscription_id'.</para>
-		/// <para>Table name: 'subscriptions'.</para>
-		/// <para>Primary key of table: 'subscriptions'.</para>
-		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int SubscriptionID { get; set; }
-
 		/// <summary>
 		/// <para>Column name: 'profile_id'.</para>
 		/// <para>Table name: 'subscriptions'.</para>
@@ -4861,13 +4848,26 @@ namespace TrackTv.Data
 		/// </summary>
 		public int ShowID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'subscription_id'.</para>
+		/// <para>Table name: 'subscriptions'.</para>
+		/// <para>Primary key of table: 'subscriptions'.</para>
+		/// <para>Primary key constraint name: 'subscriptions_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int SubscriptionID { get; set; }
+
 		public SubscriptionPoco ToPoco()
 		{
 			return new SubscriptionPoco
 			{
-				SubscriptionID = this.SubscriptionID,
 				ProfileID = this.ProfileID,
 				ShowID = this.ShowID,
+				SubscriptionID = this.SubscriptionID,
 			};
 		}
 	}
@@ -4879,19 +4879,6 @@ namespace TrackTv.Data
 	public partial class UserBM : IBusinessModel<UserPoco>
 	{
 		/// <summary>
-		/// <para>Column name: 'user_id'.</para>
-		/// <para>Table name: 'users'.</para>
-		/// <para>Primary key of table: 'users'.</para>
-		/// <para>Primary key constraint name: 'users_pkey'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'integer'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
-		/// <para>CLR type: 'int'.</para>
-		/// <para>linq2db data type: 'DataType.Int32'.</para>
-		/// </summary>
-		public int UserID { get; set; }
-
-		/// <summary>
 		/// <para>Column name: 'is_admin'.</para>
 		/// <para>Table name: 'users'.</para>
 		/// <para>This column is not nullable.</para>
@@ -4901,17 +4888,6 @@ namespace TrackTv.Data
 		/// <para>linq2db data type: 'DataType.Boolean'.</para>
 		/// </summary>
 		public bool IsAdmin { get; set; }
-
-		/// <summary>
-		/// <para>Column name: 'username'.</para>
-		/// <para>Table name: 'users'.</para>
-		/// <para>This column is not nullable.</para>
-		/// <para>PostgreSQL data type: 'character varying'.</para>
-		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
-		/// <para>CLR type: 'string'.</para>
-		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
-		/// </summary>
-		public string Username { get; set; }
 
 		/// <summary>
 		/// <para>Column name: 'password'.</para>
@@ -4935,15 +4911,39 @@ namespace TrackTv.Data
 		/// </summary>
 		public int ProfileID { get; set; }
 
+		/// <summary>
+		/// <para>Column name: 'user_id'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>Primary key of table: 'users'.</para>
+		/// <para>Primary key constraint name: 'users_pkey'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'integer'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Integer'.</para>
+		/// <para>CLR type: 'int'.</para>
+		/// <para>linq2db data type: 'DataType.Int32'.</para>
+		/// </summary>
+		public int UserID { get; set; }
+
+		/// <summary>
+		/// <para>Column name: 'username'.</para>
+		/// <para>Table name: 'users'.</para>
+		/// <para>This column is not nullable.</para>
+		/// <para>PostgreSQL data type: 'character varying'.</para>
+		/// <para>NpgsqlDbType: 'NpgsqlDbType.Varchar'.</para>
+		/// <para>CLR type: 'string'.</para>
+		/// <para>linq2db data type: 'DataType.NVarChar'.</para>
+		/// </summary>
+		public string Username { get; set; }
+
 		public UserPoco ToPoco()
 		{
 			return new UserPoco
 			{
-				UserID = this.UserID,
 				IsAdmin = this.IsAdmin,
-				Username = this.Username,
 				Password = this.Password,
 				ProfileID = this.ProfileID,
+				UserID = this.UserID,
+				Username = this.Username,
 			};
 		}
 	}
@@ -5426,37 +5426,6 @@ namespace TrackTv.Data
 				{
 					new ColumnMetadataModel
 					{
-						ClrTypeName = "string",
-						ClrType = typeof(string),
-						ClrNonNullableTypeName = "string",
-						ClrNonNullableType = typeof(string),
-						ClrNullableTypeName = "string",
-						ClrNullableType = typeof(string),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "api_change_type_name",
-						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("False"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("True"),
-						Linq2dbDataTypeName = "DataType.NVarChar",
-						Linq2dbDataType = DataType.NVarChar,
-						NpgsDataTypeName = "NpgsqlDbType.Varchar",
-						NpgsDataType = NpgsqlDbType.Varchar,
-						PropertyName = "ApiChangeTypeName",
-						TableName = "api_change_types",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
 						ClrTypeName = "int",
 						ClrType = typeof(int),
 						ClrNonNullableTypeName = "int",
@@ -5486,6 +5455,37 @@ namespace TrackTv.Data
 						TableName = "api_change_types",
 						TableSchema = "public",
 					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "api_change_type_name",
+						DbDataType = "character varying",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NVarChar",
+						Linq2dbDataType = DataType.NVarChar,
+						NpgsDataTypeName = "NpgsqlDbType.Varchar",
+						NpgsDataType = NpgsqlDbType.Varchar,
+						PropertyName = "ApiChangeTypeName",
+						TableName = "api_change_types",
+						TableSchema = "public",
+					},
 				}
 			};
 
@@ -5510,15 +5510,15 @@ namespace TrackTv.Data
 				{
 					new ColumnMetadataModel
 					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
+						ClrTypeName = "int?",
+						ClrType = typeof(int?),
 						ClrNonNullableTypeName = "int",
 						ClrNonNullableType = typeof(int),
 						ClrNullableTypeName = "int?",
 						ClrNullableType = typeof(int?),
 						ColumnComment = "" == string.Empty ? null : "",
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "api_change_thetvdbid",
+						ColumnName = "api_change_attached_series_id",
 						DbDataType = "integer",
 						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
@@ -5527,46 +5527,15 @@ namespace TrackTv.Data
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
+						IsNullable = bool.Parse("True"),
 						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
 						Linq2dbDataTypeName = "DataType.Int32",
 						Linq2dbDataType = DataType.Int32,
 						NpgsDataTypeName = "NpgsqlDbType.Integer",
 						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ApiChangeThetvdbid",
-						TableName = "api_changes",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "api_change_fail_count",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ApiChangeFailCount",
+						PropertyName = "ApiChangeAttachedSeriesID",
 						TableName = "api_changes",
 						TableSchema = "public",
 					},
@@ -5598,6 +5567,37 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Timestamp",
 						NpgsDataType = NpgsqlDbType.Timestamp,
 						PropertyName = "ApiChangeCreatedDate",
+						TableName = "api_changes",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "api_change_fail_count",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "ApiChangeFailCount",
 						TableName = "api_changes",
 						TableSchema = "public",
 					},
@@ -5696,15 +5696,15 @@ namespace TrackTv.Data
 					},
 					new ColumnMetadataModel
 					{
-						ClrTypeName = "int?",
-						ClrType = typeof(int?),
+						ClrTypeName = "int",
+						ClrType = typeof(int),
 						ClrNonNullableTypeName = "int",
 						ClrNonNullableType = typeof(int),
 						ClrNullableTypeName = "int?",
 						ClrNullableType = typeof(int?),
 						ColumnComment = "" == string.Empty ? null : "",
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "api_change_attached_series_id",
+						ColumnName = "api_change_thetvdbid",
 						DbDataType = "integer",
 						IsPrimaryKey = bool.Parse("False"),
 						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
@@ -5713,15 +5713,15 @@ namespace TrackTv.Data
 						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
 						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("True"),
+						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("True"),
-						IsClrReferenceType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
 						Linq2dbDataTypeName = "DataType.Int32",
 						Linq2dbDataType = DataType.Int32,
 						NpgsDataTypeName = "NpgsqlDbType.Integer",
 						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ApiChangeAttachedSeriesID",
+						PropertyName = "ApiChangeThetvdbid",
 						TableName = "api_changes",
 						TableSchema = "public",
 					},
@@ -5780,68 +5780,6 @@ namespace TrackTv.Data
 				{
 					new ColumnMetadataModel
 					{
-						ClrTypeName = "int?",
-						ClrType = typeof(int?),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "api_response_episode_thetvdbid",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_api_responses_episodes_thetvdbid" == string.Empty ? null : "fk_api_responses_episodes_thetvdbid",
-						ForeignKeyReferenceColumnName = "thetvdbid" == string.Empty ? null : "thetvdbid",
-						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "episodes" == string.Empty ? null : "episodes",
-						IsNullable = bool.Parse("True"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("True"),
-						IsClrReferenceType = bool.Parse("True"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ApiResponseEpisodeThetvdbid",
-						TableName = "api_responses",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int?",
-						ClrType = typeof(int?),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "api_response_show_thetvdbid",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_api_responses_shows_thetvdbid" == string.Empty ? null : "fk_api_responses_shows_thetvdbid",
-						ForeignKeyReferenceColumnName = "thetvdbid" == string.Empty ? null : "thetvdbid",
-						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
-						IsNullable = bool.Parse("True"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("True"),
-						IsClrReferenceType = bool.Parse("True"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ApiResponseShowThetvdbid",
-						TableName = "api_responses",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
 						ClrTypeName = "string",
 						ClrType = typeof(string),
 						ClrNonNullableTypeName = "string",
@@ -5868,6 +5806,37 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Jsonb",
 						NpgsDataType = NpgsqlDbType.Jsonb,
 						PropertyName = "ApiResponseBody",
+						TableName = "api_responses",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int?",
+						ClrType = typeof(int?),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "api_response_episode_thetvdbid",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("True"),
+						ForeignKeyConstraintName = "fk_api_responses_episodes_thetvdbid" == string.Empty ? null : "fk_api_responses_episodes_thetvdbid",
+						ForeignKeyReferenceColumnName = "thetvdbid" == string.Empty ? null : "thetvdbid",
+						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
+						ForeignKeyReferenceTableName = "episodes" == string.Empty ? null : "episodes",
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "ApiResponseEpisodeThetvdbid",
 						TableName = "api_responses",
 						TableSchema = "public",
 					},
@@ -5933,6 +5902,37 @@ namespace TrackTv.Data
 						TableName = "api_responses",
 						TableSchema = "public",
 					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int?",
+						ClrType = typeof(int?),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "api_response_show_thetvdbid",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("True"),
+						ForeignKeyConstraintName = "fk_api_responses_shows_thetvdbid" == string.Empty ? null : "fk_api_responses_shows_thetvdbid",
+						ForeignKeyReferenceColumnName = "thetvdbid" == string.Empty ? null : "thetvdbid",
+						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
+						ForeignKeyReferenceTableName = "shows" == string.Empty ? null : "shows",
+						IsNullable = bool.Parse("True"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("True"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "ApiResponseShowThetvdbid",
+						TableName = "api_responses",
+						TableSchema = "public",
+					},
 				}
 			};
 
@@ -5955,37 +5955,6 @@ namespace TrackTv.Data
 				IsNew = (instance) => instance.EpisodeID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "episode_id",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),
-						PrimaryKeyConstraintName = "episodes_pkey" == string.Empty ? null : "episodes_pkey",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "EpisodeID",
-						TableName = "episodes",
-						TableSchema = "public",
-					},
 					new ColumnMetadataModel
 					{
 						ClrTypeName = "string",
@@ -6014,6 +5983,37 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Text",
 						NpgsDataType = NpgsqlDbType.Text,
 						PropertyName = "EpisodeDescription",
+						TableName = "episodes",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "episode_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),
+						PrimaryKeyConstraintName = "episodes_pkey" == string.Empty ? null : "episodes_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "EpisodeID",
 						TableName = "episodes",
 						TableSchema = "public",
 					},
@@ -6549,37 +6549,6 @@ namespace TrackTv.Data
 						ClrNullableType = typeof(int?),
 						ColumnComment = "" == string.Empty ? null : "",
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "role_id",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),
-						PrimaryKeyConstraintName = "roles_pkey" == string.Empty ? null : "roles_pkey",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "RoleID",
-						TableName = "roles",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "actor_id",
 						DbDataType = "integer",
 						IsPrimaryKey = bool.Parse("False"),
@@ -6598,6 +6567,37 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Integer",
 						NpgsDataType = NpgsqlDbType.Integer,
 						PropertyName = "ActorID",
+						TableName = "roles",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "role_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),
+						PrimaryKeyConstraintName = "roles_pkey" == string.Empty ? null : "roles_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "RoleID",
 						TableName = "roles",
 						TableSchema = "public",
 					},
@@ -6726,37 +6726,6 @@ namespace TrackTv.Data
 						ClrNullableType = typeof(string),
 						ColumnComment = "" == string.Empty ? null : "",
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "setting_value",
-						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("False"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("True"),
-						Linq2dbDataTypeName = "DataType.NVarChar",
-						Linq2dbDataType = DataType.NVarChar,
-						NpgsDataTypeName = "NpgsqlDbType.Varchar",
-						NpgsDataType = NpgsqlDbType.Varchar,
-						PropertyName = "SettingValue",
-						TableName = "settings",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "string",
-						ClrType = typeof(string),
-						ClrNonNullableTypeName = "string",
-						ClrNonNullableType = typeof(string),
-						ClrNullableTypeName = "string",
-						ClrNullableType = typeof(string),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
 						ColumnName = "setting_name",
 						DbDataType = "character varying",
 						IsPrimaryKey = bool.Parse("False"),
@@ -6775,6 +6744,37 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Varchar",
 						NpgsDataType = NpgsqlDbType.Varchar,
 						PropertyName = "SettingName",
+						TableName = "settings",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "setting_value",
+						DbDataType = "character varying",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NVarChar",
+						Linq2dbDataType = DataType.NVarChar,
+						NpgsDataTypeName = "NpgsqlDbType.Varchar",
+						NpgsDataType = NpgsqlDbType.Varchar,
+						PropertyName = "SettingValue",
 						TableName = "settings",
 						TableSchema = "public",
 					},
@@ -6800,37 +6800,6 @@ namespace TrackTv.Data
 				IsNew = (instance) => instance.ShowID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "show_id",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),
-						PrimaryKeyConstraintName = "shows_pkey" == string.Empty ? null : "shows_pkey",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ShowID",
-						TableName = "shows",
-						TableSchema = "public",
-					},
 					new ColumnMetadataModel
 					{
 						ClrTypeName = "int?",
@@ -7081,6 +7050,37 @@ namespace TrackTv.Data
 					},
 					new ColumnMetadataModel
 					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "show_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),
+						PrimaryKeyConstraintName = "shows_pkey" == string.Empty ? null : "shows_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "ShowID",
+						TableName = "shows",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
 						ClrTypeName = "string",
 						ClrType = typeof(string),
 						ClrNonNullableTypeName = "string",
@@ -7204,15 +7204,15 @@ namespace TrackTv.Data
 						ClrNullableType = typeof(int?),
 						ColumnComment = "" == string.Empty ? null : "",
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "shows_genres_id",
+						ColumnName = "genre_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),
-						PrimaryKeyConstraintName = "shows_genres_pkey" == string.Empty ? null : "shows_genres_pkey",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("True"),
+						ForeignKeyConstraintName = "fk_shows_genres_genre_id" == string.Empty ? null : "fk_shows_genres_genre_id",
+						ForeignKeyReferenceColumnName = "genre_id" == string.Empty ? null : "genre_id",
+						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
+						ForeignKeyReferenceTableName = "genres" == string.Empty ? null : "genres",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7221,7 +7221,7 @@ namespace TrackTv.Data
 						Linq2dbDataType = DataType.Int32,
 						NpgsDataTypeName = "NpgsqlDbType.Integer",
 						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "ShowsGenresID",
+						PropertyName = "GenreID",
 						TableName = "shows_genres",
 						TableSchema = "public",
 					},
@@ -7266,15 +7266,15 @@ namespace TrackTv.Data
 						ClrNullableType = typeof(int?),
 						ColumnComment = "" == string.Empty ? null : "",
 						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "genre_id",
+						ColumnName = "shows_genres_id",
 						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("True"),
-						ForeignKeyConstraintName = "fk_shows_genres_genre_id" == string.Empty ? null : "fk_shows_genres_genre_id",
-						ForeignKeyReferenceColumnName = "genre_id" == string.Empty ? null : "genre_id",
-						ForeignKeyReferenceSchemaName = "public" == string.Empty ? null : "public",
-						ForeignKeyReferenceTableName = "genres" == string.Empty ? null : "genres",
+						IsPrimaryKey = bool.Parse("True"),
+						PrimaryKeyConstraintName = "shows_genres_pkey" == string.Empty ? null : "shows_genres_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
 						IsNullable = bool.Parse("False"),
 						IsClrValueType = bool.Parse("True"),
 						IsClrNullableType = bool.Parse("False"),
@@ -7283,7 +7283,7 @@ namespace TrackTv.Data
 						Linq2dbDataType = DataType.Int32,
 						NpgsDataTypeName = "NpgsqlDbType.Integer",
 						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "GenreID",
+						PropertyName = "ShowsGenresID",
 						TableName = "shows_genres",
 						TableSchema = "public",
 					},
@@ -7309,37 +7309,6 @@ namespace TrackTv.Data
 				IsNew = (instance) => instance.SubscriptionID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "subscription_id",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),
-						PrimaryKeyConstraintName = "subscriptions_pkey" == string.Empty ? null : "subscriptions_pkey",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "SubscriptionID",
-						TableName = "subscriptions",
-						TableSchema = "public",
-					},
 					new ColumnMetadataModel
 					{
 						ClrTypeName = "int",
@@ -7402,6 +7371,37 @@ namespace TrackTv.Data
 						TableName = "subscriptions",
 						TableSchema = "public",
 					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "subscription_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),
+						PrimaryKeyConstraintName = "subscriptions_pkey" == string.Empty ? null : "subscriptions_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "SubscriptionID",
+						TableName = "subscriptions",
+						TableSchema = "public",
+					},
 				}
 			};
 
@@ -7424,37 +7424,6 @@ namespace TrackTv.Data
 				IsNew = (instance) => instance.UserID == default,
 				Columns = new List<ColumnMetadataModel>
 				{
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "int",
-						ClrType = typeof(int),
-						ClrNonNullableTypeName = "int",
-						ClrNonNullableType = typeof(int),
-						ClrNullableTypeName = "int?",
-						ClrNullableType = typeof(int?),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "user_id",
-						DbDataType = "integer",
-						IsPrimaryKey = bool.Parse("True"),
-						PrimaryKeyConstraintName = "users_pkey" == string.Empty ? null : "users_pkey",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("True"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("False"),
-						Linq2dbDataTypeName = "DataType.Int32",
-						Linq2dbDataType = DataType.Int32,
-						NpgsDataTypeName = "NpgsqlDbType.Integer",
-						NpgsDataType = NpgsqlDbType.Integer,
-						PropertyName = "UserID",
-						TableName = "users",
-						TableSchema = "public",
-					},
 					new ColumnMetadataModel
 					{
 						ClrTypeName = "bool",
@@ -7483,37 +7452,6 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Boolean",
 						NpgsDataType = NpgsqlDbType.Boolean,
 						PropertyName = "IsAdmin",
-						TableName = "users",
-						TableSchema = "public",
-					},
-					new ColumnMetadataModel
-					{
-						ClrTypeName = "string",
-						ClrType = typeof(string),
-						ClrNonNullableTypeName = "string",
-						ClrNonNullableType = typeof(string),
-						ClrNullableTypeName = "string",
-						ClrNullableType = typeof(string),
-						ColumnComment = "" == string.Empty ? null : "",
-						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
-						ColumnName = "username",
-						DbDataType = "character varying",
-						IsPrimaryKey = bool.Parse("False"),
-						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
-						IsForeignKey = bool.Parse("False"),
-						ForeignKeyConstraintName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
-						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
-						IsNullable = bool.Parse("False"),
-						IsClrValueType = bool.Parse("False"),
-						IsClrNullableType = bool.Parse("False"),
-						IsClrReferenceType = bool.Parse("True"),
-						Linq2dbDataTypeName = "DataType.NVarChar",
-						Linq2dbDataType = DataType.NVarChar,
-						NpgsDataTypeName = "NpgsqlDbType.Varchar",
-						NpgsDataType = NpgsqlDbType.Varchar,
-						PropertyName = "Username",
 						TableName = "users",
 						TableSchema = "public",
 					},
@@ -7576,6 +7514,68 @@ namespace TrackTv.Data
 						NpgsDataTypeName = "NpgsqlDbType.Integer",
 						NpgsDataType = NpgsqlDbType.Integer,
 						PropertyName = "ProfileID",
+						TableName = "users",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "int",
+						ClrType = typeof(int),
+						ClrNonNullableTypeName = "int",
+						ClrNonNullableType = typeof(int),
+						ClrNullableTypeName = "int?",
+						ClrNullableType = typeof(int?),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "user_id",
+						DbDataType = "integer",
+						IsPrimaryKey = bool.Parse("True"),
+						PrimaryKeyConstraintName = "users_pkey" == string.Empty ? null : "users_pkey",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("True"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("False"),
+						Linq2dbDataTypeName = "DataType.Int32",
+						Linq2dbDataType = DataType.Int32,
+						NpgsDataTypeName = "NpgsqlDbType.Integer",
+						NpgsDataType = NpgsqlDbType.Integer,
+						PropertyName = "UserID",
+						TableName = "users",
+						TableSchema = "public",
+					},
+					new ColumnMetadataModel
+					{
+						ClrTypeName = "string",
+						ClrType = typeof(string),
+						ClrNonNullableTypeName = "string",
+						ClrNonNullableType = typeof(string),
+						ClrNullableTypeName = "string",
+						ClrNullableType = typeof(string),
+						ColumnComment = "" == string.Empty ? null : "",
+						Comments = "".Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+						ColumnName = "username",
+						DbDataType = "character varying",
+						IsPrimaryKey = bool.Parse("False"),
+						PrimaryKeyConstraintName = "" == string.Empty ? null : "",
+						IsForeignKey = bool.Parse("False"),
+						ForeignKeyConstraintName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceColumnName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceSchemaName = "" == string.Empty ? null : "",
+						ForeignKeyReferenceTableName = "" == string.Empty ? null : "",
+						IsNullable = bool.Parse("False"),
+						IsClrValueType = bool.Parse("False"),
+						IsClrNullableType = bool.Parse("False"),
+						IsClrReferenceType = bool.Parse("True"),
+						Linq2dbDataTypeName = "DataType.NVarChar",
+						Linq2dbDataType = DataType.NVarChar,
+						NpgsDataTypeName = "NpgsqlDbType.Varchar",
+						NpgsDataType = NpgsqlDbType.Varchar,
+						PropertyName = "Username",
 						TableName = "users",
 						TableSchema = "public",
 					},

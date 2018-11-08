@@ -52,4 +52,4 @@ create view "public"."db_columns" as
       WHERE a.atttypid <> 0::oid
         AND (n.nspname != 'information_schema' AND n.nspname NOT LIKE 'pg_%')
         and not (n.nspname = 'public' and t.viewname = 'db_columns')
-  )) ORDER BY IsViewColumn, TableName, ColumnName;
+  )) ORDER BY TableSchema, IsViewColumn, TableName, ColumnName;
