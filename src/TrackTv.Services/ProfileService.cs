@@ -15,7 +15,7 @@
         }
 
         private IDbService DbService { get; }
- 
+
 
         public Task<int> CreateProfileAsync(string username)
         {

@@ -37,7 +37,7 @@
         public async Task DisposeAsync()
         {
             await this.Tx.RollbackAsync();
-            
+
             this.Db.Connection.Dispose();
             this.Db.Dispose();
         }

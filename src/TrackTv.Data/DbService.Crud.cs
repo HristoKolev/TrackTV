@@ -75,14 +75,14 @@
                 var parameters = metadata.GenerateParameters(record);
 
                 allParameters.AddRange(parameters);
-                
+
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     if (i != 0)
                     {
                         sqlBuilder.Append(", ");
                     }
-                    
+
                     int currentIndex = paramIndex++;
                     var parameter = parameters[i];
                     parameter.ParameterName = "p" + currentIndex;

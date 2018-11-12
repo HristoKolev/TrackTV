@@ -159,7 +159,7 @@
 
         TPocos Poco { get; }
     }
-    
+
     public class TableMetadataModel<T> : TableMetadataModel
     {
         /// <summary>
@@ -195,7 +195,7 @@
         /// Returns the names of the changed columns and parameters for every column value.
         /// </summary>
         public Func<T, T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetColumnChanges { get; set; }
-        
+
         public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFm { get; set; }
     }
 

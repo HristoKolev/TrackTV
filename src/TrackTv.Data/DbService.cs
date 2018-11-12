@@ -358,9 +358,9 @@
 
             return result;
         }
-        
+
         private async Task<T> QueryOneInternal<T>(
-            string sql, 
+            string sql,
             IEnumerable<NpgsqlParameter> parameters,
             CancellationToken cancellationToken = default)
             where T : class, new()

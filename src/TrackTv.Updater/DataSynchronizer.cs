@@ -107,7 +107,7 @@
 
                     changeListWatch.Stop();
                     this.Log.Debug($"Change list was merged successfuly in {changeListWatch.Elapsed:hh\\:mm\\:ss}.");
-                    
+
                 });
 
                 var newLastUpdated = new[]

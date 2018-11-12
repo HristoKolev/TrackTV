@@ -8,7 +8,7 @@ namespace TrackTv.Data.Tests
 	using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
-	
+
 	/// <summary>
 	/// <para>Table name: 'test1'.</para>
 	/// <para>Table schema: 'public'.</para>

@@ -164,7 +164,6 @@
                 return;
             }
 
-            
             MapToShow(myShow, externalShow);
 
             myShow.NetworkID = await this.GetOrCreateNetwork(externalShow.Network);
@@ -270,7 +269,7 @@
                                             TheTvDbID = e.Id,
                                             LastUpdated = e.LastUpdated.ToDateTime()
                                         }).ToArray();
-            
+
             // My episodes 
             var myEpisodes = await this.DbService.Poco.Episodes.Where(poco => poco.ShowID == showID)
                                        .Select(poco => new

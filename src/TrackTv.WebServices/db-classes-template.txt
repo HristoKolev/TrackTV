@@ -8,7 +8,7 @@ namespace {{model.Namespace}}
 	using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
-	
+
 	{{#each model.tables}}
 	/// <summary>
 	/// <para>Table name: '{{TableName}}'.</para>

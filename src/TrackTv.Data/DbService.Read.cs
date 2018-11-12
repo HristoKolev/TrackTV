@@ -12,7 +12,7 @@
     public partial class DbService<TPocos>
     {
         public Task<List<TCatalogModel>> FilterInternal<TPoco, TCatalogModel>(
-            IFilterModel<TPoco> filter, 
+            IFilterModel<TPoco> filter,
             CancellationToken cancellationToken = default)
             where TPoco : IReadOnlyPoco<TPoco>
             where TCatalogModel: ICatalogModel<TPoco>, new()
@@ -20,7 +20,7 @@
             var metadata = DbCodeGenerator.GetMetadata<TPoco>();
 
             var (columnNames, parameters, operators) = metadata.ParseFm(filter);
-         
+
             var sqlBuilder = new StringBuilder();
 
             sqlBuilder.Append("select * from \"");

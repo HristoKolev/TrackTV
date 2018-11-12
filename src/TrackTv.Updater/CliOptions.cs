@@ -9,7 +9,7 @@
     {
         [Option('c', "compile-only", HelpText = "Only updates change lists. Does not apply any changes.", Required = false)]
         public bool CompileOnly { get; set; }
- 
+
         [Option('s', "skip-failed", HelpText = "Skip failed changes.", Required = false)]
         public bool SkipFailed { get; set; }
 

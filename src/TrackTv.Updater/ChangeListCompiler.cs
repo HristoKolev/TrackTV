@@ -30,7 +30,7 @@
         private ITvDbClient Client { get; }
 
         private IDbService DbService { get; }
-        
+
         private ILog Log { get; }
 
         private SettingsService SettingsService { get; }
@@ -118,7 +118,7 @@
                  AddShow(series, changeList) ;
             }
         }
- 
+
         private static void AddShow(Series series, ConcurrentDictionary<string, ApiChangePoco> changeList)
         {
             string key = series.Id + "_" + (int)ApiChangeType.Show;
@@ -134,7 +134,7 @@
                 });
             }
         }
- 
+
         private static void AddEpisode(EpisodeRecord episode, ConcurrentDictionary<string, ApiChangePoco> changeList)
         {
             string key = episode.Id + "_" + (int)ApiChangeType.Episode;

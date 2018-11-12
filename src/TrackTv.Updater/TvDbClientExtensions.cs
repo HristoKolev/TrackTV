@@ -112,7 +112,7 @@ namespace TrackTv.Updater
                 return new List<BasicEpisode>();
             }
         }
-        
+
         public static async Task<EpisodeRecord> GetExternalEpisodeAsync(this IEpisodesClient client, int updateId)
         {
             try
@@ -138,7 +138,7 @@ namespace TrackTv.Updater
 
         public static async Task<Series> GetExternalShowAsync(this ISeriesClient client, int updateId)
         {
-            
+
 
             try
             {

@@ -41,7 +41,7 @@ namespace TrackTv.Updater.Infrastructure
 
             this.For<IDbService>().Use<DbService>();
         }
- 
+
         private void Infrastructure()
         {
             this.For<IRavenClient>().Use("Building sentry client.", () => new RavenClient(Global.AppConfig.SentryUrl));

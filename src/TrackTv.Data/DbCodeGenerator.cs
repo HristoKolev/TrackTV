@@ -81,7 +81,7 @@
                 {
                     il.Emit(OpCodes.Box, property.PropertyType);
                 }
-                
+
                 il.Emit(OpCodes.Ret);
             });
         }
@@ -116,7 +116,7 @@
         public static Func<T, T> GetClone<T>()
         {
             var instanceType = typeof(T);
-            
+
             return GenerateMethod<Func<T, T>>(il =>
             {
                 var cloneObject = il.DeclareLocal(instanceType);
@@ -142,13 +142,13 @@
         {
             var pocoType = typeof(TPoco);
             var parameterType = typeof(NpgsqlParameter);
-      
+
             var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
 
             return GenerateMethod<Func<TPoco, NpgsqlParameter[]>>(il =>
             {
                 il.DeclareLocal(typeof(NpgsqlParameter[]));
-                
+
                 // create the array and save it in local0
                 il.Emit(OpCodes.Ldc_I4, nonPrimaryKeyColumns.Length);
                 il.Emit(OpCodes.Newarr, parameterType);
@@ -263,7 +263,7 @@
                         var nullableType = property.PropertyType;
                         var getValueOrDefault = nullableType.GetMethod("GetValueOrDefault", Array.Empty<Type>());
                         var hasValue = nullableType.GetProperty("HasValue");
-                        
+
                         // compare the HasValue properties
                         il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Ldflda, property.GetBackingField());
@@ -346,7 +346,7 @@
 
         public static Func<IFilterModel<TPoco>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> GetParseFm<TPoco>(
             TableMetadataModel<TPoco> metadata,
-            Type fmType) 
+            Type fmType)
             where TPoco : IReadOnlyPoco<TPoco>
         {
             var tupleConstructor = typeof(ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>)
@@ -400,7 +400,7 @@
                     il.Emit(OpCodes.Ldloc, columnNamesLocal);
                     il.Emit(OpCodes.Ldstr, column.ColumnName);
                     il.Emit(OpCodes.Call, columnNamesListType.GetMethod("Add"));
-                    
+
                     #region AddTheParameter
 
                     il.Emit(OpCodes.Ldloc, parameterListLocal); // the parameter list
@@ -450,7 +450,7 @@
             var genericParameterType = typeof(NpgsqlParameter<>);
             var dbNullValue = typeof(DBNull).GetField("Value");
 
-            if (!property.PropertyType.IsValueType) { 
+            if (!property.PropertyType.IsValueType) {
 
                 var nullParameterType = genericParameterType.MakeGenericType(typeof(DBNull));
                 var concreteParameterType = genericParameterType.MakeGenericType(property.PropertyType);

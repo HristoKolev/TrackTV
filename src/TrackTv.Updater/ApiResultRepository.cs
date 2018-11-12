@@ -20,8 +20,8 @@
         public Task SaveApiResult(object jsonObj, ApiChangeType type, int thetvdbid)
         {
             int apiResponseID = this.DbService.Poco.ApiResponses
-                                  .Where(poco => 
-                                     (type == ApiChangeType.Show && poco.ApiResponseShowThetvdbid == thetvdbid) || 
+                                  .Where(poco =>
+                                     (type == ApiChangeType.Show && poco.ApiResponseShowThetvdbid == thetvdbid) ||
                                      (type == ApiChangeType.Episode && poco.ApiResponseEpisodeThetvdbid == thetvdbid))
                                   .Select(poco => poco.ApiResponseID)
                                   .FirstOrDefault();

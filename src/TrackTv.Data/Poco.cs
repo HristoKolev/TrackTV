@@ -8,7 +8,7 @@ namespace TrackTv.Data
 	using LinqToDB.Mapping;
 
 	using NpgsqlTypes;
-	
+
 	/// <summary>
 	/// <para>Table name: 'actors'.</para>
 	/// <para>Table schema: 'public'.</para>

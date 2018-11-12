@@ -31,7 +31,7 @@
                     return;
                 }
 
-                if (ctx.Result != null 
+                if (ctx.Result != null
                     && ctx.Result is OkObjectResult jsResult
                     && jsResult.Value is ApiResult apiResult
                     && !apiResult.Success)
