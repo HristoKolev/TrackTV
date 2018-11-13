@@ -1,6 +1,7 @@
 ﻿namespace TrackTv.Data
 {
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Npgsql;
@@ -20,26 +21,26 @@
         /// <summary>
         /// Starts a transaction and runs the `body` function.
         /// </summary>
-        public async Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null)
+        public async Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, CancellationToken cancellationToken = default)
         {
-            await this.VerifyConnectionState();
+            await this.VerifyConnectionState(cancellationToken);
 
             using (var transaction = await this.BeginTransaction())
             {
-                if (timeout == null)
+                if (cancellationToken == default)
                 {
                     await body(transaction);
                 }
                 else
                 {
-                    var timeoutTask = Task.Delay(timeout.Value);
+                    var canceledTask = cancellationToken.AsTask();
                     var transactionTask = body(transaction);
 
-                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask);
+                    var completedTask = await Task.WhenAny(transactionTask, canceledTask);
 
-                    if (completedTask == timeoutTask)
+                    if (completedTask == canceledTask)
                     {
-                        throw new TimeoutException("The db transaction timed out.");
+                        cancellationToken.ThrowIfCancellationRequested();
                     }
 
                     await transactionTask;
@@ -51,44 +52,44 @@
         /// Starts a transaction, runs the `body` function
         /// and if it does not throw - commits the transaction.
         /// </summary>
-        public Task ExecuteInTransaction(Func<Task> body, TimeSpan? timeout = null)
+        public Task ExecuteInTransaction(Func<Task> body, CancellationToken cancellationToken = default)
         {
-            return this.ExecuteInTransaction(tr => body(), timeout);
+            return this.ExecuteInTransaction(tr => body(), cancellationToken);
         }
 
         /// <summary>
         /// Starts a transaction, runs the `body` function
         /// and if it does not throw - commits the transaction.
         /// </summary>
-        public Task ExecuteInTransactionAndCommit(Func<Task> body, TimeSpan? timeout = null)
+        public Task ExecuteInTransactionAndCommit(Func<Task> body, CancellationToken cancellationToken = default)
         {
-            return this.ExecuteInTransactionAndCommit(tr => body(), timeout);
+            return this.ExecuteInTransactionAndCommit(tr => body(), cancellationToken);
         }
 
         /// <summary>
         /// Starts a transaction, runs the `body` function
         /// and if it does not throw and the transaction is not completed - commits the transaction.
         /// </summary>
-        public async Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null)
+        public async Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, CancellationToken cancellationToken = default)
         {
-            await this.VerifyConnectionState();
+            await this.VerifyConnectionState(cancellationToken);
 
             using (var transaction = await this.BeginTransaction())
             {
-                if (timeout == null)
+                if (cancellationToken == default)
                 {
                     await body(transaction);
                 }
                 else
                 {
-                    var timeoutTask = Task.Delay(timeout.Value);
+                    var canceledTask = cancellationToken.AsTask();
                     var transactionTask = body(transaction);
 
-                    var completedTask = await Task.WhenAny(transactionTask, timeoutTask);
+                    var completedTask = await Task.WhenAny(transactionTask, canceledTask);
 
-                    if (completedTask == timeoutTask)
+                    if (completedTask == canceledTask)
                     {
-                        throw new TimeoutException("The db transaction timed out.");
+                        cancellationToken.ThrowIfCancellationRequested();
                     }
 
                     await transactionTask;
@@ -96,7 +97,7 @@
 
                 if (!transaction.IsCompleted)
                 {
-                    await transaction.CommitAsync();
+                    await transaction.CommitAsync(cancellationToken);
                 }
             }
         }

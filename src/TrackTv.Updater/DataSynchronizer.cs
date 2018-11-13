@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using log4net;
@@ -132,6 +133,8 @@
 
                     var changeWatch = Stopwatch.StartNew();
 
+                    var timeoutToken = new CancellationTokenSource(TimeSpan.FromMinutes(20)).Token;
+
                     await dbService.ExecuteInTransactionAndCommit(async tr =>
                     {
                         string typeName = ((ApiChangeType)change.ApiChangeType).ToString();
@@ -162,7 +165,7 @@
                                $"[{index}/{maxCount}] Failed to apply a change. (ID={change.ApiChangeThetvdbid}, Type={typeName}, {changeWatch.Elapsed:mm\\:ss})",
                                e);
                         }
-                    }, timeout: TimeSpan.FromMinutes(20))
+                    }, timeoutToken)
                    ;
                 }
                 catch (Exception e)

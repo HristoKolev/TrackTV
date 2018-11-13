@@ -57,24 +57,24 @@
         /// <summary>
         /// Starts a transaction and runs the `body` function
         /// </summary>
-        Task ExecuteInTransaction(Func<Task> body, TimeSpan? timeout = null);
+        Task ExecuteInTransaction(Func<Task> body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Starts a transaction and runs the `body` function
         /// </summary>
-        Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null);
+        Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Starts a transaction, runs the `body` function
         /// and if it does not throw - commits the transaction.
         /// </summary>
-        Task ExecuteInTransactionAndCommit(Func<Task> body, TimeSpan? timeout = null);
+        Task ExecuteInTransactionAndCommit(Func<Task> body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Starts a transaction, runs the `body` function
         /// and if it does not throw and the transaction is not completed - commits the transaction.
         /// </summary>
-        Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, TimeSpan? timeout = null);
+        Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Executes a query and returns the rows affected.
