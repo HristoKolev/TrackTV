@@ -8,8 +8,7 @@
         public static Task AsTask(this CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
-            cancellationToken.Register(() => tcs.TrySetCanceled(),
-                                       useSynchronizationContext: false);
+            cancellationToken.Register(() => tcs.TrySetCanceled(), false);
             return tcs.Task;
         }
     }
