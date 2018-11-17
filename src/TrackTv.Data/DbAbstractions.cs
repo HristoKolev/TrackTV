@@ -12,17 +12,25 @@
 
     using NpgsqlTypes;
 
+    /// <summary>
+    /// All Poco types implement this interface, either directly or through the <see cref="IPoco{T}"/> Interface.
+    /// </summary>
+    /// <typeparam name="T">The poco type.</typeparam>
     public interface IReadOnlyPoco<T>
     {
     }
 
     /// <summary>
-    /// Interface for all Poco classes.
+    /// Interface for all Poco types generated from database Tables, omitting types generated from Views.
     /// </summary>
     public interface IPoco<T> : IReadOnlyPoco<T>
     {
     }
 
+    /// <summary>
+    /// The main API for the database access interface.
+    /// </summary>
+    /// <typeparam name="TPocos">The type for the database specific generated APIs.</typeparam>
     public interface IDbService<TPocos> : IDisposable where TPocos : IDbPocos<TPocos>, new()
     {
         /// <summary>
@@ -55,24 +63,19 @@
             where T : IPoco<T>;
 
         /// <summary>
-        /// Starts a transaction and runs the `body` function
-        /// </summary>
-        Task ExecuteInTransaction(Func<Task> body, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Starts a transaction and runs the `body` function
+        /// Starts a transaction and runs the `body` function passing the native <see cref="NpgsqlTransaction"/> object.
         /// </summary>
         Task ExecuteInTransaction(Func<NpgsqlTransaction, Task> body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Starts a transaction, runs the `body` function
-        /// and if it does not throw - commits the transaction.
+        /// and if it does not manually rollback throw an exception - commits the transaction.
         /// </summary>
         Task ExecuteInTransactionAndCommit(Func<Task> body, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Starts a transaction, runs the `body` function
-        /// and if it does not throw and the transaction is not completed - commits the transaction.
+        /// Starts a transaction, runs the `body` function passing the native <see cref="NpgsqlTransaction"/> object
+        /// and if it does not manually rollback throw an exception - commits the transaction.
         /// </summary>
         Task ExecuteInTransactionAndCommit(Func<NpgsqlTransaction, Task> body, CancellationToken cancellationToken = default);
 
@@ -139,7 +142,6 @@
 
         /// <summary>
         /// Updates a record by its ID.
-        /// Only updates the changed rows. 
         /// </summary>
         Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>;
@@ -151,12 +153,21 @@
         Task<int> UpdateChangesOnly<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
+        /// <summary>
+        /// Returns a record by its ID. 
+        /// </summary>
         Task<T> FindByID<T>(int id, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new();
 
+        /// <summary>
+        /// Returns an IQueryable from the relation that the <see cref="IReadOnlyPoco{T}"/> type maps to.
+        /// </summary>
         IQueryable<T> GetTable<T>()
             where T : class, IReadOnlyPoco<T>;
 
+        /// <summary>
+        /// The database specific API.
+        /// </summary>
         TPocos Poco { get; }
     }
 
@@ -188,6 +199,9 @@
         /// </summary>
         public Func<T, NpgsqlParameter[]> GenerateParameters { get; set; }
 
+        /// <summary>
+        /// Generates a parameter for every column in the table.
+        /// </summary>
         public Func<T, ValueTuple<string[], NpgsqlParameter[]>> GetAllColumns { get; set; }
 
         /// <summary>
@@ -196,6 +210,9 @@
         /// </summary>
         public Func<T, T, ValueTuple<List<string>, List<NpgsqlParameter>>> GetColumnChanges { get; set; }
 
+        /// <summary>
+        /// Returns the data needed to generate an expression from an <see cref="IFilterModel{TPoco}"/> instance.
+        /// </summary>
         public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFm { get; set; }
     }
 
@@ -292,24 +309,24 @@
     /// <summary>
     /// Interface for all Catalog models
     /// </summary>
-    public interface ICatalogModel<TPoco>
+    public interface ICatalogModel<T>
     {
     }
 
     /// <summary>
     /// Interface for all Filter models
     /// </summary>
-    public interface IFilterModel<TPoco>
+    public interface IFilterModel<T>
     {
     }
 
     /// <summary>
     /// Interface for all Business models
     /// </summary>
-    public interface IBusinessModel<TPoco>
-        where TPoco : IPoco<TPoco>
+    public interface IBusinessModel<T>
+        where T : IPoco<T>
     {
-        TPoco ToPoco();
+        T ToPoco();
     }
 
     public enum QueryOperatorType
@@ -367,10 +384,17 @@
         public QueryOperatorType QueryOperatorType { get; }
     }
 
+    /// <summary>
+    /// Interface for all generated Metadata types.
+    /// </summary>
     public interface IDbMetadata
     {
     }
 
+    /// <summary>
+    /// Interface for all generated database specific API types.
+    /// </summary>
+    /// <typeparam name="TDbPocos"></typeparam>
     public interface IDbPocos<TDbPocos>
         where TDbPocos : IDbPocos<TDbPocos>, new()
     {

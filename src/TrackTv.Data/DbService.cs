@@ -92,9 +92,6 @@
             this.LinqToDbConnection?.Dispose();
         }
 
-        /// <summary>
-        /// Executes a query and returns the rows affected.
-        /// </summary>
         public Task<int> ExecuteNonQuery(string sql, params NpgsqlParameter[] parameters)
         {
             if (sql == null)
@@ -110,11 +107,6 @@
             return this.ExecuteNonQueryInternal(sql, parameters);
         }
 
-        /// <summary>
-        /// Executes a query and returns a scalar value of type T.
-        /// It throws if the result set does not have exactly one column and one row.
-        /// It throws if the return value is 'null' and the type T is a value type.
-        /// </summary>
         public Task<T> ExecuteScalar<T>(string sql, params NpgsqlParameter[] parameters)
         {
             if (sql == null)
@@ -130,9 +122,6 @@
             return this.ExecuteScalarInternal<T>(sql, parameters);
         }
 
-        /// <summary>
-        /// Creates a parameter of type T with NpgsqlDbType from the default type map 'defaultNpgsqlDbTypeMap'.
-        /// </summary>
         public NpgsqlParameter Parameter<T>(string parameterName, T value)
         {
             if (value == null)
@@ -157,9 +146,6 @@
             return this.Parameter(parameterName, value, dbType);
         }
 
-        /// <summary>
-        /// Creates a parameter of type T by explicitly specifying NpgsqlDbType.
-        /// </summary>
         public NpgsqlParameter Parameter<T>(string parameterName, T value, NpgsqlDbType dbType)
         {
             if (value == null)
@@ -173,9 +159,6 @@
             };
         }
 
-        /// <summary>
-        /// Executes a query and returns objects 
-        /// </summary>
         public Task<List<T>> Query<T>(string sql, params NpgsqlParameter[] parameters)
             where T : new()
         {
@@ -192,11 +175,6 @@
             return this.QueryInternal<T>(sql, parameters);
         }
 
-        /// <summary>
-        /// Returns one object of type T.
-        /// If there are no rows then returns 'null';
-        /// If there is more that one row then throws.
-        /// </summary>
         public Task<T> QueryOne<T>(string sql, params NpgsqlParameter[] parameters)
             where T : class, new()
         {

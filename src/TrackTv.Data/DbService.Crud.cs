@@ -11,9 +11,6 @@
 
     public partial class DbService<TPocos>
     {
-        /// <summary>
-        /// Inserts several records in single query.
-        /// </summary>
         public Task<int> BulkInsert<T>(IEnumerable<T> pocos, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
@@ -101,9 +98,6 @@
             return this.ExecuteNonQueryInternal(sql, allParameters, cancellationToken);
         }
 
-        /// <summary>
-        /// Deletes a record by its PrimaryKey.
-        /// </summary>
         public Task<int> Delete<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
@@ -114,9 +108,6 @@
             return this.Delete<T>(pk, cancellationToken);
         }
 
-        /// <summary>
-        /// <para>Deletes records from a table by their IDs.</para>
-        /// </summary>
         public Task<int> Delete<T>(int[] ids, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
@@ -141,9 +132,6 @@
             return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
 
-        /// <summary>
-        /// <para>Deletes a record by ID.</para>
-        /// </summary>
         public Task<int> Delete<T>(int id, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
@@ -163,9 +151,6 @@
             return this.ExecuteNonQueryInternal(sql, parameters, cancellationToken);
         }
 
-        /// <summary>
-        /// Inserts a record and attaches it's ID to the poco object. 
-        /// </summary>
         public async Task<int> Insert<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
@@ -178,9 +163,6 @@
             return pk;
         }
 
-        /// <summary>
-        /// Inserts a record and returns its ID.
-        /// </summary>
         public Task<int> InsertWithoutMutating<T>(T model, CancellationToken cancellationToken = default)
             where T : IPoco<T>
         {
@@ -234,12 +216,6 @@
             return this.ExecuteScalarInternal<int>(sql, parameters, cancellationToken);
         }
 
-        /// <summary>
-        /// Saves a record to the database.
-        /// If the poco object has a positive primary key it updates it.
-        /// If the primary key value is 0 it inserts the record.
-        /// Returns the record's primary key value.
-        /// </summary>
         public async Task<int> Save<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>
         {
@@ -255,9 +231,6 @@
             return metadata.GetPrimaryKey(model);
         }
 
-        /// <summary>
-        /// Updates a record by its ID.
-        /// </summary>
         public Task<int> Update<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>
         {
@@ -319,10 +292,6 @@
             return this.ExecuteNonQueryInternal(sql, allParameters, cancellationToken);
         }
 
-        /// <summary>
-        /// Updates a record by its ID.
-        /// Only updates the changed rows. 
-        /// </summary>
         public async Task<int> UpdateChangesOnly<T>(T model, CancellationToken cancellationToken = default)
             where T : class, IPoco<T>, new()
         {
