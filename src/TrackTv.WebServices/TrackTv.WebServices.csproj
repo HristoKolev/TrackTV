@@ -19,9 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="db-classes-template.cshtml" />
     <Content Remove="log4net-config.xml" />
     <Content Remove="wwwroot\**" />
     <Content Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="db-classes-template.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

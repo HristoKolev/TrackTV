@@ -1,0 +1,105 @@
+@inherits TemplateBase<PocoTemplateContext>
+namespace @Model.Namespace
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Linq;
+	using LinqToDB;
+	using LinqToDB.Mapping;
+
+    using NpgsqlTypes;
+
+@foreach (var table in Model.Tables)
+{    
+    @:/// <summary>
+    @:/// <para>Table name: '@table.TableName'.</para>
+    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// </summary>
+    @:[Table(Schema="@table.TableSchema", Name = "@table.TableName")]
+    @:public class @(table.ClassName)Poco : @(table.IsView ? $"IReadOnlyPoco<@{table.ClassName}Poco>" : $"IPoco<{table.ClassName}Poco>")
+    @:{
+    @foreach(var column in table.Columns)
+    {
+        @:/// <summary>
+        @foreach(var commentLine in column.Comments)
+        {
+            @:/// <para>@commentLine</para>
+        }        
+	    @:/// <para>Column name: '@column.ColumnName'.</para>
+	    @:/// <para>Table name: '@column.TableName'.</para>        
+        @if (column.IsPrimaryKey) {        
+        @:/// <para>Primary key of table: '@column.TableName'.</para>
+	    @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>        
+        }
+        @if (column.IsForeignKey) {        
+	    @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
+	    @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>        
+        }        
+        @:/// <para>This column is @(!column.IsNullable ? "not " : "") nullable.</para>
+	    @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
+	    @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
+	    @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
+	    @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
+	    @:/// </summary>
+        @:@(column.IsPrimaryKey ? "[PrimaryKey, Identity]" : (column.IsNullable ? "[Nullable]" : "[NotNull]"))
+        @:[Column(Name = "@column.ColumnName", DataType = @column.Linq2dbDataTypeName)]
+		@:public @column.ClrTypeName @column.PropertyName { get; set; }
+@:
+    }
+
+    @if (!table.IsView)
+    {
+        @:public @(table.ClassName)BM ToBm()
+		@:{
+			@:return new @(table.ClassName)BM
+			@:{
+				@foreach(var column in table.Columns)
+                {
+                @:@($"{column.PropertyName} = this.{column.PropertyName},")
+                }
+			@:};
+		@:}
+    }
+    @:}
+@:
+}
+
+@foreach (var table in Model.Tables)
+{    
+    @:/// <summary>
+    @:/// <para>Table name: '@table.TableName'.</para>
+    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// </summary>
+    @:public class @(table.ClassName)CM : ICatalogModel<@(table.ClassName)Poco>
+    @:{
+    @foreach(var column in table.Columns)
+    {
+        @:/// <summary>
+        @foreach(var commentLine in column.Comments)
+        {
+            @:/// <para>@commentLine</para>
+        }        
+	    @:/// <para>Column name: '@column.ColumnName'.</para>
+	    @:/// <para>Table name: '@column.TableName'.</para>        
+        @if (column.IsPrimaryKey) {        
+        @:/// <para>Primary key of table: '@column.TableName'.</para>
+	    @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>        
+        }
+        @if (column.IsForeignKey) {        
+	    @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
+	    @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>        
+        }        
+        @:/// <para>This column is @(!column.IsNullable ? "not " : "") nullable.</para>
+	    @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
+	    @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
+	    @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
+	    @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
+	    @:/// </summary>
+		@:public @column.ClrTypeName @column.PropertyName { get; set; }
+@:
+    }
+    @:}
+@:
+}
+}

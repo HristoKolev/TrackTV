@@ -400,4 +400,15 @@
     {
         IDbService<TDbPocos> DbService { set; }
     }
+
+    public class PocoTemplateContext
+    {
+        public List<TableMetadataModel> Tables { get; set; }
+
+        public string Namespace { get; set; }
+
+        public string PocoClassName { get; set; }
+
+        public string MetadataClassName { get; set; }
+    }
 }

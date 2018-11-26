@@ -32,7 +32,7 @@
             }
 
             // Shows UseCors with CorsPolicyBuilder.
-            app.UseCors(builder => { builder.WithOrigins(Global.AppConfig.CorsUrls).AllowAnyHeader().AllowAnyMethod(); });
+            app.UseCors(builder => builder.WithOrigins(Global.AppConfig.CorsUrls).AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthentication();
 
