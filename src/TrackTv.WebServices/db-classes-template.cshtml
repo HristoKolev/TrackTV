@@ -66,7 +66,7 @@ namespace @Model.Namespace
 }
 
 @foreach (var table in Model.Tables)
-{    
+{
     @:/// <summary>
     @:/// <para>Table name: '@table.TableName'.</para>
     @:/// <para>Table schema: '@table.TableSchema'.</para>        
@@ -98,6 +98,35 @@ namespace @Model.Namespace
 	    @:/// </summary>
 		@:public @column.ClrTypeName @column.PropertyName { get; set; }
 @:
+    }
+    @:}
+@:
+}
+@foreach (var table in Model.Tables)
+{
+    @:/// <summary>
+    @:/// <para>Table name: '@table.TableName'.</para>
+    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// </summary>
+    @:public class @(table.ClassName)FM : IFilterModel<@(table.ClassName)Poco>
+    @:{
+    @foreach(var column in table.Columns)
+    {
+    foreach(var oper in column.ValidOperators) 
+    {
+        @:[FilterOperator(QueryOperatorType.@(!string.IsNullOrEmpty(oper) ? oper : "Equal" ), "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+        @:public @(column.ClrNullableTypeName) @(column.PropertyName)@(!string.IsNullOrEmpty(oper) ? "_" + oper : "" ) { get; set; }
+        @:
+    }
+    if(column.IsNullable)
+    {
+        @:[FilterOperator(QueryOperatorType.IsNull, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+		@:public bool? @(column.PropertyName)_IsNull { get; set; }
+        @:
+		@:[FilterOperator(QueryOperatorType.IsNotNull, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+		@:public bool? @(column.PropertyName)_IsNotNull { get; set; }
+        @:
+    }
     }
     @:}
 @:
