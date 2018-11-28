@@ -1,4 +1,5 @@
 @inherits TemplateBase<PocoTemplateContext>
+@using System.Linq;
 namespace @Model.Namespace
 {
 	using System;
@@ -127,7 +128,59 @@ namespace @Model.Namespace
 		@:public bool? @(column.PropertyName)_IsNotNull { get; set; }
         @:
     }
+        @:[FilterOperator(QueryOperatorType.IsIn, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+		@:public @(column.ClrNonNullableTypeName)[] @(column.PropertyName)_IsIn { get; set; }
+        @:
+		@:[FilterOperator(QueryOperatorType.IsNotIn, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+		@:public @(column.ClrNonNullableTypeName)[] @(column.PropertyName)_IsNotIn { get; set; }
     }
+    @:}
+@:
+}
+@foreach (var table in Model.Tables.Where(x => !x.IsView))
+{
+    @:/// <summary>
+    @:/// <para>Table name: '@table.TableName'.</para>
+    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// </summary>
+    @:public class @(table.ClassName)BM : IBusinessModel<@(table.ClassName)Poco>
+    @:{
+    @foreach(var column in table.Columns)
+    {
+        @:/// <summary>
+        @foreach(var commentLine in column.Comments)
+        {
+            @:/// <para>@commentLine</para>
+        }        
+	    @:/// <para>Column name: '@column.ColumnName'.</para>
+	    @:/// <para>Table name: '@column.TableName'.</para>        
+        @if (column.IsPrimaryKey) {        
+        @:/// <para>Primary key of table: '@column.TableName'.</para>
+	    @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>        
+        }
+        @if (column.IsForeignKey) {        
+	    @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
+	    @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>        
+        }        
+        @:/// <para>This column is @(!column.IsNullable ? "not " : "") nullable.</para>
+	    @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
+	    @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
+	    @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
+	    @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
+	    @:/// </summary>
+		@:public @column.ClrTypeName @column.PropertyName { get; set; }
+@:
+    }
+        @:public @(table.ClassName)Poco ToPoco()
+        @:{
+            @:return new @(table.ClassName)Poco
+            @:{
+                @foreach(var column in table.Columns)
+                {
+                @:@($"{column.PropertyName} = this.{column.PropertyName},")
+                }
+            @:};
+        @:}
     @:}
 @:
 }
