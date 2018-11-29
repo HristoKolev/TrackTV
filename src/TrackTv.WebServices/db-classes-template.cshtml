@@ -2,12 +2,12 @@
 @using System.Linq;
 namespace @Model.Namespace
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using System.Linq;
-	using LinqToDB;
-	using LinqToDB.Mapping;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Linq;
+    using LinqToDB;
+    using LinqToDB.Mapping;
 
     using NpgsqlTypes;
 
@@ -15,7 +15,7 @@ namespace @Model.Namespace
 {    
     @:/// <summary>
     @:/// <para>Table name: '@table.TableName'.</para>
-    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// <para>Table schema: '@table.TableSchema'.</para>
     @:/// </summary>
     @:[Table(Schema="@table.TableSchema", Name = "@table.TableName")]
     @:public class @(table.ClassName)Poco : @(table.IsView ? $"IReadOnlyPoco<@{table.ClassName}Poco>" : $"IPoco<{table.ClassName}Poco>")
@@ -26,41 +26,41 @@ namespace @Model.Namespace
         @foreach(var commentLine in column.Comments)
         {
             @:/// <para>@commentLine</para>
-        }        
-	    @:/// <para>Column name: '@column.ColumnName'.</para>
-	    @:/// <para>Table name: '@column.TableName'.</para>        
+        }
+        @:/// <para>Column name: '@column.ColumnName'.</para>
+        @:/// <para>Table name: '@column.TableName'.</para>
         @if (column.IsPrimaryKey) {        
         @:/// <para>Primary key of table: '@column.TableName'.</para>
-	    @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>        
+        @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>
         }
         @if (column.IsForeignKey) {        
-	    @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
-	    @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>        
+        @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
+        @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>
         }        
         @:/// <para>This column is @(!column.IsNullable ? "not " : "") nullable.</para>
-	    @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
-	    @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
-	    @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
-	    @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
-	    @:/// </summary>
+        @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
+        @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
+        @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
+        @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
+        @:/// </summary>
         @:@(column.IsPrimaryKey ? "[PrimaryKey, Identity]" : (column.IsNullable ? "[Nullable]" : "[NotNull]"))
         @:[Column(Name = "@column.ColumnName", DataType = @column.Linq2dbDataTypeName)]
-		@:public @column.ClrTypeName @column.PropertyName { get; set; }
+        @:public @column.ClrTypeName @column.PropertyName { get; set; }
 @:
     }
 
     @if (!table.IsView)
     {
         @:public @(table.ClassName)BM ToBm()
-		@:{
-			@:return new @(table.ClassName)BM
-			@:{
-				@foreach(var column in table.Columns)
+        @:{
+            @:return new @(table.ClassName)BM
+            @:{
+                @foreach(var column in table.Columns)
                 {
                 @:@($"{column.PropertyName} = this.{column.PropertyName},")
                 }
-			@:};
-		@:}
+            @:};
+        @:}
     }
     @:}
 @:
@@ -70,7 +70,7 @@ namespace @Model.Namespace
 {
     @:/// <summary>
     @:/// <para>Table name: '@table.TableName'.</para>
-    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// <para>Table schema: '@table.TableSchema'.</para>
     @:/// </summary>
     @:public class @(table.ClassName)CM : ICatalogModel<@(table.ClassName)Poco>
     @:{
@@ -81,23 +81,23 @@ namespace @Model.Namespace
         {
             @:/// <para>@commentLine</para>
         }        
-	    @:/// <para>Column name: '@column.ColumnName'.</para>
-	    @:/// <para>Table name: '@column.TableName'.</para>        
+        @:/// <para>Column name: '@column.ColumnName'.</para>
+        @:/// <para>Table name: '@column.TableName'.</para>
         @if (column.IsPrimaryKey) {        
         @:/// <para>Primary key of table: '@column.TableName'.</para>
-	    @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>        
+        @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>
         }
         @if (column.IsForeignKey) {        
-	    @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
-	    @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>        
-        }        
+        @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
+        @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>
+        }
         @:/// <para>This column is @(!column.IsNullable ? "not " : "") nullable.</para>
-	    @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
-	    @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
-	    @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
-	    @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
-	    @:/// </summary>
-		@:public @column.ClrTypeName @column.PropertyName { get; set; }
+        @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
+        @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
+        @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
+        @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
+        @:/// </summary>
+        @:public @column.ClrTypeName @column.PropertyName { get; set; }
 @:
     }
     @:}
@@ -107,7 +107,7 @@ namespace @Model.Namespace
 {
     @:/// <summary>
     @:/// <para>Table name: '@table.TableName'.</para>
-    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// <para>Table schema: '@table.TableSchema'.</para>
     @:/// </summary>
     @:public class @(table.ClassName)FM : IFilterModel<@(table.ClassName)Poco>
     @:{
@@ -122,17 +122,17 @@ namespace @Model.Namespace
     if(column.IsNullable)
     {
         @:[FilterOperator(QueryOperatorType.IsNull, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
-		@:public bool? @(column.PropertyName)_IsNull { get; set; }
+        @:public bool? @(column.PropertyName)_IsNull { get; set; }
         @:
-		@:[FilterOperator(QueryOperatorType.IsNotNull, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
-		@:public bool? @(column.PropertyName)_IsNotNull { get; set; }
+        @:[FilterOperator(QueryOperatorType.IsNotNull, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+        @:public bool? @(column.PropertyName)_IsNotNull { get; set; }
         @:
     }
         @:[FilterOperator(QueryOperatorType.IsIn, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
-		@:public @(column.ClrNonNullableTypeName)[] @(column.PropertyName)_IsIn { get; set; }
+        @:public @(column.ClrNonNullableTypeName)[] @(column.PropertyName)_IsIn { get; set; }
         @:
-		@:[FilterOperator(QueryOperatorType.IsNotIn, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
-		@:public @(column.ClrNonNullableTypeName)[] @(column.PropertyName)_IsNotIn { get; set; }
+        @:[FilterOperator(QueryOperatorType.IsNotIn, "@(column.PropertyName)", NpgsqlDbType.@(column.NpgsDataTypeName), "@(column.ColumnName)")]
+        @:public @(column.ClrNonNullableTypeName)[] @(column.PropertyName)_IsNotIn { get; set; }
     }
     @:}
 @:
@@ -141,7 +141,7 @@ namespace @Model.Namespace
 {
     @:/// <summary>
     @:/// <para>Table name: '@table.TableName'.</para>
-    @:/// <para>Table schema: '@table.TableSchema'.</para>        
+    @:/// <para>Table schema: '@table.TableSchema'.</para>
     @:/// </summary>
     @:public class @(table.ClassName)BM : IBusinessModel<@(table.ClassName)Poco>
     @:{
@@ -151,24 +151,24 @@ namespace @Model.Namespace
         @foreach(var commentLine in column.Comments)
         {
             @:/// <para>@commentLine</para>
-        }        
-	    @:/// <para>Column name: '@column.ColumnName'.</para>
-	    @:/// <para>Table name: '@column.TableName'.</para>        
+        }
+        @:/// <para>Column name: '@column.ColumnName'.</para>
+        @:/// <para>Table name: '@column.TableName'.</para>        
         @if (column.IsPrimaryKey) {        
         @:/// <para>Primary key of table: '@column.TableName'.</para>
-	    @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>        
+        @:/// <para>Primary key constraint name: '@column.PrimaryKeyConstraintName'.</para>
         }
         @if (column.IsForeignKey) {        
-	    @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
-	    @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>        
+        @:/// <para>Foreign key column [@(column.TableSchema).@(column.TableName).@(column.ColumnName) -> @(column.ForeignKeyReferenceSchemaName).@(column.ForeignKeyReferenceTableName).@(column.ForeignKeyReferenceColumnName)].</para>
+        @:/// <para>Foreign key constraint name: '@(column.ForeignKeyConstraintName)'.</para>
         }        
         @:/// <para>This column is @(!column.IsNullable ? "not " : "") nullable.</para>
-	    @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
-	    @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
-	    @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
-	    @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
-	    @:/// </summary>
-		@:public @column.ClrTypeName @column.PropertyName { get; set; }
+        @:/// <para>PostgreSQL data type: '@(column.DbDataType)'.</para>
+        @:/// <para>NpgsqlDbType: 'NpgsqlDbType.@(column.NpgsDataTypeName)'.</para>
+        @:/// <para>CLR type: '@(column.ClrTypeName)'.</para>
+        @:/// <para>linq2db data type: '@(column.Linq2dbDataTypeName)'.</para>
+        @:/// </summary>
+        @:public @column.ClrTypeName @column.PropertyName { get; set; }
 @:
     }
         @:public @(table.ClassName)Poco ToPoco()
@@ -184,4 +184,35 @@ namespace @Model.Namespace
     @:}
 @:
 }
+    public class @(Model.PocoClassName) : IDbPocos<@(Model.PocoClassName)>
+    {
+    @foreach (var table in Model.Tables)
+    {
+        @:/// <summary>
+        @:/// <para>Database table '@(table.TableName)'.</para>
+        @:/// </summary>
+        @:public IQueryable<@(table.ClassName)Poco> @(table.PluralClassName) => this.DbService.GetTable<@(table.ClassName)Poco>();
+        @:
+        @:/// <summary>
+        @:/// <para>Database table '@(table.TableName)'.</para>
+        @:/// <para>Filter model '@(table.ClassName)FM'.</para>
+        @:/// <para>Catalog model '@(table.ClassName)CM'.</para>
+        @:/// </summary>
+        @:public Task<List<@(table.ClassName)CM>> Filter(@(table.ClassName)FM filter) => this.DbService.FilterInternal<@(table.ClassName)Poco, @(table.ClassName)CM>(filter);
+        @:
+    }
+        public IDbService<@(Model.PocoClassName)> DbService { private get; set; }
+    }
+
+    public static class @(Model.PocoClassName)Extensions
+    {
+    @foreach (var table in Model.Tables)
+    {
+        @:/// <summary>
+        @:/// <para>Database table '@(table.TableName)'.</para>
+        @:/// </summary>
+        @:public static IQueryable<@(table.ClassName)CM> SelectCm(this IQueryable<@(table.ClassName)Poco> collection) => collection.SelectCm<@(table.ClassName)Poco, @(table.ClassName)CM>();
+        @:
+    }
+    }
 }
