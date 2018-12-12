@@ -38,7 +38,7 @@ services:
       timeout: 5s
       retries: 5
   testdb:
-    image: postgres
+    image: postgres:10
     restart: unless-stopped
     ports:
       - "4202:5432"

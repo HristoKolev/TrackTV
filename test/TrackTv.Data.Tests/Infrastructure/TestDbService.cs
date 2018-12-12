@@ -4,7 +4,7 @@
 
     public class TestDbService : DbService<TestDbPocos>
     {
-        const string TestConnectionString = "Server=vm5;Port=4202;Database=test;Uid=test;Pwd=test;";
+        const string TestConnectionString = "Server=vm5.lan;Port=4202;Database=test;Uid=test;Pwd=test;";
 
         public TestDbService(NpgsqlConnection dbConnection)
             : base(dbConnection)
