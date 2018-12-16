@@ -237,6 +237,13 @@ namespace TrackTv.Data.Tests
         }
 
         [Theory]
+        [ClassData(typeof(GeneratedBulkData<Test1Poco>))]
+        public void Copy(List<Test1Poco> pocos)
+        {
+            this.Db.Copy(pocos);
+        }
+
+        [Theory]
         [ClassData(typeof(GeneratedFilterData<Test1Poco, Test1FM>))]
         public async Task FilterSql(Test1FM filter)
         {
@@ -588,6 +595,13 @@ namespace TrackTv.Data.Tests
 
                 Assert.Equal(getter(poco) ?? DBNull.Value, parameter.Value);
             }
+        }
+
+        [Theory]
+        [ClassData(typeof(GeneratedBulkData<Test2Poco>))]
+        public void Copy(List<Test2Poco> pocos)
+        {
+            this.Db.Copy(pocos);
         }
 
         [Theory]

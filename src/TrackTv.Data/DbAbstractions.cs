@@ -214,6 +214,11 @@
         /// Returns the data needed to generate an expression from an <see cref="IFilterModel{TPoco}"/> instance.
         /// </summary>
         public Func<IFilterModel<T>, ValueTuple<List<string>, List<NpgsqlParameter>, List<QueryOperatorType>>> ParseFm { get; set; }
+
+        /// <summary>
+        /// Writes the poco object to the binary importer.
+        /// </summary>
+        public Action<NpgsqlBinaryImporter, T> WriteToImporter { get; set; }
     }
 
     /// <summary>

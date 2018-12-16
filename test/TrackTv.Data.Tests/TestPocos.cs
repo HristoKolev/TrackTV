@@ -388,7 +388,7 @@ namespace TrackTv.Data.Tests
     /// <para>Table schema: 'public'.</para>
     /// </summary>
     [Table(Schema="public", Name = "view1")]
-    public class View1Poco : IReadOnlyPoco<@View1Poco>
+    public class View1Poco : IReadOnlyPoco<View1Poco>
     {
         /// <summary>
         /// <para>Column name: 'test_bigint1'.</para>
@@ -3409,6 +3409,7 @@ namespace TrackTv.Data.Tests
 
             Test1PocoMetadata.Clone = DbCodeGenerator.GetClone<Test1Poco>();
             Test1PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test1PocoMetadata);
+            Test1PocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(Test1PocoMetadata);
             Test1PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test1PocoMetadata);
             Test1PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test1PocoMetadata);
             Test1PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(Test1PocoMetadata, typeof(Test1FM));
@@ -3524,6 +3525,7 @@ namespace TrackTv.Data.Tests
 
             Test2PocoMetadata.Clone = DbCodeGenerator.GetClone<Test2Poco>();
             Test2PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(Test2PocoMetadata);
+            Test2PocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(Test2PocoMetadata);
             Test2PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(Test2PocoMetadata);
             Test2PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(Test2PocoMetadata);
             Test2PocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(Test2PocoMetadata, typeof(Test2FM));

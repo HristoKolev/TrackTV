@@ -383,5 +383,58 @@
 
             return this.QueryOneInternal<T>(sql, parameters, cancellationToken);
         }
+
+        public void Copy<T>(IEnumerable<T> pocos)
+            where T : IPoco<T>
+        {
+            var metadata = DbCodeGenerator.GetMetadata<T>();
+            var columns = metadata.Columns;
+            
+            var copyHeaderBuilder = new StringBuilder(128);
+
+            // STATEMENT HEADER
+            copyHeaderBuilder.Append("COPY \"");
+            copyHeaderBuilder.Append(metadata.TableSchema);
+            copyHeaderBuilder.Append("\".\"");
+            copyHeaderBuilder.Append(metadata.TableName);
+            copyHeaderBuilder.Append("\" (");
+            
+            bool headerFirstRun = true;
+
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (int i = 0; i < columns.Count; i++)
+            {
+                var column = columns[i];
+
+                if (!column.IsPrimaryKey)
+                {
+                    if (headerFirstRun)
+                    {
+                        copyHeaderBuilder.Append("\"");
+                        headerFirstRun = false;
+                    }
+                    else
+                    {
+                        copyHeaderBuilder.Append(", \"");
+                    }
+
+                    copyHeaderBuilder.Append(column.ColumnName);
+                    copyHeaderBuilder.Append('"');
+                }
+            }
+
+            copyHeaderBuilder.Append(") FROM STDIN (FORMAT BINARY)");
+
+            using (var importer = this.dbConnection.BeginBinaryImport(copyHeaderBuilder.ToString()))
+            {
+                foreach (var poco in pocos)
+                {
+                    importer.StartRow();
+                    metadata.WriteToImporter(importer, poco);
+                }
+                
+                importer.Complete();
+            }
+        }
     }
 }

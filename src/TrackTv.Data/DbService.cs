@@ -50,7 +50,7 @@
 
         private DataConnection linqToDbConnection;
 
-        private TPocos poco;
+        private TPocos _poco;
 
         public DbService(NpgsqlConnection dbConnection)
         {
@@ -75,15 +75,15 @@
         {
             get
             {
-                if (this.poco == null)
+                if (this._poco == null)
                 {
-                    this.poco = new TPocos
+                    this._poco = new TPocos
                     {
                         DbService = this
                     };
                 }
 
-                return this.poco;
+                return this._poco;
             }
         }
 

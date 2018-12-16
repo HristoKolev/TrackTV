@@ -18,7 +18,7 @@ namespace @Model.Namespace
     @:/// <para>Table schema: '@table.TableSchema'.</para>
     @:/// </summary>
     @:[Table(Schema="@table.TableSchema", Name = "@table.TableName")]
-    @:public class @(table.ClassName)Poco : @(table.IsView ? $"IReadOnlyPoco<@{table.ClassName}Poco>" : $"IPoco<{table.ClassName}Poco>")
+    @:public class @(table.ClassName)Poco : @(table.IsView ? $"IReadOnlyPoco<{table.ClassName}Poco>" : $"IPoco<{table.ClassName}Poco>")
     @:{
     @foreach(var column in table.Columns)
     {
@@ -294,6 +294,7 @@ namespace @Model.Namespace
             @if(!table.IsView)
             {
             @:@(table.ClassName)PocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(@(table.ClassName)PocoMetadata);
+            @:@(table.ClassName)PocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(@(table.ClassName)PocoMetadata);
             @:@(table.ClassName)PocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(@(table.ClassName)PocoMetadata);
             @:@(table.ClassName)PocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(@(table.ClassName)PocoMetadata);
             }

@@ -5405,6 +5405,7 @@ namespace TrackTv.Data
 
             ActorPocoMetadata.Clone = DbCodeGenerator.GetClone<ActorPoco>();
             ActorPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ActorPocoMetadata);
+            ActorPocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ActorPocoMetadata);
             ActorPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ActorPocoMetadata);
             ActorPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ActorPocoMetadata);
             ActorPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ActorPocoMetadata, typeof(ActorFM));
@@ -5489,6 +5490,7 @@ namespace TrackTv.Data
 
             ApiChangeTypePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangeTypePoco>();
             ApiChangeTypePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangeTypePocoMetadata);
+            ApiChangeTypePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ApiChangeTypePocoMetadata);
             ApiChangeTypePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiChangeTypePocoMetadata);
             ApiChangeTypePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiChangeTypePocoMetadata);
             ApiChangeTypePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ApiChangeTypePocoMetadata, typeof(ApiChangeTypeFM));
@@ -5759,6 +5761,7 @@ namespace TrackTv.Data
 
             ApiChangePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiChangePoco>();
             ApiChangePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiChangePocoMetadata);
+            ApiChangePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ApiChangePocoMetadata);
             ApiChangePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiChangePocoMetadata);
             ApiChangePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiChangePocoMetadata);
             ApiChangePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ApiChangePocoMetadata, typeof(ApiChangeFM));
@@ -5936,6 +5939,7 @@ namespace TrackTv.Data
 
             ApiResponsePocoMetadata.Clone = DbCodeGenerator.GetClone<ApiResponsePoco>();
             ApiResponsePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ApiResponsePocoMetadata);
+            ApiResponsePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ApiResponsePocoMetadata);
             ApiResponsePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ApiResponsePocoMetadata);
             ApiResponsePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ApiResponsePocoMetadata);
             ApiResponsePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ApiResponsePocoMetadata, typeof(ApiResponseFM));
@@ -6268,6 +6272,7 @@ namespace TrackTv.Data
 
             EpisodePocoMetadata.Clone = DbCodeGenerator.GetClone<EpisodePoco>();
             EpisodePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(EpisodePocoMetadata);
+            EpisodePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(EpisodePocoMetadata);
             EpisodePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(EpisodePocoMetadata);
             EpisodePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(EpisodePocoMetadata);
             EpisodePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(EpisodePocoMetadata, typeof(EpisodeFM));
@@ -6352,6 +6357,7 @@ namespace TrackTv.Data
 
             GenrePocoMetadata.Clone = DbCodeGenerator.GetClone<GenrePoco>();
             GenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(GenrePocoMetadata);
+            GenrePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(GenrePocoMetadata);
             GenrePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(GenrePocoMetadata);
             GenrePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(GenrePocoMetadata);
             GenrePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(GenrePocoMetadata, typeof(GenreFM));
@@ -6436,6 +6442,7 @@ namespace TrackTv.Data
 
             NetworkPocoMetadata.Clone = DbCodeGenerator.GetClone<NetworkPoco>();
             NetworkPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(NetworkPocoMetadata);
+            NetworkPocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(NetworkPocoMetadata);
             NetworkPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(NetworkPocoMetadata);
             NetworkPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(NetworkPocoMetadata);
             NetworkPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(NetworkPocoMetadata, typeof(NetworkFM));
@@ -6520,6 +6527,7 @@ namespace TrackTv.Data
 
             ProfilePocoMetadata.Clone = DbCodeGenerator.GetClone<ProfilePoco>();
             ProfilePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ProfilePocoMetadata);
+            ProfilePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ProfilePocoMetadata);
             ProfilePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ProfilePocoMetadata);
             ProfilePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ProfilePocoMetadata);
             ProfilePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ProfilePocoMetadata, typeof(ProfileFM));
@@ -6666,6 +6674,7 @@ namespace TrackTv.Data
 
             RolePocoMetadata.Clone = DbCodeGenerator.GetClone<RolePoco>();
             RolePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(RolePocoMetadata);
+            RolePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(RolePocoMetadata);
             RolePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(RolePocoMetadata);
             RolePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(RolePocoMetadata);
             RolePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(RolePocoMetadata, typeof(RoleFM));
@@ -6781,6 +6790,7 @@ namespace TrackTv.Data
 
             SettingPocoMetadata.Clone = DbCodeGenerator.GetClone<SettingPoco>();
             SettingPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SettingPocoMetadata);
+            SettingPocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(SettingPocoMetadata);
             SettingPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(SettingPocoMetadata);
             SettingPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(SettingPocoMetadata);
             SettingPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(SettingPocoMetadata, typeof(SettingFM));
@@ -7175,6 +7185,7 @@ namespace TrackTv.Data
 
             ShowPocoMetadata.Clone = DbCodeGenerator.GetClone<ShowPoco>();
             ShowPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowPocoMetadata);
+            ShowPocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ShowPocoMetadata);
             ShowPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ShowPocoMetadata);
             ShowPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ShowPocoMetadata);
             ShowPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ShowPocoMetadata, typeof(ShowFM));
@@ -7290,6 +7301,7 @@ namespace TrackTv.Data
 
             ShowGenrePocoMetadata.Clone = DbCodeGenerator.GetClone<ShowGenrePoco>();
             ShowGenrePocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(ShowGenrePocoMetadata);
+            ShowGenrePocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(ShowGenrePocoMetadata);
             ShowGenrePocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(ShowGenrePocoMetadata);
             ShowGenrePocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(ShowGenrePocoMetadata);
             ShowGenrePocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(ShowGenrePocoMetadata, typeof(ShowGenreFM));
@@ -7405,6 +7417,7 @@ namespace TrackTv.Data
 
             SubscriptionPocoMetadata.Clone = DbCodeGenerator.GetClone<SubscriptionPoco>();
             SubscriptionPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(SubscriptionPocoMetadata);
+            SubscriptionPocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(SubscriptionPocoMetadata);
             SubscriptionPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(SubscriptionPocoMetadata);
             SubscriptionPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(SubscriptionPocoMetadata);
             SubscriptionPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(SubscriptionPocoMetadata, typeof(SubscriptionFM));
@@ -7582,6 +7595,7 @@ namespace TrackTv.Data
 
             UserPocoMetadata.Clone = DbCodeGenerator.GetClone<UserPoco>();
             UserPocoMetadata.GenerateParameters = DbCodeGenerator.GetGenerateParameters(UserPocoMetadata);
+            UserPocoMetadata.WriteToImporter = DbCodeGenerator.GetWriteToImporter(UserPocoMetadata);
             UserPocoMetadata.GetColumnChanges = DbCodeGenerator.GetGetColumnChanges(UserPocoMetadata);
             UserPocoMetadata.GetAllColumns = DbCodeGenerator.GetGetAllColumns(UserPocoMetadata);
             UserPocoMetadata.ParseFm = DbCodeGenerator.GetParseFm(UserPocoMetadata, typeof(UserFM));

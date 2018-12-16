@@ -1,4 +1,6 @@
-﻿namespace TrackTv.Data
+﻿using System.ComponentModel.Design;
+
+namespace TrackTv.Data
 {
     using System;
     using System.Collections.Concurrent;
@@ -175,6 +177,71 @@
             });
         }
 
+        public static Action<NpgsqlBinaryImporter, TPoco> GetWriteToImporter<TPoco>(TableMetadataModel<TPoco> metadata)
+            where TPoco : IPoco<TPoco>
+        {
+            var pocoType = typeof(TPoco);
+            
+            var genericWrite = typeof(NpgsqlBinaryImporter)
+                                .GetMethods()
+                                .Where((info, i) => info.GetParameters().Length == 2 && info.GetParameters()[1].ParameterType == typeof(NpgsqlDbType))
+                                .First();
+
+            var writeNull = typeof(NpgsqlBinaryImporter).GetMethod("WriteNull");
+
+            var nonPrimaryKeyColumns = metadata.Columns.Where(x => !x.IsPrimaryKey).ToArray();
+            
+            return GenerateMethod<Action<NpgsqlBinaryImporter, TPoco>>(il =>
+            {
+                foreach (var column in nonPrimaryKeyColumns)
+                {
+                    var property = pocoType.GetProperty(column.PropertyName);
+
+                    var concreteMethod = genericWrite.MakeGenericMethod(property.PropertyType);
+                    
+                    il.Emit(OpCodes.Ldarg_0);
+                    il.Emit(OpCodes.Ldarg_1);
+                    il.Emit(OpCodes.Ldfld, property.GetBackingField());
+                    il.Emit(OpCodes.Dup);
+                    
+                    var ifNotNullLabel = il.DefineLabel();
+                    var endifLabel = il.DefineLabel();
+
+                    if (!property.PropertyType.IsValueType)
+                    {
+                        il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
+                    }
+                    else if (IsNullableType(property.PropertyType))
+                    {
+                        il.Emit(OpCodes.Call, property.PropertyType.GetProperty("HasValue").GetMethod);
+                        il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
+                    }
+                    else
+                    {
+                        il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
+                    }
+                    
+                    il.Emit(OpCodes.Pop);
+                    il.Emit(OpCodes.Call, writeNull);
+                    il.Emit(OpCodes.Br_S, endifLabel);
+                    
+                    il.MarkLabel(ifNotNullLabel);
+
+                    if (IsNullableType(property.PropertyType))
+                    {
+                        il.Emit(OpCodes.Call, property.PropertyType.GetMethod("GetValueOrDefault", Array.Empty<Type>()));
+                    }
+                    
+                    il.Emit(OpCodes.Ldc_I4, (int) column.NpgsDataType);
+                    il.Emit(OpCodes.Call, concreteMethod);
+                    
+                    il.MarkLabel(endifLabel);
+                }
+
+                il.Emit(OpCodes.Ret);
+            });
+        }
+        
         public static Func<TPoco, ValueTuple<string[], NpgsqlParameter[]>> GetGetAllColumns<TPoco>(TableMetadataModel<TPoco> metadata)
             where TPoco : IPoco<TPoco>
         {

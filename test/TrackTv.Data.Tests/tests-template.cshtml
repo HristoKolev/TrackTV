@@ -191,6 +191,13 @@ namespace @Model.Namespace
             @:}
         @:}
 @:
+        @:[Theory]
+        @:[ClassData(typeof(GeneratedBulkData<@(table.ClassName)Poco>))]
+        @:public void Copy(List<@(table.ClassName)Poco> pocos)
+        @:{
+            @:this.Db.Copy(pocos);
+        @:}
+@:
     }
         @:[Theory]
         @:[ClassData(typeof(GeneratedFilterData<@(table.ClassName)Poco, @(table.ClassName)FM>))]
