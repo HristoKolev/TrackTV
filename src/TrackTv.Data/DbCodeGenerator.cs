@@ -196,24 +196,23 @@ namespace TrackTv.Data
                 foreach (var column in nonPrimaryKeyColumns)
                 {
                     var property = pocoType.GetProperty(column.PropertyName);
-
-                    var concreteMethod = genericWrite.MakeGenericMethod(property.PropertyType);
+                     
+                    var ifNotNullLabel = il.DefineLabel();
+                    var endifLabel = il.DefineLabel();
                     
                     il.Emit(OpCodes.Ldarg_0);
                     il.Emit(OpCodes.Ldarg_1);
-                    il.Emit(OpCodes.Ldfld, property.GetBackingField());
                     il.Emit(OpCodes.Dup);
                     
-                    var ifNotNullLabel = il.DefineLabel();
-                    var endifLabel = il.DefineLabel();
-
-                    if (!property.PropertyType.IsValueType)
+                    if (IsNullableType(property.PropertyType))
                     {
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
+                        il.Emit(OpCodes.Call, property.PropertyType.GetProperty("HasValue").GetMethod);
                         il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
                     }
-                    else if (IsNullableType(property.PropertyType))
+                    else if (!property.PropertyType.IsValueType)
                     {
-                        il.Emit(OpCodes.Call, property.PropertyType.GetProperty("HasValue").GetMethod);
+                        il.Emit(OpCodes.Ldfld, property.GetBackingField());
                         il.Emit(OpCodes.Brtrue_S, ifNotNullLabel);
                     }
                     else
@@ -224,16 +223,31 @@ namespace TrackTv.Data
                     il.Emit(OpCodes.Pop);
                     il.Emit(OpCodes.Call, writeNull);
                     il.Emit(OpCodes.Br_S, endifLabel);
-                    
-                    il.MarkLabel(ifNotNullLabel);
 
+                    il.MarkLabel(ifNotNullLabel);
+                    
                     if (IsNullableType(property.PropertyType))
                     {
+                        il.Emit(OpCodes.Ldflda, property.GetBackingField());
                         il.Emit(OpCodes.Call, property.PropertyType.GetMethod("GetValueOrDefault", Array.Empty<Type>()));
                     }
-                    
+                    else
+                    {
+                        il.Emit(OpCodes.Ldfld, property.GetBackingField());
+                    }
+                   
                     il.Emit(OpCodes.Ldc_I4, (int) column.NpgsDataType);
-                    il.Emit(OpCodes.Call, concreteMethod);
+                    
+                    if (IsNullableType(property.PropertyType))
+                    {
+                        var concreteMethod = genericWrite.MakeGenericMethod(Nullable.GetUnderlyingType(property.PropertyType));
+                        il.Emit(OpCodes.Call, concreteMethod);
+                    }
+                    else
+                    {
+                        var concreteMethod = genericWrite.MakeGenericMethod(property.PropertyType);
+                        il.Emit(OpCodes.Call, concreteMethod);
+                    }
                     
                     il.MarkLabel(endifLabel);
                 }
