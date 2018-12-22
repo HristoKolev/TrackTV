@@ -8,6 +8,8 @@
 
     using TrackTv.Data;
     using TrackTv.Services.Data;
+    
+    using PgNet;
 
     public class ShowsService
     {

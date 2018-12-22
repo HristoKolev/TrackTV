@@ -1,6 +1,8 @@
 ﻿namespace TrackTv.Data
 {
     using Npgsql;
+    
+    using PgNet;
 
     public interface IDbService : IDbService<TrackTvPocos>
     {

@@ -9,6 +9,8 @@ namespace TrackTv.Data
 
     using NpgsqlTypes;
 
+    using PgNet;
+
     /// <summary>
     /// <para>Table name: 'actors'.</para>
     /// <para>Table schema: 'public'.</para>
