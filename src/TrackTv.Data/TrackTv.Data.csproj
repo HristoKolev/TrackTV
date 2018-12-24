@@ -3,16 +3,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion> 
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="linq2db.Core" Version="1.10.2" />
-    <PackageReference Include="Npgsql" Version="4.0.4" />
     <PackageReference Include="PgNet" Version="1.0.0" />
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="db-classes-template.cshtml" />
   </ItemGroup>
 </Project>
